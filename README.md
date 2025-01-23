@@ -1,4 +1,4 @@
-# dodopayments PHP SDK 0.18.0
+# dodopayments PHP SDK 0.19.0
 
 
 Welcome to the dodopayments SDK documentation. This guide will help you get started with integrating and using the dodopayments SDK in your project.
@@ -7,8 +7,8 @@ Welcome to the dodopayments SDK documentation. This guide will help you get star
 
 ## Versions
 
-- API version: `0.17.0`
-- SDK version: `0.18.0`
+- API version: `0.19.0`
+- SDK version: `0.19.0`
 
 ## Table of Contents
 - [Setup & Configuration](#setup--configuration)
@@ -195,14 +195,14 @@ The SDK includes several models that represent the data structures used in API r
 | [PayoutsResponse](documentation/models/PayoutsResponse.md) |  |
 | [PayoutStatus](documentation/models/PayoutStatus.md) |  |
 | [GetProductsListResponseItem](documentation/models/GetProductsListResponseItem.md) |  |
-| [TaxCategory](documentation/models/TaxCategory.md) | Represents the different categories of taxation applicable to various products and services. |
-| [LicenseKeyDuration](documentation/models/LicenseKeyDuration.md) |  |
 | [Price](documentation/models/Price.md) |  |
-| [TimeInterval](documentation/models/TimeInterval.md) |  |
+| [TaxCategory](documentation/models/TaxCategory.md) | Represents the different categories of taxation applicable to various products and services. |
 | [Price_1](documentation/models/Price1.md) |  |
 | [Price_2](documentation/models/Price2.md) |  |
 | [Price_1Type](documentation/models/Price1Type.md) |  |
+| [TimeInterval](documentation/models/TimeInterval.md) |  |
 | [Price_2Type](documentation/models/Price2Type.md) |  |
+| [LicenseKeyDuration](documentation/models/LicenseKeyDuration.md) |  |
 | [OutgoingWebhookData](documentation/models/OutgoingWebhookData.md) |  |
 | [EventType](documentation/models/EventType.md) | Event types for Dodo events |
 | [OutgoingWebhookData_1](documentation/models/OutgoingWebhookData1.md) |  |

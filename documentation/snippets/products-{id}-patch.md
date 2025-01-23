@@ -13,7 +13,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 $input = new Models\PatchProductRequest(
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 4,
+  licenseKeyActivationsLimit: 123,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",

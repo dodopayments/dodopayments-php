@@ -11,7 +11,7 @@ $response = $sdk->subscriptions->listSubscriptions(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
   pageSize: 1,
-  pageNumber: 1,
+  pageNumber: 4,
   customerId: "customer_id",
   status: $status
 );

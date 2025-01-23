@@ -10,6 +10,7 @@ A list of all methods in the `Products` service. Click on the method name to vie
 |[patch_product](#patch_product)|  |
 |[delete_product](#delete_product)|  |
 |[update_product_image](#update_product_image)|  |
+|[undelete_product](#undelete_product)|  |
 
 ## list_products
 
@@ -23,6 +24,7 @@ A list of all methods in the `Products` service. Click on the method name to vie
 | :-------- | :----------| :----------| :----------|
 | $pageSize | int | ❌ | Page size default is 10 max is 100 |
 | $pageNumber | int | ❌ | Page number default is 0 |
+| $archived | bool | ❌ | List archived products |
 
 **Return Type**
 
@@ -38,7 +40,8 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->listProducts(
   pageSize: 8,
-  pageNumber: 4
+  pageNumber: 4,
+  archived: true
 );
 
 print_r($response);
@@ -79,7 +82,7 @@ $taxCategory = Models\TaxCategory::DigitalProducts;
 $input = new Models\CreateProductRequest(
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 10,
+  licenseKeyActivationsLimit: 2,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",
@@ -158,7 +161,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 $input = new Models\PatchProductRequest(
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 4,
+  licenseKeyActivationsLimit: 123,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",
@@ -230,6 +233,37 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->updateProductImage(
+  id: "id"
+);
+
+print_r($response);
+```
+
+## undelete_product
+
+
+- HTTP Method: `POST`
+- Endpoint: `/products/{id}/unarchive`
+
+**Parameters**
+
+| Name    | Type| Required | Description |
+| :-------- | :----------| :----------| :----------|
+| $id | string | ✅ |  |
+
+**Return Type**
+
+`mixed`
+
+**Example Usage Code Snippet**
+```php
+<?php
+
+use Dodopayments\Client;
+
+$sdk = new Client(accessToken: 'YOUR_TOKEN');
+
+$response = $sdk->products->undeleteProduct(
   id: "id"
 );
 

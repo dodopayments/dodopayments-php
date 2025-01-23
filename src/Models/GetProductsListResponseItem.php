@@ -61,6 +61,9 @@ This ensures precision and avoids floating-point rounding errors.
     #[SerializedName('price')]
     public ?int $price;
 
+    #[SerializedName('price_detail')]
+    public ?Price $priceDetail;
+
     /**
      * Unique identifier for the product.
      */
@@ -73,6 +76,9 @@ This ensures precision and avoids floating-point rounding errors.
     #[SerializedName('tax_category')]
     public TaxCategory $taxCategory;
 
+    /**
+     * Indicates if the price is tax inclusive
+     */
     #[SerializedName('tax_inclusive')]
     public ?bool $taxInclusive;
 
@@ -91,6 +97,7 @@ This ensures precision and avoids floating-point rounding errors.
         bool $isRecurring,
         ?string $name = null,
         ?int $price = null,
+        ?Price $priceDetail = null,
         string $productId,
         TaxCategory $taxCategory,
         ?bool $taxInclusive = null,
@@ -104,6 +111,7 @@ This ensures precision and avoids floating-point rounding errors.
         $this->isRecurring = $isRecurring;
         $this->name = $name;
         $this->price = $price;
+        $this->priceDetail = $priceDetail;
         $this->productId = $productId;
         $this->taxCategory = $taxCategory;
         $this->taxInclusive = $taxInclusive;

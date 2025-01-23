@@ -5,10 +5,8 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->products->listProducts(
-  pageSize: 8,
-  pageNumber: 4,
-  archived: true
+$response = $sdk->products->undeleteProduct(
+  id: "id"
 );
 
 print_r($response);

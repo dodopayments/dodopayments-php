@@ -9,7 +9,8 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class CreateNewCustomer
 {
     /**
-	 * When true, the most recently created customer object with the given email is used if exists.
+	 * When false, the most recently created customer object with the given email is used if exists.
+When true, a new customer object is always created
 False by default
 	 */
     #[SerializedName('create_new_customer')]

@@ -8,7 +8,7 @@
 | :-------- | :----------| :----------| :----------|
     | email | string | ✅ |  |
     | name | string | ✅ |  |
-    | createNewCustomer | boolean | ❌ | When true, the most recently created customer object with the given email is used if exists. False by default |
+    | createNewCustomer | boolean | ❌ | When false, the most recently created customer object with the given email is used if exists. When true, a new customer object is always created False by default |
     | phoneNumber | string | ❌ |  |
 
 

@@ -9,12 +9,16 @@ use Dodopayments\Models;
 
 class Products extends BaseService
 {
-    public function listProducts(int $pageSize = null, int $pageNumber = null): Models\GetProductsListResponse
-    {
+    public function listProducts(
+        int $pageSize = null,
+        int $pageNumber = null,
+        bool $archived = null
+    ): Models\GetProductsListResponse {
         $data = $this->sendRequest('get', '/products', [
             'query' => [
                 'page_size' => $pageSize,
                 'page_number' => $pageNumber,
+                'archived' => $archived,
             ],
         ]);
 
@@ -54,5 +58,12 @@ class Products extends BaseService
         $data = $this->sendRequest('put', "/products/{$id}/images", []);
 
         return Serializer::deserialize($data, Models\UpdateProductImageResponse::class);
+    }
+
+    public function undeleteProduct(string $id): mixed
+    {
+        $data = $this->sendRequest('post', "/products/{$id}/unarchive", []);
+
+        return json_decode($data, true);
     }
 }
