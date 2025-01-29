@@ -1,4 +1,4 @@
-# dodopayments PHP SDK 0.19.0
+# dodopayments PHP SDK 0.20.1
 
 
 Welcome to the dodopayments SDK documentation. This guide will help you get started with integrating and using the dodopayments SDK in your project.
@@ -7,8 +7,8 @@ Welcome to the dodopayments SDK documentation. This guide will help you get star
 
 ## Versions
 
-- API version: `0.19.0`
-- SDK version: `0.19.0`
+- API version: `0.20.1`
+- SDK version: `0.20.1`
 
 ## Table of Contents
 - [Setup & Configuration](#setup--configuration)
@@ -189,9 +189,10 @@ The SDK includes several models that represent the data structures used in API r
 | [CustomerLimitedDetailsResponse](documentation/models/CustomerLimitedDetailsResponse.md) |  |
 | [BillingAddress](documentation/models/BillingAddress.md) |  |
 | [CustomerRequest](documentation/models/CustomerRequest.md) |  |
-| [OneTimeProductCartItem](documentation/models/OneTimeProductCartItem.md) |  |
+| [OneTimeProductCartItemReq](documentation/models/OneTimeProductCartItemReq.md) |  |
 | [AttachExistingCustomer](documentation/models/AttachExistingCustomer.md) |  |
 | [CreateNewCustomer](documentation/models/CreateNewCustomer.md) |  |
+| [OneTimeProductCartItemResponse](documentation/models/OneTimeProductCartItemResponse.md) |  |
 | [PayoutsResponse](documentation/models/PayoutsResponse.md) |  |
 | [PayoutStatus](documentation/models/PayoutStatus.md) |  |
 | [GetProductsListResponseItem](documentation/models/GetProductsListResponseItem.md) |  |

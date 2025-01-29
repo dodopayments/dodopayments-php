@@ -6,8 +6,8 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->listProducts(
-  pageSize: 8,
-  pageNumber: 4,
+  pageSize: 5,
+  pageNumber: 8,
   archived: true
 );
 

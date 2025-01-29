@@ -61,7 +61,7 @@ class PaymentResponse
     public ?string $paymentMethodType;
 
     /**
-     * @var OneTimeProductCartItem[]|null
+     * @var OneTimeProductCartItemResponse[]|null
      * List of products purchased in a one-time payment
      */
     #[SerializedName('product_cart')]

@@ -18,21 +18,38 @@ class Price1
     public float $discount;
 
     /**
-	 * The payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD).
+	 * Indicates whether the customer can pay any amount they choose.
+If set to `true`, the [`price`](Self::price) field is the minimum amount.
+	 */
+    #[SerializedName('pay_what_you_want')]
+    public ?bool $payWhatYouWant;
+
+    /**
+	 * The payment amount, in the smallest denomination of the currency (e.g., cents for USD).
 For example, to charge $1.00, pass `100`.
+
+If [`pay_what_you_want`](Self::pay_what_you_want) is set to `true`, this field represents
+the **minimum** amount the customer must pay.
 	 */
     #[SerializedName('price')]
     public int $price;
 
     /**
 	 * Indicates if purchasing power parity adjustments are applied to the price.
-Purchasing power parity feature is not available as of now
+Purchasing power parity feature is not available as of now.
 	 */
     #[SerializedName('purchasing_power_parity')]
     public bool $purchasingPowerParity;
 
     /**
-     * Indicates if the price is tax inclusive
+	 * A suggested price for the user to pay. This value is only considered if
+[`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored.
+	 */
+    #[SerializedName('suggested_price')]
+    public ?int $suggestedPrice;
+
+    /**
+     * Indicates if the price is tax inclusive.
      */
     #[SerializedName('tax_inclusive')]
     public ?bool $taxInclusive;
@@ -43,15 +60,19 @@ Purchasing power parity feature is not available as of now
     public function __construct(
         Currency $currency,
         float $discount,
+        ?bool $payWhatYouWant = null,
         int $price,
         bool $purchasingPowerParity,
+        ?int $suggestedPrice = null,
         ?bool $taxInclusive = null,
         Price1Type $type
     ) {
         $this->currency = $currency;
         $this->discount = $discount;
+        $this->payWhatYouWant = $payWhatYouWant;
         $this->price = $price;
         $this->purchasingPowerParity = $purchasingPowerParity;
+        $this->suggestedPrice = $suggestedPrice;
         $this->taxInclusive = $taxInclusive;
         $this->type = $type;
     }

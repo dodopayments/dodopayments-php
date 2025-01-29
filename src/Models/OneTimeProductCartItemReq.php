@@ -6,16 +6,23 @@ namespace Dodopayments\Models;
 
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
-class OneTimeProductCartItem
+class OneTimeProductCartItemReq
 {
+    /**
+     * Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored
+     */
+    #[SerializedName('amount')]
+    public ?int $amount;
+
     #[SerializedName('product_id')]
     public string $productId;
 
     #[SerializedName('quantity')]
     public int $quantity;
 
-    public function __construct(string $productId, int $quantity)
+    public function __construct(?int $amount = null, string $productId, int $quantity)
     {
+        $this->amount = $amount;
         $this->productId = $productId;
         $this->quantity = $quantity;
     }

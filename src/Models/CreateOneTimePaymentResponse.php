@@ -34,7 +34,7 @@ NOTE : Dodo checkout SDK will be coming soon
     public ?string $paymentLink;
 
     /**
-     * @var OneTimeProductCartItem[]|null
+     * @var OneTimeProductCartItemReq[]|null
      * Optional list of products included in the payment
      */
     #[SerializedName('product_cart')]

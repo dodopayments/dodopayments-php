@@ -1,6 +1,6 @@
 {
   "name": "dodopayments/client",
-  "version": "0.19.0",
+  "version": "0.20.1",
   "type": "library",
   "license": "Apache-2.0",
   "require": {

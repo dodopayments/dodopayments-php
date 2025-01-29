@@ -8,10 +8,12 @@
 | :-------- | :----------| :----------| :----------|
     | currency | model | ✅ |  |
     | discount | number | ✅ | Discount applied to the price, represented as a percentage (0 to 100). |
-    | price | integer | ✅ | The payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD). For example, to charge $1.00, pass `100`. |
-    | purchasingPowerParity | boolean | ✅ | Indicates if purchasing power parity adjustments are applied to the price. Purchasing power parity feature is not available as of now |
+    | price | integer | ✅ | The payment amount, in the smallest denomination of the currency (e.g., cents for USD). For example, to charge $1.00, pass `100`. If [`pay_what_you_want`](Self::pay_what_you_want) is set to `true`, this field represents the **minimum** amount the customer must pay. |
+    | purchasingPowerParity | boolean | ✅ | Indicates if purchasing power parity adjustments are applied to the price. Purchasing power parity feature is not available as of now. |
     | type | model | ✅ |  |
-    | taxInclusive | boolean | ❌ | Indicates if the price is tax inclusive |
+    | payWhatYouWant | boolean | ❌ | Indicates whether the customer can pay any amount they choose. If set to `true`, the [`price`](Self::price) field is the minimum amount. |
+    | suggestedPrice | integer | ❌ | A suggested price for the user to pay. This value is only considered if [`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored. |
+    | taxInclusive | boolean | ❌ | Indicates if the price is tax inclusive. |
 
 # Price_1Type
 

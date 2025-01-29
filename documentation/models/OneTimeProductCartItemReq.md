@@ -1,4 +1,4 @@
-# OneTimeProductCartItem
+# OneTimeProductCartItemReq
 
 
 
@@ -8,6 +8,7 @@
 | :-------- | :----------| :----------| :----------|
     | productId | string | ✅ |  |
     | quantity | integer | ✅ |  |
+    | amount | integer | ❌ | Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored |
 
 
 

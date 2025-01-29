@@ -24,7 +24,7 @@ class CreateOneTimePaymentRequest
     public ?bool $paymentLink;
 
     /**
-     * @var OneTimeProductCartItem[]
+     * @var OneTimeProductCartItemReq[]
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      */
     #[SerializedName('product_cart')]

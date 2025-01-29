@@ -74,7 +74,7 @@ print_r($response);
 use Dodopayments\Client;
 use Dodopayments\Models\BillingAddress;
 use Dodopayments\Models\CustomerRequest;
-use Dodopayments\Models\OneTimeProductCartItem;
+use Dodopayments\Models\OneTimeProductCartItemReq;
 use Dodopayments\Models\CreateOneTimePaymentRequest;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
@@ -92,9 +92,10 @@ $billingAddress = new Models\BillingAddress(
 COMPLEX_MODEL_NOT_IMPLEMENTED
 
 
-$oneTimeProductCartItem = new Models\OneTimeProductCartItem(
+$oneTimeProductCartItemReq = new Models\OneTimeProductCartItemReq(
+  amount: 2,
   productId: "product_id",
-  quantity: 2
+  quantity: 1
 );
 
 $input = new Models\CreateOneTimePaymentRequest(
