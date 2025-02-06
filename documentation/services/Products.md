@@ -160,6 +160,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $input = new Models\PatchProductRequest(
   description: "description",
+  imageId: "image_id",
   licenseKeyActivationMessage: "license_key_activation_message",
   licenseKeyActivationsLimit: 1,
   licenseKeyDuration: $licenseKeyDuration,
@@ -219,6 +220,7 @@ print_r($response);
 | Name    | Type| Required | Description |
 | :-------- | :----------| :----------| :----------|
 | $id | string | ✅ | Product Id |
+| $forceUpdate | bool | ❌ |  |
 
 **Return Type**
 
@@ -233,6 +235,7 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->updateProductImage(
+  forceUpdate: true,
   id: "id"
 );
 

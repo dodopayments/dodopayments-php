@@ -15,6 +15,12 @@ class PatchProductRequest
     public ?string $description;
 
     /**
+     * Product image id after its uploaded to S3
+     */
+    #[SerializedName('image_id')]
+    public ?string $imageId;
+
+    /**
 	 * Message sent to the customer upon license key activation.
 
 Only applicable if `license_key_enabled` is `true`. This message contains instructions for
@@ -61,6 +67,7 @@ become applicable.
 
     public function __construct(
         ?string $description = null,
+        ?string $imageId = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
         ?LicenseKeyDuration $licenseKeyDuration = null,
@@ -70,6 +77,7 @@ become applicable.
         ?TaxCategory $taxCategory = null
     ) {
         $this->description = $description;
+        $this->imageId = $imageId;
         $this->licenseKeyActivationMessage = $licenseKeyActivationMessage;
         $this->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
         $this->licenseKeyDuration = $licenseKeyDuration;

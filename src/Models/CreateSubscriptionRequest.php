@@ -49,6 +49,12 @@ Defaults to false if not specified.
     public ?string $returnUrl;
 
     /**
+     * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
+     */
+    #[SerializedName('tax_id')]
+    public ?string $taxId;
+
+    /**
 	 * Optional trial period in days
 If specified, this value overrides the trial period set in the product's price
 Must be between 0 and 10000 days
@@ -64,6 +70,7 @@ Must be between 0 and 10000 days
         string $productId,
         int $quantity,
         ?string $returnUrl = null,
+        ?string $taxId = null,
         ?int $trialPeriodDays = null
     ) {
         $this->billing = $billing;
@@ -73,6 +80,7 @@ Must be between 0 and 10000 days
         $this->productId = $productId;
         $this->quantity = $quantity;
         $this->returnUrl = $returnUrl;
+        $this->taxId = $taxId;
         $this->trialPeriodDays = $trialPeriodDays;
     }
 }

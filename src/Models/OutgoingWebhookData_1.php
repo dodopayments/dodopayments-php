@@ -33,6 +33,12 @@ class OutgoingWebhookData1
     #[SerializedName('disputes')]
     public array $disputes;
 
+    /**
+     * An error message if the payment failed
+     */
+    #[SerializedName('error_message')]
+    public ?string $errorMessage;
+
     #[SerializedName('metadata')]
     public array $metadata;
 
@@ -110,6 +116,7 @@ class OutgoingWebhookData1
         Currency $currency,
         CustomerLimitedDetailsResponse $customer,
         array $disputes,
+        ?string $errorMessage = null,
         array $metadata,
         string $paymentId,
         ?string $paymentLink = null,
@@ -129,6 +136,7 @@ class OutgoingWebhookData1
         $this->currency = $currency;
         $this->customer = $customer;
         $this->disputes = $disputes;
+        $this->errorMessage = $errorMessage;
         $this->metadata = $metadata;
         $this->paymentId = $paymentId;
         $this->paymentLink = $paymentLink;

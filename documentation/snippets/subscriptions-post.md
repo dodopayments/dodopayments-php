@@ -26,9 +26,10 @@ $input = new Models\CreateSubscriptionRequest(
   metadata: [],
   paymentLink: true,
   productId: "product_id",
-  quantity: 6,
+  quantity: 5,
   returnUrl: "return_url",
-  trialPeriodDays: 5
+  taxId: "tax_id",
+  trialPeriodDays: 3
 );
 
 $response = $sdk->subscriptions->createSubscriptionHandler(

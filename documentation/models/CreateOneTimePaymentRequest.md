@@ -12,6 +12,7 @@
     | metadata | dictionary | ❌ |  |
     | paymentLink | boolean | ❌ | Whether to generate a payment link. Defaults to false if not specified. |
     | returnUrl | string | ❌ | Optional URL to redirect the customer after payment. Must be a valid URL if provided. |
+    | taxId | string | ❌ | Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail |
 
 
 

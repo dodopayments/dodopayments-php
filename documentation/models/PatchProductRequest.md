@@ -7,6 +7,7 @@
 | Name | Type | Required | Description |
 | :-------- | :----------| :----------| :----------|
     | description | string | ❌ | Description of the product, optional and must be at most 1000 characters. |
+    | imageId | string | ❌ | Product image id after its uploaded to S3 |
     | licenseKeyActivationMessage | string | ❌ | Message sent to the customer upon license key activation. Only applicable if `license_key_enabled` is `true`. This message contains instructions for activating the license key. |
     | licenseKeyActivationsLimit | integer | ❌ | Limit for the number of activations for the license key. Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times the license key can be activated. |
     | licenseKeyDuration | model | ❌ |  |

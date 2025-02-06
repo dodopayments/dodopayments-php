@@ -34,7 +34,8 @@ $input = new Models\CreateOneTimePaymentRequest(
   metadata: [],
   paymentLink: true,
   productCart: [],
-  returnUrl: "return_url"
+  returnUrl: "return_url",
+  taxId: "tax_id"
 );
 
 $response = $sdk->payments->createOneTimePaymentHandler(

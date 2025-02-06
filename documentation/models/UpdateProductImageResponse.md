@@ -7,6 +7,7 @@
 | Name | Type | Required | Description |
 | :-------- | :----------| :----------| :----------|
     | url | string | ✅ |  |
+    | imageId | string | ❌ |  |
 
 
 

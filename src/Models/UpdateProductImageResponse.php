@@ -8,11 +8,15 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class UpdateProductImageResponse
 {
+    #[SerializedName('image_id')]
+    public ?string $imageId;
+
     #[SerializedName('url')]
     public string $url;
 
-    public function __construct(string $url)
+    public function __construct(?string $imageId = null, string $url)
     {
+        $this->imageId = $imageId;
         $this->url = $url;
     }
 }

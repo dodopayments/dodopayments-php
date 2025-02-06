@@ -37,13 +37,20 @@ Must be a valid URL if provided.
     #[SerializedName('return_url')]
     public ?string $returnUrl;
 
+    /**
+     * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
+     */
+    #[SerializedName('tax_id')]
+    public ?string $taxId;
+
     public function __construct(
         BillingAddress $billing,
         CustomerRequest $customer,
         ?array $metadata = [],
         ?bool $paymentLink = null,
         array $productCart,
-        ?string $returnUrl = null
+        ?string $returnUrl = null,
+        ?string $taxId = null
     ) {
         $this->billing = $billing;
         $this->customer = $customer;
@@ -51,5 +58,6 @@ Must be a valid URL if provided.
         $this->paymentLink = $paymentLink;
         $this->productCart = $productCart;
         $this->returnUrl = $returnUrl;
+        $this->taxId = $taxId;
     }
 }

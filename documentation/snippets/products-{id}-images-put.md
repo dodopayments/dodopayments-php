@@ -6,6 +6,7 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->updateProductImage(
+  forceUpdate: true,
   id: "id"
 );
 

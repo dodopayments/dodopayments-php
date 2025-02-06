@@ -53,9 +53,13 @@ class Products extends BaseService
         return json_decode($data, true);
     }
 
-    public function updateProductImage(string $id): Models\UpdateProductImageResponse
+    public function updateProductImage(string $id, bool $forceUpdate = null): Models\UpdateProductImageResponse
     {
-        $data = $this->sendRequest('put', "/products/{$id}/images", []);
+        $data = $this->sendRequest('put', "/products/{$id}/images", [
+            'query' => [
+                'force_update' => $forceUpdate,
+            ],
+        ]);
 
         return Serializer::deserialize($data, Models\UpdateProductImageResponse::class);
     }

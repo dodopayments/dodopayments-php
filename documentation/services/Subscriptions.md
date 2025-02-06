@@ -43,8 +43,8 @@ $status = Models\SubscriptionStatus::Pending;
 $response = $sdk->subscriptions->listSubscriptions(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 6,
-  pageNumber: 3,
+  pageSize: 3,
+  pageNumber: 8,
   customerId: "customer_id",
   status: $status
 );
@@ -97,9 +97,10 @@ $input = new Models\CreateSubscriptionRequest(
   metadata: [],
   paymentLink: true,
   productId: "product_id",
-  quantity: 6,
+  quantity: 5,
   returnUrl: "return_url",
-  trialPeriodDays: 5
+  taxId: "tax_id",
+  trialPeriodDays: 3
 );
 
 $response = $sdk->subscriptions->createSubscriptionHandler(

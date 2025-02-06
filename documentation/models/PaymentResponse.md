@@ -15,6 +15,7 @@
     | paymentId | string | ✅ | Unique identifier for the payment |
     | refunds | array | ✅ | List of refunds issued for this payment |
     | totalAmount | integer | ✅ | Total amount charged to the customer including tax, in smallest currency unit (e.g. cents) |
+    | errorMessage | string | ❌ | An error message if the payment failed |
     | paymentLink | string | ❌ | Checkout URL |
     | paymentMethod | string | ❌ | Payment method used by customer (e.g. "card", "bank_transfer") |
     | paymentMethodType | string | ❌ | Specific type of payment method (e.g. "visa", "mastercard") |
