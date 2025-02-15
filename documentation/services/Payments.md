@@ -42,8 +42,8 @@ $status = Models\IntentStatus::Succeeded;
 $response = $sdk->payments->listPayments(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 1,
-  pageNumber: 3,
+  pageSize: 9,
+  pageNumber: 7,
   customerId: "customer_id",
   status: $status
 );
@@ -95,12 +95,13 @@ COMPLEX_MODEL_NOT_IMPLEMENTED
 $oneTimeProductCartItemReq = new Models\OneTimeProductCartItemReq(
   amount: 2,
   productId: "product_id",
-  quantity: 1
+  quantity: 10
 );
 
 $input = new Models\CreateOneTimePaymentRequest(
   billing: $billingAddress,
   customer: $customerRequest,
+  discountCode: "discount_code",
   metadata: [],
   paymentLink: true,
   productCart: [],

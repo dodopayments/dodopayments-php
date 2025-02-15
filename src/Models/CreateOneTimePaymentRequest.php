@@ -14,6 +14,12 @@ class CreateOneTimePaymentRequest
     #[SerializedName('customer')]
     public CustomerRequest $customer;
 
+    /**
+     * Discount Code to apply to the transaction
+     */
+    #[SerializedName('discount_code')]
+    public ?string $discountCode;
+
     #[SerializedName('metadata')]
     public ?array $metadata;
 
@@ -46,6 +52,7 @@ Must be a valid URL if provided.
     public function __construct(
         BillingAddress $billing,
         CustomerRequest $customer,
+        ?string $discountCode = null,
         ?array $metadata = [],
         ?bool $paymentLink = null,
         array $productCart,
@@ -54,6 +61,7 @@ Must be a valid URL if provided.
     ) {
         $this->billing = $billing;
         $this->customer = $customer;
+        $this->discountCode = $discountCode;
         $this->metadata = $metadata;
         $this->paymentLink = $paymentLink;
         $this->productCart = $productCart;

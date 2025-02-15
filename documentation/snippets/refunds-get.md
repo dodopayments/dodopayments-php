@@ -10,8 +10,8 @@ $status = Models\RefundStatus::Succeeded;
 $response = $sdk->refunds->listRefunds(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 9,
-  pageNumber: 5,
+  pageSize: 2,
+  pageNumber: 123,
   status: $status
 );
 

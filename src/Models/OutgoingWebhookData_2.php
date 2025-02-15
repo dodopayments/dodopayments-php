@@ -20,6 +20,12 @@ class OutgoingWebhookData2
     #[SerializedName('customer')]
     public CustomerLimitedDetailsResponse $customer;
 
+    /**
+     * The discount id if discount is applied
+     */
+    #[SerializedName('discount_id')]
+    public ?string $discountId;
+
     #[SerializedName('metadata')]
     public array $metadata;
 
@@ -93,6 +99,7 @@ class OutgoingWebhookData2
         string $createdAt,
         Currency $currency,
         CustomerLimitedDetailsResponse $customer,
+        ?string $discountId = null,
         array $metadata,
         string $nextBillingDate,
         int $paymentFrequencyCount,
@@ -111,6 +118,7 @@ class OutgoingWebhookData2
         $this->createdAt = $createdAt;
         $this->currency = $currency;
         $this->customer = $customer;
+        $this->discountId = $discountId;
         $this->metadata = $metadata;
         $this->nextBillingDate = $nextBillingDate;
         $this->paymentFrequencyCount = $paymentFrequencyCount;

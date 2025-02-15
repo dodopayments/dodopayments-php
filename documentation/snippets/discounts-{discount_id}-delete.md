@@ -5,9 +5,8 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->payouts->listPayouts(
-  pageSize: 8,
-  pageNumber: 6
+$response = $sdk->discounts->deleteDiscountHandler(
+  discountId: "discount_id"
 );
 
 print_r($response);

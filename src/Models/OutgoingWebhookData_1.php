@@ -27,6 +27,12 @@ class OutgoingWebhookData1
     public CustomerLimitedDetailsResponse $customer;
 
     /**
+     * The discount id if discount is applied
+     */
+    #[SerializedName('discount_id')]
+    public ?string $discountId;
+
+    /**
      * @var DisputeResponse[]
      * List of disputes associated with this payment
      */
@@ -115,6 +121,7 @@ class OutgoingWebhookData1
         string $createdAt,
         Currency $currency,
         CustomerLimitedDetailsResponse $customer,
+        ?string $discountId = null,
         array $disputes,
         ?string $errorMessage = null,
         array $metadata,
@@ -135,6 +142,7 @@ class OutgoingWebhookData1
         $this->createdAt = $createdAt;
         $this->currency = $currency;
         $this->customer = $customer;
+        $this->discountId = $discountId;
         $this->disputes = $disputes;
         $this->errorMessage = $errorMessage;
         $this->metadata = $metadata;

@@ -1,4 +1,4 @@
-# dodopayments PHP SDK 0.22.0
+# dodopayments PHP SDK 0.24.0
 
 
 Welcome to the dodopayments SDK documentation. This guide will help you get started with integrating and using the dodopayments SDK in your project.
@@ -7,8 +7,8 @@ Welcome to the dodopayments SDK documentation. This guide will help you get star
 
 ## Versions
 
-- API version: `0.22.0`
-- SDK version: `0.22.0`
+- API version: `0.23.2`
+- SDK version: `0.24.0`
 
 ## Table of Contents
 - [Setup & Configuration](#setup--configuration)
@@ -118,6 +118,7 @@ The SDK provides various services to interact with the API.
 | :--- |
 | [Checkout](documentation/services/Checkout.md) |
 | [Customers](documentation/services/Customers.md) |
+| [Discounts](documentation/services/Discounts.md) |
 | [Disputes](documentation/services/Disputes.md) |
 | [Invoices](documentation/services/Invoices.md) |
 | [LicenseKeys](documentation/services/LicenseKeys.md) |
@@ -145,6 +146,10 @@ The SDK includes several models that represent the data structures used in API r
 | [CreateCustomerRequest](documentation/models/CreateCustomerRequest.md) |  |
 | [CustomerResponse](documentation/models/CustomerResponse.md) |  |
 | [PatchCustomerRequest](documentation/models/PatchCustomerRequest.md) |  |
+| [GetDiscountsListResponse](documentation/models/GetDiscountsListResponse.md) |  |
+| [CreateDiscountRequest](documentation/models/CreateDiscountRequest.md) | Request body for creating a discount. `code` is optional; if not provided, we generate a random 16-char code. |
+| [DiscountResponse](documentation/models/DiscountResponse.md) |  |
+| [PatchDiscountRequest](documentation/models/PatchDiscountRequest.md) | Request body for patching (updating) a discount. All fields are optional and only update if provided. |
 | [GetDisputesListResponse](documentation/models/GetDisputesListResponse.md) |  |
 | [DisputeStatus](documentation/models/DisputeStatus.md) |  |
 | [DisputeStage](documentation/models/DisputeStage.md) |  |
@@ -184,6 +189,7 @@ The SDK includes several models that represent the data structures used in API r
 | [ListWebhookEventsResponse](documentation/models/ListWebhookEventsResponse.md) |  |
 | [WebhookEventLogResponse](documentation/models/WebhookEventLogResponse.md) |  |
 | [OutgoingWebhook](documentation/models/OutgoingWebhook.md) |  |
+| [DiscountType](documentation/models/DiscountType.md) |  |
 | [GetPaymentsListResponseItem](documentation/models/GetPaymentsListResponseItem.md) |  |
 | [Currency](documentation/models/Currency.md) |  |
 | [CustomerLimitedDetailsResponse](documentation/models/CustomerLimitedDetailsResponse.md) |  |

@@ -12,6 +12,7 @@ class Client
 {
     public $checkout;
     public $customers;
+    public $discounts;
     public $disputes;
     public $invoices;
     public $licenseKeys;
@@ -32,6 +33,7 @@ class Client
     ) {
         $this->checkout = new Services\Checkout($accessToken, $tokenPrefix, $environment, $timeout);
         $this->customers = new Services\Customers($accessToken, $tokenPrefix, $environment, $timeout);
+        $this->discounts = new Services\Discounts($accessToken, $tokenPrefix, $environment, $timeout);
         $this->disputes = new Services\Disputes($accessToken, $tokenPrefix, $environment, $timeout);
         $this->invoices = new Services\Invoices($accessToken, $tokenPrefix, $environment, $timeout);
         $this->licenseKeys = new Services\LicenseKeys($accessToken, $tokenPrefix, $environment, $timeout);
@@ -49,6 +51,7 @@ class Client
     {
         $this->checkout->setBaseUrl($url);
         $this->customers->setBaseUrl($url);
+        $this->discounts->setBaseUrl($url);
         $this->disputes->setBaseUrl($url);
         $this->invoices->setBaseUrl($url);
         $this->licenseKeys->setBaseUrl($url);
@@ -66,6 +69,7 @@ class Client
     {
         $this->checkout->setAccessToken($accessToken);
         $this->customers->setAccessToken($accessToken);
+        $this->discounts->setAccessToken($accessToken);
         $this->disputes->setAccessToken($accessToken);
         $this->invoices->setAccessToken($accessToken);
         $this->licenseKeys->setAccessToken($accessToken);

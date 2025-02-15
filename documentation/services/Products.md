@@ -39,8 +39,8 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->listProducts(
-  pageSize: 5,
-  pageNumber: 8,
+  pageSize: 9,
+  pageNumber: 9,
   archived: true
 );
 
@@ -82,7 +82,7 @@ $taxCategory = Models\TaxCategory::DigitalProducts;
 $input = new Models\CreateProductRequest(
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 10,
+  licenseKeyActivationsLimit: 5,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",
@@ -162,7 +162,7 @@ $input = new Models\PatchProductRequest(
   description: "description",
   imageId: "image_id",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 1,
+  licenseKeyActivationsLimit: 3,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",

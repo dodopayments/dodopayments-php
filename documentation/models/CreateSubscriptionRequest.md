@@ -10,6 +10,7 @@ Request payload for creating a new subscription This struct represents the data 
     | customer | model | ✅ |  |
     | productId | string | ✅ | Unique identifier of the product to subscribe to |
     | quantity | integer | ✅ | Number of units to subscribe for. Must be at least 1. |
+    | discountCode | string | ❌ | Discount Code to apply to the subscription |
     | metadata | dictionary | ❌ |  |
     | paymentLink | boolean | ❌ | If true, generates a payment link. Defaults to false if not specified. |
     | returnUrl | string | ❌ | Optional URL to redirect after successful subscription creation |

@@ -21,6 +21,7 @@
     | refunds | array | ✅ | List of refunds issued for this payment |
     | totalAmount | integer | ✅ | Total amount charged to the customer including tax, in smallest currency unit (e.g. cents) |
     | payloadType | model | ✅ |  |
+    | discountId | string | ❌ | The discount id if discount is applied |
     | errorMessage | string | ❌ | An error message if the payment failed |
     | paymentLink | string | ❌ | Checkout URL |
     | paymentMethod | string | ❌ | Payment method used by customer (e.g. "card", "bank_transfer") |
@@ -68,6 +69,7 @@
     | taxInclusive | boolean | ✅ | Indicates if the recurring_pre_tax_amount is tax inclusive |
     | trialPeriodDays | integer | ✅ | Number of days in the trial period (0 if no trial) |
     | payloadType | model | ✅ |  |
+    | discountId | string | ❌ | The discount id if discount is applied |
 
 # OutgoingWebhookData_2PayloadType
 

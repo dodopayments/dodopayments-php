@@ -22,6 +22,7 @@ Response struct representing subscription details
     | subscriptionPeriodInterval | model | ✅ |  |
     | taxInclusive | boolean | ✅ | Indicates if the recurring_pre_tax_amount is tax inclusive |
     | trialPeriodDays | integer | ✅ | Number of days in the trial period (0 if no trial) |
+    | discountId | string | ❌ | The discount id if discount is applied |
 
 
 

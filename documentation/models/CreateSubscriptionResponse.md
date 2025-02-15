@@ -11,6 +11,7 @@
     | recurringPreTaxAmount | integer | ✅ | Tax will be added to the amount and charged to the customer on each billing cycle |
     | subscriptionId | string | ✅ | Unique identifier for the subscription |
     | clientSecret | string | ❌ | Client secret used to load Dodo checkout SDK NOTE : Dodo checkout SDK will be coming soon |
+    | discountId | string | ❌ | The discount id if discount is applied |
     | paymentLink | string | ❌ | URL to checkout page |
 
 

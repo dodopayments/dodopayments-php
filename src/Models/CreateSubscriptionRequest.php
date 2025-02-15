@@ -20,6 +20,12 @@ class CreateSubscriptionRequest
     #[SerializedName('customer')]
     public CustomerRequest $customer;
 
+    /**
+     * Discount Code to apply to the subscription
+     */
+    #[SerializedName('discount_code')]
+    public ?string $discountCode;
+
     #[SerializedName('metadata')]
     public ?array $metadata;
 
@@ -65,6 +71,7 @@ Must be between 0 and 10000 days
     public function __construct(
         BillingAddress $billing,
         CustomerRequest $customer,
+        ?string $discountCode = null,
         ?array $metadata = [],
         ?bool $paymentLink = null,
         string $productId,
@@ -75,6 +82,7 @@ Must be between 0 and 10000 days
     ) {
         $this->billing = $billing;
         $this->customer = $customer;
+        $this->discountCode = $discountCode;
         $this->metadata = $metadata;
         $this->paymentLink = $paymentLink;
         $this->productId = $productId;

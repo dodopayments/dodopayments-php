@@ -18,6 +18,12 @@ NOTE : Dodo checkout SDK will be coming soon
     #[SerializedName('customer')]
     public CustomerLimitedDetailsResponse $customer;
 
+    /**
+     * The discount id if discount is applied
+     */
+    #[SerializedName('discount_id')]
+    public ?string $discountId;
+
     #[SerializedName('metadata')]
     public array $metadata;
 
@@ -42,6 +48,7 @@ NOTE : Dodo checkout SDK will be coming soon
     public function __construct(
         ?string $clientSecret = null,
         CustomerLimitedDetailsResponse $customer,
+        ?string $discountId = null,
         array $metadata,
         ?string $paymentLink = null,
         int $recurringPreTaxAmount,
@@ -49,6 +56,7 @@ NOTE : Dodo checkout SDK will be coming soon
     ) {
         $this->clientSecret = $clientSecret;
         $this->customer = $customer;
+        $this->discountId = $discountId;
         $this->metadata = $metadata;
         $this->paymentLink = $paymentLink;
         $this->recurringPreTaxAmount = $recurringPreTaxAmount;

@@ -23,6 +23,12 @@ class SubscriptionResponse
     #[SerializedName('customer')]
     public CustomerLimitedDetailsResponse $customer;
 
+    /**
+     * The discount id if discount is applied
+     */
+    #[SerializedName('discount_id')]
+    public ?string $discountId;
+
     #[SerializedName('metadata')]
     public array $metadata;
 
@@ -93,6 +99,7 @@ class SubscriptionResponse
         string $createdAt,
         Currency $currency,
         CustomerLimitedDetailsResponse $customer,
+        ?string $discountId = null,
         array $metadata,
         string $nextBillingDate,
         int $paymentFrequencyCount,
@@ -110,6 +117,7 @@ class SubscriptionResponse
         $this->createdAt = $createdAt;
         $this->currency = $currency;
         $this->customer = $customer;
+        $this->discountId = $discountId;
         $this->metadata = $metadata;
         $this->nextBillingDate = $nextBillingDate;
         $this->paymentFrequencyCount = $paymentFrequencyCount;

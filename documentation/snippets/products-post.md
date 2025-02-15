@@ -16,7 +16,7 @@ $taxCategory = Models\TaxCategory::DigitalProducts;
 $input = new Models\CreateProductRequest(
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 10,
+  licenseKeyActivationsLimit: 5,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",

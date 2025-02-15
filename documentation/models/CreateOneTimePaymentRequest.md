@@ -9,6 +9,7 @@
     | billing | model | ✅ |  |
     | customer | model | ✅ |  |
     | productCart | array | ✅ | List of products in the cart. Must contain at least 1 and at most 100 items. |
+    | discountCode | string | ❌ | Discount Code to apply to the transaction |
     | metadata | dictionary | ❌ |  |
     | paymentLink | boolean | ❌ | Whether to generate a payment link. Defaults to false if not specified. |
     | returnUrl | string | ❌ | Optional URL to redirect the customer after payment. Must be a valid URL if provided. |

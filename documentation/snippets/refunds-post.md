@@ -8,7 +8,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\CreateRefundRequest(
-  amount: 6,
+  amount: 2,
   paymentId: "payment_id",
   reason: "reason"
 );
