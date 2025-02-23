@@ -4,11 +4,11 @@ A list of all methods in the `Payments` service. Click on the method name to vie
 
 | Methods | Description |
 | :------ | :---------- |
-|[list_payments](#list_payments)|  |
+|[list_payments_handler](#list_payments_handler)|  |
 |[create_one_time_payment_handler](#create_one_time_payment_handler)|  |
 |[get_payment_handler](#get_payment_handler)|  |
 
-## list_payments
+## list_payments_handler
 
 
 - HTTP Method: `GET`
@@ -39,11 +39,11 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $status = Models\IntentStatus::Succeeded;
 
-$response = $sdk->payments->listPayments(
+$response = $sdk->payments->listPaymentsHandler(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 9,
-  pageNumber: 7,
+  pageSize: 7,
+  pageNumber: 6,
   customerId: "customer_id",
   status: $status
 );
@@ -93,9 +93,9 @@ COMPLEX_MODEL_NOT_IMPLEMENTED
 
 
 $oneTimeProductCartItemReq = new Models\OneTimeProductCartItemReq(
-  amount: 2,
+  amount: 3,
   productId: "product_id",
-  quantity: 10
+  quantity: 8
 );
 
 $input = new Models\CreateOneTimePaymentRequest(

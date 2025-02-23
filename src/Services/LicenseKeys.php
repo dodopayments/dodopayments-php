@@ -41,7 +41,7 @@ class LicenseKeys extends BaseService
         return Serializer::deserialize($data, Models\LicenseKeyInstanceResponse::class);
     }
 
-    public function listLicenseKeys(
+    public function listLicenseKeysHandler(
         int $pageSize = null,
         int $pageNumber = null,
         string $customerId = null,

@@ -9,7 +9,7 @@ use Dodopayments\Models;
 
 class Payments extends BaseService
 {
-    public function listPayments(
+    public function listPaymentsHandler(
         string $createdAtGte = null,
         string $createdAtLte = null,
         int $pageSize = null,

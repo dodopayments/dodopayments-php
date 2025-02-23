@@ -1,4 +1,4 @@
-# dodopayments PHP SDK 0.24.0
+# dodopayments PHP SDK 1.0.0
 
 
 Welcome to the dodopayments SDK documentation. This guide will help you get started with integrating and using the dodopayments SDK in your project.
@@ -7,8 +7,8 @@ Welcome to the dodopayments SDK documentation. This guide will help you get star
 
 ## Versions
 
-- API version: `0.23.2`
-- SDK version: `0.24.0`
+- API version: `1.0.0`
+- SDK version: `1.0.0`
 
 ## Table of Contents
 - [Setup & Configuration](#setup--configuration)

@@ -39,8 +39,8 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->products->listProducts(
-  pageSize: 9,
-  pageNumber: 9,
+  pageSize: 10,
+  pageNumber: 4,
   archived: true
 );
 
@@ -162,7 +162,7 @@ $input = new Models\PatchProductRequest(
   description: "description",
   imageId: "image_id",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 3,
+  licenseKeyActivationsLimit: 9,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",

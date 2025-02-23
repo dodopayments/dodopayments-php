@@ -9,7 +9,7 @@ use Dodopayments\Models;
 
 class Subscriptions extends BaseService
 {
-    public function listSubscriptions(
+    public function listSubscriptionsHandler(
         string $createdAtGte = null,
         string $createdAtLte = null,
         int $pageSize = null,
@@ -46,7 +46,7 @@ class Subscriptions extends BaseService
         return Serializer::deserialize($data, Models\SubscriptionResponse::class);
     }
 
-    public function patchSubscription(
+    public function patchSubscriptionHandler(
         Models\PatchSubscriptionRequest $input,
         string $subscriptionId
     ): Models\SubscriptionResponse {

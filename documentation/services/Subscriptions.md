@@ -4,12 +4,12 @@ A list of all methods in the `Subscriptions` service. Click on the method name t
 
 | Methods | Description |
 | :------ | :---------- |
-|[list_subscriptions](#list_subscriptions)|  |
+|[list_subscriptions_handler](#list_subscriptions_handler)|  |
 |[create_subscription_handler](#create_subscription_handler)|  |
 |[get_subscription_handler](#get_subscription_handler)|  |
-|[patch_subscription](#patch_subscription)|  |
+|[patch_subscription_handler](#patch_subscription_handler)|  |
 
-## list_subscriptions
+## list_subscriptions_handler
 
 
 - HTTP Method: `GET`
@@ -40,11 +40,11 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $status = Models\SubscriptionStatus::Pending;
 
-$response = $sdk->subscriptions->listSubscriptions(
+$response = $sdk->subscriptions->listSubscriptionsHandler(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 3,
-  pageNumber: 5,
+  pageSize: 5,
+  pageNumber: 7,
   customerId: "customer_id",
   status: $status
 );
@@ -98,10 +98,10 @@ $input = new Models\CreateSubscriptionRequest(
   metadata: [],
   paymentLink: true,
   productId: "product_id",
-  quantity: 5,
+  quantity: 9,
   returnUrl: "return_url",
   taxId: "tax_id",
-  trialPeriodDays: 9
+  trialPeriodDays: 8
 );
 
 $response = $sdk->subscriptions->createSubscriptionHandler(
@@ -142,7 +142,7 @@ $response = $sdk->subscriptions->getSubscriptionHandler(
 print_r($response);
 ```
 
-## patch_subscription
+## patch_subscription_handler
 
 
 - HTTP Method: `PATCH`
@@ -175,7 +175,7 @@ $input = new Models\PatchSubscriptionRequest(
   status: $subscriptionStatus
 );
 
-$response = $sdk->subscriptions->patchSubscription(
+$response = $sdk->subscriptions->patchSubscriptionHandler(
   input: $input,
   subscriptionId: "subscription_id"
 );

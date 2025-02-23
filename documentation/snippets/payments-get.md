@@ -7,11 +7,11 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $status = Models\IntentStatus::Succeeded;
 
-$response = $sdk->payments->listPayments(
+$response = $sdk->payments->listPaymentsHandler(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 9,
-  pageNumber: 7,
+  pageSize: 7,
+  pageNumber: 6,
   customerId: "customer_id",
   status: $status
 );

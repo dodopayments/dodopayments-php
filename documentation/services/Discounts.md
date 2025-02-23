@@ -36,8 +36,8 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->discounts->listDiscountsHandler(
-  pageSize: 9,
-  pageNumber: 8
+  pageSize: 8,
+  pageNumber: 2
 );
 
 print_r($response);
@@ -74,13 +74,13 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 $discountType = Models\DiscountType::Percentage;
 
 $input = new Models\CreateDiscountRequest(
-  amount: 7,
+  amount: 1,
   code: "code",
   expiresAt: "expires_at",
   name: "name",
   restrictedTo: [],
   type: $discountType,
-  usageLimit: 1
+  usageLimit: 2
 );
 
 $response = $sdk->discounts->createDiscountHandler(
@@ -150,13 +150,13 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\PatchDiscountRequest(
-  amount: 2,
+  amount: 8,
   code: "code",
   expiresAt: "expires_at",
   name: "name",
   restrictedTo: [],
   type: $discountType,
-  usageLimit: 8
+  usageLimit: 1
 );
 
 $response = $sdk->discounts->patchDiscountHandler(

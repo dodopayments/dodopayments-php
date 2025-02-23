@@ -7,7 +7,7 @@ A list of all methods in the `LicenseKeys` service. Click on the method name to 
 |[list_license_key_instances](#list_license_key_instances)|  |
 |[get_license_key_instance](#get_license_key_instance)|  |
 |[update_license_key_instance](#update_license_key_instance)|  |
-|[list_license_keys](#list_license_keys)|  |
+|[list_license_keys_handler](#list_license_keys_handler)|  |
 |[get_license_key_handler](#get_license_key_handler)|  |
 |[update_license_key](#update_license_key)|  |
 
@@ -38,8 +38,8 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->licenseKeys->listLicenseKeyInstances(
-  pageSize: 8,
-  pageNumber: 4,
+  pageSize: 4,
+  pageNumber: 7,
   licenseKeyId: "license_key_id"
 );
 
@@ -116,7 +116,7 @@ $response = $sdk->licenseKeys->updateLicenseKeyInstance(
 print_r($response);
 ```
 
-## list_license_keys
+## list_license_keys_handler
 
 
 - HTTP Method: `GET`
@@ -146,9 +146,9 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $status = Models\LicenseKeyStatus::Active;
 
-$response = $sdk->licenseKeys->listLicenseKeys(
-  pageSize: 7,
-  pageNumber: 8,
+$response = $sdk->licenseKeys->listLicenseKeysHandler(
+  pageSize: 8,
+  pageNumber: 9,
   customerId: "customer_id",
   status: $status,
   productId: "product_id"
@@ -216,7 +216,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\PatchLicenseKeyRequest(
-  activationsLimit: 5,
+  activationsLimit: 9,
   disabled: true,
   expiresAt: "expires_at"
 );

@@ -13,7 +13,7 @@ $input = new Models\PatchSubscriptionRequest(
   status: $subscriptionStatus
 );
 
-$response = $sdk->subscriptions->patchSubscription(
+$response = $sdk->subscriptions->patchSubscriptionHandler(
   input: $input,
   subscriptionId: "subscription_id"
 );

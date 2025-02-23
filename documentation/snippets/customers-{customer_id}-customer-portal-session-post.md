@@ -5,9 +5,9 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->discounts->listDiscountsHandler(
-  pageSize: 8,
-  pageNumber: 2
+$response = $sdk->customers->createCustomerPortalSession(
+  sendEmail: true,
+  customerId: "customer_id"
 );
 
 print_r($response);

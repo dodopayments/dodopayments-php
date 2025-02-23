@@ -42,8 +42,8 @@ $disputeStage = Models\DisputeStage::PreDispute;
 $response = $sdk->disputes->listDisputes(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 1,
-  pageNumber: 3,
+  pageSize: 3,
+  pageNumber: 8,
   disputeStatus: $disputeStatus,
   disputeStage: $disputeStage
 );

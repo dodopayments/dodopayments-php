@@ -8,6 +8,7 @@ A list of all methods in the `Customers` service. Click on the method name to vi
 |[create_customer](#create_customer)|  |
 |[get_customer_handler](#get_customer_handler)|  |
 |[patch_customer](#patch_customer)|  |
+|[create_customer_portal_session](#create_customer_portal_session)|  |
 
 ## list_customers
 
@@ -146,6 +147,39 @@ $input = new Models\PatchCustomerRequest(
 
 $response = $sdk->customers->patchCustomer(
   input: $input,
+  customerId: "customer_id"
+);
+
+print_r($response);
+```
+
+## create_customer_portal_session
+
+
+- HTTP Method: `POST`
+- Endpoint: `/customers/{customer_id}/customer-portal/session`
+
+**Parameters**
+
+| Name    | Type| Required | Description |
+| :-------- | :----------| :----------| :----------|
+| $customerId | string | ✅ | Customer Id |
+| $sendEmail | bool | ❌ | If true, will send link to user. |
+
+**Return Type**
+
+`mixed`
+
+**Example Usage Code Snippet**
+```php
+<?php
+
+use Dodopayments\Client;
+
+$sdk = new Client(accessToken: 'YOUR_TOKEN');
+
+$response = $sdk->customers->createCustomerPortalSession(
+  sendEmail: true,
   customerId: "customer_id"
 );
 
