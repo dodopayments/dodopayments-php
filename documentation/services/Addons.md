@@ -1,20 +1,20 @@
-# Customers
+# Addons
 
-A list of all methods in the `Customers` service. Click on the method name to view detailed information about that method.
+A list of all methods in the `Addons` service. Click on the method name to view detailed information about that method.
 
 | Methods | Description |
 | :------ | :---------- |
-|[list_customers](#list_customers)|  |
-|[create_customer](#create_customer)|  |
-|[get_customer_handler](#get_customer_handler)|  |
-|[patch_customer](#patch_customer)|  |
-|[create_customer_portal_session](#create_customer_portal_session)|  |
+|[list_addons](#list_addons)|  |
+|[create_addon](#create_addon)|  |
+|[get_addon_handler](#get_addon_handler)|  |
+|[patch_addon](#patch_addon)|  |
+|[update_addon_image](#update_addon_image)|  |
 
-## list_customers
+## list_addons
 
 
 - HTTP Method: `GET`
-- Endpoint: `/customers`
+- Endpoint: `/addons`
 
 **Parameters**
 
@@ -25,7 +25,7 @@ A list of all methods in the `Customers` service. Click on the method name to vi
 
 **Return Type**
 
-`Models\GetCustomersListResponse`
+`Models\AddonsListResponse`
 
 **Example Usage Code Snippet**
 ```php
@@ -35,68 +35,75 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->customers->listCustomers(
-  pageSize: 3,
-  pageNumber: 6
+$response = $sdk->addons->listAddons(
+  pageSize: 8,
+  pageNumber: 2
 );
 
 print_r($response);
 ```
 
-## create_customer
+## create_addon
 
 
 - HTTP Method: `POST`
-- Endpoint: `/customers`
+- Endpoint: `/addons`
 
 **Parameters**
 
 | Name    | Type| Required | Description |
 | :-------- | :----------| :----------| :----------|
-| input | Models\CreateCustomerRequest | ✅ |  |
+| input | Models\CreateAddonRequest | ✅ |  |
 
 **Return Type**
 
-`Models\CustomerResponse`
+`Models\AddonResponse`
 
 **Example Usage Code Snippet**
 ```php
 <?php
 
 use Dodopayments\Client;
-use Dodopayments\Models\CreateCustomerRequest;
+use Dodopayments\Models\Currency;
+use Dodopayments\Models\TaxCategory;
+use Dodopayments\Models\CreateAddonRequest;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
+$currency = Models\Currency::Aed;
 
-$input = new Models\CreateCustomerRequest(
-  email: "email",
+$taxCategory = Models\TaxCategory::DigitalProducts;
+
+$input = new Models\CreateAddonRequest(
+  currency: $currency,
+  description: "description",
   name: "name",
-  phoneNumber: "phone_number"
+  price: 8,
+  taxCategory: $taxCategory
 );
 
-$response = $sdk->customers->createCustomer(
+$response = $sdk->addons->createAddon(
   input: $input
 );
 
 print_r($response);
 ```
 
-## get_customer_handler
+## get_addon_handler
 
 
 - HTTP Method: `GET`
-- Endpoint: `/customers/{customer_id}`
+- Endpoint: `/addons/{id}`
 
 **Parameters**
 
 | Name    | Type| Required | Description |
 | :-------- | :----------| :----------| :----------|
-| $customerId | string | ✅ | Customer Id |
+| $id | string | ✅ | Addon Id |
 
 **Return Type**
 
-`Models\CustomerResponse`
+`Models\AddonResponse`
 
 **Example Usage Code Snippet**
 ```php
@@ -106,69 +113,74 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->customers->getCustomerHandler(
-  customerId: "customer_id"
+$response = $sdk->addons->getAddonHandler(
+  id: "id"
 );
 
 print_r($response);
 ```
 
-## patch_customer
+## patch_addon
 
 
 - HTTP Method: `PATCH`
-- Endpoint: `/customers/{customer_id}`
+- Endpoint: `/addons/{id}`
 
 **Parameters**
 
 | Name    | Type| Required | Description |
 | :-------- | :----------| :----------| :----------|
-| input | Models\PatchCustomerRequest | ✅ |  |
-| $customerId | string | ✅ | Customer Id |
+| input | Models\PatchAddonRequest | ✅ |  |
+| $id | string | ✅ | Addon Id |
 
 **Return Type**
 
-`Models\CustomerResponse`
+`Models\AddonResponse`
 
 **Example Usage Code Snippet**
 ```php
 <?php
 
 use Dodopayments\Client;
-use Dodopayments\Models\PatchCustomerRequest;
+use Dodopayments\Models\Currency;
+use Dodopayments\Models\TaxCategory;
+use Dodopayments\Models\PatchAddonRequest;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
-$input = new Models\PatchCustomerRequest(
+$input = new Models\PatchAddonRequest(
+  currency: $currency,
+  description: "description",
+  imageId: "image_id",
   name: "name",
-  phoneNumber: "phone_number"
+  price: 2,
+  taxCategory: $taxCategory
 );
 
-$response = $sdk->customers->patchCustomer(
+$response = $sdk->addons->patchAddon(
   input: $input,
-  customerId: "customer_id"
+  id: "id"
 );
 
 print_r($response);
 ```
 
-## create_customer_portal_session
+## update_addon_image
 
 
-- HTTP Method: `POST`
-- Endpoint: `/customers/{customer_id}/customer-portal/session`
+- HTTP Method: `PUT`
+- Endpoint: `/addons/{id}/images`
 
 **Parameters**
 
 | Name    | Type| Required | Description |
 | :-------- | :----------| :----------| :----------|
-| $customerId | string | ✅ | Customer Id |
-| $sendEmail | bool | ❌ | If true, will send link to user. |
+| $id | string | ✅ | Addon Id |
 
 **Return Type**
 
-`mixed`
+`Models\UpdateAddonImageResponse`
 
 **Example Usage Code Snippet**
 ```php
@@ -178,9 +190,8 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->customers->createCustomerPortalSession(
-  sendEmail: true,
-  customerId: "customer_id"
+$response = $sdk->addons->updateAddonImage(
+  id: "id"
 );
 
 print_r($response);

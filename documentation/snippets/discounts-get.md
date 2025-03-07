@@ -6,7 +6,7 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->discounts->listDiscountsHandler(
-  pageSize: 8,
+  pageSize: 1,
   pageNumber: 2
 );
 

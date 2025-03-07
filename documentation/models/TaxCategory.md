@@ -9,6 +9,7 @@ Represents the different categories of taxation applicable to various products a
     | DigitalProducts | string |  | digital_products |
     | Saas | string |  | saas |
     | EBook | string |  | e_book |
+    | Edtech | string |  | edtech |
 
 
 

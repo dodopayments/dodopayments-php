@@ -14,4 +14,5 @@ enum TaxCategory: string
     case DigitalProducts = 'digital_products';
     case Saas = 'saas';
     case EBook = 'e_book';
+    case Edtech = 'edtech';
 }

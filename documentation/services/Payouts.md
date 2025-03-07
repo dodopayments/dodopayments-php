@@ -32,8 +32,8 @@ use Dodopayments\Client;
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 $response = $sdk->payouts->listPayouts(
-  pageSize: 10,
-  pageNumber: 1
+  pageSize: 1,
+  pageNumber: 10
 );
 
 print_r($response);

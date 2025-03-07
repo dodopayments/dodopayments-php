@@ -5,9 +5,9 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->payouts->listPayouts(
-  pageSize: 1,
-  pageNumber: 10
+$response = $sdk->addons->listAddons(
+  pageSize: 8,
+  pageNumber: 2
 );
 
 print_r($response);

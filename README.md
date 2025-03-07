@@ -1,4 +1,4 @@
-# dodopayments PHP SDK 1.0.0
+# dodopayments PHP SDK 1.5.0
 
 
 Welcome to the dodopayments SDK documentation. This guide will help you get started with integrating and using the dodopayments SDK in your project.
@@ -7,8 +7,8 @@ Welcome to the dodopayments SDK documentation. This guide will help you get star
 
 ## Versions
 
-- API version: `1.0.0`
-- SDK version: `1.0.0`
+- API version: `1.5.0`
+- SDK version: `1.5.0`
 
 ## Table of Contents
 - [Setup & Configuration](#setup--configuration)
@@ -101,7 +101,10 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->checkout->getSupportedCountriesProxy();
+$response = $sdk->addons->listAddons(
+  pageSize: 8,
+  pageNumber: 2
+);
 
 print_r($response);
 
@@ -116,6 +119,7 @@ The SDK provides various services to interact with the API.
 
 | Name |
 | :--- |
+| [Addons](documentation/services/Addons.md) |
 | [Checkout](documentation/services/Checkout.md) |
 | [Customers](documentation/services/Customers.md) |
 | [Discounts](documentation/services/Discounts.md) |
@@ -141,6 +145,11 @@ The SDK includes several models that represent the data structures used in API r
 
 | Name       | Description |
 | :--------- | :---------- |
+| [AddonsListResponse](documentation/models/AddonsListResponse.md) |  |
+| [CreateAddonRequest](documentation/models/CreateAddonRequest.md) |  |
+| [AddonResponse](documentation/models/AddonResponse.md) |  |
+| [PatchAddonRequest](documentation/models/PatchAddonRequest.md) |  |
+| [UpdateAddonImageResponse](documentation/models/UpdateAddonImageResponse.md) |  |
 | [CountryCodeAlpha2](documentation/models/CountryCodeAlpha2.md) | ISO country code alpha2 variant |
 | [GetCustomersListResponse](documentation/models/GetCustomersListResponse.md) |  |
 | [CreateCustomerRequest](documentation/models/CreateCustomerRequest.md) |  |
@@ -189,9 +198,10 @@ The SDK includes several models that represent the data structures used in API r
 | [ListWebhookEventsResponse](documentation/models/ListWebhookEventsResponse.md) |  |
 | [WebhookEventLogResponse](documentation/models/WebhookEventLogResponse.md) |  |
 | [OutgoingWebhook](documentation/models/OutgoingWebhook.md) |  |
+| [Currency](documentation/models/Currency.md) |  |
+| [TaxCategory](documentation/models/TaxCategory.md) | Represents the different categories of taxation applicable to various products and services. |
 | [DiscountType](documentation/models/DiscountType.md) |  |
 | [GetPaymentsListResponseItem](documentation/models/GetPaymentsListResponseItem.md) |  |
-| [Currency](documentation/models/Currency.md) |  |
 | [CustomerLimitedDetailsResponse](documentation/models/CustomerLimitedDetailsResponse.md) |  |
 | [BillingAddress](documentation/models/BillingAddress.md) |  |
 | [CustomerRequest](documentation/models/CustomerRequest.md) |  |
@@ -203,7 +213,6 @@ The SDK includes several models that represent the data structures used in API r
 | [PayoutStatus](documentation/models/PayoutStatus.md) |  |
 | [GetProductsListResponseItem](documentation/models/GetProductsListResponseItem.md) |  |
 | [Price](documentation/models/Price.md) |  |
-| [TaxCategory](documentation/models/TaxCategory.md) | Represents the different categories of taxation applicable to various products and services. |
 | [Price_1](documentation/models/Price1.md) |  |
 | [Price_2](documentation/models/Price2.md) |  |
 | [Price_1Type](documentation/models/Price1Type.md) |  |

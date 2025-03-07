@@ -5,7 +5,7 @@ A list of all methods in the `Refunds` service. Click on the method name to view
 | Methods | Description |
 | :------ | :---------- |
 |[list_refunds](#list_refunds)|  |
-|[create_refund](#create_refund)|  |
+|[create_refund_handler](#create_refund_handler)|  |
 |[get_refund_handler](#get_refund_handler)|  |
 
 ## list_refunds
@@ -41,15 +41,15 @@ $status = Models\RefundStatus::Succeeded;
 $response = $sdk->refunds->listRefunds(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 10,
-  pageNumber: 4,
+  pageSize: 8,
+  pageNumber: 1,
   status: $status
 );
 
 print_r($response);
 ```
 
-## create_refund
+## create_refund_handler
 
 
 - HTTP Method: `POST`
@@ -81,7 +81,7 @@ $input = new Models\CreateRefundRequest(
   reason: "reason"
 );
 
-$response = $sdk->refunds->createRefund(
+$response = $sdk->refunds->createRefundHandler(
   input: $input
 );
 

@@ -8,10 +8,10 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 $response = $sdk->webhookEvents->listWebhookEvents(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  limit: 5,
+  limit: 3,
   objectId: "object_id",
-  pageSize: 3,
-  pageNumber: 2
+  pageSize: 6,
+  pageNumber: 9
 );
 
 print_r($response);

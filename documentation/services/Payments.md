@@ -23,6 +23,7 @@ A list of all methods in the `Payments` service. Click on the method name to vie
 | $pageSize | int | ❌ | Page size default is 10 max is 100 |
 | $pageNumber | int | ❌ | Page number default is 0 |
 | $customerId | string | ❌ | Filter by customer id |
+| $subscriptionId | string | ❌ | Filter by subscription id |
 | $status | Models\IntentStatus | ❌ | Filter by status |
 
 **Return Type**
@@ -42,9 +43,10 @@ $status = Models\IntentStatus::Succeeded;
 $response = $sdk->payments->listPaymentsHandler(
   createdAtGte: "created_at_gte",
   createdAtLte: "created_at_lte",
-  pageSize: 7,
-  pageNumber: 6,
+  pageSize: 3,
+  pageNumber: 9,
   customerId: "customer_id",
+  subscriptionId: "subscription_id",
   status: $status
 );
 
@@ -93,9 +95,9 @@ COMPLEX_MODEL_NOT_IMPLEMENTED
 
 
 $oneTimeProductCartItemReq = new Models\OneTimeProductCartItemReq(
-  amount: 3,
+  amount: 10,
   productId: "product_id",
-  quantity: 8
+  quantity: 10
 );
 
 $input = new Models\CreateOneTimePaymentRequest(

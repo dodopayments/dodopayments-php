@@ -29,7 +29,7 @@ class Refunds extends BaseService
         return Serializer::deserialize($data, Models\GetRefundsListResponse::class);
     }
 
-    public function createRefund(Models\CreateRefundRequest $input): Models\RefundResponse
+    public function createRefundHandler(Models\CreateRefundRequest $input): Models\RefundResponse
     {
         $data = $this->sendRequest('post', '/refunds', ['json' => Serializer::serialize($input)]);
 

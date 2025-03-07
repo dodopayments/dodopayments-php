@@ -8,7 +8,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\PatchLicenseKeyRequest(
-  activationsLimit: 9,
+  activationsLimit: 10,
   disabled: true,
   expiresAt: "expires_at"
 );

@@ -10,13 +10,13 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 $discountType = Models\DiscountType::Percentage;
 
 $input = new Models\CreateDiscountRequest(
-  amount: 1,
+  amount: 8,
   code: "code",
   expiresAt: "expires_at",
   name: "name",
   restrictedTo: [],
   type: $discountType,
-  usageLimit: 2
+  usageLimit: 4
 );
 
 $response = $sdk->discounts->createDiscountHandler(

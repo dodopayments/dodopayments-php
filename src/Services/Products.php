@@ -9,16 +9,18 @@ use Dodopayments\Models;
 
 class Products extends BaseService
 {
-    public function listProducts(
+    public function listProductsHandler(
         int $pageSize = null,
         int $pageNumber = null,
-        bool $archived = null
+        bool $archived = null,
+        bool $recurring = null
     ): Models\GetProductsListResponse {
         $data = $this->sendRequest('get', '/products', [
             'query' => [
                 'page_size' => $pageSize,
                 'page_number' => $pageNumber,
                 'archived' => $archived,
+                'recurring' => $recurring,
             ],
         ]);
 

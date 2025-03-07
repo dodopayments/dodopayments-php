@@ -13,7 +13,7 @@ $input = new Models\CreateRefundRequest(
   reason: "reason"
 );
 
-$response = $sdk->refunds->createRefund(
+$response = $sdk->refunds->createRefundHandler(
   input: $input
 );
 

@@ -4,7 +4,7 @@ A list of all methods in the `Products` service. Click on the method name to vie
 
 | Methods | Description |
 | :------ | :---------- |
-|[list_products](#list_products)|  |
+|[list_products_handler](#list_products_handler)|  |
 |[create_product](#create_product)|  |
 |[get_product_handler](#get_product_handler)|  |
 |[patch_product](#patch_product)|  |
@@ -12,7 +12,7 @@ A list of all methods in the `Products` service. Click on the method name to vie
 |[update_product_image](#update_product_image)|  |
 |[undelete_product](#undelete_product)|  |
 
-## list_products
+## list_products_handler
 
 
 - HTTP Method: `GET`
@@ -25,6 +25,7 @@ A list of all methods in the `Products` service. Click on the method name to vie
 | $pageSize | int | ❌ | Page size default is 10 max is 100 |
 | $pageNumber | int | ❌ | Page number default is 0 |
 | $archived | bool | ❌ | List archived products |
+| $recurring | bool | ❌ | Filter products by pricing type: - `true`: Show only recurring pricing products (e.g. subscriptions) - `false`: Show only one-time price products - `null` or absent: Show both types of products |
 
 **Return Type**
 
@@ -38,10 +39,11 @@ use Dodopayments\Client;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
-$response = $sdk->products->listProducts(
-  pageSize: 10,
-  pageNumber: 4,
-  archived: true
+$response = $sdk->products->listProductsHandler(
+  pageSize: 2,
+  pageNumber: 2,
+  archived: true,
+  recurring: true
 );
 
 print_r($response);
@@ -82,7 +84,7 @@ $taxCategory = Models\TaxCategory::DigitalProducts;
 $input = new Models\CreateProductRequest(
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 5,
+  licenseKeyActivationsLimit: 9,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",
@@ -162,7 +164,7 @@ $input = new Models\PatchProductRequest(
   description: "description",
   imageId: "image_id",
   licenseKeyActivationMessage: "license_key_activation_message",
-  licenseKeyActivationsLimit: 9,
+  licenseKeyActivationsLimit: 5,
   licenseKeyDuration: $licenseKeyDuration,
   licenseKeyEnabled: true,
   name: "name",

@@ -9,13 +9,13 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\PatchDiscountRequest(
-  amount: 8,
+  amount: 7,
   code: "code",
   expiresAt: "expires_at",
   name: "name",
   restrictedTo: [],
   type: $discountType,
-  usageLimit: 1
+  usageLimit: 8
 );
 
 $response = $sdk->discounts->patchDiscountHandler(
