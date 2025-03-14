@@ -14,6 +14,7 @@
     | productId | string | ✅ | Unique identifier for the product. |
     | taxCategory | model | ✅ | Represents the different categories of taxation applicable to various products and services. |
     | updatedAt | string | ✅ | Timestamp when the product was last updated. |
+    | addons | array | ❌ | Available Addons for subscription products |
     | description | string | ❌ | Description of the product, optional. |
     | image | string | ❌ | URL of the product image, optional. |
     | licenseKeyActivationMessage | string | ❌ | Message sent upon license key activation, if applicable. |

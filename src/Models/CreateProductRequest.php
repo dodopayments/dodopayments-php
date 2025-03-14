@@ -9,6 +9,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class CreateProductRequest
 {
     /**
+     * @var string[]|null
+     * Addons available for subscription product
+     */
+    #[SerializedName('addons')]
+    public ?array $addons;
+
+    /**
      * Optional description of the product
      */
     #[SerializedName('description')]
@@ -53,6 +60,7 @@ Defaults to false
     public TaxCategory $taxCategory;
 
     public function __construct(
+        ?array $addons = [],
         ?string $description = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
@@ -62,6 +70,7 @@ Defaults to false
         Price $price,
         TaxCategory $taxCategory
     ) {
+        $this->addons = $addons;
         $this->description = $description;
         $this->licenseKeyActivationMessage = $licenseKeyActivationMessage;
         $this->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;

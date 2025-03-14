@@ -11,9 +11,9 @@ class DiscountResponse
     /**
 	 * The discount amount.
 
-- If `discount_type` is `percentage`, this is in **basis points**
+- If `discount_type` is `percentage`, this is in ``basis points``
 (e.g., 540 => 5.4%).
-- Otherwise, this is **USD cents** (e.g., 100 => `$1.00`).
+- Otherwise, this is ``USD cents`` (e.g., 100 => `$1.00`).
 	 */
     #[SerializedName('amount')]
     public int $amount;

@@ -69,6 +69,7 @@
     | taxInclusive | boolean | ✅ | Indicates if the recurring_pre_tax_amount is tax inclusive |
     | trialPeriodDays | integer | ✅ | Number of days in the trial period (0 if no trial) |
     | payloadType | model | ✅ |  |
+    | cancelledAt | string | ❌ | Cancelled timestamp if the subscription is cancelled |
     | discountId | string | ❌ | The discount id if discount is applied |
 
 # OutgoingWebhookData_2PayloadType

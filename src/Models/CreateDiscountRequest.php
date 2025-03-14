@@ -16,9 +16,9 @@ class CreateDiscountRequest
     /**
 	 * The discount amount.
 
-- If `discount_type` is **not** `percentage`, `amount` is in **USD cents**. For example, `100` means `$1.00`.
+- If `discount_type` is ``not`` `percentage`, `amount` is in ``USD cents``. For example, `100` means `$1.00`.
 Only USD is allowed.
-- If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
+- If `discount_type` ``is`` `percentage`, `amount` is in ``basis points``. For example, `540` means `5.4%`.
 
 Must be at least 1.
 	 */

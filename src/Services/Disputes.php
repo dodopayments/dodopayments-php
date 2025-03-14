@@ -15,7 +15,8 @@ class Disputes extends BaseService
         int $pageSize = null,
         int $pageNumber = null,
         Models\DisputeStatus $disputeStatus = null,
-        Models\DisputeStage $disputeStage = null
+        Models\DisputeStage $disputeStage = null,
+        string $customerId = null
     ): Models\GetDisputesListResponse {
         $data = $this->sendRequest('get', '/disputes', [
             'query' => [
@@ -25,6 +26,7 @@ class Disputes extends BaseService
                 'page_number' => $pageNumber,
                 'dispute_status' => $disputeStatus,
                 'dispute_stage' => $disputeStage,
+                'customer_id' => $customerId,
             ],
         ]);
 

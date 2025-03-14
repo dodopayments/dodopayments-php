@@ -82,6 +82,7 @@ COMPLEX_MODEL_NOT_IMPLEMENTED
 $taxCategory = Models\TaxCategory::DigitalProducts;
 
 $input = new Models\CreateProductRequest(
+  addons: [],
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
   licenseKeyActivationsLimit: 9,
@@ -161,6 +162,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\PatchProductRequest(
+  addons: [],
   description: "description",
   imageId: "image_id",
   licenseKeyActivationMessage: "license_key_activation_message",

@@ -23,6 +23,7 @@ A list of all methods in the `Refunds` service. Click on the method name to view
 | $pageSize | int | ❌ | Page size default is 10 max is 100 |
 | $pageNumber | int | ❌ | Page number default is 0 |
 | $status | Models\RefundStatus | ❌ | Filter by status |
+| $customerId | string | ❌ | Filter by customer_id |
 
 **Return Type**
 
@@ -43,7 +44,8 @@ $response = $sdk->refunds->listRefunds(
   createdAtLte: "created_at_lte",
   pageSize: 8,
   pageNumber: 1,
-  status: $status
+  status: $status,
+  customerId: "customer_id"
 );
 
 print_r($response);

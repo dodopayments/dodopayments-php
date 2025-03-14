@@ -15,8 +15,8 @@ class PatchDiscountRequest
 {
     /**
 	 * If present, update the discount amount:
-- If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
-- Otherwise, this represents **USD cents** (e.g., `100` = `$1.00`).
+- If `discount_type` is `percentage`, this represents ``basis points`` (e.g., `540` = `5.4%`).
+- Otherwise, this represents ``USD cents`` (e.g., `100` = `$1.00`).
 
 Must be at least 1 if provided.
 	 */

@@ -11,6 +11,7 @@ $sdk = new Client(accessToken: 'YOUR_TOKEN');
 
 
 $input = new Models\PatchProductRequest(
+  addons: [],
   description: "description",
   imageId: "image_id",
   licenseKeyActivationMessage: "license_key_activation_message",

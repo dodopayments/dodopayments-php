@@ -6,6 +6,7 @@
 
 | Name | Type | Required | Description |
 | :-------- | :----------| :----------| :----------|
+    | addons | array | ❌ | Available Addons for subscription products |
     | description | string | ❌ | Description of the product, optional and must be at most 1000 characters. |
     | imageId | string | ❌ | Product image id after its uploaded to S3 |
     | licenseKeyActivationMessage | string | ❌ | Message sent to the customer upon license key activation. Only applicable if `license_key_enabled` is `true`. This message contains instructions for activating the license key. |

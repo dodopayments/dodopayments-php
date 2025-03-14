@@ -9,6 +9,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class PatchProductRequest
 {
     /**
+     * @var string[]|null
+     * Available Addons for subscription products
+     */
+    #[SerializedName('addons')]
+    public ?array $addons;
+
+    /**
      * Description of the product, optional and must be at most 1000 characters.
      */
     #[SerializedName('description')]
@@ -66,6 +73,7 @@ become applicable.
     public ?TaxCategory $taxCategory;
 
     public function __construct(
+        ?array $addons = [],
         ?string $description = null,
         ?string $imageId = null,
         ?string $licenseKeyActivationMessage = null,
@@ -76,6 +84,7 @@ become applicable.
         ?Price $price = null,
         ?TaxCategory $taxCategory = null
     ) {
+        $this->addons = $addons;
         $this->description = $description;
         $this->imageId = $imageId;
         $this->licenseKeyActivationMessage = $licenseKeyActivationMessage;

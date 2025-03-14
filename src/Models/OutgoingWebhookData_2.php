@@ -9,6 +9,12 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class OutgoingWebhookData2
 {
     /**
+     * Cancelled timestamp if the subscription is cancelled
+     */
+    #[SerializedName('cancelled_at')]
+    public ?string $cancelledAt;
+
+    /**
      * Timestamp when the subscription was created
      */
     #[SerializedName('created_at')]
@@ -96,6 +102,7 @@ class OutgoingWebhookData2
     public OutgoingWebhookData2PayloadType $payloadType;
 
     public function __construct(
+        ?string $cancelledAt = null,
         string $createdAt,
         Currency $currency,
         CustomerLimitedDetailsResponse $customer,
@@ -115,6 +122,7 @@ class OutgoingWebhookData2
         int $trialPeriodDays,
         OutgoingWebhookData2PayloadType $payloadType
     ) {
+        $this->cancelledAt = $cancelledAt;
         $this->createdAt = $createdAt;
         $this->currency = $currency;
         $this->customer = $customer;

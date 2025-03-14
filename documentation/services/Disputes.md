@@ -23,6 +23,7 @@ A list of all methods in the `Disputes` service. Click on the method name to vie
 | $pageNumber | int | ❌ | Page number default is 0 |
 | $disputeStatus | Models\DisputeStatus | ❌ | Filter by dispute status |
 | $disputeStage | Models\DisputeStage | ❌ | Filter by dispute stage |
+| $customerId | string | ❌ | Filter by customer_id |
 
 **Return Type**
 
@@ -45,7 +46,8 @@ $response = $sdk->disputes->listDisputes(
   pageSize: 9,
   pageNumber: 5,
   disputeStatus: $disputeStatus,
-  disputeStage: $disputeStage
+  disputeStage: $disputeStage,
+  customerId: "customer_id"
 );
 
 print_r($response);

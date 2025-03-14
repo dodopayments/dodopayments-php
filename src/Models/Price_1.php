@@ -29,7 +29,7 @@ If set to `true`, the [`price`](Self::price) field is the minimum amount.
 For example, to charge $1.00, pass `100`.
 
 If [`pay_what_you_want`](Self::pay_what_you_want) is set to `true`, this field represents
-the **minimum** amount the customer must pay.
+the ``minimum`` amount the customer must pay.
 	 */
     #[SerializedName('price')]
     public int $price;

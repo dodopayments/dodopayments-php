@@ -12,7 +12,8 @@ $response = $sdk->refunds->listRefunds(
   createdAtLte: "created_at_lte",
   pageSize: 8,
   pageNumber: 1,
-  status: $status
+  status: $status,
+  customerId: "customer_id"
 );
 
 print_r($response);

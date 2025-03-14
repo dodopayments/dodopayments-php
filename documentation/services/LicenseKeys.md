@@ -27,7 +27,7 @@ A list of all methods in the `LicenseKeys` service. Click on the method name to 
 
 **Return Type**
 
-`array`
+`Models\ListLicenseKeyInstancesResponse`
 
 **Example Usage Code Snippet**
 ```php
@@ -134,7 +134,7 @@ print_r($response);
 
 **Return Type**
 
-`array`
+`Models\ListLicenseKeysResponse`
 
 **Example Usage Code Snippet**
 ```php

@@ -14,7 +14,8 @@ $response = $sdk->disputes->listDisputes(
   pageSize: 9,
   pageNumber: 5,
   disputeStatus: $disputeStatus,
-  disputeStage: $disputeStage
+  disputeStage: $disputeStage,
+  customerId: "customer_id"
 );
 
 print_r($response);

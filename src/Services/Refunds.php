@@ -14,7 +14,8 @@ class Refunds extends BaseService
         string $createdAtLte = null,
         int $pageSize = null,
         int $pageNumber = null,
-        Models\RefundStatus $status = null
+        Models\RefundStatus $status = null,
+        string $customerId = null
     ): Models\GetRefundsListResponse {
         $data = $this->sendRequest('get', '/refunds', [
             'query' => [
@@ -23,6 +24,7 @@ class Refunds extends BaseService
                 'page_size' => $pageSize,
                 'page_number' => $pageNumber,
                 'status' => $status,
+                'customer_id' => $customerId,
             ],
         ]);
 

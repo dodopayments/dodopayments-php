@@ -14,6 +14,7 @@ COMPLEX_MODEL_NOT_IMPLEMENTED
 $taxCategory = Models\TaxCategory::DigitalProducts;
 
 $input = new Models\CreateProductRequest(
+  addons: [],
   description: "description",
   licenseKeyActivationMessage: "license_key_activation_message",
   licenseKeyActivationsLimit: 9,

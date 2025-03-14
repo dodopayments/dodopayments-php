@@ -9,6 +9,13 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 class GetProductResponse
 {
     /**
+     * @var string[]|null
+     * Available Addons for subscription products
+     */
+    #[SerializedName('addons')]
+    public ?array $addons;
+
+    /**
      * Unique identifier for the business to which the product belongs.
      */
     #[SerializedName('business_id')]
@@ -87,6 +94,7 @@ class GetProductResponse
     public string $updatedAt;
 
     public function __construct(
+        ?array $addons = [],
         string $businessId,
         string $createdAt,
         ?string $description = null,
@@ -102,6 +110,7 @@ class GetProductResponse
         TaxCategory $taxCategory,
         string $updatedAt
     ) {
+        $this->addons = $addons;
         $this->businessId = $businessId;
         $this->createdAt = $createdAt;
         $this->description = $description;

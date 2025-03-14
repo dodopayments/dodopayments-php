@@ -13,7 +13,7 @@ class LicenseKeys extends BaseService
         int $pageSize = null,
         int $pageNumber = null,
         string $licenseKeyId = null
-    ): array {
+    ): Models\ListLicenseKeyInstancesResponse {
         $data = $this->sendRequest('get', '/license_key_instances', [
             'query' => [
                 'page_size' => $pageSize,
@@ -22,7 +22,7 @@ class LicenseKeys extends BaseService
             ],
         ]);
 
-        return json_decode($data, true);
+        return Serializer::deserialize($data, Models\ListLicenseKeyInstancesResponse::class);
     }
 
     public function getLicenseKeyInstance(string $id): Models\LicenseKeyInstanceResponse
@@ -47,7 +47,7 @@ class LicenseKeys extends BaseService
         string $customerId = null,
         Models\LicenseKeyStatus $status = null,
         string $productId = null
-    ): array {
+    ): Models\ListLicenseKeysResponse {
         $data = $this->sendRequest('get', '/license_keys', [
             'query' => [
                 'page_size' => $pageSize,
@@ -58,7 +58,7 @@ class LicenseKeys extends BaseService
             ],
         ]);
 
-        return json_decode($data, true);
+        return Serializer::deserialize($data, Models\ListLicenseKeysResponse::class);
     }
 
     public function getLicenseKeyHandler(string $id): Models\LicenseKeyResponse
