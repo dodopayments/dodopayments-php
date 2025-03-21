@@ -42,7 +42,7 @@ $response = $sdk->webhookEvents->listWebhookEvents(
   limit: 3,
   objectId: "object_id",
   pageSize: 6,
-  pageNumber: 9
+  pageNumber: 8
 );
 
 print_r($response);

@@ -8,6 +8,7 @@ A list of all methods in the `Subscriptions` service. Click on the method name t
 |[create_subscription_handler](#create_subscription_handler)|  |
 |[get_subscription_handler](#get_subscription_handler)|  |
 |[patch_subscription_handler](#patch_subscription_handler)|  |
+|[create_subscription_charge](#create_subscription_charge)|  |
 
 ## list_subscriptions_handler
 
@@ -73,8 +74,10 @@ print_r($response);
 <?php
 
 use Dodopayments\Client;
+use Dodopayments\Models\PaymentMethodTypes;
 use Dodopayments\Models\BillingAddress;
 use Dodopayments\Models\CustomerRequest;
+use Dodopayments\Models\OnDemandSubscriptionReq;
 use Dodopayments\Models\CreateSubscriptionRequest;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
@@ -92,16 +95,18 @@ $billingAddress = new Models\BillingAddress(
 COMPLEX_MODEL_NOT_IMPLEMENTED
 
 $input = new Models\CreateSubscriptionRequest(
+  allowedPaymentMethodTypes: [],
   billing: $billingAddress,
   customer: $customerRequest,
   discountCode: "discount_code",
   metadata: [],
+  onDemand: $onDemandSubscriptionReq,
   paymentLink: true,
   productId: "product_id",
-  quantity: 4,
+  quantity: 8,
   returnUrl: "return_url",
   taxId: "tax_id",
-  trialPeriodDays: 1
+  trialPeriodDays: 10
 );
 
 $response = $sdk->subscriptions->createSubscriptionHandler(
@@ -176,6 +181,45 @@ $input = new Models\PatchSubscriptionRequest(
 );
 
 $response = $sdk->subscriptions->patchSubscriptionHandler(
+  input: $input,
+  subscriptionId: "subscription_id"
+);
+
+print_r($response);
+```
+
+## create_subscription_charge
+
+
+- HTTP Method: `POST`
+- Endpoint: `/subscriptions/{subscription_id}/charge`
+
+**Parameters**
+
+| Name    | Type| Required | Description |
+| :-------- | :----------| :----------| :----------|
+| input | Models\CreateSubscriptionChargeRequest | ✅ |  |
+| $subscriptionId | string | ✅ | Subscription Id |
+
+**Return Type**
+
+`Models\CreateSubscriptionChargeResponse`
+
+**Example Usage Code Snippet**
+```php
+<?php
+
+use Dodopayments\Client;
+use Dodopayments\Models\CreateSubscriptionChargeRequest;
+
+$sdk = new Client(accessToken: 'YOUR_TOKEN');
+
+
+$input = new Models\CreateSubscriptionChargeRequest(
+  productPrice: 9
+);
+
+$response = $sdk->subscriptions->createSubscriptionCharge(
   input: $input,
   subscriptionId: "subscription_id"
 );

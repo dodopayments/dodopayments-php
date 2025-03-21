@@ -8,6 +8,17 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 class CreateOneTimePaymentRequest
 {
+    /**
+	 * @var PaymentMethodTypes[]|null
+	 * List of payment methods allowed during checkout.
+
+Customers will **never** see payment methods that are **not** in this list.
+However, adding a method here **does not guarantee** customers will see it.
+Availability still depends on other factors (e.g., customer location, merchant settings).
+	 */
+    #[SerializedName('allowed_payment_method_types')]
+    public ?array $allowedPaymentMethodTypes;
+
     #[SerializedName('billing')]
     public BillingAddress $billing;
 
@@ -50,6 +61,7 @@ Must be a valid URL if provided.
     public ?string $taxId;
 
     public function __construct(
+        ?array $allowedPaymentMethodTypes = [],
         BillingAddress $billing,
         CustomerRequest $customer,
         ?string $discountCode = null,
@@ -59,6 +71,7 @@ Must be a valid URL if provided.
         ?string $returnUrl = null,
         ?string $taxId = null
     ) {
+        $this->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
         $this->billing = $billing;
         $this->customer = $customer;
         $this->discountCode = $discountCode;

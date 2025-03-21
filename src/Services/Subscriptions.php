@@ -56,4 +56,15 @@ class Subscriptions extends BaseService
 
         return Serializer::deserialize($data, Models\SubscriptionResponse::class);
     }
+
+    public function createSubscriptionCharge(
+        Models\CreateSubscriptionChargeRequest $input,
+        string $subscriptionId
+    ): Models\CreateSubscriptionChargeResponse {
+        $data = $this->sendRequest('post', "/subscriptions/{$subscriptionId}/charge", [
+            'json' => Serializer::serialize($input),
+        ]);
+
+        return Serializer::deserialize($data, Models\CreateSubscriptionChargeResponse::class);
+    }
 }

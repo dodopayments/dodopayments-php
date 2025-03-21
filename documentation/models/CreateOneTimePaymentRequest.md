@@ -9,6 +9,7 @@
     | billing | model | ✅ |  |
     | customer | model | ✅ |  |
     | productCart | array | ✅ | List of products in the cart. Must contain at least 1 and at most 100 items. |
+    | allowedPaymentMethodTypes | array | ❌ | List of payment methods allowed during checkout. Customers will **never** see payment methods that are **not** in this list. However, adding a method here **does not guarantee** customers will see it. Availability still depends on other factors (e.g., customer location, merchant settings). |
     | discountCode | string | ❌ | Discount Code to apply to the transaction |
     | metadata | dictionary | ❌ |  |
     | paymentLink | boolean | ❌ | Whether to generate a payment link. Defaults to false if not specified. |

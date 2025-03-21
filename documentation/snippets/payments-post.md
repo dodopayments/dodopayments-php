@@ -2,6 +2,7 @@
 <?php
 
 use Dodopayments\Client;
+use Dodopayments\Models\PaymentMethodTypes;
 use Dodopayments\Models\BillingAddress;
 use Dodopayments\Models\CustomerRequest;
 use Dodopayments\Models\OneTimeProductCartItemReq;
@@ -29,6 +30,7 @@ $oneTimeProductCartItemReq = new Models\OneTimeProductCartItemReq(
 );
 
 $input = new Models\CreateOneTimePaymentRequest(
+  allowedPaymentMethodTypes: [],
   billing: $billingAddress,
   customer: $customerRequest,
   discountCode: "discount_code",

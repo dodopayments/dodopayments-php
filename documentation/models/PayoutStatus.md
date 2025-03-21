@@ -6,7 +6,9 @@
 
 | Name | Type | Required | Description |
 | :-------- | :----------| :----------| :----------|
+    | NotInitiated | string |  | not_initiated |
     | InProgress | string |  | in_progress |
+    | OnHold | string |  | on_hold |
     | Failed | string |  | failed |
     | Success | string |  | success |
 

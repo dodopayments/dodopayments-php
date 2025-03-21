@@ -8,7 +8,9 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 enum PayoutStatus: string
 {
+    case NotInitiated = 'not_initiated';
     case InProgress = 'in_progress';
+    case OnHold = 'on_hold';
     case Failed = 'failed';
     case Success = 'success';
 }

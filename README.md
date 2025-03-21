@@ -1,4 +1,4 @@
-# dodopayments PHP SDK 1.7.0
+# dodopayments PHP SDK 1.10.1
 
 
 Welcome to the dodopayments SDK documentation. This guide will help you get started with integrating and using the dodopayments SDK in your project.
@@ -7,8 +7,8 @@ Welcome to the dodopayments SDK documentation. This guide will help you get star
 
 ## Versions
 
-- API version: `1.7.0`
-- SDK version: `1.7.0`
+- API version: `1.10.1`
+- SDK version: `1.10.1`
 
 ## Table of Contents
 - [Setup & Configuration](#setup--configuration)
@@ -195,6 +195,8 @@ The SDK includes several models that represent the data structures used in API r
 | [CreateSubscriptionResponse](documentation/models/CreateSubscriptionResponse.md) |  |
 | [SubscriptionResponse](documentation/models/SubscriptionResponse.md) | Response struct representing subscription details |
 | [PatchSubscriptionRequest](documentation/models/PatchSubscriptionRequest.md) |  |
+| [CreateSubscriptionChargeRequest](documentation/models/CreateSubscriptionChargeRequest.md) |  |
+| [CreateSubscriptionChargeResponse](documentation/models/CreateSubscriptionChargeResponse.md) |  |
 | [ListWebhookEventsResponse](documentation/models/ListWebhookEventsResponse.md) |  |
 | [WebhookEventLogResponse](documentation/models/WebhookEventLogResponse.md) |  |
 | [OutgoingWebhook](documentation/models/OutgoingWebhook.md) |  |
@@ -203,6 +205,7 @@ The SDK includes several models that represent the data structures used in API r
 | [DiscountType](documentation/models/DiscountType.md) |  |
 | [GetPaymentsListResponseItem](documentation/models/GetPaymentsListResponseItem.md) |  |
 | [CustomerLimitedDetailsResponse](documentation/models/CustomerLimitedDetailsResponse.md) |  |
+| [PaymentMethodTypes](documentation/models/PaymentMethodTypes.md) |  |
 | [BillingAddress](documentation/models/BillingAddress.md) |  |
 | [CustomerRequest](documentation/models/CustomerRequest.md) |  |
 | [OneTimeProductCartItemReq](documentation/models/OneTimeProductCartItemReq.md) |  |
@@ -219,6 +222,7 @@ The SDK includes several models that represent the data structures used in API r
 | [TimeInterval](documentation/models/TimeInterval.md) |  |
 | [Price_2Type](documentation/models/Price2Type.md) |  |
 | [LicenseKeyDuration](documentation/models/LicenseKeyDuration.md) |  |
+| [OnDemandSubscriptionReq](documentation/models/OnDemandSubscriptionReq.md) |  |
 | [OutgoingWebhookData](documentation/models/OutgoingWebhookData.md) |  |
 | [EventType](documentation/models/EventType.md) | Event types for Dodo events |
 | [OutgoingWebhookData_1](documentation/models/OutgoingWebhookData1.md) |  |

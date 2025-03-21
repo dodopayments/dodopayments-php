@@ -2,8 +2,10 @@
 <?php
 
 use Dodopayments\Client;
+use Dodopayments\Models\PaymentMethodTypes;
 use Dodopayments\Models\BillingAddress;
 use Dodopayments\Models\CustomerRequest;
+use Dodopayments\Models\OnDemandSubscriptionReq;
 use Dodopayments\Models\CreateSubscriptionRequest;
 
 $sdk = new Client(accessToken: 'YOUR_TOKEN');
@@ -21,16 +23,18 @@ $billingAddress = new Models\BillingAddress(
 COMPLEX_MODEL_NOT_IMPLEMENTED
 
 $input = new Models\CreateSubscriptionRequest(
+  allowedPaymentMethodTypes: [],
   billing: $billingAddress,
   customer: $customerRequest,
   discountCode: "discount_code",
   metadata: [],
+  onDemand: $onDemandSubscriptionReq,
   paymentLink: true,
   productId: "product_id",
-  quantity: 4,
+  quantity: 8,
   returnUrl: "return_url",
   taxId: "tax_id",
-  trialPeriodDays: 1
+  trialPeriodDays: 10
 );
 
 $response = $sdk->subscriptions->createSubscriptionHandler(

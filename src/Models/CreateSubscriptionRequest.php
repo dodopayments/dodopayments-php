@@ -14,6 +14,17 @@ It includes details about the product, quantity, customer information, and billi
  */
 class CreateSubscriptionRequest
 {
+    /**
+	 * @var PaymentMethodTypes[]|null
+	 * List of payment methods allowed during checkout.
+
+Customers will **never** see payment methods that are **not** in this list.
+However, adding a method here **does not guarantee** customers will see it.
+Availability still depends on other factors (e.g., customer location, merchant settings).
+	 */
+    #[SerializedName('allowed_payment_method_types')]
+    public ?array $allowedPaymentMethodTypes;
+
     #[SerializedName('billing')]
     public BillingAddress $billing;
 
@@ -28,6 +39,9 @@ class CreateSubscriptionRequest
 
     #[SerializedName('metadata')]
     public ?array $metadata;
+
+    #[SerializedName('on_demand')]
+    public ?OnDemandSubscriptionReq $onDemand;
 
     /**
 	 * If true, generates a payment link.
@@ -69,10 +83,12 @@ Must be between 0 and 10000 days
     public ?int $trialPeriodDays;
 
     public function __construct(
+        ?array $allowedPaymentMethodTypes = [],
         BillingAddress $billing,
         CustomerRequest $customer,
         ?string $discountCode = null,
         ?array $metadata = [],
+        ?OnDemandSubscriptionReq $onDemand = null,
         ?bool $paymentLink = null,
         string $productId,
         int $quantity,
@@ -80,10 +96,12 @@ Must be between 0 and 10000 days
         ?string $taxId = null,
         ?int $trialPeriodDays = null
     ) {
+        $this->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
         $this->billing = $billing;
         $this->customer = $customer;
         $this->discountCode = $discountCode;
         $this->metadata = $metadata;
+        $this->onDemand = $onDemand;
         $this->paymentLink = $paymentLink;
         $this->productId = $productId;
         $this->quantity = $quantity;
