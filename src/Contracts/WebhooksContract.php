@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Contracts;
+namespace Dodopayments\Contracts;
 
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Webhooks\WebhookGetResponse;
-use DodopaymentsClient\Responses\Webhooks\WebhookListResponse;
-use DodopaymentsClient\Responses\Webhooks\WebhookNewResponse;
-use DodopaymentsClient\Responses\Webhooks\WebhookUpdateResponse;
-use DodopaymentsClient\WebhookEvents\WebhookEventType;
-use DodopaymentsClient\Webhooks\WebhookCreateParams;
-use DodopaymentsClient\Webhooks\WebhookListParams;
-use DodopaymentsClient\Webhooks\WebhookUpdateParams;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Webhooks\WebhookGetResponse;
+use Dodopayments\Responses\Webhooks\WebhookListResponse;
+use Dodopayments\Responses\Webhooks\WebhookNewResponse;
+use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
+use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\Webhooks\WebhookCreateParams;
+use Dodopayments\Webhooks\WebhookListParams;
+use Dodopayments\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {

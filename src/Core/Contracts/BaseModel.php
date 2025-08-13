@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core\Contracts;
+namespace Dodopayments\Core\Contracts;
 
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @internal

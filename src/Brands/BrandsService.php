@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Brands;
+namespace Dodopayments\Brands;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Contracts\BrandsContract;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Brands\BrandListResponse;
-use DodopaymentsClient\Responses\Brands\BrandUpdateImagesResponse;
+use Dodopayments\Client;
+use Dodopayments\Contracts\BrandsContract;
+use Dodopayments\Core\Conversion;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Brands\BrandListResponse;
+use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
 
 final class BrandsService implements BrandsContract
 {

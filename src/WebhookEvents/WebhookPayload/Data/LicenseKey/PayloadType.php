@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\WebhookEvents\WebhookPayload\Data\LicenseKey;
+namespace Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 
-use DodopaymentsClient\Core\Concerns\Enum;
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Concerns\Enum;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type payload_type_alias = PayloadType::*

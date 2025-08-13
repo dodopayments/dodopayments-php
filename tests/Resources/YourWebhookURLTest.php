@@ -2,21 +2,21 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Disputes\Dispute;
-use DodopaymentsClient\Disputes\DisputeStage;
-use DodopaymentsClient\Disputes\DisputeStatus;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\CustomerLimitedDetails;
-use DodopaymentsClient\Payments\IntentStatus;
-use DodopaymentsClient\Payments\Payment\ProductCart;
-use DodopaymentsClient\Refunds\Refund;
-use DodopaymentsClient\Refunds\RefundStatus;
-use DodopaymentsClient\WebhookEvents\WebhookEventType;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
+use Dodopayments\Client;
+use Dodopayments\Disputes\Dispute;
+use Dodopayments\Disputes\DisputeStage;
+use Dodopayments\Disputes\DisputeStatus;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Payments\IntentStatus;
+use Dodopayments\Payments\Payment\ProductCart;
+use Dodopayments\Refunds\Refund;
+use Dodopayments\Refunds\RefundStatus;
+use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

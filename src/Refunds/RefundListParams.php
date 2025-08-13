@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Refunds;
+namespace Dodopayments\Refunds;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Concerns\Params;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Refunds\RefundListParams\Status;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Refunds\RefundListParams\Status;
 
 /**
  * @phpstan-type list_params = array{

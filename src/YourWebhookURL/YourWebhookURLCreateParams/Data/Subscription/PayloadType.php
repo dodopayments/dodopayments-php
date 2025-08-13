@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
+namespace Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
 
-use DodopaymentsClient\Core\Concerns\Enum;
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Concerns\Enum;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type payload_type_alias = PayloadType::*

@@ -1,9 +1,9 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class NotFoundError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient Not Found Error';
+    protected const DESC = 'Dodopayments Not Found Error';
 }

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Contracts;
+namespace Dodopayments\Contracts;
 
-use DodopaymentsClient\LicenseKeys\LicenseKey;
-use DodopaymentsClient\LicenseKeys\LicenseKeyListParams;
-use DodopaymentsClient\LicenseKeys\LicenseKeyListParams\Status;
-use DodopaymentsClient\LicenseKeys\LicenseKeyUpdateParams;
-use DodopaymentsClient\RequestOptions;
+use Dodopayments\LicenseKeys\LicenseKey;
+use Dodopayments\LicenseKeys\LicenseKeyListParams;
+use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
+use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\LicenseKeys\LicenseKeyListResponseItem;
 
 interface LicenseKeysContract
 {
@@ -38,9 +39,11 @@ interface LicenseKeysContract
      *   productID?: string,
      *   status?: Status::*,
      * }|LicenseKeyListParams $params
+     *
+     * @return list<LicenseKeyListResponseItem>
      */
     public function list(
         array|LicenseKeyListParams $params,
         ?RequestOptions $requestOptions = null,
-    ): LicenseKey;
+    ): array;
 }

@@ -2,13 +2,12 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\LicenseKeys\LicenseKeyListParams;
-use DodopaymentsClient\LicenseKeys\LicenseKeyUpdateParams;
+use Dodopayments\Client;
+use Dodopayments\LicenseKeys\LicenseKeyListParams;
+use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -48,10 +47,6 @@ final class LicenseKeysTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $params = (new LicenseKeyListParams);
         $result = $this->client->licenseKeys->list($params);
 

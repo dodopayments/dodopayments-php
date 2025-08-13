@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Subscriptions;
+namespace Dodopayments\Subscriptions;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Concerns\Params;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Core\Conversion\MapOf;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\MapOf;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
  * @phpstan-type update_params = array{
@@ -18,6 +18,7 @@ use DodopaymentsClient\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *   cancelAtNextBillingDate?: bool|null,
  *   disableOnDemand?: DisableOnDemand|null,
  *   metadata?: array<string, string>|null,
+ *   nextBillingDate?: \DateTimeInterface|null,
  *   status?: SubscriptionStatus::*,
  *   taxID?: string|null,
  * }
@@ -39,6 +40,9 @@ final class SubscriptionUpdateParams implements BaseModel
     /** @var null|array<string, string> $metadata */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $metadata;
+
+    #[Api('next_billing_date', optional: true)]
+    public ?\DateTimeInterface $nextBillingDate;
 
     /** @var null|SubscriptionStatus::* $status */
     #[Api(enum: SubscriptionStatus::class, optional: true)]
@@ -66,6 +70,7 @@ final class SubscriptionUpdateParams implements BaseModel
         ?bool $cancelAtNextBillingDate = null,
         ?DisableOnDemand $disableOnDemand = null,
         ?array $metadata = null,
+        ?\DateTimeInterface $nextBillingDate = null,
         ?string $status = null,
         ?string $taxID = null,
     ): self {
@@ -75,6 +80,7 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $cancelAtNextBillingDate && $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
         null !== $disableOnDemand && $obj->disableOnDemand = $disableOnDemand;
         null !== $metadata && $obj->metadata = $metadata;
+        null !== $nextBillingDate && $obj->nextBillingDate = $nextBillingDate;
         null !== $status && $obj->status = $status;
         null !== $taxID && $obj->taxID = $taxID;
 
@@ -109,6 +115,14 @@ final class SubscriptionUpdateParams implements BaseModel
     public function setMetadata(?array $metadata): self
     {
         $this->metadata = $metadata;
+
+        return $this;
+    }
+
+    public function setNextBillingDate(
+        ?\DateTimeInterface $nextBillingDate
+    ): self {
+        $this->nextBillingDate = $nextBillingDate;
 
         return $this;
     }

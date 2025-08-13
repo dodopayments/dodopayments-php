@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\WebhookEvents;
+namespace Dodopayments\WebhookEvents;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Dispute;
-use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\LicenseKey;
-use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Payment;
-use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Refund;
-use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Subscription;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
 /**
  * @phpstan-type webhook_payload_alias = array{

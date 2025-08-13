@@ -1,11 +1,11 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class Error extends \Exception
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient Error';
+    protected const DESC = 'Dodopayments Error';
 
     public function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
     {

@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient;
+namespace Dodopayments;
 
-use DodopaymentsClient\Addons\AddonsService;
-use DodopaymentsClient\Brands\BrandsService;
-use DodopaymentsClient\Core\BaseClient;
-use DodopaymentsClient\Customers\CustomersService;
-use DodopaymentsClient\Discounts\DiscountsService;
-use DodopaymentsClient\Disputes\DisputesService;
-use DodopaymentsClient\Invoices\InvoicesService;
-use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstancesService;
-use DodopaymentsClient\LicenseKeys\LicenseKeysService;
-use DodopaymentsClient\Licenses\LicensesService;
-use DodopaymentsClient\Misc\MiscService;
-use DodopaymentsClient\Payments\PaymentsService;
-use DodopaymentsClient\Payouts\PayoutsService;
-use DodopaymentsClient\Products\ProductsService;
-use DodopaymentsClient\Refunds\RefundsService;
-use DodopaymentsClient\Subscriptions\SubscriptionsService;
-use DodopaymentsClient\WebhookEvents\WebhookEventsService;
-use DodopaymentsClient\Webhooks\WebhooksService;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLService;
+use Dodopayments\Addons\AddonsService;
+use Dodopayments\Brands\BrandsService;
+use Dodopayments\Core\BaseClient;
+use Dodopayments\Customers\CustomersService;
+use Dodopayments\Discounts\DiscountsService;
+use Dodopayments\Disputes\DisputesService;
+use Dodopayments\Invoices\InvoicesService;
+use Dodopayments\LicenseKeyInstances\LicenseKeyInstancesService;
+use Dodopayments\LicenseKeys\LicenseKeysService;
+use Dodopayments\Licenses\LicensesService;
+use Dodopayments\Misc\MiscService;
+use Dodopayments\Payments\PaymentsService;
+use Dodopayments\Payouts\PayoutsService;
+use Dodopayments\Products\ProductsService;
+use Dodopayments\Refunds\RefundsService;
+use Dodopayments\Subscriptions\SubscriptionsService;
+use Dodopayments\WebhookEvents\WebhookEventsService;
+use Dodopayments\Webhooks\WebhooksService;
+use Dodopayments\YourWebhookURL\YourWebhookURLService;
 
 class Client extends BaseClient
 {

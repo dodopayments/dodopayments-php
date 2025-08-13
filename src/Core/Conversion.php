@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core;
+namespace Dodopayments\Core;
 
-use DodopaymentsClient\Core\Conversion\CoerceState;
-use DodopaymentsClient\Core\Conversion\Contracts\Converter;
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
-use DodopaymentsClient\Core\Conversion\DumpState;
+use Dodopayments\Core\Conversion\CoerceState;
+use Dodopayments\Core\Conversion\Contracts\Converter;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Conversion\DumpState;
 
 final class Conversion
 {

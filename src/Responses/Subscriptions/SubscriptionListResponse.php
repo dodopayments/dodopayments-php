@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Responses\Subscriptions;
+namespace Dodopayments\Responses\Subscriptions;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Core\Conversion\MapOf;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\CustomerLimitedDetails;
-use DodopaymentsClient\Subscriptions\SubscriptionStatus;
-use DodopaymentsClient\Subscriptions\TimeInterval;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\MapOf;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Subscriptions\SubscriptionStatus;
+use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * Response struct representing subscription details.

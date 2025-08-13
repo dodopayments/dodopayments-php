@@ -1,9 +1,9 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class ConflictError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient Conflict Error';
+    protected const DESC = 'Dodopayments Conflict Error';
 }

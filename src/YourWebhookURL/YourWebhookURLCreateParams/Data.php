@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams;
+namespace Dodopayments\YourWebhookURL\YourWebhookURLCreateParams;
 
-use DodopaymentsClient\Core\Concerns\Union;
-use DodopaymentsClient\Core\Conversion\Contracts\Converter;
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund;
-use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
+use Dodopayments\Core\Concerns\Union;
+use Dodopayments\Core\Conversion\Contracts\Converter;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
 
 /**
  * The latest data at the time of delivery attempt.

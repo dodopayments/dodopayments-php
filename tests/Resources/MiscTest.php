@@ -2,7 +2,7 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
+use Dodopayments\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

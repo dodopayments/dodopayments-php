@@ -2,10 +2,10 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Customers\CustomerCreateParams;
-use DodopaymentsClient\Customers\CustomerListParams;
-use DodopaymentsClient\Customers\CustomerUpdateParams;
+use Dodopayments\Client;
+use Dodopayments\Customers\CustomerCreateParams;
+use Dodopayments\Customers\CustomerListParams;
+use Dodopayments\Customers\CustomerUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

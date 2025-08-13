@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Responses\Payouts;
+namespace Dodopayments\Responses\Payouts;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Responses\Payouts\PayoutListResponse\Status;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Responses\Payouts\PayoutListResponse\Status;
 
 /**
  * @phpstan-type payout_list_response_alias = array{

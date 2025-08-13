@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Subscriptions;
+namespace Dodopayments\Subscriptions;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Contracts\SubscriptionsContract;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\NewCustomer;
-use DodopaymentsClient\Payments\PaymentMethodTypes;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Subscriptions\SubscriptionChargeResponse;
-use DodopaymentsClient\Responses\Subscriptions\SubscriptionListResponse;
-use DodopaymentsClient\Responses\Subscriptions\SubscriptionNewResponse;
-use DodopaymentsClient\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
-use DodopaymentsClient\Subscriptions\SubscriptionCreateParams\OnDemand;
-use DodopaymentsClient\Subscriptions\SubscriptionListParams\Status;
-use DodopaymentsClient\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
+use Dodopayments\Client;
+use Dodopayments\Contracts\SubscriptionsContract;
+use Dodopayments\Core\Conversion;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\NewCustomer;
+use Dodopayments\Payments\PaymentMethodTypes;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Subscriptions\SubscriptionChargeResponse;
+use Dodopayments\Responses\Subscriptions\SubscriptionListResponse;
+use Dodopayments\Responses\Subscriptions\SubscriptionNewResponse;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
+use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
+use Dodopayments\Subscriptions\SubscriptionListParams\Status;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 final class SubscriptionsService implements SubscriptionsContract
 {
@@ -83,6 +83,7 @@ final class SubscriptionsService implements SubscriptionsContract
      *   cancelAtNextBillingDate?: null|bool,
      *   disableOnDemand?: null|DisableOnDemand,
      *   metadata?: null|array<string, string>,
+     *   nextBillingDate?: null|\DateTimeInterface,
      *   status?: SubscriptionStatus::*,
      *   taxID?: null|string,
      * }|SubscriptionUpdateParams $params

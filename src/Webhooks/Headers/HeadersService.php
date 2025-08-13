@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Webhooks\Headers;
+namespace Dodopayments\Webhooks\Headers;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Contracts\Webhooks\HeadersContract;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Webhooks\Headers\HeaderGetResponse;
+use Dodopayments\Client;
+use Dodopayments\Contracts\Webhooks\HeadersContract;
+use Dodopayments\Core\Conversion;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Webhooks\Headers\HeaderGetResponse;
 
 final class HeadersService implements HeadersContract
 {

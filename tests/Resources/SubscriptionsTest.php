@@ -2,19 +2,19 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\PaymentMethodTypes;
-use DodopaymentsClient\Subscriptions\AttachAddon;
-use DodopaymentsClient\Subscriptions\SubscriptionChangePlanParams;
-use DodopaymentsClient\Subscriptions\SubscriptionChargeParams;
-use DodopaymentsClient\Subscriptions\SubscriptionCreateParams;
-use DodopaymentsClient\Subscriptions\SubscriptionCreateParams\OnDemand;
-use DodopaymentsClient\Subscriptions\SubscriptionListParams;
-use DodopaymentsClient\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Client;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\PaymentMethodTypes;
+use Dodopayments\Subscriptions\AttachAddon;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChargeParams;
+use Dodopayments\Subscriptions\SubscriptionCreateParams;
+use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
+use Dodopayments\Subscriptions\SubscriptionListParams;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

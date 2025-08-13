@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Products\Price;
+namespace Dodopayments\Products\Price;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Products\Price\OneTimePrice\Type;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Products\Price\OneTimePrice\Type;
 
 /**
  * One-time price details.
