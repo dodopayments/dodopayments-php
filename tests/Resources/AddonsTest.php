@@ -1,0 +1,100 @@
+<?php
+
+namespace Tests\Resources;
+
+use DodoPayments\Addons\AddonCreateParams;
+use DodoPayments\Addons\AddonListParams;
+use DodoPayments\Addons\AddonUpdateParams;
+use DodoPayments\Client;
+use DodoPayments\Misc\Currency;
+use DodoPayments\Misc\TaxCategory;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+use Tests\UnsupportedMockTests;
+
+/**
+ * @internal
+ */
+#[CoversNothing]
+final class AddonsTest extends TestCase
+{
+    protected Client $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $client = new Client(bearerToken: 'My Bearer Token', baseUrl: $testUrl);
+
+        $this->client = $client;
+    }
+
+    #[Test]
+    public function testCreate(): void
+    {
+        $params = AddonCreateParams::from(
+            currency: Currency::AED,
+            name: 'name',
+            price: 0,
+            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+        );
+        $result = $this->client->addons->create($params);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        $params = AddonCreateParams::from(
+            currency: Currency::AED,
+            name: 'name',
+            price: 0,
+            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            description: 'description',
+        );
+        $result = $this->client->addons->create($params);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testRetrieve(): void
+    {
+        $result = $this->client->addons->retrieve('id');
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testUpdate(): void
+    {
+        $params = (new AddonUpdateParams);
+        $result = $this->client->addons->update('id', $params);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testList(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: currently unsupported');
+        }
+
+        $params = (new AddonListParams);
+        $result = $this->client->addons->list($params);
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+
+    #[Test]
+    public function testUpdateImages(): void
+    {
+        $result = $this->client->addons->updateImages('id');
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
+}
