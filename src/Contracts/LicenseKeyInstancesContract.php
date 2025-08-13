@@ -8,7 +8,6 @@ use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
-use Dodopayments\Responses\LicenseKeyInstances\LicenseKeyInstanceListResponseItem;
 
 interface LicenseKeyInstancesContract
 {
@@ -30,11 +29,9 @@ interface LicenseKeyInstancesContract
      * @param array{
      *   licenseKeyID?: null|string, pageNumber?: null|int, pageSize?: null|int
      * }|LicenseKeyInstanceListParams $params
-     *
-     * @return list<LicenseKeyInstanceListResponseItem>
      */
     public function list(
         array|LicenseKeyInstanceListParams $params,
         ?RequestOptions $requestOptions = null,
-    ): array;
+    ): LicenseKeyInstance;
 }

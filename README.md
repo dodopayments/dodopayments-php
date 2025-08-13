@@ -17,10 +17,22 @@ The REST API documentation can be found on [docs.dodopayments.com](https://docs.
 
 ## Installation
 
+To use this package, install via Composer by adding the following to your application's `composer.json`:
+
 <!-- x-release-please-start-version -->
 
-```
-composer require "dodopayments/client 0.0.1"
+```json
+{
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:dodopayments/dodopayments-php.git"
+    }
+  ],
+  "require": {
+    "dodopayments/client": "dev-main"
+  }
+}
 ```
 
 <!-- x-release-please-end -->
