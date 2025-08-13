@@ -1,9 +1,9 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class BadRequestError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient Bad Request Error';
+    protected const DESC = 'Dodopayments Bad Request Error';
 }

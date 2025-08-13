@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Products\Images;
+namespace Dodopayments\Products\Images;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Contracts\Products\ImagesContract;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Products\Images\ImageUpdateResponse;
+use Dodopayments\Client;
+use Dodopayments\Contracts\Products\ImagesContract;
+use Dodopayments\Core\Conversion;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Products\Images\ImageUpdateResponse;
 
 final class ImagesService implements ImagesContract
 {

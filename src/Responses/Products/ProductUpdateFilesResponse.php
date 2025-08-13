@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Responses\Products;
+namespace Dodopayments\Responses\Products;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type product_update_files_response_alias = array{

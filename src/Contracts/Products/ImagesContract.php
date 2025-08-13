@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Contracts\Products;
+namespace Dodopayments\Contracts\Products;
 
-use DodopaymentsClient\Products\Images\ImageUpdateParams;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Products\Images\ImageUpdateResponse;
+use Dodopayments\Products\Images\ImageUpdateParams;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Products\Images\ImageUpdateResponse;
 
 interface ImagesContract
 {

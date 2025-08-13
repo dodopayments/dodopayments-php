@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Subscriptions;
+namespace Dodopayments\Subscriptions;
 
-use DodopaymentsClient\Core\Concerns\Enum;
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Concerns\Enum;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type subscription_status_alias = SubscriptionStatus::*

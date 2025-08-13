@@ -2,12 +2,12 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Addons\AddonCreateParams;
-use DodopaymentsClient\Addons\AddonListParams;
-use DodopaymentsClient\Addons\AddonUpdateParams;
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Misc\TaxCategory;
+use Dodopayments\Addons\AddonCreateParams;
+use Dodopayments\Addons\AddonListParams;
+use Dodopayments\Addons\AddonUpdateParams;
+use Dodopayments\Client;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\TaxCategory;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

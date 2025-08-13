@@ -5,7 +5,7 @@
       "src/Client.php"
     ],
     "psr-4": {
-      "DodopaymentsClient\\": "src/"
+      "Dodopayments\\": "src/"
     }
   },
   "autoload-dev": {

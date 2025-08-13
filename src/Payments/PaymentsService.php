@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Payments;
+namespace Dodopayments\Payments;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Contracts\PaymentsContract;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Payments\PaymentListParams\Status;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Payments\PaymentGetLineItemsResponse;
-use DodopaymentsClient\Responses\Payments\PaymentListResponse;
-use DodopaymentsClient\Responses\Payments\PaymentNewResponse;
+use Dodopayments\Client;
+use Dodopayments\Contracts\PaymentsContract;
+use Dodopayments\Core\Conversion;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\PaymentListParams\Status;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse;
+use Dodopayments\Responses\Payments\PaymentListResponse;
+use Dodopayments\Responses\Payments\PaymentNewResponse;
 
 final class PaymentsService implements PaymentsContract
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Products\ProductUpdateParams;
+namespace Dodopayments\Products\ProductUpdateParams;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Core\Conversion\ListOf;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\ListOf;
 
 /**
  * Choose how you would like you digital product delivered.

@@ -1,8 +1,8 @@
 <?php
 
-namespace DodopaymentsClient\Core\Pagination;
+namespace Dodopayments\Core\Pagination;
 
-use DodopaymentsClient\Core\BaseClient;
+use Dodopayments\Core\BaseClient;
 use Psr\Http\Message\ResponseInterface;
 
 /**

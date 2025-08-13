@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Contracts\Customers;
+namespace Dodopayments\Contracts\Customers;
 
-use DodopaymentsClient\Customers\CustomerPortal\CustomerPortalCreateParams;
-use DodopaymentsClient\Customers\CustomerPortalSession;
-use DodopaymentsClient\RequestOptions;
+use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
+use Dodopayments\Customers\CustomerPortalSession;
+use Dodopayments\RequestOptions;
 
 interface CustomerPortalContract
 {

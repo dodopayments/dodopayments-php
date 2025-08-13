@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core\Concerns;
+namespace Dodopayments\Core\Concerns;
 
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\Core\Conversion\CoerceState;
-use DodopaymentsClient\Core\Conversion\Contracts\Converter;
-use DodopaymentsClient\Core\Conversion\ModelOf;
-use DodopaymentsClient\Core\Util;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Conversion\CoerceState;
+use Dodopayments\Core\Conversion\Contracts\Converter;
+use Dodopayments\Core\Conversion\ModelOf;
+use Dodopayments\Core\Util;
 
 /**
  * @internal

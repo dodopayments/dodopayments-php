@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Contracts;
+namespace Dodopayments\Contracts;
 
-use DodopaymentsClient\Brands\Brand;
-use DodopaymentsClient\Brands\BrandCreateParams;
-use DodopaymentsClient\Brands\BrandUpdateParams;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Responses\Brands\BrandListResponse;
-use DodopaymentsClient\Responses\Brands\BrandUpdateImagesResponse;
+use Dodopayments\Brands\Brand;
+use Dodopayments\Brands\BrandCreateParams;
+use Dodopayments\Brands\BrandUpdateParams;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\Brands\BrandListResponse;
+use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
 
 interface BrandsContract
 {

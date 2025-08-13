@@ -2,11 +2,11 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Discounts\DiscountCreateParams;
-use DodopaymentsClient\Discounts\DiscountListParams;
-use DodopaymentsClient\Discounts\DiscountType;
-use DodopaymentsClient\Discounts\DiscountUpdateParams;
+use Dodopayments\Client;
+use Dodopayments\Discounts\DiscountCreateParams;
+use Dodopayments\Discounts\DiscountListParams;
+use Dodopayments\Discounts\DiscountType;
+use Dodopayments\Discounts\DiscountUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

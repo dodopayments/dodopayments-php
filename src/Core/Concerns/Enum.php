@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core\Concerns;
+namespace Dodopayments\Core\Concerns;
 
-use DodopaymentsClient\Core\Conversion\Contracts\Converter;
-use DodopaymentsClient\Core\Conversion\EnumOf;
+use Dodopayments\Core\Conversion\Contracts\Converter;
+use Dodopayments\Core\Conversion\EnumOf;
 
 trait Enum
 {

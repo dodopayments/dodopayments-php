@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Responses\Brands;
+namespace Dodopayments\Responses\Brands;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type brand_update_images_response_alias = array{

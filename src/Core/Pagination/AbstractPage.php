@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core\Pagination;
+namespace Dodopayments\Core\Pagination;
 
-use DodopaymentsClient\Core\BaseClient;
-use DodopaymentsClient\Core\Concerns\Page;
-use DodopaymentsClient\Errors\Error;
+use Dodopayments\Core\BaseClient;
+use Dodopayments\Core\Concerns\Page;
+use Dodopayments\Errors\Error;
 use Psr\Http\Message\ResponseInterface;
 
 /**

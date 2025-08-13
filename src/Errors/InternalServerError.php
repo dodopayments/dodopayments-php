@@ -1,9 +1,9 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class InternalServerError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient Internal Server Error';
+    protected const DESC = 'Dodopayments Internal Server Error';
 }

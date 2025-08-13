@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Products;
+namespace Dodopayments\Products;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Subscriptions\TimeInterval;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-type license_key_duration_alias = array{

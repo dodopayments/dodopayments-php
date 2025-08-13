@@ -2,11 +2,11 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\WebhookEvents\WebhookEventType;
-use DodopaymentsClient\Webhooks\WebhookCreateParams;
-use DodopaymentsClient\Webhooks\WebhookListParams;
-use DodopaymentsClient\Webhooks\WebhookUpdateParams;
+use Dodopayments\Client;
+use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\Webhooks\WebhookCreateParams;
+use Dodopayments\Webhooks\WebhookListParams;
+use Dodopayments\Webhooks\WebhookUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

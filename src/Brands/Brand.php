@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Brands;
+namespace Dodopayments\Brands;
 
-use DodopaymentsClient\Brands\Brand\VerificationStatus;
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
+use Dodopayments\Brands\Brand\VerificationStatus;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type brand_alias = array{

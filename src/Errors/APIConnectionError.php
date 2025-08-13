@@ -1,9 +1,9 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class APIConnectionError extends APIError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient API Connection Error';
+    protected const DESC = 'Dodopayments API Connection Error';
 }

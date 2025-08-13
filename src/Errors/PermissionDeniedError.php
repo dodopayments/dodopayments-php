@@ -1,9 +1,9 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
 class PermissionDeniedError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient Permission Denied Error';
+    protected const DESC = 'Dodopayments Permission Denied Error';
 }

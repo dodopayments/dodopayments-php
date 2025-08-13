@@ -30,12 +30,12 @@ composer require "dodopayments/client 0.0.1"
 ```php
 <?php
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Payments\PaymentCreateParams;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\OneTimeProductCartItem;
+use Dodopayments\Client;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 
 $client = new Client(
   bearerToken: getenv("DODO_PAYMENTS_API_KEY") ?: "My Bearer Token",
@@ -62,17 +62,17 @@ var_dump($payment->payment_id);
 
 ### Handling errors
 
-When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `DodopaymentsClient\Errors\APIError` will be thrown:
+When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `Dodopayments\Errors\APIError` will be thrown:
 
 ```php
 <?php
 
-use DodopaymentsClient\Errors\APIConnectionError;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Payments\PaymentCreateParams;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\OneTimeProductCartItem;
+use Dodopayments\Errors\APIConnectionError;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 
 try {
     $params = PaymentCreateParams::from(
@@ -127,13 +127,13 @@ You can use the `max_retries` option to configure or disable this:
 ```php
 <?php
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Payments\PaymentCreateParams;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\OneTimeProductCartItem;
+use Dodopayments\Client;
+use Dodopayments\RequestOptions;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
@@ -168,12 +168,12 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
-use DodopaymentsClient\RequestOptions;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Payments\PaymentCreateParams;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\OneTimeProductCartItem;
+use Dodopayments\RequestOptions;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 
 $params = PaymentCreateParams::from(
   billing: BillingAddress::from(

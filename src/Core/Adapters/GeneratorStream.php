@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core;
+namespace Dodopayments\Core;
 
 use Psr\Http\Message\StreamInterface;
 

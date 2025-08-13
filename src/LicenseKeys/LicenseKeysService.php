@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\LicenseKeys;
+namespace Dodopayments\LicenseKeys;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Contracts\LicenseKeysContract;
-use DodopaymentsClient\Core\Conversion;
-use DodopaymentsClient\LicenseKeys\LicenseKeyListParams\Status;
-use DodopaymentsClient\RequestOptions;
+use Dodopayments\Client;
+use Dodopayments\Contracts\LicenseKeysContract;
+use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Conversion\ListOf;
+use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
+use Dodopayments\RequestOptions;
+use Dodopayments\Responses\LicenseKeys\LicenseKeyListResponseItem;
 
 final class LicenseKeysService implements LicenseKeysContract
 {
@@ -63,11 +65,13 @@ final class LicenseKeysService implements LicenseKeysContract
      *   productID?: string,
      *   status?: Status::*,
      * }|LicenseKeyListParams $params
+     *
+     * @return list<LicenseKeyListResponseItem>
      */
     public function list(
         array|LicenseKeyListParams $params,
         ?RequestOptions $requestOptions = null
-    ): LicenseKey {
+    ): array {
         [$parsed, $options] = LicenseKeyListParams::parseRequest(
             $params,
             $requestOptions
@@ -80,6 +84,9 @@ final class LicenseKeysService implements LicenseKeysContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(LicenseKey::class, value: $resp);
+        return Conversion::coerce(
+            new ListOf(LicenseKeyListResponseItem::class),
+            value: $resp
+        );
     }
 }

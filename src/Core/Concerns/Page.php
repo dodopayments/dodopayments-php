@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Core\Concerns;
+namespace Dodopayments\Core\Concerns;
 
-use DodopaymentsClient\Core\BaseClient;
-use DodopaymentsClient\Core\Pagination\PageRequestOptions;
+use Dodopayments\Core\BaseClient;
+use Dodopayments\Core\Pagination\PageRequestOptions;
 use Psr\Http\Message\ResponseInterface;
 
 /**

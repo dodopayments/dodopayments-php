@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Products;
+namespace Dodopayments\Products;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Core\Conversion\ListOf;
-use DodopaymentsClient\Core\Conversion\MapOf;
-use DodopaymentsClient\Misc\TaxCategory;
-use DodopaymentsClient\Products\Price\OneTimePrice;
-use DodopaymentsClient\Products\Price\RecurringPrice;
-use DodopaymentsClient\Products\Product\DigitalProductDelivery;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\ListOf;
+use Dodopayments\Core\Conversion\MapOf;
+use Dodopayments\Misc\TaxCategory;
+use Dodopayments\Products\Price\OneTimePrice;
+use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Product\DigitalProductDelivery;
 
 /**
  * @phpstan-type product_alias = array{

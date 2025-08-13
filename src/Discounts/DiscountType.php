@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Discounts;
+namespace Dodopayments\Discounts;
 
-use DodopaymentsClient\Core\Concerns\Enum;
-use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Concerns\Enum;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type discount_type_alias = DiscountType::*

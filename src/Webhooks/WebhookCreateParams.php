@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Webhooks;
+namespace Dodopayments\Webhooks;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Concerns\Params;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Core\Conversion\ListOf;
-use DodopaymentsClient\Core\Conversion\MapOf;
-use DodopaymentsClient\WebhookEvents\WebhookEventType;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\ListOf;
+use Dodopayments\Core\Conversion\MapOf;
+use Dodopayments\WebhookEvents\WebhookEventType;
 
 /**
  * Create a new webhook.
@@ -37,11 +37,6 @@ final class WebhookCreateParams implements BaseModel
     #[Api]
     public string $url;
 
-    /**
-     * Filter events to the webhook.
-     *
-     * Webhook event will only be sent for events in the list.
-     */
     #[Api(optional: true)]
     public ?string $description;
 
@@ -53,7 +48,13 @@ final class WebhookCreateParams implements BaseModel
     #[Api(optional: true)]
     public ?bool $disabled;
 
-    /** @var null|list<WebhookEventType::*> $filterTypes */
+    /**
+     * Filter events to the webhook.
+     *
+     * Webhook event will only be sent for events in the list.
+     *
+     * @var null|list<WebhookEventType::*> $filterTypes
+     */
     #[Api(
         'filter_types',
         type: new ListOf(enum: WebhookEventType::class),
@@ -137,11 +138,6 @@ final class WebhookCreateParams implements BaseModel
         return $this;
     }
 
-    /**
-     * Filter events to the webhook.
-     *
-     * Webhook event will only be sent for events in the list.
-     */
     public function setDescription(?string $description): self
     {
         $this->description = $description;
@@ -162,6 +158,10 @@ final class WebhookCreateParams implements BaseModel
     }
 
     /**
+     * Filter events to the webhook.
+     *
+     * Webhook event will only be sent for events in the list.
+     *
      * @param list<WebhookEventType::*> $filterTypes
      */
     public function setFilterTypes(array $filterTypes): self

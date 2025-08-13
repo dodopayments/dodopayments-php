@@ -2,15 +2,15 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Client;
-use DodopaymentsClient\Misc\CountryCode;
-use DodopaymentsClient\Misc\Currency;
-use DodopaymentsClient\Payments\AttachExistingCustomer;
-use DodopaymentsClient\Payments\BillingAddress;
-use DodopaymentsClient\Payments\OneTimeProductCartItem;
-use DodopaymentsClient\Payments\PaymentCreateParams;
-use DodopaymentsClient\Payments\PaymentListParams;
-use DodopaymentsClient\Payments\PaymentMethodTypes;
+use Dodopayments\Client;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\OneTimeProductCartItem;
+use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\PaymentListParams;
+use Dodopayments\Payments\PaymentMethodTypes;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

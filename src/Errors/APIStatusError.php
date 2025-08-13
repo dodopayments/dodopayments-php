@@ -1,15 +1,15 @@
 <?php
 
-namespace DodopaymentsClient\Errors;
+namespace Dodopayments\Errors;
 
-use DodopaymentsClient\Core\Util;
+use Dodopayments\Core\Util;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 class APIStatusError extends APIError
 {
     /** @var string */
-    protected const DESC = 'DodopaymentsClient API Status Error';
+    protected const DESC = 'Dodopayments API Status Error';
 
     public ?int $status;
 

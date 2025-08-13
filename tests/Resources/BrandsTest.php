@@ -2,9 +2,9 @@
 
 namespace Tests\Resources;
 
-use DodopaymentsClient\Brands\BrandCreateParams;
-use DodopaymentsClient\Brands\BrandUpdateParams;
-use DodopaymentsClient\Client;
+use Dodopayments\Brands\BrandCreateParams;
+use Dodopayments\Brands\BrandUpdateParams;
+use Dodopayments\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

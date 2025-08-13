@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodopaymentsClient\Responses\Disputes;
+namespace Dodopayments\Responses\Disputes;
 
-use DodopaymentsClient\Core\Attributes\Api;
-use DodopaymentsClient\Core\Concerns\Model;
-use DodopaymentsClient\Core\Contracts\BaseModel;
-use DodopaymentsClient\Disputes\DisputeStage;
-use DodopaymentsClient\Disputes\DisputeStatus;
+use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Disputes\DisputeStage;
+use Dodopayments\Disputes\DisputeStatus;
 
 /**
  * @phpstan-type dispute_list_response_alias = array{
