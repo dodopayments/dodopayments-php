@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\WebhookEvents;
+namespace DodopaymentsClient\WebhookEvents;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\WebhookEventsContract;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\WebhookEventsContract;
 
 final class WebhookEventsService implements WebhookEventsContract
 {

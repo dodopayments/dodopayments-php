@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Customers\Customer;
-use DodoPayments\Customers\CustomerCreateParams;
-use DodoPayments\Customers\CustomerListParams;
-use DodoPayments\Customers\CustomerUpdateParams;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Customers\Customer;
+use DodopaymentsClient\Customers\CustomerCreateParams;
+use DodopaymentsClient\Customers\CustomerListParams;
+use DodopaymentsClient\Customers\CustomerUpdateParams;
+use DodopaymentsClient\RequestOptions;
 
 interface CustomersContract
 {

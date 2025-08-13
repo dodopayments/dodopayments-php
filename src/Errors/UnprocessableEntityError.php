@@ -1,9 +1,9 @@
 <?php
 
-namespace DodoPayments\Errors;
+namespace DodopaymentsClient\Errors;
 
 class UnprocessableEntityError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodoPayments Unprocessable Entity Error';
+    protected const DESC = 'DodopaymentsClient Unprocessable Entity Error';
 }

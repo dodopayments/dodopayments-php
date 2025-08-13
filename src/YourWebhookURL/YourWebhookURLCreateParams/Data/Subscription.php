@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data;
+namespace DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription\PayloadType;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription\PayloadType;
 
 /**
  * Response struct representing subscription details.

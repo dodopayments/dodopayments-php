@@ -2,8 +2,8 @@
 
 namespace Tests\Resources\Customers;
 
-use DodoPayments\Client;
-use DodoPayments\Customers\CustomerPortal\CustomerPortalCreateParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Customers\CustomerPortal\CustomerPortalCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

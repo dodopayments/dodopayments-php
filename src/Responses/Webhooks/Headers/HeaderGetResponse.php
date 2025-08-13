@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Responses\Webhooks\Headers;
+namespace DodopaymentsClient\Responses\Webhooks\Headers;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\ListOf;
-use DodoPayments\Core\Conversion\MapOf;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\ListOf;
+use DodopaymentsClient\Core\Conversion\MapOf;
 
 /**
  * The value of the headers is returned in the `headers` field.

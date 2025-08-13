@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Customers;
+namespace DodopaymentsClient\Customers;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\CustomersContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\Customers\CustomerPortal\CustomerPortalService;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\CustomersContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\Customers\CustomerPortal\CustomerPortalService;
+use DodopaymentsClient\RequestOptions;
 
 final class CustomersService implements CustomersContract
 {

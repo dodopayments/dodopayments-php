@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Disputes;
+namespace DodopaymentsClient\Disputes;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Concerns\Params;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Disputes\DisputeListParams\DisputeStage as DisputeStage1;
-use DodoPayments\Disputes\DisputeListParams\DisputeStatus as DisputeStatus1;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Concerns\Params;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Disputes\DisputeListParams\DisputeStage as DisputeStage1;
+use DodopaymentsClient\Disputes\DisputeListParams\DisputeStatus as DisputeStatus1;
 
 /**
  * @phpstan-type list_params = array{

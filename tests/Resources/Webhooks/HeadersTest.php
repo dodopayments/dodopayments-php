@@ -2,8 +2,8 @@
 
 namespace Tests\Resources\Webhooks;
 
-use DodoPayments\Client;
-use DodoPayments\Webhooks\Headers\HeaderUpdateParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Webhooks\Headers\HeaderUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

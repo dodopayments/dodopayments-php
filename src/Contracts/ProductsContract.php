@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Misc\TaxCategory;
-use DodoPayments\Products\LicenseKeyDuration;
-use DodoPayments\Products\Price\OneTimePrice;
-use DodoPayments\Products\Price\RecurringPrice;
-use DodoPayments\Products\Product;
-use DodoPayments\Products\ProductCreateParams;
-use DodoPayments\Products\ProductCreateParams\DigitalProductDelivery;
-use DodoPayments\Products\ProductListParams;
-use DodoPayments\Products\ProductUpdateFilesParams;
-use DodoPayments\Products\ProductUpdateParams;
-use DodoPayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDelivery1;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Products\ProductListResponse;
-use DodoPayments\Responses\Products\ProductUpdateFilesResponse;
+use DodopaymentsClient\Misc\TaxCategory;
+use DodopaymentsClient\Products\LicenseKeyDuration;
+use DodopaymentsClient\Products\Price\OneTimePrice;
+use DodopaymentsClient\Products\Price\RecurringPrice;
+use DodopaymentsClient\Products\Product;
+use DodopaymentsClient\Products\ProductCreateParams;
+use DodopaymentsClient\Products\ProductCreateParams\DigitalProductDelivery;
+use DodopaymentsClient\Products\ProductListParams;
+use DodopaymentsClient\Products\ProductUpdateFilesParams;
+use DodopaymentsClient\Products\ProductUpdateParams;
+use DodopaymentsClient\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDelivery1;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Products\ProductListResponse;
+use DodopaymentsClient\Responses\Products\ProductUpdateFilesResponse;
 
 interface ProductsContract
 {

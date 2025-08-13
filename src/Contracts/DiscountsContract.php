@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Discounts\Discount;
-use DodoPayments\Discounts\DiscountCreateParams;
-use DodoPayments\Discounts\DiscountListParams;
-use DodoPayments\Discounts\DiscountType;
-use DodoPayments\Discounts\DiscountUpdateParams;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Discounts\Discount;
+use DodopaymentsClient\Discounts\DiscountCreateParams;
+use DodopaymentsClient\Discounts\DiscountListParams;
+use DodopaymentsClient\Discounts\DiscountType;
+use DodopaymentsClient\Discounts\DiscountUpdateParams;
+use DodopaymentsClient\RequestOptions;
 
 interface DiscountsContract
 {

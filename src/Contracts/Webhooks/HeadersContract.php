@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts\Webhooks;
+namespace DodopaymentsClient\Contracts\Webhooks;
 
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Webhooks\Headers\HeaderGetResponse;
-use DodoPayments\Webhooks\Headers\HeaderUpdateParams;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Webhooks\Headers\HeaderGetResponse;
+use DodopaymentsClient\Webhooks\Headers\HeaderUpdateParams;
 
 interface HeadersContract
 {

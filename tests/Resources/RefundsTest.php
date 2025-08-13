@@ -2,10 +2,10 @@
 
 namespace Tests\Resources;
 
-use DodoPayments\Client;
-use DodoPayments\Refunds\RefundCreateParams;
-use DodoPayments\Refunds\RefundCreateParams\Item;
-use DodoPayments\Refunds\RefundListParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Refunds\RefundCreateParams;
+use DodopaymentsClient\Refunds\RefundCreateParams\Item;
+use DodopaymentsClient\Refunds\RefundListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

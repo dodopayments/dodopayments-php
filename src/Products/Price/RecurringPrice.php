@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Products\Price;
+namespace DodopaymentsClient\Products\Price;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Products\Price\RecurringPrice\Type;
-use DodoPayments\Subscriptions\TimeInterval;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Products\Price\RecurringPrice\Type;
+use DodopaymentsClient\Subscriptions\TimeInterval;
 
 /**
  * Recurring price details.

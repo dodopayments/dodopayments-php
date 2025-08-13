@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Webhooks\Headers;
+namespace DodopaymentsClient\Webhooks\Headers;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Concerns\Params;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\MapOf;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Concerns\Params;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\MapOf;
 
 /**
  * Patch a webhook by id.

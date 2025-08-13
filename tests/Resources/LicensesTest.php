@@ -2,10 +2,10 @@
 
 namespace Tests\Resources;
 
-use DodoPayments\Client;
-use DodoPayments\Licenses\LicenseActivateParams;
-use DodoPayments\Licenses\LicenseDeactivateParams;
-use DodoPayments\Licenses\LicenseValidateParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Licenses\LicenseActivateParams;
+use DodopaymentsClient\Licenses\LicenseDeactivateParams;
+use DodopaymentsClient\Licenses\LicenseValidateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

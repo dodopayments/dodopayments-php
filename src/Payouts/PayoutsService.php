@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Payouts;
+namespace DodopaymentsClient\Payouts;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\PayoutsContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Payouts\PayoutListResponse;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\PayoutsContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Payouts\PayoutListResponse;
 
 final class PayoutsService implements PayoutsContract
 {

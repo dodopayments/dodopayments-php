@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core\Pagination;
+namespace DodopaymentsClient\Core\Pagination;
 
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\RequestOptions;
 
 /**
  * @internal

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Payouts\PayoutListParams;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Payouts\PayoutListResponse;
+use DodopaymentsClient\Payouts\PayoutListParams;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Payouts\PayoutListResponse;
 
 interface PayoutsContract
 {

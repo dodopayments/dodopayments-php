@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core\Conversion;
+namespace DodopaymentsClient\Core\Conversion;
 
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion;
-use DodoPayments\Core\Conversion\Contracts\Converter;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\Core\Conversion\Contracts\Converter;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
 
 final class UnionOf implements Converter
 {

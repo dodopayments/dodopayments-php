@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\LicenseKeys;
+namespace DodopaymentsClient\LicenseKeys;
 
-use DodoPayments\Core\Concerns\Enum;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\Core\Concerns\Enum;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type license_key_status_alias = LicenseKeyStatus::*

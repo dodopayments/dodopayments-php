@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Subscriptions;
+namespace DodopaymentsClient\Subscriptions;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\SubscriptionsContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Payments\AttachExistingCustomer;
-use DodoPayments\Payments\BillingAddress;
-use DodoPayments\Payments\NewCustomer;
-use DodoPayments\Payments\PaymentMethodTypes;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Subscriptions\SubscriptionChargeResponse;
-use DodoPayments\Responses\Subscriptions\SubscriptionListResponse;
-use DodoPayments\Responses\Subscriptions\SubscriptionNewResponse;
-use DodoPayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
-use DodoPayments\Subscriptions\SubscriptionCreateParams\OnDemand;
-use DodoPayments\Subscriptions\SubscriptionListParams\Status;
-use DodoPayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\SubscriptionsContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Payments\AttachExistingCustomer;
+use DodopaymentsClient\Payments\BillingAddress;
+use DodopaymentsClient\Payments\NewCustomer;
+use DodopaymentsClient\Payments\PaymentMethodTypes;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Subscriptions\SubscriptionChargeResponse;
+use DodopaymentsClient\Responses\Subscriptions\SubscriptionListResponse;
+use DodopaymentsClient\Responses\Subscriptions\SubscriptionNewResponse;
+use DodopaymentsClient\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
+use DodopaymentsClient\Subscriptions\SubscriptionCreateParams\OnDemand;
+use DodopaymentsClient\Subscriptions\SubscriptionListParams\Status;
+use DodopaymentsClient\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 final class SubscriptionsService implements SubscriptionsContract
 {

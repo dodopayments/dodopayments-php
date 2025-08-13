@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Disputes\DisputeListParams;
-use DodoPayments\Disputes\DisputeListParams\DisputeStage;
-use DodoPayments\Disputes\DisputeListParams\DisputeStatus;
-use DodoPayments\Disputes\GetDispute;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Disputes\DisputeListResponse;
+use DodopaymentsClient\Disputes\DisputeListParams;
+use DodopaymentsClient\Disputes\DisputeListParams\DisputeStage;
+use DodopaymentsClient\Disputes\DisputeListParams\DisputeStatus;
+use DodopaymentsClient\Disputes\GetDispute;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Disputes\DisputeListResponse;
 
 interface DisputesContract
 {

@@ -2,17 +2,17 @@
 
 namespace Tests\Resources;
 
-use DodoPayments\Client;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Misc\TaxCategory;
-use DodoPayments\Products\LicenseKeyDuration;
-use DodoPayments\Products\Price\OneTimePrice;
-use DodoPayments\Products\ProductCreateParams;
-use DodoPayments\Products\ProductCreateParams\DigitalProductDelivery;
-use DodoPayments\Products\ProductListParams;
-use DodoPayments\Products\ProductUpdateFilesParams;
-use DodoPayments\Products\ProductUpdateParams;
-use DodoPayments\Subscriptions\TimeInterval;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Misc\TaxCategory;
+use DodopaymentsClient\Products\LicenseKeyDuration;
+use DodopaymentsClient\Products\Price\OneTimePrice;
+use DodopaymentsClient\Products\ProductCreateParams;
+use DodopaymentsClient\Products\ProductCreateParams\DigitalProductDelivery;
+use DodopaymentsClient\Products\ProductListParams;
+use DodopaymentsClient\Products\ProductUpdateFilesParams;
+use DodopaymentsClient\Products\ProductUpdateParams;
+use DodopaymentsClient\Subscriptions\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

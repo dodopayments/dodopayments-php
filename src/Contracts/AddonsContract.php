@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Addons\AddonCreateParams;
-use DodoPayments\Addons\AddonListParams;
-use DodoPayments\Addons\AddonResponse;
-use DodoPayments\Addons\AddonUpdateParams;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Misc\TaxCategory;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Addons\AddonUpdateImagesResponse;
+use DodopaymentsClient\Addons\AddonCreateParams;
+use DodopaymentsClient\Addons\AddonListParams;
+use DodopaymentsClient\Addons\AddonResponse;
+use DodopaymentsClient\Addons\AddonUpdateParams;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Misc\TaxCategory;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Addons\AddonUpdateImagesResponse;
 
 interface AddonsContract
 {

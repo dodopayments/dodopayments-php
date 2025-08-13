@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Discounts;
+namespace DodopaymentsClient\Discounts;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\DiscountsContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\DiscountsContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\RequestOptions;
 
 final class DiscountsService implements DiscountsContract
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace DodoPayments\Errors;
+namespace DodopaymentsClient\Errors;
 
 use Psr\Http\Message\RequestInterface;
 
 class APITimeoutError extends APIConnectionError
 {
     /** @var string */
-    protected const DESC = 'DodoPayments API Timeout Error';
+    protected const DESC = 'DodopaymentsClient API Timeout Error';
 
     public function __construct(
         public RequestInterface $request,

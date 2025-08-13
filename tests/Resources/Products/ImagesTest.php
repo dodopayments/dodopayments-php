@@ -2,8 +2,8 @@
 
 namespace Tests\Resources\Products;
 
-use DodoPayments\Client;
-use DodoPayments\Products\Images\ImageUpdateParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Products\Images\ImageUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

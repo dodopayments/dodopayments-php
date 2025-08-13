@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core;
+namespace DodopaymentsClient\Core;
 
-use DodoPayments\Errors\APIStatusError;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Errors\APIStatusError;
+use DodopaymentsClient\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;

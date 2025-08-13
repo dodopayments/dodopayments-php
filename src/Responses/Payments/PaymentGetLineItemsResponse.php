@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Responses\Payments;
+namespace DodopaymentsClient\Responses\Payments;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\ListOf;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Responses\Payments\PaymentGetLineItemsResponse\Item;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\ListOf;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Responses\Payments\PaymentGetLineItemsResponse\Item;
 
 /**
  * @phpstan-type payment_get_line_items_response_alias = array{

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\WebhookEvents\WebhookPayload;
+namespace DodopaymentsClient\WebhookEvents\WebhookPayload;
 
-use DodoPayments\Core\Concerns\Union;
-use DodoPayments\Core\Conversion\Contracts\Converter;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
-use DodoPayments\WebhookEvents\WebhookPayload\Data\Dispute;
-use DodoPayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
-use DodoPayments\WebhookEvents\WebhookPayload\Data\Payment;
-use DodoPayments\WebhookEvents\WebhookPayload\Data\Refund;
-use DodoPayments\WebhookEvents\WebhookPayload\Data\Subscription;
+use DodopaymentsClient\Core\Concerns\Union;
+use DodopaymentsClient\Core\Conversion\Contracts\Converter;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Dispute;
+use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\LicenseKey;
+use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Payment;
+use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Refund;
+use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Subscription;
 
 /**
  * The latest data at the time of delivery attempt.

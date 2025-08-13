@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Payments;
+namespace DodopaymentsClient\Payments;
 
-use DodoPayments\Core\Concerns\Enum;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\Core\Concerns\Enum;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type intent_status_alias = IntentStatus::*

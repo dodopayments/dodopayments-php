@@ -2,6 +2,6 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
 interface InvoicesContract {}

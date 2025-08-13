@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Payments;
+namespace DodopaymentsClient\Payments;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\ListOf;
-use DodoPayments\Core\Conversion\MapOf;
-use DodoPayments\Disputes\Dispute;
-use DodoPayments\Misc\CountryCode;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Payments\Payment\ProductCart;
-use DodoPayments\Refunds\Refund;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\ListOf;
+use DodopaymentsClient\Core\Conversion\MapOf;
+use DodopaymentsClient\Disputes\Dispute;
+use DodopaymentsClient\Misc\CountryCode;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Payments\Payment\ProductCart;
+use DodopaymentsClient\Refunds\Refund;
 
 /**
  * @phpstan-type payment_alias = array{

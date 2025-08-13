@@ -2,8 +2,8 @@
 
 namespace Tests\Resources;
 
-use DodoPayments\Client;
-use DodoPayments\Payouts\PayoutListParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Payouts\PayoutListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

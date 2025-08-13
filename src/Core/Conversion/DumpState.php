@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core\Conversion;
+namespace DodopaymentsClient\Core\Conversion;
 
 /**
  * @internal

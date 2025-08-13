@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Subscriptions\SubscriptionUpdateParams;
+namespace DodopaymentsClient\Subscriptions\SubscriptionUpdateParams;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type disable_on_demand_alias = array{

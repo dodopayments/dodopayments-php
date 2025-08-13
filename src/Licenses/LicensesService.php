@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Licenses;
+namespace DodopaymentsClient\Licenses;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\LicensesContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstance;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Licenses\LicenseValidateResponse;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\LicensesContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstance;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Licenses\LicenseValidateResponse;
 
 final class LicensesService implements LicensesContract
 {

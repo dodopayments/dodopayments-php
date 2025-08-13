@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Responses\Payments\PaymentGetLineItemsResponse;
+namespace DodopaymentsClient\Responses\Payments\PaymentGetLineItemsResponse;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type item_alias = array{

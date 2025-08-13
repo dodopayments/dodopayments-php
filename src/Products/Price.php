@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Products;
+namespace DodopaymentsClient\Products;
 
-use DodoPayments\Core\Concerns\Union;
-use DodoPayments\Core\Conversion\Contracts\Converter;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
-use DodoPayments\Products\Price\OneTimePrice;
-use DodoPayments\Products\Price\RecurringPrice;
+use DodopaymentsClient\Core\Concerns\Union;
+use DodopaymentsClient\Core\Conversion\Contracts\Converter;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\Products\Price\OneTimePrice;
+use DodopaymentsClient\Products\Price\RecurringPrice;
 
 /**
  * One-time price details.

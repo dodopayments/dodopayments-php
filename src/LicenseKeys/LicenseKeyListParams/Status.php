@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\LicenseKeys\LicenseKeyListParams;
+namespace DodopaymentsClient\LicenseKeys\LicenseKeyListParams;
 
-use DodoPayments\Core\Concerns\Enum;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\Core\Concerns\Enum;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Filter by license key status.

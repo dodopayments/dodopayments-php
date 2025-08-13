@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstance;
-use DodoPayments\Licenses\LicenseActivateParams;
-use DodoPayments\Licenses\LicenseDeactivateParams;
-use DodoPayments\Licenses\LicenseValidateParams;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Licenses\LicenseValidateResponse;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstance;
+use DodopaymentsClient\Licenses\LicenseActivateParams;
+use DodopaymentsClient\Licenses\LicenseDeactivateParams;
+use DodopaymentsClient\Licenses\LicenseValidateParams;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Licenses\LicenseValidateResponse;
 
 interface LicensesContract
 {

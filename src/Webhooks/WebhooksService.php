@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Webhooks;
+namespace DodopaymentsClient\Webhooks;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\WebhooksContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Webhooks\WebhookGetResponse;
-use DodoPayments\Responses\Webhooks\WebhookListResponse;
-use DodoPayments\Responses\Webhooks\WebhookNewResponse;
-use DodoPayments\Responses\Webhooks\WebhookUpdateResponse;
-use DodoPayments\WebhookEvents\WebhookEventType;
-use DodoPayments\Webhooks\Headers\HeadersService;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\WebhooksContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Webhooks\WebhookGetResponse;
+use DodopaymentsClient\Responses\Webhooks\WebhookListResponse;
+use DodopaymentsClient\Responses\Webhooks\WebhookNewResponse;
+use DodopaymentsClient\Responses\Webhooks\WebhookUpdateResponse;
+use DodopaymentsClient\WebhookEvents\WebhookEventType;
+use DodopaymentsClient\Webhooks\Headers\HeadersService;
 
 final class WebhooksService implements WebhooksContract
 {

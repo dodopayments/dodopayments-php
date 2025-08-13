@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Products;
+namespace DodopaymentsClient\Products;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\ProductsContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\Misc\TaxCategory;
-use DodoPayments\Products\Images\ImagesService;
-use DodoPayments\Products\Price\OneTimePrice;
-use DodoPayments\Products\Price\RecurringPrice;
-use DodoPayments\Products\ProductCreateParams\DigitalProductDelivery;
-use DodoPayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDelivery1;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Products\ProductListResponse;
-use DodoPayments\Responses\Products\ProductUpdateFilesResponse;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\ProductsContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\Misc\TaxCategory;
+use DodopaymentsClient\Products\Images\ImagesService;
+use DodopaymentsClient\Products\Price\OneTimePrice;
+use DodopaymentsClient\Products\Price\RecurringPrice;
+use DodopaymentsClient\Products\ProductCreateParams\DigitalProductDelivery;
+use DodopaymentsClient\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDelivery1;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Products\ProductListResponse;
+use DodopaymentsClient\Responses\Products\ProductUpdateFilesResponse;
 
 final class ProductsService implements ProductsContract
 {

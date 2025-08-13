@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core;
+namespace DodopaymentsClient\Core;
 
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;

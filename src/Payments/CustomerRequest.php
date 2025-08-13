@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Payments;
+namespace DodopaymentsClient\Payments;
 
-use DodoPayments\Core\Concerns\Union;
-use DodoPayments\Core\Conversion\Contracts\Converter;
-use DodoPayments\Core\Conversion\Contracts\ConverterSource;
+use DodopaymentsClient\Core\Concerns\Union;
+use DodopaymentsClient\Core\Conversion\Contracts\Converter;
+use DodopaymentsClient\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * @phpstan-type customer_request_alias = AttachExistingCustomer|NewCustomer

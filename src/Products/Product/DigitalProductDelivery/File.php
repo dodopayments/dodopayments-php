@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Products\Product\DigitalProductDelivery;
+namespace DodopaymentsClient\Products\Product\DigitalProductDelivery;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type file_alias = array{fileID: string, fileName: string, url: string}

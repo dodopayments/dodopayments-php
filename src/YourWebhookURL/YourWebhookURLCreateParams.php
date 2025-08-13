@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\YourWebhookURL;
+namespace DodopaymentsClient\YourWebhookURL;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Concerns\Params;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\WebhookEvents\WebhookEventType;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Concerns\Params;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\WebhookEvents\WebhookEventType;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
 
 /**
  * @phpstan-type create_params = array{

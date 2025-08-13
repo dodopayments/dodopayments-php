@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Refunds\Refund;
-use DodoPayments\Refunds\RefundCreateParams;
-use DodoPayments\Refunds\RefundCreateParams\Item;
-use DodoPayments\Refunds\RefundListParams;
-use DodoPayments\Refunds\RefundListParams\Status;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Refunds\Refund;
+use DodopaymentsClient\Refunds\RefundCreateParams;
+use DodopaymentsClient\Refunds\RefundCreateParams\Item;
+use DodopaymentsClient\Refunds\RefundListParams;
+use DodopaymentsClient\Refunds\RefundListParams\Status;
+use DodopaymentsClient\RequestOptions;
 
 interface RefundsContract
 {

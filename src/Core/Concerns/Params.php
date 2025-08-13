@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core\Concerns;
+namespace DodopaymentsClient\Core\Concerns;
 
-use DodoPayments\Core\Conversion;
-use DodoPayments\Core\Conversion\DumpState;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\Core\Conversion\DumpState;
+use DodopaymentsClient\RequestOptions;
 
 /**
  * @internal

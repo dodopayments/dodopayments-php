@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Addons;
+namespace DodopaymentsClient\Addons;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\AddonsContract;
-use DodoPayments\Core\Conversion;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Misc\TaxCategory;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Addons\AddonUpdateImagesResponse;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\AddonsContract;
+use DodopaymentsClient\Core\Conversion;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Misc\TaxCategory;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Addons\AddonUpdateImagesResponse;
 
 final class AddonsService implements AddonsContract
 {

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Core\Conversion\Contracts;
+namespace DodopaymentsClient\Core\Conversion\Contracts;
 
-use DodoPayments\Core\Conversion\CoerceState;
-use DodoPayments\Core\Conversion\DumpState;
+use DodopaymentsClient\Core\Conversion\CoerceState;
+use DodopaymentsClient\Core\Conversion\DumpState;
 
 /**
  * @internal

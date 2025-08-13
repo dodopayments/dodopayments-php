@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Disputes;
+namespace DodopaymentsClient\Disputes;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Payments\CustomerLimitedDetails;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Payments\CustomerLimitedDetails;
 
 /**
  * @phpstan-type get_dispute_alias = array{

@@ -5,7 +5,7 @@
       "src/Client.php"
     ],
     "psr-4": {
-      "DodoPayments\\": "src/"
+      "DodopaymentsClient\\": "src/"
     }
   },
   "autoload-dev": {
@@ -27,7 +27,7 @@
   },
   "license": "APACHE-2.0",
   "description": "Dodo Payments PHP SDK",
-  "name": "org-placeholder/dodo-payments",
+  "name": "dodopayments/client",
   "require": {
     "php": "^8.1",
     "php-http/discovery": "^1",

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\WebhookEvents\WebhookPayload\Data;
+namespace DodopaymentsClient\WebhookEvents\WebhookPayload\Data;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 
 /**
  * @phpstan-type dispute_alias = array{payloadType: PayloadType::*}

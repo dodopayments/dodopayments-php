@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\YourWebhookURL;
+namespace DodopaymentsClient\YourWebhookURL;
 
-use DodoPayments\Client;
-use DodoPayments\Contracts\YourWebhookURLContract;
-use DodoPayments\RequestOptions;
-use DodoPayments\WebhookEvents\WebhookEventType;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund;
-use DodoPayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\Contracts\YourWebhookURLContract;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\WebhookEvents\WebhookEventType;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund;
+use DodopaymentsClient\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
 
 final class YourWebhookURLService implements YourWebhookURLContract
 {

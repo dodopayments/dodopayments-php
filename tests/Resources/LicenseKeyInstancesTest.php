@@ -2,9 +2,9 @@
 
 namespace Tests\Resources;
 
-use DodoPayments\Client;
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
+use DodopaymentsClient\Client;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstanceListParams;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;

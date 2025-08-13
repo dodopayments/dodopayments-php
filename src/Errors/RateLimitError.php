@@ -1,9 +1,9 @@
 <?php
 
-namespace DodoPayments\Errors;
+namespace DodopaymentsClient\Errors;
 
 class RateLimitError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodoPayments Rate Limit Error';
+    protected const DESC = 'DodopaymentsClient Rate Limit Error';
 }

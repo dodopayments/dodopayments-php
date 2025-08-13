@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Responses\Subscriptions;
+namespace DodopaymentsClient\Responses\Subscriptions;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\ListOf;
-use DodoPayments\Core\Conversion\MapOf;
-use DodoPayments\Payments\CustomerLimitedDetails;
-use DodoPayments\Subscriptions\AddonCartResponseItem;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\ListOf;
+use DodopaymentsClient\Core\Conversion\MapOf;
+use DodopaymentsClient\Payments\CustomerLimitedDetails;
+use DodopaymentsClient\Subscriptions\AddonCartResponseItem;
 
 /**
  * @phpstan-type subscription_new_response_alias = array{

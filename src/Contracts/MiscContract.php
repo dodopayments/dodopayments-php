@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Misc\CountryCode;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\Misc\CountryCode;
+use DodopaymentsClient\RequestOptions;
 
 interface MiscContract
 {

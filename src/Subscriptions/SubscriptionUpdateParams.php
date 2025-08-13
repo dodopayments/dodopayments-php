@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Subscriptions;
+namespace DodopaymentsClient\Subscriptions;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Concerns\Params;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\MapOf;
-use DodoPayments\Payments\BillingAddress;
-use DodoPayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Concerns\Params;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\MapOf;
+use DodopaymentsClient\Payments\BillingAddress;
+use DodopaymentsClient\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
  * @phpstan-type update_params = array{

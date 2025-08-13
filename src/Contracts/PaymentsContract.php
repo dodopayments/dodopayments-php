@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\Misc\Currency;
-use DodoPayments\Payments\AttachExistingCustomer;
-use DodoPayments\Payments\BillingAddress;
-use DodoPayments\Payments\NewCustomer;
-use DodoPayments\Payments\OneTimeProductCartItem;
-use DodoPayments\Payments\Payment;
-use DodoPayments\Payments\PaymentCreateParams;
-use DodoPayments\Payments\PaymentListParams;
-use DodoPayments\Payments\PaymentListParams\Status;
-use DodoPayments\Payments\PaymentMethodTypes;
-use DodoPayments\RequestOptions;
-use DodoPayments\Responses\Payments\PaymentGetLineItemsResponse;
-use DodoPayments\Responses\Payments\PaymentListResponse;
-use DodoPayments\Responses\Payments\PaymentNewResponse;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Payments\AttachExistingCustomer;
+use DodopaymentsClient\Payments\BillingAddress;
+use DodopaymentsClient\Payments\NewCustomer;
+use DodopaymentsClient\Payments\OneTimeProductCartItem;
+use DodopaymentsClient\Payments\Payment;
+use DodopaymentsClient\Payments\PaymentCreateParams;
+use DodopaymentsClient\Payments\PaymentListParams;
+use DodopaymentsClient\Payments\PaymentListParams\Status;
+use DodopaymentsClient\Payments\PaymentMethodTypes;
+use DodopaymentsClient\RequestOptions;
+use DodopaymentsClient\Responses\Payments\PaymentGetLineItemsResponse;
+use DodopaymentsClient\Responses\Payments\PaymentListResponse;
+use DodopaymentsClient\Responses\Payments\PaymentNewResponse;
 
 interface PaymentsContract
 {

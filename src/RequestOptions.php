@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments;
+namespace DodopaymentsClient;
 
 class RequestOptions
 {

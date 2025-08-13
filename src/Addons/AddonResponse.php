@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Addons;
+namespace DodopaymentsClient\Addons;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Misc\Currency;
-use DodoPayments\Misc\TaxCategory;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Misc\Currency;
+use DodopaymentsClient\Misc\TaxCategory;
 
 /**
  * @phpstan-type addon_response_alias = array{

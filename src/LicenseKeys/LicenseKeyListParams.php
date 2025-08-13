@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\LicenseKeys;
+namespace DodopaymentsClient\LicenseKeys;
 
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Concerns\Params;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\LicenseKeys\LicenseKeyListParams\Status;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Concerns\Params;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\LicenseKeys\LicenseKeyListParams\Status;
 
 /**
  * @phpstan-type list_params = array{

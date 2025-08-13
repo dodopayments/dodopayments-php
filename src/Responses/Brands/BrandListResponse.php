@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Responses\Brands;
+namespace DodopaymentsClient\Responses\Brands;
 
-use DodoPayments\Brands\Brand;
-use DodoPayments\Core\Attributes\Api;
-use DodoPayments\Core\Concerns\Model;
-use DodoPayments\Core\Contracts\BaseModel;
-use DodoPayments\Core\Conversion\ListOf;
+use DodopaymentsClient\Brands\Brand;
+use DodopaymentsClient\Core\Attributes\Api;
+use DodopaymentsClient\Core\Concerns\Model;
+use DodopaymentsClient\Core\Contracts\BaseModel;
+use DodopaymentsClient\Core\Conversion\ListOf;
 
 /**
  * @phpstan-type brand_list_response_alias = array{items: list<Brand>}

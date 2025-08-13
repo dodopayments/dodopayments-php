@@ -1,9 +1,9 @@
 <?php
 
-namespace DodoPayments\Errors;
+namespace DodopaymentsClient\Errors;
 
 class AuthenticationError extends APIStatusError
 {
     /** @var string */
-    protected const DESC = 'DodoPayments Authentication Error';
+    protected const DESC = 'DodopaymentsClient Authentication Error';
 }

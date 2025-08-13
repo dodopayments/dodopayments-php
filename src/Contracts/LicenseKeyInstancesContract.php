@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace DodoPayments\Contracts;
+namespace DodopaymentsClient\Contracts;
 
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstance;
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
-use DodoPayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
-use DodoPayments\RequestOptions;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstance;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstanceListParams;
+use DodopaymentsClient\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
+use DodopaymentsClient\RequestOptions;
 
 interface LicenseKeyInstancesContract
 {
