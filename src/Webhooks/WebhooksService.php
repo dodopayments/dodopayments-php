@@ -9,6 +9,7 @@ use Dodopayments\Contracts\WebhooksContract;
 use Dodopayments\Core\Conversion;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Webhooks\WebhookGetResponse;
+use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Responses\Webhooks\WebhookListResponse;
 use Dodopayments\Responses\Webhooks\WebhookNewResponse;
 use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
@@ -142,5 +143,22 @@ final class WebhooksService implements WebhooksContract
             path: ['webhooks/%1$s', $webhookID],
             options: $requestOptions,
         );
+    }
+
+    /**
+     * Get webhook secret by id.
+     */
+    public function retrieveSecret(
+        string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookGetSecretResponse {
+        $resp = $this->client->request(
+            method: 'get',
+            path: ['webhooks/%1$s/secret', $webhookID],
+            options: $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return Conversion::coerce(WebhookGetSecretResponse::class, value: $resp);
     }
 }

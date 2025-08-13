@@ -6,6 +6,7 @@ namespace Dodopayments\Contracts;
 
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Webhooks\WebhookGetResponse;
+use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Responses\Webhooks\WebhookListResponse;
 use Dodopayments\Responses\Webhooks\WebhookNewResponse;
 use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
@@ -66,4 +67,9 @@ interface WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed;
+
+    public function retrieveSecret(
+        string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookGetSecretResponse;
 }
