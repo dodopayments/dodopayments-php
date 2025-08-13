@@ -94,4 +94,12 @@ final class WebhooksTest extends TestCase
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
+
+    #[Test]
+    public function testRetrieveSecret(): void
+    {
+        $result = $this->client->webhooks->retrieveSecret('webhook_id');
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
 }
