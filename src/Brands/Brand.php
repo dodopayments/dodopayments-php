@@ -69,6 +69,33 @@ final class Brand implements BaseModel
     #[Api(optional: true)]
     public ?string $url;
 
+    /**
+     * `new Brand()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Brand::with(
+     *   brandID: ...,
+     *   businessID: ...,
+     *   enabled: ...,
+     *   statementDescriptor: ...,
+     *   verificationEnabled: ...,
+     *   verificationStatus: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Brand)
+     *   ->withBrandID(...)
+     *   ->withBusinessID(...)
+     *   ->withEnabled(...)
+     *   ->withStatementDescriptor(...)
+     *   ->withVerificationEnabled(...)
+     *   ->withVerificationStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -82,7 +109,7 @@ final class Brand implements BaseModel
      *
      * @param VerificationStatus::* $verificationStatus
      */
-    public static function from(
+    public static function with(
         string $brandID,
         string $businessID,
         bool $enabled,
@@ -115,93 +142,105 @@ final class Brand implements BaseModel
         return $obj;
     }
 
-    public function setBrandID(string $brandID): self
+    public function withBrandID(string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setEnabled(bool $enabled): self
+    public function withEnabled(bool $enabled): self
     {
-        $this->enabled = $enabled;
+        $obj = clone $this;
+        $obj->enabled = $enabled;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStatementDescriptor(string $statementDescriptor): self
+    public function withStatementDescriptor(string $statementDescriptor): self
     {
-        $this->statementDescriptor = $statementDescriptor;
+        $obj = clone $this;
+        $obj->statementDescriptor = $statementDescriptor;
 
-        return $this;
+        return $obj;
     }
 
-    public function setVerificationEnabled(bool $verificationEnabled): self
+    public function withVerificationEnabled(bool $verificationEnabled): self
     {
-        $this->verificationEnabled = $verificationEnabled;
+        $obj = clone $this;
+        $obj->verificationEnabled = $verificationEnabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param VerificationStatus::* $verificationStatus
      */
-    public function setVerificationStatus(string $verificationStatus): self
+    public function withVerificationStatus(string $verificationStatus): self
     {
-        $this->verificationStatus = $verificationStatus;
+        $obj = clone $this;
+        $obj->verificationStatus = $verificationStatus;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
-    public function setImage(?string $image): self
+    public function withImage(?string $image): self
     {
-        $this->image = $image;
+        $obj = clone $this;
+        $obj->image = $image;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Incase the brand verification fails or is put on hold.
      */
-    public function setReasonForHold(?string $reasonForHold): self
+    public function withReasonForHold(?string $reasonForHold): self
     {
-        $this->reasonForHold = $reasonForHold;
+        $obj = clone $this;
+        $obj->reasonForHold = $reasonForHold;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSupportEmail(?string $supportEmail): self
+    public function withSupportEmail(?string $supportEmail): self
     {
-        $this->supportEmail = $supportEmail;
+        $obj = clone $this;
+        $obj->supportEmail = $supportEmail;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(?string $url): self
+    public function withURL(?string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

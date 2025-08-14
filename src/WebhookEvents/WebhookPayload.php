@@ -48,6 +48,24 @@ final class WebhookPayload implements BaseModel
     #[Api(enum: WebhookEventType::class)]
     public string $type;
 
+    /**
+     * `new WebhookPayload()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebhookPayload::with(businessID: ..., data: ..., timestamp: ..., type: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebhookPayload)
+     *   ->withBusinessID(...)
+     *   ->withData(...)
+     *   ->withTimestamp(...)
+     *   ->withType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -61,7 +79,7 @@ final class WebhookPayload implements BaseModel
      *
      * @param WebhookEventType::* $type
      */
-    public static function from(
+    public static function with(
         string $businessID,
         Dispute|LicenseKey|Payment|Refund|Subscription $data,
         \DateTimeInterface $timestamp,
@@ -77,32 +95,35 @@ final class WebhookPayload implements BaseModel
         return $obj;
     }
 
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The latest data at the time of delivery attempt.
      */
-    public function setData(
+    public function withData(
         Dispute|LicenseKey|Payment|Refund|Subscription $data
     ): self {
-        $this->data = $data;
+        $obj = clone $this;
+        $obj->data = $data;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp of when the event occurred (not necessarily the same of when it was delivered).
      */
-    public function setTimestamp(\DateTimeInterface $timestamp): self
+    public function withTimestamp(\DateTimeInterface $timestamp): self
     {
-        $this->timestamp = $timestamp;
+        $obj = clone $this;
+        $obj->timestamp = $timestamp;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -110,10 +131,11 @@ final class WebhookPayload implements BaseModel
      *
      * @param WebhookEventType::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 }

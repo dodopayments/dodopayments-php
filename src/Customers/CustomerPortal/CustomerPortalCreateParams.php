@@ -34,7 +34,7 @@ final class CustomerPortalCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(?bool $sendEmail = null): self
+    public static function with(?bool $sendEmail = null): self
     {
         $obj = new self;
 
@@ -46,10 +46,11 @@ final class CustomerPortalCreateParams implements BaseModel
     /**
      * If true, will send link to user.
      */
-    public function setSendEmail(bool $sendEmail): self
+    public function withSendEmail(bool $sendEmail): self
     {
-        $this->sendEmail = $sendEmail;
+        $obj = clone $this;
+        $obj->sendEmail = $sendEmail;
 
-        return $this;
+        return $obj;
     }
 }

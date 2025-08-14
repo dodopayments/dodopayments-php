@@ -20,6 +20,20 @@ final class LicenseKey implements BaseModel
     #[Api('payload_type', enum: PayloadType::class)]
     public string $payloadType;
 
+    /**
+     * `new LicenseKey()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseKey::with(payloadType: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseKey)->withPayloadType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -33,7 +47,7 @@ final class LicenseKey implements BaseModel
      *
      * @param PayloadType::* $payloadType
      */
-    public static function from(string $payloadType): self
+    public static function with(string $payloadType): self
     {
         $obj = new self;
 
@@ -45,10 +59,11 @@ final class LicenseKey implements BaseModel
     /**
      * @param PayloadType::* $payloadType
      */
-    public function setPayloadType(string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
-        $this->payloadType = $payloadType;
+        $obj = clone $this;
+        $obj->payloadType = $payloadType;
 
-        return $this;
+        return $obj;
     }
 }

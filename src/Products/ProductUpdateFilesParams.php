@@ -20,6 +20,20 @@ final class ProductUpdateFilesParams implements BaseModel
     #[Api('file_name')]
     public string $fileName;
 
+    /**
+     * `new ProductUpdateFilesParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ProductUpdateFilesParams::with(fileName: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ProductUpdateFilesParams)->withFileName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -31,7 +45,7 @@ final class ProductUpdateFilesParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $fileName): self
+    public static function with(string $fileName): self
     {
         $obj = new self;
 
@@ -40,10 +54,11 @@ final class ProductUpdateFilesParams implements BaseModel
         return $obj;
     }
 
-    public function setFileName(string $fileName): self
+    public function withFileName(string $fileName): self
     {
-        $this->fileName = $fileName;
+        $obj = clone $this;
+        $obj->fileName = $fileName;
 
-        return $this;
+        return $obj;
     }
 }

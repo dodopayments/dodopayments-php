@@ -36,6 +36,27 @@ final class LicenseKeyInstance implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * `new LicenseKeyInstance()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseKeyInstance::with(
+     *   id: ..., businessID: ..., createdAt: ..., licenseKeyID: ..., name: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseKeyInstance)
+     *   ->withID(...)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withLicenseKeyID(...)
+     *   ->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -47,7 +68,7 @@ final class LicenseKeyInstance implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $id,
         string $businessID,
         \DateTimeInterface $createdAt,
@@ -65,38 +86,43 @@ final class LicenseKeyInstance implements BaseModel
         return $obj;
     }
 
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
-    public function setLicenseKeyID(string $licenseKeyID): self
+    public function withLicenseKeyID(string $licenseKeyID): self
     {
-        $this->licenseKeyID = $licenseKeyID;
+        $obj = clone $this;
+        $obj->licenseKeyID = $licenseKeyID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

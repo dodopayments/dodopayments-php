@@ -83,6 +83,37 @@ final class Dispute implements BaseModel
     #[Api(optional: true)]
     public ?string $remarks;
 
+    /**
+     * `new Dispute()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Dispute::with(
+     *   amount: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   currency: ...,
+     *   disputeID: ...,
+     *   disputeStage: ...,
+     *   disputeStatus: ...,
+     *   paymentID: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Dispute)
+     *   ->withAmount(...)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withCurrency(...)
+     *   ->withDisputeID(...)
+     *   ->withDisputeStage(...)
+     *   ->withDisputeStatus(...)
+     *   ->withPaymentID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -97,7 +128,7 @@ final class Dispute implements BaseModel
      * @param DisputeStage::* $disputeStage
      * @param DisputeStatus::* $disputeStatus
      */
-    public static function from(
+    public static function with(
         string $amount,
         string $businessID,
         \DateTimeInterface $createdAt,
@@ -127,51 +158,56 @@ final class Dispute implements BaseModel
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.
      */
-    public function setAmount(string $amount): self
+    public function withAmount(string $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the business involved in the dispute.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp of when the dispute was created, in UTC.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The currency of the disputed amount, represented as an ISO 4217 currency code.
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the dispute.
      */
-    public function setDisputeID(string $disputeID): self
+    public function withDisputeID(string $disputeID): self
     {
-        $this->disputeID = $disputeID;
+        $obj = clone $this;
+        $obj->disputeID = $disputeID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -179,11 +215,12 @@ final class Dispute implements BaseModel
      *
      * @param DisputeStage::* $disputeStage
      */
-    public function setDisputeStage(string $disputeStage): self
+    public function withDisputeStage(string $disputeStage): self
     {
-        $this->disputeStage = $disputeStage;
+        $obj = clone $this;
+        $obj->disputeStage = $disputeStage;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -191,30 +228,33 @@ final class Dispute implements BaseModel
      *
      * @param DisputeStatus::* $disputeStatus
      */
-    public function setDisputeStatus(string $disputeStatus): self
+    public function withDisputeStatus(string $disputeStatus): self
     {
-        $this->disputeStatus = $disputeStatus;
+        $obj = clone $this;
+        $obj->disputeStatus = $disputeStatus;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the payment associated with the dispute.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Remarks.
      */
-    public function setRemarks(?string $remarks): self
+    public function withRemarks(?string $remarks): self
     {
-        $this->remarks = $remarks;
+        $obj = clone $this;
+        $obj->remarks = $remarks;
 
-        return $this;
+        return $obj;
     }
 }

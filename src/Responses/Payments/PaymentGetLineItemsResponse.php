@@ -28,6 +28,20 @@ final class PaymentGetLineItemsResponse implements BaseModel
     #[Api(type: new ListOf(Item::class))]
     public array $items;
 
+    /**
+     * `new PaymentGetLineItemsResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * PaymentGetLineItemsResponse::with(currency: ..., items: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new PaymentGetLineItemsResponse)->withCurrency(...)->withItems(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -42,7 +56,7 @@ final class PaymentGetLineItemsResponse implements BaseModel
      * @param Currency::* $currency
      * @param list<Item> $items
      */
-    public static function from(string $currency, array $items): self
+    public static function with(string $currency, array $items): self
     {
         $obj = new self;
 
@@ -55,20 +69,22 @@ final class PaymentGetLineItemsResponse implements BaseModel
     /**
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param list<Item> $items
      */
-    public function setItems(array $items): self
+    public function withItems(array $items): self
     {
-        $this->items = $items;
+        $obj = clone $this;
+        $obj->items = $items;
 
-        return $this;
+        return $obj;
     }
 }

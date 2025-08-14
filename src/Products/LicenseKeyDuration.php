@@ -25,6 +25,20 @@ final class LicenseKeyDuration implements BaseModel
     #[Api(enum: TimeInterval::class)]
     public string $interval;
 
+    /**
+     * `new LicenseKeyDuration()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseKeyDuration::with(count: ..., interval: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseKeyDuration)->withCount(...)->withInterval(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -38,7 +52,7 @@ final class LicenseKeyDuration implements BaseModel
      *
      * @param TimeInterval::* $interval
      */
-    public static function from(int $count, string $interval): self
+    public static function with(int $count, string $interval): self
     {
         $obj = new self;
 
@@ -48,20 +62,22 @@ final class LicenseKeyDuration implements BaseModel
         return $obj;
     }
 
-    public function setCount(int $count): self
+    public function withCount(int $count): self
     {
-        $this->count = $count;
+        $obj = clone $this;
+        $obj->count = $count;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param TimeInterval::* $interval
      */
-    public function setInterval(string $interval): self
+    public function withInterval(string $interval): self
     {
-        $this->interval = $interval;
+        $obj = clone $this;
+        $obj->interval = $interval;
 
-        return $this;
+        return $obj;
     }
 }

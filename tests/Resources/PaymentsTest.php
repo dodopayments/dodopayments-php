@@ -37,17 +37,17 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = PaymentCreateParams::from(
-            billing: BillingAddress::from(
+        $params = PaymentCreateParams::with(
+            billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',
             ),
-            customer: AttachExistingCustomer::from(customerID: 'customer_id'),
+            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
             productCart: [
-                OneTimeProductCartItem::from(productID: 'product_id', quantity: 0),
+                OneTimeProductCartItem::with(productID: 'product_id', quantity: 0),
             ],
         );
         $result = $this->client->payments->create($params);
@@ -58,18 +58,18 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = PaymentCreateParams::from(
-            billing: BillingAddress::from(
+        $params = PaymentCreateParams::with(
+            billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',
             ),
-            customer: AttachExistingCustomer::from(customerID: 'customer_id'),
+            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
             productCart: [
-                OneTimeProductCartItem::from(productID: 'product_id', quantity: 0)
-                    ->setAmount(0),
+                OneTimeProductCartItem::with(productID: 'product_id', quantity: 0)
+                    ->withAmount(0),
             ],
             allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
             billingCurrency: Currency::AED,

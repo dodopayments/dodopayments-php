@@ -39,8 +39,8 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = ProductCreateParams::from(
-            price: OneTimePrice::from(
+        $params = ProductCreateParams::with(
+            price: OneTimePrice::with(
                 currency: Currency::AED,
                 discount: 0,
                 price: 0,
@@ -57,27 +57,27 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = ProductCreateParams::from(
-            price: OneTimePrice::from(
+        $params = ProductCreateParams::with(
+            price: OneTimePrice::with(
                 currency: Currency::AED,
                 discount: 0,
                 price: 0,
                 purchasingPowerParity: true,
                 type: 'one_time_price',
             )
-                ->setPayWhatYouWant(true)
-                ->setSuggestedPrice(0)
-                ->setTaxInclusive(true),
+                ->withPayWhatYouWant(true)
+                ->withSuggestedPrice(0)
+                ->withTaxInclusive(true),
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
             addons: ['string'],
             brandID: 'brand_id',
             description: 'description',
             digitalProductDelivery: (new DigitalProductDelivery)
-                ->setExternalURL('external_url')
-                ->setInstructions('instructions'),
+                ->withExternalURL('external_url')
+                ->withInstructions('instructions'),
             licenseKeyActivationMessage: 'license_key_activation_message',
             licenseKeyActivationsLimit: 0,
-            licenseKeyDuration: LicenseKeyDuration::from(
+            licenseKeyDuration: LicenseKeyDuration::with(
                 count: 0,
                 interval: TimeInterval::DAY
             ),
@@ -139,7 +139,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFiles(): void
     {
-        $params = ProductUpdateFilesParams::from(fileName: 'file_name');
+        $params = ProductUpdateFilesParams::with(fileName: 'file_name');
         $result = $this->client->products->updateFiles('id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -148,7 +148,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFilesWithOptionalParams(): void
     {
-        $params = ProductUpdateFilesParams::from(fileName: 'file_name');
+        $params = ProductUpdateFilesParams::with(fileName: 'file_name');
         $result = $this->client->products->updateFiles('id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line

@@ -23,6 +23,20 @@ final class ProductUpdateFilesResponse implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * `new ProductUpdateFilesResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ProductUpdateFilesResponse::with(fileID: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ProductUpdateFilesResponse)->withFileID(...)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class ProductUpdateFilesResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $fileID, string $url): self
+    public static function with(string $fileID, string $url): self
     {
         $obj = new self;
 
@@ -44,17 +58,19 @@ final class ProductUpdateFilesResponse implements BaseModel
         return $obj;
     }
 
-    public function setFileID(string $fileID): self
+    public function withFileID(string $fileID): self
     {
-        $this->fileID = $fileID;
+        $obj = clone $this;
+        $obj->fileID = $fileID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

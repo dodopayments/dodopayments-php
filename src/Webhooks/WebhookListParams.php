@@ -42,7 +42,7 @@ final class WebhookListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $iterator = null,
         ?int $limit = null
     ): self {
@@ -57,20 +57,22 @@ final class WebhookListParams implements BaseModel
     /**
      * The iterator returned from a prior invocation.
      */
-    public function setIterator(?string $iterator): self
+    public function withIterator(?string $iterator): self
     {
-        $this->iterator = $iterator;
+        $obj = clone $this;
+        $obj->iterator = $iterator;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Limit the number of returned items.
      */
-    public function setLimit(?int $limit): self
+    public function withLimit(?int $limit): self
     {
-        $this->limit = $limit;
+        $obj = clone $this;
+        $obj->limit = $limit;
 
-        return $this;
+        return $obj;
     }
 }

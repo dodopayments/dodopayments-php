@@ -21,6 +21,20 @@ final class ProductCart implements BaseModel
     #[Api]
     public int $quantity;
 
+    /**
+     * `new ProductCart()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ProductCart::with(productID: ..., quantity: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ProductCart)->withProductID(...)->withQuantity(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -32,7 +46,7 @@ final class ProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $productID, int $quantity): self
+    public static function with(string $productID, int $quantity): self
     {
         $obj = new self;
 
@@ -42,17 +56,19 @@ final class ProductCart implements BaseModel
         return $obj;
     }
 
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setQuantity(int $quantity): self
+    public function withQuantity(int $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 }

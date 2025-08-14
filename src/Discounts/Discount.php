@@ -111,6 +111,37 @@ final class Discount implements BaseModel
     #[Api('usage_limit', optional: true)]
     public ?int $usageLimit;
 
+    /**
+     * `new Discount()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Discount::with(
+     *   amount: ...,
+     *   businessID: ...,
+     *   code: ...,
+     *   createdAt: ...,
+     *   discountID: ...,
+     *   restrictedTo: ...,
+     *   timesUsed: ...,
+     *   type: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Discount)
+     *   ->withAmount(...)
+     *   ->withBusinessID(...)
+     *   ->withCode(...)
+     *   ->withCreatedAt(...)
+     *   ->withDiscountID(...)
+     *   ->withRestrictedTo(...)
+     *   ->withTimesUsed(...)
+     *   ->withType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -125,7 +156,7 @@ final class Discount implements BaseModel
      * @param list<string> $restrictedTo
      * @param DiscountType::* $type
      */
-    public static function from(
+    public static function with(
         int $amount,
         string $businessID,
         string $code,
@@ -165,51 +196,56 @@ final class Discount implements BaseModel
      *   (e.g., 540 => 5.4%).
      * - Otherwise, this is **USD cents** (e.g., 100 => `$1.00`).
      */
-    public function setAmount(int $amount): self
+    public function withAmount(int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The business this discount belongs to.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The discount code (up to 16 chars).
      */
-    public function setCode(string $code): self
+    public function withCode(string $code): self
     {
-        $this->code = $code;
+        $obj = clone $this;
+        $obj->code = $code;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the discount is created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique discount ID.
      */
-    public function setDiscountID(string $discountID): self
+    public function withDiscountID(string $discountID): self
     {
-        $this->discountID = $discountID;
+        $obj = clone $this;
+        $obj->discountID = $discountID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -217,21 +253,23 @@ final class Discount implements BaseModel
      *
      * @param list<string> $restrictedTo
      */
-    public function setRestrictedTo(array $restrictedTo): self
+    public function withRestrictedTo(array $restrictedTo): self
     {
-        $this->restrictedTo = $restrictedTo;
+        $obj = clone $this;
+        $obj->restrictedTo = $restrictedTo;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * How many times this discount has been used.
      */
-    public function setTimesUsed(int $timesUsed): self
+    public function withTimesUsed(int $timesUsed): self
     {
-        $this->timesUsed = $timesUsed;
+        $obj = clone $this;
+        $obj->timesUsed = $timesUsed;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -239,31 +277,34 @@ final class Discount implements BaseModel
      *
      * @param DiscountType::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional date/time after which discount is expired.
      */
-    public function setExpiresAt(?\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name for the Discount.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -271,20 +312,22 @@ final class Discount implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    public function setSubscriptionCycles(?int $subscriptionCycles): self
+    public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
-        $this->subscriptionCycles = $subscriptionCycles;
+        $obj = clone $this;
+        $obj->subscriptionCycles = $subscriptionCycles;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Usage limit for this discount, if any.
      */
-    public function setUsageLimit(?int $usageLimit): self
+    public function withUsageLimit(?int $usageLimit): self
     {
-        $this->usageLimit = $usageLimit;
+        $obj = clone $this;
+        $obj->usageLimit = $usageLimit;
 
-        return $this;
+        return $obj;
     }
 }

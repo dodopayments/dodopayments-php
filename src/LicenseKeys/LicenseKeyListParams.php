@@ -69,7 +69,7 @@ final class LicenseKeyListParams implements BaseModel
      *
      * @param null|Status::* $status
      */
-    public static function from(
+    public static function with(
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
@@ -90,41 +90,45 @@ final class LicenseKeyListParams implements BaseModel
     /**
      * Filter by customer ID.
      */
-    public function setCustomerID(string $customerID): self
+    public function withCustomerID(string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page number default is 0.
      */
-    public function setPageNumber(int $pageNumber): self
+    public function withPageNumber(int $pageNumber): self
     {
-        $this->pageNumber = $pageNumber;
+        $obj = clone $this;
+        $obj->pageNumber = $pageNumber;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page size default is 10 max is 100.
      */
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Filter by product ID.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -132,10 +136,11 @@ final class LicenseKeyListParams implements BaseModel
      *
      * @param Status::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 }

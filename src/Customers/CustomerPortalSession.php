@@ -18,6 +18,20 @@ final class CustomerPortalSession implements BaseModel
     #[Api]
     public string $link;
 
+    /**
+     * `new CustomerPortalSession()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CustomerPortalSession::with(link: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CustomerPortalSession)->withLink(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class CustomerPortalSession implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $link): self
+    public static function with(string $link): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class CustomerPortalSession implements BaseModel
         return $obj;
     }
 
-    public function setLink(string $link): self
+    public function withLink(string $link): self
     {
-        $this->link = $link;
+        $obj = clone $this;
+        $obj->link = $link;
 
-        return $this;
+        return $obj;
     }
 }

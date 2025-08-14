@@ -41,6 +41,20 @@ final class RefundCreateParams implements BaseModel
     #[Api(optional: true)]
     public ?string $reason;
 
+    /**
+     * `new RefundCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RefundCreateParams::with(paymentID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RefundCreateParams)->withPaymentID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -54,7 +68,7 @@ final class RefundCreateParams implements BaseModel
      *
      * @param null|list<Item> $items
      */
-    public static function from(
+    public static function with(
         string $paymentID,
         ?array $items = null,
         ?string $reason = null
@@ -72,11 +86,12 @@ final class RefundCreateParams implements BaseModel
     /**
      * The unique identifier of the payment to be refunded.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -84,20 +99,22 @@ final class RefundCreateParams implements BaseModel
      *
      * @param null|list<Item> $items
      */
-    public function setItems(?array $items): self
+    public function withItems(?array $items): self
     {
-        $this->items = $items;
+        $obj = clone $this;
+        $obj->items = $items;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      */
-    public function setReason(?string $reason): self
+    public function withReason(?string $reason): self
     {
-        $this->reason = $reason;
+        $obj = clone $this;
+        $obj->reason = $reason;
 
-        return $this;
+        return $obj;
     }
 }

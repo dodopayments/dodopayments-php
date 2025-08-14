@@ -25,6 +25,20 @@ final class AddonCartResponseItem implements BaseModel
     #[Api]
     public int $quantity;
 
+    /**
+     * `new AddonCartResponseItem()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AddonCartResponseItem::with(addonID: ..., quantity: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AddonCartResponseItem)->withAddonID(...)->withQuantity(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -36,7 +50,7 @@ final class AddonCartResponseItem implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $addonID, int $quantity): self
+    public static function with(string $addonID, int $quantity): self
     {
         $obj = new self;
 
@@ -46,17 +60,19 @@ final class AddonCartResponseItem implements BaseModel
         return $obj;
     }
 
-    public function setAddonID(string $addonID): self
+    public function withAddonID(string $addonID): self
     {
-        $this->addonID = $addonID;
+        $obj = clone $this;
+        $obj->addonID = $addonID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setQuantity(int $quantity): self
+    public function withQuantity(int $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 }

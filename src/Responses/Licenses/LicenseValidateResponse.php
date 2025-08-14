@@ -18,6 +18,20 @@ final class LicenseValidateResponse implements BaseModel
     #[Api]
     public bool $valid;
 
+    /**
+     * `new LicenseValidateResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseValidateResponse::with(valid: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseValidateResponse)->withValid(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class LicenseValidateResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(bool $valid): self
+    public static function with(bool $valid): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class LicenseValidateResponse implements BaseModel
         return $obj;
     }
 
-    public function setValid(bool $valid): self
+    public function withValid(bool $valid): self
     {
-        $this->valid = $valid;
+        $obj = clone $this;
+        $obj->valid = $valid;
 
-        return $this;
+        return $obj;
     }
 }

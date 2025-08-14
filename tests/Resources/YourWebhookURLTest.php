@@ -42,10 +42,10 @@ final class YourWebhookURLTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = YourWebhookURLCreateParams::from(
+        $params = YourWebhookURLCreateParams::with(
             businessID: 'business_id',
-            data: Payment::from(
-                billing: BillingAddress::from(
+            data: Payment::with(
+                billing: BillingAddress::with(
                     city: 'city',
                     country: CountryCode::AF,
                     state: 'state',
@@ -56,14 +56,14 @@ final class YourWebhookURLTest extends TestCase
                 businessID: 'business_id',
                 createdAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 currency: Currency::AED,
-                customer: CustomerLimitedDetails::from(
+                customer: CustomerLimitedDetails::with(
                     customerID: 'customer_id',
                     email: 'email',
                     name: 'name'
                 ),
                 digitalProductsDelivered: true,
                 disputes: [
-                    Dispute::from(
+                    Dispute::with(
                         amount: 'amount',
                         businessID: 'business_id',
                         createdAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
@@ -77,7 +77,7 @@ final class YourWebhookURLTest extends TestCase
                 metadata: ['foo' => 'string'],
                 paymentID: 'payment_id',
                 refunds: [
-                    Refund::from(
+                    Refund::with(
                         businessID: 'business_id',
                         createdAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                         isPartial: true,
@@ -105,10 +105,10 @@ final class YourWebhookURLTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = YourWebhookURLCreateParams::from(
+        $params = YourWebhookURLCreateParams::with(
             businessID: 'business_id',
-            data: Payment::from(
-                billing: BillingAddress::from(
+            data: Payment::with(
+                billing: BillingAddress::with(
                     city: 'city',
                     country: CountryCode::AF,
                     state: 'state',
@@ -119,14 +119,14 @@ final class YourWebhookURLTest extends TestCase
                 businessID: 'business_id',
                 createdAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 currency: Currency::AED,
-                customer: CustomerLimitedDetails::from(
+                customer: CustomerLimitedDetails::with(
                     customerID: 'customer_id',
                     email: 'email',
                     name: 'name'
                 ),
                 digitalProductsDelivered: true,
                 disputes: [
-                    Dispute::from(
+                    Dispute::with(
                         amount: 'amount',
                         businessID: 'business_id',
                         createdAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
@@ -136,12 +136,12 @@ final class YourWebhookURLTest extends TestCase
                         disputeStatus: DisputeStatus::DISPUTE_OPENED,
                         paymentID: 'payment_id',
                     )
-                        ->setRemarks('remarks'),
+                        ->withRemarks('remarks'),
                 ],
                 metadata: ['foo' => 'string'],
                 paymentID: 'payment_id',
                 refunds: [
-                    Refund::from(
+                    Refund::with(
                         businessID: 'business_id',
                         createdAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                         isPartial: true,
@@ -149,33 +149,33 @@ final class YourWebhookURLTest extends TestCase
                         refundID: 'refund_id',
                         status: RefundStatus::SUCCEEDED,
                     )
-                        ->setAmount(0)
-                        ->setCurrency(Currency::AED)
-                        ->setReason('reason'),
+                        ->withAmount(0)
+                        ->withCurrency(Currency::AED)
+                        ->withReason('reason'),
                 ],
                 settlementAmount: 0,
                 settlementCurrency: Currency::AED,
                 totalAmount: 0,
                 payloadType: 'Payment',
             )
-                ->setCardIssuingCountry(CountryCode::AF)
-                ->setCardLastFour('card_last_four')
-                ->setCardNetwork('card_network')
-                ->setCardType('card_type')
-                ->setDiscountID('discount_id')
-                ->setErrorCode('error_code')
-                ->setErrorMessage('error_message')
-                ->setPaymentLink('payment_link')
-                ->setPaymentMethod('payment_method')
-                ->setPaymentMethodType('payment_method_type')
-                ->setProductCart(
-                    [ProductCart::from(productID: 'product_id', quantity: 0)]
+                ->withCardIssuingCountry(CountryCode::AF)
+                ->withCardLastFour('card_last_four')
+                ->withCardNetwork('card_network')
+                ->withCardType('card_type')
+                ->withDiscountID('discount_id')
+                ->withErrorCode('error_code')
+                ->withErrorMessage('error_message')
+                ->withPaymentLink('payment_link')
+                ->withPaymentMethod('payment_method')
+                ->withPaymentMethodType('payment_method_type')
+                ->withProductCart(
+                    [ProductCart::with(productID: 'product_id', quantity: 0)]
                 )
-                ->setSettlementTax(0)
-                ->setStatus(IntentStatus::SUCCEEDED)
-                ->setSubscriptionID('subscription_id')
-                ->setTax(0)
-                ->setUpdatedAt(new \DateTimeImmutable('2019-12-27T18:11:19.117Z')),
+                ->withSettlementTax(0)
+                ->withStatus(IntentStatus::SUCCEEDED)
+                ->withSubscriptionID('subscription_id')
+                ->withTax(0)
+                ->withUpdatedAt(new \DateTimeImmutable('2019-12-27T18:11:19.117Z')),
             timestamp: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             type: WebhookEventType::PAYMENT_SUCCEEDED,
             webhookID: 'webhook-id',

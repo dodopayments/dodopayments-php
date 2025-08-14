@@ -59,6 +59,24 @@ final class AddonCreateParams implements BaseModel
     #[Api(optional: true)]
     public ?string $description;
 
+    /**
+     * `new AddonCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AddonCreateParams::with(currency: ..., name: ..., price: ..., taxCategory: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AddonCreateParams)
+     *   ->withCurrency(...)
+     *   ->withName(...)
+     *   ->withPrice(...)
+     *   ->withTaxCategory(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -73,7 +91,7 @@ final class AddonCreateParams implements BaseModel
      * @param Currency::* $currency
      * @param TaxCategory::* $taxCategory
      */
-    public static function from(
+    public static function with(
         string $currency,
         string $name,
         int $price,
@@ -97,31 +115,34 @@ final class AddonCreateParams implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the Addon.
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Amount of the addon.
      */
-    public function setPrice(int $price): self
+    public function withPrice(int $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -129,20 +150,22 @@ final class AddonCreateParams implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional description of the Addon.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 }

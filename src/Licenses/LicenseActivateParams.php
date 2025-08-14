@@ -23,6 +23,20 @@ final class LicenseActivateParams implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * `new LicenseActivateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseActivateParams::with(licenseKey: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseActivateParams)->withLicenseKey(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class LicenseActivateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $licenseKey, string $name): self
+    public static function with(string $licenseKey, string $name): self
     {
         $obj = new self;
 
@@ -44,17 +58,19 @@ final class LicenseActivateParams implements BaseModel
         return $obj;
     }
 
-    public function setLicenseKey(string $licenseKey): self
+    public function withLicenseKey(string $licenseKey): self
     {
-        $this->licenseKey = $licenseKey;
+        $obj = clone $this;
+        $obj->licenseKey = $licenseKey;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

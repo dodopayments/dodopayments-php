@@ -203,6 +203,63 @@ final class Subscription implements BaseModel
     #[Api('discount_id', optional: true)]
     public ?string $discountID;
 
+    /**
+     * `new Subscription()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Subscription::with(
+     *   addons: ...,
+     *   billing: ...,
+     *   cancelAtNextBillingDate: ...,
+     *   createdAt: ...,
+     *   currency: ...,
+     *   customer: ...,
+     *   metadata: ...,
+     *   nextBillingDate: ...,
+     *   onDemand: ...,
+     *   paymentFrequencyCount: ...,
+     *   paymentFrequencyInterval: ...,
+     *   previousBillingDate: ...,
+     *   productID: ...,
+     *   quantity: ...,
+     *   recurringPreTaxAmount: ...,
+     *   status: ...,
+     *   subscriptionID: ...,
+     *   subscriptionPeriodCount: ...,
+     *   subscriptionPeriodInterval: ...,
+     *   taxInclusive: ...,
+     *   trialPeriodDays: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Subscription)
+     *   ->withAddons(...)
+     *   ->withBilling(...)
+     *   ->withCancelAtNextBillingDate(...)
+     *   ->withCreatedAt(...)
+     *   ->withCurrency(...)
+     *   ->withCustomer(...)
+     *   ->withMetadata(...)
+     *   ->withNextBillingDate(...)
+     *   ->withOnDemand(...)
+     *   ->withPaymentFrequencyCount(...)
+     *   ->withPaymentFrequencyInterval(...)
+     *   ->withPreviousBillingDate(...)
+     *   ->withProductID(...)
+     *   ->withQuantity(...)
+     *   ->withRecurringPreTaxAmount(...)
+     *   ->withStatus(...)
+     *   ->withSubscriptionID(...)
+     *   ->withSubscriptionPeriodCount(...)
+     *   ->withSubscriptionPeriodInterval(...)
+     *   ->withTaxInclusive(...)
+     *   ->withTrialPeriodDays(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -221,7 +278,7 @@ final class Subscription implements BaseModel
      * @param SubscriptionStatus::* $status
      * @param TimeInterval::* $subscriptionPeriodInterval
      */
-    public static function from(
+    public static function with(
         array $addons,
         BillingAddress $billing,
         bool $cancelAtNextBillingDate,
@@ -283,42 +340,46 @@ final class Subscription implements BaseModel
      *
      * @param list<AddonCartResponseItem> $addons
      */
-    public function setAddons(array $addons): self
+    public function withAddons(array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Billing address details for payments.
      */
-    public function setBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress $billing): self
     {
-        $this->billing = $billing;
+        $obj = clone $this;
+        $obj->billing = $billing;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the subscription will cancel at the next billing date.
      */
-    public function setCancelAtNextBillingDate(
+    public function withCancelAtNextBillingDate(
         bool $cancelAtNextBillingDate
     ): self {
-        $this->cancelAtNextBillingDate = $cancelAtNextBillingDate;
+        $obj = clone $this;
+        $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the subscription was created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -326,21 +387,23 @@ final class Subscription implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Customer details associated with the subscription.
      */
-    public function setCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails $customer): self
     {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -348,42 +411,46 @@ final class Subscription implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp of the next scheduled billing. Indicates the end of current billing period.
      */
-    public function setNextBillingDate(
+    public function withNextBillingDate(
         \DateTimeInterface $nextBillingDate
     ): self {
-        $this->nextBillingDate = $nextBillingDate;
+        $obj = clone $this;
+        $obj->nextBillingDate = $nextBillingDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Wether the subscription is on-demand or not.
      */
-    public function setOnDemand(bool $onDemand): self
+    public function withOnDemand(bool $onDemand): self
     {
-        $this->onDemand = $onDemand;
+        $obj = clone $this;
+        $obj->onDemand = $onDemand;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of payment frequency intervals.
      */
-    public function setPaymentFrequencyCount(int $paymentFrequencyCount): self
+    public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
-        $this->paymentFrequencyCount = $paymentFrequencyCount;
+        $obj = clone $this;
+        $obj->paymentFrequencyCount = $paymentFrequencyCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -391,53 +458,58 @@ final class Subscription implements BaseModel
      *
      * @param TimeInterval::* $paymentFrequencyInterval
      */
-    public function setPaymentFrequencyInterval(
+    public function withPaymentFrequencyInterval(
         string $paymentFrequencyInterval
     ): self {
-        $this->paymentFrequencyInterval = $paymentFrequencyInterval;
+        $obj = clone $this;
+        $obj->paymentFrequencyInterval = $paymentFrequencyInterval;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp of the last payment. Indicates the start of current billing period.
      */
-    public function setPreviousBillingDate(
+    public function withPreviousBillingDate(
         \DateTimeInterface $previousBillingDate
     ): self {
-        $this->previousBillingDate = $previousBillingDate;
+        $obj = clone $this;
+        $obj->previousBillingDate = $previousBillingDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Identifier of the product associated with this subscription.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of units/items included in the subscription.
      */
-    public function setQuantity(int $quantity): self
+    public function withQuantity(int $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
      */
-    public function setRecurringPreTaxAmount(int $recurringPreTaxAmount): self
+    public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
-        $this->recurringPreTaxAmount = $recurringPreTaxAmount;
+        $obj = clone $this;
+        $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -445,32 +517,35 @@ final class Subscription implements BaseModel
      *
      * @param SubscriptionStatus::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the subscription.
      */
-    public function setSubscriptionID(string $subscriptionID): self
+    public function withSubscriptionID(string $subscriptionID): self
     {
-        $this->subscriptionID = $subscriptionID;
+        $obj = clone $this;
+        $obj->subscriptionID = $subscriptionID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of subscription period intervals.
      */
-    public function setSubscriptionPeriodCount(
+    public function withSubscriptionPeriodCount(
         int $subscriptionPeriodCount
     ): self {
-        $this->subscriptionPeriodCount = $subscriptionPeriodCount;
+        $obj = clone $this;
+        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -478,62 +553,68 @@ final class Subscription implements BaseModel
      *
      * @param TimeInterval::* $subscriptionPeriodInterval
      */
-    public function setSubscriptionPeriodInterval(
+    public function withSubscriptionPeriodInterval(
         string $subscriptionPeriodInterval
     ): self {
-        $this->subscriptionPeriodInterval = $subscriptionPeriodInterval;
+        $obj = clone $this;
+        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the recurring_pre_tax_amount is tax inclusive.
      */
-    public function setTaxInclusive(bool $taxInclusive): self
+    public function withTaxInclusive(bool $taxInclusive): self
     {
-        $this->taxInclusive = $taxInclusive;
+        $obj = clone $this;
+        $obj->taxInclusive = $taxInclusive;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of days in the trial period (0 if no trial).
      */
-    public function setTrialPeriodDays(int $trialPeriodDays): self
+    public function withTrialPeriodDays(int $trialPeriodDays): self
     {
-        $this->trialPeriodDays = $trialPeriodDays;
+        $obj = clone $this;
+        $obj->trialPeriodDays = $trialPeriodDays;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Cancelled timestamp if the subscription is cancelled.
      */
-    public function setCancelledAt(?\DateTimeInterface $cancelledAt): self
+    public function withCancelledAt(?\DateTimeInterface $cancelledAt): self
     {
-        $this->cancelledAt = $cancelledAt;
+        $obj = clone $this;
+        $obj->cancelledAt = $cancelledAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of remaining discount cycles if discount is applied.
      */
-    public function setDiscountCyclesRemaining(
+    public function withDiscountCyclesRemaining(
         ?int $discountCyclesRemaining
     ): self {
-        $this->discountCyclesRemaining = $discountCyclesRemaining;
+        $obj = clone $this;
+        $obj->discountCyclesRemaining = $discountCyclesRemaining;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The discount id if discount is applied.
      */
-    public function setDiscountID(?string $discountID): self
+    public function withDiscountID(?string $discountID): self
     {
-        $this->discountID = $discountID;
+        $obj = clone $this;
+        $obj->discountID = $discountID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -53,6 +53,25 @@ final class SubscriptionChangePlanParams implements BaseModel
     #[Api(type: new ListOf(AttachAddon::class), nullable: true, optional: true)]
     public ?array $addons;
 
+    /**
+     * `new SubscriptionChangePlanParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SubscriptionChangePlanParams::with(
+     *   productID: ..., prorationBillingMode: ..., quantity: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SubscriptionChangePlanParams)
+     *   ->withProductID(...)
+     *   ->withProrationBillingMode(...)
+     *   ->withQuantity(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -67,7 +86,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * @param ProrationBillingMode::* $prorationBillingMode
      * @param null|list<AttachAddon> $addons
      */
-    public static function from(
+    public static function with(
         string $productID,
         string $prorationBillingMode,
         int $quantity,
@@ -87,11 +106,12 @@ final class SubscriptionChangePlanParams implements BaseModel
     /**
      * Unique identifier of the product to subscribe to.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -99,21 +119,23 @@ final class SubscriptionChangePlanParams implements BaseModel
      *
      * @param ProrationBillingMode::* $prorationBillingMode
      */
-    public function setProrationBillingMode(string $prorationBillingMode): self
+    public function withProrationBillingMode(string $prorationBillingMode): self
     {
-        $this->prorationBillingMode = $prorationBillingMode;
+        $obj = clone $this;
+        $obj->prorationBillingMode = $prorationBillingMode;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of units to subscribe for. Must be at least 1.
      */
-    public function setQuantity(int $quantity): self
+    public function withQuantity(int $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -122,10 +144,11 @@ final class SubscriptionChangePlanParams implements BaseModel
      *
      * @param null|list<AttachAddon> $addons
      */
-    public function setAddons(?array $addons): self
+    public function withAddons(?array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 }

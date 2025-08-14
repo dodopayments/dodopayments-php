@@ -36,7 +36,7 @@ final class CustomerUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $name = null,
         ?string $phoneNumber = null
     ): self {
@@ -48,17 +48,19 @@ final class CustomerUpdateParams implements BaseModel
         return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPhoneNumber(?string $phoneNumber): self
+    public function withPhoneNumber(?string $phoneNumber): self
     {
-        $this->phoneNumber = $phoneNumber;
+        $obj = clone $this;
+        $obj->phoneNumber = $phoneNumber;
 
-        return $this;
+        return $obj;
     }
 }

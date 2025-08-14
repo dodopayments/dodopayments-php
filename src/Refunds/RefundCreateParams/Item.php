@@ -35,6 +35,20 @@ final class Item implements BaseModel
     #[Api('tax_inclusive', optional: true)]
     public ?bool $taxInclusive;
 
+    /**
+     * `new Item()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Item::with(itemID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Item)->withItemID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -46,7 +60,7 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $itemID,
         ?int $amount = null,
         ?bool $taxInclusive = null
@@ -64,30 +78,33 @@ final class Item implements BaseModel
     /**
      * The id of the item (i.e. `product_id` or `addon_id`).
      */
-    public function setItemID(string $itemID): self
+    public function withItemID(string $itemID): self
     {
-        $this->itemID = $itemID;
+        $obj = clone $this;
+        $obj->itemID = $itemID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The amount to refund. if None the whole item is refunded.
      */
-    public function setAmount(?int $amount): self
+    public function withAmount(?int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Specify if tax is inclusive of the refund. Default true.
      */
-    public function setTaxInclusive(bool $taxInclusive): self
+    public function withTaxInclusive(bool $taxInclusive): self
     {
-        $this->taxInclusive = $taxInclusive;
+        $obj = clone $this;
+        $obj->taxInclusive = $taxInclusive;
 
-        return $this;
+        return $obj;
     }
 }

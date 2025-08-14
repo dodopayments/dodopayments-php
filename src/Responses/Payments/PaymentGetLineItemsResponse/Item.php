@@ -40,6 +40,24 @@ final class Item implements BaseModel
     #[Api(optional: true)]
     public ?string $name;
 
+    /**
+     * `new Item()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Item::with(amount: ..., itemsID: ..., refundableAmount: ..., tax: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Item)
+     *   ->withAmount(...)
+     *   ->withItemsID(...)
+     *   ->withRefundableAmount(...)
+     *   ->withTax(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -51,7 +69,7 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         int $amount,
         string $itemsID,
         int $refundableAmount,
@@ -72,45 +90,51 @@ final class Item implements BaseModel
         return $obj;
     }
 
-    public function setAmount(int $amount): self
+    public function withAmount(int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
-    public function setItemsID(string $itemsID): self
+    public function withItemsID(string $itemsID): self
     {
-        $this->itemsID = $itemsID;
+        $obj = clone $this;
+        $obj->itemsID = $itemsID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRefundableAmount(int $refundableAmount): self
+    public function withRefundableAmount(int $refundableAmount): self
     {
-        $this->refundableAmount = $refundableAmount;
+        $obj = clone $this;
+        $obj->refundableAmount = $refundableAmount;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTax(int $tax): self
+    public function withTax(int $tax): self
     {
-        $this->tax = $tax;
+        $obj = clone $this;
+        $obj->tax = $tax;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

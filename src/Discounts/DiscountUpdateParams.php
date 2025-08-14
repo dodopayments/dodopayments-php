@@ -98,7 +98,7 @@ final class DiscountUpdateParams implements BaseModel
      * @param null|list<string> $restrictedTo
      * @param DiscountType::* $type
      */
-    public static function from(
+    public static function with(
         ?int $amount = null,
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
@@ -129,35 +129,39 @@ final class DiscountUpdateParams implements BaseModel
      *
      * Must be at least 1 if provided.
      */
-    public function setAmount(?int $amount): self
+    public function withAmount(?int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * If present, update the discount code (uppercase).
      */
-    public function setCode(?string $code): self
+    public function withCode(?string $code): self
     {
-        $this->code = $code;
+        $obj = clone $this;
+        $obj->code = $code;
 
-        return $this;
+        return $obj;
     }
 
-    public function setExpiresAt(?\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -166,11 +170,12 @@ final class DiscountUpdateParams implements BaseModel
      *
      * @param null|list<string> $restrictedTo
      */
-    public function setRestrictedTo(?array $restrictedTo): self
+    public function withRestrictedTo(?array $restrictedTo): self
     {
-        $this->restrictedTo = $restrictedTo;
+        $obj = clone $this;
+        $obj->restrictedTo = $restrictedTo;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -178,11 +183,12 @@ final class DiscountUpdateParams implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    public function setSubscriptionCycles(?int $subscriptionCycles): self
+    public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
-        $this->subscriptionCycles = $subscriptionCycles;
+        $obj = clone $this;
+        $obj->subscriptionCycles = $subscriptionCycles;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -190,17 +196,19 @@ final class DiscountUpdateParams implements BaseModel
      *
      * @param DiscountType::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
-    public function setUsageLimit(?int $usageLimit): self
+    public function withUsageLimit(?int $usageLimit): self
     {
-        $this->usageLimit = $usageLimit;
+        $obj = clone $this;
+        $obj->usageLimit = $usageLimit;
 
-        return $this;
+        return $obj;
     }
 }

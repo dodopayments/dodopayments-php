@@ -33,7 +33,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = DiscountCreateParams::from(
+        $params = DiscountCreateParams::with(
             amount: 0,
             type: DiscountType::PERCENTAGE
         );
@@ -45,7 +45,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = DiscountCreateParams::from(
+        $params = DiscountCreateParams::with(
             amount: 0,
             type: DiscountType::PERCENTAGE,
             code: 'code',

@@ -258,6 +258,49 @@ final class Payment implements BaseModel
     #[Api('updated_at', optional: true)]
     public ?\DateTimeInterface $updatedAt;
 
+    /**
+     * `new Payment()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Payment::with(
+     *   billing: ...,
+     *   brandID: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   currency: ...,
+     *   customer: ...,
+     *   digitalProductsDelivered: ...,
+     *   disputes: ...,
+     *   metadata: ...,
+     *   paymentID: ...,
+     *   refunds: ...,
+     *   settlementAmount: ...,
+     *   settlementCurrency: ...,
+     *   totalAmount: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Payment)
+     *   ->withBilling(...)
+     *   ->withBrandID(...)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withCurrency(...)
+     *   ->withCustomer(...)
+     *   ->withDigitalProductsDelivered(...)
+     *   ->withDisputes(...)
+     *   ->withMetadata(...)
+     *   ->withPaymentID(...)
+     *   ->withRefunds(...)
+     *   ->withSettlementAmount(...)
+     *   ->withSettlementCurrency(...)
+     *   ->withTotalAmount(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -278,7 +321,7 @@ final class Payment implements BaseModel
      * @param null|list<ProductCart> $productCart
      * @param IntentStatus::* $status
      */
-    public static function from(
+    public static function with(
         BillingAddress $billing,
         string $brandID,
         string $businessID,
@@ -350,41 +393,45 @@ final class Payment implements BaseModel
     /**
      * Billing address details for payments.
      */
-    public function setBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress $billing): self
     {
-        $this->billing = $billing;
+        $obj = clone $this;
+        $obj->billing = $billing;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * brand id this payment belongs to.
      */
-    public function setBrandID(string $brandID): self
+    public function withBrandID(string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Identifier of the business associated with the payment.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the payment was created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -392,32 +439,35 @@ final class Payment implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Details about the customer who made the payment.
      */
-    public function setCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails $customer): self
     {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * brand id this payment belongs to.
      */
-    public function setDigitalProductsDelivered(
+    public function withDigitalProductsDelivered(
         bool $digitalProductsDelivered
     ): self {
-        $this->digitalProductsDelivered = $digitalProductsDelivered;
+        $obj = clone $this;
+        $obj->digitalProductsDelivered = $digitalProductsDelivered;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -425,11 +475,12 @@ final class Payment implements BaseModel
      *
      * @param list<Dispute> $disputes
      */
-    public function setDisputes(array $disputes): self
+    public function withDisputes(array $disputes): self
     {
-        $this->disputes = $disputes;
+        $obj = clone $this;
+        $obj->disputes = $disputes;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -437,21 +488,23 @@ final class Payment implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the payment.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -459,22 +512,24 @@ final class Payment implements BaseModel
      *
      * @param list<Refund> $refunds
      */
-    public function setRefunds(array $refunds): self
+    public function withRefunds(array $refunds): self
     {
-        $this->refunds = $refunds;
+        $obj = clone $this;
+        $obj->refunds = $refunds;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The amount that will be credited to your Dodo balance after currency conversion and processing.
      * Especially relevant for adaptive pricing where the customer's payment currency differs from your settlement currency.
      */
-    public function setSettlementAmount(int $settlementAmount): self
+    public function withSettlementAmount(int $settlementAmount): self
     {
-        $this->settlementAmount = $settlementAmount;
+        $obj = clone $this;
+        $obj->settlementAmount = $settlementAmount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -483,21 +538,23 @@ final class Payment implements BaseModel
      *
      * @param Currency::* $settlementCurrency
      */
-    public function setSettlementCurrency(string $settlementCurrency): self
+    public function withSettlementCurrency(string $settlementCurrency): self
     {
-        $this->settlementCurrency = $settlementCurrency;
+        $obj = clone $this;
+        $obj->settlementCurrency = $settlementCurrency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
      */
-    public function setTotalAmount(int $totalAmount): self
+    public function withTotalAmount(int $totalAmount): self
     {
-        $this->totalAmount = $totalAmount;
+        $obj = clone $this;
+        $obj->totalAmount = $totalAmount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -505,101 +562,111 @@ final class Payment implements BaseModel
      *
      * @param CountryCode::* $cardIssuingCountry
      */
-    public function setCardIssuingCountry(string $cardIssuingCountry): self
+    public function withCardIssuingCountry(string $cardIssuingCountry): self
     {
-        $this->cardIssuingCountry = $cardIssuingCountry;
+        $obj = clone $this;
+        $obj->cardIssuingCountry = $cardIssuingCountry;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The last four digits of the card.
      */
-    public function setCardLastFour(?string $cardLastFour): self
+    public function withCardLastFour(?string $cardLastFour): self
     {
-        $this->cardLastFour = $cardLastFour;
+        $obj = clone $this;
+        $obj->cardLastFour = $cardLastFour;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Card network like VISA, MASTERCARD etc.
      */
-    public function setCardNetwork(?string $cardNetwork): self
+    public function withCardNetwork(?string $cardNetwork): self
     {
-        $this->cardNetwork = $cardNetwork;
+        $obj = clone $this;
+        $obj->cardNetwork = $cardNetwork;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The type of card DEBIT or CREDIT.
      */
-    public function setCardType(?string $cardType): self
+    public function withCardType(?string $cardType): self
     {
-        $this->cardType = $cardType;
+        $obj = clone $this;
+        $obj->cardType = $cardType;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The discount id if discount is applied.
      */
-    public function setDiscountID(?string $discountID): self
+    public function withDiscountID(?string $discountID): self
     {
-        $this->discountID = $discountID;
+        $obj = clone $this;
+        $obj->discountID = $discountID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * An error code if the payment failed.
      */
-    public function setErrorCode(?string $errorCode): self
+    public function withErrorCode(?string $errorCode): self
     {
-        $this->errorCode = $errorCode;
+        $obj = clone $this;
+        $obj->errorCode = $errorCode;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * An error message if the payment failed.
      */
-    public function setErrorMessage(?string $errorMessage): self
+    public function withErrorMessage(?string $errorMessage): self
     {
-        $this->errorMessage = $errorMessage;
+        $obj = clone $this;
+        $obj->errorMessage = $errorMessage;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Checkout URL.
      */
-    public function setPaymentLink(?string $paymentLink): self
+    public function withPaymentLink(?string $paymentLink): self
     {
-        $this->paymentLink = $paymentLink;
+        $obj = clone $this;
+        $obj->paymentLink = $paymentLink;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Payment method used by customer (e.g. "card", "bank_transfer").
      */
-    public function setPaymentMethod(?string $paymentMethod): self
+    public function withPaymentMethod(?string $paymentMethod): self
     {
-        $this->paymentMethod = $paymentMethod;
+        $obj = clone $this;
+        $obj->paymentMethod = $paymentMethod;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Specific type of payment method (e.g. "visa", "mastercard").
      */
-    public function setPaymentMethodType(?string $paymentMethodType): self
+    public function withPaymentMethodType(?string $paymentMethodType): self
     {
-        $this->paymentMethodType = $paymentMethodType;
+        $obj = clone $this;
+        $obj->paymentMethodType = $paymentMethodType;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -607,11 +674,12 @@ final class Payment implements BaseModel
      *
      * @param null|list<ProductCart> $productCart
      */
-    public function setProductCart(?array $productCart): self
+    public function withProductCart(?array $productCart): self
     {
-        $this->productCart = $productCart;
+        $obj = clone $this;
+        $obj->productCart = $productCart;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -619,11 +687,12 @@ final class Payment implements BaseModel
      * Especially relevant for adaptive pricing where the tax component must be tracked separately
      * in your Dodo balance.
      */
-    public function setSettlementTax(?int $settlementTax): self
+    public function withSettlementTax(?int $settlementTax): self
     {
-        $this->settlementTax = $settlementTax;
+        $obj = clone $this;
+        $obj->settlementTax = $settlementTax;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -631,40 +700,44 @@ final class Payment implements BaseModel
      *
      * @param IntentStatus::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Identifier of the subscription if payment is part of a subscription.
      */
-    public function setSubscriptionID(?string $subscriptionID): self
+    public function withSubscriptionID(?string $subscriptionID): self
     {
-        $this->subscriptionID = $subscriptionID;
+        $obj = clone $this;
+        $obj->subscriptionID = $subscriptionID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Amount of tax collected in smallest currency unit (e.g. cents).
      */
-    public function setTax(?int $tax): self
+    public function withTax(?int $tax): self
     {
-        $this->tax = $tax;
+        $obj = clone $this;
+        $obj->tax = $tax;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the payment was last updated.
      */
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function withUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $obj = clone $this;
+        $obj->updatedAt = $updatedAt;
 
-        return $this;
+        return $obj;
     }
 }

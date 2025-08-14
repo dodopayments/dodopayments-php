@@ -88,6 +88,20 @@ final class WebhookCreateParams implements BaseModel
     #[Api('rate_limit', optional: true)]
     public ?int $rateLimit;
 
+    /**
+     * `new WebhookCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebhookCreateParams::with(url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebhookCreateParams)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -103,7 +117,7 @@ final class WebhookCreateParams implements BaseModel
      * @param null|array<string, string> $headers
      * @param null|array<string, string> $metadata
      */
-    public static function from(
+    public static function with(
         string $url,
         ?string $description = null,
         ?bool $disabled = null,
@@ -131,18 +145,20 @@ final class WebhookCreateParams implements BaseModel
     /**
      * Url of the webhook.
      */
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -150,11 +166,12 @@ final class WebhookCreateParams implements BaseModel
      *
      * Default is false
      */
-    public function setDisabled(?bool $disabled): self
+    public function withDisabled(?bool $disabled): self
     {
-        $this->disabled = $disabled;
+        $obj = clone $this;
+        $obj->disabled = $disabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -164,11 +181,12 @@ final class WebhookCreateParams implements BaseModel
      *
      * @param list<WebhookEventType::*> $filterTypes
      */
-    public function setFilterTypes(array $filterTypes): self
+    public function withFilterTypes(array $filterTypes): self
     {
-        $this->filterTypes = $filterTypes;
+        $obj = clone $this;
+        $obj->filterTypes = $filterTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -176,21 +194,23 @@ final class WebhookCreateParams implements BaseModel
      *
      * @param null|array<string, string> $headers
      */
-    public function setHeaders(?array $headers): self
+    public function withHeaders(?array $headers): self
     {
-        $this->headers = $headers;
+        $obj = clone $this;
+        $obj->headers = $headers;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The request's idempotency key.
      */
-    public function setIdempotencyKey(?string $idempotencyKey): self
+    public function withIdempotencyKey(?string $idempotencyKey): self
     {
-        $this->idempotencyKey = $idempotencyKey;
+        $obj = clone $this;
+        $obj->idempotencyKey = $idempotencyKey;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -199,17 +219,19 @@ final class WebhookCreateParams implements BaseModel
      *
      * @param null|array<string, string> $metadata
      */
-    public function setMetadata(?array $metadata): self
+    public function withMetadata(?array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
-    public function setRateLimit(?int $rateLimit): self
+    public function withRateLimit(?int $rateLimit): self
     {
-        $this->rateLimit = $rateLimit;
+        $obj = clone $this;
+        $obj->rateLimit = $rateLimit;
 
-        return $this;
+        return $obj;
     }
 }

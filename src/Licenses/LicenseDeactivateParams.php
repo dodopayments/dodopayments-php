@@ -25,6 +25,22 @@ final class LicenseDeactivateParams implements BaseModel
     #[Api('license_key_instance_id')]
     public string $licenseKeyInstanceID;
 
+    /**
+     * `new LicenseDeactivateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseDeactivateParams::with(licenseKey: ..., licenseKeyInstanceID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseDeactivateParams)
+     *   ->withLicenseKey(...)
+     *   ->withLicenseKeyInstanceID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -36,7 +52,7 @@ final class LicenseDeactivateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $licenseKey,
         string $licenseKeyInstanceID
     ): self {
@@ -48,17 +64,19 @@ final class LicenseDeactivateParams implements BaseModel
         return $obj;
     }
 
-    public function setLicenseKey(string $licenseKey): self
+    public function withLicenseKey(string $licenseKey): self
     {
-        $this->licenseKey = $licenseKey;
+        $obj = clone $this;
+        $obj->licenseKey = $licenseKey;
 
-        return $this;
+        return $obj;
     }
 
-    public function setLicenseKeyInstanceID(string $licenseKeyInstanceID): self
+    public function withLicenseKeyInstanceID(string $licenseKeyInstanceID): self
     {
-        $this->licenseKeyInstanceID = $licenseKeyInstanceID;
+        $obj = clone $this;
+        $obj->licenseKeyInstanceID = $licenseKeyInstanceID;
 
-        return $this;
+        return $obj;
     }
 }

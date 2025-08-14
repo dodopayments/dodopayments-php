@@ -119,6 +119,23 @@ final class PaymentCreateParams implements BaseModel
     #[Api('tax_id', optional: true)]
     public ?string $taxID;
 
+    /**
+     * `new PaymentCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * PaymentCreateParams::with(billing: ..., customer: ..., productCart: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new PaymentCreateParams)
+     *   ->withBilling(...)
+     *   ->withCustomer(...)
+     *   ->withProductCart(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -135,7 +152,7 @@ final class PaymentCreateParams implements BaseModel
      * @param Currency::* $billingCurrency
      * @param null|array<string, string> $metadata
      */
-    public static function from(
+    public static function with(
         BillingAddress $billing,
         AttachExistingCustomer|NewCustomer $customer,
         array $productCart,
@@ -169,22 +186,24 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Billing address details for the payment.
      */
-    public function setBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress $billing): self
     {
-        $this->billing = $billing;
+        $obj = clone $this;
+        $obj->billing = $billing;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Customer information for the payment.
      */
-    public function setCustomer(
+    public function withCustomer(
         AttachExistingCustomer|NewCustomer $customer
     ): self {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -192,11 +211,12 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param list<OneTimeProductCartItem> $productCart
      */
-    public function setProductCart(array $productCart): self
+    public function withProductCart(array $productCart): self
     {
-        $this->productCart = $productCart;
+        $obj = clone $this;
+        $obj->productCart = $productCart;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -208,12 +228,13 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
      */
-    public function setAllowedPaymentMethodTypes(
+    public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes
     ): self {
-        $this->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
+        $obj = clone $this;
+        $obj->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -222,21 +243,23 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param Currency::* $billingCurrency
      */
-    public function setBillingCurrency(string $billingCurrency): self
+    public function withBillingCurrency(string $billingCurrency): self
     {
-        $this->billingCurrency = $billingCurrency;
+        $obj = clone $this;
+        $obj->billingCurrency = $billingCurrency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Discount Code to apply to the transaction.
      */
-    public function setDiscountCode(?string $discountCode): self
+    public function withDiscountCode(?string $discountCode): self
     {
-        $this->discountCode = $discountCode;
+        $obj = clone $this;
+        $obj->discountCode = $discountCode;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -245,53 +268,58 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether to generate a payment link. Defaults to false if not specified.
      */
-    public function setPaymentLink(?bool $paymentLink): self
+    public function withPaymentLink(?bool $paymentLink): self
     {
-        $this->paymentLink = $paymentLink;
+        $obj = clone $this;
+        $obj->paymentLink = $paymentLink;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
-    public function setReturnURL(?string $returnURL): self
+    public function withReturnURL(?string $returnURL): self
     {
-        $this->returnURL = $returnURL;
+        $obj = clone $this;
+        $obj->returnURL = $returnURL;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Display saved payment methods of a returning customer
      * False by default.
      */
-    public function setShowSavedPaymentMethods(
+    public function withShowSavedPaymentMethods(
         bool $showSavedPaymentMethods
     ): self {
-        $this->showSavedPaymentMethods = $showSavedPaymentMethods;
+        $obj = clone $this;
+        $obj->showSavedPaymentMethods = $showSavedPaymentMethods;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    public function setTaxID(?string $taxID): self
+    public function withTaxID(?string $taxID): self
     {
-        $this->taxID = $taxID;
+        $obj = clone $this;
+        $obj->taxID = $taxID;
 
-        return $this;
+        return $obj;
     }
 }

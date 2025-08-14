@@ -133,6 +133,35 @@ final class ProductListResponse implements BaseModel
     #[Api('tax_inclusive', optional: true)]
     public ?bool $taxInclusive;
 
+    /**
+     * `new ProductListResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ProductListResponse::with(
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   isRecurring: ...,
+     *   metadata: ...,
+     *   productID: ...,
+     *   taxCategory: ...,
+     *   updatedAt: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ProductListResponse)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withIsRecurring(...)
+     *   ->withMetadata(...)
+     *   ->withProductID(...)
+     *   ->withTaxCategory(...)
+     *   ->withUpdatedAt(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -148,7 +177,7 @@ final class ProductListResponse implements BaseModel
      * @param TaxCategory::* $taxCategory
      * @param Currency::* $currency
      */
-    public static function from(
+    public static function with(
         string $businessID,
         \DateTimeInterface $createdAt,
         bool $isRecurring,
@@ -188,31 +217,34 @@ final class ProductListResponse implements BaseModel
     /**
      * Unique identifier for the business to which the product belongs.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the product was created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
-    public function setIsRecurring(bool $isRecurring): self
+    public function withIsRecurring(bool $isRecurring): self
     {
-        $this->isRecurring = $isRecurring;
+        $obj = clone $this;
+        $obj->isRecurring = $isRecurring;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -220,21 +252,23 @@ final class ProductListResponse implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the product.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -242,21 +276,23 @@ final class ProductListResponse implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the product was last updated.
      */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $obj = clone $this;
+        $obj->updatedAt = $updatedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -264,41 +300,45 @@ final class ProductListResponse implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Description of the product, optional.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * URL of the product image, optional.
      */
-    public function setImage(?string $image): self
+    public function withImage(?string $image): self
     {
-        $this->image = $image;
+        $obj = clone $this;
+        $obj->image = $image;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the product, optional.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -312,31 +352,34 @@ final class ProductListResponse implements BaseModel
      *
      * This ensures precision and avoids floating-point rounding errors.
      */
-    public function setPrice(?int $price): self
+    public function withPrice(?int $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Details of the price.
      */
-    public function setPriceDetail(
+    public function withPriceDetail(
         OneTimePrice|RecurringPrice $priceDetail
     ): self {
-        $this->priceDetail = $priceDetail;
+        $obj = clone $this;
+        $obj->priceDetail = $priceDetail;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    public function setTaxInclusive(?bool $taxInclusive): self
+    public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $this->taxInclusive = $taxInclusive;
+        $obj = clone $this;
+        $obj->taxInclusive = $taxInclusive;
 
-        return $this;
+        return $obj;
     }
 }

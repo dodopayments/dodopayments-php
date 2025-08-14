@@ -48,7 +48,7 @@ final class BrandUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $imageID = null,
         ?string $name = null,
         ?string $statementDescriptor = null,
@@ -67,31 +67,35 @@ final class BrandUpdateParams implements BaseModel
     /**
      * The UUID you got back from the presigned‐upload call.
      */
-    public function setImageID(?string $imageID): self
+    public function withImageID(?string $imageID): self
     {
-        $this->imageID = $imageID;
+        $obj = clone $this;
+        $obj->imageID = $imageID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStatementDescriptor(?string $statementDescriptor): self
+    public function withStatementDescriptor(?string $statementDescriptor): self
     {
-        $this->statementDescriptor = $statementDescriptor;
+        $obj = clone $this;
+        $obj->statementDescriptor = $statementDescriptor;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSupportEmail(?string $supportEmail): self
+    public function withSupportEmail(?string $supportEmail): self
     {
-        $this->supportEmail = $supportEmail;
+        $obj = clone $this;
+        $obj->supportEmail = $supportEmail;
 
-        return $this;
+        return $obj;
     }
 }

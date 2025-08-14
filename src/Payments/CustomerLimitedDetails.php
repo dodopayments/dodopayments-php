@@ -35,6 +35,20 @@ final class CustomerLimitedDetails implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * `new CustomerLimitedDetails()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CustomerLimitedDetails::with(customerID: ..., email: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CustomerLimitedDetails)->withCustomerID(...)->withEmail(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -46,7 +60,7 @@ final class CustomerLimitedDetails implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $customerID,
         string $email,
         string $name
@@ -63,30 +77,33 @@ final class CustomerLimitedDetails implements BaseModel
     /**
      * Unique identifier for the customer.
      */
-    public function setCustomerID(string $customerID): self
+    public function withCustomerID(string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Email address of the customer.
      */
-    public function setEmail(string $email): self
+    public function withEmail(string $email): self
     {
-        $this->email = $email;
+        $obj = clone $this;
+        $obj->email = $email;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Full name of the customer.
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

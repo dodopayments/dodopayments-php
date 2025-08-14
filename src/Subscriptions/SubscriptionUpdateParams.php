@@ -65,7 +65,7 @@ final class SubscriptionUpdateParams implements BaseModel
      * @param null|array<string, string> $metadata
      * @param SubscriptionStatus::* $status
      */
-    public static function from(
+    public static function with(
         ?BillingAddress $billing = null,
         ?bool $cancelAtNextBillingDate = null,
         ?DisableOnDemand $disableOnDemand = null,
@@ -87,60 +87,67 @@ final class SubscriptionUpdateParams implements BaseModel
         return $obj;
     }
 
-    public function setBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress $billing): self
     {
-        $this->billing = $billing;
+        $obj = clone $this;
+        $obj->billing = $billing;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCancelAtNextBillingDate(
+    public function withCancelAtNextBillingDate(
         ?bool $cancelAtNextBillingDate
     ): self {
-        $this->cancelAtNextBillingDate = $cancelAtNextBillingDate;
+        $obj = clone $this;
+        $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDisableOnDemand(?DisableOnDemand $disableOnDemand): self
+    public function withDisableOnDemand(?DisableOnDemand $disableOnDemand): self
     {
-        $this->disableOnDemand = $disableOnDemand;
+        $obj = clone $this;
+        $obj->disableOnDemand = $disableOnDemand;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param null|array<string, string> $metadata
      */
-    public function setMetadata(?array $metadata): self
+    public function withMetadata(?array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
-    public function setNextBillingDate(
+    public function withNextBillingDate(
         ?\DateTimeInterface $nextBillingDate
     ): self {
-        $this->nextBillingDate = $nextBillingDate;
+        $obj = clone $this;
+        $obj->nextBillingDate = $nextBillingDate;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param SubscriptionStatus::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTaxID(?string $taxID): self
+    public function withTaxID(?string $taxID): self
     {
-        $this->taxID = $taxID;
+        $obj = clone $this;
+        $obj->taxID = $taxID;
 
-        return $this;
+        return $obj;
     }
 }

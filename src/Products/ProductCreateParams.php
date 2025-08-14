@@ -118,6 +118,20 @@ final class ProductCreateParams implements BaseModel
     #[Api(optional: true)]
     public ?string $name;
 
+    /**
+     * `new ProductCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ProductCreateParams::with(price: ..., taxCategory: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ProductCreateParams)->withPrice(...)->withTaxCategory(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -133,7 +147,7 @@ final class ProductCreateParams implements BaseModel
      * @param null|list<string> $addons
      * @param null|array<string, string> $metadata
      */
-    public static function from(
+    public static function with(
         OneTimePrice|RecurringPrice $price,
         string $taxCategory,
         ?array $addons = null,
@@ -169,11 +183,12 @@ final class ProductCreateParams implements BaseModel
     /**
      * Price configuration for the product.
      */
-    public function setPrice(OneTimePrice|RecurringPrice $price): self
+    public function withPrice(OneTimePrice|RecurringPrice $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -181,11 +196,12 @@ final class ProductCreateParams implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -193,65 +209,71 @@ final class ProductCreateParams implements BaseModel
      *
      * @param null|list<string> $addons
      */
-    public function setAddons(?array $addons): self
+    public function withAddons(?array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Brand id for the product, if not provided will default to primary brand.
      */
-    public function setBrandID(?string $brandID): self
+    public function withBrandID(?string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional description of the product.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Choose how you would like you digital product delivered.
      */
-    public function setDigitalProductDelivery(
+    public function withDigitalProductDelivery(
         ?DigitalProductDelivery $digitalProductDelivery
     ): self {
-        $this->digitalProductDelivery = $digitalProductDelivery;
+        $obj = clone $this;
+        $obj->digitalProductDelivery = $digitalProductDelivery;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional message displayed during license key activation.
      */
-    public function setLicenseKeyActivationMessage(
+    public function withLicenseKeyActivationMessage(
         ?string $licenseKeyActivationMessage
     ): self {
-        $this->licenseKeyActivationMessage = $licenseKeyActivationMessage;
+        $obj = clone $this;
+        $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The number of times the license key can be activated.
      * Must be 0 or greater.
      */
-    public function setLicenseKeyActivationsLimit(
+    public function withLicenseKeyActivationsLimit(
         ?int $licenseKeyActivationsLimit
     ): self {
-        $this->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
+        $obj = clone $this;
+        $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -259,23 +281,25 @@ final class ProductCreateParams implements BaseModel
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
      */
-    public function setLicenseKeyDuration(
+    public function withLicenseKeyDuration(
         LicenseKeyDuration $licenseKeyDuration
     ): self {
-        $this->licenseKeyDuration = $licenseKeyDuration;
+        $obj = clone $this;
+        $obj->licenseKeyDuration = $licenseKeyDuration;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * When true, generates and sends a license key to your customer.
      * Defaults to false.
      */
-    public function setLicenseKeyEnabled(?bool $licenseKeyEnabled): self
+    public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {
-        $this->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj = clone $this;
+        $obj->licenseKeyEnabled = $licenseKeyEnabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -283,20 +307,22 @@ final class ProductCreateParams implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional name of the product.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

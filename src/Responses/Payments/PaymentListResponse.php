@@ -71,6 +71,37 @@ final class PaymentListResponse implements BaseModel
     #[Api('subscription_id', optional: true)]
     public ?string $subscriptionID;
 
+    /**
+     * `new PaymentListResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * PaymentListResponse::with(
+     *   brandID: ...,
+     *   createdAt: ...,
+     *   currency: ...,
+     *   customer: ...,
+     *   digitalProductsDelivered: ...,
+     *   metadata: ...,
+     *   paymentID: ...,
+     *   totalAmount: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new PaymentListResponse)
+     *   ->withBrandID(...)
+     *   ->withCreatedAt(...)
+     *   ->withCurrency(...)
+     *   ->withCustomer(...)
+     *   ->withDigitalProductsDelivered(...)
+     *   ->withMetadata(...)
+     *   ->withPaymentID(...)
+     *   ->withTotalAmount(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -86,7 +117,7 @@ final class PaymentListResponse implements BaseModel
      * @param array<string, string> $metadata
      * @param IntentStatus::* $status
      */
-    public static function from(
+    public static function with(
         string $brandID,
         \DateTimeInterface $createdAt,
         string $currency,
@@ -119,97 +150,109 @@ final class PaymentListResponse implements BaseModel
         return $obj;
     }
 
-    public function setBrandID(string $brandID): self
+    public function withBrandID(string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
-    public function setCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails $customer): self
     {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDigitalProductsDelivered(
+    public function withDigitalProductsDelivered(
         bool $digitalProductsDelivered
     ): self {
-        $this->digitalProductsDelivered = $digitalProductsDelivered;
+        $obj = clone $this;
+        $obj->digitalProductsDelivered = $digitalProductsDelivered;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setTotalAmount(int $totalAmount): self
+    public function withTotalAmount(int $totalAmount): self
     {
-        $this->totalAmount = $totalAmount;
+        $obj = clone $this;
+        $obj->totalAmount = $totalAmount;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPaymentMethod(?string $paymentMethod): self
+    public function withPaymentMethod(?string $paymentMethod): self
     {
-        $this->paymentMethod = $paymentMethod;
+        $obj = clone $this;
+        $obj->paymentMethod = $paymentMethod;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPaymentMethodType(?string $paymentMethodType): self
+    public function withPaymentMethodType(?string $paymentMethodType): self
     {
-        $this->paymentMethodType = $paymentMethodType;
+        $obj = clone $this;
+        $obj->paymentMethodType = $paymentMethodType;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param IntentStatus::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSubscriptionID(?string $subscriptionID): self
+    public function withSubscriptionID(?string $subscriptionID): self
     {
-        $this->subscriptionID = $subscriptionID;
+        $obj = clone $this;
+        $obj->subscriptionID = $subscriptionID;
 
-        return $this;
+        return $obj;
     }
 }

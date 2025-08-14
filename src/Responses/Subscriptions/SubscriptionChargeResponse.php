@@ -18,6 +18,20 @@ final class SubscriptionChargeResponse implements BaseModel
     #[Api('payment_id')]
     public string $paymentID;
 
+    /**
+     * `new SubscriptionChargeResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SubscriptionChargeResponse::with(paymentID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SubscriptionChargeResponse)->withPaymentID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class SubscriptionChargeResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $paymentID): self
+    public static function with(string $paymentID): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class SubscriptionChargeResponse implements BaseModel
         return $obj;
     }
 
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -54,17 +54,17 @@ $client = new Client(
   environment: "test_mode",
 );
 
-$params = PaymentCreateParams::from(
-  billing: BillingAddress::from(
+$params = PaymentCreateParams::with(
+  billing: BillingAddress::with(
     city: "city",
     country: CountryCode::AF,
     state: "state",
     street: "street",
     zipcode: "zipcode",
   ),
-  customer: AttachExistingCustomer::from(customerID: "customer_id"),
+  customer: AttachExistingCustomer::with(customerID: "customer_id"),
   productCart: [
-    OneTimeProductCartItem::from(productID: "product_id", quantity: 0)
+    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
 );
 $payment = $client->payments->create($params);
@@ -86,21 +86,21 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
+$params = PaymentCreateParams::with(
+  billing: BillingAddress::with(
+    city: "city",
+    country: CountryCode::AF,
+    state: "state",
+    street: "street",
+    zipcode: "zipcode",
+  ),
+  customer: AttachExistingCustomer::with(customerID: "customer_id"),
+  productCart: [
+    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
+  ],
+);
 try {
-    $params = PaymentCreateParams::from(
-      billing: BillingAddress::from(
-        city: "city",
-        country: CountryCode::AF,
-        state: "state",
-        street: "street",
-        zipcode: "zipcode",
-      ),
-      customer: AttachExistingCustomer::from(customerID: "customer_id"),
-      productCart: [
-        OneTimeProductCartItem::from(productID: "product_id", quantity: 0)
-      ],
-    );
-    $Payments = $client->payments->create($params);
+  $Payments = $client->payments->create($params);
 } catch (APIConnectionError $e) {
     echo "The server could not be reached", PHP_EOL;
     var_dump($e->getPrevious());
@@ -149,22 +149,23 @@ use Dodopayments\Payments\OneTimeProductCartItem;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
-$params = PaymentCreateParams::from(
-  billing: BillingAddress::from(
+$params = PaymentCreateParams::with(
+  billing: BillingAddress::with(
     city: "city",
     country: CountryCode::AF,
     state: "state",
     street: "street",
     zipcode: "zipcode",
   ),
-  customer: AttachExistingCustomer::from(customerID: "customer_id"),
+  customer: AttachExistingCustomer::with(customerID: "customer_id"),
   productCart: [
-    OneTimeProductCartItem::from(productID: "product_id", quantity: 0)
+    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
 );
 
-// Or, configure per-request:
-$result = $client->payments->create($params, new RequestOptions(maxRetries: 5));
+// Or, configure per-request:$result = $client
+  ->payments
+  ->create($params, new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -187,17 +188,17 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
-$params = PaymentCreateParams::from(
-  billing: BillingAddress::from(
+$params = PaymentCreateParams::with(
+  billing: BillingAddress::with(
     city: "city",
     country: CountryCode::AF,
     state: "state",
     street: "street",
     zipcode: "zipcode",
   ),
-  customer: AttachExistingCustomer::from(customerID: "customer_id"),
+  customer: AttachExistingCustomer::with(customerID: "customer_id"),
   productCart: [
-    OneTimeProductCartItem::from(productID: "product_id", quantity: 0)
+    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
 );
 $payment = $client

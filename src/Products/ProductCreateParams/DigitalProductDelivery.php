@@ -42,7 +42,7 @@ final class DigitalProductDelivery implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $externalURL = null,
         ?string $instructions = null
     ): self {
@@ -57,20 +57,22 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    public function setExternalURL(?string $externalURL): self
+    public function withExternalURL(?string $externalURL): self
     {
-        $this->externalURL = $externalURL;
+        $obj = clone $this;
+        $obj->externalURL = $externalURL;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Instructions to download and use the digital product.
      */
-    public function setInstructions(?string $instructions): self
+    public function withInstructions(?string $instructions): self
     {
-        $this->instructions = $instructions;
+        $obj = clone $this;
+        $obj->instructions = $instructions;
 
-        return $this;
+        return $obj;
     }
 }

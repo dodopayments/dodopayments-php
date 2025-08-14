@@ -53,7 +53,7 @@ final class LicenseKeyUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?int $activationsLimit = null,
         ?bool $disabled = null,
         ?\DateTimeInterface $expiresAt = null,
@@ -71,32 +71,35 @@ final class LicenseKeyUpdateParams implements BaseModel
      * The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      */
-    public function setActivationsLimit(?int $activationsLimit): self
+    public function withActivationsLimit(?int $activationsLimit): self
     {
-        $this->activationsLimit = $activationsLimit;
+        $obj = clone $this;
+        $obj->activationsLimit = $activationsLimit;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates whether the license key should be disabled.
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
      */
-    public function setDisabled(?bool $disabled): self
+    public function withDisabled(?bool $disabled): self
     {
-        $this->disabled = $disabled;
+        $obj = clone $this;
+        $obj->disabled = $disabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      */
-    public function setExpiresAt(?\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 }

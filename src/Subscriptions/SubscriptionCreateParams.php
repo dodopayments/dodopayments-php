@@ -151,6 +151,26 @@ final class SubscriptionCreateParams implements BaseModel
     #[Api('trial_period_days', optional: true)]
     public ?int $trialPeriodDays;
 
+    /**
+     * `new SubscriptionCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SubscriptionCreateParams::with(
+     *   billing: ..., customer: ..., productID: ..., quantity: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SubscriptionCreateParams)
+     *   ->withBilling(...)
+     *   ->withCustomer(...)
+     *   ->withProductID(...)
+     *   ->withQuantity(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -167,7 +187,7 @@ final class SubscriptionCreateParams implements BaseModel
      * @param Currency::* $billingCurrency
      * @param null|array<string, string> $metadata
      */
-    public static function from(
+    public static function with(
         BillingAddress $billing,
         AttachExistingCustomer|NewCustomer $customer,
         string $productID,
@@ -209,42 +229,46 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Billing address information for the subscription.
      */
-    public function setBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress $billing): self
     {
-        $this->billing = $billing;
+        $obj = clone $this;
+        $obj->billing = $billing;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Customer details for the subscription.
      */
-    public function setCustomer(
+    public function withCustomer(
         AttachExistingCustomer|NewCustomer $customer
     ): self {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier of the product to subscribe to.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of units to subscribe for. Must be at least 1.
      */
-    public function setQuantity(int $quantity): self
+    public function withQuantity(int $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -252,11 +276,12 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @param null|list<AttachAddon> $addons
      */
-    public function setAddons(?array $addons): self
+    public function withAddons(?array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -268,12 +293,13 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
      */
-    public function setAllowedPaymentMethodTypes(
+    public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes
     ): self {
-        $this->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
+        $obj = clone $this;
+        $obj->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -282,21 +308,23 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @param Currency::* $billingCurrency
      */
-    public function setBillingCurrency(string $billingCurrency): self
+    public function withBillingCurrency(string $billingCurrency): self
     {
-        $this->billingCurrency = $billingCurrency;
+        $obj = clone $this;
+        $obj->billingCurrency = $billingCurrency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Discount Code to apply to the subscription.
      */
-    public function setDiscountCode(?string $discountCode): self
+    public function withDiscountCode(?string $discountCode): self
     {
-        $this->discountCode = $discountCode;
+        $obj = clone $this;
+        $obj->discountCode = $discountCode;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -305,61 +333,67 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
-    public function setOnDemand(?OnDemand $onDemand): self
+    public function withOnDemand(?OnDemand $onDemand): self
     {
-        $this->onDemand = $onDemand;
+        $obj = clone $this;
+        $obj->onDemand = $onDemand;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * If true, generates a payment link.
      * Defaults to false if not specified.
      */
-    public function setPaymentLink(?bool $paymentLink): self
+    public function withPaymentLink(?bool $paymentLink): self
     {
-        $this->paymentLink = $paymentLink;
+        $obj = clone $this;
+        $obj->paymentLink = $paymentLink;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional URL to redirect after successful subscription creation.
      */
-    public function setReturnURL(?string $returnURL): self
+    public function withReturnURL(?string $returnURL): self
     {
-        $this->returnURL = $returnURL;
+        $obj = clone $this;
+        $obj->returnURL = $returnURL;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Display saved payment methods of a returning customer
      * False by default.
      */
-    public function setShowSavedPaymentMethods(
+    public function withShowSavedPaymentMethods(
         bool $showSavedPaymentMethods
     ): self {
-        $this->showSavedPaymentMethods = $showSavedPaymentMethods;
+        $obj = clone $this;
+        $obj->showSavedPaymentMethods = $showSavedPaymentMethods;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    public function setTaxID(?string $taxID): self
+    public function withTaxID(?string $taxID): self
     {
-        $this->taxID = $taxID;
+        $obj = clone $this;
+        $obj->taxID = $taxID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -367,10 +401,11 @@ final class SubscriptionCreateParams implements BaseModel
      * If specified, this value overrides the trial period set in the product's price
      * Must be between 0 and 10000 days.
      */
-    public function setTrialPeriodDays(?int $trialPeriodDays): self
+    public function withTrialPeriodDays(?int $trialPeriodDays): self
     {
-        $this->trialPeriodDays = $trialPeriodDays;
+        $obj = clone $this;
+        $obj->trialPeriodDays = $trialPeriodDays;
 
-        return $this;
+        return $obj;
     }
 }

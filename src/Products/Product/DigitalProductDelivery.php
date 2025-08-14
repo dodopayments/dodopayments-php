@@ -52,7 +52,7 @@ final class DigitalProductDelivery implements BaseModel
      *
      * @param null|list<File> $files
      */
-    public static function from(
+    public static function with(
         ?string $externalURL = null,
         ?array $files = null,
         ?string $instructions = null,
@@ -69,11 +69,12 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    public function setExternalURL(?string $externalURL): self
+    public function withExternalURL(?string $externalURL): self
     {
-        $this->externalURL = $externalURL;
+        $obj = clone $this;
+        $obj->externalURL = $externalURL;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -81,20 +82,22 @@ final class DigitalProductDelivery implements BaseModel
      *
      * @param null|list<File> $files
      */
-    public function setFiles(?array $files): self
+    public function withFiles(?array $files): self
     {
-        $this->files = $files;
+        $obj = clone $this;
+        $obj->files = $files;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Instructions to download and use the digital product.
      */
-    public function setInstructions(?string $instructions): self
+    public function withInstructions(?string $instructions): self
     {
-        $this->instructions = $instructions;
+        $obj = clone $this;
+        $obj->instructions = $instructions;
 
-        return $this;
+        return $obj;
     }
 }

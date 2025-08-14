@@ -148,6 +148,41 @@ final class Product implements BaseModel
     #[Api(optional: true)]
     public ?string $name;
 
+    /**
+     * `new Product()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Product::with(
+     *   brandID: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   isRecurring: ...,
+     *   licenseKeyEnabled: ...,
+     *   metadata: ...,
+     *   price: ...,
+     *   productID: ...,
+     *   taxCategory: ...,
+     *   updatedAt: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Product)
+     *   ->withBrandID(...)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withIsRecurring(...)
+     *   ->withLicenseKeyEnabled(...)
+     *   ->withMetadata(...)
+     *   ->withPrice(...)
+     *   ->withProductID(...)
+     *   ->withTaxCategory(...)
+     *   ->withUpdatedAt(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -163,7 +198,7 @@ final class Product implements BaseModel
      * @param TaxCategory::* $taxCategory
      * @param null|list<string> $addons
      */
-    public static function from(
+    public static function with(
         string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
@@ -208,51 +243,56 @@ final class Product implements BaseModel
         return $obj;
     }
 
-    public function setBrandID(string $brandID): self
+    public function withBrandID(string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the business to which the product belongs.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the product was created.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
-    public function setIsRecurring(bool $isRecurring): self
+    public function withIsRecurring(bool $isRecurring): self
     {
-        $this->isRecurring = $isRecurring;
+        $obj = clone $this;
+        $obj->isRecurring = $isRecurring;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates whether the product requires a license key.
      */
-    public function setLicenseKeyEnabled(bool $licenseKeyEnabled): self
+    public function withLicenseKeyEnabled(bool $licenseKeyEnabled): self
     {
-        $this->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj = clone $this;
+        $obj->licenseKeyEnabled = $licenseKeyEnabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -260,31 +300,34 @@ final class Product implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Pricing information for the product.
      */
-    public function setPrice(OneTimePrice|RecurringPrice $price): self
+    public function withPrice(OneTimePrice|RecurringPrice $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the product.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -292,21 +335,23 @@ final class Product implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Timestamp when the product was last updated.
      */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $obj = clone $this;
+        $obj->updatedAt = $updatedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -314,81 +359,89 @@ final class Product implements BaseModel
      *
      * @param null|list<string> $addons
      */
-    public function setAddons(?array $addons): self
+    public function withAddons(?array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Description of the product, optional.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
-    public function setDigitalProductDelivery(
+    public function withDigitalProductDelivery(
         ?DigitalProductDelivery $digitalProductDelivery
     ): self {
-        $this->digitalProductDelivery = $digitalProductDelivery;
+        $obj = clone $this;
+        $obj->digitalProductDelivery = $digitalProductDelivery;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * URL of the product image, optional.
      */
-    public function setImage(?string $image): self
+    public function withImage(?string $image): self
     {
-        $this->image = $image;
+        $obj = clone $this;
+        $obj->image = $image;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Message sent upon license key activation, if applicable.
      */
-    public function setLicenseKeyActivationMessage(
+    public function withLicenseKeyActivationMessage(
         ?string $licenseKeyActivationMessage
     ): self {
-        $this->licenseKeyActivationMessage = $licenseKeyActivationMessage;
+        $obj = clone $this;
+        $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Limit on the number of activations for the license key, if enabled.
      */
-    public function setLicenseKeyActivationsLimit(
+    public function withLicenseKeyActivationsLimit(
         ?int $licenseKeyActivationsLimit
     ): self {
-        $this->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
+        $obj = clone $this;
+        $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Duration of the license key validity, if enabled.
      */
-    public function setLicenseKeyDuration(
+    public function withLicenseKeyDuration(
         LicenseKeyDuration $licenseKeyDuration
     ): self {
-        $this->licenseKeyDuration = $licenseKeyDuration;
+        $obj = clone $this;
+        $obj->licenseKeyDuration = $licenseKeyDuration;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the product, optional.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }
