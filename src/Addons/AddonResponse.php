@@ -92,6 +92,37 @@ final class AddonResponse implements BaseModel
     #[Api(optional: true)]
     public ?string $image;
 
+    /**
+     * `new AddonResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AddonResponse::with(
+     *   id: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   currency: ...,
+     *   name: ...,
+     *   price: ...,
+     *   taxCategory: ...,
+     *   updatedAt: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AddonResponse)
+     *   ->withID(...)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withCurrency(...)
+     *   ->withName(...)
+     *   ->withPrice(...)
+     *   ->withTaxCategory(...)
+     *   ->withUpdatedAt(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -106,7 +137,7 @@ final class AddonResponse implements BaseModel
      * @param Currency::* $currency
      * @param TaxCategory::* $taxCategory
      */
-    public static function from(
+    public static function with(
         string $id,
         string $businessID,
         \DateTimeInterface $createdAt,
@@ -138,31 +169,34 @@ final class AddonResponse implements BaseModel
     /**
      * id of the Addon.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the business to which the addon belongs.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Created time.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -170,31 +204,34 @@ final class AddonResponse implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the Addon.
      */
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Amount of the addon.
      */
-    public function setPrice(int $price): self
+    public function withPrice(int $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -202,40 +239,44 @@ final class AddonResponse implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Updated time.
      */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $obj = clone $this;
+        $obj->updatedAt = $updatedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional description of the Addon.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Image of the Addon.
      */
-    public function setImage(?string $image): self
+    public function withImage(?string $image): self
     {
-        $this->image = $image;
+        $obj = clone $this;
+        $obj->image = $image;
 
-        return $this;
+        return $obj;
     }
 }

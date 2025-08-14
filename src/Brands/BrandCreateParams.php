@@ -49,7 +49,7 @@ final class BrandCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $description = null,
         ?string $name = null,
         ?string $statementDescriptor = null,
@@ -67,38 +67,43 @@ final class BrandCreateParams implements BaseModel
         return $obj;
     }
 
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
-    public function setStatementDescriptor(?string $statementDescriptor): self
+    public function withStatementDescriptor(?string $statementDescriptor): self
     {
-        $this->statementDescriptor = $statementDescriptor;
+        $obj = clone $this;
+        $obj->statementDescriptor = $statementDescriptor;
 
-        return $this;
+        return $obj;
     }
 
-    public function setSupportEmail(?string $supportEmail): self
+    public function withSupportEmail(?string $supportEmail): self
     {
-        $this->supportEmail = $supportEmail;
+        $obj = clone $this;
+        $obj->supportEmail = $supportEmail;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(?string $url): self
+    public function withURL(?string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

@@ -54,6 +54,27 @@ final class BillingAddress implements BaseModel
     #[Api]
     public string $zipcode;
 
+    /**
+     * `new BillingAddress()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BillingAddress::with(
+     *   city: ..., country: ..., state: ..., street: ..., zipcode: ...
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BillingAddress)
+     *   ->withCity(...)
+     *   ->withCountry(...)
+     *   ->withState(...)
+     *   ->withStreet(...)
+     *   ->withZipcode(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -67,7 +88,7 @@ final class BillingAddress implements BaseModel
      *
      * @param CountryCode::* $country
      */
-    public static function from(
+    public static function with(
         string $city,
         string $country,
         string $state,
@@ -88,11 +109,12 @@ final class BillingAddress implements BaseModel
     /**
      * City name.
      */
-    public function setCity(string $city): self
+    public function withCity(string $city): self
     {
-        $this->city = $city;
+        $obj = clone $this;
+        $obj->city = $city;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -100,40 +122,44 @@ final class BillingAddress implements BaseModel
      *
      * @param CountryCode::* $country
      */
-    public function setCountry(string $country): self
+    public function withCountry(string $country): self
     {
-        $this->country = $country;
+        $obj = clone $this;
+        $obj->country = $country;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * State or province name.
      */
-    public function setState(string $state): self
+    public function withState(string $state): self
     {
-        $this->state = $state;
+        $obj = clone $this;
+        $obj->state = $state;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Street address including house number and unit/apartment if applicable.
      */
-    public function setStreet(string $street): self
+    public function withStreet(string $street): self
     {
-        $this->street = $street;
+        $obj = clone $this;
+        $obj->street = $street;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Postal code or ZIP code.
      */
-    public function setZipcode(string $zipcode): self
+    public function withZipcode(string $zipcode): self
     {
-        $this->zipcode = $zipcode;
+        $obj = clone $this;
+        $obj->zipcode = $zipcode;
 
-        return $this;
+        return $obj;
     }
 }

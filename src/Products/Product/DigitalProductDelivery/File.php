@@ -24,6 +24,20 @@ final class File implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * `new File()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * File::with(fileID: ..., fileName: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new File)->withFileID(...)->withFileName(...)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -35,7 +49,7 @@ final class File implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $fileID,
         string $fileName,
         string $url
@@ -49,24 +63,27 @@ final class File implements BaseModel
         return $obj;
     }
 
-    public function setFileID(string $fileID): self
+    public function withFileID(string $fileID): self
     {
-        $this->fileID = $fileID;
+        $obj = clone $this;
+        $obj->fileID = $fileID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setFileName(string $fileName): self
+    public function withFileName(string $fileName): self
     {
-        $this->fileName = $fileName;
+        $obj = clone $this;
+        $obj->fileName = $fileName;
 
-        return $this;
+        return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

@@ -31,7 +31,7 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testActivate(): void
     {
-        $params = LicenseActivateParams::from(
+        $params = LicenseActivateParams::with(
             licenseKey: 'license_key',
             name: 'name'
         );
@@ -43,7 +43,7 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testActivateWithOptionalParams(): void
     {
-        $params = LicenseActivateParams::from(
+        $params = LicenseActivateParams::with(
             licenseKey: 'license_key',
             name: 'name'
         );
@@ -55,7 +55,7 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testDeactivate(): void
     {
-        $params = LicenseDeactivateParams::from(
+        $params = LicenseDeactivateParams::with(
             licenseKey: 'license_key',
             licenseKeyInstanceID: 'license_key_instance_id'
         );
@@ -67,7 +67,7 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testDeactivateWithOptionalParams(): void
     {
-        $params = LicenseDeactivateParams::from(
+        $params = LicenseDeactivateParams::with(
             licenseKey: 'license_key',
             licenseKeyInstanceID: 'license_key_instance_id'
         );
@@ -79,7 +79,7 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testValidate(): void
     {
-        $params = LicenseValidateParams::from(
+        $params = LicenseValidateParams::with(
             licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43'
         );
         $result = $this->client->licenses->validate($params);
@@ -90,7 +90,7 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testValidateWithOptionalParams(): void
     {
-        $params = LicenseValidateParams::from(
+        $params = LicenseValidateParams::with(
             licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
             licenseKeyInstanceID: 'lki_123',
         );

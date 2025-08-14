@@ -93,6 +93,31 @@ final class PaymentNewResponse implements BaseModel
     )]
     public ?array $productCart;
 
+    /**
+     * `new PaymentNewResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * PaymentNewResponse::with(
+     *   clientSecret: ...,
+     *   customer: ...,
+     *   metadata: ...,
+     *   paymentID: ...,
+     *   totalAmount: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new PaymentNewResponse)
+     *   ->withClientSecret(...)
+     *   ->withCustomer(...)
+     *   ->withMetadata(...)
+     *   ->withPaymentID(...)
+     *   ->withTotalAmount(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -107,7 +132,7 @@ final class PaymentNewResponse implements BaseModel
      * @param array<string, string> $metadata
      * @param null|list<OneTimeProductCartItem> $productCart
      */
-    public static function from(
+    public static function with(
         string $clientSecret,
         CustomerLimitedDetails $customer,
         array $metadata,
@@ -138,21 +163,23 @@ final class PaymentNewResponse implements BaseModel
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    public function setClientSecret(string $clientSecret): self
+    public function withClientSecret(string $clientSecret): self
     {
-        $this->clientSecret = $clientSecret;
+        $obj = clone $this;
+        $obj->clientSecret = $clientSecret;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Limited details about the customer making the payment.
      */
-    public function setCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails $customer): self
     {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -160,61 +187,67 @@ final class PaymentNewResponse implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the payment.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Total amount of the payment in smallest currency unit (e.g. cents).
      */
-    public function setTotalAmount(int $totalAmount): self
+    public function withTotalAmount(int $totalAmount): self
     {
-        $this->totalAmount = $totalAmount;
+        $obj = clone $this;
+        $obj->totalAmount = $totalAmount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The discount id if discount is applied.
      */
-    public function setDiscountID(?string $discountID): self
+    public function withDiscountID(?string $discountID): self
     {
-        $this->discountID = $discountID;
+        $obj = clone $this;
+        $obj->discountID = $discountID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Expiry timestamp of the payment link.
      */
-    public function setExpiresOn(?\DateTimeInterface $expiresOn): self
+    public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
-        $this->expiresOn = $expiresOn;
+        $obj = clone $this;
+        $obj->expiresOn = $expiresOn;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional URL to a hosted payment page.
      */
-    public function setPaymentLink(?string $paymentLink): self
+    public function withPaymentLink(?string $paymentLink): self
     {
-        $this->paymentLink = $paymentLink;
+        $obj = clone $this;
+        $obj->paymentLink = $paymentLink;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -222,10 +255,11 @@ final class PaymentNewResponse implements BaseModel
      *
      * @param null|list<OneTimeProductCartItem> $productCart
      */
-    public function setProductCart(?array $productCart): self
+    public function withProductCart(?array $productCart): self
     {
-        $this->productCart = $productCart;
+        $obj = clone $this;
+        $obj->productCart = $productCart;
 
-        return $this;
+        return $obj;
     }
 }

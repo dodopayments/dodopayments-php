@@ -127,6 +127,45 @@ final class PayoutListResponse implements BaseModel
     #[Api(optional: true)]
     public ?string $remarks;
 
+    /**
+     * `new PayoutListResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * PayoutListResponse::with(
+     *   amount: ...,
+     *   businessID: ...,
+     *   chargebacks: ...,
+     *   createdAt: ...,
+     *   currency: ...,
+     *   fee: ...,
+     *   paymentMethod: ...,
+     *   payoutID: ...,
+     *   refunds: ...,
+     *   status: ...,
+     *   tax: ...,
+     *   updatedAt: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new PayoutListResponse)
+     *   ->withAmount(...)
+     *   ->withBusinessID(...)
+     *   ->withChargebacks(...)
+     *   ->withCreatedAt(...)
+     *   ->withCurrency(...)
+     *   ->withFee(...)
+     *   ->withPaymentMethod(...)
+     *   ->withPayoutID(...)
+     *   ->withRefunds(...)
+     *   ->withStatus(...)
+     *   ->withTax(...)
+     *   ->withUpdatedAt(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -141,7 +180,7 @@ final class PayoutListResponse implements BaseModel
      * @param Currency::* $currency
      * @param Status::* $status
      */
-    public static function from(
+    public static function with(
         int $amount,
         string $businessID,
         int $chargebacks,
@@ -183,41 +222,45 @@ final class PayoutListResponse implements BaseModel
     /**
      * The total amount of the payout.
      */
-    public function setAmount(int $amount): self
+    public function withAmount(int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the business associated with the payout.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The total value of chargebacks associated with the payout.
      */
-    public function setChargebacks(int $chargebacks): self
+    public function withChargebacks(int $chargebacks): self
     {
-        $this->chargebacks = $chargebacks;
+        $obj = clone $this;
+        $obj->chargebacks = $chargebacks;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp when the payout was created, in UTC.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -225,51 +268,56 @@ final class PayoutListResponse implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The fee charged for processing the payout.
      */
-    public function setFee(int $fee): self
+    public function withFee(int $fee): self
     {
-        $this->fee = $fee;
+        $obj = clone $this;
+        $obj->fee = $fee;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The payment method used for the payout (e.g., bank transfer, card, etc.).
      */
-    public function setPaymentMethod(string $paymentMethod): self
+    public function withPaymentMethod(string $paymentMethod): self
     {
-        $this->paymentMethod = $paymentMethod;
+        $obj = clone $this;
+        $obj->paymentMethod = $paymentMethod;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the payout.
      */
-    public function setPayoutID(string $payoutID): self
+    public function withPayoutID(string $payoutID): self
     {
-        $this->payoutID = $payoutID;
+        $obj = clone $this;
+        $obj->payoutID = $payoutID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The total value of refunds associated with the payout.
      */
-    public function setRefunds(int $refunds): self
+    public function withRefunds(int $refunds): self
     {
-        $this->refunds = $refunds;
+        $obj = clone $this;
+        $obj->refunds = $refunds;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -277,60 +325,66 @@ final class PayoutListResponse implements BaseModel
      *
      * @param Status::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The tax applied to the payout.
      */
-    public function setTax(int $tax): self
+    public function withTax(int $tax): self
     {
-        $this->tax = $tax;
+        $obj = clone $this;
+        $obj->tax = $tax;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp when the payout was last updated, in UTC.
      */
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $obj = clone $this;
+        $obj->updatedAt = $updatedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The name of the payout recipient or purpose.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The URL of the document associated with the payout.
      */
-    public function setPayoutDocumentURL(?string $payoutDocumentURL): self
+    public function withPayoutDocumentURL(?string $payoutDocumentURL): self
     {
-        $this->payoutDocumentURL = $payoutDocumentURL;
+        $obj = clone $this;
+        $obj->payoutDocumentURL = $payoutDocumentURL;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Any additional remarks or notes associated with the payout.
      */
-    public function setRemarks(?string $remarks): self
+    public function withRemarks(?string $remarks): self
     {
-        $this->remarks = $remarks;
+        $obj = clone $this;
+        $obj->remarks = $remarks;
 
-        return $this;
+        return $obj;
     }
 }

@@ -94,6 +94,33 @@ final class WebhookGetResponse implements BaseModel
     #[Api('rate_limit', optional: true)]
     public ?int $rateLimit;
 
+    /**
+     * `new WebhookGetResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebhookGetResponse::with(
+     *   id: ...,
+     *   createdAt: ...,
+     *   description: ...,
+     *   metadata: ...,
+     *   updatedAt: ...,
+     *   url: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebhookGetResponse)
+     *   ->withID(...)
+     *   ->withCreatedAt(...)
+     *   ->withDescription(...)
+     *   ->withMetadata(...)
+     *   ->withUpdatedAt(...)
+     *   ->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -108,7 +135,7 @@ final class WebhookGetResponse implements BaseModel
      * @param array<string, string> $metadata
      * @param null|list<string> $filterTypes
      */
-    public static function from(
+    public static function with(
         string $id,
         string $createdAt,
         string $description,
@@ -138,31 +165,34 @@ final class WebhookGetResponse implements BaseModel
     /**
      * The webhook's ID.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Created at timestamp.
      */
-    public function setCreatedAt(string $createdAt): self
+    public function withCreatedAt(string $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * An example webhook name.
      */
-    public function setDescription(string $description): self
+    public function withDescription(string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -170,31 +200,34 @@ final class WebhookGetResponse implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Updated at timestamp.
      */
-    public function setUpdatedAt(string $updatedAt): self
+    public function withUpdatedAt(string $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $obj = clone $this;
+        $obj->updatedAt = $updatedAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Url endpoint of the webhook.
      */
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -202,11 +235,12 @@ final class WebhookGetResponse implements BaseModel
      *
      * If true, events are not sent
      */
-    public function setDisabled(?bool $disabled): self
+    public function withDisabled(?bool $disabled): self
     {
-        $this->disabled = $disabled;
+        $obj = clone $this;
+        $obj->disabled = $disabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -216,20 +250,22 @@ final class WebhookGetResponse implements BaseModel
      *
      * @param null|list<string> $filterTypes
      */
-    public function setFilterTypes(?array $filterTypes): self
+    public function withFilterTypes(?array $filterTypes): self
     {
-        $this->filterTypes = $filterTypes;
+        $obj = clone $this;
+        $obj->filterTypes = $filterTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Configured rate limit.
      */
-    public function setRateLimit(?int $rateLimit): self
+    public function withRateLimit(?int $rateLimit): self
     {
-        $this->rateLimit = $rateLimit;
+        $obj = clone $this;
+        $obj->rateLimit = $rateLimit;
 
-        return $this;
+        return $obj;
     }
 }

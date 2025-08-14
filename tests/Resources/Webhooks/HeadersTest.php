@@ -37,7 +37,7 @@ final class HeadersTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = HeaderUpdateParams::from(headers: ['foo' => 'string']);
+        $params = HeaderUpdateParams::with(headers: ['foo' => 'string']);
         $result = $this->client->webhooks->headers->update('webhook_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -46,7 +46,7 @@ final class HeadersTest extends TestCase
     #[Test]
     public function testUpdateWithOptionalParams(): void
     {
-        $params = HeaderUpdateParams::from(headers: ['foo' => 'string']);
+        $params = HeaderUpdateParams::with(headers: ['foo' => 'string']);
         $result = $this->client->webhooks->headers->update('webhook_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line

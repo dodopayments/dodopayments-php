@@ -20,6 +20,20 @@ final class LicenseKeyInstanceUpdateParams implements BaseModel
     #[Api]
     public string $name;
 
+    /**
+     * `new LicenseKeyInstanceUpdateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseKeyInstanceUpdateParams::with(name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseKeyInstanceUpdateParams)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -31,7 +45,7 @@ final class LicenseKeyInstanceUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $name): self
+    public static function with(string $name): self
     {
         $obj = new self;
 
@@ -40,10 +54,11 @@ final class LicenseKeyInstanceUpdateParams implements BaseModel
         return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 }

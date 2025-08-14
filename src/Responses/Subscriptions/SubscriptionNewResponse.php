@@ -95,6 +95,33 @@ final class SubscriptionNewResponse implements BaseModel
     #[Api('payment_link', optional: true)]
     public ?string $paymentLink;
 
+    /**
+     * `new SubscriptionNewResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SubscriptionNewResponse::with(
+     *   addons: ...,
+     *   customer: ...,
+     *   metadata: ...,
+     *   paymentID: ...,
+     *   recurringPreTaxAmount: ...,
+     *   subscriptionID: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SubscriptionNewResponse)
+     *   ->withAddons(...)
+     *   ->withCustomer(...)
+     *   ->withMetadata(...)
+     *   ->withPaymentID(...)
+     *   ->withRecurringPreTaxAmount(...)
+     *   ->withSubscriptionID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -109,7 +136,7 @@ final class SubscriptionNewResponse implements BaseModel
      * @param list<AddonCartResponseItem> $addons
      * @param array<string, string> $metadata
      */
-    public static function from(
+    public static function with(
         array $addons,
         CustomerLimitedDetails $customer,
         array $metadata,
@@ -143,21 +170,23 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @param list<AddonCartResponseItem> $addons
      */
-    public function setAddons(array $addons): self
+    public function withAddons(array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Customer details associated with this subscription.
      */
-    public function setCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails $customer): self
     {
-        $this->customer = $customer;
+        $obj = clone $this;
+        $obj->customer = $customer;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -165,81 +194,89 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @param array<string, string> $metadata
      */
-    public function setMetadata(array $metadata): self
+    public function withMetadata(array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * First payment id for the subscription.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Tax will be added to the amount and charged to the customer on each billing cycle.
      */
-    public function setRecurringPreTaxAmount(int $recurringPreTaxAmount): self
+    public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
-        $this->recurringPreTaxAmount = $recurringPreTaxAmount;
+        $obj = clone $this;
+        $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Unique identifier for the subscription.
      */
-    public function setSubscriptionID(string $subscriptionID): self
+    public function withSubscriptionID(string $subscriptionID): self
     {
-        $this->subscriptionID = $subscriptionID;
+        $obj = clone $this;
+        $obj->subscriptionID = $subscriptionID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    public function setClientSecret(?string $clientSecret): self
+    public function withClientSecret(?string $clientSecret): self
     {
-        $this->clientSecret = $clientSecret;
+        $obj = clone $this;
+        $obj->clientSecret = $clientSecret;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The discount id if discount is applied.
      */
-    public function setDiscountID(?string $discountID): self
+    public function withDiscountID(?string $discountID): self
     {
-        $this->discountID = $discountID;
+        $obj = clone $this;
+        $obj->discountID = $discountID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Expiry timestamp of the payment link.
      */
-    public function setExpiresOn(?\DateTimeInterface $expiresOn): self
+    public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
-        $this->expiresOn = $expiresOn;
+        $obj = clone $this;
+        $obj->expiresOn = $expiresOn;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * URL to checkout page.
      */
-    public function setPaymentLink(?string $paymentLink): self
+    public function withPaymentLink(?string $paymentLink): self
     {
-        $this->paymentLink = $paymentLink;
+        $obj = clone $this;
+        $obj->paymentLink = $paymentLink;
 
-        return $this;
+        return $obj;
     }
 }

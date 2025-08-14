@@ -67,7 +67,7 @@ final class ProductListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?bool $archived = null,
         ?string $brandID = null,
         ?int $pageNumber = null,
@@ -88,41 +88,45 @@ final class ProductListParams implements BaseModel
     /**
      * List archived products.
      */
-    public function setArchived(bool $archived): self
+    public function withArchived(bool $archived): self
     {
-        $this->archived = $archived;
+        $obj = clone $this;
+        $obj->archived = $archived;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * filter by Brand id.
      */
-    public function setBrandID(string $brandID): self
+    public function withBrandID(string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page number default is 0.
      */
-    public function setPageNumber(int $pageNumber): self
+    public function withPageNumber(int $pageNumber): self
     {
-        $this->pageNumber = $pageNumber;
+        $obj = clone $this;
+        $obj->pageNumber = $pageNumber;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page size default is 10 max is 100.
      */
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -131,10 +135,11 @@ final class ProductListParams implements BaseModel
      * - `false`: Show only one-time price products
      * - `null` or absent: Show both types of products
      */
-    public function setRecurring(bool $recurring): self
+    public function withRecurring(bool $recurring): self
     {
-        $this->recurring = $recurring;
+        $obj = clone $this;
+        $obj->recurring = $recurring;
 
-        return $this;
+        return $obj;
     }
 }

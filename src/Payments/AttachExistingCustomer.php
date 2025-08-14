@@ -18,6 +18,20 @@ final class AttachExistingCustomer implements BaseModel
     #[Api('customer_id')]
     public string $customerID;
 
+    /**
+     * `new AttachExistingCustomer()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * AttachExistingCustomer::with(customerID: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new AttachExistingCustomer)->withCustomerID(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class AttachExistingCustomer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $customerID): self
+    public static function with(string $customerID): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class AttachExistingCustomer implements BaseModel
         return $obj;
     }
 
-    public function setCustomerID(string $customerID): self
+    public function withCustomerID(string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -23,6 +23,20 @@ final class ImageUpdateResponse implements BaseModel
     #[Api('image_id', optional: true)]
     public ?string $imageID;
 
+    /**
+     * `new ImageUpdateResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * ImageUpdateResponse::with(url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new ImageUpdateResponse)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -34,7 +48,7 @@ final class ImageUpdateResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $url, ?string $imageID = null): self
+    public static function with(string $url, ?string $imageID = null): self
     {
         $obj = new self;
 
@@ -45,17 +59,19 @@ final class ImageUpdateResponse implements BaseModel
         return $obj;
     }
 
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 
-    public function setImageID(?string $imageID): self
+    public function withImageID(?string $imageID): self
     {
-        $this->imageID = $imageID;
+        $obj = clone $this;
+        $obj->imageID = $imageID;
 
-        return $this;
+        return $obj;
     }
 }

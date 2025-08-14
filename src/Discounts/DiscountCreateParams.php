@@ -95,6 +95,20 @@ final class DiscountCreateParams implements BaseModel
     #[Api('usage_limit', optional: true)]
     public ?int $usageLimit;
 
+    /**
+     * `new DiscountCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DiscountCreateParams::with(amount: ..., type: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DiscountCreateParams)->withAmount(...)->withType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -109,7 +123,7 @@ final class DiscountCreateParams implements BaseModel
      * @param DiscountType::* $type
      * @param null|list<string> $restrictedTo
      */
-    public static function from(
+    public static function with(
         int $amount,
         string $type,
         ?string $code = null,
@@ -143,11 +157,12 @@ final class DiscountCreateParams implements BaseModel
      *
      * Must be at least 1.
      */
-    public function setAmount(int $amount): self
+    public function withAmount(int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -155,11 +170,12 @@ final class DiscountCreateParams implements BaseModel
      *
      * @param DiscountType::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -167,28 +183,31 @@ final class DiscountCreateParams implements BaseModel
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
      */
-    public function setCode(?string $code): self
+    public function withCode(?string $code): self
     {
-        $this->code = $code;
+        $obj = clone $this;
+        $obj->code = $code;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * When the discount expires, if ever.
      */
-    public function setExpiresAt(?\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -196,11 +215,12 @@ final class DiscountCreateParams implements BaseModel
      *
      * @param null|list<string> $restrictedTo
      */
-    public function setRestrictedTo(?array $restrictedTo): self
+    public function withRestrictedTo(?array $restrictedTo): self
     {
-        $this->restrictedTo = $restrictedTo;
+        $obj = clone $this;
+        $obj->restrictedTo = $restrictedTo;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -208,21 +228,23 @@ final class DiscountCreateParams implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    public function setSubscriptionCycles(?int $subscriptionCycles): self
+    public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
-        $this->subscriptionCycles = $subscriptionCycles;
+        $obj = clone $this;
+        $obj->subscriptionCycles = $subscriptionCycles;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * How many times this discount can be used (if any).
      * Must be >= 1 if provided.
      */
-    public function setUsageLimit(?int $usageLimit): self
+    public function withUsageLimit(?int $usageLimit): self
     {
-        $this->usageLimit = $usageLimit;
+        $obj = clone $this;
+        $obj->usageLimit = $usageLimit;
 
-        return $this;
+        return $obj;
     }
 }

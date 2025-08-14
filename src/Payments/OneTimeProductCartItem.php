@@ -31,6 +31,20 @@ final class OneTimeProductCartItem implements BaseModel
     #[Api(optional: true)]
     public ?int $amount;
 
+    /**
+     * `new OneTimeProductCartItem()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * OneTimeProductCartItem::with(productID: ..., quantity: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new OneTimeProductCartItem)->withProductID(...)->withQuantity(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -42,7 +56,7 @@ final class OneTimeProductCartItem implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $productID,
         int $quantity,
         ?int $amount = null
@@ -57,18 +71,20 @@ final class OneTimeProductCartItem implements BaseModel
         return $obj;
     }
 
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setQuantity(int $quantity): self
+    public function withQuantity(int $quantity): self
     {
-        $this->quantity = $quantity;
+        $obj = clone $this;
+        $obj->quantity = $quantity;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -76,10 +92,11 @@ final class OneTimeProductCartItem implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    public function setAmount(?int $amount): self
+    public function withAmount(?int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 }

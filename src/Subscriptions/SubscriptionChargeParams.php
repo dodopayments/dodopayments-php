@@ -62,6 +62,20 @@ final class SubscriptionChargeParams implements BaseModel
     #[Api('product_description', optional: true)]
     public ?string $productDescription;
 
+    /**
+     * `new SubscriptionChargeParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * SubscriptionChargeParams::with(productPrice: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new SubscriptionChargeParams)->withProductPrice(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -76,7 +90,7 @@ final class SubscriptionChargeParams implements BaseModel
      * @param null|array<string, string> $metadata
      * @param Currency::* $productCurrency
      */
-    public static function from(
+    public static function with(
         int $productPrice,
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $metadata = null,
@@ -99,23 +113,25 @@ final class SubscriptionChargeParams implements BaseModel
      * The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    public function setProductPrice(int $productPrice): self
+    public function withProductPrice(int $productPrice): self
     {
-        $this->productPrice = $productPrice;
+        $obj = clone $this;
+        $obj->productPrice = $productPrice;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    public function setAdaptiveCurrencyFeesInclusive(
+    public function withAdaptiveCurrencyFeesInclusive(
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
-        $this->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
+        $obj = clone $this;
+        $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -123,11 +139,12 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * @param null|array<string, string> $metadata
      */
-    public function setMetadata(?array $metadata): self
+    public function withMetadata(?array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -135,21 +152,23 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * @param Currency::* $productCurrency
      */
-    public function setProductCurrency(string $productCurrency): self
+    public function withProductCurrency(string $productCurrency): self
     {
-        $this->productCurrency = $productCurrency;
+        $obj = clone $this;
+        $obj->productCurrency = $productCurrency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    public function setProductDescription(?string $productDescription): self
+    public function withProductDescription(?string $productDescription): self
     {
-        $this->productDescription = $productDescription;
+        $obj = clone $this;
+        $obj->productDescription = $productDescription;
 
-        return $this;
+        return $obj;
     }
 }

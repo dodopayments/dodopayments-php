@@ -48,7 +48,7 @@ final class LicenseKeyInstanceListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         ?string $licenseKeyID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null
@@ -65,30 +65,33 @@ final class LicenseKeyInstanceListParams implements BaseModel
     /**
      * Filter by license key ID.
      */
-    public function setLicenseKeyID(?string $licenseKeyID): self
+    public function withLicenseKeyID(?string $licenseKeyID): self
     {
-        $this->licenseKeyID = $licenseKeyID;
+        $obj = clone $this;
+        $obj->licenseKeyID = $licenseKeyID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page number default is 0.
      */
-    public function setPageNumber(?int $pageNumber): self
+    public function withPageNumber(?int $pageNumber): self
     {
-        $this->pageNumber = $pageNumber;
+        $obj = clone $this;
+        $obj->pageNumber = $pageNumber;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page size default is 10 max is 100.
      */
-    public function setPageSize(?int $pageSize): self
+    public function withPageSize(?int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 }

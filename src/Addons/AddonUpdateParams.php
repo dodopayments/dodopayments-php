@@ -80,7 +80,7 @@ final class AddonUpdateParams implements BaseModel
      * @param Currency::* $currency
      * @param TaxCategory::* $taxCategory
      */
-    public static function from(
+    public static function with(
         ?string $currency = null,
         ?string $description = null,
         ?string $imageID = null,
@@ -105,51 +105,56 @@ final class AddonUpdateParams implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Description of the Addon, optional and must be at most 1000 characters.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Addon image id after its uploaded to S3.
      */
-    public function setImageID(?string $imageID): self
+    public function withImageID(?string $imageID): self
     {
-        $this->imageID = $imageID;
+        $obj = clone $this;
+        $obj->imageID = $imageID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the Addon, optional and must be at most 100 characters.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Amount of the addon.
      */
-    public function setPrice(?int $price): self
+    public function withPrice(?int $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -157,10 +162,11 @@ final class AddonUpdateParams implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 }

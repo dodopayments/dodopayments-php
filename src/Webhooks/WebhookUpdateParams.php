@@ -90,7 +90,7 @@ final class WebhookUpdateParams implements BaseModel
      * @param null|list<WebhookEventType::*> $filterTypes
      * @param null|array<string, string> $metadata
      */
-    public static function from(
+    public static function with(
         ?string $description = null,
         ?bool $disabled = null,
         ?array $filterTypes = null,
@@ -113,21 +113,23 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Description of the webhook.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * To Disable the endpoint, set it to true.
      */
-    public function setDisabled(?bool $disabled): self
+    public function withDisabled(?bool $disabled): self
     {
-        $this->disabled = $disabled;
+        $obj = clone $this;
+        $obj->disabled = $disabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -137,11 +139,12 @@ final class WebhookUpdateParams implements BaseModel
      *
      * @param null|list<WebhookEventType::*> $filterTypes
      */
-    public function setFilterTypes(?array $filterTypes): self
+    public function withFilterTypes(?array $filterTypes): self
     {
-        $this->filterTypes = $filterTypes;
+        $obj = clone $this;
+        $obj->filterTypes = $filterTypes;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -149,30 +152,33 @@ final class WebhookUpdateParams implements BaseModel
      *
      * @param null|array<string, string> $metadata
      */
-    public function setMetadata(?array $metadata): self
+    public function withMetadata(?array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Rate limit.
      */
-    public function setRateLimit(?int $rateLimit): self
+    public function withRateLimit(?int $rateLimit): self
     {
-        $this->rateLimit = $rateLimit;
+        $obj = clone $this;
+        $obj->rateLimit = $rateLimit;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Url endpoint.
      */
-    public function setURL(?string $url): self
+    public function withURL(?string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

@@ -145,7 +145,7 @@ final class ProductUpdateParams implements BaseModel
      * @param null|array<string, string> $metadata
      * @param TaxCategory::* $taxCategory
      */
-    public static function from(
+    public static function with(
         ?array $addons = null,
         ?string $brandID = null,
         ?string $description = null,
@@ -184,49 +184,54 @@ final class ProductUpdateParams implements BaseModel
      *
      * @param null|list<string> $addons
      */
-    public function setAddons(?array $addons): self
+    public function withAddons(?array $addons): self
     {
-        $this->addons = $addons;
+        $obj = clone $this;
+        $obj->addons = $addons;
 
-        return $this;
+        return $obj;
     }
 
-    public function setBrandID(?string $brandID): self
+    public function withBrandID(?string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Description of the product, optional and must be at most 1000 characters.
      */
-    public function setDescription(?string $description): self
+    public function withDescription(?string $description): self
     {
-        $this->description = $description;
+        $obj = clone $this;
+        $obj->description = $description;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Choose how you would like you digital product delivered.
      */
-    public function setDigitalProductDelivery(
+    public function withDigitalProductDelivery(
         ?DigitalProductDelivery $digitalProductDelivery
     ): self {
-        $this->digitalProductDelivery = $digitalProductDelivery;
+        $obj = clone $this;
+        $obj->digitalProductDelivery = $digitalProductDelivery;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Product image id after its uploaded to S3.
      */
-    public function setImageID(?string $imageID): self
+    public function withImageID(?string $imageID): self
     {
-        $this->imageID = $imageID;
+        $obj = clone $this;
+        $obj->imageID = $imageID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -235,12 +240,13 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
      * activating the license key.
      */
-    public function setLicenseKeyActivationMessage(
+    public function withLicenseKeyActivationMessage(
         ?string $licenseKeyActivationMessage
     ): self {
-        $this->licenseKeyActivationMessage = $licenseKeyActivationMessage;
+        $obj = clone $this;
+        $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -249,12 +255,13 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
      */
-    public function setLicenseKeyActivationsLimit(
+    public function withLicenseKeyActivationsLimit(
         ?int $licenseKeyActivationsLimit
     ): self {
-        $this->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
+        $obj = clone $this;
+        $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -263,12 +270,13 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
      */
-    public function setLicenseKeyDuration(
+    public function withLicenseKeyDuration(
         LicenseKeyDuration $licenseKeyDuration
     ): self {
-        $this->licenseKeyDuration = $licenseKeyDuration;
+        $obj = clone $this;
+        $obj->licenseKeyDuration = $licenseKeyDuration;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -277,11 +285,12 @@ final class ProductUpdateParams implements BaseModel
      * If `true`, additional fields related to license key (duration, activations limit, activation message)
      * become applicable.
      */
-    public function setLicenseKeyEnabled(?bool $licenseKeyEnabled): self
+    public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {
-        $this->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj = clone $this;
+        $obj->licenseKeyEnabled = $licenseKeyEnabled;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -289,31 +298,34 @@ final class ProductUpdateParams implements BaseModel
      *
      * @param null|array<string, string> $metadata
      */
-    public function setMetadata(?array $metadata): self
+    public function withMetadata(?array $metadata): self
     {
-        $this->metadata = $metadata;
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Name of the product, optional and must be at most 100 characters.
      */
-    public function setName(?string $name): self
+    public function withName(?string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Price details of the product.
      */
-    public function setPrice(OneTimePrice|RecurringPrice $price): self
+    public function withPrice(OneTimePrice|RecurringPrice $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -321,10 +333,11 @@ final class ProductUpdateParams implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      */
-    public function setTaxCategory(string $taxCategory): self
+    public function withTaxCategory(string $taxCategory): self
     {
-        $this->taxCategory = $taxCategory;
+        $obj = clone $this;
+        $obj->taxCategory = $taxCategory;
 
-        return $this;
+        return $obj;
     }
 }

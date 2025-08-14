@@ -29,6 +29,20 @@ final class BrandUpdateImagesResponse implements BaseModel
     #[Api]
     public string $url;
 
+    /**
+     * `new BrandUpdateImagesResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BrandUpdateImagesResponse::with(imageID: ..., url: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BrandUpdateImagesResponse)->withImageID(...)->withURL(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -40,7 +54,7 @@ final class BrandUpdateImagesResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $imageID, string $url): self
+    public static function with(string $imageID, string $url): self
     {
         $obj = new self;
 
@@ -53,20 +67,22 @@ final class BrandUpdateImagesResponse implements BaseModel
     /**
      * UUID that will be used as the image identifier/key suffix.
      */
-    public function setImageID(string $imageID): self
+    public function withImageID(string $imageID): self
     {
-        $this->imageID = $imageID;
+        $obj = clone $this;
+        $obj->imageID = $imageID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Presigned URL to upload the image.
      */
-    public function setURL(string $url): self
+    public function withURL(string $url): self
     {
-        $this->url = $url;
+        $obj = clone $this;
+        $obj->url = $url;
 
-        return $this;
+        return $obj;
     }
 }

@@ -33,7 +33,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = WebhookCreateParams::from(url: 'url');
+        $params = WebhookCreateParams::with(url: 'url');
         $result = $this->client->webhooks->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -42,7 +42,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = WebhookCreateParams::from(
+        $params = WebhookCreateParams::with(
             url: 'url',
             description: 'description',
             disabled: true,

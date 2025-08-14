@@ -28,6 +28,20 @@ final class CustomerCreateParams implements BaseModel
     #[Api('phone_number', optional: true)]
     public ?string $phoneNumber;
 
+    /**
+     * `new CustomerCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CustomerCreateParams::with(email: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CustomerCreateParams)->withEmail(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -39,7 +53,7 @@ final class CustomerCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $email,
         string $name,
         ?string $phoneNumber = null
@@ -54,24 +68,27 @@ final class CustomerCreateParams implements BaseModel
         return $obj;
     }
 
-    public function setEmail(string $email): self
+    public function withEmail(string $email): self
     {
-        $this->email = $email;
+        $obj = clone $this;
+        $obj->email = $email;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPhoneNumber(?string $phoneNumber): self
+    public function withPhoneNumber(?string $phoneNumber): self
     {
-        $this->phoneNumber = $phoneNumber;
+        $obj = clone $this;
+        $obj->phoneNumber = $phoneNumber;
 
-        return $this;
+        return $obj;
     }
 }

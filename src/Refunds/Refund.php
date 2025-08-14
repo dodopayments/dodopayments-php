@@ -84,6 +84,33 @@ final class Refund implements BaseModel
     #[Api(optional: true)]
     public ?string $reason;
 
+    /**
+     * `new Refund()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Refund::with(
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   isPartial: ...,
+     *   paymentID: ...,
+     *   refundID: ...,
+     *   status: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Refund)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withIsPartial(...)
+     *   ->withPaymentID(...)
+     *   ->withRefundID(...)
+     *   ->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -98,7 +125,7 @@ final class Refund implements BaseModel
      * @param RefundStatus::* $status
      * @param Currency::* $currency
      */
-    public static function from(
+    public static function with(
         string $businessID,
         \DateTimeInterface $createdAt,
         bool $isPartial,
@@ -128,51 +155,56 @@ final class Refund implements BaseModel
     /**
      * The unique identifier of the business issuing the refund.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * If true the refund is a partial refund.
      */
-    public function setIsPartial(bool $isPartial): self
+    public function withIsPartial(bool $isPartial): self
     {
-        $this->isPartial = $isPartial;
+        $obj = clone $this;
+        $obj->isPartial = $isPartial;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the refund.
      */
-    public function setRefundID(string $refundID): self
+    public function withRefundID(string $refundID): self
     {
-        $this->refundID = $refundID;
+        $obj = clone $this;
+        $obj->refundID = $refundID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -180,21 +212,23 @@ final class Refund implements BaseModel
      *
      * @param RefundStatus::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The refunded amount.
      */
-    public function setAmount(?int $amount): self
+    public function withAmount(?int $amount): self
     {
-        $this->amount = $amount;
+        $obj = clone $this;
+        $obj->amount = $amount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -202,20 +236,22 @@ final class Refund implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The reason provided for the refund, if any. Optional.
      */
-    public function setReason(?string $reason): self
+    public function withReason(?string $reason): self
     {
-        $this->reason = $reason;
+        $obj = clone $this;
+        $obj->reason = $reason;
 
-        return $this;
+        return $obj;
     }
 }

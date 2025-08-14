@@ -28,6 +28,20 @@ final class HeaderUpdateParams implements BaseModel
     #[Api(type: new MapOf('string'))]
     public array $headers;
 
+    /**
+     * `new HeaderUpdateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * HeaderUpdateParams::with(headers: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new HeaderUpdateParams)->withHeaders(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -41,7 +55,7 @@ final class HeaderUpdateParams implements BaseModel
      *
      * @param array<string, string> $headers
      */
-    public static function from(array $headers): self
+    public static function with(array $headers): self
     {
         $obj = new self;
 
@@ -55,10 +69,11 @@ final class HeaderUpdateParams implements BaseModel
      *
      * @param array<string, string> $headers
      */
-    public function setHeaders(array $headers): self
+    public function withHeaders(array $headers): self
     {
-        $this->headers = $headers;
+        $obj = clone $this;
+        $obj->headers = $headers;
 
-        return $this;
+        return $obj;
     }
 }

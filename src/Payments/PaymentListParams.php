@@ -90,7 +90,7 @@ final class PaymentListParams implements BaseModel
      *
      * @param null|Status::* $status
      */
-    public static function from(
+    public static function with(
         ?string $brandID = null,
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
@@ -117,61 +117,67 @@ final class PaymentListParams implements BaseModel
     /**
      * filter by Brand id.
      */
-    public function setBrandID(string $brandID): self
+    public function withBrandID(string $brandID): self
     {
-        $this->brandID = $brandID;
+        $obj = clone $this;
+        $obj->brandID = $brandID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Get events after this created time.
      */
-    public function setCreatedAtGte(\DateTimeInterface $createdAtGte): self
+    public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
-        $this->createdAtGte = $createdAtGte;
+        $obj = clone $this;
+        $obj->createdAtGte = $createdAtGte;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Get events created before this time.
      */
-    public function setCreatedAtLte(\DateTimeInterface $createdAtLte): self
+    public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
-        $this->createdAtLte = $createdAtLte;
+        $obj = clone $this;
+        $obj->createdAtLte = $createdAtLte;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Filter by customer id.
      */
-    public function setCustomerID(string $customerID): self
+    public function withCustomerID(string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page number default is 0.
      */
-    public function setPageNumber(int $pageNumber): self
+    public function withPageNumber(int $pageNumber): self
     {
-        $this->pageNumber = $pageNumber;
+        $obj = clone $this;
+        $obj->pageNumber = $pageNumber;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page size default is 10 max is 100.
      */
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -179,20 +185,22 @@ final class PaymentListParams implements BaseModel
      *
      * @param Status::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Filter by subscription id.
      */
-    public function setSubscriptionID(string $subscriptionID): self
+    public function withSubscriptionID(string $subscriptionID): self
     {
-        $this->subscriptionID = $subscriptionID;
+        $obj = clone $this;
+        $obj->subscriptionID = $subscriptionID;
 
-        return $this;
+        return $obj;
     }
 }

@@ -106,6 +106,39 @@ final class RecurringPrice implements BaseModel
     #[Api('trial_period_days', optional: true)]
     public ?int $trialPeriodDays;
 
+    /**
+     * `new RecurringPrice()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * RecurringPrice::with(
+     *   currency: ...,
+     *   discount: ...,
+     *   paymentFrequencyCount: ...,
+     *   paymentFrequencyInterval: ...,
+     *   price: ...,
+     *   purchasingPowerParity: ...,
+     *   subscriptionPeriodCount: ...,
+     *   subscriptionPeriodInterval: ...,
+     *   type: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new RecurringPrice)
+     *   ->withCurrency(...)
+     *   ->withDiscount(...)
+     *   ->withPaymentFrequencyCount(...)
+     *   ->withPaymentFrequencyInterval(...)
+     *   ->withPrice(...)
+     *   ->withPurchasingPowerParity(...)
+     *   ->withSubscriptionPeriodCount(...)
+     *   ->withSubscriptionPeriodInterval(...)
+     *   ->withType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -122,7 +155,7 @@ final class RecurringPrice implements BaseModel
      * @param TimeInterval::* $subscriptionPeriodInterval
      * @param Type::* $type
      */
-    public static function from(
+    public static function with(
         string $currency,
         float $discount,
         int $paymentFrequencyCount,
@@ -158,32 +191,35 @@ final class RecurringPrice implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
-    public function setDiscount(float $discount): self
+    public function withDiscount(float $discount): self
     {
-        $this->discount = $discount;
+        $obj = clone $this;
+        $obj->discount = $discount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of units for the payment frequency.
      * For example, a value of `1` with a `payment_frequency_interval` of `month` represents monthly payments.
      */
-    public function setPaymentFrequencyCount(int $paymentFrequencyCount): self
+    public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
-        $this->paymentFrequencyCount = $paymentFrequencyCount;
+        $obj = clone $this;
+        $obj->paymentFrequencyCount = $paymentFrequencyCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -191,46 +227,50 @@ final class RecurringPrice implements BaseModel
      *
      * @param TimeInterval::* $paymentFrequencyInterval
      */
-    public function setPaymentFrequencyInterval(
+    public function withPaymentFrequencyInterval(
         string $paymentFrequencyInterval
     ): self {
-        $this->paymentFrequencyInterval = $paymentFrequencyInterval;
+        $obj = clone $this;
+        $obj->paymentFrequencyInterval = $paymentFrequencyInterval;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    public function setPrice(int $price): self
+    public function withPrice(int $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if purchasing power parity adjustments are applied to the price.
      * Purchasing power parity feature is not available as of now.
      */
-    public function setPurchasingPowerParity(bool $purchasingPowerParity): self
+    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
-        $this->purchasingPowerParity = $purchasingPowerParity;
+        $obj = clone $this;
+        $obj->purchasingPowerParity = $purchasingPowerParity;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
-    public function setSubscriptionPeriodCount(
+    public function withSubscriptionPeriodCount(
         int $subscriptionPeriodCount
     ): self {
-        $this->subscriptionPeriodCount = $subscriptionPeriodCount;
+        $obj = clone $this;
+        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -238,41 +278,45 @@ final class RecurringPrice implements BaseModel
      *
      * @param TimeInterval::* $subscriptionPeriodInterval
      */
-    public function setSubscriptionPeriodInterval(
+    public function withSubscriptionPeriodInterval(
         string $subscriptionPeriodInterval
     ): self {
-        $this->subscriptionPeriodInterval = $subscriptionPeriodInterval;
+        $obj = clone $this;
+        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Type::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    public function setTaxInclusive(?bool $taxInclusive): self
+    public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $this->taxInclusive = $taxInclusive;
+        $obj = clone $this;
+        $obj->taxInclusive = $taxInclusive;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Number of days for the trial period. A value of `0` indicates no trial period.
      */
-    public function setTrialPeriodDays(int $trialPeriodDays): self
+    public function withTrialPeriodDays(int $trialPeriodDays): self
     {
-        $this->trialPeriodDays = $trialPeriodDays;
+        $obj = clone $this;
+        $obj->trialPeriodDays = $trialPeriodDays;
 
-        return $this;
+        return $obj;
     }
 }

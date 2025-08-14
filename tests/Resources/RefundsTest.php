@@ -32,7 +32,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = RefundCreateParams::from(paymentID: 'payment_id');
+        $params = RefundCreateParams::with(paymentID: 'payment_id');
         $result = $this->client->refunds->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -41,10 +41,10 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = RefundCreateParams::from(
+        $params = RefundCreateParams::with(
             paymentID: 'payment_id',
             items: [
-                Item::from(itemID: 'item_id')->setAmount(0)->setTaxInclusive(true),
+                Item::with(itemID: 'item_id')->withAmount(0)->withTaxInclusive(true),
             ],
             reason: 'reason',
         );

@@ -37,6 +37,20 @@ final class CreateNewCustomer implements BaseModel
     #[Api('phone_number', optional: true)]
     public ?string $phoneNumber;
 
+    /**
+     * `new CreateNewCustomer()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * CreateNewCustomer::with(email: ..., name: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new CreateNewCustomer)->withEmail(...)->withName(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -48,7 +62,7 @@ final class CreateNewCustomer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $email,
         string $name,
         ?bool $createNewCustomer = null,
@@ -65,18 +79,20 @@ final class CreateNewCustomer implements BaseModel
         return $obj;
     }
 
-    public function setEmail(string $email): self
+    public function withEmail(string $email): self
     {
-        $this->email = $email;
+        $obj = clone $this;
+        $obj->email = $email;
 
-        return $this;
+        return $obj;
     }
 
-    public function setName(string $name): self
+    public function withName(string $name): self
     {
-        $this->name = $name;
+        $obj = clone $this;
+        $obj->name = $name;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -84,17 +100,19 @@ final class CreateNewCustomer implements BaseModel
      * When true, a new customer object is always created
      * False by default.
      */
-    public function setCreateNewCustomer(bool $createNewCustomer): self
+    public function withCreateNewCustomer(bool $createNewCustomer): self
     {
-        $this->createNewCustomer = $createNewCustomer;
+        $obj = clone $this;
+        $obj->createNewCustomer = $createNewCustomer;
 
-        return $this;
+        return $obj;
     }
 
-    public function setPhoneNumber(?string $phoneNumber): self
+    public function withPhoneNumber(?string $phoneNumber): self
     {
-        $this->phoneNumber = $phoneNumber;
+        $obj = clone $this;
+        $obj->phoneNumber = $phoneNumber;
 
-        return $this;
+        return $obj;
     }
 }

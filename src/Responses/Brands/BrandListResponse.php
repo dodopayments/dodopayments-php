@@ -25,6 +25,20 @@ final class BrandListResponse implements BaseModel
     #[Api(type: new ListOf(Brand::class))]
     public array $items;
 
+    /**
+     * `new BrandListResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * BrandListResponse::with(items: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new BrandListResponse)->withItems(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -38,7 +52,7 @@ final class BrandListResponse implements BaseModel
      *
      * @param list<Brand> $items
      */
-    public static function from(array $items): self
+    public static function with(array $items): self
     {
         $obj = new self;
 
@@ -52,10 +66,11 @@ final class BrandListResponse implements BaseModel
      *
      * @param list<Brand> $items
      */
-    public function setItems(array $items): self
+    public function withItems(array $items): self
     {
-        $this->items = $items;
+        $obj = clone $this;
+        $obj->items = $items;
 
-        return $this;
+        return $obj;
     }
 }

@@ -41,15 +41,15 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = SubscriptionCreateParams::from(
-            billing: BillingAddress::from(
+        $params = SubscriptionCreateParams::with(
+            billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',
             ),
-            customer: AttachExistingCustomer::from(customerID: 'customer_id'),
+            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
             productID: 'product_id',
             quantity: 0,
         );
@@ -61,27 +61,27 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = SubscriptionCreateParams::from(
-            billing: BillingAddress::from(
+        $params = SubscriptionCreateParams::with(
+            billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',
             ),
-            customer: AttachExistingCustomer::from(customerID: 'customer_id'),
+            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
             productID: 'product_id',
             quantity: 0,
-            addons: [AttachAddon::from(addonID: 'addon_id', quantity: 0)],
+            addons: [AttachAddon::with(addonID: 'addon_id', quantity: 0)],
             allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
             billingCurrency: Currency::AED,
             discountCode: 'discount_code',
             metadata: ['foo' => 'string'],
-            onDemand: OnDemand::from(mandateOnly: true)
-                ->setAdaptiveCurrencyFeesInclusive(true)
-                ->setProductCurrency(Currency::AED)
-                ->setProductDescription('product_description')
-                ->setProductPrice(0),
+            onDemand: OnDemand::with(mandateOnly: true)
+                ->withAdaptiveCurrencyFeesInclusive(true)
+                ->withProductCurrency(Currency::AED)
+                ->withProductDescription('product_description')
+                ->withProductPrice(0),
             paymentLink: true,
             returnURL: 'return_url',
             showSavedPaymentMethods: true,
@@ -126,7 +126,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testChangePlan(): void
     {
-        $params = SubscriptionChangePlanParams::from(
+        $params = SubscriptionChangePlanParams::with(
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
@@ -143,11 +143,11 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testChangePlanWithOptionalParams(): void
     {
-        $params = SubscriptionChangePlanParams::from(
+        $params = SubscriptionChangePlanParams::with(
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
-            addons: [AttachAddon::from(addonID: 'addon_id', quantity: 0)],
+            addons: [AttachAddon::with(addonID: 'addon_id', quantity: 0)],
         );
         $result = $this
             ->client
@@ -161,7 +161,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCharge(): void
     {
-        $params = SubscriptionChargeParams::from(productPrice: 0);
+        $params = SubscriptionChargeParams::with(productPrice: 0);
         $result = $this->client->subscriptions->charge('subscription_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -170,7 +170,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testChargeWithOptionalParams(): void
     {
-        $params = SubscriptionChargeParams::from(
+        $params = SubscriptionChargeParams::with(
             productPrice: 0,
             adaptiveCurrencyFeesInclusive: true,
             metadata: ['foo' => 'string'],

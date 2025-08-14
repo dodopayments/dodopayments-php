@@ -25,6 +25,20 @@ final class LicenseValidateParams implements BaseModel
     #[Api('license_key_instance_id', optional: true)]
     public ?string $licenseKeyInstanceID;
 
+    /**
+     * `new LicenseValidateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseValidateParams::with(licenseKey: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseValidateParams)->withLicenseKey(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -36,7 +50,7 @@ final class LicenseValidateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(
+    public static function with(
         string $licenseKey,
         ?string $licenseKeyInstanceID = null
     ): self {
@@ -49,17 +63,20 @@ final class LicenseValidateParams implements BaseModel
         return $obj;
     }
 
-    public function setLicenseKey(string $licenseKey): self
+    public function withLicenseKey(string $licenseKey): self
     {
-        $this->licenseKey = $licenseKey;
+        $obj = clone $this;
+        $obj->licenseKey = $licenseKey;
 
-        return $this;
+        return $obj;
     }
 
-    public function setLicenseKeyInstanceID(?string $licenseKeyInstanceID): self
-    {
-        $this->licenseKeyInstanceID = $licenseKeyInstanceID;
+    public function withLicenseKeyInstanceID(
+        ?string $licenseKeyInstanceID
+    ): self {
+        $obj = clone $this;
+        $obj->licenseKeyInstanceID = $licenseKeyInstanceID;
 
-        return $this;
+        return $obj;
     }
 }

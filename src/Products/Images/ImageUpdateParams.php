@@ -31,7 +31,7 @@ final class ImageUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(?bool $forceUpdate = null): self
+    public static function with(?bool $forceUpdate = null): self
     {
         $obj = new self;
 
@@ -40,10 +40,11 @@ final class ImageUpdateParams implements BaseModel
         return $obj;
     }
 
-    public function setForceUpdate(bool $forceUpdate): self
+    public function withForceUpdate(bool $forceUpdate): self
     {
-        $this->forceUpdate = $forceUpdate;
+        $obj = clone $this;
+        $obj->forceUpdate = $forceUpdate;
 
-        return $this;
+        return $obj;
     }
 }

@@ -63,6 +63,35 @@ final class YourWebhookURLCreateParams implements BaseModel
     #[Api]
     public string $webhookTimestamp;
 
+    /**
+     * `new YourWebhookURLCreateParams()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * YourWebhookURLCreateParams::with(
+     *   businessID: ...,
+     *   data: ...,
+     *   timestamp: ...,
+     *   type: ...,
+     *   webhookID: ...,
+     *   webhookSignature: ...,
+     *   webhookTimestamp: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new YourWebhookURLCreateParams)
+     *   ->withBusinessID(...)
+     *   ->withData(...)
+     *   ->withTimestamp(...)
+     *   ->withType(...)
+     *   ->withWebhookID(...)
+     *   ->withWebhookSignature(...)
+     *   ->withWebhookTimestamp(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -76,7 +105,7 @@ final class YourWebhookURLCreateParams implements BaseModel
      *
      * @param WebhookEventType::* $type
      */
-    public static function from(
+    public static function with(
         string $businessID,
         Dispute|LicenseKey|Payment|Refund|Subscription $data,
         \DateTimeInterface $timestamp,
@@ -98,32 +127,35 @@ final class YourWebhookURLCreateParams implements BaseModel
         return $obj;
     }
 
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The latest data at the time of delivery attempt.
      */
-    public function setData(
+    public function withData(
         Dispute|LicenseKey|Payment|Refund|Subscription $data
     ): self {
-        $this->data = $data;
+        $obj = clone $this;
+        $obj->data = $data;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp of when the event occurred (not necessarily the same of when it was delivered).
      */
-    public function setTimestamp(\DateTimeInterface $timestamp): self
+    public function withTimestamp(\DateTimeInterface $timestamp): self
     {
-        $this->timestamp = $timestamp;
+        $obj = clone $this;
+        $obj->timestamp = $timestamp;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -131,31 +163,35 @@ final class YourWebhookURLCreateParams implements BaseModel
      *
      * @param WebhookEventType::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
-    public function setWebhookID(string $webhookID): self
+    public function withWebhookID(string $webhookID): self
     {
-        $this->webhookID = $webhookID;
+        $obj = clone $this;
+        $obj->webhookID = $webhookID;
 
-        return $this;
+        return $obj;
     }
 
-    public function setWebhookSignature(string $webhookSignature): self
+    public function withWebhookSignature(string $webhookSignature): self
     {
-        $this->webhookSignature = $webhookSignature;
+        $obj = clone $this;
+        $obj->webhookSignature = $webhookSignature;
 
-        return $this;
+        return $obj;
     }
 
-    public function setWebhookTimestamp(string $webhookTimestamp): self
+    public function withWebhookTimestamp(string $webhookTimestamp): self
     {
-        $this->webhookTimestamp = $webhookTimestamp;
+        $obj = clone $this;
+        $obj->webhookTimestamp = $webhookTimestamp;
 
-        return $this;
+        return $obj;
     }
 }

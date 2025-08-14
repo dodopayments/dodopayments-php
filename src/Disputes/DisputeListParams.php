@@ -87,7 +87,7 @@ final class DisputeListParams implements BaseModel
      * @param null|DisputeStage1::* $disputeStage
      * @param null|DisputeStatus1::* $disputeStatus
      */
-    public static function from(
+    public static function with(
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
@@ -112,31 +112,34 @@ final class DisputeListParams implements BaseModel
     /**
      * Get events after this created time.
      */
-    public function setCreatedAtGte(\DateTimeInterface $createdAtGte): self
+    public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
-        $this->createdAtGte = $createdAtGte;
+        $obj = clone $this;
+        $obj->createdAtGte = $createdAtGte;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Get events created before this time.
      */
-    public function setCreatedAtLte(\DateTimeInterface $createdAtLte): self
+    public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
-        $this->createdAtLte = $createdAtLte;
+        $obj = clone $this;
+        $obj->createdAtLte = $createdAtLte;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Filter by customer_id.
      */
-    public function setCustomerID(string $customerID): self
+    public function withCustomerID(string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -144,11 +147,12 @@ final class DisputeListParams implements BaseModel
      *
      * @param DisputeStage1::* $disputeStage
      */
-    public function setDisputeStage(string $disputeStage): self
+    public function withDisputeStage(string $disputeStage): self
     {
-        $this->disputeStage = $disputeStage;
+        $obj = clone $this;
+        $obj->disputeStage = $disputeStage;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -156,30 +160,33 @@ final class DisputeListParams implements BaseModel
      *
      * @param DisputeStatus1::* $disputeStatus
      */
-    public function setDisputeStatus(string $disputeStatus): self
+    public function withDisputeStatus(string $disputeStatus): self
     {
-        $this->disputeStatus = $disputeStatus;
+        $obj = clone $this;
+        $obj->disputeStatus = $disputeStatus;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page number default is 0.
      */
-    public function setPageNumber(int $pageNumber): self
+    public function withPageNumber(int $pageNumber): self
     {
-        $this->pageNumber = $pageNumber;
+        $obj = clone $this;
+        $obj->pageNumber = $pageNumber;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Page size default is 10 max is 100.
      */
-    public function setPageSize(int $pageSize): self
+    public function withPageSize(int $pageSize): self
     {
-        $this->pageSize = $pageSize;
+        $obj = clone $this;
+        $obj->pageSize = $pageSize;
 
-        return $this;
+        return $obj;
     }
 }

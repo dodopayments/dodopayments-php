@@ -34,7 +34,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = AddonCreateParams::from(
+        $params = AddonCreateParams::with(
             currency: Currency::AED,
             name: 'name',
             price: 0,
@@ -48,7 +48,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = AddonCreateParams::from(
+        $params = AddonCreateParams::with(
             currency: Currency::AED,
             name: 'name',
             price: 0,

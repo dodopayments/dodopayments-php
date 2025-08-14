@@ -18,6 +18,20 @@ final class WebhookGetSecretResponse implements BaseModel
     #[Api]
     public string $secret;
 
+    /**
+     * `new WebhookGetSecretResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * WebhookGetSecretResponse::with(secret: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new WebhookGetSecretResponse)->withSecret(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -29,7 +43,7 @@ final class WebhookGetSecretResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(string $secret): self
+    public static function with(string $secret): self
     {
         $obj = new self;
 
@@ -38,10 +52,11 @@ final class WebhookGetSecretResponse implements BaseModel
         return $obj;
     }
 
-    public function setSecret(string $secret): self
+    public function withSecret(string $secret): self
     {
-        $this->secret = $secret;
+        $obj = clone $this;
+        $obj->secret = $secret;
 
-        return $this;
+        return $obj;
     }
 }

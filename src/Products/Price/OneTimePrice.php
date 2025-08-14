@@ -83,6 +83,31 @@ final class OneTimePrice implements BaseModel
     #[Api('tax_inclusive', optional: true)]
     public ?bool $taxInclusive;
 
+    /**
+     * `new OneTimePrice()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * OneTimePrice::with(
+     *   currency: ...,
+     *   discount: ...,
+     *   price: ...,
+     *   purchasingPowerParity: ...,
+     *   type: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new OneTimePrice)
+     *   ->withCurrency(...)
+     *   ->withDiscount(...)
+     *   ->withPrice(...)
+     *   ->withPurchasingPowerParity(...)
+     *   ->withType(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -97,7 +122,7 @@ final class OneTimePrice implements BaseModel
      * @param Currency::* $currency
      * @param Type::* $type
      */
-    public static function from(
+    public static function with(
         string $currency,
         float $discount,
         int $price,
@@ -127,21 +152,23 @@ final class OneTimePrice implements BaseModel
      *
      * @param Currency::* $currency
      */
-    public function setCurrency(string $currency): self
+    public function withCurrency(string $currency): self
     {
-        $this->currency = $currency;
+        $obj = clone $this;
+        $obj->currency = $currency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
-    public function setDiscount(float $discount): self
+    public function withDiscount(float $discount): self
     {
-        $this->discount = $discount;
+        $obj = clone $this;
+        $obj->discount = $discount;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -151,63 +178,69 @@ final class OneTimePrice implements BaseModel
      * If [`pay_what_you_want`](Self::pay_what_you_want) is set to `true`, this field represents
      * the **minimum** amount the customer must pay.
      */
-    public function setPrice(int $price): self
+    public function withPrice(int $price): self
     {
-        $this->price = $price;
+        $obj = clone $this;
+        $obj->price = $price;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if purchasing power parity adjustments are applied to the price.
      * Purchasing power parity feature is not available as of now.
      */
-    public function setPurchasingPowerParity(bool $purchasingPowerParity): self
+    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
-        $this->purchasingPowerParity = $purchasingPowerParity;
+        $obj = clone $this;
+        $obj->purchasingPowerParity = $purchasingPowerParity;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * @param Type::* $type
      */
-    public function setType(string $type): self
+    public function withType(string $type): self
     {
-        $this->type = $type;
+        $obj = clone $this;
+        $obj->type = $type;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates whether the customer can pay any amount they choose.
      * If set to `true`, the [`price`](Self::price) field is the minimum amount.
      */
-    public function setPayWhatYouWant(bool $payWhatYouWant): self
+    public function withPayWhatYouWant(bool $payWhatYouWant): self
     {
-        $this->payWhatYouWant = $payWhatYouWant;
+        $obj = clone $this;
+        $obj->payWhatYouWant = $payWhatYouWant;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * A suggested price for the user to pay. This value is only considered if
      * [`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored.
      */
-    public function setSuggestedPrice(?int $suggestedPrice): self
+    public function withSuggestedPrice(?int $suggestedPrice): self
     {
-        $this->suggestedPrice = $suggestedPrice;
+        $obj = clone $this;
+        $obj->suggestedPrice = $suggestedPrice;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    public function setTaxInclusive(?bool $taxInclusive): self
+    public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $this->taxInclusive = $taxInclusive;
+        $obj = clone $this;
+        $obj->taxInclusive = $taxInclusive;
 
-        return $this;
+        return $obj;
     }
 }

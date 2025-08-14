@@ -20,6 +20,20 @@ final class DisableOnDemand implements BaseModel
     #[Api('next_billing_date')]
     public \DateTimeInterface $nextBillingDate;
 
+    /**
+     * `new DisableOnDemand()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DisableOnDemand::with(nextBillingDate: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DisableOnDemand)->withNextBillingDate(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -31,7 +45,7 @@ final class DisableOnDemand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function from(\DateTimeInterface $nextBillingDate): self
+    public static function with(\DateTimeInterface $nextBillingDate): self
     {
         $obj = new self;
 
@@ -40,11 +54,12 @@ final class DisableOnDemand implements BaseModel
         return $obj;
     }
 
-    public function setNextBillingDate(
+    public function withNextBillingDate(
         \DateTimeInterface $nextBillingDate
     ): self {
-        $this->nextBillingDate = $nextBillingDate;
+        $obj = clone $this;
+        $obj->nextBillingDate = $nextBillingDate;
 
-        return $this;
+        return $obj;
     }
 }

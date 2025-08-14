@@ -59,6 +59,20 @@ final class OnDemand implements BaseModel
     #[Api('product_price', optional: true)]
     public ?int $productPrice;
 
+    /**
+     * `new OnDemand()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * OnDemand::with(mandateOnly: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new OnDemand)->withMandateOnly(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -72,7 +86,7 @@ final class OnDemand implements BaseModel
      *
      * @param Currency::* $productCurrency
      */
-    public static function from(
+    public static function with(
         bool $mandateOnly,
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?string $productCurrency = null,
@@ -94,23 +108,25 @@ final class OnDemand implements BaseModel
     /**
      * If set as True, does not perform any charge and only authorizes payment method details for future use.
      */
-    public function setMandateOnly(bool $mandateOnly): self
+    public function withMandateOnly(bool $mandateOnly): self
     {
-        $this->mandateOnly = $mandateOnly;
+        $obj = clone $this;
+        $obj->mandateOnly = $mandateOnly;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    public function setAdaptiveCurrencyFeesInclusive(
+    public function withAdaptiveCurrencyFeesInclusive(
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
-        $this->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
+        $obj = clone $this;
+        $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -118,22 +134,24 @@ final class OnDemand implements BaseModel
      *
      * @param Currency::* $productCurrency
      */
-    public function setProductCurrency(string $productCurrency): self
+    public function withProductCurrency(string $productCurrency): self
     {
-        $this->productCurrency = $productCurrency;
+        $obj = clone $this;
+        $obj->productCurrency = $productCurrency;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    public function setProductDescription(?string $productDescription): self
+    public function withProductDescription(?string $productDescription): self
     {
-        $this->productDescription = $productDescription;
+        $obj = clone $this;
+        $obj->productDescription = $productDescription;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -142,10 +160,11 @@ final class OnDemand implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    public function setProductPrice(?int $productPrice): self
+    public function withProductPrice(?int $productPrice): self
     {
-        $this->productPrice = $productPrice;
+        $obj = clone $this;
+        $obj->productPrice = $productPrice;
 
-        return $this;
+        return $obj;
     }
 }

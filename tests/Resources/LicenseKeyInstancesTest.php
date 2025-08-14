@@ -39,7 +39,7 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = LicenseKeyInstanceUpdateParams::from(name: 'name');
+        $params = LicenseKeyInstanceUpdateParams::with(name: 'name');
         $result = $this->client->licenseKeyInstances->update('lki_123', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -48,7 +48,7 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testUpdateWithOptionalParams(): void
     {
-        $params = LicenseKeyInstanceUpdateParams::from(name: 'name');
+        $params = LicenseKeyInstanceUpdateParams::with(name: 'name');
         $result = $this->client->licenseKeyInstances->update('lki_123', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line

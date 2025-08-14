@@ -32,7 +32,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = CustomerCreateParams::from(email: 'email', name: 'name');
+        $params = CustomerCreateParams::with(email: 'email', name: 'name');
         $result = $this->client->customers->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -41,7 +41,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = CustomerCreateParams::from(
+        $params = CustomerCreateParams::with(
             email: 'email',
             name: 'name',
             phoneNumber: 'phone_number'

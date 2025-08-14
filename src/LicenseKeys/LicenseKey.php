@@ -102,6 +102,39 @@ final class LicenseKey implements BaseModel
     #[Api('subscription_id', optional: true)]
     public ?string $subscriptionID;
 
+    /**
+     * `new LicenseKey()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * LicenseKey::with(
+     *   id: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   customerID: ...,
+     *   instancesCount: ...,
+     *   key: ...,
+     *   paymentID: ...,
+     *   productID: ...,
+     *   status: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new LicenseKey)
+     *   ->withID(...)
+     *   ->withBusinessID(...)
+     *   ->withCreatedAt(...)
+     *   ->withCustomerID(...)
+     *   ->withInstancesCount(...)
+     *   ->withKey(...)
+     *   ->withPaymentID(...)
+     *   ->withProductID(...)
+     *   ->withStatus(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -115,7 +148,7 @@ final class LicenseKey implements BaseModel
      *
      * @param LicenseKeyStatus::* $status
      */
-    public static function from(
+    public static function with(
         string $id,
         string $businessID,
         \DateTimeInterface $createdAt,
@@ -151,81 +184,89 @@ final class LicenseKey implements BaseModel
     /**
      * The unique identifier of the license key.
      */
-    public function setID(string $id): self
+    public function withID(string $id): self
     {
-        $this->id = $id;
+        $obj = clone $this;
+        $obj->id = $id;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the business associated with the license key.
      */
-    public function setBusinessID(string $businessID): self
+    public function withBusinessID(string $businessID): self
     {
-        $this->businessID = $businessID;
+        $obj = clone $this;
+        $obj->businessID = $businessID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp indicating when the license key was created, in UTC.
      */
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $this->createdAt = $createdAt;
+        $obj = clone $this;
+        $obj->createdAt = $createdAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the customer associated with the license key.
      */
-    public function setCustomerID(string $customerID): self
+    public function withCustomerID(string $customerID): self
     {
-        $this->customerID = $customerID;
+        $obj = clone $this;
+        $obj->customerID = $customerID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The current number of instances activated for this license key.
      */
-    public function setInstancesCount(int $instancesCount): self
+    public function withInstancesCount(int $instancesCount): self
     {
-        $this->instancesCount = $instancesCount;
+        $obj = clone $this;
+        $obj->instancesCount = $instancesCount;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The license key string.
      */
-    public function setKey(string $key): self
+    public function withKey(string $key): self
     {
-        $this->key = $key;
+        $obj = clone $this;
+        $obj->key = $key;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the payment associated with the license key.
      */
-    public function setPaymentID(string $paymentID): self
+    public function withPaymentID(string $paymentID): self
     {
-        $this->paymentID = $paymentID;
+        $obj = clone $this;
+        $obj->paymentID = $paymentID;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the product associated with the license key.
      */
-    public function setProductID(string $productID): self
+    public function withProductID(string $productID): self
     {
-        $this->productID = $productID;
+        $obj = clone $this;
+        $obj->productID = $productID;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -233,40 +274,44 @@ final class LicenseKey implements BaseModel
      *
      * @param LicenseKeyStatus::* $status
      */
-    public function setStatus(string $status): self
+    public function withStatus(string $status): self
     {
-        $this->status = $status;
+        $obj = clone $this;
+        $obj->status = $status;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The maximum number of activations allowed for this license key.
      */
-    public function setActivationsLimit(?int $activationsLimit): self
+    public function withActivationsLimit(?int $activationsLimit): self
     {
-        $this->activationsLimit = $activationsLimit;
+        $obj = clone $this;
+        $obj->activationsLimit = $activationsLimit;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The timestamp indicating when the license key expires, in UTC.
      */
-    public function setExpiresAt(?\DateTimeInterface $expiresAt): self
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $this->expiresAt = $expiresAt;
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
-        return $this;
+        return $obj;
     }
 
     /**
      * The unique identifier of the subscription associated with the license key, if any.
      */
-    public function setSubscriptionID(?string $subscriptionID): self
+    public function withSubscriptionID(?string $subscriptionID): self
     {
-        $this->subscriptionID = $subscriptionID;
+        $obj = clone $this;
+        $obj->subscriptionID = $subscriptionID;
 
-        return $this;
+        return $obj;
     }
 }

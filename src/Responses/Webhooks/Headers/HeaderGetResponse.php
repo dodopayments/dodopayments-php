@@ -40,6 +40,20 @@ final class HeaderGetResponse implements BaseModel
     #[Api(type: new ListOf('string'))]
     public array $sensitive;
 
+    /**
+     * `new HeaderGetResponse()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * HeaderGetResponse::with(headers: ..., sensitive: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new HeaderGetResponse)->withHeaders(...)->withSensitive(...)
+     * ```
+     */
     public function __construct()
     {
         self::introspect();
@@ -54,7 +68,7 @@ final class HeaderGetResponse implements BaseModel
      * @param array<string, string> $headers
      * @param list<string> $sensitive
      */
-    public static function from(array $headers, array $sensitive): self
+    public static function with(array $headers, array $sensitive): self
     {
         $obj = new self;
 
@@ -69,11 +83,12 @@ final class HeaderGetResponse implements BaseModel
      *
      * @param array<string, string> $headers
      */
-    public function setHeaders(array $headers): self
+    public function withHeaders(array $headers): self
     {
-        $this->headers = $headers;
+        $obj = clone $this;
+        $obj->headers = $headers;
 
-        return $this;
+        return $obj;
     }
 
     /**
@@ -81,10 +96,11 @@ final class HeaderGetResponse implements BaseModel
      *
      * @param list<string> $sensitive
      */
-    public function setSensitive(array $sensitive): self
+    public function withSensitive(array $sensitive): self
     {
-        $this->sensitive = $sensitive;
+        $obj = clone $this;
+        $obj->sensitive = $sensitive;
 
-        return $this;
+        return $obj;
     }
 }
