@@ -8,16 +8,16 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\Model;
 use Dodopayments\Core\Concerns\Params;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Disputes\DisputeListParams\DisputeStage as DisputeStage1;
-use Dodopayments\Disputes\DisputeListParams\DisputeStatus as DisputeStatus1;
+use Dodopayments\Disputes\DisputeListParams\DisputeStage;
+use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 
 /**
  * @phpstan-type list_params = array{
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,
  *   customerID?: string,
- *   disputeStage?: DisputeStage1::*,
- *   disputeStatus?: DisputeStatus1::*,
+ *   disputeStage?: DisputeStage::*,
+ *   disputeStatus?: DisputeStatus::*,
  *   pageNumber?: int,
  *   pageSize?: int,
  * }
@@ -48,17 +48,17 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute stage.
      *
-     * @var null|DisputeStage1::* $disputeStage
+     * @var null|DisputeStage::* $disputeStage
      */
-    #[Api(enum: DisputeStage1::class, optional: true)]
+    #[Api(enum: DisputeStage::class, optional: true)]
     public ?string $disputeStage;
 
     /**
      * Filter by dispute status.
      *
-     * @var null|DisputeStatus1::* $disputeStatus
+     * @var null|DisputeStatus::* $disputeStatus
      */
-    #[Api(enum: DisputeStatus1::class, optional: true)]
+    #[Api(enum: DisputeStatus::class, optional: true)]
     public ?string $disputeStatus;
 
     /**
@@ -84,8 +84,8 @@ final class DisputeListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|DisputeStage1::* $disputeStage
-     * @param null|DisputeStatus1::* $disputeStatus
+     * @param null|DisputeStage::* $disputeStage
+     * @param null|DisputeStatus::* $disputeStatus
      */
     public static function with(
         ?\DateTimeInterface $createdAtGte = null,
@@ -145,7 +145,7 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute stage.
      *
-     * @param DisputeStage1::* $disputeStage
+     * @param DisputeStage::* $disputeStage
      */
     public function withDisputeStage(string $disputeStage): self
     {
@@ -158,7 +158,7 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute status.
      *
-     * @param DisputeStatus1::* $disputeStatus
+     * @param DisputeStatus::* $disputeStatus
      */
     public function withDisputeStatus(string $disputeStatus): self
     {

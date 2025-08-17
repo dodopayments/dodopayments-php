@@ -7,8 +7,8 @@ namespace Dodopayments\Disputes;
 use Dodopayments\Client;
 use Dodopayments\Contracts\DisputesContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Disputes\DisputeListParams\DisputeStage as DisputeStage1;
-use Dodopayments\Disputes\DisputeListParams\DisputeStatus as DisputeStatus1;
+use Dodopayments\Disputes\DisputeListParams\DisputeStage;
+use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Disputes\DisputeListResponse;
 
@@ -35,8 +35,8 @@ final class DisputesService implements DisputesContract
      *   createdAtGte?: \DateTimeInterface,
      *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
-     *   disputeStage?: DisputeStage1::*,
-     *   disputeStatus?: DisputeStatus1::*,
+     *   disputeStage?: DisputeStage::*,
+     *   disputeStatus?: DisputeStatus::*,
      *   pageNumber?: int,
      *   pageSize?: int,
      * }|DisputeListParams $params
