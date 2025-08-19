@@ -17,8 +17,6 @@ The REST API documentation can be found on [docs.dodopayments.com](https://docs.
 
 ## Installation
 
-To use this package, install via Composer by adding the following to your application's `composer.json`:
-
 <!-- x-release-please-start-version -->
 
 ```
