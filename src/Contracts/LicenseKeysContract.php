@@ -9,7 +9,6 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
-use Dodopayments\Responses\LicenseKeys\LicenseKeyListResponseItem;
 
 interface LicenseKeysContract
 {
@@ -39,11 +38,9 @@ interface LicenseKeysContract
      *   productID?: string,
      *   status?: Status::*,
      * }|LicenseKeyListParams $params
-     *
-     * @return list<LicenseKeyListResponseItem>
      */
     public function list(
         array|LicenseKeyListParams $params,
         ?RequestOptions $requestOptions = null,
-    ): array;
+    ): LicenseKey;
 }
