@@ -2,9 +2,6 @@
 
 namespace Tests\Resources;
 
-use Dodopayments\Addons\AddonCreateParams;
-use Dodopayments\Addons\AddonListParams;
-use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -34,13 +31,12 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = AddonCreateParams::with(
+        $result = $this->client->addons->create(
             currency: Currency::AED,
             name: 'name',
             price: 0,
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
-        $result = $this->client->addons->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,14 +44,13 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = AddonCreateParams::with(
+        $result = $this->client->addons->create(
             currency: Currency::AED,
             name: 'name',
             price: 0,
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
             description: 'description',
         );
-        $result = $this->client->addons->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -71,8 +66,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new AddonUpdateParams);
-        $result = $this->client->addons->update('id', $params);
+        $result = $this->client->addons->update('id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -84,8 +78,7 @@ final class AddonsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new AddonListParams);
-        $result = $this->client->addons->list($params);
+        $result = $this->client->addons->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

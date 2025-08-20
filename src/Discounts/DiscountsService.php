@@ -17,24 +17,49 @@ final class DiscountsService implements DiscountsContract
      * POST /discounts
      * If `code` is omitted or empty, a random 16-char uppercase code is generated.
      *
-     * @param array{
-     *   amount: int,
-     *   type: DiscountType::*,
-     *   code?: null|string,
-     *   expiresAt?: null|\DateTimeInterface,
-     *   name?: null|string,
-     *   restrictedTo?: null|list<string>,
-     *   subscriptionCycles?: null|int,
-     *   usageLimit?: null|int,
-     * }|DiscountCreateParams $params
+     * @param int $amount The discount amount.
+     *
+     * - If `discount_type` is **not** `percentage`, `amount` is in **USD cents**. For example, `100` means `$1.00`.
+     *   Only USD is allowed.
+     * - If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
+     *
+     * Must be at least 1.
+     * @param DiscountType::* $type The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
+     * @param null|string $code Optionally supply a code (will be uppercased).
+     * - Must be at least 3 characters if provided.
+     * - If omitted, a random 16-character code is generated.
+     * @param null|\DateTimeInterface $expiresAt when the discount expires, if ever
+     * @param null|string $name
+     * @param null|list<string> $restrictedTo list of product IDs to restrict usage (if any)
+     * @param null|int $subscriptionCycles Number of subscription billing cycles this discount is valid for.
+     * If not provided, the discount will be applied indefinitely to
+     * all recurring payments related to the subscription.
+     * @param null|int $usageLimit How many times this discount can be used (if any).
+     * Must be >= 1 if provided.
      */
     public function create(
-        array|DiscountCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        $amount,
+        $type,
+        $code = null,
+        $expiresAt = null,
+        $name = null,
+        $restrictedTo = null,
+        $subscriptionCycles = null,
+        $usageLimit = null,
+        ?RequestOptions $requestOptions = null,
     ): Discount {
         [$parsed, $options] = DiscountCreateParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'amount' => $amount,
+                'type' => $type,
+                'code' => $code,
+                'expiresAt' => $expiresAt,
+                'name' => $name,
+                'restrictedTo' => $restrictedTo,
+                'subscriptionCycles' => $subscriptionCycles,
+                'usageLimit' => $usageLimit,
+            ],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -67,25 +92,46 @@ final class DiscountsService implements DiscountsContract
     /**
      * PATCH /discounts/{discount_id}.
      *
-     * @param array{
-     *   amount?: null|int,
-     *   code?: null|string,
-     *   expiresAt?: null|\DateTimeInterface,
-     *   name?: null|string,
-     *   restrictedTo?: null|list<string>,
-     *   subscriptionCycles?: null|int,
-     *   type?: DiscountType::*,
-     *   usageLimit?: null|int,
-     * }|DiscountUpdateParams $params
+     * @param null|int $amount If present, update the discount amount:
+     * - If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
+     * - Otherwise, this represents **USD cents** (e.g., `100` = `$1.00`).
+     *
+     * Must be at least 1 if provided.
+     * @param null|string $code if present, update the discount code (uppercase)
+     * @param null|\DateTimeInterface $expiresAt
+     * @param null|string $name
+     * @param null|list<string> $restrictedTo If present, replaces all restricted product IDs with this new set.
+     * To remove all restrictions, send empty array
+     * @param null|int $subscriptionCycles Number of subscription billing cycles this discount is valid for.
+     * If not provided, the discount will be applied indefinitely to
+     * all recurring payments related to the subscription.
+     * @param DiscountType::* $type if present, update the discount type
+     * @param null|int $usageLimit
      */
     public function update(
         string $discountID,
-        array|DiscountUpdateParams $params,
+        $amount = null,
+        $code = null,
+        $expiresAt = null,
+        $name = null,
+        $restrictedTo = null,
+        $subscriptionCycles = null,
+        $type = null,
+        $usageLimit = null,
         ?RequestOptions $requestOptions = null,
     ): Discount {
         [$parsed, $options] = DiscountUpdateParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'amount' => $amount,
+                'code' => $code,
+                'expiresAt' => $expiresAt,
+                'name' => $name,
+                'restrictedTo' => $restrictedTo,
+                'subscriptionCycles' => $subscriptionCycles,
+                'type' => $type,
+                'usageLimit' => $usageLimit,
+            ],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -101,14 +147,16 @@ final class DiscountsService implements DiscountsContract
     /**
      * GET /discounts.
      *
-     * @param array{pageNumber?: int, pageSize?: int}|DiscountListParams $params
+     * @param int $pageNumber page number (default = 0)
+     * @param int $pageSize page size (default = 10, max = 100)
      */
     public function list(
-        array|DiscountListParams $params,
+        $pageNumber = null,
+        $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): Discount {
         [$parsed, $options] = DiscountListParams::parseRequest(
-            $params,
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(

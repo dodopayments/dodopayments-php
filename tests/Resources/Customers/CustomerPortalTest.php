@@ -3,7 +3,6 @@
 namespace Tests\Resources\Customers;
 
 use Dodopayments\Client;
-use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -29,13 +28,7 @@ final class CustomerPortalTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = (new CustomerPortalCreateParams);
-        $result = $this
-            ->client
-            ->customers
-            ->customerPortal
-            ->create('customer_id', $params)
-        ;
+        $result = $this->client->customers->customerPortal->create('customer_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

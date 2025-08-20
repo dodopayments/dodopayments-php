@@ -31,23 +31,35 @@ final class DisputesService implements DisputesContract
     }
 
     /**
-     * @param array{
-     *   createdAtGte?: \DateTimeInterface,
-     *   createdAtLte?: \DateTimeInterface,
-     *   customerID?: string,
-     *   disputeStage?: DisputeStage::*,
-     *   disputeStatus?: DisputeStatus::*,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     * }|DisputeListParams $params
+     * @param \DateTimeInterface $createdAtGte Get events after this created time
+     * @param \DateTimeInterface $createdAtLte Get events created before this time
+     * @param string $customerID Filter by customer_id
+     * @param DisputeStage::* $disputeStage Filter by dispute stage
+     * @param DisputeStatus::* $disputeStatus Filter by dispute status
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        array|DisputeListParams $params,
-        ?RequestOptions $requestOptions = null
+        $createdAtGte = null,
+        $createdAtLte = null,
+        $customerID = null,
+        $disputeStage = null,
+        $disputeStatus = null,
+        $pageNumber = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): DisputeListResponse {
         [$parsed, $options] = DisputeListParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'disputeStage' => $disputeStage,
+                'disputeStatus' => $disputeStatus,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+            ],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

@@ -5,39 +5,38 @@ declare(strict_types=1);
 namespace Dodopayments\Contracts;
 
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
-use Dodopayments\Licenses\LicenseActivateParams;
-use Dodopayments\Licenses\LicenseDeactivateParams;
-use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Licenses\LicenseValidateResponse;
 
 interface LicensesContract
 {
     /**
-     * @param array{licenseKey: string, name: string}|LicenseActivateParams $params
+     * @param string $licenseKey
+     * @param string $name
      */
     public function activate(
-        array|LicenseActivateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $licenseKey,
+        $name,
+        ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance;
 
     /**
-     * @param array{
-     *   licenseKey: string, licenseKeyInstanceID: string
-     * }|LicenseDeactivateParams $params
+     * @param string $licenseKey
+     * @param string $licenseKeyInstanceID
      */
     public function deactivate(
-        array|LicenseDeactivateParams $params,
+        $licenseKey,
+        $licenseKeyInstanceID,
         ?RequestOptions $requestOptions = null,
     ): mixed;
 
     /**
-     * @param array{
-     *   licenseKey: string, licenseKeyInstanceID?: null|string
-     * }|LicenseValidateParams $params
+     * @param string $licenseKey
+     * @param null|string $licenseKeyInstanceID
      */
     public function validate(
-        array|LicenseValidateParams $params,
+        $licenseKey,
+        $licenseKeyInstanceID = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse;
 }

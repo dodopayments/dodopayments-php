@@ -3,8 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -39,8 +37,7 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = LicenseKeyInstanceUpdateParams::with(name: 'name');
-        $result = $this->client->licenseKeyInstances->update('lki_123', $params);
+        $result = $this->client->licenseKeyInstances->update('lki_123', 'name');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -48,8 +45,7 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testUpdateWithOptionalParams(): void
     {
-        $params = LicenseKeyInstanceUpdateParams::with(name: 'name');
-        $result = $this->client->licenseKeyInstances->update('lki_123', $params);
+        $result = $this->client->licenseKeyInstances->update('lki_123', 'name');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -61,8 +57,7 @@ final class LicenseKeyInstancesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new LicenseKeyInstanceListParams);
-        $result = $this->client->licenseKeyInstances->list($params);
+        $result = $this->client->licenseKeyInstances->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

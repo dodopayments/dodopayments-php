@@ -10,8 +10,6 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
-use Dodopayments\Payments\PaymentCreateParams;
-use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListParams\Status;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
@@ -22,22 +20,39 @@ use Dodopayments\Responses\Payments\PaymentNewResponse;
 interface PaymentsContract
 {
     /**
-     * @param array{
-     *   billing: BillingAddress,
-     *   customer: AttachExistingCustomer|NewCustomer,
-     *   productCart: list<OneTimeProductCartItem>,
-     *   allowedPaymentMethodTypes?: null|list<PaymentMethodTypes::*>,
-     *   billingCurrency?: Currency::*,
-     *   discountCode?: null|string,
-     *   metadata?: array<string, string>,
-     *   paymentLink?: null|bool,
-     *   returnURL?: null|string,
-     *   showSavedPaymentMethods?: bool,
-     *   taxID?: null|string,
-     * }|PaymentCreateParams $params
+     * @param BillingAddress $billing Billing address details for the payment
+     * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
+     * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
+     * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes List of payment methods allowed during checkout.
+     *
+     * Customers will **never** see payment methods that are **not** in this list.
+     * However, adding a method here **does not guarantee** customers will see it.
+     * Availability still depends on other factors (e.g., customer location, merchant settings).
+     * @param Currency::* $billingCurrency Fix the currency in which the end customer is billed.
+     * If Dodo Payments cannot support that currency for this transaction, it will not proceed
+     * @param null|string $discountCode Discount Code to apply to the transaction
+     * @param array<string,
+     * string,> $metadata Additional metadata associated with the payment.
+     * Defaults to empty if not provided.
+     * @param null|bool $paymentLink Whether to generate a payment link. Defaults to false if not specified.
+     * @param null|string $returnURL Optional URL to redirect the customer after payment.
+     * Must be a valid URL if provided.
+     * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
+     * False by default
+     * @param null|string $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
      */
     public function create(
-        array|PaymentCreateParams $params,
+        $billing,
+        $customer,
+        $productCart,
+        $allowedPaymentMethodTypes = null,
+        $billingCurrency = null,
+        $discountCode = null,
+        $metadata = null,
+        $paymentLink = null,
+        $returnURL = null,
+        $showSavedPaymentMethods = null,
+        $taxID = null,
         ?RequestOptions $requestOptions = null,
     ): PaymentNewResponse;
 
@@ -47,20 +62,25 @@ interface PaymentsContract
     ): Payment;
 
     /**
-     * @param array{
-     *   brandID?: string,
-     *   createdAtGte?: \DateTimeInterface,
-     *   createdAtLte?: \DateTimeInterface,
-     *   customerID?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     *   status?: Status::*,
-     *   subscriptionID?: string,
-     * }|PaymentListParams $params
+     * @param string $brandID filter by Brand id
+     * @param \DateTimeInterface $createdAtGte Get events after this created time
+     * @param \DateTimeInterface $createdAtLte Get events created before this time
+     * @param string $customerID Filter by customer id
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
+     * @param Status::* $status Filter by status
+     * @param string $subscriptionID Filter by subscription id
      */
     public function list(
-        array|PaymentListParams $params,
-        ?RequestOptions $requestOptions = null
+        $brandID = null,
+        $createdAtGte = null,
+        $createdAtLte = null,
+        $customerID = null,
+        $pageNumber = null,
+        $pageSize = null,
+        $status = null,
+        $subscriptionID = null,
+        ?RequestOptions $requestOptions = null,
     ): PaymentListResponse;
 
     public function retrieveLineItems(

@@ -3,7 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\Disputes\DisputeListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -42,8 +41,7 @@ final class DisputesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new DisputeListParams);
-        $result = $this->client->disputes->list($params);
+        $result = $this->client->disputes->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

@@ -4,9 +4,6 @@ namespace Tests\Resources;
 
 use Dodopayments\Client;
 use Dodopayments\WebhookEvents\WebhookEventType;
-use Dodopayments\Webhooks\WebhookCreateParams;
-use Dodopayments\Webhooks\WebhookListParams;
-use Dodopayments\Webhooks\WebhookUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,8 +30,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = WebhookCreateParams::with(url: 'url');
-        $result = $this->client->webhooks->create($params);
+        $result = $this->client->webhooks->create(url: 'url');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -42,7 +38,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = WebhookCreateParams::with(
+        $result = $this->client->webhooks->create(
             url: 'url',
             description: 'description',
             disabled: true,
@@ -52,7 +48,6 @@ final class WebhooksTest extends TestCase
             metadata: ['foo' => 'string'],
             rateLimit: 0,
         );
-        $result = $this->client->webhooks->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -68,8 +63,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new WebhookUpdateParams);
-        $result = $this->client->webhooks->update('webhook_id', $params);
+        $result = $this->client->webhooks->update('webhook_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -81,8 +75,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new WebhookListParams);
-        $result = $this->client->webhooks->list($params);
+        $result = $this->client->webhooks->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

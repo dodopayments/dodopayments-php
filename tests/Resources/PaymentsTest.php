@@ -8,8 +8,6 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\OneTimeProductCartItem;
-use Dodopayments\Payments\PaymentCreateParams;
-use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentMethodTypes;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -37,7 +35,7 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = PaymentCreateParams::with(
+        $result = $this->client->payments->create(
             billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
@@ -50,7 +48,6 @@ final class PaymentsTest extends TestCase
                 OneTimeProductCartItem::with(productID: 'product_id', quantity: 0),
             ],
         );
-        $result = $this->client->payments->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -58,7 +55,7 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = PaymentCreateParams::with(
+        $result = $this->client->payments->create(
             billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
@@ -80,7 +77,6 @@ final class PaymentsTest extends TestCase
             showSavedPaymentMethods: true,
             taxID: 'tax_id',
         );
-        $result = $this->client->payments->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -100,8 +96,7 @@ final class PaymentsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new PaymentListParams);
-        $result = $this->client->payments->list($params);
+        $result = $this->client->payments->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

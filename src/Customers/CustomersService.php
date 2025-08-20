@@ -20,17 +20,19 @@ final class CustomersService implements CustomersContract
     }
 
     /**
-     * @param array{
-     *   email: string, name: string, phoneNumber?: null|string
-     * }|CustomerCreateParams $params
+     * @param string $email
+     * @param string $name
+     * @param null|string $phoneNumber
      */
     public function create(
-        array|CustomerCreateParams $params,
+        $email,
+        $name,
+        $phoneNumber = null,
         ?RequestOptions $requestOptions = null
     ): Customer {
         [$parsed, $options] = CustomerCreateParams::parseRequest(
-            $params,
-            $requestOptions
+            ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -58,17 +60,17 @@ final class CustomersService implements CustomersContract
     }
 
     /**
-     * @param array{
-     *   name?: null|string, phoneNumber?: null|string
-     * }|CustomerUpdateParams $params
+     * @param null|string $name
+     * @param null|string $phoneNumber
      */
     public function update(
         string $customerID,
-        array|CustomerUpdateParams $params,
+        $name = null,
+        $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer {
         [$parsed, $options] = CustomerUpdateParams::parseRequest(
-            $params,
+            ['name' => $name, 'phoneNumber' => $phoneNumber],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -83,17 +85,19 @@ final class CustomersService implements CustomersContract
     }
 
     /**
-     * @param array{
-     *   email?: string, pageNumber?: int, pageSize?: int
-     * }|CustomerListParams $params
+     * @param string $email Filter by customer email
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        array|CustomerListParams $params,
-        ?RequestOptions $requestOptions = null
+        $email = null,
+        $pageNumber = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): Customer {
         [$parsed, $options] = CustomerListParams::parseRequest(
-            $params,
-            $requestOptions
+            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

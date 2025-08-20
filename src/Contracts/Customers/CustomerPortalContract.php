@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Dodopayments\Contracts\Customers;
 
-use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 
 interface CustomerPortalContract
 {
     /**
-     * @param array{sendEmail?: bool}|CustomerPortalCreateParams $params
+     * @param bool $sendEmail if true, will send link to user
      */
     public function create(
         string $customerID,
-        array|CustomerPortalCreateParams $params,
+        $sendEmail = null,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession;
 }

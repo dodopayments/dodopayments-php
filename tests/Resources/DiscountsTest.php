@@ -3,10 +3,7 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\Discounts\DiscountCreateParams;
-use Dodopayments\Discounts\DiscountListParams;
 use Dodopayments\Discounts\DiscountType;
-use Dodopayments\Discounts\DiscountUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,11 +30,10 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = DiscountCreateParams::with(
+        $result = $this->client->discounts->create(
             amount: 0,
             type: DiscountType::PERCENTAGE
         );
-        $result = $this->client->discounts->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -45,7 +41,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = DiscountCreateParams::with(
+        $result = $this->client->discounts->create(
             amount: 0,
             type: DiscountType::PERCENTAGE,
             code: 'code',
@@ -55,7 +51,6 @@ final class DiscountsTest extends TestCase
             subscriptionCycles: 0,
             usageLimit: 0,
         );
-        $result = $this->client->discounts->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -71,8 +66,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new DiscountUpdateParams);
-        $result = $this->client->discounts->update('discount_id', $params);
+        $result = $this->client->discounts->update('discount_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -84,8 +78,7 @@ final class DiscountsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new DiscountListParams);
-        $result = $this->client->discounts->list($params);
+        $result = $this->client->discounts->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

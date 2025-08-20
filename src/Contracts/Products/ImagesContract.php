@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Dodopayments\Contracts\Products;
 
-use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Products\Images\ImageUpdateResponse;
 
 interface ImagesContract
 {
     /**
-     * @param array{forceUpdate?: bool}|ImageUpdateParams $params
+     * @param bool $forceUpdate
      */
     public function update(
         string $id,
-        array|ImageUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $forceUpdate = null,
+        ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse;
 }

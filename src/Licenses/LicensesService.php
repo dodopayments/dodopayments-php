@@ -16,14 +16,16 @@ final class LicensesService implements LicensesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{licenseKey: string, name: string}|LicenseActivateParams $params
+     * @param string $licenseKey
+     * @param string $name
      */
     public function activate(
-        array|LicenseActivateParams $params,
+        $licenseKey,
+        $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
         [$parsed, $options] = LicenseActivateParams::parseRequest(
-            $params,
+            ['licenseKey' => $licenseKey, 'name' => $name],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -38,17 +40,20 @@ final class LicensesService implements LicensesContract
     }
 
     /**
-     * @param array{
-     *   licenseKey: string, licenseKeyInstanceID: string
-     * }|LicenseDeactivateParams $params
+     * @param string $licenseKey
+     * @param string $licenseKeyInstanceID
      */
     public function deactivate(
-        array|LicenseDeactivateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $licenseKey,
+        $licenseKeyInstanceID,
+        ?RequestOptions $requestOptions = null
     ): mixed {
         [$parsed, $options] = LicenseDeactivateParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'licenseKey' => $licenseKey,
+                'licenseKeyInstanceID' => $licenseKeyInstanceID,
+            ],
+            $requestOptions,
         );
 
         return $this->client->request(
@@ -60,17 +65,20 @@ final class LicensesService implements LicensesContract
     }
 
     /**
-     * @param array{
-     *   licenseKey: string, licenseKeyInstanceID?: null|string
-     * }|LicenseValidateParams $params
+     * @param string $licenseKey
+     * @param null|string $licenseKeyInstanceID
      */
     public function validate(
-        array|LicenseValidateParams $params,
-        ?RequestOptions $requestOptions = null
+        $licenseKey,
+        $licenseKeyInstanceID = null,
+        ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
         [$parsed, $options] = LicenseValidateParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'licenseKey' => $licenseKey,
+                'licenseKeyInstanceID' => $licenseKeyInstanceID,
+            ],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',

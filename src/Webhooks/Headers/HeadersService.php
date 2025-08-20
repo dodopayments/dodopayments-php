@@ -34,15 +34,16 @@ final class HeadersService implements HeadersContract
     /**
      * Patch a webhook by id.
      *
-     * @param array{headers: array<string, string>}|HeaderUpdateParams $params
+     * @param array<string,
+     * string,> $headers Object of header-value pair to update or add
      */
     public function update(
         string $webhookID,
-        array|HeaderUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $headers,
+        ?RequestOptions $requestOptions = null
     ): mixed {
         [$parsed, $options] = HeaderUpdateParams::parseRequest(
-            $params,
+            ['headers' => $headers],
             $requestOptions
         );
 
