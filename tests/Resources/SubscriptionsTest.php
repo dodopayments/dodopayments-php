@@ -9,12 +9,7 @@ use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Subscriptions\AttachAddon;
-use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
-use Dodopayments\Subscriptions\SubscriptionChargeParams;
-use Dodopayments\Subscriptions\SubscriptionCreateParams;
 use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
-use Dodopayments\Subscriptions\SubscriptionListParams;
-use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -41,7 +36,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = SubscriptionCreateParams::with(
+        $result = $this->client->subscriptions->create(
             billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
@@ -53,7 +48,6 @@ final class SubscriptionsTest extends TestCase
             productID: 'product_id',
             quantity: 0,
         );
-        $result = $this->client->subscriptions->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -61,7 +55,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = SubscriptionCreateParams::with(
+        $result = $this->client->subscriptions->create(
             billing: BillingAddress::with(
                 city: 'city',
                 country: CountryCode::AF,
@@ -88,7 +82,6 @@ final class SubscriptionsTest extends TestCase
             taxID: 'tax_id',
             trialPeriodDays: 0,
         );
-        $result = $this->client->subscriptions->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -104,8 +97,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new SubscriptionUpdateParams);
-        $result = $this->client->subscriptions->update('subscription_id', $params);
+        $result = $this->client->subscriptions->update('subscription_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -117,8 +109,7 @@ final class SubscriptionsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new SubscriptionListParams);
-        $result = $this->client->subscriptions->list($params);
+        $result = $this->client->subscriptions->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -126,16 +117,12 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testChangePlan(): void
     {
-        $params = SubscriptionChangePlanParams::with(
+        $result = $this->client->subscriptions->changePlan(
+            'subscription_id',
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
         );
-        $result = $this
-            ->client
-            ->subscriptions
-            ->changePlan('subscription_id', $params)
-        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -143,17 +130,13 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testChangePlanWithOptionalParams(): void
     {
-        $params = SubscriptionChangePlanParams::with(
+        $result = $this->client->subscriptions->changePlan(
+            'subscription_id',
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
             addons: [AttachAddon::with(addonID: 'addon_id', quantity: 0)],
         );
-        $result = $this
-            ->client
-            ->subscriptions
-            ->changePlan('subscription_id', $params)
-        ;
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -161,8 +144,10 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCharge(): void
     {
-        $params = SubscriptionChargeParams::with(productPrice: 0);
-        $result = $this->client->subscriptions->charge('subscription_id', $params);
+        $result = $this->client->subscriptions->charge(
+            'subscription_id',
+            productPrice: 0
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -170,14 +155,14 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testChargeWithOptionalParams(): void
     {
-        $params = SubscriptionChargeParams::with(
+        $result = $this->client->subscriptions->charge(
+            'subscription_id',
             productPrice: 0,
             adaptiveCurrencyFeesInclusive: true,
             metadata: ['foo' => 'string'],
             productCurrency: Currency::AED,
             productDescription: 'product_description',
         );
-        $result = $this->client->subscriptions->charge('subscription_id', $params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

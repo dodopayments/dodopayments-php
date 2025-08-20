@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Contracts;
 
-use Dodopayments\Addons\AddonCreateParams;
-use Dodopayments\Addons\AddonListParams;
 use Dodopayments\Addons\AddonResponse;
-use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
@@ -16,17 +13,19 @@ use Dodopayments\Responses\Addons\AddonUpdateImagesResponse;
 interface AddonsContract
 {
     /**
-     * @param AddonCreateParams|array{
-     *   currency: Currency::*,
-     *   name: string,
-     *   price: int,
-     *   taxCategory: TaxCategory::*,
-     *   description?: null|string,
-     * } $params
+     * @param Currency::* $currency The currency of the Addon
+     * @param string $name Name of the Addon
+     * @param int $price Amount of the addon
+     * @param TaxCategory::* $taxCategory Tax category applied to this Addon
+     * @param null|string $description Optional description of the Addon
      */
     public function create(
-        AddonCreateParams|array $params,
-        ?RequestOptions $requestOptions = null
+        $currency,
+        $name,
+        $price,
+        $taxCategory,
+        $description = null,
+        ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 
     public function retrieve(
@@ -35,27 +34,32 @@ interface AddonsContract
     ): AddonResponse;
 
     /**
-     * @param AddonUpdateParams|array{
-     *   currency?: Currency::*,
-     *   description?: null|string,
-     *   imageID?: null|string,
-     *   name?: null|string,
-     *   price?: null|int,
-     *   taxCategory?: TaxCategory::*,
-     * } $params
+     * @param Currency::* $currency The currency of the Addon
+     * @param null|string $description description of the Addon, optional and must be at most 1000 characters
+     * @param null|string $imageID Addon image id after its uploaded to S3
+     * @param null|string $name name of the Addon, optional and must be at most 100 characters
+     * @param null|int $price Amount of the addon
+     * @param TaxCategory::* $taxCategory tax category of the Addon
      */
     public function update(
         string $id,
-        AddonUpdateParams|array $params,
+        $currency = null,
+        $description = null,
+        $imageID = null,
+        $name = null,
+        $price = null,
+        $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 
     /**
-     * @param AddonListParams|array{pageNumber?: int, pageSize?: int} $params
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        AddonListParams|array $params,
-        ?RequestOptions $requestOptions = null
+        $pageNumber = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 
     public function updateImages(

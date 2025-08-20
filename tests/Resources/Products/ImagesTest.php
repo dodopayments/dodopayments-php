@@ -3,7 +3,6 @@
 namespace Tests\Resources\Products;
 
 use Dodopayments\Client;
-use Dodopayments\Products\Images\ImageUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -29,8 +28,7 @@ final class ImagesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new ImageUpdateParams);
-        $result = $this->client->products->images->update('id', $params);
+        $result = $this->client->products->images->update('id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

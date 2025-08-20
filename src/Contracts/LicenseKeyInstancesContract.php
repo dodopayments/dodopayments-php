@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Contracts;
 
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 
 interface LicenseKeyInstancesContract
@@ -17,21 +15,23 @@ interface LicenseKeyInstancesContract
     ): LicenseKeyInstance;
 
     /**
-     * @param array{name: string}|LicenseKeyInstanceUpdateParams $params
+     * @param string $name
      */
     public function update(
         string $id,
-        array|LicenseKeyInstanceUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $name,
+        ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance;
 
     /**
-     * @param array{
-     *   licenseKeyID?: null|string, pageNumber?: null|int, pageSize?: null|int
-     * }|LicenseKeyInstanceListParams $params
+     * @param null|string $licenseKeyID Filter by license key ID
+     * @param null|int $pageNumber Page number default is 0
+     * @param null|int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        array|LicenseKeyInstanceListParams $params,
+        $licenseKeyID = null,
+        $pageNumber = null,
+        $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseKeyInstance;
 }

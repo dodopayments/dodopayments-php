@@ -3,7 +3,6 @@
 namespace Tests\Resources\Webhooks;
 
 use Dodopayments\Client;
-use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -37,8 +36,10 @@ final class HeadersTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = HeaderUpdateParams::with(headers: ['foo' => 'string']);
-        $result = $this->client->webhooks->headers->update('webhook_id', $params);
+        $result = $this->client->webhooks->headers->update(
+            'webhook_id',
+            ['foo' => 'string']
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -46,8 +47,10 @@ final class HeadersTest extends TestCase
     #[Test]
     public function testUpdateWithOptionalParams(): void
     {
-        $params = HeaderUpdateParams::with(headers: ['foo' => 'string']);
-        $result = $this->client->webhooks->headers->update('webhook_id', $params);
+        $result = $this->client->webhooks->headers->update(
+            'webhook_id',
+            ['foo' => 'string']
+        );
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

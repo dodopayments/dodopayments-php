@@ -11,26 +11,33 @@ use Dodopayments\Responses\Webhooks\WebhookListResponse;
 use Dodopayments\Responses\Webhooks\WebhookNewResponse;
 use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
 use Dodopayments\WebhookEvents\WebhookEventType;
-use Dodopayments\Webhooks\WebhookCreateParams;
-use Dodopayments\Webhooks\WebhookListParams;
-use Dodopayments\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {
     /**
-     * @param array{
-     *   url: string,
-     *   description?: null|string,
-     *   disabled?: null|bool,
-     *   filterTypes?: list<WebhookEventType::*>,
-     *   headers?: null|array<string, string>,
-     *   idempotencyKey?: null|string,
-     *   metadata?: null|array<string, string>,
-     *   rateLimit?: null|int,
-     * }|WebhookCreateParams $params
+     * @param string $url Url of the webhook
+     * @param null|string $description
+     * @param null|bool $disabled Create the webhook in a disabled state.
+     *
+     * Default is false
+     * @param list<WebhookEventType::*> $filterTypes Filter events to the webhook.
+     *
+     * Webhook event will only be sent for events in the list.
+     * @param null|array<string, string> $headers Custom headers to be passed
+     * @param null|string $idempotencyKey The request's idempotency key
+     * @param null|array<string, string> $metadata Metadata to be passed to the webhook
+     * Defaut is {}
+     * @param null|int $rateLimit
      */
     public function create(
-        array|WebhookCreateParams $params,
+        $url,
+        $description = null,
+        $disabled = null,
+        $filterTypes = null,
+        $headers = null,
+        $idempotencyKey = null,
+        $metadata = null,
+        $rateLimit = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookNewResponse;
 
@@ -40,26 +47,33 @@ interface WebhooksContract
     ): WebhookGetResponse;
 
     /**
-     * @param array{
-     *   description?: null|string,
-     *   disabled?: null|bool,
-     *   filterTypes?: null|list<WebhookEventType::*>,
-     *   metadata?: null|array<string, string>,
-     *   rateLimit?: null|int,
-     *   url?: null|string,
-     * }|WebhookUpdateParams $params
+     * @param null|string $description Description of the webhook
+     * @param null|bool $disabled to Disable the endpoint, set it to true
+     * @param null|list<WebhookEventType::*> $filterTypes Filter events to the endpoint.
+     *
+     * Webhook event will only be sent for events in the list.
+     * @param null|array<string, string> $metadata Metadata
+     * @param null|int $rateLimit Rate limit
+     * @param null|string $url Url endpoint
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParams $params,
+        $description = null,
+        $disabled = null,
+        $filterTypes = null,
+        $metadata = null,
+        $rateLimit = null,
+        $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookUpdateResponse;
 
     /**
-     * @param array{iterator?: null|string, limit?: null|int}|WebhookListParams $params
+     * @param null|string $iterator The iterator returned from a prior invocation
+     * @param null|int $limit Limit the number of returned items
      */
     public function list(
-        array|WebhookListParams $params,
+        $iterator = null,
+        $limit = null,
         ?RequestOptions $requestOptions = null
     ): WebhookListResponse;
 

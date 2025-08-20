@@ -5,20 +5,19 @@ declare(strict_types=1);
 namespace Dodopayments\Contracts;
 
 use Dodopayments\Customers\Customer;
-use Dodopayments\Customers\CustomerCreateParams;
-use Dodopayments\Customers\CustomerListParams;
-use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\RequestOptions;
 
 interface CustomersContract
 {
     /**
-     * @param array{
-     *   email: string, name: string, phoneNumber?: null|string
-     * }|CustomerCreateParams $params
+     * @param string $email
+     * @param string $name
+     * @param null|string $phoneNumber
      */
     public function create(
-        array|CustomerCreateParams $params,
+        $email,
+        $name,
+        $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer;
 
@@ -28,23 +27,25 @@ interface CustomersContract
     ): Customer;
 
     /**
-     * @param array{
-     *   name?: null|string, phoneNumber?: null|string
-     * }|CustomerUpdateParams $params
+     * @param null|string $name
+     * @param null|string $phoneNumber
      */
     public function update(
         string $customerID,
-        array|CustomerUpdateParams $params,
+        $name = null,
+        $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer;
 
     /**
-     * @param array{
-     *   email?: string, pageNumber?: int, pageSize?: int
-     * }|CustomerListParams $params
+     * @param string $email Filter by customer email
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        array|CustomerListParams $params,
-        ?RequestOptions $requestOptions = null
+        $email = null,
+        $pageNumber = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): Customer;
 }

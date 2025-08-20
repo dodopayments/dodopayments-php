@@ -7,11 +7,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
-use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
-use Dodopayments\Products\ProductListParams;
-use Dodopayments\Products\ProductUpdateFilesParams;
-use Dodopayments\Products\ProductUpdateParams;
 use Dodopayments\Subscriptions\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -39,7 +35,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = ProductCreateParams::with(
+        $result = $this->client->products->create(
             price: OneTimePrice::with(
                 currency: Currency::AED,
                 discount: 0,
@@ -49,7 +45,6 @@ final class ProductsTest extends TestCase
             ),
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
-        $result = $this->client->products->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -57,7 +52,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = ProductCreateParams::with(
+        $result = $this->client->products->create(
             price: OneTimePrice::with(
                 currency: Currency::AED,
                 discount: 0,
@@ -85,7 +80,6 @@ final class ProductsTest extends TestCase
             metadata: ['foo' => 'string'],
             name: 'name',
         );
-        $result = $this->client->products->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -101,8 +95,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new ProductUpdateParams);
-        $result = $this->client->products->update('id', $params);
+        $result = $this->client->products->update('id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -114,8 +107,7 @@ final class ProductsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new ProductListParams);
-        $result = $this->client->products->list($params);
+        $result = $this->client->products->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -139,8 +131,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFiles(): void
     {
-        $params = ProductUpdateFilesParams::with(fileName: 'file_name');
-        $result = $this->client->products->updateFiles('id', $params);
+        $result = $this->client->products->updateFiles('id', 'file_name');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -148,8 +139,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFilesWithOptionalParams(): void
     {
-        $params = ProductUpdateFilesParams::with(fileName: 'file_name');
-        $result = $this->client->products->updateFiles('id', $params);
+        $result = $this->client->products->updateFiles('id', 'file_name');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

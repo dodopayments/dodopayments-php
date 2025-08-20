@@ -16,17 +16,19 @@ final class RefundsService implements RefundsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{
-     *   paymentID: string, items?: null|list<Item>, reason?: null|string
-     * }|RefundCreateParams $params
+     * @param string $paymentID the unique identifier of the payment to be refunded
+     * @param null|list<Item> $items Partially Refund an Individual Item
+     * @param null|string $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      */
     public function create(
-        array|RefundCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        $paymentID,
+        $items = null,
+        $reason = null,
+        ?RequestOptions $requestOptions = null,
     ): Refund {
         [$parsed, $options] = RefundCreateParams::parseRequest(
-            $params,
-            $requestOptions
+            ['paymentID' => $paymentID, 'items' => $items, 'reason' => $reason],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -54,22 +56,32 @@ final class RefundsService implements RefundsContract
     }
 
     /**
-     * @param array{
-     *   createdAtGte?: \DateTimeInterface,
-     *   createdAtLte?: \DateTimeInterface,
-     *   customerID?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     *   status?: Status::*,
-     * }|RefundListParams $params
+     * @param \DateTimeInterface $createdAtGte Get events after this created time
+     * @param \DateTimeInterface $createdAtLte Get events created before this time
+     * @param string $customerID Filter by customer_id
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
+     * @param Status::* $status Filter by status
      */
     public function list(
-        array|RefundListParams $params,
-        ?RequestOptions $requestOptions = null
+        $createdAtGte = null,
+        $createdAtLte = null,
+        $customerID = null,
+        $pageNumber = null,
+        $pageSize = null,
+        $status = null,
+        ?RequestOptions $requestOptions = null,
     ): Refund {
         [$parsed, $options] = RefundListParams::parseRequest(
-            $params,
-            $requestOptions
+            [
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'status' => $status,
+            ],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

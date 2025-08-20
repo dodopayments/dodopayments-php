@@ -15,14 +15,16 @@ final class PayoutsService implements PayoutsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{pageNumber?: int, pageSize?: int}|PayoutListParams $params
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        array|PayoutListParams $params,
+        $pageNumber = null,
+        $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): PayoutListResponse {
         [$parsed, $options] = PayoutListParams::parseRequest(
-            $params,
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(

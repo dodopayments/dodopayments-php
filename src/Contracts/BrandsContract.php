@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Contracts;
 
 use Dodopayments\Brands\Brand;
-use Dodopayments\Brands\BrandCreateParams;
-use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Brands\BrandListResponse;
 use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
@@ -14,17 +12,19 @@ use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
 interface BrandsContract
 {
     /**
-     * @param array{
-     *   description?: null|string,
-     *   name?: null|string,
-     *   statementDescriptor?: null|string,
-     *   supportEmail?: null|string,
-     *   url?: null|string,
-     * }|BrandCreateParams $params
+     * @param null|string $description
+     * @param null|string $name
+     * @param null|string $statementDescriptor
+     * @param null|string $supportEmail
+     * @param null|string $url
      */
     public function create(
-        array|BrandCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        $description = null,
+        $name = null,
+        $statementDescriptor = null,
+        $supportEmail = null,
+        $url = null,
+        ?RequestOptions $requestOptions = null,
     ): Brand;
 
     public function retrieve(
@@ -33,16 +33,17 @@ interface BrandsContract
     ): Brand;
 
     /**
-     * @param array{
-     *   imageID?: null|string,
-     *   name?: null|string,
-     *   statementDescriptor?: null|string,
-     *   supportEmail?: null|string,
-     * }|BrandUpdateParams $params
+     * @param null|string $imageID The UUID you got back from the presigned‐upload call
+     * @param null|string $name
+     * @param null|string $statementDescriptor
+     * @param null|string $supportEmail
      */
     public function update(
         string $id,
-        array|BrandUpdateParams $params,
+        $imageID = null,
+        $name = null,
+        $statementDescriptor = null,
+        $supportEmail = null,
         ?RequestOptions $requestOptions = null,
     ): Brand;
 

@@ -3,7 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\Payouts\PayoutListParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,8 +33,7 @@ final class PayoutsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new PayoutListParams);
-        $result = $this->client->payouts->list($params);
+        $result = $this->client->payouts->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

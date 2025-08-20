@@ -27,12 +27,14 @@ composer require "dodopayments/client 0.0.1"
 
 ## Usage
 
+This library uses named parameters to specify optional arguments.
+Parameters with a default value must be set by name.
+
 ```php
 <?php
 
 use Dodopayments\Client;
 use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
@@ -42,7 +44,7 @@ $client = new Client(
   environment: "test_mode",
 );
 
-$params = PaymentCreateParams::with(
+$payment = $client->payments->create(
   billing: BillingAddress::with(
     city: "city",
     country: CountryCode::AF,
@@ -56,9 +58,15 @@ $params = PaymentCreateParams::with(
   ],
 );
 
-$payment = $client->payments->create($params);
 var_dump($payment->payment_id);
 ```
+
+## Value Objects
+
+It is recommended to use the `with` constructor `Dog::with(name: "Joey")`
+and named parameters to initialize value objects.
+
+However builders are provided as well `(new Dog)->withName("Joey")`.
 
 ### Handling errors
 
@@ -69,34 +77,32 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 use Dodopayments\Errors\APIConnectionError;
 use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
-$params = PaymentCreateParams::with(
-  billing: BillingAddress::with(
-    city: "city",
-    country: CountryCode::AF,
-    state: "state",
-    street: "street",
-    zipcode: "zipcode",
-  ),
-  customer: AttachExistingCustomer::with(customerID: "customer_id"),
-  productCart: [
-    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
-  ],
-);
 try {
-  $Payments = $client->payments->create($params);
+  $payment = $client->payments->create(
+    billing: BillingAddress::with(
+      city: "city",
+      country: CountryCode::AF,
+      state: "state",
+      street: "street",
+      zipcode: "zipcode",
+    ),
+    customer: AttachExistingCustomer::with(customerID: "customer_id"),
+    productCart: [
+      OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
+    ],
+  );
 } catch (APIConnectionError $e) {
-    echo "The server could not be reached", PHP_EOL;
-    var_dump($e->getPrevious());
+  echo "The server could not be reached", PHP_EOL;
+  var_dump($e->getPrevious());
 } catch (RateLimitError $_) {
-    echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
+  echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
-    echo "Another non-200-range status code was received", PHP_EOL;
-    echo $e->getMessage();
+  echo "Another non-200-range status code was received", PHP_EOL;
+  echo $e->getMessage();
 }
 ```
 
@@ -130,14 +136,15 @@ You can use the `max_retries` option to configure or disable this:
 use Dodopayments\Client;
 use Dodopayments\RequestOptions;
 use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
-$params = PaymentCreateParams::with(
+
+// Or, configure per-request:
+$result = $client->payments->create(
   billing: BillingAddress::with(
     city: "city",
     country: CountryCode::AF,
@@ -149,11 +156,8 @@ $params = PaymentCreateParams::with(
   productCart: [
     OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
+  new RequestOptions(maxRetries: 5),
 );
-
-// Or, configure per-request:$result = $client
-  ->payments
-  ->create($params, new RequestOptions(maxRetries: 5));
 ```
 
 ## Advanced concepts
@@ -171,12 +175,11 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 
 use Dodopayments\RequestOptions;
 use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
-$params = PaymentCreateParams::with(
+$payment = $client->payments->create(
   billing: BillingAddress::with(
     city: "city",
     country: CountryCode::AF,
@@ -188,11 +191,6 @@ $params = PaymentCreateParams::with(
   productCart: [
     OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
-);
-$payment = $client
-  ->payments
-  ->create(
-  $params,
   new RequestOptions(
     extraQueryParams: ["my_query_parameter" => "value"],
     extraBodyParams: ["my_body_parameter" => "value"],

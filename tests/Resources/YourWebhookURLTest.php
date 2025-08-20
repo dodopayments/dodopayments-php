@@ -15,7 +15,6 @@ use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundStatus;
 use Dodopayments\WebhookEvents\WebhookEventType;
-use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams;
 use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -42,7 +41,7 @@ final class YourWebhookURLTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = YourWebhookURLCreateParams::with(
+        $result = $this->client->yourWebhookURL->create(
             businessID: 'business_id',
             data: Payment::with(
                 billing: BillingAddress::with(
@@ -97,7 +96,6 @@ final class YourWebhookURLTest extends TestCase
             webhookSignature: 'webhook-signature',
             webhookTimestamp: 'webhook-timestamp',
         );
-        $result = $this->client->yourWebhookURL->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -105,7 +103,7 @@ final class YourWebhookURLTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = YourWebhookURLCreateParams::with(
+        $result = $this->client->yourWebhookURL->create(
             businessID: 'business_id',
             data: Payment::with(
                 billing: BillingAddress::with(
@@ -182,7 +180,6 @@ final class YourWebhookURLTest extends TestCase
             webhookSignature: 'webhook-signature',
             webhookTimestamp: 'webhook-timestamp',
         );
-        $result = $this->client->yourWebhookURL->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

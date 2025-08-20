@@ -3,9 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\Licenses\LicenseActivateParams;
-use Dodopayments\Licenses\LicenseDeactivateParams;
-use Dodopayments\Licenses\LicenseValidateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -31,11 +28,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testActivate(): void
     {
-        $params = LicenseActivateParams::with(
+        $result = $this->client->licenses->activate(
             licenseKey: 'license_key',
             name: 'name'
         );
-        $result = $this->client->licenses->activate($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -43,11 +39,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testActivateWithOptionalParams(): void
     {
-        $params = LicenseActivateParams::with(
+        $result = $this->client->licenses->activate(
             licenseKey: 'license_key',
             name: 'name'
         );
-        $result = $this->client->licenses->activate($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -55,11 +50,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testDeactivate(): void
     {
-        $params = LicenseDeactivateParams::with(
+        $result = $this->client->licenses->deactivate(
             licenseKey: 'license_key',
             licenseKeyInstanceID: 'license_key_instance_id'
         );
-        $result = $this->client->licenses->deactivate($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -67,11 +61,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testDeactivateWithOptionalParams(): void
     {
-        $params = LicenseDeactivateParams::with(
+        $result = $this->client->licenses->deactivate(
             licenseKey: 'license_key',
             licenseKeyInstanceID: 'license_key_instance_id'
         );
-        $result = $this->client->licenses->deactivate($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -79,10 +72,9 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testValidate(): void
     {
-        $params = LicenseValidateParams::with(
+        $result = $this->client->licenses->validate(
             licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43'
         );
-        $result = $this->client->licenses->validate($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -90,11 +82,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testValidateWithOptionalParams(): void
     {
-        $params = LicenseValidateParams::with(
+        $result = $this->client->licenses->validate(
             licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
             licenseKeyInstanceID: 'lki_123',
         );
-        $result = $this->client->licenses->validate($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

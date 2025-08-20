@@ -15,15 +15,15 @@ final class ImagesService implements ImagesContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{forceUpdate?: bool}|ImageUpdateParams $params
+     * @param bool $forceUpdate
      */
     public function update(
         string $id,
-        array|ImageUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        $forceUpdate = null,
+        ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse {
         [$parsed, $options] = ImageUpdateParams::parseRequest(
-            $params,
+            ['forceUpdate' => $forceUpdate],
             $requestOptions
         );
         $resp = $this->client->request(

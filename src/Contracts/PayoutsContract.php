@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Dodopayments\Contracts;
 
-use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Payouts\PayoutListResponse;
 
 interface PayoutsContract
 {
     /**
-     * @param array{pageNumber?: int, pageSize?: int}|PayoutListParams $params
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        array|PayoutListParams $params,
-        ?RequestOptions $requestOptions = null
+        $pageNumber = null,
+        $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): PayoutListResponse;
 }

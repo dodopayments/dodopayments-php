@@ -15,15 +15,15 @@ final class CustomerPortalService implements CustomerPortalContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param array{sendEmail?: bool}|CustomerPortalCreateParams $params
+     * @param bool $sendEmail if true, will send link to user
      */
     public function create(
         string $customerID,
-        array|CustomerPortalCreateParams $params,
+        $sendEmail = null,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession {
         [$parsed, $options] = CustomerPortalCreateParams::parseRequest(
-            $params,
+            ['sendEmail' => $sendEmail],
             $requestOptions
         );
         $resp = $this->client->request(

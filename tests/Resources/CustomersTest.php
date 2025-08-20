@@ -3,9 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\Customers\CustomerCreateParams;
-use Dodopayments\Customers\CustomerListParams;
-use Dodopayments\Customers\CustomerUpdateParams;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,8 +29,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = CustomerCreateParams::with(email: 'email', name: 'name');
-        $result = $this->client->customers->create($params);
+        $result = $this->client->customers->create(email: 'email', name: 'name');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -41,12 +37,11 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $params = CustomerCreateParams::with(
+        $result = $this->client->customers->create(
             email: 'email',
             name: 'name',
             phoneNumber: 'phone_number'
         );
-        $result = $this->client->customers->create($params);
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -62,8 +57,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new CustomerUpdateParams);
-        $result = $this->client->customers->update('customer_id', $params);
+        $result = $this->client->customers->update('customer_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -75,8 +69,7 @@ final class CustomersTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $params = (new CustomerListParams);
-        $result = $this->client->customers->list($params);
+        $result = $this->client->customers->list();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

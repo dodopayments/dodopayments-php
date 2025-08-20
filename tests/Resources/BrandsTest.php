@@ -2,8 +2,6 @@
 
 namespace Tests\Resources;
 
-use Dodopayments\Brands\BrandCreateParams;
-use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -30,8 +28,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $params = (new BrandCreateParams);
-        $result = $this->client->brands->create($params);
+        $result = $this->client->brands->create();
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
@@ -47,8 +44,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $params = (new BrandUpdateParams);
-        $result = $this->client->brands->update('id', $params);
+        $result = $this->client->brands->update('id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
