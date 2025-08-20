@@ -55,8 +55,8 @@ $params = PaymentCreateParams::with(
     OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
 );
-$payment = $client->payments->create($params);
 
+$payment = $client->payments->create($params);
 var_dump($payment->payment_id);
 ```
 
@@ -96,7 +96,7 @@ try {
     echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
     echo "Another non-200-range status code was received", PHP_EOL;
-    var_dump($e->status);
+    echo $e->getMessage();
 }
 ```
 
