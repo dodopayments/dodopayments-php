@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.50.1 (2025-08-21)
+
+Full Changelog: [v1.50.0...v1.50.1](https://github.com/dodopayments/dodopayments-php/compare/v1.50.0...v1.50.1)
+
+### Features
+
+* **client:** add streaming ([88c4cfc](https://github.com/dodopayments/dodopayments-php/commit/88c4cfc93111ed59f1b14cd63ccd9633e794db88))
+* **client:** improve error handling ([517d392](https://github.com/dodopayments/dodopayments-php/commit/517d3921fca8921dba641bfed933b4b0b9a47109))
+* **client:** use named parameters in methods ([17793c2](https://github.com/dodopayments/dodopayments-php/commit/17793c2690b5b57dc2254bd7cc01ad4ffca0ccfc))
+* **php:** rename internal types ([bb0a969](https://github.com/dodopayments/dodopayments-php/commit/bb0a969990ee5729920dd185b7f0f644a9928dc2))
+
+
+### Bug Fixes
+
+* **client:** elide null named parameters ([d11f74e](https://github.com/dodopayments/dodopayments-php/commit/d11f74e0c353f942e12690d7a3c13cdeba917aea))
+
+
+### Chores
+
+* intuitively order union types ([c5deaae](https://github.com/dodopayments/dodopayments-php/commit/c5deaae1de00a2b8718e033342ae7fea3e7a0d8c))
+* readme improvements ([9449090](https://github.com/dodopayments/dodopayments-php/commit/944909087c9359a2502c7468d23204b283f1bd48))
+
 ## 1.50.0 (2025-08-19)
 
 Full Changelog: [v1.49.0...v1.50.0](https://github.com/dodopayments/dodopayments-php/compare/v1.49.0...v1.50.0)
