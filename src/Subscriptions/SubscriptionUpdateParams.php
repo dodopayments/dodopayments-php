@@ -37,14 +37,14 @@ final class SubscriptionUpdateParams implements BaseModel
     #[Api('disable_on_demand', optional: true)]
     public ?DisableOnDemand $disableOnDemand;
 
-    /** @var null|array<string, string> $metadata */
+    /** @var array<string, string>|null $metadata */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $metadata;
 
     #[Api('next_billing_date', optional: true)]
     public ?\DateTimeInterface $nextBillingDate;
 
-    /** @var null|SubscriptionStatus::* $status */
+    /** @var SubscriptionStatus::*|null $status */
     #[Api(enum: SubscriptionStatus::class, optional: true)]
     public ?string $status;
 
@@ -62,7 +62,7 @@ final class SubscriptionUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      * @param SubscriptionStatus::* $status
      */
     public static function with(
@@ -113,7 +113,7 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

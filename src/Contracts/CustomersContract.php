@@ -12,7 +12,7 @@ interface CustomersContract
     /**
      * @param string $email
      * @param string $name
-     * @param null|string $phoneNumber
+     * @param string|null $phoneNumber
      */
     public function create(
         $email,
@@ -27,8 +27,8 @@ interface CustomersContract
     ): Customer;
 
     /**
-     * @param null|string $name
-     * @param null|string $phoneNumber
+     * @param string|null $name
+     * @param string|null $phoneNumber
      */
     public function update(
         string $customerID,

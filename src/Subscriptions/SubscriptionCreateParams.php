@@ -68,7 +68,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Attach addons to this subscription.
      *
-     * @var null|list<AttachAddon> $addons
+     * @var list<AttachAddon>|null $addons
      */
     #[Api(type: new ListOf(AttachAddon::class), nullable: true, optional: true)]
     public ?array $addons;
@@ -80,7 +80,7 @@ final class SubscriptionCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @var null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
+     * @var list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      */
     #[Api(
         'allowed_payment_method_types',
@@ -94,7 +94,7 @@ final class SubscriptionCreateParams implements BaseModel
      * Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed.
      *
-     * @var null|Currency::* $billingCurrency
+     * @var Currency::*|null $billingCurrency
      */
     #[Api('billing_currency', enum: Currency::class, optional: true)]
     public ?string $billingCurrency;
@@ -109,7 +109,7 @@ final class SubscriptionCreateParams implements BaseModel
      * Additional metadata for the subscription
      * Defaults to empty if not specified.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), optional: true)]
     public ?array $metadata;
@@ -182,10 +182,10 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<AttachAddon> $addons
-     * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
+     * @param list<AttachAddon>|null $addons
+     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      * @param Currency::* $billingCurrency
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public static function with(
         BillingAddress $billing,
@@ -274,7 +274,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Attach addons to this subscription.
      *
-     * @param null|list<AttachAddon> $addons
+     * @param list<AttachAddon>|null $addons
      */
     public function withAddons(?array $addons): self
     {
@@ -291,7 +291,7 @@ final class SubscriptionCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
+     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      */
     public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes

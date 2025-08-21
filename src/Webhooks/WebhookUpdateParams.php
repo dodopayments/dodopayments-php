@@ -46,7 +46,7 @@ final class WebhookUpdateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var null|list<WebhookEventType::*> $filterTypes
+     * @var list<WebhookEventType::*>|null $filterTypes
      */
     #[Api(
         'filter_types',
@@ -59,7 +59,7 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Metadata.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $metadata;
@@ -87,8 +87,8 @@ final class WebhookUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<WebhookEventType::*> $filterTypes
-     * @param null|array<string, string> $metadata
+     * @param list<WebhookEventType::*>|null $filterTypes
+     * @param array<string, string>|null $metadata
      */
     public static function with(
         ?string $description = null,
@@ -137,7 +137,7 @@ final class WebhookUpdateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @param null|list<WebhookEventType::*> $filterTypes
+     * @param list<WebhookEventType::*>|null $filterTypes
      */
     public function withFilterTypes(?array $filterTypes): self
     {
@@ -150,7 +150,7 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Metadata.
      *
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

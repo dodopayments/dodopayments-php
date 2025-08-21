@@ -72,7 +72,7 @@ final class LicensesService implements LicensesContract
 
     /**
      * @param string $licenseKey
-     * @param null|string $licenseKeyInstanceID
+     * @param string|null $licenseKeyInstanceID
      */
     public function validate(
         $licenseKey,

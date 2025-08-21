@@ -48,7 +48,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons.
      *
-     * @var null|list<AttachAddon> $addons
+     * @var list<AttachAddon>|null $addons
      */
     #[Api(type: new ListOf(AttachAddon::class), nullable: true, optional: true)]
     public ?array $addons;
@@ -84,7 +84,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProrationBillingMode::* $prorationBillingMode
-     * @param null|list<AttachAddon> $addons
+     * @param list<AttachAddon>|null $addons
      */
     public static function with(
         string $productID,
@@ -142,7 +142,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons.
      *
-     * @param null|list<AttachAddon> $addons
+     * @param list<AttachAddon>|null $addons
      */
     public function withAddons(?array $addons): self
     {

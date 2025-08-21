@@ -78,7 +78,7 @@ final class WebhookGetResponse implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var null|list<string> $filterTypes
+     * @var list<string>|null $filterTypes
      */
     #[Api(
         'filter_types',
@@ -133,7 +133,7 @@ final class WebhookGetResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string, string> $metadata
-     * @param null|list<string> $filterTypes
+     * @param list<string>|null $filterTypes
      */
     public static function with(
         string $id,
@@ -248,7 +248,7 @@ final class WebhookGetResponse implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @param null|list<string> $filterTypes
+     * @param list<string>|null $filterTypes
      */
     public function withFilterTypes(?array $filterTypes): self
     {

@@ -42,7 +42,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $metadata;
@@ -50,7 +50,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Optional currency of the product price. If not specified, defaults to the currency of the product.
      *
-     * @var null|Currency::* $productCurrency
+     * @var Currency::*|null $productCurrency
      */
     #[Api('product_currency', enum: Currency::class, optional: true)]
     public ?string $productCurrency;
@@ -87,7 +87,7 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      * @param Currency::* $productCurrency
      */
     public static function with(
@@ -137,7 +137,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

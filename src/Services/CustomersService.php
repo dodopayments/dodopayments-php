@@ -27,7 +27,7 @@ final class CustomersService implements CustomersContract
     /**
      * @param string $email
      * @param string $name
-     * @param null|string $phoneNumber
+     * @param string|null $phoneNumber
      */
     public function create(
         $email,
@@ -67,8 +67,8 @@ final class CustomersService implements CustomersContract
     }
 
     /**
-     * @param null|string $name
-     * @param null|string $phoneNumber
+     * @param string|null $name
+     * @param string|null $phoneNumber
      */
     public function update(
         string $customerID,

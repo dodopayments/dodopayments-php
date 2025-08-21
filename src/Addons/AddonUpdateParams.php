@@ -29,7 +29,7 @@ final class AddonUpdateParams implements BaseModel
     /**
      * The currency of the Addon.
      *
-     * @var null|Currency::* $currency
+     * @var Currency::*|null $currency
      */
     #[Api(enum: Currency::class, optional: true)]
     public ?string $currency;
@@ -61,7 +61,7 @@ final class AddonUpdateParams implements BaseModel
     /**
      * Tax category of the Addon.
      *
-     * @var null|TaxCategory::* $taxCategory
+     * @var TaxCategory::*|null $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class, optional: true)]
     public ?string $taxCategory;

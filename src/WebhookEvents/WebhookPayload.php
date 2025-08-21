@@ -32,7 +32,7 @@ final class WebhookPayload implements BaseModel
      * The latest data at the time of delivery attempt.
      */
     #[Api]
-    public Dispute|LicenseKey|Payment|Refund|Subscription $data;
+    public Payment|Subscription|Refund|Dispute|LicenseKey $data;
 
     /**
      * The timestamp of when the event occurred (not necessarily the same of when it was delivered).
@@ -81,7 +81,7 @@ final class WebhookPayload implements BaseModel
      */
     public static function with(
         string $businessID,
-        Dispute|LicenseKey|Payment|Refund|Subscription $data,
+        Payment|Subscription|Refund|Dispute|LicenseKey $data,
         \DateTimeInterface $timestamp,
         string $type,
     ): self {
@@ -107,7 +107,7 @@ final class WebhookPayload implements BaseModel
      * The latest data at the time of delivery attempt.
      */
     public function withData(
-        Dispute|LicenseKey|Payment|Refund|Subscription $data
+        Payment|Subscription|Refund|Dispute|LicenseKey $data
     ): self {
         $obj = clone $this;
         $obj->data = $data;

@@ -66,7 +66,7 @@ final class PaymentListParams implements BaseModel
     /**
      * Filter by status.
      *
-     * @var null|Status::* $status
+     * @var Status::*|null $status
      */
     #[Api(enum: Status::class, optional: true)]
     public ?string $status;
@@ -88,7 +88,7 @@ final class PaymentListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|Status::* $status
+     * @param Status::*|null $status
      */
     public static function with(
         ?string $brandID = null,

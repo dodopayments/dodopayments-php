@@ -30,7 +30,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * Partially Refund an Individual Item.
      *
-     * @var null|list<Item> $items
+     * @var list<Item>|null $items
      */
     #[Api(type: new ListOf(Item::class), nullable: true, optional: true)]
     public ?array $items;
@@ -66,7 +66,7 @@ final class RefundCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<Item> $items
+     * @param list<Item>|null $items
      */
     public static function with(
         string $paymentID,
@@ -97,7 +97,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * Partially Refund an Individual Item.
      *
-     * @param null|list<Item> $items
+     * @param list<Item>|null $items
      */
     public function withItems(?array $items): self
     {

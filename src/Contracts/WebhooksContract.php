@@ -16,18 +16,18 @@ interface WebhooksContract
 {
     /**
      * @param string $url Url of the webhook
-     * @param null|string $description
-     * @param null|bool $disabled Create the webhook in a disabled state.
+     * @param string|null $description
+     * @param bool|null $disabled Create the webhook in a disabled state.
      *
      * Default is false
      * @param list<WebhookEventType::*> $filterTypes Filter events to the webhook.
      *
      * Webhook event will only be sent for events in the list.
-     * @param null|array<string, string> $headers Custom headers to be passed
-     * @param null|string $idempotencyKey The request's idempotency key
-     * @param null|array<string, string> $metadata Metadata to be passed to the webhook
+     * @param array<string, string>|null $headers Custom headers to be passed
+     * @param string|null $idempotencyKey The request's idempotency key
+     * @param array<string, string>|null $metadata Metadata to be passed to the webhook
      * Defaut is {}
-     * @param null|int $rateLimit
+     * @param int|null $rateLimit
      */
     public function create(
         $url,
@@ -47,14 +47,14 @@ interface WebhooksContract
     ): WebhookGetResponse;
 
     /**
-     * @param null|string $description Description of the webhook
-     * @param null|bool $disabled to Disable the endpoint, set it to true
-     * @param null|list<WebhookEventType::*> $filterTypes Filter events to the endpoint.
+     * @param string|null $description Description of the webhook
+     * @param bool|null $disabled to Disable the endpoint, set it to true
+     * @param list<WebhookEventType::*>|null $filterTypes Filter events to the endpoint.
      *
      * Webhook event will only be sent for events in the list.
-     * @param null|array<string, string> $metadata Metadata
-     * @param null|int $rateLimit Rate limit
-     * @param null|string $url Url endpoint
+     * @param array<string, string>|null $metadata Metadata
+     * @param int|null $rateLimit Rate limit
+     * @param string|null $url Url endpoint
      */
     public function update(
         string $webhookID,
@@ -68,8 +68,8 @@ interface WebhooksContract
     ): WebhookUpdateResponse;
 
     /**
-     * @param null|string $iterator The iterator returned from a prior invocation
-     * @param null|int $limit Limit the number of returned items
+     * @param string|null $iterator The iterator returned from a prior invocation
+     * @param int|null $limit Limit the number of returned items
      */
     public function list(
         $iterator = null,

@@ -70,7 +70,7 @@ final class DiscountCreateParams implements BaseModel
     /**
      * List of product IDs to restrict usage (if any).
      *
-     * @var null|list<string> $restrictedTo
+     * @var list<string>|null $restrictedTo
      */
     #[Api(
         'restricted_to',
@@ -121,7 +121,7 @@ final class DiscountCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DiscountType::* $type
-     * @param null|list<string> $restrictedTo
+     * @param list<string>|null $restrictedTo
      */
     public static function with(
         int $amount,
@@ -213,7 +213,7 @@ final class DiscountCreateParams implements BaseModel
     /**
      * List of product IDs to restrict usage (if any).
      *
-     * @param null|list<string> $restrictedTo
+     * @param list<string>|null $restrictedTo
      */
     public function withRestrictedTo(?array $restrictedTo): self
     {

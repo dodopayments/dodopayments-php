@@ -21,7 +21,7 @@ final class YourWebhookURLService implements YourWebhookURLContract
 
     /**
      * @param string $businessID
-     * @param Dispute|LicenseKey|Payment|Refund|Subscription $data The latest data at the time of delivery attempt
+     * @param Payment|Subscription|Refund|Dispute|LicenseKey $data The latest data at the time of delivery attempt
      * @param \DateTimeInterface $timestamp The timestamp of when the event occurred (not necessarily the same of when it was delivered)
      * @param WebhookEventType::* $type Event types for Dodo events
      * @param string $webhookID

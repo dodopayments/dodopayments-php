@@ -59,7 +59,7 @@ final class PaymentCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @var null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
+     * @var list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      */
     #[Api(
         'allowed_payment_method_types',
@@ -73,7 +73,7 @@ final class PaymentCreateParams implements BaseModel
      * Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed.
      *
-     * @var null|Currency::* $billingCurrency
+     * @var Currency::*|null $billingCurrency
      */
     #[Api('billing_currency', enum: Currency::class, optional: true)]
     public ?string $billingCurrency;
@@ -88,7 +88,7 @@ final class PaymentCreateParams implements BaseModel
      * Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), optional: true)]
     public ?array $metadata;
@@ -148,9 +148,9 @@ final class PaymentCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<OneTimeProductCartItem> $productCart
-     * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
+     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      * @param Currency::* $billingCurrency
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public static function with(
         BillingAddress $billing,
@@ -226,7 +226,7 @@ final class PaymentCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes
+     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      */
     public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes

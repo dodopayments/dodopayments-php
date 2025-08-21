@@ -53,7 +53,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var null|list<WebhookEventType::*> $filterTypes
+     * @var list<WebhookEventType::*>|null $filterTypes
      */
     #[Api(
         'filter_types',
@@ -65,7 +65,7 @@ final class WebhookCreateParams implements BaseModel
     /**
      * Custom headers to be passed.
      *
-     * @var null|array<string, string> $headers
+     * @var array<string, string>|null $headers
      */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $headers;
@@ -80,7 +80,7 @@ final class WebhookCreateParams implements BaseModel
      * Metadata to be passed to the webhook
      * Defaut is {}.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $metadata;
@@ -113,9 +113,9 @@ final class WebhookCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<WebhookEventType::*> $filterTypes
-     * @param null|array<string, string> $headers
-     * @param null|array<string, string> $metadata
+     * @param list<WebhookEventType::*>|null $filterTypes
+     * @param array<string, string>|null $headers
+     * @param array<string, string>|null $metadata
      */
     public static function with(
         string $url,
@@ -192,7 +192,7 @@ final class WebhookCreateParams implements BaseModel
     /**
      * Custom headers to be passed.
      *
-     * @param null|array<string, string> $headers
+     * @param array<string, string>|null $headers
      */
     public function withHeaders(?array $headers): self
     {
@@ -217,7 +217,7 @@ final class WebhookCreateParams implements BaseModel
      * Metadata to be passed to the webhook
      * Defaut is {}.
      *
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

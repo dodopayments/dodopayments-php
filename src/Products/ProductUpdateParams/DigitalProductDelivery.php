@@ -31,7 +31,7 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * Uploaded files ids of digital product.
      *
-     * @var null|list<string> $files
+     * @var list<string>|null $files
      */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $files;
@@ -53,7 +53,7 @@ final class DigitalProductDelivery implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $files
+     * @param list<string>|null $files
      */
     public static function with(
         ?string $externalURL = null,
@@ -83,7 +83,7 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * Uploaded files ids of digital product.
      *
-     * @param null|list<string> $files
+     * @param list<string>|null $files
      */
     public function withFiles(?array $files): self
     {

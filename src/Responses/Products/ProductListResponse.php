@@ -84,7 +84,7 @@ final class ProductListResponse implements BaseModel
     /**
      * Currency of the price.
      *
-     * @var null|Currency::* $currency
+     * @var Currency::*|null $currency
      */
     #[Api(enum: Currency::class, optional: true)]
     public ?string $currency;
@@ -125,7 +125,7 @@ final class ProductListResponse implements BaseModel
      * Details of the price.
      */
     #[Api('price_detail', optional: true)]
-    public null|OneTimePrice|RecurringPrice $priceDetail;
+    public OneTimePrice|RecurringPrice|null $priceDetail;
 
     /**
      * Indicates if the price is tax inclusive.
@@ -190,7 +190,7 @@ final class ProductListResponse implements BaseModel
         ?string $image = null,
         ?string $name = null,
         ?int $price = null,
-        null|OneTimePrice|RecurringPrice $priceDetail = null,
+        OneTimePrice|RecurringPrice|null $priceDetail = null,
         ?bool $taxInclusive = null,
     ): self {
         $obj = new self;

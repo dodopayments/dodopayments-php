@@ -64,7 +64,7 @@ final class PaymentListResponse implements BaseModel
     #[Api('payment_method_type', optional: true)]
     public ?string $paymentMethodType;
 
-    /** @var null|IntentStatus::* $status */
+    /** @var IntentStatus::*|null $status */
     #[Api(enum: IntentStatus::class, optional: true)]
     public ?string $status;
 
