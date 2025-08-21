@@ -6,7 +6,7 @@ namespace Dodopayments\Brands;
 
 use Dodopayments\Brands\Brand\VerificationStatus;
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -27,7 +27,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class Brand implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('brand_id')]
     public string $brandID;

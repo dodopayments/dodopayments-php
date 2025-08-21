@@ -3,7 +3,7 @@
 namespace Tests\Core;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class TestModel implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public string $name;

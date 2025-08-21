@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Products;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
@@ -33,7 +33,7 @@ use Dodopayments\Products\Price\RecurringPrice;
  */
 final class ProductListResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Unique identifier for the business to which the product belongs.

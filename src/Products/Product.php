@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
@@ -38,7 +38,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  */
 final class Product implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('brand_id')]
     public string $brandID;

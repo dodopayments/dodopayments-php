@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Refunds\RefundListParams;
 
-use Dodopayments\Core\Concerns\Enum;
+use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -14,7 +14,7 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
  */
 final class Status implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const SUCCEEDED = 'succeeded';
 

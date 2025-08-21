@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Payments;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
@@ -27,7 +27,7 @@ use Dodopayments\Payments\OneTimeProductCartItem;
  */
 final class PaymentNewResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Client secret used to load Dodo checkout SDK

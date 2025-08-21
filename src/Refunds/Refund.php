@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Refunds;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
@@ -24,7 +24,7 @@ use Dodopayments\Misc\Currency;
  */
 final class Refund implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The unique identifier of the business issuing the refund.

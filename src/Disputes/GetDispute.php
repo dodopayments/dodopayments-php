@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Disputes;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
@@ -26,7 +26,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  */
 final class GetDispute implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.

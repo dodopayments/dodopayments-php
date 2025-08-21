@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Webhooks;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
@@ -25,7 +25,7 @@ use Dodopayments\Core\Conversion\MapOf;
  */
 final class WebhookGetResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The webhook's ID.

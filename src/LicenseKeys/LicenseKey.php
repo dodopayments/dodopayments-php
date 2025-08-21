@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\LicenseKeys;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -26,7 +26,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class LicenseKey implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The unique identifier of the license key.

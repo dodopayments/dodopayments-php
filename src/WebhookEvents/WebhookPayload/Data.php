@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\WebhookEvents\WebhookPayload;
 
-use Dodopayments\Core\Concerns\Union;
+use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
@@ -20,7 +20,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  */
 final class Data implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

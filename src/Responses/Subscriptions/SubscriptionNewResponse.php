@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
@@ -28,7 +28,7 @@ use Dodopayments\Subscriptions\AddonCartResponseItem;
  */
 final class SubscriptionNewResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Addons associated with this subscription.

@@ -6,7 +6,7 @@ namespace Dodopayments\Responses\Brands;
 
 use Dodopayments\Brands\Brand;
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 
@@ -15,7 +15,7 @@ use Dodopayments\Core\Conversion\ListOf;
  */
 final class BrandListResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * List of brands for this business.

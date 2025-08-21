@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products;
 
-use Dodopayments\Core\Concerns\Union;
+use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -17,7 +17,7 @@ use Dodopayments\Products\Price\RecurringPrice;
  */
 final class Price implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

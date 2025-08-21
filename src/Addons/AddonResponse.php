@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Addons;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -26,7 +26,7 @@ use Dodopayments\Misc\TaxCategory;
  */
 final class AddonResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * id of the Addon.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Misc;
 
-use Dodopayments\Core\Concerns\Enum;
+use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
  */
 final class Currency implements ConverterSource
 {
-    use Enum;
+    use SdkEnum;
 
     public const AED = 'AED';
 

@@ -11,7 +11,7 @@ use Dodopayments\RequestOptions;
 /**
  * @internal
  */
-trait Params
+trait SdkParams
 {
     /**
      * @param null|array<string, mixed>|self           $params

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Discounts;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
-use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 
@@ -26,8 +26,8 @@ use Dodopayments\Core\Conversion\ListOf;
  */
 final class DiscountUpdateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * If present, update the discount amount:

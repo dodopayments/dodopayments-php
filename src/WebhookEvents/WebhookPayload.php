@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\WebhookEvents;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
@@ -23,7 +23,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  */
 final class WebhookPayload implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('business_id')]
     public string $businessID;

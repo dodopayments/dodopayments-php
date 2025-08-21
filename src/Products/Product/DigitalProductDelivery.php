@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Products\Product;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Products\Product\DigitalProductDelivery\File;
@@ -17,7 +17,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery\File;
  */
 final class DigitalProductDelivery implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * External URL to digital product.

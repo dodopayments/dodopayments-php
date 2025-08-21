@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
-use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
@@ -22,8 +22,8 @@ use Dodopayments\Misc\Currency;
  */
 final class SubscriptionChargeParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     /**
      * The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).

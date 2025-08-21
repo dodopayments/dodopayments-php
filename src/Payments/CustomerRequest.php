@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Concerns\Union;
+use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
@@ -13,7 +13,7 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
  */
 final class CustomerRequest implements ConverterSource
 {
-    use Union;
+    use SdkUnion;
 
     /**
      * @return array<string,

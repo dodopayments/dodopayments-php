@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Brands;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class BrandUpdateImagesResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * UUID that will be used as the image identifier/key suffix.
