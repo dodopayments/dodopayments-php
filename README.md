@@ -63,10 +63,10 @@ var_dump($payment->payment_id);
 
 ## Value Objects
 
-It is recommended to use the `with` constructor `Dog::with(name: "Joey")`
+It is recommended to use the static `with` constructor `AttachExistingCustomer::with(customerID: "customer_id", ...)`
 and named parameters to initialize value objects.
 
-However builders are provided as well `(new Dog)->withName("Joey")`.
+However, builders are also provided `(new AttachExistingCustomer)->withCustomerID("customer_id")`.
 
 ### Handling errors
 
