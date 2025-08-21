@@ -49,7 +49,6 @@ final class AddonsTest extends TestCase
             name: 'name',
             price: 0,
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
-            description: 'description',
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

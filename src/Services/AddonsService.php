@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Addons;
+namespace Dodopayments\Services;
 
+use Dodopayments\Addons\AddonCreateParams;
+use Dodopayments\Addons\AddonListParams;
+use Dodopayments\Addons\AddonResponse;
+use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Contracts\AddonsContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
@@ -31,15 +36,17 @@ final class AddonsService implements AddonsContract
         $description = null,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
+        $args = [
+            'currency' => $currency,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+            'description' => $description,
+        ];
+        $args = Util::array_filter_null($args, ['description']);
         [$parsed, $options] = AddonCreateParams::parseRequest(
-            [
-                'currency' => $currency,
-                'name' => $name,
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-                'description' => $description,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -84,16 +91,21 @@ final class AddonsService implements AddonsContract
         $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
+        $args = [
+            'currency' => $currency,
+            'description' => $description,
+            'imageID' => $imageID,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['currency', 'description', 'imageID', 'name', 'price', 'taxCategory'],
+        );
         [$parsed, $options] = AddonUpdateParams::parseRequest(
-            [
-                'currency' => $currency,
-                'description' => $description,
-                'imageID' => $imageID,
-                'name' => $name,
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -115,10 +127,9 @@ final class AddonsService implements AddonsContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
-        [$parsed, $options] = AddonListParams::parseRequest(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
-            $requestOptions
-        );
+        $args = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+        $args = Util::array_filter_null($args, ['pageNumber', 'pageSize']);
+        [$parsed, $options] = AddonListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',
             path: 'addons',

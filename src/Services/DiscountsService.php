@@ -2,11 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Discounts;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\DiscountsContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
+use Dodopayments\Discounts\Discount;
+use Dodopayments\Discounts\DiscountCreateParams;
+use Dodopayments\Discounts\DiscountListParams;
+use Dodopayments\Discounts\DiscountType;
+use Dodopayments\Discounts\DiscountUpdateParams;
 use Dodopayments\RequestOptions;
 
 final class DiscountsService implements DiscountsContract
@@ -48,18 +54,30 @@ final class DiscountsService implements DiscountsContract
         $usageLimit = null,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        [$parsed, $options] = DiscountCreateParams::parseRequest(
+        $args = [
+            'amount' => $amount,
+            'type' => $type,
+            'code' => $code,
+            'expiresAt' => $expiresAt,
+            'name' => $name,
+            'restrictedTo' => $restrictedTo,
+            'subscriptionCycles' => $subscriptionCycles,
+            'usageLimit' => $usageLimit,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'amount' => $amount,
-                'type' => $type,
-                'code' => $code,
-                'expiresAt' => $expiresAt,
-                'name' => $name,
-                'restrictedTo' => $restrictedTo,
-                'subscriptionCycles' => $subscriptionCycles,
-                'usageLimit' => $usageLimit,
+                'code',
+                'expiresAt',
+                'name',
+                'restrictedTo',
+                'subscriptionCycles',
+                'usageLimit',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = DiscountCreateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -120,18 +138,32 @@ final class DiscountsService implements DiscountsContract
         $usageLimit = null,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        [$parsed, $options] = DiscountUpdateParams::parseRequest(
+        $args = [
+            'amount' => $amount,
+            'code' => $code,
+            'expiresAt' => $expiresAt,
+            'name' => $name,
+            'restrictedTo' => $restrictedTo,
+            'subscriptionCycles' => $subscriptionCycles,
+            'type' => $type,
+            'usageLimit' => $usageLimit,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'amount' => $amount,
-                'code' => $code,
-                'expiresAt' => $expiresAt,
-                'name' => $name,
-                'restrictedTo' => $restrictedTo,
-                'subscriptionCycles' => $subscriptionCycles,
-                'type' => $type,
-                'usageLimit' => $usageLimit,
+                'amount',
+                'code',
+                'expiresAt',
+                'name',
+                'restrictedTo',
+                'subscriptionCycles',
+                'type',
+                'usageLimit',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = DiscountUpdateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -155,8 +187,10 @@ final class DiscountsService implements DiscountsContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): Discount {
+        $args = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+        $args = Util::array_filter_null($args, ['pageNumber', 'pageSize']);
         [$parsed, $options] = DiscountListParams::parseRequest(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

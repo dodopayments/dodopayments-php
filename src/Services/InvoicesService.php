@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Invoices;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\InvoicesContract;
-use Dodopayments\Invoices\Payments\PaymentsService;
+use Dodopayments\Services\Invoices\PaymentsService;
 
 final class InvoicesService implements InvoicesContract
 {

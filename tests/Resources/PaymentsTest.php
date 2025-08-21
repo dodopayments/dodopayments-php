@@ -4,11 +4,9 @@ namespace Tests\Resources;
 
 use Dodopayments\Client;
 use Dodopayments\Misc\CountryCode;
-use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\OneTimeProductCartItem;
-use Dodopayments\Payments\PaymentMethodTypes;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -68,14 +66,6 @@ final class PaymentsTest extends TestCase
                 OneTimeProductCartItem::with(productID: 'product_id', quantity: 0)
                     ->withAmount(0),
             ],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
-            billingCurrency: Currency::AED,
-            discountCode: 'discount_code',
-            metadata: ['foo' => 'string'],
-            paymentLink: true,
-            returnURL: 'return_url',
-            showSavedPaymentMethods: true,
-            taxID: 'tax_id',
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

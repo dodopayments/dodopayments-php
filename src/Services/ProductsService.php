@@ -2,20 +2,27 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Products;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\ProductsContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
 use Dodopayments\Misc\TaxCategory;
-use Dodopayments\Products\Images\ImagesService;
+use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Product;
+use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductListParams;
+use Dodopayments\Products\ProductUpdateFilesParams;
+use Dodopayments\Products\ProductUpdateParams;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDelivery1;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Products\ProductListResponse;
 use Dodopayments\Responses\Products\ProductUpdateFilesResponse;
+use Dodopayments\Services\Products\ImagesService;
 
 final class ProductsService implements ProductsContract
 {
@@ -59,22 +66,38 @@ final class ProductsService implements ProductsContract
         $name = null,
         ?RequestOptions $requestOptions = null,
     ): Product {
-        [$parsed, $options] = ProductCreateParams::parseRequest(
+        $args = [
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+            'addons' => $addons,
+            'brandID' => $brandID,
+            'description' => $description,
+            'digitalProductDelivery' => $digitalProductDelivery,
+            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+            'licenseKeyDuration' => $licenseKeyDuration,
+            'licenseKeyEnabled' => $licenseKeyEnabled,
+            'metadata' => $metadata,
+            'name' => $name,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-                'addons' => $addons,
-                'brandID' => $brandID,
-                'description' => $description,
-                'digitalProductDelivery' => $digitalProductDelivery,
-                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-                'licenseKeyDuration' => $licenseKeyDuration,
-                'licenseKeyEnabled' => $licenseKeyEnabled,
-                'metadata' => $metadata,
-                'name' => $name,
+                'addons',
+                'brandID',
+                'description',
+                'digitalProductDelivery',
+                'licenseKeyActivationMessage',
+                'licenseKeyActivationsLimit',
+                'licenseKeyDuration',
+                'licenseKeyEnabled',
+                'metadata',
+                'name',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = ProductCreateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -145,23 +168,42 @@ final class ProductsService implements ProductsContract
         $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        [$parsed, $options] = ProductUpdateParams::parseRequest(
+        $args = [
+            'addons' => $addons,
+            'brandID' => $brandID,
+            'description' => $description,
+            'digitalProductDelivery' => $digitalProductDelivery,
+            'imageID' => $imageID,
+            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+            'licenseKeyDuration' => $licenseKeyDuration,
+            'licenseKeyEnabled' => $licenseKeyEnabled,
+            'metadata' => $metadata,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'addons' => $addons,
-                'brandID' => $brandID,
-                'description' => $description,
-                'digitalProductDelivery' => $digitalProductDelivery,
-                'imageID' => $imageID,
-                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-                'licenseKeyDuration' => $licenseKeyDuration,
-                'licenseKeyEnabled' => $licenseKeyEnabled,
-                'metadata' => $metadata,
-                'name' => $name,
-                'price' => $price,
-                'taxCategory' => $taxCategory,
+                'addons',
+                'brandID',
+                'description',
+                'digitalProductDelivery',
+                'imageID',
+                'licenseKeyActivationMessage',
+                'licenseKeyActivationsLimit',
+                'licenseKeyDuration',
+                'licenseKeyEnabled',
+                'metadata',
+                'name',
+                'price',
+                'taxCategory',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = ProductUpdateParams::parseRequest(
+            $args,
+            $requestOptions
         );
 
         return $this->client->request(
@@ -190,15 +232,20 @@ final class ProductsService implements ProductsContract
         $recurring = null,
         ?RequestOptions $requestOptions = null,
     ): ProductListResponse {
+        $args = [
+            'archived' => $archived,
+            'brandID' => $brandID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'recurring' => $recurring,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['archived', 'brandID', 'pageNumber', 'pageSize', 'recurring']
+        );
         [$parsed, $options] = ProductListParams::parseRequest(
-            [
-                'archived' => $archived,
-                'brandID' => $brandID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'recurring' => $recurring,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',
@@ -241,8 +288,9 @@ final class ProductsService implements ProductsContract
         $fileName,
         ?RequestOptions $requestOptions = null
     ): ProductUpdateFilesResponse {
+        $args = ['fileName' => $fileName];
         [$parsed, $options] = ProductUpdateFilesParams::parseRequest(
-            ['fileName' => $fileName],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

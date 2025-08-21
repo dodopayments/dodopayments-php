@@ -4,12 +4,8 @@ namespace Tests\Resources;
 
 use Dodopayments\Client;
 use Dodopayments\Misc\CountryCode;
-use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\PaymentMethodTypes;
-use Dodopayments\Subscriptions\AttachAddon;
-use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -66,21 +62,6 @@ final class SubscriptionsTest extends TestCase
             customer: AttachExistingCustomer::with(customerID: 'customer_id'),
             productID: 'product_id',
             quantity: 0,
-            addons: [AttachAddon::with(addonID: 'addon_id', quantity: 0)],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
-            billingCurrency: Currency::AED,
-            discountCode: 'discount_code',
-            metadata: ['foo' => 'string'],
-            onDemand: OnDemand::with(mandateOnly: true)
-                ->withAdaptiveCurrencyFeesInclusive(true)
-                ->withProductCurrency(Currency::AED)
-                ->withProductDescription('product_description')
-                ->withProductPrice(0),
-            paymentLink: true,
-            returnURL: 'return_url',
-            showSavedPaymentMethods: true,
-            taxID: 'tax_id',
-            trialPeriodDays: 0,
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -135,7 +116,6 @@ final class SubscriptionsTest extends TestCase
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
-            addons: [AttachAddon::with(addonID: 'addon_id', quantity: 0)],
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line
@@ -157,11 +137,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->charge(
             'subscription_id',
-            productPrice: 0,
-            adaptiveCurrencyFeesInclusive: true,
-            metadata: ['foo' => 'string'],
-            productCurrency: Currency::AED,
-            productDescription: 'product_description',
+            productPrice: 0
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

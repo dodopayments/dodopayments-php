@@ -2,13 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Payments;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\PaymentsContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\AttachExistingCustomer;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\NewCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
+use Dodopayments\Payments\Payment;
+use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListParams\Status;
+use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Responses\Payments\PaymentListResponse;
@@ -54,21 +63,35 @@ final class PaymentsService implements PaymentsContract
         $taxID = null,
         ?RequestOptions $requestOptions = null,
     ): PaymentNewResponse {
-        [$parsed, $options] = PaymentCreateParams::parseRequest(
+        $args = [
+            'billing' => $billing,
+            'customer' => $customer,
+            'productCart' => $productCart,
+            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+            'billingCurrency' => $billingCurrency,
+            'discountCode' => $discountCode,
+            'metadata' => $metadata,
+            'paymentLink' => $paymentLink,
+            'returnURL' => $returnURL,
+            'showSavedPaymentMethods' => $showSavedPaymentMethods,
+            'taxID' => $taxID,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'billing' => $billing,
-                'customer' => $customer,
-                'productCart' => $productCart,
-                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-                'billingCurrency' => $billingCurrency,
-                'discountCode' => $discountCode,
-                'metadata' => $metadata,
-                'paymentLink' => $paymentLink,
-                'returnURL' => $returnURL,
-                'showSavedPaymentMethods' => $showSavedPaymentMethods,
-                'taxID' => $taxID,
+                'allowedPaymentMethodTypes',
+                'billingCurrency',
+                'discountCode',
+                'metadata',
+                'paymentLink',
+                'returnURL',
+                'showSavedPaymentMethods',
+                'taxID',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = PaymentCreateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -116,18 +139,32 @@ final class PaymentsService implements PaymentsContract
         $subscriptionID = null,
         ?RequestOptions $requestOptions = null,
     ): PaymentListResponse {
-        [$parsed, $options] = PaymentListParams::parseRequest(
+        $args = [
+            'brandID' => $brandID,
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'customerID' => $customerID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'status' => $status,
+            'subscriptionID' => $subscriptionID,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'brandID' => $brandID,
-                'createdAtGte' => $createdAtGte,
-                'createdAtLte' => $createdAtLte,
-                'customerID' => $customerID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'status' => $status,
-                'subscriptionID' => $subscriptionID,
+                'brandID',
+                'createdAtGte',
+                'createdAtLte',
+                'customerID',
+                'pageNumber',
+                'pageSize',
+                'status',
+                'subscriptionID',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = PaymentListParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',

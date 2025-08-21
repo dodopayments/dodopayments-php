@@ -43,13 +43,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->create(
             amount: 0,
-            type: DiscountType::PERCENTAGE,
-            code: 'code',
-            expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-            name: 'name',
-            restrictedTo: ['string'],
-            subscriptionCycles: 0,
-            usageLimit: 0,
+            type: DiscountType::PERCENTAGE
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

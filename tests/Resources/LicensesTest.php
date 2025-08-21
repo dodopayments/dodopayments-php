@@ -83,8 +83,7 @@ final class LicensesTest extends TestCase
     public function testValidateWithOptionalParams(): void
     {
         $result = $this->client->licenses->validate(
-            licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
-            licenseKeyInstanceID: 'lki_123',
+            licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43'
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

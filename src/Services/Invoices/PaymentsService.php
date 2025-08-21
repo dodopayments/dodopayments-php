@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Invoices\Payments;
+namespace Dodopayments\Services\Invoices;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\Invoices\PaymentsContract;

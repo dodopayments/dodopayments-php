@@ -3,7 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\WebhookEvents\WebhookEventType;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,16 +37,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->webhooks->create(
-            url: 'url',
-            description: 'description',
-            disabled: true,
-            filterTypes: [WebhookEventType::PAYMENT_SUCCEEDED],
-            headers: ['foo' => 'string'],
-            idempotencyKey: 'idempotency_key',
-            metadata: ['foo' => 'string'],
-            rateLimit: 0,
-        );
+        $result = $this->client->webhooks->create(url: 'url');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

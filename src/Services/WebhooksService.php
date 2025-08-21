@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\WebhooksContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Webhooks\WebhookGetResponse;
 use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Responses\Webhooks\WebhookListResponse;
 use Dodopayments\Responses\Webhooks\WebhookNewResponse;
 use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
+use Dodopayments\Services\Webhooks\HeadersService;
 use Dodopayments\WebhookEvents\WebhookEventType;
-use Dodopayments\Webhooks\Headers\HeadersService;
+use Dodopayments\Webhooks\WebhookCreateParams;
+use Dodopayments\Webhooks\WebhookListParams;
+use Dodopayments\Webhooks\WebhookUpdateParams;
 
 final class WebhooksService implements WebhooksContract
 {
@@ -53,18 +57,31 @@ final class WebhooksService implements WebhooksContract
         $rateLimit = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookNewResponse {
-        [$parsed, $options] = WebhookCreateParams::parseRequest(
+        $args = [
+            'url' => $url,
+            'description' => $description,
+            'disabled' => $disabled,
+            'filterTypes' => $filterTypes,
+            'headers' => $headers,
+            'idempotencyKey' => $idempotencyKey,
+            'metadata' => $metadata,
+            'rateLimit' => $rateLimit,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'url' => $url,
-                'description' => $description,
-                'disabled' => $disabled,
-                'filterTypes' => $filterTypes,
-                'headers' => $headers,
-                'idempotencyKey' => $idempotencyKey,
-                'metadata' => $metadata,
-                'rateLimit' => $rateLimit,
+                'description',
+                'disabled',
+                'filterTypes',
+                'headers',
+                'idempotencyKey',
+                'metadata',
+                'rateLimit',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = WebhookCreateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -116,16 +133,23 @@ final class WebhooksService implements WebhooksContract
         $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookUpdateResponse {
-        [$parsed, $options] = WebhookUpdateParams::parseRequest(
+        $args = [
+            'description' => $description,
+            'disabled' => $disabled,
+            'filterTypes' => $filterTypes,
+            'metadata' => $metadata,
+            'rateLimit' => $rateLimit,
+            'url' => $url,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'description' => $description,
-                'disabled' => $disabled,
-                'filterTypes' => $filterTypes,
-                'metadata' => $metadata,
-                'rateLimit' => $rateLimit,
-                'url' => $url,
+                'description', 'disabled', 'filterTypes', 'metadata', 'rateLimit', 'url',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = WebhookUpdateParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -149,8 +173,10 @@ final class WebhooksService implements WebhooksContract
         $limit = null,
         ?RequestOptions $requestOptions = null
     ): WebhookListResponse {
+        $args = ['iterator' => $iterator, 'limit' => $limit];
+        $args = Util::array_filter_null($args, ['iterator', 'limit']);
         [$parsed, $options] = WebhookListParams::parseRequest(
-            ['iterator' => $iterator, 'limit' => $limit],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks\Headers;
+namespace Dodopayments\Services\Webhooks;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\Webhooks\HeadersContract;
 use Dodopayments\Core\Conversion;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Webhooks\Headers\HeaderGetResponse;
+use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 
 final class HeadersService implements HeadersContract
 {
@@ -42,8 +43,9 @@ final class HeadersService implements HeadersContract
         $headers,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        $args = ['headers' => $headers];
         [$parsed, $options] = HeaderUpdateParams::parseRequest(
-            ['headers' => $headers],
+            $args,
             $requestOptions
         );
 
