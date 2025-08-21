@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Discounts;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 
@@ -27,7 +27,7 @@ use Dodopayments\Core\Conversion\ListOf;
  */
 final class Discount implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The discount amount.

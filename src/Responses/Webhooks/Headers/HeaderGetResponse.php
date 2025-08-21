@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Webhooks\Headers;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
@@ -22,7 +22,7 @@ use Dodopayments\Core\Conversion\MapOf;
  */
 final class HeaderGetResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * List of headers configured.

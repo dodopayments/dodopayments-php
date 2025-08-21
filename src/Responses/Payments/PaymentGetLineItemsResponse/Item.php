@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Payments\PaymentGetLineItemsResponse;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -20,7 +20,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class Item implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api]
     public int $amount;

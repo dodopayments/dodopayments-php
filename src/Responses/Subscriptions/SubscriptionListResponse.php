@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
@@ -45,7 +45,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  */
 final class SubscriptionListResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * Billing address details for payments.

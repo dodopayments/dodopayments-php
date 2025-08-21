@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Products\Price;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Products\Price\OneTimePrice\Type;
@@ -26,7 +26,7 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  */
 final class OneTimePrice implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The currency in which the payment is made.

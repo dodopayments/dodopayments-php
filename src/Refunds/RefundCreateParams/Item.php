@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Refunds\RefundCreateParams;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -15,7 +15,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class Item implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * The id of the item (i.e. `product_id` or `addon_id`).

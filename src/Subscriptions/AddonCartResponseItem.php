@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -17,7 +17,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class AddonCartResponseItem implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     #[Api('addon_id')]
     public string $addonID;

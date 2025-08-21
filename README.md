@@ -61,7 +61,7 @@ $payment = $client->payments->create(
 var_dump($payment->payment_id);
 ```
 
-## Value Objects
+### Value Objects
 
 It is recommended to use the static `with` constructor `AttachExistingCustomer::with(customerID: "customer_id", ...)`
 and named parameters to initialize value objects.

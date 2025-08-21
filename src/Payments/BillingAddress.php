@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\CountryCode;
 
@@ -20,7 +20,7 @@ use Dodopayments\Misc\CountryCode;
  */
 final class BillingAddress implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * City name.

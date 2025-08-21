@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Licenses;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
-use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
@@ -14,8 +14,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class LicenseActivateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     #[Api('license_key')]
     public string $licenseKey;

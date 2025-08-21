@@ -7,7 +7,10 @@ namespace Dodopayments\Core\Concerns;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\EnumOf;
 
-trait Enum
+/**
+ * @internal
+ */
+trait SdkEnum
 {
     private static Converter $converter;
 

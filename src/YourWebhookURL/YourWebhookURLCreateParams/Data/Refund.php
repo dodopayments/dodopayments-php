@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund\PayloadType;
 
@@ -14,7 +14,7 @@ use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Refund\PayloadTy
  */
 final class Refund implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /** @var PayloadType::* $payloadType */
     #[Api('payload_type', enum: PayloadType::class)]

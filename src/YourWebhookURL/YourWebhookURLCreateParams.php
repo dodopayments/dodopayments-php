@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\YourWebhookURL;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
-use Dodopayments\Core\Concerns\Params;
+use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
@@ -28,8 +28,8 @@ use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Subscription;
  */
 final class YourWebhookURLCreateParams implements BaseModel
 {
-    use Model;
-    use Params;
+    use SdkModel;
+    use SdkParams;
 
     #[Api('business_id')]
     public string $businessID;

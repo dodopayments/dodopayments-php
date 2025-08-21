@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Subscriptions\SubscriptionCreateParams;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
@@ -20,7 +20,7 @@ use Dodopayments\Misc\Currency;
  */
 final class OnDemand implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /**
      * If set as True, does not perform any charge and only authorizes payment method details for future use.

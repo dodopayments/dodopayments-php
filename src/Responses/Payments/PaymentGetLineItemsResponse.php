@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Responses\Payments;
 
 use Dodopayments\Core\Attributes\Api;
-use Dodopayments\Core\Concerns\Model;
+use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Misc\Currency;
@@ -18,7 +18,7 @@ use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse\Item;
  */
 final class PaymentGetLineItemsResponse implements BaseModel
 {
-    use Model;
+    use SdkModel;
 
     /** @var Currency::* $currency */
     #[Api(enum: Currency::class)]
