@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Misc;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\MiscContract;
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\ListOf;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\RequestOptions;
 
 final class MiscService implements MiscContract

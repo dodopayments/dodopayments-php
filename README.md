@@ -57,7 +57,6 @@ $payment = $client->payments->create(
     OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
   ],
 );
-
 var_dump($payment->payment_id);
 ```
 

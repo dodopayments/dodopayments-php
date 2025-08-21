@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Brands;
+namespace Dodopayments\Services;
 
+use Dodopayments\Brands\Brand;
+use Dodopayments\Brands\BrandCreateParams;
+use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Contracts\BrandsContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Brands\BrandListResponse;
 use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
@@ -30,15 +34,20 @@ final class BrandsService implements BrandsContract
         $url = null,
         ?RequestOptions $requestOptions = null,
     ): Brand {
+        $args = [
+            'description' => $description,
+            'name' => $name,
+            'statementDescriptor' => $statementDescriptor,
+            'supportEmail' => $supportEmail,
+            'url' => $url,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['description', 'name', 'statementDescriptor', 'supportEmail', 'url'],
+        );
         [$parsed, $options] = BrandCreateParams::parseRequest(
-            [
-                'description' => $description,
-                'name' => $name,
-                'statementDescriptor' => $statementDescriptor,
-                'supportEmail' => $supportEmail,
-                'url' => $url,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -82,14 +91,19 @@ final class BrandsService implements BrandsContract
         $supportEmail = null,
         ?RequestOptions $requestOptions = null,
     ): Brand {
+        $args = [
+            'imageID' => $imageID,
+            'name' => $name,
+            'statementDescriptor' => $statementDescriptor,
+            'supportEmail' => $supportEmail,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['imageID', 'name', 'statementDescriptor', 'supportEmail']
+        );
         [$parsed, $options] = BrandUpdateParams::parseRequest(
-            [
-                'imageID' => $imageID,
-                'name' => $name,
-                'statementDescriptor' => $statementDescriptor,
-                'supportEmail' => $supportEmail,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'patch',

@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Customers;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\CustomersContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Customers\CustomerPortal\CustomerPortalService;
+use Dodopayments\Core\Util;
+use Dodopayments\Customers\Customer;
+use Dodopayments\Customers\CustomerCreateParams;
+use Dodopayments\Customers\CustomerListParams;
+use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\RequestOptions;
+use Dodopayments\Services\Customers\CustomerPortalService;
 
 final class CustomersService implements CustomersContract
 {
@@ -30,9 +35,11 @@ final class CustomersService implements CustomersContract
         $phoneNumber = null,
         ?RequestOptions $requestOptions = null
     ): Customer {
+        $args = ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber];
+        $args = Util::array_filter_null($args, ['phoneNumber']);
         [$parsed, $options] = CustomerCreateParams::parseRequest(
-            ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',
@@ -69,8 +76,10 @@ final class CustomersService implements CustomersContract
         $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer {
+        $args = ['name' => $name, 'phoneNumber' => $phoneNumber];
+        $args = Util::array_filter_null($args, ['name', 'phoneNumber']);
         [$parsed, $options] = CustomerUpdateParams::parseRequest(
-            ['name' => $name, 'phoneNumber' => $phoneNumber],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -95,9 +104,13 @@ final class CustomersService implements CustomersContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): Customer {
+        $args = [
+            'email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize,
+        ];
+        $args = Util::array_filter_null($args, ['email', 'pageNumber', 'pageSize']);
         [$parsed, $options] = CustomerListParams::parseRequest(
-            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',

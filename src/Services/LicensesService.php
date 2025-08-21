@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Licenses;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\LicensesContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
+use Dodopayments\Licenses\LicenseActivateParams;
+use Dodopayments\Licenses\LicenseDeactivateParams;
+use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Licenses\LicenseValidateResponse;
 
@@ -24,8 +28,9 @@ final class LicensesService implements LicensesContract
         $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
+        $args = ['licenseKey' => $licenseKey, 'name' => $name];
         [$parsed, $options] = LicenseActivateParams::parseRequest(
-            ['licenseKey' => $licenseKey, 'name' => $name],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
@@ -48,12 +53,13 @@ final class LicensesService implements LicensesContract
         $licenseKeyInstanceID,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        $args = [
+            'licenseKey' => $licenseKey,
+            'licenseKeyInstanceID' => $licenseKeyInstanceID,
+        ];
         [$parsed, $options] = LicenseDeactivateParams::parseRequest(
-            [
-                'licenseKey' => $licenseKey,
-                'licenseKeyInstanceID' => $licenseKeyInstanceID,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
 
         return $this->client->request(
@@ -73,12 +79,14 @@ final class LicensesService implements LicensesContract
         $licenseKeyInstanceID = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
+        $args = [
+            'licenseKey' => $licenseKey,
+            'licenseKeyInstanceID' => $licenseKeyInstanceID,
+        ];
+        $args = Util::array_filter_null($args, ['licenseKeyInstanceID']);
         [$parsed, $options] = LicenseValidateParams::parseRequest(
-            [
-                'licenseKey' => $licenseKey,
-                'licenseKeyInstanceID' => $licenseKeyInstanceID,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'post',

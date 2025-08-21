@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Payouts;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\PayoutsContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
+use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Payouts\PayoutListResponse;
 
@@ -23,8 +25,10 @@ final class PayoutsService implements PayoutsContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null
     ): PayoutListResponse {
+        $args = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+        $args = Util::array_filter_null($args, ['pageNumber', 'pageSize']);
         [$parsed, $options] = PayoutListParams::parseRequest(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(

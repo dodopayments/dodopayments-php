@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\LicenseKeys;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\LicenseKeysContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
+use Dodopayments\LicenseKeys\LicenseKey;
+use Dodopayments\LicenseKeys\LicenseKeyListParams;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
+use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
 
 final class LicenseKeysService implements LicenseKeysContract
@@ -43,13 +47,18 @@ final class LicenseKeysService implements LicenseKeysContract
         $expiresAt = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
+        $args = [
+            'activationsLimit' => $activationsLimit,
+            'disabled' => $disabled,
+            'expiresAt' => $expiresAt,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['activationsLimit', 'disabled', 'expiresAt']
+        );
         [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
-            [
-                'activationsLimit' => $activationsLimit,
-                'disabled' => $disabled,
-                'expiresAt' => $expiresAt,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -77,15 +86,20 @@ final class LicenseKeysService implements LicenseKeysContract
         $status = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
+        $args = [
+            'customerID' => $customerID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'productID' => $productID,
+            'status' => $status,
+        ];
+        $args = Util::array_filter_null(
+            $args,
+            ['customerID', 'pageNumber', 'pageSize', 'productID', 'status']
+        );
         [$parsed, $options] = LicenseKeyListParams::parseRequest(
-            [
-                'customerID' => $customerID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'productID' => $productID,
-                'status' => $status,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',

@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\YourWebhookURL;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\YourWebhookURLContract;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams;
 use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Dispute;
 use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\LicenseKey;
 use Dodopayments\YourWebhookURL\YourWebhookURLCreateParams\Data\Payment;
@@ -37,17 +38,18 @@ final class YourWebhookURLService implements YourWebhookURLContract
         $webhookTimestamp,
         ?RequestOptions $requestOptions = null,
     ): mixed {
+        $args = [
+            'businessID' => $businessID,
+            'data' => $data,
+            'timestamp' => $timestamp,
+            'type' => $type,
+            'webhookID' => $webhookID,
+            'webhookSignature' => $webhookSignature,
+            'webhookTimestamp' => $webhookTimestamp,
+        ];
         [$parsed, $options] = YourWebhookURLCreateParams::parseRequest(
-            [
-                'businessID' => $businessID,
-                'data' => $data,
-                'timestamp' => $timestamp,
-                'type' => $type,
-                'webhookID' => $webhookID,
-                'webhookSignature' => $webhookSignature,
-                'webhookTimestamp' => $webhookTimestamp,
-            ],
-            $requestOptions,
+            $args,
+            $requestOptions
         );
         $header_params = [
             'webhook-id' => 'webhook-id',

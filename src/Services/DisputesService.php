@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Disputes;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\DisputesContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
+use Dodopayments\Disputes\DisputeListParams;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
+use Dodopayments\Disputes\GetDispute;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Disputes\DisputeListResponse;
 
@@ -49,17 +52,30 @@ final class DisputesService implements DisputesContract
         $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DisputeListResponse {
-        [$parsed, $options] = DisputeListParams::parseRequest(
+        $args = [
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'customerID' => $customerID,
+            'disputeStage' => $disputeStage,
+            'disputeStatus' => $disputeStatus,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+        $args = Util::array_filter_null(
+            $args,
             [
-                'createdAtGte' => $createdAtGte,
-                'createdAtLte' => $createdAtLte,
-                'customerID' => $customerID,
-                'disputeStage' => $disputeStage,
-                'disputeStatus' => $disputeStatus,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
+                'createdAtGte',
+                'createdAtLte',
+                'customerID',
+                'disputeStage',
+                'disputeStatus',
+                'pageNumber',
+                'pageSize',
             ],
-            $requestOptions,
+        );
+        [$parsed, $options] = DisputeListParams::parseRequest(
+            $args,
+            $requestOptions
         );
         $resp = $this->client->request(
             method: 'get',

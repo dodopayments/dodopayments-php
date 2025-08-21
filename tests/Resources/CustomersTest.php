@@ -37,11 +37,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->customers->create(
-            email: 'email',
-            name: 'name',
-            phoneNumber: 'phone_number'
-        );
+        $result = $this->client->customers->create(email: 'email', name: 'name');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

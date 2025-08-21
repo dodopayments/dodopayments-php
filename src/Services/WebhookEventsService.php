@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\WebhookEvents;
+namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\WebhookEventsContract;

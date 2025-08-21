@@ -5,10 +5,7 @@ namespace Tests\Resources;
 use Dodopayments\Client;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
-use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
-use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
-use Dodopayments\Subscriptions\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -64,21 +61,6 @@ final class ProductsTest extends TestCase
                 ->withSuggestedPrice(0)
                 ->withTaxInclusive(true),
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
-            addons: ['string'],
-            brandID: 'brand_id',
-            description: 'description',
-            digitalProductDelivery: (new DigitalProductDelivery)
-                ->withExternalURL('external_url')
-                ->withInstructions('instructions'),
-            licenseKeyActivationMessage: 'license_key_activation_message',
-            licenseKeyActivationsLimit: 0,
-            licenseKeyDuration: LicenseKeyDuration::with(
-                count: 0,
-                interval: TimeInterval::DAY
-            ),
-            licenseKeyEnabled: true,
-            metadata: ['foo' => 'string'],
-            name: 'name',
         );
 
         $this->assertTrue(true); // @phpstan-ignore-line

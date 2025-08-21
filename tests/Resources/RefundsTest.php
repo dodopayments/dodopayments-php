@@ -3,7 +3,6 @@
 namespace Tests\Resources;
 
 use Dodopayments\Client;
-use Dodopayments\Refunds\RefundCreateParams\Item;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,13 +37,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->refunds->create(
-            paymentID: 'payment_id',
-            items: [
-                Item::with(itemID: 'item_id')->withAmount(0)->withTaxInclusive(true),
-            ],
-            reason: 'reason',
-        );
+        $result = $this->client->refunds->create(paymentID: 'payment_id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }

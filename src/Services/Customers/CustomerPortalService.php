@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Customers\CustomerPortal;
+namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
 use Dodopayments\Contracts\Customers\CustomerPortalContract;
 use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Util;
+use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 
@@ -22,8 +24,10 @@ final class CustomerPortalService implements CustomerPortalContract
         $sendEmail = null,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession {
+        $args = ['sendEmail' => $sendEmail];
+        $args = Util::array_filter_null($args, ['sendEmail']);
         [$parsed, $options] = CustomerPortalCreateParams::parseRequest(
-            ['sendEmail' => $sendEmail],
+            $args,
             $requestOptions
         );
         $resp = $this->client->request(
