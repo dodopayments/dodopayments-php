@@ -23,23 +23,23 @@ interface PaymentsContract
      * @param BillingAddress $billing Billing address details for the payment
      * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
      * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
-     * @param null|list<PaymentMethodTypes::*> $allowedPaymentMethodTypes List of payment methods allowed during checkout.
+     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
      *
      * Customers will **never** see payment methods that are **not** in this list.
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      * @param Currency::* $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
-     * @param null|string $discountCode Discount Code to apply to the transaction
+     * @param string|null $discountCode Discount Code to apply to the transaction
      * @param array<string,
      * string,> $metadata Additional metadata associated with the payment.
      * Defaults to empty if not provided.
-     * @param null|bool $paymentLink Whether to generate a payment link. Defaults to false if not specified.
-     * @param null|string $returnURL Optional URL to redirect the customer after payment.
+     * @param bool|null $paymentLink Whether to generate a payment link. Defaults to false if not specified.
+     * @param string|null $returnURL Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
      * False by default
-     * @param null|string $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
+     * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
      */
     public function create(
         $billing,

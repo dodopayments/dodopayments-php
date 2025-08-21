@@ -55,7 +55,7 @@ final class DiscountUpdateParams implements BaseModel
      * If present, replaces all restricted product IDs with this new set.
      * To remove all restrictions, send empty array.
      *
-     * @var null|list<string> $restrictedTo
+     * @var list<string>|null $restrictedTo
      */
     #[Api(
         'restricted_to',
@@ -76,7 +76,7 @@ final class DiscountUpdateParams implements BaseModel
     /**
      * If present, update the discount type.
      *
-     * @var null|DiscountType::* $type
+     * @var DiscountType::*|null $type
      */
     #[Api(enum: DiscountType::class, optional: true)]
     public ?string $type;
@@ -95,7 +95,7 @@ final class DiscountUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $restrictedTo
+     * @param list<string>|null $restrictedTo
      * @param DiscountType::* $type
      */
     public static function with(
@@ -168,7 +168,7 @@ final class DiscountUpdateParams implements BaseModel
      * If present, replaces all restricted product IDs with this new set.
      * To remove all restrictions, send empty array.
      *
-     * @param null|list<string> $restrictedTo
+     * @param list<string>|null $restrictedTo
      */
     public function withRestrictedTo(?array $restrictedTo): self
     {

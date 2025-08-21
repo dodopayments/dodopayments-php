@@ -83,7 +83,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Optional list of products included in the payment.
      *
-     * @var null|list<OneTimeProductCartItem> $productCart
+     * @var list<OneTimeProductCartItem>|null $productCart
      */
     #[Api(
         'product_cart',
@@ -130,7 +130,7 @@ final class PaymentNewResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string, string> $metadata
-     * @param null|list<OneTimeProductCartItem> $productCart
+     * @param list<OneTimeProductCartItem>|null $productCart
      */
     public static function with(
         string $clientSecret,
@@ -253,7 +253,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Optional list of products included in the payment.
      *
-     * @param null|list<OneTimeProductCartItem> $productCart
+     * @param list<OneTimeProductCartItem>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

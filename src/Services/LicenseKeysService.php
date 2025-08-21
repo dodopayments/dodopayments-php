@@ -33,11 +33,11 @@ final class LicenseKeysService implements LicenseKeysContract
     }
 
     /**
-     * @param null|int $activationsLimit The updated activation limit for the license key.
+     * @param int|null $activationsLimit The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
-     * @param null|bool $disabled Indicates whether the license key should be disabled.
+     * @param bool|null $disabled Indicates whether the license key should be disabled.
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
-     * @param null|\DateTimeInterface $expiresAt The updated expiration timestamp for the license key in UTC.
+     * @param \DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      */
     public function update(

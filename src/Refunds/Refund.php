@@ -73,7 +73,7 @@ final class Refund implements BaseModel
     /**
      * The currency of the refund, represented as an ISO 4217 currency code.
      *
-     * @var null|Currency::* $currency
+     * @var Currency::*|null $currency
      */
     #[Api(enum: Currency::class, optional: true)]
     public ?string $currency;

@@ -104,7 +104,7 @@ final class Product implements BaseModel
     /**
      * Available Addons for subscription products.
      *
-     * @var null|list<string> $addons
+     * @var list<string>|null $addons
      */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $addons;
@@ -196,7 +196,7 @@ final class Product implements BaseModel
      *
      * @param array<string, string> $metadata
      * @param TaxCategory::* $taxCategory
-     * @param null|list<string> $addons
+     * @param list<string>|null $addons
      */
     public static function with(
         string $brandID,
@@ -357,7 +357,7 @@ final class Product implements BaseModel
     /**
      * Available Addons for subscription products.
      *
-     * @param null|list<string> $addons
+     * @param list<string>|null $addons
      */
     public function withAddons(?array $addons): self
     {

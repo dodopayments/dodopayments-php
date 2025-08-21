@@ -26,7 +26,7 @@ final class AddonsService implements AddonsContract
      * @param string $name Name of the Addon
      * @param int $price Amount of the addon
      * @param TaxCategory::* $taxCategory Tax category applied to this Addon
-     * @param null|string $description Optional description of the Addon
+     * @param string|null $description Optional description of the Addon
      */
     public function create(
         $currency,
@@ -75,10 +75,10 @@ final class AddonsService implements AddonsContract
 
     /**
      * @param Currency::* $currency The currency of the Addon
-     * @param null|string $description description of the Addon, optional and must be at most 1000 characters
-     * @param null|string $imageID Addon image id after its uploaded to S3
-     * @param null|string $name name of the Addon, optional and must be at most 100 characters
-     * @param null|int $price Amount of the addon
+     * @param string|null $description description of the Addon, optional and must be at most 1000 characters
+     * @param string|null $imageID Addon image id after its uploaded to S3
+     * @param string|null $name name of the Addon, optional and must be at most 100 characters
+     * @param int|null $price Amount of the addon
      * @param TaxCategory::* $taxCategory tax category of the Addon
      */
     public function update(

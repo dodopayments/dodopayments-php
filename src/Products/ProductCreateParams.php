@@ -53,7 +53,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Addons available for subscription product.
      *
-     * @var null|list<string> $addons
+     * @var list<string>|null $addons
      */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $addons;
@@ -107,7 +107,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), optional: true)]
     public ?array $metadata;
@@ -144,8 +144,8 @@ final class ProductCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param TaxCategory::* $taxCategory
-     * @param null|list<string> $addons
-     * @param null|array<string, string> $metadata
+     * @param list<string>|null $addons
+     * @param array<string, string>|null $metadata
      */
     public static function with(
         OneTimePrice|RecurringPrice $price,
@@ -207,7 +207,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Addons available for subscription product.
      *
-     * @param null|list<string> $addons
+     * @param list<string>|null $addons
      */
     public function withAddons(?array $addons): self
     {

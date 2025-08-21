@@ -38,7 +38,7 @@ final class OnDemand implements BaseModel
     /**
      * Optional currency of the product price. If not specified, defaults to the currency of the product.
      *
-     * @var null|Currency::* $productCurrency
+     * @var Currency::*|null $productCurrency
      */
     #[Api('product_currency', enum: Currency::class, optional: true)]
     public ?string $productCurrency;

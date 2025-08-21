@@ -152,7 +152,7 @@ final class Payment implements BaseModel
     /**
      * ISO2 country code of the card.
      *
-     * @var null|CountryCode::* $cardIssuingCountry
+     * @var CountryCode::*|null $cardIssuingCountry
      */
     #[Api('card_issuing_country', enum: CountryCode::class, optional: true)]
     public ?string $cardIssuingCountry;
@@ -214,7 +214,7 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @var null|list<ProductCart> $productCart
+     * @var list<ProductCart>|null $productCart
      */
     #[Api(
         'product_cart',
@@ -235,7 +235,7 @@ final class Payment implements BaseModel
     /**
      * Current status of the payment intent.
      *
-     * @var null|IntentStatus::* $status
+     * @var IntentStatus::*|null $status
      */
     #[Api(enum: IntentStatus::class, optional: true)]
     public ?string $status;
@@ -318,7 +318,7 @@ final class Payment implements BaseModel
      * @param list<Refund> $refunds
      * @param Currency::* $settlementCurrency
      * @param CountryCode::* $cardIssuingCountry
-     * @param null|list<ProductCart> $productCart
+     * @param list<ProductCart>|null $productCart
      * @param IntentStatus::* $status
      */
     public static function with(
@@ -672,7 +672,7 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @param null|list<ProductCart> $productCart
+     * @param list<ProductCart>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

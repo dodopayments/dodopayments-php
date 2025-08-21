@@ -21,8 +21,8 @@ final class RefundsService implements RefundsContract
 
     /**
      * @param string $paymentID the unique identifier of the payment to be refunded
-     * @param null|list<Item> $items Partially Refund an Individual Item
-     * @param null|string $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
+     * @param list<Item>|null $items Partially Refund an Individual Item
+     * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      */
     public function create(
         $paymentID,

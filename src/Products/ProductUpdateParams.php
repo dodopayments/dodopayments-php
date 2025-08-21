@@ -40,7 +40,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Available Addons for subscription products.
      *
-     * @var null|list<string> $addons
+     * @var list<string>|null $addons
      */
     #[Api(type: new ListOf('string'), nullable: true, optional: true)]
     public ?array $addons;
@@ -105,7 +105,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @var null|array<string, string> $metadata
+     * @var array<string, string>|null $metadata
      */
     #[Api(type: new MapOf('string'), nullable: true, optional: true)]
     public ?array $metadata;
@@ -120,12 +120,12 @@ final class ProductUpdateParams implements BaseModel
      * Price details of the product.
      */
     #[Api(optional: true)]
-    public null|OneTimePrice|RecurringPrice $price;
+    public OneTimePrice|RecurringPrice|null $price;
 
     /**
      * Tax category of the product.
      *
-     * @var null|TaxCategory::* $taxCategory
+     * @var TaxCategory::*|null $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class, optional: true)]
     public ?string $taxCategory;
@@ -141,8 +141,8 @@ final class ProductUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|list<string> $addons
-     * @param null|array<string, string> $metadata
+     * @param list<string>|null $addons
+     * @param array<string, string>|null $metadata
      * @param TaxCategory::* $taxCategory
      */
     public static function with(
@@ -157,7 +157,7 @@ final class ProductUpdateParams implements BaseModel
         ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
         ?string $name = null,
-        null|OneTimePrice|RecurringPrice $price = null,
+        OneTimePrice|RecurringPrice|null $price = null,
         ?string $taxCategory = null,
     ): self {
         $obj = new self;
@@ -182,7 +182,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Available Addons for subscription products.
      *
-     * @param null|list<string> $addons
+     * @param list<string>|null $addons
      */
     public function withAddons(?array $addons): self
     {
@@ -296,7 +296,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @param null|array<string, string> $metadata
+     * @param array<string, string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

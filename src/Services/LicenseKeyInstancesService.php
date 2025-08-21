@@ -56,9 +56,9 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     }
 
     /**
-     * @param null|string $licenseKeyID Filter by license key ID
-     * @param null|int $pageNumber Page number default is 0
-     * @param null|int $pageSize Page size default is 10 max is 100
+     * @param string|null $licenseKeyID Filter by license key ID
+     * @param int|null $pageNumber Page number default is 0
+     * @param int|null $pageSize Page size default is 10 max is 100
      */
     public function list(
         $licenseKeyID = null,

@@ -20,11 +20,11 @@ final class BrandsService implements BrandsContract
     public function __construct(private Client $client) {}
 
     /**
-     * @param null|string $description
-     * @param null|string $name
-     * @param null|string $statementDescriptor
-     * @param null|string $supportEmail
-     * @param null|string $url
+     * @param string|null $description
+     * @param string|null $name
+     * @param string|null $statementDescriptor
+     * @param string|null $supportEmail
+     * @param string|null $url
      */
     public function create(
         $description = null,
@@ -78,10 +78,10 @@ final class BrandsService implements BrandsContract
     }
 
     /**
-     * @param null|string $imageID The UUID you got back from the presigned‐upload call
-     * @param null|string $name
-     * @param null|string $statementDescriptor
-     * @param null|string $supportEmail
+     * @param string|null $imageID The UUID you got back from the presigned‐upload call
+     * @param string|null $name
+     * @param string|null $statementDescriptor
+     * @param string|null $supportEmail
      */
     public function update(
         string $id,

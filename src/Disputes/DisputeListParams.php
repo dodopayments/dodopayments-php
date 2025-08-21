@@ -48,7 +48,7 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute stage.
      *
-     * @var null|DisputeStage::* $disputeStage
+     * @var DisputeStage::*|null $disputeStage
      */
     #[Api(enum: DisputeStage::class, optional: true)]
     public ?string $disputeStage;
@@ -56,7 +56,7 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute status.
      *
-     * @var null|DisputeStatus::* $disputeStatus
+     * @var DisputeStatus::*|null $disputeStatus
      */
     #[Api(enum: DisputeStatus::class, optional: true)]
     public ?string $disputeStatus;
@@ -84,8 +84,8 @@ final class DisputeListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param null|DisputeStage::* $disputeStage
-     * @param null|DisputeStatus::* $disputeStatus
+     * @param DisputeStage::*|null $disputeStage
+     * @param DisputeStatus::*|null $disputeStatus
      */
     public static function with(
         ?\DateTimeInterface $createdAtGte = null,
