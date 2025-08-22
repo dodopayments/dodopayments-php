@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.51.0 (2025-08-22)
+
+Full Changelog: [v1.50.1...v1.51.0](https://github.com/dodopayments/dodopayments-php/compare/v1.50.1...v1.51.0)
+
+### Features
+
+* **api:** updated example ([6ae6c1f](https://github.com/dodopayments/dodopayments-php/commit/6ae6c1f00cd8bff4894c11aca96530bfecc4fec2))
+* **api:** updated openapi spec to v1.51.0 and added checkout sessions ([b558561](https://github.com/dodopayments/dodopayments-php/commit/b5585611d87014131550619f3132ce2e1ac20df7))
+
 ## 1.50.1 (2025-08-21)
 
 Full Changelog: [v1.50.0...v1.50.1](https://github.com/dodopayments/dodopayments-php/compare/v1.50.0...v1.50.1)
