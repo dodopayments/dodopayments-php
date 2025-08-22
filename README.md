@@ -34,30 +34,17 @@ Parameters with a default value must be set by name.
 <?php
 
 use Dodopayments\Client;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 
 $client = new Client(
   bearerToken: getenv("DODO_PAYMENTS_API_KEY") ?: "My Bearer Token",
   environment: "test_mode",
 );
 
-$payment = $client->payments->create(
-  billing: BillingAddress::with(
-    city: "city",
-    country: CountryCode::AF,
-    state: "state",
-    street: "street",
-    zipcode: "zipcode",
-  ),
-  customer: AttachExistingCustomer::with(customerID: "customer_id"),
-  productCart: [
-    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
-  ],
+$checkoutSessionResponse = $client->checkoutSessions->create(
+  productCart: [ProductCart::with(productID: "product_id", quantity: 0)]
 );
-var_dump($payment->payment_id);
+var_dump($checkoutSessionResponse->session_id);
 ```
 
 ### Value Objects
@@ -74,25 +61,12 @@ When the library is unable to connect to the API, or if the API returns a non-su
 ```php
 <?php
 
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\Errors\APIConnectionError;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
 
 try {
-  $payment = $client->payments->create(
-    billing: BillingAddress::with(
-      city: "city",
-      country: CountryCode::AF,
-      state: "state",
-      street: "street",
-      zipcode: "zipcode",
-    ),
-    customer: AttachExistingCustomer::with(customerID: "customer_id"),
-    productCart: [
-      OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
-    ],
+  $checkoutSessionResponse = $client->checkoutSessions->create(
+    productCart: [ProductCart::with(productID: "product_id", quantity: 0)]
   );
 } catch (APIConnectionError $e) {
   echo "The server could not be reached", PHP_EOL;
@@ -134,27 +108,14 @@ You can use the `max_retries` option to configure or disable this:
 
 use Dodopayments\Client;
 use Dodopayments\RequestOptions;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-$result = $client->payments->create(
-  billing: BillingAddress::with(
-    city: "city",
-    country: CountryCode::AF,
-    state: "state",
-    street: "street",
-    zipcode: "zipcode",
-  ),
-  customer: AttachExistingCustomer::with(customerID: "customer_id"),
-  productCart: [
-    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
-  ],
+$result = $client->checkoutSessions->create(
+  productCart: [ProductCart::with(productID: "product_id", quantity: 0)],
   new RequestOptions(maxRetries: 5),
 );
 ```
@@ -173,23 +134,10 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 <?php
 
 use Dodopayments\RequestOptions;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 
-$payment = $client->payments->create(
-  billing: BillingAddress::with(
-    city: "city",
-    country: CountryCode::AF,
-    state: "state",
-    street: "street",
-    zipcode: "zipcode",
-  ),
-  customer: AttachExistingCustomer::with(customerID: "customer_id"),
-  productCart: [
-    OneTimeProductCartItem::with(productID: "product_id", quantity: 0)
-  ],
+$checkoutSessionResponse = $client->checkoutSessions->create(
+  productCart: [ProductCart::with(productID: "product_id", quantity: 0)],
   new RequestOptions(
     extraQueryParams: ["my_query_parameter" => "value"],
     extraBodyParams: ["my_body_parameter" => "value"],
@@ -197,7 +145,7 @@ $payment = $client->payments->create(
   ),
 );
 
-var_dump($payment["my_undocumented_property"]);
+var_dump($checkoutSessionResponse["my_undocumented_property"]);
 ```
 
 #### Undocumented request params
