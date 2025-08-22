@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Subscriptions\SubscriptionCreateParams;
+namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type on_demand_alias = array{
+ * @phpstan-type on_demand_subscription_alias = array{
  *   mandateOnly: bool,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   productCurrency?: Currency::*,
@@ -18,7 +18,7 @@ use Dodopayments\Misc\Currency;
  *   productPrice?: int|null,
  * }
  */
-final class OnDemand implements BaseModel
+final class OnDemandSubscription implements BaseModel
 {
     use SdkModel;
 
@@ -60,17 +60,17 @@ final class OnDemand implements BaseModel
     public ?int $productPrice;
 
     /**
-     * `new OnDemand()` is missing required properties by the API.
+     * `new OnDemandSubscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * OnDemand::with(mandateOnly: ...)
+     * OnDemandSubscription::with(mandateOnly: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OnDemand)->withMandateOnly(...)
+     * (new OnDemandSubscription)->withMandateOnly(...)
      * ```
      */
     public function __construct()

@@ -14,9 +14,9 @@ use Dodopayments\Responses\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Responses\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Responses\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\AttachAddon;
+use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
-use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
@@ -39,7 +39,7 @@ interface SubscriptionsContract
      * @param string|null $discountCode Discount Code to apply to the subscription
      * @param array<string, string> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
-     * @param OnDemand|null $onDemand
+     * @param OnDemandSubscription $onDemand
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
@@ -76,7 +76,7 @@ interface SubscriptionsContract
 
     /**
      * @param BillingAddress $billing
-     * @param bool|null $cancelAtNextBillingDate
+     * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
      * @param DisableOnDemand|null $disableOnDemand
      * @param array<string, string>|null $metadata
      * @param \DateTimeInterface|null $nextBillingDate

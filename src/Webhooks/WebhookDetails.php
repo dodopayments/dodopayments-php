@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Responses\Webhooks;
+namespace Dodopayments\Webhooks;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -11,7 +11,7 @@ use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
 
 /**
- * @phpstan-type webhook_update_response_alias = array{
+ * @phpstan-type webhook_details_alias = array{
  *   id: string,
  *   createdAt: string,
  *   description: string,
@@ -23,7 +23,7 @@ use Dodopayments\Core\Conversion\MapOf;
  *   rateLimit?: int|null,
  * }
  */
-final class WebhookUpdateResponse implements BaseModel
+final class WebhookDetails implements BaseModel
 {
     use SdkModel;
 
@@ -95,11 +95,11 @@ final class WebhookUpdateResponse implements BaseModel
     public ?int $rateLimit;
 
     /**
-     * `new WebhookUpdateResponse()` is missing required properties by the API.
+     * `new WebhookDetails()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WebhookUpdateResponse::with(
+     * WebhookDetails::with(
      *   id: ...,
      *   createdAt: ...,
      *   description: ...,
@@ -112,7 +112,7 @@ final class WebhookUpdateResponse implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new WebhookUpdateResponse)
+     * (new WebhookDetails)
      *   ->withID(...)
      *   ->withCreatedAt(...)
      *   ->withDescription(...)

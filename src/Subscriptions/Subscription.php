@@ -41,6 +41,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   cancelledAt?: \DateTimeInterface|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
+ *   expiresAt?: \DateTimeInterface|null,
  * }
  */
 final class Subscription implements BaseModel
@@ -204,6 +205,12 @@ final class Subscription implements BaseModel
     public ?string $discountID;
 
     /**
+     * Timestamp when the subscription will expire.
+     */
+    #[Api('expires_at', optional: true)]
+    public ?\DateTimeInterface $expiresAt;
+
+    /**
      * `new Subscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -303,6 +310,7 @@ final class Subscription implements BaseModel
         ?\DateTimeInterface $cancelledAt = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
+        ?\DateTimeInterface $expiresAt = null,
     ): self {
         $obj = new self;
 
@@ -331,6 +339,7 @@ final class Subscription implements BaseModel
         null !== $cancelledAt && $obj->cancelledAt = $cancelledAt;
         null !== $discountCyclesRemaining && $obj->discountCyclesRemaining = $discountCyclesRemaining;
         null !== $discountID && $obj->discountID = $discountID;
+        null !== $expiresAt && $obj->expiresAt = $expiresAt;
 
         return $obj;
     }
@@ -614,6 +623,17 @@ final class Subscription implements BaseModel
     {
         $obj = clone $this;
         $obj->discountID = $discountID;
+
+        return $obj;
+    }
+
+    /**
+     * Timestamp when the subscription will expire.
+     */
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
+    {
+        $obj = clone $this;
+        $obj->expiresAt = $expiresAt;
 
         return $obj;
     }
