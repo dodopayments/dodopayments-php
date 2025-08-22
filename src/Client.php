@@ -7,6 +7,7 @@ namespace Dodopayments;
 use Dodopayments\Core\BaseClient;
 use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BrandsService;
+use Dodopayments\Services\CheckoutSessionsService;
 use Dodopayments\Services\CustomersService;
 use Dodopayments\Services\DiscountsService;
 use Dodopayments\Services\DisputesService;
@@ -22,11 +23,12 @@ use Dodopayments\Services\RefundsService;
 use Dodopayments\Services\SubscriptionsService;
 use Dodopayments\Services\WebhookEventsService;
 use Dodopayments\Services\WebhooksService;
-use Dodopayments\Services\YourWebhookURLService;
 
 class Client extends BaseClient
 {
     public string $bearerToken;
+
+    public CheckoutSessionsService $checkoutSessions;
 
     public PaymentsService $payments;
 
@@ -62,8 +64,6 @@ class Client extends BaseClient
 
     public WebhooksService $webhooks;
 
-    public YourWebhookURLService $yourWebhookURL;
-
     public function __construct(?string $bearerToken = null, ?string $baseUrl = null)
     {
         $this->bearerToken = (string) (
@@ -82,6 +82,7 @@ class Client extends BaseClient
             options: new RequestOptions,
         );
 
+        $this->checkoutSessions = new CheckoutSessionsService($this);
         $this->payments = new PaymentsService($this);
         $this->subscriptions = new SubscriptionsService($this);
         $this->invoices = new InvoicesService($this);
@@ -99,7 +100,6 @@ class Client extends BaseClient
         $this->addons = new AddonsService($this);
         $this->brands = new BrandsService($this);
         $this->webhooks = new WebhooksService($this);
-        $this->yourWebhookURL = new YourWebhookURLService($this);
     }
 
     /** @return array<string, string> */

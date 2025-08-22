@@ -9,14 +9,11 @@ use Dodopayments\Contracts\WebhooksContract;
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
-use Dodopayments\Responses\Webhooks\WebhookGetResponse;
 use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
-use Dodopayments\Responses\Webhooks\WebhookListResponse;
-use Dodopayments\Responses\Webhooks\WebhookNewResponse;
-use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
 use Dodopayments\Services\Webhooks\HeadersService;
 use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookCreateParams;
+use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookListParams;
 use Dodopayments\Webhooks\WebhookUpdateParams;
 
@@ -56,7 +53,7 @@ final class WebhooksService implements WebhooksContract
         $metadata = null,
         $rateLimit = null,
         ?RequestOptions $requestOptions = null,
-    ): WebhookNewResponse {
+    ): WebhookDetails {
         $args = [
             'url' => $url,
             'description' => $description,
@@ -91,7 +88,7 @@ final class WebhooksService implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookNewResponse::class, value: $resp);
+        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -100,7 +97,7 @@ final class WebhooksService implements WebhooksContract
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
-    ): WebhookGetResponse {
+    ): WebhookDetails {
         $resp = $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s', $webhookID],
@@ -108,7 +105,7 @@ final class WebhooksService implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookGetResponse::class, value: $resp);
+        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -132,7 +129,7 @@ final class WebhooksService implements WebhooksContract
         $rateLimit = null,
         $url = null,
         ?RequestOptions $requestOptions = null,
-    ): WebhookUpdateResponse {
+    ): WebhookDetails {
         $args = [
             'description' => $description,
             'disabled' => $disabled,
@@ -159,7 +156,7 @@ final class WebhooksService implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookUpdateResponse::class, value: $resp);
+        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -172,7 +169,7 @@ final class WebhooksService implements WebhooksContract
         $iterator = null,
         $limit = null,
         ?RequestOptions $requestOptions = null
-    ): WebhookListResponse {
+    ): WebhookDetails {
         $args = ['iterator' => $iterator, 'limit' => $limit];
         $args = Util::array_filter_null($args, ['iterator', 'limit']);
         [$parsed, $options] = WebhookListParams::parseRequest(
@@ -187,7 +184,7 @@ final class WebhooksService implements WebhooksContract
         );
 
         // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookListResponse::class, value: $resp);
+        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**

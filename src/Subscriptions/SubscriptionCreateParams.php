@@ -15,7 +15,6 @@ use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
-use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
 
 /**
  * @phpstan-type create_params = array{
@@ -28,7 +27,7 @@ use Dodopayments\Subscriptions\SubscriptionCreateParams\OnDemand;
  *   billingCurrency?: Currency::*,
  *   discountCode?: string|null,
  *   metadata?: array<string, string>,
- *   onDemand?: OnDemand|null,
+ *   onDemand?: OnDemandSubscription,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
  *   showSavedPaymentMethods?: bool,
@@ -115,7 +114,7 @@ final class SubscriptionCreateParams implements BaseModel
     public ?array $metadata;
 
     #[Api('on_demand', optional: true)]
-    public ?OnDemand $onDemand;
+    public ?OnDemandSubscription $onDemand;
 
     /**
      * If true, generates a payment link.
@@ -197,7 +196,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?string $billingCurrency = null,
         ?string $discountCode = null,
         ?array $metadata = null,
-        ?OnDemand $onDemand = null,
+        ?OnDemandSubscription $onDemand = null,
         ?bool $paymentLink = null,
         ?string $returnURL = null,
         ?bool $showSavedPaymentMethods = null,
@@ -341,7 +340,7 @@ final class SubscriptionCreateParams implements BaseModel
         return $obj;
     }
 
-    public function withOnDemand(?OnDemand $onDemand): self
+    public function withOnDemand(OnDemandSubscription $onDemand): self
     {
         $obj = clone $this;
         $obj->onDemand = $onDemand;

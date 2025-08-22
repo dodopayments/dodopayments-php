@@ -31,6 +31,9 @@ final class SubscriptionUpdateParams implements BaseModel
     #[Api(optional: true)]
     public ?BillingAddress $billing;
 
+    /**
+     * When set, the subscription will remain active until the end of billing period.
+     */
     #[Api('cancel_at_next_billing_date', optional: true)]
     public ?bool $cancelAtNextBillingDate;
 
@@ -95,6 +98,9 @@ final class SubscriptionUpdateParams implements BaseModel
         return $obj;
     }
 
+    /**
+     * When set, the subscription will remain active until the end of billing period.
+     */
     public function withCancelAtNextBillingDate(
         ?bool $cancelAtNextBillingDate
     ): self {

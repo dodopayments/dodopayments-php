@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Dodopayments\Contracts;
 
 use Dodopayments\RequestOptions;
-use Dodopayments\Responses\Webhooks\WebhookGetResponse;
 use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
-use Dodopayments\Responses\Webhooks\WebhookListResponse;
-use Dodopayments\Responses\Webhooks\WebhookNewResponse;
-use Dodopayments\Responses\Webhooks\WebhookUpdateResponse;
 use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\Webhooks\WebhookDetails;
 
 interface WebhooksContract
 {
@@ -39,12 +36,12 @@ interface WebhooksContract
         $metadata = null,
         $rateLimit = null,
         ?RequestOptions $requestOptions = null,
-    ): WebhookNewResponse;
+    ): WebhookDetails;
 
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
-    ): WebhookGetResponse;
+    ): WebhookDetails;
 
     /**
      * @param string|null $description Description of the webhook
@@ -65,7 +62,7 @@ interface WebhooksContract
         $rateLimit = null,
         $url = null,
         ?RequestOptions $requestOptions = null,
-    ): WebhookUpdateResponse;
+    ): WebhookDetails;
 
     /**
      * @param string|null $iterator The iterator returned from a prior invocation
@@ -75,7 +72,7 @@ interface WebhooksContract
         $iterator = null,
         $limit = null,
         ?RequestOptions $requestOptions = null
-    ): WebhookListResponse;
+    ): WebhookDetails;
 
     public function delete(
         string $webhookID,
