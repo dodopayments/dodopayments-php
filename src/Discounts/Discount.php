@@ -9,22 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type discount_alias = array{
- *   amount: int,
- *   businessID: string,
- *   code: string,
- *   createdAt: \DateTimeInterface,
- *   discountID: string,
- *   restrictedTo: list<string>,
- *   timesUsed: int,
- *   type: DiscountType::*,
- *   expiresAt?: \DateTimeInterface|null,
- *   name?: string|null,
- *   subscriptionCycles?: int|null,
- *   usageLimit?: int|null,
- * }
- */
 final class Discount implements BaseModel
 {
     use SdkModel;

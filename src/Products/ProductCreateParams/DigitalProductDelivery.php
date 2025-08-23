@@ -10,10 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * Choose how you would like you digital product delivered.
- *
- * @phpstan-type digital_product_delivery_alias = array{
- *   externalURL?: string|null, instructions?: string|null
- * }
  */
 final class DigitalProductDelivery implements BaseModel
 {

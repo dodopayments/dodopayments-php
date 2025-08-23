@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Proration Billing Mode.
- *
- * @phpstan-type proration_billing_mode_alias = ProrationBillingMode::*
  */
 final class ProrationBillingMode implements ConverterSource
 {

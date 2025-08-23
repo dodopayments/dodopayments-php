@@ -7,9 +7,6 @@ namespace Dodopayments\Subscriptions;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type time_interval_alias = TimeInterval::*
- */
 final class TimeInterval implements ConverterSource
 {
     use SdkEnum;

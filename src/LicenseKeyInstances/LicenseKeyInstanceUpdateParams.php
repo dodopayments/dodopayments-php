@@ -9,9 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type update_params = array{name: string}
- */
 final class LicenseKeyInstanceUpdateParams implements BaseModel
 {
     use SdkModel;

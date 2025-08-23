@@ -8,9 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type attach_existing_customer_alias = array{customerID: string}
- */
 final class AttachExistingCustomer implements BaseModel
 {
     use SdkModel;

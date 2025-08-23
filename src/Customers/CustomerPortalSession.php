@@ -8,9 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type customer_portal_session_alias = array{link: string}
- */
 final class CustomerPortalSession implements BaseModel
 {
     use SdkModel;

@@ -10,18 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeStage;
 use Dodopayments\Disputes\DisputeStatus;
 
-/**
- * @phpstan-type dispute_list_response_alias = array{
- *   amount: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   currency: string,
- *   disputeID: string,
- *   disputeStage: DisputeStage::*,
- *   disputeStatus: DisputeStatus::*,
- *   paymentID: string,
- * }
- */
 final class DisputeListResponse implements BaseModel
 {
     use SdkModel;

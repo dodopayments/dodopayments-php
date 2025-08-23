@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Filter by dispute status.
- *
- * @phpstan-type dispute_status_alias = DisputeStatus::*
  */
 final class DisputeStatus implements ConverterSource
 {

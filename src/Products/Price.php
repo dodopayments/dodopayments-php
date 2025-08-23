@@ -12,8 +12,6 @@ use Dodopayments\Products\Price\RecurringPrice;
 
 /**
  * One-time price details.
- *
- * @phpstan-type price_alias = OneTimePrice|RecurringPrice
  */
 final class Price implements ConverterSource
 {

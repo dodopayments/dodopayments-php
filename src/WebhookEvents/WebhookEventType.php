@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Event types for Dodo events.
- *
- * @phpstan-type webhook_event_type_alias = WebhookEventType::*
  */
 final class WebhookEventType implements ConverterSource
 {

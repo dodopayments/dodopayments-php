@@ -8,11 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type one_time_product_cart_item_alias = array{
- *   productID: string, quantity: int, amount?: int|null
- * }
- */
 final class OneTimeProductCartItem implements BaseModel
 {
     use SdkModel;

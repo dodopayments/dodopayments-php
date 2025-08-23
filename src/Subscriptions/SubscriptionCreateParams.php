@@ -16,25 +16,6 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
-/**
- * @phpstan-type create_params = array{
- *   billing: BillingAddress,
- *   customer: AttachExistingCustomer|NewCustomer,
- *   productID: string,
- *   quantity: int,
- *   addons?: list<AttachAddon>|null,
- *   allowedPaymentMethodTypes?: list<PaymentMethodTypes::*>|null,
- *   billingCurrency?: Currency::*,
- *   discountCode?: string|null,
- *   metadata?: array<string, string>,
- *   onDemand?: OnDemandSubscription,
- *   paymentLink?: bool|null,
- *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool,
- *   taxID?: string|null,
- *   trialPeriodDays?: int|null,
- * }
- */
 final class SubscriptionCreateParams implements BaseModel
 {
     use SdkModel;

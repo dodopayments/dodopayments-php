@@ -12,17 +12,6 @@ use Dodopayments\Core\Conversion\ListOf;
 
 /**
  * PATCH /discounts/{discount_id}.
- *
- * @phpstan-type update_params = array{
- *   amount?: int|null,
- *   code?: string|null,
- *   expiresAt?: \DateTimeInterface|null,
- *   name?: string|null,
- *   restrictedTo?: list<string>|null,
- *   subscriptionCycles?: int|null,
- *   type?: DiscountType::*,
- *   usageLimit?: int|null,
- * }
  */
 final class DiscountUpdateParams implements BaseModel
 {

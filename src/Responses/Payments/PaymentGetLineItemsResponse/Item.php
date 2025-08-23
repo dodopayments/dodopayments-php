@@ -8,16 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type item_alias = array{
- *   amount: int,
- *   itemsID: string,
- *   refundableAmount: int,
- *   tax: int,
- *   description?: string|null,
- *   name?: string|null,
- * }
- */
 final class Item implements BaseModel
 {
     use SdkModel;

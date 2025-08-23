@@ -11,8 +11,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
  * Theme of the page.
  *
  * Default is `System`.
- *
- * @phpstan-type theme_alias = Theme::*
  */
 final class Theme implements ConverterSource
 {

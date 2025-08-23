@@ -8,19 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type dispute_alias = array{
- *   amount: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   currency: string,
- *   disputeID: string,
- *   disputeStage: DisputeStage::*,
- *   disputeStatus: DisputeStatus::*,
- *   paymentID: string,
- *   remarks?: string|null,
- * }
- */
 final class Dispute implements BaseModel
 {
     use SdkModel;

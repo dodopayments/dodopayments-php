@@ -8,9 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type subscription_charge_response_alias = array{paymentID: string}
- */
 final class SubscriptionChargeResponse implements BaseModel
 {
     use SdkModel;

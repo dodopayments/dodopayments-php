@@ -15,34 +15,6 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
  * Response struct representing subscription details.
- *
- * @phpstan-type subscription_alias = array{
- *   addons: list<AddonCartResponseItem>,
- *   billing: BillingAddress,
- *   cancelAtNextBillingDate: bool,
- *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
- *   customer: CustomerLimitedDetails,
- *   metadata: array<string, string>,
- *   nextBillingDate: \DateTimeInterface,
- *   onDemand: bool,
- *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: TimeInterval::*,
- *   previousBillingDate: \DateTimeInterface,
- *   productID: string,
- *   quantity: int,
- *   recurringPreTaxAmount: int,
- *   status: SubscriptionStatus::*,
- *   subscriptionID: string,
- *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: TimeInterval::*,
- *   taxInclusive: bool,
- *   trialPeriodDays: int,
- *   cancelledAt?: \DateTimeInterface|null,
- *   discountCyclesRemaining?: int|null,
- *   discountID?: string|null,
- *   expiresAt?: \DateTimeInterface|null,
- * }
  */
 final class Subscription implements BaseModel
 {

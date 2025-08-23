@@ -14,15 +14,6 @@ use Dodopayments\WebhookEvents\WebhookEventType;
 
 /**
  * Patch a webhook by id.
- *
- * @phpstan-type update_params = array{
- *   description?: string|null,
- *   disabled?: bool|null,
- *   filterTypes?: list<WebhookEventType::*>|null,
- *   metadata?: array<string, string>|null,
- *   rateLimit?: int|null,
- *   url?: string|null,
- * }
  */
 final class WebhookUpdateParams implements BaseModel
 {

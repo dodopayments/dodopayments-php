@@ -12,20 +12,6 @@ use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\AddonCartResponseItem;
 
-/**
- * @phpstan-type subscription_new_response_alias = array{
- *   addons: list<AddonCartResponseItem>,
- *   customer: CustomerLimitedDetails,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   recurringPreTaxAmount: int,
- *   subscriptionID: string,
- *   clientSecret?: string|null,
- *   discountID?: string|null,
- *   expiresOn?: \DateTimeInterface|null,
- *   paymentLink?: string|null,
- * }
- */
 final class SubscriptionNewResponse implements BaseModel
 {
     use SdkModel;

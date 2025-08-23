@@ -10,14 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Subscriptions\AttachAddon;
 
-/**
- * @phpstan-type product_cart_alias = array{
- *   productID: string,
- *   quantity: int,
- *   addons?: list<AttachAddon>|null,
- *   amount?: int|null,
- * }
- */
 final class ProductCart implements BaseModel
 {
     use SdkModel;

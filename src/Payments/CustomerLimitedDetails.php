@@ -8,11 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type customer_limited_details_alias = array{
- *   customerID: string, email: string, name: string
- * }
- */
 final class CustomerLimitedDetails implements BaseModel
 {
     use SdkModel;

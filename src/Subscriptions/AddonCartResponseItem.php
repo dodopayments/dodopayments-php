@@ -10,10 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * Response struct representing subscription details.
- *
- * @phpstan-type addon_cart_response_item_alias = array{
- *   addonID: string, quantity: int
- * }
  */
 final class AddonCartResponseItem implements BaseModel
 {

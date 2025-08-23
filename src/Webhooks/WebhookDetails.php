@@ -10,19 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Conversion\MapOf;
 
-/**
- * @phpstan-type webhook_details_alias = array{
- *   id: string,
- *   createdAt: string,
- *   description: string,
- *   metadata: array<string, string>,
- *   updatedAt: string,
- *   url: string,
- *   disabled?: bool|null,
- *   filterTypes?: list<string>|null,
- *   rateLimit?: int|null,
- * }
- */
 final class WebhookDetails implements BaseModel
 {
     use SdkModel;

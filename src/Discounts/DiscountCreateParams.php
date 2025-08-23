@@ -13,17 +13,6 @@ use Dodopayments\Core\Conversion\ListOf;
 /**
  * POST /discounts
  * If `code` is omitted or empty, a random 16-char uppercase code is generated.
- *
- * @phpstan-type create_params = array{
- *   amount: int,
- *   type: DiscountType::*,
- *   code?: string|null,
- *   expiresAt?: \DateTimeInterface|null,
- *   name?: string|null,
- *   restrictedTo?: list<string>|null,
- *   subscriptionCycles?: int|null,
- *   usageLimit?: int|null,
- * }
  */
 final class DiscountCreateParams implements BaseModel
 {

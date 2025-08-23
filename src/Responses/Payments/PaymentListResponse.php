@@ -12,22 +12,6 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\IntentStatus;
 
-/**
- * @phpstan-type payment_list_response_alias = array{
- *   brandID: string,
- *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
- *   customer: CustomerLimitedDetails,
- *   digitalProductsDelivered: bool,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   totalAmount: int,
- *   paymentMethod?: string|null,
- *   paymentMethodType?: string|null,
- *   status?: IntentStatus::*,
- *   subscriptionID?: string|null,
- * }
- */
 final class PaymentListResponse implements BaseModel
 {
     use SdkModel;

@@ -12,19 +12,6 @@ use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
-/**
- * @phpstan-type payment_new_response_alias = array{
- *   clientSecret: string,
- *   customer: CustomerLimitedDetails,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   totalAmount: int,
- *   discountID?: string|null,
- *   expiresOn?: \DateTimeInterface|null,
- *   paymentLink?: string|null,
- *   productCart?: list<OneTimeProductCartItem>|null,
- * }
- */
 final class PaymentNewResponse implements BaseModel
 {
     use SdkModel;

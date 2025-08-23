@@ -11,15 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 
-/**
- * @phpstan-type charge_params = array{
- *   productPrice: int,
- *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   metadata?: array<string, string>|null,
- *   productCurrency?: Currency::*,
- *   productDescription?: string|null,
- * }
- */
 final class SubscriptionChargeParams implements BaseModel
 {
     use SdkModel;

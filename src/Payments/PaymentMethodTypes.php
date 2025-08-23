@@ -7,9 +7,6 @@ namespace Dodopayments\Payments;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type payment_method_types_alias = PaymentMethodTypes::*
- */
 final class PaymentMethodTypes implements ConverterSource
 {
     use SdkEnum;
