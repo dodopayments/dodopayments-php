@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Represents the different categories of taxation applicable to various products and services.
- *
- * @phpstan-type tax_category_alias = TaxCategory::*
  */
 final class TaxCategory implements ConverterSource
 {

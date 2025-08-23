@@ -9,15 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type list_params = array{
- *   archived?: bool,
- *   brandID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   recurring?: bool,
- * }
- */
 final class ProductListParams implements BaseModel
 {
     use SdkModel;

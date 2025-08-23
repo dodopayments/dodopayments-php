@@ -9,15 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
-/**
- * @phpstan-type on_demand_subscription_alias = array{
- *   mandateOnly: bool,
- *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   productCurrency?: Currency::*,
- *   productDescription?: string|null,
- *   productPrice?: int|null,
- * }
- */
 final class OnDemandSubscription implements BaseModel
 {
     use SdkModel;

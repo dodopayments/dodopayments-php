@@ -7,9 +7,6 @@ namespace Dodopayments\Subscriptions;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type subscription_status_alias = SubscriptionStatus::*
- */
 final class SubscriptionStatus implements ConverterSource
 {
     use SdkEnum;

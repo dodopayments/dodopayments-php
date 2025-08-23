@@ -7,9 +7,6 @@ namespace Dodopayments\LicenseKeys;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type license_key_status_alias = LicenseKeyStatus::*
- */
 final class LicenseKeyStatus implements ConverterSource
 {
     use SdkEnum;

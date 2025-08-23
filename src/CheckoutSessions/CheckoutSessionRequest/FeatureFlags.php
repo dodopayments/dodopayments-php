@@ -8,15 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type feature_flags_alias = array{
- *   allowCurrencySelection?: bool,
- *   allowDiscountCode?: bool,
- *   allowPhoneNumberCollection?: bool,
- *   allowTaxID?: bool,
- *   alwaysCreateNewCustomer?: bool,
- * }
- */
 final class FeatureFlags implements BaseModel
 {
     use SdkModel;

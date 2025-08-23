@@ -8,9 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type file_alias = array{fileID: string, fileName: string, url: string}
- */
 final class File implements BaseModel
 {
     use SdkModel;

@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * The current status of the payout.
- *
- * @phpstan-type status_alias = Status::*
  */
 final class Status implements ConverterSource
 {

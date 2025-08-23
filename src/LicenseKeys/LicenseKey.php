@@ -8,22 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type license_key_alias = array{
- *   id: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   customerID: string,
- *   instancesCount: int,
- *   key: string,
- *   paymentID: string,
- *   productID: string,
- *   status: LicenseKeyStatus::*,
- *   activationsLimit?: int|null,
- *   expiresAt?: \DateTimeInterface|null,
- *   subscriptionID?: string|null,
- * }
- */
 final class LicenseKey implements BaseModel
 {
     use SdkModel;

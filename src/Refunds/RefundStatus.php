@@ -7,9 +7,6 @@ namespace Dodopayments\Refunds;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type refund_status_alias = RefundStatus::*
- */
 final class RefundStatus implements ConverterSource
 {
     use SdkEnum;

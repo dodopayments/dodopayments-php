@@ -11,11 +11,6 @@ use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse\Item;
 
-/**
- * @phpstan-type payment_get_line_items_response_alias = array{
- *   currency: Currency::*, items: list<Item>
- * }
- */
 final class PaymentGetLineItemsResponse implements BaseModel
 {
     use SdkModel;

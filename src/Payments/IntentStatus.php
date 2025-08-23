@@ -7,9 +7,6 @@ namespace Dodopayments\Payments;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type intent_status_alias = IntentStatus::*
- */
 final class IntentStatus implements ConverterSource
 {
     use SdkEnum;

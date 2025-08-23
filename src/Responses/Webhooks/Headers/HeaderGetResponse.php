@@ -15,10 +15,6 @@ use Dodopayments\Core\Conversion\MapOf;
  *
  * Sensitive headers that have been redacted are returned in the sensitive
  * field.
- *
- * @phpstan-type header_get_response_alias = array{
- *   headers: array<string, string>, sensitive: list<string>
- * }
  */
 final class HeaderGetResponse implements BaseModel
 {

@@ -15,8 +15,6 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
 /**
  * The latest data at the time of delivery attempt.
- *
- * @phpstan-type data_alias = Payment|Subscription|Refund|Dispute|LicenseKey
  */
 final class Data implements ConverterSource
 {

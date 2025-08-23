@@ -10,25 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Responses\Payouts\PayoutListResponse\Status;
 
-/**
- * @phpstan-type payout_list_response_alias = array{
- *   amount: int,
- *   businessID: string,
- *   chargebacks: int,
- *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
- *   fee: int,
- *   paymentMethod: string,
- *   payoutID: string,
- *   refunds: int,
- *   status: Status::*,
- *   tax: int,
- *   updatedAt: \DateTimeInterface,
- *   name?: string|null,
- *   payoutDocumentURL?: string|null,
- *   remarks?: string|null,
- * }
- */
 final class PayoutListResponse implements BaseModel
 {
     use SdkModel;

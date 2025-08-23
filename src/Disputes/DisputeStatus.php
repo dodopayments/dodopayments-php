@@ -7,9 +7,6 @@ namespace Dodopayments\Disputes;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type dispute_status_alias = DisputeStatus::*
- */
 final class DisputeStatus implements ConverterSource
 {
     use SdkEnum;

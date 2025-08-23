@@ -14,28 +14,6 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Product\DigitalProductDelivery;
 
-/**
- * @phpstan-type product_alias = array{
- *   brandID: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   isRecurring: bool,
- *   licenseKeyEnabled: bool,
- *   metadata: array<string, string>,
- *   price: OneTimePrice|RecurringPrice,
- *   productID: string,
- *   taxCategory: TaxCategory::*,
- *   updatedAt: \DateTimeInterface,
- *   addons?: list<string>|null,
- *   description?: string|null,
- *   digitalProductDelivery?: DigitalProductDelivery|null,
- *   image?: string|null,
- *   licenseKeyActivationMessage?: string|null,
- *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDuration,
- *   name?: string|null,
- * }
- */
 final class Product implements BaseModel
 {
     use SdkModel;

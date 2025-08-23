@@ -13,20 +13,6 @@ use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * Recurring price details.
- *
- * @phpstan-type recurring_price_alias = array{
- *   currency: Currency::*,
- *   discount: float,
- *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: TimeInterval::*,
- *   price: int,
- *   purchasingPowerParity: bool,
- *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: TimeInterval::*,
- *   type: Type::*,
- *   taxInclusive?: bool|null,
- *   trialPeriodDays?: int,
- * }
  */
 final class RecurringPrice implements BaseModel
 {

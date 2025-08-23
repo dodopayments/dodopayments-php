@@ -7,9 +7,6 @@ namespace Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type type_alias = Type::*
- */
 final class Type implements ConverterSource
 {
     use SdkEnum;

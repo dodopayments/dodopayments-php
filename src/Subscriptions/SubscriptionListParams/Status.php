@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * Filter by status.
- *
- * @phpstan-type status_alias = Status::*
  */
 final class Status implements ConverterSource
 {

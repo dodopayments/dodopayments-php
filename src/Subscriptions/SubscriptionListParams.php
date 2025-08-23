@@ -10,17 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 
-/**
- * @phpstan-type list_params = array{
- *   brandID?: string,
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   status?: Status::*,
- * }
- */
 final class SubscriptionListParams implements BaseModel
 {
     use SdkModel;

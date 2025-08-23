@@ -8,11 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type product_update_files_response_alias = array{
- *   fileID: string, url: string
- * }
- */
 final class ProductUpdateFilesResponse implements BaseModel
 {
     use SdkModel;
