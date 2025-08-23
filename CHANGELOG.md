@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.51.1 (2025-08-23)
+
+Full Changelog: [v1.51.0...v1.51.1](https://github.com/dodopayments/dodopayments-php/compare/v1.51.0...v1.51.1)
+
+### Chores
+
+* remove type aliases ([05256ab](https://github.com/dodopayments/dodopayments-php/commit/05256abfaee0e4669d92c0ac9f5ef558c3c5923d))
+
 ## 1.51.0 (2025-08-22)
 
 Full Changelog: [v1.50.1...v1.51.0](https://github.com/dodopayments/dodopayments-php/compare/v1.50.1...v1.51.0)
