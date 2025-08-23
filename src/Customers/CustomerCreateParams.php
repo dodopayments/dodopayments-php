@@ -9,11 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type create_params = array{
- *   email: string, name: string, phoneNumber?: string|null
- * }
- */
 final class CustomerCreateParams implements BaseModel
 {
     use SdkModel;

@@ -11,11 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
-/**
- * @phpstan-type create_params = array{
- *   paymentID: string, items?: list<Item>|null, reason?: string|null
- * }
- */
 final class RefundCreateParams implements BaseModel
 {
     use SdkModel;

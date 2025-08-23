@@ -9,9 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 
-/**
- * @phpstan-type dispute_alias = array{payloadType: PayloadType::*}
- */
 final class Dispute implements BaseModel
 {
     use SdkModel;

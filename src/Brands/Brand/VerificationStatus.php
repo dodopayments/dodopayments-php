@@ -7,9 +7,6 @@ namespace Dodopayments\Brands\Brand;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type verification_status_alias = VerificationStatus::*
- */
 final class VerificationStatus implements ConverterSource
 {
     use SdkEnum;

@@ -12,8 +12,6 @@ use Dodopayments\Core\Conversion\MapOf;
 
 /**
  * Patch a webhook by id.
- *
- * @phpstan-type update_params = array{headers: array<string, string>}
  */
 final class HeaderUpdateParams implements BaseModel
 {

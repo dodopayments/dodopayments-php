@@ -9,19 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
-/**
- * @phpstan-type refund_alias = array{
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   isPartial: bool,
- *   paymentID: string,
- *   refundID: string,
- *   status: RefundStatus::*,
- *   amount?: int|null,
- *   currency?: Currency::*,
- *   reason?: string|null,
- * }
- */
 final class Refund implements BaseModel
 {
     use SdkModel;

@@ -11,12 +11,6 @@ use Dodopayments\Core\Conversion\ListOf;
 
 /**
  * Choose how you would like you digital product delivered.
- *
- * @phpstan-type digital_product_delivery_alias = array{
- *   externalURL?: string|null,
- *   files?: list<string>|null,
- *   instructions?: string|null,
- * }
  */
 final class DigitalProductDelivery implements BaseModel
 {

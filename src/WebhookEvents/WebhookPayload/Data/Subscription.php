@@ -11,8 +11,6 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
 
 /**
  * Response struct representing subscription details.
- *
- * @phpstan-type subscription_alias = array{payloadType: PayloadType::*}
  */
 final class Subscription implements BaseModel
 {

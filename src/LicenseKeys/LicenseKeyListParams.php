@@ -10,15 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 
-/**
- * @phpstan-type list_params = array{
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   productID?: string,
- *   status?: Status::*,
- * }
- */
 final class LicenseKeyListParams implements BaseModel
 {
     use SdkModel;

@@ -8,14 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type create_new_customer_alias = array{
- *   email: string,
- *   name: string,
- *   createNewCustomer?: bool,
- *   phoneNumber?: string|null,
- * }
- */
 final class CreateNewCustomer implements BaseModel
 {
     use SdkModel;

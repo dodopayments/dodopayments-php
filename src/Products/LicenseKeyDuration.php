@@ -9,11 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\TimeInterval;
 
-/**
- * @phpstan-type license_key_duration_alias = array{
- *   count: int, interval: TimeInterval::*
- * }
- */
 final class LicenseKeyDuration implements BaseModel
 {
     use SdkModel;

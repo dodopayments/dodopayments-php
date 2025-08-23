@@ -9,22 +9,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type brand_alias = array{
- *   brandID: string,
- *   businessID: string,
- *   enabled: bool,
- *   statementDescriptor: string,
- *   verificationEnabled: bool,
- *   verificationStatus: VerificationStatus::*,
- *   description?: string|null,
- *   image?: string|null,
- *   name?: string|null,
- *   reasonForHold?: string|null,
- *   supportEmail?: string|null,
- *   url?: string|null,
- * }
- */
 final class Brand implements BaseModel
 {
     use SdkModel;

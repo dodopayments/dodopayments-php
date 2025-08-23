@@ -12,17 +12,6 @@ use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
-/**
- * @phpstan-type update_params = array{
- *   billing?: BillingAddress,
- *   cancelAtNextBillingDate?: bool|null,
- *   disableOnDemand?: DisableOnDemand|null,
- *   metadata?: array<string, string>|null,
- *   nextBillingDate?: \DateTimeInterface|null,
- *   status?: SubscriptionStatus::*,
- *   taxID?: string|null,
- * }
- */
 final class SubscriptionUpdateParams implements BaseModel
 {
     use SdkModel;

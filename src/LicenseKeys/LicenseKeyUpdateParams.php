@@ -9,13 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type update_params = array{
- *   activationsLimit?: int|null,
- *   disabled?: bool|null,
- *   expiresAt?: \DateTimeInterface|null,
- * }
- */
 final class LicenseKeyUpdateParams implements BaseModel
 {
     use SdkModel;

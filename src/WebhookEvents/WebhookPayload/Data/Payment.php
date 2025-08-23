@@ -9,9 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
 
-/**
- * @phpstan-type payment_alias = array{payloadType: PayloadType::*}
- */
 final class Payment implements BaseModel
 {
     use SdkModel;

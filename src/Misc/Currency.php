@@ -7,9 +7,6 @@ namespace Dodopayments\Misc;
 use Dodopayments\Core\Concerns\SdkEnum;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
-/**
- * @phpstan-type currency_alias = Currency::*
- */
 final class Currency implements ConverterSource
 {
     use SdkEnum;

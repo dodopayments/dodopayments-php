@@ -8,9 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
-/**
- * @phpstan-type attach_addon_alias = array{addonID: string, quantity: int}
- */
 final class AttachAddon implements BaseModel
 {
     use SdkModel;

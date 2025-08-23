@@ -10,9 +10,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 
-/**
- * @phpstan-type brand_list_response_alias = array{items: list<Brand>}
- */
 final class BrandListResponse implements BaseModel
 {
     use SdkModel;

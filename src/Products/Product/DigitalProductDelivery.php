@@ -10,11 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Products\Product\DigitalProductDelivery\File;
 
-/**
- * @phpstan-type digital_product_delivery_alias = array{
- *   externalURL?: string|null, files?: list<File>|null, instructions?: string|null
- * }
- */
 final class DigitalProductDelivery implements BaseModel
 {
     use SdkModel;

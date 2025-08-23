@@ -16,32 +16,6 @@ use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * Response struct representing subscription details.
- *
- * @phpstan-type subscription_list_response_alias = array{
- *   billing: BillingAddress,
- *   cancelAtNextBillingDate: bool,
- *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
- *   customer: CustomerLimitedDetails,
- *   metadata: array<string, string>,
- *   nextBillingDate: \DateTimeInterface,
- *   onDemand: bool,
- *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: TimeInterval::*,
- *   previousBillingDate: \DateTimeInterface,
- *   productID: string,
- *   quantity: int,
- *   recurringPreTaxAmount: int,
- *   status: SubscriptionStatus::*,
- *   subscriptionID: string,
- *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: TimeInterval::*,
- *   taxInclusive: bool,
- *   trialPeriodDays: int,
- *   cancelledAt?: \DateTimeInterface|null,
- *   discountCyclesRemaining?: int|null,
- *   discountID?: string|null,
- * }
  */
 final class SubscriptionListResponse implements BaseModel
 {

@@ -9,8 +9,6 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
  * ISO country code alpha2 variant.
- *
- * @phpstan-type country_code_alias = CountryCode::*
  */
 final class CountryCode implements ConverterSource
 {

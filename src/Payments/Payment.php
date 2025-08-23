@@ -15,40 +15,6 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Refunds\Refund;
 
-/**
- * @phpstan-type payment_alias = array{
- *   billing: BillingAddress,
- *   brandID: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
- *   customer: CustomerLimitedDetails,
- *   digitalProductsDelivered: bool,
- *   disputes: list<Dispute>,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   refunds: list<Refund>,
- *   settlementAmount: int,
- *   settlementCurrency: Currency::*,
- *   totalAmount: int,
- *   cardIssuingCountry?: CountryCode::*,
- *   cardLastFour?: string|null,
- *   cardNetwork?: string|null,
- *   cardType?: string|null,
- *   discountID?: string|null,
- *   errorCode?: string|null,
- *   errorMessage?: string|null,
- *   paymentLink?: string|null,
- *   paymentMethod?: string|null,
- *   paymentMethodType?: string|null,
- *   productCart?: list<ProductCart>|null,
- *   settlementTax?: int|null,
- *   status?: IntentStatus::*,
- *   subscriptionID?: string|null,
- *   tax?: int|null,
- *   updatedAt?: \DateTimeInterface|null,
- * }
- */
 final class Payment implements BaseModel
 {
     use SdkModel;

@@ -9,11 +9,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 
-/**
- * @phpstan-type subscription_data_alias = array{
- *   onDemand?: OnDemandSubscription, trialPeriodDays?: int|null
- * }
- */
 final class SubscriptionData implements BaseModel
 {
     use SdkModel;

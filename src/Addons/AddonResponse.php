@@ -10,20 +10,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
-/**
- * @phpstan-type addon_response_alias = array{
- *   id: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
- *   name: string,
- *   price: int,
- *   taxCategory: TaxCategory::*,
- *   updatedAt: \DateTimeInterface,
- *   description?: string|null,
- *   image?: string|null,
- * }
- */
 final class AddonResponse implements BaseModel
 {
     use SdkModel;
