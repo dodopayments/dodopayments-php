@@ -27,25 +27,25 @@ final class BillingAddress implements BaseModel
     /**
      * City name.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $city;
 
     /**
      * State or province name.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $state;
 
     /**
      * Street address including house number and unit/apartment if applicable.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $street;
 
     /**
      * Postal code or ZIP code.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $zipcode;
 
     /**

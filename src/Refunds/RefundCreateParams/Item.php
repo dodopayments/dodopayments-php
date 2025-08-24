@@ -21,7 +21,7 @@ final class Item implements BaseModel
     /**
      * The amount to refund. if None the whole item is refunded.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $amount;
 
     /**

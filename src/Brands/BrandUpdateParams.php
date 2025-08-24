@@ -17,16 +17,16 @@ final class BrandUpdateParams implements BaseModel
     /**
      * The UUID you got back from the presigned‐upload call.
      */
-    #[Api('image_id', optional: true)]
+    #[Api('image_id', nullable: true, optional: true)]
     public ?string $imageID;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('statement_descriptor', optional: true)]
+    #[Api('statement_descriptor', nullable: true, optional: true)]
     public ?string $statementDescriptor;
 
-    #[Api('support_email', optional: true)]
+    #[Api('support_email', nullable: true, optional: true)]
     public ?string $supportEmail;
 
     public function __construct()

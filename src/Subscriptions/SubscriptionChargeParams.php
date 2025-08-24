@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 
 final class SubscriptionChargeParams implements BaseModel
@@ -27,7 +26,7 @@ final class SubscriptionChargeParams implements BaseModel
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    #[Api('adaptive_currency_fees_inclusive', optional: true)]
+    #[Api('adaptive_currency_fees_inclusive', nullable: true, optional: true)]
     public ?bool $adaptiveCurrencyFeesInclusive;
 
     /**
@@ -35,7 +34,7 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
 
     /**
@@ -43,14 +42,19 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * @var Currency::*|null $productCurrency
      */
-    #[Api('product_currency', enum: Currency::class, optional: true)]
+    #[Api(
+        'product_currency',
+        enum: Currency::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $productCurrency;
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    #[Api('product_description', optional: true)]
+    #[Api('product_description', nullable: true, optional: true)]
     public ?string $productDescription;
 
     /**

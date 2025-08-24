@@ -14,19 +14,19 @@ final class BrandCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('statement_descriptor', optional: true)]
+    #[Api('statement_descriptor', nullable: true, optional: true)]
     public ?string $statementDescriptor;
 
-    #[Api('support_email', optional: true)]
+    #[Api('support_email', nullable: true, optional: true)]
     public ?string $supportEmail;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $url;
 
     public function __construct()

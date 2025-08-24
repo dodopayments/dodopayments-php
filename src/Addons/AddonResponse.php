@@ -69,13 +69,13 @@ final class AddonResponse implements BaseModel
     /**
      * Optional description of the Addon.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**
      * Image of the Addon.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $image;
 
     /**

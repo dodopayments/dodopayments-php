@@ -23,7 +23,7 @@ final class OnDemandSubscription implements BaseModel
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    #[Api('adaptive_currency_fees_inclusive', optional: true)]
+    #[Api('adaptive_currency_fees_inclusive', nullable: true, optional: true)]
     public ?bool $adaptiveCurrencyFeesInclusive;
 
     /**
@@ -31,14 +31,19 @@ final class OnDemandSubscription implements BaseModel
      *
      * @var Currency::*|null $productCurrency
      */
-    #[Api('product_currency', enum: Currency::class, optional: true)]
+    #[Api(
+        'product_currency',
+        enum: Currency::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $productCurrency;
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    #[Api('product_description', optional: true)]
+    #[Api('product_description', nullable: true, optional: true)]
     public ?string $productDescription;
 
     /**
@@ -47,7 +52,7 @@ final class OnDemandSubscription implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api('product_price', optional: true)]
+    #[Api('product_price', nullable: true, optional: true)]
     public ?int $productPrice;
 
     /**

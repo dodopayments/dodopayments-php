@@ -8,8 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
@@ -25,28 +23,28 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var list<string>|null $addons
      */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $addons;
 
-    #[Api('brand_id', optional: true)]
+    #[Api('brand_id', nullable: true, optional: true)]
     public ?string $brandID;
 
     /**
      * Description of the product, optional and must be at most 1000 characters.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**
      * Choose how you would like you digital product delivered.
      */
-    #[Api('digital_product_delivery', optional: true)]
+    #[Api('digital_product_delivery', nullable: true, optional: true)]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
      * Product image id after its uploaded to S3.
      */
-    #[Api('image_id', optional: true)]
+    #[Api('image_id', nullable: true, optional: true)]
     public ?string $imageID;
 
     /**
@@ -55,7 +53,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
      * activating the license key.
      */
-    #[Api('license_key_activation_message', optional: true)]
+    #[Api('license_key_activation_message', nullable: true, optional: true)]
     public ?string $licenseKeyActivationMessage;
 
     /**
@@ -64,7 +62,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
      */
-    #[Api('license_key_activations_limit', optional: true)]
+    #[Api('license_key_activations_limit', nullable: true, optional: true)]
     public ?int $licenseKeyActivationsLimit;
 
     /**
@@ -73,7 +71,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
      */
-    #[Api('license_key_duration', optional: true)]
+    #[Api('license_key_duration', nullable: true, optional: true)]
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
@@ -82,7 +80,7 @@ final class ProductUpdateParams implements BaseModel
      * If `true`, additional fields related to license key (duration, activations limit, activation message)
      * become applicable.
      */
-    #[Api('license_key_enabled', optional: true)]
+    #[Api('license_key_enabled', nullable: true, optional: true)]
     public ?bool $licenseKeyEnabled;
 
     /**
@@ -90,19 +88,19 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
 
     /**
      * Name of the product, optional and must be at most 100 characters.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
      * Price details of the product.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public OneTimePrice|RecurringPrice|null $price;
 
     /**
@@ -110,7 +108,12 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var TaxCategory::*|null $taxCategory
      */
-    #[Api('tax_category', enum: TaxCategory::class, optional: true)]
+    #[Api(
+        'tax_category',
+        enum: TaxCategory::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $taxCategory;
 
     public function __construct()

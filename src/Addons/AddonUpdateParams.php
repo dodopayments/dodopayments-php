@@ -21,31 +21,31 @@ final class AddonUpdateParams implements BaseModel
      *
      * @var Currency::*|null $currency
      */
-    #[Api(enum: Currency::class, optional: true)]
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
 
     /**
      * Description of the Addon, optional and must be at most 1000 characters.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**
      * Addon image id after its uploaded to S3.
      */
-    #[Api('image_id', optional: true)]
+    #[Api('image_id', nullable: true, optional: true)]
     public ?string $imageID;
 
     /**
      * Name of the Addon, optional and must be at most 100 characters.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
      * Amount of the addon.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $price;
 
     /**
@@ -53,7 +53,12 @@ final class AddonUpdateParams implements BaseModel
      *
      * @var TaxCategory::*|null $taxCategory
      */
-    #[Api('tax_category', enum: TaxCategory::class, optional: true)]
+    #[Api(
+        'tax_category',
+        enum: TaxCategory::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $taxCategory;
 
     public function __construct()

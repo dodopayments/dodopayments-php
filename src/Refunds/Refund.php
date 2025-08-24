@@ -54,7 +54,7 @@ final class Refund implements BaseModel
     /**
      * The refunded amount.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $amount;
 
     /**
@@ -62,13 +62,13 @@ final class Refund implements BaseModel
      *
      * @var Currency::*|null $currency
      */
-    #[Api(enum: Currency::class, optional: true)]
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
 
     /**
      * The reason provided for the refund, if any. Optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $reason;
 
     /**

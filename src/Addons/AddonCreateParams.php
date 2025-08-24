@@ -47,7 +47,7 @@ final class AddonCreateParams implements BaseModel
     /**
      * Optional description of the Addon.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**

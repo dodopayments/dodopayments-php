@@ -7,8 +7,6 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 
 final class WebhookDetails implements BaseModel
 {
@@ -37,7 +35,7 @@ final class WebhookDetails implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -57,7 +55,7 @@ final class WebhookDetails implements BaseModel
      *
      * If true, events are not sent
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?bool $disabled;
 
     /**
@@ -67,18 +65,13 @@ final class WebhookDetails implements BaseModel
      *
      * @var list<string>|null $filterTypes
      */
-    #[Api(
-        'filter_types',
-        type: new ListOf('string'),
-        nullable: true,
-        optional: true
-    )]
+    #[Api('filter_types', list: 'string', nullable: true, optional: true)]
     public ?array $filterTypes;
 
     /**
      * Configured rate limit.
      */
-    #[Api('rate_limit', optional: true)]
+    #[Api('rate_limit', nullable: true, optional: true)]
     public ?int $rateLimit;
 
     /**

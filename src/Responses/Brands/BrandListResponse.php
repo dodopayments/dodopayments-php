@@ -8,7 +8,6 @@ use Dodopayments\Brands\Brand;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 
 final class BrandListResponse implements BaseModel
 {
@@ -19,7 +18,7 @@ final class BrandListResponse implements BaseModel
      *
      * @var list<Brand> $items
      */
-    #[Api(type: new ListOf(Brand::class))]
+    #[Api(list: Brand::class)]
     public array $items;
 
     /**

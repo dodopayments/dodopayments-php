@@ -18,21 +18,21 @@ final class LicenseKeyUpdateParams implements BaseModel
      * The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      */
-    #[Api('activations_limit', optional: true)]
+    #[Api('activations_limit', nullable: true, optional: true)]
     public ?int $activationsLimit;
 
     /**
      * Indicates whether the license key should be disabled.
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?bool $disabled;
 
     /**
      * The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      */
-    #[Api('expires_at', optional: true)]
+    #[Api('expires_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresAt;
 
     public function __construct()

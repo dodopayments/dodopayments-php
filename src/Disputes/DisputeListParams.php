@@ -73,8 +73,8 @@ final class DisputeListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DisputeStage::*|null $disputeStage
-     * @param DisputeStatus::*|null $disputeStatus
+     * @param DisputeStage::* $disputeStage
+     * @param DisputeStatus::* $disputeStatus
      */
     public static function with(
         ?\DateTimeInterface $createdAtGte = null,

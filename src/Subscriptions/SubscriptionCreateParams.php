@@ -8,8 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -50,7 +48,7 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var list<AttachAddon>|null $addons
      */
-    #[Api(type: new ListOf(AttachAddon::class), nullable: true, optional: true)]
+    #[Api(list: AttachAddon::class, nullable: true, optional: true)]
     public ?array $addons;
 
     /**
@@ -64,7 +62,7 @@ final class SubscriptionCreateParams implements BaseModel
      */
     #[Api(
         'allowed_payment_method_types',
-        type: new ListOf(enum: PaymentMethodTypes::class),
+        list: PaymentMethodTypes::class,
         nullable: true,
         optional: true,
     )]
@@ -76,13 +74,18 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var Currency::*|null $billingCurrency
      */
-    #[Api('billing_currency', enum: Currency::class, optional: true)]
+    #[Api(
+        'billing_currency',
+        enum: Currency::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $billingCurrency;
 
     /**
      * Discount Code to apply to the subscription.
      */
-    #[Api('discount_code', optional: true)]
+    #[Api('discount_code', nullable: true, optional: true)]
     public ?string $discountCode;
 
     /**
@@ -91,23 +94,23 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), optional: true)]
+    #[Api(map: 'string', optional: true)]
     public ?array $metadata;
 
-    #[Api('on_demand', optional: true)]
+    #[Api('on_demand', nullable: true, optional: true)]
     public ?OnDemandSubscription $onDemand;
 
     /**
      * If true, generates a payment link.
      * Defaults to false if not specified.
      */
-    #[Api('payment_link', optional: true)]
+    #[Api('payment_link', nullable: true, optional: true)]
     public ?bool $paymentLink;
 
     /**
      * Optional URL to redirect after successful subscription creation.
      */
-    #[Api('return_url', optional: true)]
+    #[Api('return_url', nullable: true, optional: true)]
     public ?string $returnURL;
 
     /**
@@ -120,7 +123,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    #[Api('tax_id', optional: true)]
+    #[Api('tax_id', nullable: true, optional: true)]
     public ?string $taxID;
 
     /**
@@ -128,7 +131,7 @@ final class SubscriptionCreateParams implements BaseModel
      * If specified, this value overrides the trial period set in the product's price
      * Must be between 0 and 10000 days.
      */
-    #[Api('trial_period_days', optional: true)]
+    #[Api('trial_period_days', nullable: true, optional: true)]
     public ?int $trialPeriodDays;
 
     /**
@@ -165,7 +168,7 @@ final class SubscriptionCreateParams implements BaseModel
      * @param list<AttachAddon>|null $addons
      * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      * @param Currency::* $billingCurrency
-     * @param array<string, string>|null $metadata
+     * @param array<string, string> $metadata
      */
     public static function with(
         BillingAddress $billing,

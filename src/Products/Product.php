@@ -7,8 +7,6 @@ namespace Dodopayments\Products;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
@@ -50,7 +48,7 @@ final class Product implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -84,46 +82,46 @@ final class Product implements BaseModel
      *
      * @var list<string>|null $addons
      */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $addons;
 
     /**
      * Description of the product, optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
-    #[Api('digital_product_delivery', optional: true)]
+    #[Api('digital_product_delivery', nullable: true, optional: true)]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
      * URL of the product image, optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $image;
 
     /**
      * Message sent upon license key activation, if applicable.
      */
-    #[Api('license_key_activation_message', optional: true)]
+    #[Api('license_key_activation_message', nullable: true, optional: true)]
     public ?string $licenseKeyActivationMessage;
 
     /**
      * Limit on the number of activations for the license key, if enabled.
      */
-    #[Api('license_key_activations_limit', optional: true)]
+    #[Api('license_key_activations_limit', nullable: true, optional: true)]
     public ?int $licenseKeyActivationsLimit;
 
     /**
      * Duration of the license key validity, if enabled.
      */
-    #[Api('license_key_duration', optional: true)]
+    #[Api('license_key_duration', nullable: true, optional: true)]
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
      * Name of the product, optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**

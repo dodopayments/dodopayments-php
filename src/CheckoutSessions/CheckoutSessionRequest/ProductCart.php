@@ -7,7 +7,6 @@ namespace Dodopayments\CheckoutSessions\CheckoutSessionRequest;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Subscriptions\AttachAddon;
 
 final class ProductCart implements BaseModel
@@ -28,7 +27,7 @@ final class ProductCart implements BaseModel
      *
      * @var list<AttachAddon>|null $addons
      */
-    #[Api(type: new ListOf(AttachAddon::class), nullable: true, optional: true)]
+    #[Api(list: AttachAddon::class, nullable: true, optional: true)]
     public ?array $addons;
 
     /**
@@ -40,7 +39,7 @@ final class ProductCart implements BaseModel
      * If amount is not set for pay_what_you_want product,
      * customer is allowed to select the amount.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $amount;
 
     /**

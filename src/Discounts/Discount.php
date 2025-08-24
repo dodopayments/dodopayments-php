@@ -7,7 +7,6 @@ namespace Dodopayments\Discounts;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 
 final class Discount implements BaseModel
 {
@@ -52,7 +51,7 @@ final class Discount implements BaseModel
      *
      * @var list<string> $restrictedTo
      */
-    #[Api('restricted_to', type: new ListOf('string'))]
+    #[Api('restricted_to', list: 'string')]
     public array $restrictedTo;
 
     /**
@@ -72,13 +71,13 @@ final class Discount implements BaseModel
     /**
      * Optional date/time after which discount is expired.
      */
-    #[Api('expires_at', optional: true)]
+    #[Api('expires_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresAt;
 
     /**
      * Name for the Discount.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
@@ -86,13 +85,13 @@ final class Discount implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api('subscription_cycles', optional: true)]
+    #[Api('subscription_cycles', nullable: true, optional: true)]
     public ?int $subscriptionCycles;
 
     /**
      * Usage limit for this discount, if any.
      */
-    #[Api('usage_limit', optional: true)]
+    #[Api('usage_limit', nullable: true, optional: true)]
     public ?int $usageLimit;
 
     /**

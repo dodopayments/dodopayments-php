@@ -26,7 +26,7 @@ final class CreateNewCustomer implements BaseModel
     #[Api('create_new_customer', optional: true)]
     public ?bool $createNewCustomer;
 
-    #[Api('phone_number', optional: true)]
+    #[Api('phone_number', nullable: true, optional: true)]
     public ?string $phoneNumber;
 
     /**
