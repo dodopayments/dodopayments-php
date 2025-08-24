@@ -7,7 +7,6 @@ namespace Dodopayments\Responses\Payments;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse\Item;
 
@@ -20,7 +19,7 @@ final class PaymentGetLineItemsResponse implements BaseModel
     public string $currency;
 
     /** @var list<Item> $items */
-    #[Api(type: new ListOf(Item::class))]
+    #[Api(list: Item::class)]
     public array $items;
 
     /**

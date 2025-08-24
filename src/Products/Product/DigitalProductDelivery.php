@@ -7,7 +7,6 @@ namespace Dodopayments\Products\Product;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Products\Product\DigitalProductDelivery\File;
 
 final class DigitalProductDelivery implements BaseModel
@@ -17,7 +16,7 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    #[Api('external_url', optional: true)]
+    #[Api('external_url', nullable: true, optional: true)]
     public ?string $externalURL;
 
     /**
@@ -25,13 +24,13 @@ final class DigitalProductDelivery implements BaseModel
      *
      * @var list<File>|null $files
      */
-    #[Api(type: new ListOf(File::class), nullable: true, optional: true)]
+    #[Api(list: File::class, nullable: true, optional: true)]
     public ?array $files;
 
     /**
      * Instructions to download and use the digital product.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $instructions;
 
     public function __construct()

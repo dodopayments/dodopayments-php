@@ -7,8 +7,6 @@ namespace Dodopayments\Payments;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
@@ -68,7 +66,7 @@ final class Payment implements BaseModel
      *
      * @var list<Dispute> $disputes
      */
-    #[Api(type: new ListOf(Dispute::class))]
+    #[Api(list: Dispute::class)]
     public array $disputes;
 
     /**
@@ -76,7 +74,7 @@ final class Payment implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -90,7 +88,7 @@ final class Payment implements BaseModel
      *
      * @var list<Refund> $refunds
      */
-    #[Api(type: new ListOf(Refund::class))]
+    #[Api(list: Refund::class)]
     public array $refunds;
 
     /**
@@ -120,61 +118,66 @@ final class Payment implements BaseModel
      *
      * @var CountryCode::*|null $cardIssuingCountry
      */
-    #[Api('card_issuing_country', enum: CountryCode::class, optional: true)]
+    #[Api(
+        'card_issuing_country',
+        enum: CountryCode::class,
+        nullable: true,
+        optional: true,
+    )]
     public ?string $cardIssuingCountry;
 
     /**
      * The last four digits of the card.
      */
-    #[Api('card_last_four', optional: true)]
+    #[Api('card_last_four', nullable: true, optional: true)]
     public ?string $cardLastFour;
 
     /**
      * Card network like VISA, MASTERCARD etc.
      */
-    #[Api('card_network', optional: true)]
+    #[Api('card_network', nullable: true, optional: true)]
     public ?string $cardNetwork;
 
     /**
      * The type of card DEBIT or CREDIT.
      */
-    #[Api('card_type', optional: true)]
+    #[Api('card_type', nullable: true, optional: true)]
     public ?string $cardType;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', optional: true)]
+    #[Api('discount_id', nullable: true, optional: true)]
     public ?string $discountID;
 
     /**
      * An error code if the payment failed.
      */
-    #[Api('error_code', optional: true)]
+    #[Api('error_code', nullable: true, optional: true)]
     public ?string $errorCode;
 
     /**
      * An error message if the payment failed.
      */
-    #[Api('error_message', optional: true)]
+    #[Api('error_message', nullable: true, optional: true)]
     public ?string $errorMessage;
 
     /**
      * Checkout URL.
      */
-    #[Api('payment_link', optional: true)]
+    #[Api('payment_link', nullable: true, optional: true)]
     public ?string $paymentLink;
 
     /**
      * Payment method used by customer (e.g. "card", "bank_transfer").
      */
-    #[Api('payment_method', optional: true)]
+    #[Api('payment_method', nullable: true, optional: true)]
     public ?string $paymentMethod;
 
     /**
      * Specific type of payment method (e.g. "visa", "mastercard").
      */
-    #[Api('payment_method_type', optional: true)]
+    #[Api('payment_method_type', nullable: true, optional: true)]
     public ?string $paymentMethodType;
 
     /**
@@ -184,9 +187,9 @@ final class Payment implements BaseModel
      */
     #[Api(
         'product_cart',
-        type: new ListOf(ProductCart::class),
+        list: ProductCart::class,
         nullable: true,
-        optional: true,
+        optional: true
     )]
     public ?array $productCart;
 
@@ -195,7 +198,7 @@ final class Payment implements BaseModel
      * Especially relevant for adaptive pricing where the tax component must be tracked separately
      * in your Dodo balance.
      */
-    #[Api('settlement_tax', optional: true)]
+    #[Api('settlement_tax', nullable: true, optional: true)]
     public ?int $settlementTax;
 
     /**
@@ -203,25 +206,25 @@ final class Payment implements BaseModel
      *
      * @var IntentStatus::*|null $status
      */
-    #[Api(enum: IntentStatus::class, optional: true)]
+    #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
     public ?string $status;
 
     /**
      * Identifier of the subscription if payment is part of a subscription.
      */
-    #[Api('subscription_id', optional: true)]
+    #[Api('subscription_id', nullable: true, optional: true)]
     public ?string $subscriptionID;
 
     /**
      * Amount of tax collected in smallest currency unit (e.g. cents).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $tax;
 
     /**
      * Timestamp when the payment was last updated.
      */
-    #[Api('updated_at', optional: true)]
+    #[Api('updated_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $updatedAt;
 
     /**

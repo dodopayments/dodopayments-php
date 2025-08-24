@@ -53,7 +53,7 @@ final class Customization implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Theme::*|null $theme
+     * @param Theme::* $theme
      */
     public static function with(
         ?bool $showOnDemandTag = null,

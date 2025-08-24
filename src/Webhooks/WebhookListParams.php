@@ -20,13 +20,13 @@ final class WebhookListParams implements BaseModel
     /**
      * The iterator returned from a prior invocation.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $iterator;
 
     /**
      * Limit the number of returned items.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $limit;
 
     public function __construct()

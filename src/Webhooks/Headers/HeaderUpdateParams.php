@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\MapOf;
 
 /**
  * Patch a webhook by id.
@@ -23,7 +22,7 @@ final class HeaderUpdateParams implements BaseModel
      *
      * @var array<string, string> $headers
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $headers;
 
     /**

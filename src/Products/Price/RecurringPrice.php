@@ -83,7 +83,7 @@ final class RecurringPrice implements BaseModel
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', optional: true)]
+    #[Api('tax_inclusive', nullable: true, optional: true)]
     public ?bool $taxInclusive;
 
     /**

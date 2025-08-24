@@ -7,8 +7,6 @@ namespace Dodopayments\Responses\Payments;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\OneTimeProductCartItem;
 
@@ -34,7 +32,7 @@ final class PaymentNewResponse implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -52,19 +50,19 @@ final class PaymentNewResponse implements BaseModel
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', optional: true)]
+    #[Api('discount_id', nullable: true, optional: true)]
     public ?string $discountID;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Api('expires_on', optional: true)]
+    #[Api('expires_on', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresOn;
 
     /**
      * Optional URL to a hosted payment page.
      */
-    #[Api('payment_link', optional: true)]
+    #[Api('payment_link', nullable: true, optional: true)]
     public ?string $paymentLink;
 
     /**
@@ -74,7 +72,7 @@ final class PaymentNewResponse implements BaseModel
      */
     #[Api(
         'product_cart',
-        type: new ListOf(OneTimeProductCartItem::class),
+        list: OneTimeProductCartItem::class,
         nullable: true,
         optional: true,
     )]

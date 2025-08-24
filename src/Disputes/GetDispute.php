@@ -74,13 +74,13 @@ final class GetDispute implements BaseModel
     /**
      * Reason for the dispute.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $reason;
 
     /**
      * Remarks.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $remarks;
 
     /**

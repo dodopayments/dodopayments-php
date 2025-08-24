@@ -63,13 +63,13 @@ final class OneTimePrice implements BaseModel
      * A suggested price for the user to pay. This value is only considered if
      * [`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored.
      */
-    #[Api('suggested_price', optional: true)]
+    #[Api('suggested_price', nullable: true, optional: true)]
     public ?int $suggestedPrice;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', optional: true)]
+    #[Api('tax_inclusive', nullable: true, optional: true)]
     public ?bool $taxInclusive;
 
     /**

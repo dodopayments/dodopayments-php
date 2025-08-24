@@ -12,8 +12,6 @@ use Dodopayments\CheckoutSessions\CheckoutSessionRequest\SubscriptionData;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
@@ -24,7 +22,7 @@ final class CheckoutSessionRequest implements BaseModel
     use SdkModel;
 
     /** @var list<ProductCart> $productCart */
-    #[Api('product_cart', type: new ListOf(ProductCart::class))]
+    #[Api('product_cart', list: ProductCart::class)]
     public array $productCart;
 
     /**
@@ -39,7 +37,7 @@ final class CheckoutSessionRequest implements BaseModel
      */
     #[Api(
         'allowed_payment_method_types',
-        type: new ListOf(enum: PaymentMethodTypes::class),
+        list: PaymentMethodTypes::class,
         nullable: true,
         optional: true,
     )]
@@ -48,7 +46,7 @@ final class CheckoutSessionRequest implements BaseModel
     /**
      * Billing address information for the session.
      */
-    #[Api('billing_address', optional: true)]
+    #[Api('billing_address', nullable: true, optional: true)]
     public ?BillingAddress $billingAddress;
 
     /**
@@ -56,7 +54,12 @@ final class CheckoutSessionRequest implements BaseModel
      *
      * @var Currency::*|null $billingCurrency
      */
-    #[Api('billing_currency', enum: Currency::class, optional: true)]
+    #[Api(
+        'billing_currency',
+        enum: Currency::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $billingCurrency;
 
     /**
@@ -68,7 +71,7 @@ final class CheckoutSessionRequest implements BaseModel
     /**
      * Customer details for the session.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public AttachExistingCustomer|NewCustomer|null $customer;
 
     /**
@@ -77,7 +80,7 @@ final class CheckoutSessionRequest implements BaseModel
     #[Api(optional: true)]
     public ?Customization $customization;
 
-    #[Api('discount_code', optional: true)]
+    #[Api('discount_code', nullable: true, optional: true)]
     public ?string $discountCode;
 
     #[Api('feature_flags', optional: true)]
@@ -88,13 +91,13 @@ final class CheckoutSessionRequest implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
 
     /**
      * The url to redirect after payment failure or success.
      */
-    #[Api('return_url', optional: true)]
+    #[Api('return_url', nullable: true, optional: true)]
     public ?string $returnURL;
 
     /**
@@ -103,7 +106,7 @@ final class CheckoutSessionRequest implements BaseModel
     #[Api('show_saved_payment_methods', optional: true)]
     public ?bool $showSavedPaymentMethods;
 
-    #[Api('subscription_data', optional: true)]
+    #[Api('subscription_data', nullable: true, optional: true)]
     public ?SubscriptionData $subscriptionData;
 
     /**

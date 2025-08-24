@@ -14,10 +14,10 @@ final class CustomerUpdateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('phone_number', optional: true)]
+    #[Api('phone_number', nullable: true, optional: true)]
     public ?string $phoneNumber;
 
     public function __construct()
