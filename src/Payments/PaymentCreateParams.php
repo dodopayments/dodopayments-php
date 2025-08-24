@@ -8,8 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 
 final class PaymentCreateParams implements BaseModel
@@ -34,7 +32,7 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var list<OneTimeProductCartItem> $productCart
      */
-    #[Api('product_cart', type: new ListOf(OneTimeProductCartItem::class))]
+    #[Api('product_cart', list: OneTimeProductCartItem::class)]
     public array $productCart;
 
     /**
@@ -48,7 +46,7 @@ final class PaymentCreateParams implements BaseModel
      */
     #[Api(
         'allowed_payment_method_types',
-        type: new ListOf(enum: PaymentMethodTypes::class),
+        list: PaymentMethodTypes::class,
         nullable: true,
         optional: true,
     )]
@@ -60,13 +58,18 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var Currency::*|null $billingCurrency
      */
-    #[Api('billing_currency', enum: Currency::class, optional: true)]
+    #[Api(
+        'billing_currency',
+        enum: Currency::class,
+        nullable: true,
+        optional: true
+    )]
     public ?string $billingCurrency;
 
     /**
      * Discount Code to apply to the transaction.
      */
-    #[Api('discount_code', optional: true)]
+    #[Api('discount_code', nullable: true, optional: true)]
     public ?string $discountCode;
 
     /**
@@ -75,20 +78,20 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), optional: true)]
+    #[Api(map: 'string', optional: true)]
     public ?array $metadata;
 
     /**
      * Whether to generate a payment link. Defaults to false if not specified.
      */
-    #[Api('payment_link', optional: true)]
+    #[Api('payment_link', nullable: true, optional: true)]
     public ?bool $paymentLink;
 
     /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
-    #[Api('return_url', optional: true)]
+    #[Api('return_url', nullable: true, optional: true)]
     public ?string $returnURL;
 
     /**
@@ -101,7 +104,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    #[Api('tax_id', optional: true)]
+    #[Api('tax_id', nullable: true, optional: true)]
     public ?string $taxID;
 
     /**
@@ -135,7 +138,7 @@ final class PaymentCreateParams implements BaseModel
      * @param list<OneTimeProductCartItem> $productCart
      * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
      * @param Currency::* $billingCurrency
-     * @param array<string, string>|null $metadata
+     * @param array<string, string> $metadata
      */
     public static function with(
         BillingAddress $billing,

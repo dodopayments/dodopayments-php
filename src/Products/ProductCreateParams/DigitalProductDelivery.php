@@ -18,13 +18,13 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    #[Api('external_url', optional: true)]
+    #[Api('external_url', nullable: true, optional: true)]
     public ?string $externalURL;
 
     /**
      * Instructions to download and use the digital product.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $instructions;
 
     public function __construct()

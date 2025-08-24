@@ -7,7 +7,6 @@ namespace Dodopayments\Responses\Payments;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\IntentStatus;
@@ -33,7 +32,7 @@ final class PaymentListResponse implements BaseModel
     public bool $digitalProductsDelivered;
 
     /** @var array<string, string> $metadata */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     #[Api('payment_id')]
@@ -42,17 +41,17 @@ final class PaymentListResponse implements BaseModel
     #[Api('total_amount')]
     public int $totalAmount;
 
-    #[Api('payment_method', optional: true)]
+    #[Api('payment_method', nullable: true, optional: true)]
     public ?string $paymentMethod;
 
-    #[Api('payment_method_type', optional: true)]
+    #[Api('payment_method_type', nullable: true, optional: true)]
     public ?string $paymentMethodType;
 
     /** @var IntentStatus::*|null $status */
-    #[Api(enum: IntentStatus::class, optional: true)]
+    #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
     public ?string $status;
 
-    #[Api('subscription_id', optional: true)]
+    #[Api('subscription_id', nullable: true, optional: true)]
     public ?string $subscriptionID;
 
     /**

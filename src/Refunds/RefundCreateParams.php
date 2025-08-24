@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
 final class RefundCreateParams implements BaseModel
@@ -27,13 +26,13 @@ final class RefundCreateParams implements BaseModel
      *
      * @var list<Item>|null $items
      */
-    #[Api(type: new ListOf(Item::class), nullable: true, optional: true)]
+    #[Api(list: Item::class, nullable: true, optional: true)]
     public ?array $items;
 
     /**
      * The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $reason;
 
     /**

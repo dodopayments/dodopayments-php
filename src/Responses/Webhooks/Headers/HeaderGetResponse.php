@@ -7,8 +7,6 @@ namespace Dodopayments\Responses\Webhooks\Headers;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 
 /**
  * The value of the headers is returned in the `headers` field.
@@ -25,7 +23,7 @@ final class HeaderGetResponse implements BaseModel
      *
      * @var array<string, string> $headers
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $headers;
 
     /**
@@ -33,7 +31,7 @@ final class HeaderGetResponse implements BaseModel
      *
      * @var list<string> $sensitive
      */
-    #[Api(type: new ListOf('string'))]
+    #[Api(list: 'string')]
     public array $sensitive;
 
     /**

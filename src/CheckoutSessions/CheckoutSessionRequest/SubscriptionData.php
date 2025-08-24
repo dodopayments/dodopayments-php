@@ -13,13 +13,13 @@ final class SubscriptionData implements BaseModel
 {
     use SdkModel;
 
-    #[Api('on_demand', optional: true)]
+    #[Api('on_demand', nullable: true, optional: true)]
     public ?OnDemandSubscription $onDemand;
 
     /**
      * Optional trial period in days If specified, this value overrides the trial period set in the product's price Must be between 0 and 10000 days.
      */
-    #[Api('trial_period_days', optional: true)]
+    #[Api('trial_period_days', nullable: true, optional: true)]
     public ?int $trialPeriodDays;
 
     public function __construct()

@@ -24,10 +24,10 @@ final class Item implements BaseModel
     #[Api]
     public int $tax;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**

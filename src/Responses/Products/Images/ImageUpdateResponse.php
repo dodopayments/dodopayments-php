@@ -15,7 +15,7 @@ final class ImageUpdateResponse implements BaseModel
     #[Api]
     public string $url;
 
-    #[Api('image_id', optional: true)]
+    #[Api('image_id', nullable: true, optional: true)]
     public ?string $imageID;
 
     /**

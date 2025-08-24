@@ -27,7 +27,7 @@ final class Customer implements BaseModel
     #[Api]
     public string $name;
 
-    #[Api('phone_number', optional: true)]
+    #[Api('phone_number', nullable: true, optional: true)]
     public ?string $phoneNumber;
 
     /**

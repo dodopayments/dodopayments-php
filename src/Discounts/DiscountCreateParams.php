@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 
 /**
  * POST /discounts
@@ -44,16 +43,16 @@ final class DiscountCreateParams implements BaseModel
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $code;
 
     /**
      * When the discount expires, if ever.
      */
-    #[Api('expires_at', optional: true)]
+    #[Api('expires_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresAt;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
@@ -61,12 +60,7 @@ final class DiscountCreateParams implements BaseModel
      *
      * @var list<string>|null $restrictedTo
      */
-    #[Api(
-        'restricted_to',
-        type: new ListOf('string'),
-        nullable: true,
-        optional: true
-    )]
+    #[Api('restricted_to', list: 'string', nullable: true, optional: true)]
     public ?array $restrictedTo;
 
     /**
@@ -74,14 +68,14 @@ final class DiscountCreateParams implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api('subscription_cycles', optional: true)]
+    #[Api('subscription_cycles', nullable: true, optional: true)]
     public ?int $subscriptionCycles;
 
     /**
      * How many times this discount can be used (if any).
      * Must be >= 1 if provided.
      */
-    #[Api('usage_limit', optional: true)]
+    #[Api('usage_limit', nullable: true, optional: true)]
     public ?int $usageLimit;
 
     /**

@@ -8,8 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
@@ -39,38 +37,38 @@ final class ProductCreateParams implements BaseModel
      *
      * @var list<string>|null $addons
      */
-    #[Api(type: new ListOf('string'), nullable: true, optional: true)]
+    #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $addons;
 
     /**
      * Brand id for the product, if not provided will default to primary brand.
      */
-    #[Api('brand_id', optional: true)]
+    #[Api('brand_id', nullable: true, optional: true)]
     public ?string $brandID;
 
     /**
      * Optional description of the product.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**
      * Choose how you would like you digital product delivered.
      */
-    #[Api('digital_product_delivery', optional: true)]
+    #[Api('digital_product_delivery', nullable: true, optional: true)]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
      * Optional message displayed during license key activation.
      */
-    #[Api('license_key_activation_message', optional: true)]
+    #[Api('license_key_activation_message', nullable: true, optional: true)]
     public ?string $licenseKeyActivationMessage;
 
     /**
      * The number of times the license key can be activated.
      * Must be 0 or greater.
      */
-    #[Api('license_key_activations_limit', optional: true)]
+    #[Api('license_key_activations_limit', nullable: true, optional: true)]
     public ?int $licenseKeyActivationsLimit;
 
     /**
@@ -78,14 +76,14 @@ final class ProductCreateParams implements BaseModel
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
      */
-    #[Api('license_key_duration', optional: true)]
+    #[Api('license_key_duration', nullable: true, optional: true)]
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
      * When true, generates and sends a license key to your customer.
      * Defaults to false.
      */
-    #[Api('license_key_enabled', optional: true)]
+    #[Api('license_key_enabled', nullable: true, optional: true)]
     public ?bool $licenseKeyEnabled;
 
     /**
@@ -93,13 +91,13 @@ final class ProductCreateParams implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), optional: true)]
+    #[Api(map: 'string', optional: true)]
     public ?array $metadata;
 
     /**
      * Optional name of the product.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
@@ -129,7 +127,7 @@ final class ProductCreateParams implements BaseModel
      *
      * @param TaxCategory::* $taxCategory
      * @param list<string>|null $addons
-     * @param array<string, string>|null $metadata
+     * @param array<string, string> $metadata
      */
     public static function with(
         OneTimePrice|RecurringPrice $price,

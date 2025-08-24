@@ -71,19 +71,19 @@ final class LicenseKey implements BaseModel
     /**
      * The maximum number of activations allowed for this license key.
      */
-    #[Api('activations_limit', optional: true)]
+    #[Api('activations_limit', nullable: true, optional: true)]
     public ?int $activationsLimit;
 
     /**
      * The timestamp indicating when the license key expires, in UTC.
      */
-    #[Api('expires_at', optional: true)]
+    #[Api('expires_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresAt;
 
     /**
      * The unique identifier of the subscription associated with the license key, if any.
      */
-    #[Api('subscription_id', optional: true)]
+    #[Api('subscription_id', nullable: true, optional: true)]
     public ?string $subscriptionID;
 
     /**

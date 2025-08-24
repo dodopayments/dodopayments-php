@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 
 final class SubscriptionChangePlanParams implements BaseModel
@@ -42,7 +41,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      *
      * @var list<AttachAddon>|null $addons
      */
-    #[Api(type: new ListOf(AttachAddon::class), nullable: true, optional: true)]
+    #[Api(list: AttachAddon::class, nullable: true, optional: true)]
     public ?array $addons;
 
     /**

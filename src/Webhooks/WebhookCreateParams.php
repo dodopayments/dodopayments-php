@@ -8,8 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\WebhookEvents\WebhookEventType;
 
 /**
@@ -26,7 +24,7 @@ final class WebhookCreateParams implements BaseModel
     #[Api]
     public string $url;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**
@@ -34,7 +32,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * Default is false
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?bool $disabled;
 
     /**
@@ -44,11 +42,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * @var list<WebhookEventType::*>|null $filterTypes
      */
-    #[Api(
-        'filter_types',
-        type: new ListOf(enum: WebhookEventType::class),
-        optional: true,
-    )]
+    #[Api('filter_types', list: WebhookEventType::class, optional: true)]
     public ?array $filterTypes;
 
     /**
@@ -56,13 +50,13 @@ final class WebhookCreateParams implements BaseModel
      *
      * @var array<string, string>|null $headers
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $headers;
 
     /**
      * The request's idempotency key.
      */
-    #[Api('idempotency_key', optional: true)]
+    #[Api('idempotency_key', nullable: true, optional: true)]
     public ?string $idempotencyKey;
 
     /**
@@ -71,10 +65,10 @@ final class WebhookCreateParams implements BaseModel
      *
      * @var array<string, string>|null $metadata
      */
-    #[Api(type: new MapOf('string'), nullable: true, optional: true)]
+    #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
 
-    #[Api('rate_limit', optional: true)]
+    #[Api('rate_limit', nullable: true, optional: true)]
     public ?int $rateLimit;
 
     /**
@@ -102,7 +96,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebhookEventType::*>|null $filterTypes
+     * @param list<WebhookEventType::*> $filterTypes
      * @param array<string, string>|null $headers
      * @param array<string, string>|null $metadata
      */

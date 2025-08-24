@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
 
 /**
  * PATCH /discounts/{discount_id}.
@@ -25,19 +24,19 @@ final class DiscountUpdateParams implements BaseModel
      *
      * Must be at least 1 if provided.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $amount;
 
     /**
      * If present, update the discount code (uppercase).
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $code;
 
-    #[Api('expires_at', optional: true)]
+    #[Api('expires_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresAt;
 
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
@@ -46,12 +45,7 @@ final class DiscountUpdateParams implements BaseModel
      *
      * @var list<string>|null $restrictedTo
      */
-    #[Api(
-        'restricted_to',
-        type: new ListOf('string'),
-        nullable: true,
-        optional: true
-    )]
+    #[Api('restricted_to', list: 'string', nullable: true, optional: true)]
     public ?array $restrictedTo;
 
     /**
@@ -59,7 +53,7 @@ final class DiscountUpdateParams implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api('subscription_cycles', optional: true)]
+    #[Api('subscription_cycles', nullable: true, optional: true)]
     public ?int $subscriptionCycles;
 
     /**
@@ -67,10 +61,10 @@ final class DiscountUpdateParams implements BaseModel
      *
      * @var DiscountType::*|null $type
      */
-    #[Api(enum: DiscountType::class, optional: true)]
+    #[Api(enum: DiscountType::class, nullable: true, optional: true)]
     public ?string $type;
 
-    #[Api('usage_limit', optional: true)]
+    #[Api('usage_limit', nullable: true, optional: true)]
     public ?int $usageLimit;
 
     public function __construct()

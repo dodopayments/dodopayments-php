@@ -17,19 +17,19 @@ final class LicenseKeyInstanceListParams implements BaseModel
     /**
      * Filter by license key ID.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $licenseKeyID;
 
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $pageNumber;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $pageSize;
 
     public function __construct()

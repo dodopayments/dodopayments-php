@@ -23,7 +23,7 @@ final class OneTimeProductCartItem implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $amount;
 
     /**

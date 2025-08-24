@@ -58,7 +58,7 @@ final class LicenseKeyListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Status::*|null $status
+     * @param Status::* $status
      */
     public static function with(
         ?string $customerID = null,

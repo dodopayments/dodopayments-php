@@ -7,7 +7,6 @@ namespace Dodopayments\Responses\Subscriptions;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -58,7 +57,7 @@ final class SubscriptionListResponse implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -154,19 +153,19 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Cancelled timestamp if the subscription is cancelled.
      */
-    #[Api('cancelled_at', optional: true)]
+    #[Api('cancelled_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $cancelledAt;
 
     /**
      * Number of remaining discount cycles if discount is applied.
      */
-    #[Api('discount_cycles_remaining', optional: true)]
+    #[Api('discount_cycles_remaining', nullable: true, optional: true)]
     public ?int $discountCyclesRemaining;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', optional: true)]
+    #[Api('discount_id', nullable: true, optional: true)]
     public ?string $discountID;
 
     /**

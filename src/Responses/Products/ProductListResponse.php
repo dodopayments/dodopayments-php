@@ -7,7 +7,6 @@ namespace Dodopayments\Responses\Products;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -40,7 +39,7 @@ final class ProductListResponse implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -68,25 +67,25 @@ final class ProductListResponse implements BaseModel
      *
      * @var Currency::*|null $currency
      */
-    #[Api(enum: Currency::class, optional: true)]
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
 
     /**
      * Description of the product, optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $description;
 
     /**
      * URL of the product image, optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $image;
 
     /**
      * Name of the product, optional.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
@@ -100,19 +99,19 @@ final class ProductListResponse implements BaseModel
      *
      * This ensures precision and avoids floating-point rounding errors.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?int $price;
 
     /**
      * Details of the price.
      */
-    #[Api('price_detail', optional: true)]
+    #[Api('price_detail', nullable: true, optional: true)]
     public OneTimePrice|RecurringPrice|null $priceDetail;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', optional: true)]
+    #[Api('tax_inclusive', nullable: true, optional: true)]
     public ?bool $taxInclusive;
 
     /**

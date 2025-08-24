@@ -67,7 +67,7 @@ final class Dispute implements BaseModel
     /**
      * Remarks.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $remarks;
 
     /**

@@ -7,8 +7,6 @@ namespace Dodopayments\Responses\Subscriptions;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Conversion\MapOf;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\AddonCartResponseItem;
 
@@ -21,7 +19,7 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @var list<AddonCartResponseItem> $addons
      */
-    #[Api(type: new ListOf(AddonCartResponseItem::class))]
+    #[Api(list: AddonCartResponseItem::class)]
     public array $addons;
 
     /**
@@ -35,7 +33,7 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @var array<string, string> $metadata
      */
-    #[Api(type: new MapOf('string'))]
+    #[Api(map: 'string')]
     public array $metadata;
 
     /**
@@ -60,25 +58,25 @@ final class SubscriptionNewResponse implements BaseModel
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    #[Api('client_secret', optional: true)]
+    #[Api('client_secret', nullable: true, optional: true)]
     public ?string $clientSecret;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', optional: true)]
+    #[Api('discount_id', nullable: true, optional: true)]
     public ?string $discountID;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Api('expires_on', optional: true)]
+    #[Api('expires_on', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresOn;
 
     /**
      * URL to checkout page.
      */
-    #[Api('payment_link', optional: true)]
+    #[Api('payment_link', nullable: true, optional: true)]
     public ?string $paymentLink;
 
     /**

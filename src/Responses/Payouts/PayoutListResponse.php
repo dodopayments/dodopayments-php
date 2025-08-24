@@ -93,19 +93,19 @@ final class PayoutListResponse implements BaseModel
     /**
      * The name of the payout recipient or purpose.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $name;
 
     /**
      * The URL of the document associated with the payout.
      */
-    #[Api('payout_document_url', optional: true)]
+    #[Api('payout_document_url', nullable: true, optional: true)]
     public ?string $payoutDocumentURL;
 
     /**
      * Any additional remarks or notes associated with the payout.
      */
-    #[Api(optional: true)]
+    #[Api(nullable: true, optional: true)]
     public ?string $remarks;
 
     /**

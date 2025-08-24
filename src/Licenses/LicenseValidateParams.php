@@ -17,7 +17,7 @@ final class LicenseValidateParams implements BaseModel
     #[Api('license_key')]
     public string $licenseKey;
 
-    #[Api('license_key_instance_id', optional: true)]
+    #[Api('license_key_instance_id', nullable: true, optional: true)]
     public ?string $licenseKeyInstanceID;
 
     /**
