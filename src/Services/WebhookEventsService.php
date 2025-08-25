@@ -9,7 +9,7 @@ use Dodopayments\Contracts\WebhookEventsContract;
 
 final class WebhookEventsService implements WebhookEventsContract
 {
-  @phpstan-ignore-next-line
+  // @phpstan-ignore-next-line
   /** @param Client $client */
   function __construct(protected Client $client){}
 }
