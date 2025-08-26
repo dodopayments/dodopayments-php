@@ -15,6 +15,8 @@ use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Services\Customers\CustomerPortalService;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class CustomersService implements CustomersContract
 {
     public CustomerPortalService $customerPortal;
@@ -32,11 +34,12 @@ final class CustomersService implements CustomersContract
     public function create(
         $email,
         $name,
-        $phoneNumber = null,
+        $phoneNumber = omit,
         ?RequestOptions $requestOptions = null
     ): Customer {
-        $args = ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber];
-        $args = Util::array_filter_null($args, ['phoneNumber']);
+        $args = Util::array_filter_omit(
+            ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber]
+        );
         [$parsed, $options] = CustomerCreateParams::parseRequest(
             $args,
             $requestOptions
@@ -72,12 +75,13 @@ final class CustomersService implements CustomersContract
      */
     public function update(
         string $customerID,
-        $name = null,
-        $phoneNumber = null,
+        $name = omit,
+        $phoneNumber = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        $args = ['name' => $name, 'phoneNumber' => $phoneNumber];
-        $args = Util::array_filter_null($args, ['name', 'phoneNumber']);
+        $args = Util::array_filter_omit(
+            ['name' => $name, 'phoneNumber' => $phoneNumber]
+        );
         [$parsed, $options] = CustomerUpdateParams::parseRequest(
             $args,
             $requestOptions
@@ -99,15 +103,14 @@ final class CustomersService implements CustomersContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $email = null,
-        $pageNumber = null,
-        $pageSize = null,
+        $email = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        $args = [
-            'email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize,
-        ];
-        $args = Util::array_filter_null($args, ['email', 'pageNumber', 'pageSize']);
+        $args = Util::array_filter_omit(
+            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        );
         [$parsed, $options] = CustomerListParams::parseRequest(
             $args,
             $requestOptions

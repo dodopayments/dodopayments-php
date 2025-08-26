@@ -17,6 +17,8 @@ use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookListParams;
 use Dodopayments\Webhooks\WebhookUpdateParams;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class WebhooksService implements WebhooksContract
 {
     public HeadersService $headers;
@@ -45,35 +47,25 @@ final class WebhooksService implements WebhooksContract
      */
     public function create(
         $url,
-        $description = null,
-        $disabled = null,
-        $filterTypes = null,
-        $headers = null,
-        $idempotencyKey = null,
-        $metadata = null,
-        $rateLimit = null,
+        $description = omit,
+        $disabled = omit,
+        $filterTypes = omit,
+        $headers = omit,
+        $idempotencyKey = omit,
+        $metadata = omit,
+        $rateLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        $args = [
-            'url' => $url,
-            'description' => $description,
-            'disabled' => $disabled,
-            'filterTypes' => $filterTypes,
-            'headers' => $headers,
-            'idempotencyKey' => $idempotencyKey,
-            'metadata' => $metadata,
-            'rateLimit' => $rateLimit,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'description',
-                'disabled',
-                'filterTypes',
-                'headers',
-                'idempotencyKey',
-                'metadata',
-                'rateLimit',
+                'url' => $url,
+                'description' => $description,
+                'disabled' => $disabled,
+                'filterTypes' => $filterTypes,
+                'headers' => $headers,
+                'idempotencyKey' => $idempotencyKey,
+                'metadata' => $metadata,
+                'rateLimit' => $rateLimit,
             ],
         );
         [$parsed, $options] = WebhookCreateParams::parseRequest(
@@ -122,26 +114,22 @@ final class WebhooksService implements WebhooksContract
      */
     public function update(
         string $webhookID,
-        $description = null,
-        $disabled = null,
-        $filterTypes = null,
-        $metadata = null,
-        $rateLimit = null,
-        $url = null,
+        $description = omit,
+        $disabled = omit,
+        $filterTypes = omit,
+        $metadata = omit,
+        $rateLimit = omit,
+        $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        $args = [
-            'description' => $description,
-            'disabled' => $disabled,
-            'filterTypes' => $filterTypes,
-            'metadata' => $metadata,
-            'rateLimit' => $rateLimit,
-            'url' => $url,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'description', 'disabled', 'filterTypes', 'metadata', 'rateLimit', 'url',
+                'description' => $description,
+                'disabled' => $disabled,
+                'filterTypes' => $filterTypes,
+                'metadata' => $metadata,
+                'rateLimit' => $rateLimit,
+                'url' => $url,
             ],
         );
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
@@ -166,12 +154,13 @@ final class WebhooksService implements WebhooksContract
      * @param int|null $limit Limit the number of returned items
      */
     public function list(
-        $iterator = null,
-        $limit = null,
+        $iterator = omit,
+        $limit = omit,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        $args = ['iterator' => $iterator, 'limit' => $limit];
-        $args = Util::array_filter_null($args, ['iterator', 'limit']);
+        $args = Util::array_filter_omit(
+            ['iterator' => $iterator, 'limit' => $limit]
+        );
         [$parsed, $options] = WebhookListParams::parseRequest(
             $args,
             $requestOptions

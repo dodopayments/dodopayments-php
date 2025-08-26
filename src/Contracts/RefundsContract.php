@@ -9,6 +9,8 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface RefundsContract
 {
     /**
@@ -18,8 +20,8 @@ interface RefundsContract
      */
     public function create(
         $paymentID,
-        $items = null,
-        $reason = null,
+        $items = omit,
+        $reason = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund;
 
@@ -37,12 +39,12 @@ interface RefundsContract
      * @param Status::* $status Filter by status
      */
     public function list(
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $status = null,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $status = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund;
 }

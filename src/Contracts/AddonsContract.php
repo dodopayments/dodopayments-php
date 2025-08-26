@@ -10,6 +10,8 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Addons\AddonUpdateImagesResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface AddonsContract
 {
     /**
@@ -24,7 +26,7 @@ interface AddonsContract
         $name,
         $price,
         $taxCategory,
-        $description = null,
+        $description = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 
@@ -43,12 +45,12 @@ interface AddonsContract
      */
     public function update(
         string $id,
-        $currency = null,
-        $description = null,
-        $imageID = null,
-        $name = null,
-        $price = null,
-        $taxCategory = null,
+        $currency = omit,
+        $description = omit,
+        $imageID = omit,
+        $name = omit,
+        $price = omit,
+        $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 
@@ -57,8 +59,8 @@ interface AddonsContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $pageNumber = null,
-        $pageSize = null,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 

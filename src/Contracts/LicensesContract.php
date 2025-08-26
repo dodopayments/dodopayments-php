@@ -8,6 +8,8 @@ use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Licenses\LicenseValidateResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface LicensesContract
 {
     /**
@@ -36,7 +38,7 @@ interface LicensesContract
      */
     public function validate(
         $licenseKey,
-        $licenseKeyInstanceID = null,
+        $licenseKeyInstanceID = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse;
 }

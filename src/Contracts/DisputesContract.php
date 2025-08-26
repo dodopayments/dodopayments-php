@@ -10,6 +10,8 @@ use Dodopayments\Disputes\GetDispute;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Disputes\DisputeListResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface DisputesContract
 {
     public function retrieve(
@@ -27,13 +29,13 @@ interface DisputesContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $disputeStage = null,
-        $disputeStatus = null,
-        $pageNumber = null,
-        $pageSize = null,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $disputeStage = omit,
+        $disputeStatus = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DisputeListResponse;
 }

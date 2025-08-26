@@ -30,6 +30,8 @@ use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class SubscriptionsService implements SubscriptionsContract
 {
     public function __construct(private Client $client) {}
@@ -66,50 +68,36 @@ final class SubscriptionsService implements SubscriptionsContract
         $customer,
         $productID,
         $quantity,
-        $addons = null,
-        $allowedPaymentMethodTypes = null,
-        $billingCurrency = null,
-        $discountCode = null,
-        $metadata = null,
-        $onDemand = null,
-        $paymentLink = null,
-        $returnURL = null,
-        $showSavedPaymentMethods = null,
-        $taxID = null,
-        $trialPeriodDays = null,
+        $addons = omit,
+        $allowedPaymentMethodTypes = omit,
+        $billingCurrency = omit,
+        $discountCode = omit,
+        $metadata = omit,
+        $onDemand = omit,
+        $paymentLink = omit,
+        $returnURL = omit,
+        $showSavedPaymentMethods = omit,
+        $taxID = omit,
+        $trialPeriodDays = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionNewResponse {
-        $args = [
-            'billing' => $billing,
-            'customer' => $customer,
-            'productID' => $productID,
-            'quantity' => $quantity,
-            'addons' => $addons,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingCurrency' => $billingCurrency,
-            'discountCode' => $discountCode,
-            'metadata' => $metadata,
-            'onDemand' => $onDemand,
-            'paymentLink' => $paymentLink,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'taxID' => $taxID,
-            'trialPeriodDays' => $trialPeriodDays,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'addons',
-                'allowedPaymentMethodTypes',
-                'billingCurrency',
-                'discountCode',
-                'metadata',
-                'onDemand',
-                'paymentLink',
-                'returnURL',
-                'showSavedPaymentMethods',
-                'taxID',
-                'trialPeriodDays',
+                'billing' => $billing,
+                'customer' => $customer,
+                'productID' => $productID,
+                'quantity' => $quantity,
+                'addons' => $addons,
+                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+                'billingCurrency' => $billingCurrency,
+                'discountCode' => $discountCode,
+                'metadata' => $metadata,
+                'onDemand' => $onDemand,
+                'paymentLink' => $paymentLink,
+                'returnURL' => $returnURL,
+                'showSavedPaymentMethods' => $showSavedPaymentMethods,
+                'taxID' => $taxID,
+                'trialPeriodDays' => $trialPeriodDays,
             ],
         );
         [$parsed, $options] = SubscriptionCreateParams::parseRequest(
@@ -152,34 +140,24 @@ final class SubscriptionsService implements SubscriptionsContract
      */
     public function update(
         string $subscriptionID,
-        $billing = null,
-        $cancelAtNextBillingDate = null,
-        $disableOnDemand = null,
-        $metadata = null,
-        $nextBillingDate = null,
-        $status = null,
-        $taxID = null,
+        $billing = omit,
+        $cancelAtNextBillingDate = omit,
+        $disableOnDemand = omit,
+        $metadata = omit,
+        $nextBillingDate = omit,
+        $status = omit,
+        $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): Subscription {
-        $args = [
-            'billing' => $billing,
-            'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
-            'disableOnDemand' => $disableOnDemand,
-            'metadata' => $metadata,
-            'nextBillingDate' => $nextBillingDate,
-            'status' => $status,
-            'taxID' => $taxID,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'billing',
-                'cancelAtNextBillingDate',
-                'disableOnDemand',
-                'metadata',
-                'nextBillingDate',
-                'status',
-                'taxID',
+                'billing' => $billing,
+                'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
+                'disableOnDemand' => $disableOnDemand,
+                'metadata' => $metadata,
+                'nextBillingDate' => $nextBillingDate,
+                'status' => $status,
+                'taxID' => $taxID,
             ],
         );
         [$parsed, $options] = SubscriptionUpdateParams::parseRequest(
@@ -207,34 +185,24 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param Status::* $status Filter by status
      */
     public function list(
-        $brandID = null,
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $status = null,
+        $brandID = omit,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $status = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionListResponse {
-        $args = [
-            'brandID' => $brandID,
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'brandID',
-                'createdAtGte',
-                'createdAtLte',
-                'customerID',
-                'pageNumber',
-                'pageSize',
-                'status',
+                'brandID' => $brandID,
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'status' => $status,
             ],
         );
         [$parsed, $options] = SubscriptionListParams::parseRequest(
@@ -264,16 +232,17 @@ final class SubscriptionsService implements SubscriptionsContract
         $productID,
         $prorationBillingMode,
         $quantity,
-        $addons = null,
+        $addons = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $args = [
-            'productID' => $productID,
-            'prorationBillingMode' => $prorationBillingMode,
-            'quantity' => $quantity,
-            'addons' => $addons,
-        ];
-        $args = Util::array_filter_null($args, ['addons']);
+        $args = Util::array_filter_omit(
+            [
+                'productID' => $productID,
+                'prorationBillingMode' => $prorationBillingMode,
+                'quantity' => $quantity,
+                'addons' => $addons,
+            ],
+        );
         [$parsed, $options] = SubscriptionChangePlanParams::parseRequest(
             $args,
             $requestOptions
@@ -301,26 +270,19 @@ final class SubscriptionsService implements SubscriptionsContract
     public function charge(
         string $subscriptionID,
         $productPrice,
-        $adaptiveCurrencyFeesInclusive = null,
-        $metadata = null,
-        $productCurrency = null,
-        $productDescription = null,
+        $adaptiveCurrencyFeesInclusive = omit,
+        $metadata = omit,
+        $productCurrency = omit,
+        $productDescription = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse {
-        $args = [
-            'productPrice' => $productPrice,
-            'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
-            'metadata' => $metadata,
-            'productCurrency' => $productCurrency,
-            'productDescription' => $productDescription,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'adaptiveCurrencyFeesInclusive',
-                'metadata',
-                'productCurrency',
-                'productDescription',
+                'productPrice' => $productPrice,
+                'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
+                'metadata' => $metadata,
+                'productCurrency' => $productCurrency,
+                'productDescription' => $productDescription,
             ],
         );
         [$parsed, $options] = SubscriptionChargeParams::parseRequest(

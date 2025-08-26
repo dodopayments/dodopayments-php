@@ -12,6 +12,8 @@ use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class CustomerPortalService implements CustomerPortalContract
 {
     public function __construct(private Client $client) {}
@@ -21,11 +23,10 @@ final class CustomerPortalService implements CustomerPortalContract
      */
     public function create(
         string $customerID,
-        $sendEmail = null,
+        $sendEmail = omit,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession {
-        $args = ['sendEmail' => $sendEmail];
-        $args = Util::array_filter_null($args, ['sendEmail']);
+        $args = Util::array_filter_omit(['sendEmail' => $sendEmail]);
         [$parsed, $options] = CustomerPortalCreateParams::parseRequest(
             $args,
             $requestOptions

@@ -7,6 +7,8 @@ namespace Dodopayments\Contracts;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Payouts\PayoutListResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface PayoutsContract
 {
     /**
@@ -14,8 +16,8 @@ interface PayoutsContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $pageNumber = null,
-        $pageSize = null,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): PayoutListResponse;
 }

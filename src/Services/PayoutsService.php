@@ -12,6 +12,8 @@ use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Payouts\PayoutListResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class PayoutsService implements PayoutsContract
 {
     public function __construct(private Client $client) {}
@@ -21,12 +23,13 @@ final class PayoutsService implements PayoutsContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $pageNumber = null,
-        $pageSize = null,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): PayoutListResponse {
-        $args = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
-        $args = Util::array_filter_null($args, ['pageNumber', 'pageSize']);
+        $args = Util::array_filter_omit(
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        );
         [$parsed, $options] = PayoutListParams::parseRequest(
             $args,
             $requestOptions

@@ -8,6 +8,8 @@ use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountType;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface DiscountsContract
 {
     /**
@@ -34,12 +36,12 @@ interface DiscountsContract
     public function create(
         $amount,
         $type,
-        $code = null,
-        $expiresAt = null,
-        $name = null,
-        $restrictedTo = null,
-        $subscriptionCycles = null,
-        $usageLimit = null,
+        $code = omit,
+        $expiresAt = omit,
+        $name = omit,
+        $restrictedTo = omit,
+        $subscriptionCycles = omit,
+        $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount;
 
@@ -67,14 +69,14 @@ interface DiscountsContract
      */
     public function update(
         string $discountID,
-        $amount = null,
-        $code = null,
-        $expiresAt = null,
-        $name = null,
-        $restrictedTo = null,
-        $subscriptionCycles = null,
-        $type = null,
-        $usageLimit = null,
+        $amount = omit,
+        $code = omit,
+        $expiresAt = omit,
+        $name = omit,
+        $restrictedTo = omit,
+        $subscriptionCycles = omit,
+        $type = omit,
+        $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount;
 
@@ -83,8 +85,8 @@ interface DiscountsContract
      * @param int $pageSize page size (default = 10, max = 100)
      */
     public function list(
-        $pageNumber = null,
-        $pageSize = null,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount;
 

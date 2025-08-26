@@ -13,6 +13,8 @@ use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
 {
     public function __construct(private Client $client) {}
@@ -61,19 +63,17 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @param int|null $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $licenseKeyID = null,
-        $pageNumber = null,
-        $pageSize = null,
+        $licenseKeyID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKeyInstance {
-        $args = [
-            'licenseKeyID' => $licenseKeyID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['licenseKeyID', 'pageNumber', 'pageSize']
+        $args = Util::array_filter_omit(
+            [
+                'licenseKeyID' => $licenseKeyID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+            ],
         );
         [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
             $args,

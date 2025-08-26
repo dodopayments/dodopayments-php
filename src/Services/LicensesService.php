@@ -15,6 +15,8 @@ use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Licenses\LicenseValidateResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class LicensesService implements LicensesContract
 {
     public function __construct(private Client $client) {}
@@ -76,14 +78,15 @@ final class LicensesService implements LicensesContract
      */
     public function validate(
         $licenseKey,
-        $licenseKeyInstanceID = null,
+        $licenseKeyInstanceID = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
-        $args = [
-            'licenseKey' => $licenseKey,
-            'licenseKeyInstanceID' => $licenseKeyInstanceID,
-        ];
-        $args = Util::array_filter_null($args, ['licenseKeyInstanceID']);
+        $args = Util::array_filter_omit(
+            [
+                'licenseKey' => $licenseKey,
+                'licenseKeyInstanceID' => $licenseKeyInstanceID,
+            ],
+        );
         [$parsed, $options] = LicenseValidateParams::parseRequest(
             $args,
             $requestOptions
