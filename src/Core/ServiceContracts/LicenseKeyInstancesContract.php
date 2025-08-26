@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Dodopayments\Core\ServiceContracts;
+
+use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
+use Dodopayments\RequestOptions;
+
+use const Dodopayments\Core\OMIT as omit;
+
+interface LicenseKeyInstancesContract
+{
+    public function retrieve(
+        string $id,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKeyInstance;
+
+    /**
+     * @param string $name
+     */
+    public function update(
+        string $id,
+        $name,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKeyInstance;
+
+    /**
+     * @param string|null $licenseKeyID Filter by license key ID
+     * @param int|null $pageNumber Page number default is 0
+     * @param int|null $pageSize Page size default is 10 max is 100
+     */
+    public function list(
+        $licenseKeyID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        ?RequestOptions $requestOptions = null,
+    ): LicenseKeyInstance;
+}
