@@ -8,6 +8,8 @@ use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface LicenseKeysContract
 {
     public function retrieve(
@@ -25,9 +27,9 @@ interface LicenseKeysContract
      */
     public function update(
         string $id,
-        $activationsLimit = null,
-        $disabled = null,
-        $expiresAt = null,
+        $activationsLimit = omit,
+        $disabled = omit,
+        $expiresAt = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey;
 
@@ -39,11 +41,11 @@ interface LicenseKeysContract
      * @param Status::* $status Filter by license key status
      */
     public function list(
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $productID = null,
-        $status = null,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $productID = omit,
+        $status = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey;
 }

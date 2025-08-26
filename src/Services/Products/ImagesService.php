@@ -12,6 +12,8 @@ use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Products\Images\ImageUpdateResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class ImagesService implements ImagesContract
 {
     public function __construct(private Client $client) {}
@@ -21,11 +23,10 @@ final class ImagesService implements ImagesContract
      */
     public function update(
         string $id,
-        $forceUpdate = null,
+        $forceUpdate = omit,
         ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse {
-        $args = ['forceUpdate' => $forceUpdate];
-        $args = Util::array_filter_null($args, ['forceUpdate']);
+        $args = Util::array_filter_omit(['forceUpdate' => $forceUpdate]);
         [$parsed, $options] = ImageUpdateParams::parseRequest(
             $args,
             $requestOptions

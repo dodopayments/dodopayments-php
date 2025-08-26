@@ -9,6 +9,8 @@ use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookDetails;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface WebhooksContract
 {
     /**
@@ -28,13 +30,13 @@ interface WebhooksContract
      */
     public function create(
         $url,
-        $description = null,
-        $disabled = null,
-        $filterTypes = null,
-        $headers = null,
-        $idempotencyKey = null,
-        $metadata = null,
-        $rateLimit = null,
+        $description = omit,
+        $disabled = omit,
+        $filterTypes = omit,
+        $headers = omit,
+        $idempotencyKey = omit,
+        $metadata = omit,
+        $rateLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails;
 
@@ -55,12 +57,12 @@ interface WebhooksContract
      */
     public function update(
         string $webhookID,
-        $description = null,
-        $disabled = null,
-        $filterTypes = null,
-        $metadata = null,
-        $rateLimit = null,
-        $url = null,
+        $description = omit,
+        $disabled = omit,
+        $filterTypes = omit,
+        $metadata = omit,
+        $rateLimit = omit,
+        $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails;
 
@@ -69,8 +71,8 @@ interface WebhooksContract
      * @param int|null $limit Limit the number of returned items
      */
     public function list(
-        $iterator = null,
-        $limit = null,
+        $iterator = omit,
+        $limit = omit,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails;
 

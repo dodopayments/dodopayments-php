@@ -23,6 +23,8 @@ use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Responses\Payments\PaymentListResponse;
 use Dodopayments\Responses\Payments\PaymentNewResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class PaymentsService implements PaymentsContract
 {
     public function __construct(private Client $client) {}
@@ -53,40 +55,29 @@ final class PaymentsService implements PaymentsContract
         $billing,
         $customer,
         $productCart,
-        $allowedPaymentMethodTypes = null,
-        $billingCurrency = null,
-        $discountCode = null,
-        $metadata = null,
-        $paymentLink = null,
-        $returnURL = null,
-        $showSavedPaymentMethods = null,
-        $taxID = null,
+        $allowedPaymentMethodTypes = omit,
+        $billingCurrency = omit,
+        $discountCode = omit,
+        $metadata = omit,
+        $paymentLink = omit,
+        $returnURL = omit,
+        $showSavedPaymentMethods = omit,
+        $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): PaymentNewResponse {
-        $args = [
-            'billing' => $billing,
-            'customer' => $customer,
-            'productCart' => $productCart,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingCurrency' => $billingCurrency,
-            'discountCode' => $discountCode,
-            'metadata' => $metadata,
-            'paymentLink' => $paymentLink,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'taxID' => $taxID,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'allowedPaymentMethodTypes',
-                'billingCurrency',
-                'discountCode',
-                'metadata',
-                'paymentLink',
-                'returnURL',
-                'showSavedPaymentMethods',
-                'taxID',
+                'billing' => $billing,
+                'customer' => $customer,
+                'productCart' => $productCart,
+                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+                'billingCurrency' => $billingCurrency,
+                'discountCode' => $discountCode,
+                'metadata' => $metadata,
+                'paymentLink' => $paymentLink,
+                'returnURL' => $returnURL,
+                'showSavedPaymentMethods' => $showSavedPaymentMethods,
+                'taxID' => $taxID,
             ],
         );
         [$parsed, $options] = PaymentCreateParams::parseRequest(
@@ -129,37 +120,26 @@ final class PaymentsService implements PaymentsContract
      * @param string $subscriptionID Filter by subscription id
      */
     public function list(
-        $brandID = null,
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $status = null,
-        $subscriptionID = null,
+        $brandID = omit,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $status = omit,
+        $subscriptionID = omit,
         ?RequestOptions $requestOptions = null,
     ): PaymentListResponse {
-        $args = [
-            'brandID' => $brandID,
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-            'subscriptionID' => $subscriptionID,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'brandID',
-                'createdAtGte',
-                'createdAtLte',
-                'customerID',
-                'pageNumber',
-                'pageSize',
-                'status',
-                'subscriptionID',
+                'brandID' => $brandID,
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'status' => $status,
+                'subscriptionID' => $subscriptionID,
             ],
         );
         [$parsed, $options] = PaymentListParams::parseRequest(

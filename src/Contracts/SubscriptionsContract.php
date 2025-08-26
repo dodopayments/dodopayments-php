@@ -21,6 +21,8 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface SubscriptionsContract
 {
     /**
@@ -55,17 +57,17 @@ interface SubscriptionsContract
         $customer,
         $productID,
         $quantity,
-        $addons = null,
-        $allowedPaymentMethodTypes = null,
-        $billingCurrency = null,
-        $discountCode = null,
-        $metadata = null,
-        $onDemand = null,
-        $paymentLink = null,
-        $returnURL = null,
-        $showSavedPaymentMethods = null,
-        $taxID = null,
-        $trialPeriodDays = null,
+        $addons = omit,
+        $allowedPaymentMethodTypes = omit,
+        $billingCurrency = omit,
+        $discountCode = omit,
+        $metadata = omit,
+        $onDemand = omit,
+        $paymentLink = omit,
+        $returnURL = omit,
+        $showSavedPaymentMethods = omit,
+        $taxID = omit,
+        $trialPeriodDays = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionNewResponse;
 
@@ -85,13 +87,13 @@ interface SubscriptionsContract
      */
     public function update(
         string $subscriptionID,
-        $billing = null,
-        $cancelAtNextBillingDate = null,
-        $disableOnDemand = null,
-        $metadata = null,
-        $nextBillingDate = null,
-        $status = null,
-        $taxID = null,
+        $billing = omit,
+        $cancelAtNextBillingDate = omit,
+        $disableOnDemand = omit,
+        $metadata = omit,
+        $nextBillingDate = omit,
+        $status = omit,
+        $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): Subscription;
 
@@ -105,13 +107,13 @@ interface SubscriptionsContract
      * @param Status::* $status Filter by status
      */
     public function list(
-        $brandID = null,
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $status = null,
+        $brandID = omit,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $status = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionListResponse;
 
@@ -127,7 +129,7 @@ interface SubscriptionsContract
         $productID,
         $prorationBillingMode,
         $quantity,
-        $addons = null,
+        $addons = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed;
 
@@ -145,10 +147,10 @@ interface SubscriptionsContract
     public function charge(
         string $subscriptionID,
         $productPrice,
-        $adaptiveCurrencyFeesInclusive = null,
-        $metadata = null,
-        $productCurrency = null,
-        $productDescription = null,
+        $adaptiveCurrencyFeesInclusive = omit,
+        $metadata = omit,
+        $productCurrency = omit,
+        $productDescription = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse;
 }

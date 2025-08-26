@@ -21,6 +21,8 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class CheckoutSessionsService implements CheckoutSessionsContract
 {
     public function __construct(private Client $client) {}
@@ -48,50 +50,35 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      */
     public function create(
         $productCart,
-        $allowedPaymentMethodTypes = null,
-        $billingAddress = null,
-        $billingCurrency = null,
-        $confirm = null,
-        $customer = null,
-        $customization = null,
-        $discountCode = null,
-        $featureFlags = null,
-        $metadata = null,
-        $returnURL = null,
-        $showSavedPaymentMethods = null,
-        $subscriptionData = null,
+        $allowedPaymentMethodTypes = omit,
+        $billingAddress = omit,
+        $billingCurrency = omit,
+        $confirm = omit,
+        $customer = omit,
+        $customization = omit,
+        $discountCode = omit,
+        $featureFlags = omit,
+        $metadata = omit,
+        $returnURL = omit,
+        $showSavedPaymentMethods = omit,
+        $subscriptionData = omit,
         ?RequestOptions $requestOptions = null,
     ): CheckoutSessionResponse {
-        $args = [
-            'productCart' => $productCart,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingAddress' => $billingAddress,
-            'billingCurrency' => $billingCurrency,
-            'confirm' => $confirm,
-            'customer' => $customer,
-            'customization' => $customization,
-            'discountCode' => $discountCode,
-            'featureFlags' => $featureFlags,
-            'metadata' => $metadata,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'subscriptionData' => $subscriptionData,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'allowedPaymentMethodTypes',
-                'billingAddress',
-                'billingCurrency',
-                'confirm',
-                'customer',
-                'customization',
-                'discountCode',
-                'featureFlags',
-                'metadata',
-                'returnURL',
-                'showSavedPaymentMethods',
-                'subscriptionData',
+                'productCart' => $productCart,
+                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+                'billingAddress' => $billingAddress,
+                'billingCurrency' => $billingCurrency,
+                'confirm' => $confirm,
+                'customer' => $customer,
+                'customization' => $customization,
+                'discountCode' => $discountCode,
+                'featureFlags' => $featureFlags,
+                'metadata' => $metadata,
+                'returnURL' => $returnURL,
+                'showSavedPaymentMethods' => $showSavedPaymentMethods,
+                'subscriptionData' => $subscriptionData,
             ],
         );
         [$parsed, $options] = CheckoutSessionCreateParams::parseRequest(

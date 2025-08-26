@@ -7,6 +7,8 @@ namespace Dodopayments\Contracts;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface LicenseKeyInstancesContract
 {
     public function retrieve(
@@ -29,9 +31,9 @@ interface LicenseKeyInstancesContract
      * @param int|null $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $licenseKeyID = null,
-        $pageNumber = null,
-        $pageSize = null,
+        $licenseKeyID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKeyInstance;
 }

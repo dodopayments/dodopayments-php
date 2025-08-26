@@ -14,6 +14,8 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class LicenseKeysService implements LicenseKeysContract
 {
     public function __construct(private Client $client) {}
@@ -42,19 +44,17 @@ final class LicenseKeysService implements LicenseKeysContract
      */
     public function update(
         string $id,
-        $activationsLimit = null,
-        $disabled = null,
-        $expiresAt = null,
+        $activationsLimit = omit,
+        $disabled = omit,
+        $expiresAt = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
-        $args = [
-            'activationsLimit' => $activationsLimit,
-            'disabled' => $disabled,
-            'expiresAt' => $expiresAt,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['activationsLimit', 'disabled', 'expiresAt']
+        $args = Util::array_filter_omit(
+            [
+                'activationsLimit' => $activationsLimit,
+                'disabled' => $disabled,
+                'expiresAt' => $expiresAt,
+            ],
         );
         [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
             $args,
@@ -79,23 +79,21 @@ final class LicenseKeysService implements LicenseKeysContract
      * @param Status::* $status Filter by license key status
      */
     public function list(
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $productID = null,
-        $status = null,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $productID = omit,
+        $status = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
-        $args = [
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'productID' => $productID,
-            'status' => $status,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['customerID', 'pageNumber', 'pageSize', 'productID', 'status']
+        $args = Util::array_filter_omit(
+            [
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'productID' => $productID,
+                'status' => $status,
+            ],
         );
         [$parsed, $options] = LicenseKeyListParams::parseRequest(
             $args,

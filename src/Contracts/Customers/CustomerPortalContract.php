@@ -7,6 +7,8 @@ namespace Dodopayments\Contracts\Customers;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface CustomerPortalContract
 {
     /**
@@ -14,7 +16,7 @@ interface CustomerPortalContract
      */
     public function create(
         string $customerID,
-        $sendEmail = null,
+        $sendEmail = omit,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession;
 }

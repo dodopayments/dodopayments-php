@@ -15,6 +15,8 @@ use Dodopayments\Disputes\GetDispute;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Disputes\DisputeListResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class DisputesService implements DisputesContract
 {
     public function __construct(private Client $client) {}
@@ -43,34 +45,24 @@ final class DisputesService implements DisputesContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $disputeStage = null,
-        $disputeStatus = null,
-        $pageNumber = null,
-        $pageSize = null,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $disputeStage = omit,
+        $disputeStatus = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DisputeListResponse {
-        $args = [
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'disputeStage' => $disputeStage,
-            'disputeStatus' => $disputeStatus,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'createdAtGte',
-                'createdAtLte',
-                'customerID',
-                'disputeStage',
-                'disputeStatus',
-                'pageNumber',
-                'pageSize',
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'disputeStage' => $disputeStage,
+                'disputeStatus' => $disputeStatus,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
             ],
         );
         [$parsed, $options] = DisputeListParams::parseRequest(
