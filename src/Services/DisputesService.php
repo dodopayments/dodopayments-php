@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\DisputesContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Disputes\DisputeListParams;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
@@ -54,7 +53,7 @@ final class DisputesService implements DisputesContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DisputeListResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = DisputeListParams::parseRequest(
             [
                 'createdAtGte' => $createdAtGte,
                 'createdAtLte' => $createdAtLte,
@@ -64,10 +63,7 @@ final class DisputesService implements DisputesContract
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
             ],
-        );
-        [$parsed, $options] = DisputeListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

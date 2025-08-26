@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\PaymentsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -65,7 +64,7 @@ final class PaymentsService implements PaymentsContract
         $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): PaymentNewResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = PaymentCreateParams::parseRequest(
             [
                 'billing' => $billing,
                 'customer' => $customer,
@@ -79,10 +78,7 @@ final class PaymentsService implements PaymentsContract
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,
                 'taxID' => $taxID,
             ],
-        );
-        [$parsed, $options] = PaymentCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -130,7 +126,7 @@ final class PaymentsService implements PaymentsContract
         $subscriptionID = omit,
         ?RequestOptions $requestOptions = null,
     ): PaymentListResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = PaymentListParams::parseRequest(
             [
                 'brandID' => $brandID,
                 'createdAtGte' => $createdAtGte,
@@ -141,10 +137,7 @@ final class PaymentsService implements PaymentsContract
                 'status' => $status,
                 'subscriptionID' => $subscriptionID,
             ],
-        );
-        [$parsed, $options] = PaymentListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

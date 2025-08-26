@@ -6,6 +6,7 @@ namespace Dodopayments\Core\Concerns;
 
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\DumpState;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 
 /**
@@ -29,9 +30,10 @@ trait SdkParams
      */
     public static function parseRequest(array|self|null $params, array|RequestOptions|null $options): array
     {
+        $value = is_array($params) ? Util::array_filter_omit($params) : $params;
         $converter = self::converter();
         $state = new DumpState;
-        $dumped = (array) Conversion::dump($converter, value: $params, state: $state);
+        $dumped = (array) Conversion::dump($converter, value: $value, state: $state);
         $opts = RequestOptions::parse($options); // @phpstan-ignore-line
 
         if (!$state->canRetry) {

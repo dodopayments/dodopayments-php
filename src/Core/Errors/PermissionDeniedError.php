@@ -1,6 +1,6 @@
 <?php
 
-namespace Dodopayments\Errors;
+namespace Dodopayments\Core\Errors;
 
 class PermissionDeniedError extends APIStatusError
 {

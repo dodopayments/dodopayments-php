@@ -11,7 +11,6 @@ use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Contracts\AddonsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
@@ -38,7 +37,7 @@ final class AddonsService implements AddonsContract
         $description = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = AddonCreateParams::parseRequest(
             [
                 'currency' => $currency,
                 'name' => $name,
@@ -46,10 +45,7 @@ final class AddonsService implements AddonsContract
                 'taxCategory' => $taxCategory,
                 'description' => $description,
             ],
-        );
-        [$parsed, $options] = AddonCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -94,7 +90,7 @@ final class AddonsService implements AddonsContract
         $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = AddonUpdateParams::parseRequest(
             [
                 'currency' => $currency,
                 'description' => $description,
@@ -103,10 +99,7 @@ final class AddonsService implements AddonsContract
                 'price' => $price,
                 'taxCategory' => $taxCategory,
             ],
-        );
-        [$parsed, $options] = AddonUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -128,10 +121,10 @@ final class AddonsService implements AddonsContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
-        $args = Util::array_filter_omit(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        [$parsed, $options] = AddonListParams::parseRequest(
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $requestOptions
         );
-        [$parsed, $options] = AddonListParams::parseRequest($args, $requestOptions);
         $resp = $this->client->request(
             method: 'get',
             path: 'addons',

@@ -10,7 +10,6 @@ use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Contracts\BrandsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Brands\BrandListResponse;
 use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
@@ -36,7 +35,7 @@ final class BrandsService implements BrandsContract
         $url = omit,
         ?RequestOptions $requestOptions = null,
     ): Brand {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = BrandCreateParams::parseRequest(
             [
                 'description' => $description,
                 'name' => $name,
@@ -44,10 +43,7 @@ final class BrandsService implements BrandsContract
                 'supportEmail' => $supportEmail,
                 'url' => $url,
             ],
-        );
-        [$parsed, $options] = BrandCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -91,17 +87,14 @@ final class BrandsService implements BrandsContract
         $supportEmail = omit,
         ?RequestOptions $requestOptions = null,
     ): Brand {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = BrandUpdateParams::parseRequest(
             [
                 'imageID' => $imageID,
                 'name' => $name,
                 'statementDescriptor' => $statementDescriptor,
                 'supportEmail' => $supportEmail,
             ],
-        );
-        [$parsed, $options] = BrandUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',

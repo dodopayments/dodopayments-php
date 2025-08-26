@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\RefundsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
 use Dodopayments\Refunds\RefundCreateParams\Item;
@@ -32,12 +31,9 @@ final class RefundsService implements RefundsContract
         $reason = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund {
-        $args = Util::array_filter_omit(
-            ['paymentID' => $paymentID, 'items' => $items, 'reason' => $reason]
-        );
         [$parsed, $options] = RefundCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            ['paymentID' => $paymentID, 'items' => $items, 'reason' => $reason],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -81,7 +77,7 @@ final class RefundsService implements RefundsContract
         $status = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = RefundListParams::parseRequest(
             [
                 'createdAtGte' => $createdAtGte,
                 'createdAtLte' => $createdAtLte,
@@ -90,10 +86,7 @@ final class RefundsService implements RefundsContract
                 'pageSize' => $pageSize,
                 'status' => $status,
             ],
-        );
-        [$parsed, $options] = RefundListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

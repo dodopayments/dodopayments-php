@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\SubscriptionsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -81,7 +80,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $trialPeriodDays = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionNewResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = SubscriptionCreateParams::parseRequest(
             [
                 'billing' => $billing,
                 'customer' => $customer,
@@ -99,10 +98,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'taxID' => $taxID,
                 'trialPeriodDays' => $trialPeriodDays,
             ],
-        );
-        [$parsed, $options] = SubscriptionCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -149,7 +145,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): Subscription {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = SubscriptionUpdateParams::parseRequest(
             [
                 'billing' => $billing,
                 'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
@@ -159,10 +155,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'status' => $status,
                 'taxID' => $taxID,
             ],
-        );
-        [$parsed, $options] = SubscriptionUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -194,7 +187,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $status = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionListResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = SubscriptionListParams::parseRequest(
             [
                 'brandID' => $brandID,
                 'createdAtGte' => $createdAtGte,
@@ -204,10 +197,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'pageSize' => $pageSize,
                 'status' => $status,
             ],
-        );
-        [$parsed, $options] = SubscriptionListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',
@@ -235,17 +225,14 @@ final class SubscriptionsService implements SubscriptionsContract
         $addons = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = SubscriptionChangePlanParams::parseRequest(
             [
                 'productID' => $productID,
                 'prorationBillingMode' => $prorationBillingMode,
                 'quantity' => $quantity,
                 'addons' => $addons,
             ],
-        );
-        [$parsed, $options] = SubscriptionChangePlanParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
 
         return $this->client->request(
@@ -276,7 +263,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $productDescription = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = SubscriptionChargeParams::parseRequest(
             [
                 'productPrice' => $productPrice,
                 'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
@@ -284,10 +271,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'productCurrency' => $productCurrency,
                 'productDescription' => $productDescription,
             ],
-        );
-        [$parsed, $options] = SubscriptionChargeParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',

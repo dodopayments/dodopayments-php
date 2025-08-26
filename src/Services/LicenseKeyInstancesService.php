@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\LicenseKeyInstancesContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
@@ -41,9 +40,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        $args = ['name' => $name];
         [$parsed, $options] = LicenseKeyInstanceUpdateParams::parseRequest(
-            $args,
+            ['name' => $name],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -68,16 +66,13 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKeyInstance {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
             [
                 'licenseKeyID' => $licenseKeyID,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
             ],
-        );
-        [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',
