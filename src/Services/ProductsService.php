@@ -24,6 +24,8 @@ use Dodopayments\Responses\Products\ProductListResponse;
 use Dodopayments\Responses\Products\ProductUpdateFilesResponse;
 use Dodopayments\Services\Products\ImagesService;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class ProductsService implements ProductsContract
 {
     public ImagesService $images;
@@ -54,45 +56,32 @@ final class ProductsService implements ProductsContract
     public function create(
         $price,
         $taxCategory,
-        $addons = null,
-        $brandID = null,
-        $description = null,
-        $digitalProductDelivery = null,
-        $licenseKeyActivationMessage = null,
-        $licenseKeyActivationsLimit = null,
-        $licenseKeyDuration = null,
-        $licenseKeyEnabled = null,
-        $metadata = null,
-        $name = null,
+        $addons = omit,
+        $brandID = omit,
+        $description = omit,
+        $digitalProductDelivery = omit,
+        $licenseKeyActivationMessage = omit,
+        $licenseKeyActivationsLimit = omit,
+        $licenseKeyDuration = omit,
+        $licenseKeyEnabled = omit,
+        $metadata = omit,
+        $name = omit,
         ?RequestOptions $requestOptions = null,
     ): Product {
-        $args = [
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-            'addons' => $addons,
-            'brandID' => $brandID,
-            'description' => $description,
-            'digitalProductDelivery' => $digitalProductDelivery,
-            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-            'licenseKeyDuration' => $licenseKeyDuration,
-            'licenseKeyEnabled' => $licenseKeyEnabled,
-            'metadata' => $metadata,
-            'name' => $name,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'addons',
-                'brandID',
-                'description',
-                'digitalProductDelivery',
-                'licenseKeyActivationMessage',
-                'licenseKeyActivationsLimit',
-                'licenseKeyDuration',
-                'licenseKeyEnabled',
-                'metadata',
-                'name',
+                'price' => $price,
+                'taxCategory' => $taxCategory,
+                'addons' => $addons,
+                'brandID' => $brandID,
+                'description' => $description,
+                'digitalProductDelivery' => $digitalProductDelivery,
+                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+                'licenseKeyDuration' => $licenseKeyDuration,
+                'licenseKeyEnabled' => $licenseKeyEnabled,
+                'metadata' => $metadata,
+                'name' => $name,
             ],
         );
         [$parsed, $options] = ProductCreateParams::parseRequest(
@@ -153,52 +142,36 @@ final class ProductsService implements ProductsContract
      */
     public function update(
         string $id,
-        $addons = null,
-        $brandID = null,
-        $description = null,
-        $digitalProductDelivery = null,
-        $imageID = null,
-        $licenseKeyActivationMessage = null,
-        $licenseKeyActivationsLimit = null,
-        $licenseKeyDuration = null,
-        $licenseKeyEnabled = null,
-        $metadata = null,
-        $name = null,
-        $price = null,
-        $taxCategory = null,
+        $addons = omit,
+        $brandID = omit,
+        $description = omit,
+        $digitalProductDelivery = omit,
+        $imageID = omit,
+        $licenseKeyActivationMessage = omit,
+        $licenseKeyActivationsLimit = omit,
+        $licenseKeyDuration = omit,
+        $licenseKeyEnabled = omit,
+        $metadata = omit,
+        $name = omit,
+        $price = omit,
+        $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $args = [
-            'addons' => $addons,
-            'brandID' => $brandID,
-            'description' => $description,
-            'digitalProductDelivery' => $digitalProductDelivery,
-            'imageID' => $imageID,
-            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-            'licenseKeyDuration' => $licenseKeyDuration,
-            'licenseKeyEnabled' => $licenseKeyEnabled,
-            'metadata' => $metadata,
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'addons',
-                'brandID',
-                'description',
-                'digitalProductDelivery',
-                'imageID',
-                'licenseKeyActivationMessage',
-                'licenseKeyActivationsLimit',
-                'licenseKeyDuration',
-                'licenseKeyEnabled',
-                'metadata',
-                'name',
-                'price',
-                'taxCategory',
+                'addons' => $addons,
+                'brandID' => $brandID,
+                'description' => $description,
+                'digitalProductDelivery' => $digitalProductDelivery,
+                'imageID' => $imageID,
+                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+                'licenseKeyDuration' => $licenseKeyDuration,
+                'licenseKeyEnabled' => $licenseKeyEnabled,
+                'metadata' => $metadata,
+                'name' => $name,
+                'price' => $price,
+                'taxCategory' => $taxCategory,
             ],
         );
         [$parsed, $options] = ProductUpdateParams::parseRequest(
@@ -225,23 +198,21 @@ final class ProductsService implements ProductsContract
      * - `null` or absent: Show both types of products
      */
     public function list(
-        $archived = null,
-        $brandID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $recurring = null,
+        $archived = omit,
+        $brandID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $recurring = omit,
         ?RequestOptions $requestOptions = null,
     ): ProductListResponse {
-        $args = [
-            'archived' => $archived,
-            'brandID' => $brandID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'recurring' => $recurring,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['archived', 'brandID', 'pageNumber', 'pageSize', 'recurring']
+        $args = Util::array_filter_omit(
+            [
+                'archived' => $archived,
+                'brandID' => $brandID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'recurring' => $recurring,
+            ],
         );
         [$parsed, $options] = ProductListParams::parseRequest(
             $args,

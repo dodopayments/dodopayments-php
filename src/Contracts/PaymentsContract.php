@@ -17,6 +17,8 @@ use Dodopayments\Responses\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Responses\Payments\PaymentListResponse;
 use Dodopayments\Responses\Payments\PaymentNewResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface PaymentsContract
 {
     /**
@@ -45,14 +47,14 @@ interface PaymentsContract
         $billing,
         $customer,
         $productCart,
-        $allowedPaymentMethodTypes = null,
-        $billingCurrency = null,
-        $discountCode = null,
-        $metadata = null,
-        $paymentLink = null,
-        $returnURL = null,
-        $showSavedPaymentMethods = null,
-        $taxID = null,
+        $allowedPaymentMethodTypes = omit,
+        $billingCurrency = omit,
+        $discountCode = omit,
+        $metadata = omit,
+        $paymentLink = omit,
+        $returnURL = omit,
+        $showSavedPaymentMethods = omit,
+        $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): PaymentNewResponse;
 
@@ -72,14 +74,14 @@ interface PaymentsContract
      * @param string $subscriptionID Filter by subscription id
      */
     public function list(
-        $brandID = null,
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $status = null,
-        $subscriptionID = null,
+        $brandID = omit,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $status = omit,
+        $subscriptionID = omit,
         ?RequestOptions $requestOptions = null,
     ): PaymentListResponse;
 

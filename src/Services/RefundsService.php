@@ -15,6 +15,8 @@ use Dodopayments\Refunds\RefundListParams;
 use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class RefundsService implements RefundsContract
 {
     public function __construct(private Client $client) {}
@@ -26,12 +28,13 @@ final class RefundsService implements RefundsContract
      */
     public function create(
         $paymentID,
-        $items = null,
-        $reason = null,
+        $items = omit,
+        $reason = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund {
-        $args = ['paymentID' => $paymentID, 'items' => $items, 'reason' => $reason];
-        $args = Util::array_filter_null($args, ['items', 'reason']);
+        $args = Util::array_filter_omit(
+            ['paymentID' => $paymentID, 'items' => $items, 'reason' => $reason]
+        );
         [$parsed, $options] = RefundCreateParams::parseRequest(
             $args,
             $requestOptions
@@ -70,31 +73,22 @@ final class RefundsService implements RefundsContract
      * @param Status::* $status Filter by status
      */
     public function list(
-        $createdAtGte = null,
-        $createdAtLte = null,
-        $customerID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $status = null,
+        $createdAtGte = omit,
+        $createdAtLte = omit,
+        $customerID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $status = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund {
-        $args = [
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'createdAtGte',
-                'createdAtLte',
-                'customerID',
-                'pageNumber',
-                'pageSize',
-                'status',
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'status' => $status,
             ],
         );
         [$parsed, $options] = RefundListParams::parseRequest(

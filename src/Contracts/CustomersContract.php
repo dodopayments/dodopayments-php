@@ -7,6 +7,8 @@ namespace Dodopayments\Contracts;
 use Dodopayments\Customers\Customer;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface CustomersContract
 {
     /**
@@ -17,7 +19,7 @@ interface CustomersContract
     public function create(
         $email,
         $name,
-        $phoneNumber = null,
+        $phoneNumber = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer;
 
@@ -32,8 +34,8 @@ interface CustomersContract
      */
     public function update(
         string $customerID,
-        $name = null,
-        $phoneNumber = null,
+        $name = omit,
+        $phoneNumber = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer;
 
@@ -43,9 +45,9 @@ interface CustomersContract
      * @param int $pageSize Page size default is 10 max is 100
      */
     public function list(
-        $email = null,
-        $pageNumber = null,
-        $pageSize = null,
+        $email = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer;
 }

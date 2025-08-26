@@ -16,6 +16,8 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface CheckoutSessionsContract
 {
     /**
@@ -41,18 +43,18 @@ interface CheckoutSessionsContract
      */
     public function create(
         $productCart,
-        $allowedPaymentMethodTypes = null,
-        $billingAddress = null,
-        $billingCurrency = null,
-        $confirm = null,
-        $customer = null,
-        $customization = null,
-        $discountCode = null,
-        $featureFlags = null,
-        $metadata = null,
-        $returnURL = null,
-        $showSavedPaymentMethods = null,
-        $subscriptionData = null,
+        $allowedPaymentMethodTypes = omit,
+        $billingAddress = omit,
+        $billingCurrency = omit,
+        $confirm = omit,
+        $customer = omit,
+        $customization = omit,
+        $discountCode = omit,
+        $featureFlags = omit,
+        $metadata = omit,
+        $returnURL = omit,
+        $showSavedPaymentMethods = omit,
+        $subscriptionData = omit,
         ?RequestOptions $requestOptions = null,
     ): CheckoutSessionResponse;
 }

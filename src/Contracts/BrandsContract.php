@@ -9,6 +9,8 @@ use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Brands\BrandListResponse;
 use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface BrandsContract
 {
     /**
@@ -19,11 +21,11 @@ interface BrandsContract
      * @param string|null $url
      */
     public function create(
-        $description = null,
-        $name = null,
-        $statementDescriptor = null,
-        $supportEmail = null,
-        $url = null,
+        $description = omit,
+        $name = omit,
+        $statementDescriptor = omit,
+        $supportEmail = omit,
+        $url = omit,
         ?RequestOptions $requestOptions = null,
     ): Brand;
 
@@ -40,10 +42,10 @@ interface BrandsContract
      */
     public function update(
         string $id,
-        $imageID = null,
-        $name = null,
-        $statementDescriptor = null,
-        $supportEmail = null,
+        $imageID = omit,
+        $name = omit,
+        $statementDescriptor = omit,
+        $supportEmail = omit,
         ?RequestOptions $requestOptions = null,
     ): Brand;
 

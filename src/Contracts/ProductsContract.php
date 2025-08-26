@@ -15,6 +15,8 @@ use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Products\ProductListResponse;
 use Dodopayments\Responses\Products\ProductUpdateFilesResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 interface ProductsContract
 {
     /**
@@ -38,16 +40,16 @@ interface ProductsContract
     public function create(
         $price,
         $taxCategory,
-        $addons = null,
-        $brandID = null,
-        $description = null,
-        $digitalProductDelivery = null,
-        $licenseKeyActivationMessage = null,
-        $licenseKeyActivationsLimit = null,
-        $licenseKeyDuration = null,
-        $licenseKeyEnabled = null,
-        $metadata = null,
-        $name = null,
+        $addons = omit,
+        $brandID = omit,
+        $description = omit,
+        $digitalProductDelivery = omit,
+        $licenseKeyActivationMessage = omit,
+        $licenseKeyActivationsLimit = omit,
+        $licenseKeyDuration = omit,
+        $licenseKeyEnabled = omit,
+        $metadata = omit,
+        $name = omit,
         ?RequestOptions $requestOptions = null,
     ): Product;
 
@@ -85,19 +87,19 @@ interface ProductsContract
      */
     public function update(
         string $id,
-        $addons = null,
-        $brandID = null,
-        $description = null,
-        $digitalProductDelivery = null,
-        $imageID = null,
-        $licenseKeyActivationMessage = null,
-        $licenseKeyActivationsLimit = null,
-        $licenseKeyDuration = null,
-        $licenseKeyEnabled = null,
-        $metadata = null,
-        $name = null,
-        $price = null,
-        $taxCategory = null,
+        $addons = omit,
+        $brandID = omit,
+        $description = omit,
+        $digitalProductDelivery = omit,
+        $imageID = omit,
+        $licenseKeyActivationMessage = omit,
+        $licenseKeyActivationsLimit = omit,
+        $licenseKeyDuration = omit,
+        $licenseKeyEnabled = omit,
+        $metadata = omit,
+        $name = omit,
+        $price = omit,
+        $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed;
 
@@ -112,11 +114,11 @@ interface ProductsContract
      * - `null` or absent: Show both types of products
      */
     public function list(
-        $archived = null,
-        $brandID = null,
-        $pageNumber = null,
-        $pageSize = null,
-        $recurring = null,
+        $archived = omit,
+        $brandID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $recurring = omit,
         ?RequestOptions $requestOptions = null,
     ): ProductListResponse;
 

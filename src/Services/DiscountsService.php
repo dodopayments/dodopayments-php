@@ -15,6 +15,8 @@ use Dodopayments\Discounts\DiscountType;
 use Dodopayments\Discounts\DiscountUpdateParams;
 use Dodopayments\RequestOptions;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class DiscountsService implements DiscountsContract
 {
     public function __construct(private Client $client) {}
@@ -46,33 +48,24 @@ final class DiscountsService implements DiscountsContract
     public function create(
         $amount,
         $type,
-        $code = null,
-        $expiresAt = null,
-        $name = null,
-        $restrictedTo = null,
-        $subscriptionCycles = null,
-        $usageLimit = null,
+        $code = omit,
+        $expiresAt = omit,
+        $name = omit,
+        $restrictedTo = omit,
+        $subscriptionCycles = omit,
+        $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        $args = [
-            'amount' => $amount,
-            'type' => $type,
-            'code' => $code,
-            'expiresAt' => $expiresAt,
-            'name' => $name,
-            'restrictedTo' => $restrictedTo,
-            'subscriptionCycles' => $subscriptionCycles,
-            'usageLimit' => $usageLimit,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'code',
-                'expiresAt',
-                'name',
-                'restrictedTo',
-                'subscriptionCycles',
-                'usageLimit',
+                'amount' => $amount,
+                'type' => $type,
+                'code' => $code,
+                'expiresAt' => $expiresAt,
+                'name' => $name,
+                'restrictedTo' => $restrictedTo,
+                'subscriptionCycles' => $subscriptionCycles,
+                'usageLimit' => $usageLimit,
             ],
         );
         [$parsed, $options] = DiscountCreateParams::parseRequest(
@@ -128,37 +121,26 @@ final class DiscountsService implements DiscountsContract
      */
     public function update(
         string $discountID,
-        $amount = null,
-        $code = null,
-        $expiresAt = null,
-        $name = null,
-        $restrictedTo = null,
-        $subscriptionCycles = null,
-        $type = null,
-        $usageLimit = null,
+        $amount = omit,
+        $code = omit,
+        $expiresAt = omit,
+        $name = omit,
+        $restrictedTo = omit,
+        $subscriptionCycles = omit,
+        $type = omit,
+        $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        $args = [
-            'amount' => $amount,
-            'code' => $code,
-            'expiresAt' => $expiresAt,
-            'name' => $name,
-            'restrictedTo' => $restrictedTo,
-            'subscriptionCycles' => $subscriptionCycles,
-            'type' => $type,
-            'usageLimit' => $usageLimit,
-        ];
-        $args = Util::array_filter_null(
-            $args,
+        $args = Util::array_filter_omit(
             [
-                'amount',
-                'code',
-                'expiresAt',
-                'name',
-                'restrictedTo',
-                'subscriptionCycles',
-                'type',
-                'usageLimit',
+                'amount' => $amount,
+                'code' => $code,
+                'expiresAt' => $expiresAt,
+                'name' => $name,
+                'restrictedTo' => $restrictedTo,
+                'subscriptionCycles' => $subscriptionCycles,
+                'type' => $type,
+                'usageLimit' => $usageLimit,
             ],
         );
         [$parsed, $options] = DiscountUpdateParams::parseRequest(
@@ -183,12 +165,13 @@ final class DiscountsService implements DiscountsContract
      * @param int $pageSize page size (default = 10, max = 100)
      */
     public function list(
-        $pageNumber = null,
-        $pageSize = null,
+        $pageNumber = omit,
+        $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): Discount {
-        $args = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
-        $args = Util::array_filter_null($args, ['pageNumber', 'pageSize']);
+        $args = Util::array_filter_omit(
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        );
         [$parsed, $options] = DiscountListParams::parseRequest(
             $args,
             $requestOptions

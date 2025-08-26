@@ -15,6 +15,8 @@ use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Brands\BrandListResponse;
 use Dodopayments\Responses\Brands\BrandUpdateImagesResponse;
 
+use const Dodopayments\Core\OMIT as omit;
+
 final class BrandsService implements BrandsContract
 {
     public function __construct(private Client $client) {}
@@ -27,23 +29,21 @@ final class BrandsService implements BrandsContract
      * @param string|null $url
      */
     public function create(
-        $description = null,
-        $name = null,
-        $statementDescriptor = null,
-        $supportEmail = null,
-        $url = null,
+        $description = omit,
+        $name = omit,
+        $statementDescriptor = omit,
+        $supportEmail = omit,
+        $url = omit,
         ?RequestOptions $requestOptions = null,
     ): Brand {
-        $args = [
-            'description' => $description,
-            'name' => $name,
-            'statementDescriptor' => $statementDescriptor,
-            'supportEmail' => $supportEmail,
-            'url' => $url,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['description', 'name', 'statementDescriptor', 'supportEmail', 'url'],
+        $args = Util::array_filter_omit(
+            [
+                'description' => $description,
+                'name' => $name,
+                'statementDescriptor' => $statementDescriptor,
+                'supportEmail' => $supportEmail,
+                'url' => $url,
+            ],
         );
         [$parsed, $options] = BrandCreateParams::parseRequest(
             $args,
@@ -85,21 +85,19 @@ final class BrandsService implements BrandsContract
      */
     public function update(
         string $id,
-        $imageID = null,
-        $name = null,
-        $statementDescriptor = null,
-        $supportEmail = null,
+        $imageID = omit,
+        $name = omit,
+        $statementDescriptor = omit,
+        $supportEmail = omit,
         ?RequestOptions $requestOptions = null,
     ): Brand {
-        $args = [
-            'imageID' => $imageID,
-            'name' => $name,
-            'statementDescriptor' => $statementDescriptor,
-            'supportEmail' => $supportEmail,
-        ];
-        $args = Util::array_filter_null(
-            $args,
-            ['imageID', 'name', 'statementDescriptor', 'supportEmail']
+        $args = Util::array_filter_omit(
+            [
+                'imageID' => $imageID,
+                'name' => $name,
+                'statementDescriptor' => $statementDescriptor,
+                'supportEmail' => $supportEmail,
+            ],
         );
         [$parsed, $options] = BrandUpdateParams::parseRequest(
             $args,
