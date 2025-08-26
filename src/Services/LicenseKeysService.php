@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\LicenseKeysContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
@@ -49,16 +48,13 @@ final class LicenseKeysService implements LicenseKeysContract
         $expiresAt = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
             [
                 'activationsLimit' => $activationsLimit,
                 'disabled' => $disabled,
                 'expiresAt' => $expiresAt,
             ],
-        );
-        [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -86,7 +82,7 @@ final class LicenseKeysService implements LicenseKeysContract
         $status = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = LicenseKeyListParams::parseRequest(
             [
                 'customerID' => $customerID,
                 'pageNumber' => $pageNumber,
@@ -94,10 +90,7 @@ final class LicenseKeysService implements LicenseKeysContract
                 'productID' => $productID,
                 'status' => $status,
             ],
-        );
-        [$parsed, $options] = LicenseKeyListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

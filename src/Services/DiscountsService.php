@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\DiscountsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountCreateParams;
 use Dodopayments\Discounts\DiscountListParams;
@@ -56,7 +55,7 @@ final class DiscountsService implements DiscountsContract
         $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = DiscountCreateParams::parseRequest(
             [
                 'amount' => $amount,
                 'type' => $type,
@@ -67,10 +66,7 @@ final class DiscountsService implements DiscountsContract
                 'subscriptionCycles' => $subscriptionCycles,
                 'usageLimit' => $usageLimit,
             ],
-        );
-        [$parsed, $options] = DiscountCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -131,7 +127,7 @@ final class DiscountsService implements DiscountsContract
         $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = DiscountUpdateParams::parseRequest(
             [
                 'amount' => $amount,
                 'code' => $code,
@@ -142,10 +138,7 @@ final class DiscountsService implements DiscountsContract
                 'type' => $type,
                 'usageLimit' => $usageLimit,
             ],
-        );
-        [$parsed, $options] = DiscountUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -169,11 +162,8 @@ final class DiscountsService implements DiscountsContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): Discount {
-        $args = Util::array_filter_omit(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
-        );
         [$parsed, $options] = DiscountListParams::parseRequest(
-            $args,
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
         );
         $resp = $this->client->request(

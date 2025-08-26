@@ -43,9 +43,8 @@ final class HeadersService implements HeadersContract
         $headers,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        $args = ['headers' => $headers];
         [$parsed, $options] = HeaderUpdateParams::parseRequest(
-            $args,
+            ['headers' => $headers],
             $requestOptions
         );
 

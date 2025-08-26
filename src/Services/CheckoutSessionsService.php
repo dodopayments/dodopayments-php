@@ -14,7 +14,6 @@ use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\Client;
 use Dodopayments\Contracts\CheckoutSessionsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
@@ -64,7 +63,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         $subscriptionData = omit,
         ?RequestOptions $requestOptions = null,
     ): CheckoutSessionResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = CheckoutSessionCreateParams::parseRequest(
             [
                 'productCart' => $productCart,
                 'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
@@ -80,10 +79,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,
                 'subscriptionData' => $subscriptionData,
             ],
-        );
-        [$parsed, $options] = CheckoutSessionCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',

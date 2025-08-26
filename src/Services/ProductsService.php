@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\ProductsContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -68,7 +67,7 @@ final class ProductsService implements ProductsContract
         $name = omit,
         ?RequestOptions $requestOptions = null,
     ): Product {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = ProductCreateParams::parseRequest(
             [
                 'price' => $price,
                 'taxCategory' => $taxCategory,
@@ -83,10 +82,7 @@ final class ProductsService implements ProductsContract
                 'metadata' => $metadata,
                 'name' => $name,
             ],
-        );
-        [$parsed, $options] = ProductCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -157,7 +153,7 @@ final class ProductsService implements ProductsContract
         $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = ProductUpdateParams::parseRequest(
             [
                 'addons' => $addons,
                 'brandID' => $brandID,
@@ -173,10 +169,7 @@ final class ProductsService implements ProductsContract
                 'price' => $price,
                 'taxCategory' => $taxCategory,
             ],
-        );
-        [$parsed, $options] = ProductUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
 
         return $this->client->request(
@@ -205,7 +198,7 @@ final class ProductsService implements ProductsContract
         $recurring = omit,
         ?RequestOptions $requestOptions = null,
     ): ProductListResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = ProductListParams::parseRequest(
             [
                 'archived' => $archived,
                 'brandID' => $brandID,
@@ -213,10 +206,7 @@ final class ProductsService implements ProductsContract
                 'pageSize' => $pageSize,
                 'recurring' => $recurring,
             ],
-        );
-        [$parsed, $options] = ProductListParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',
@@ -259,9 +249,8 @@ final class ProductsService implements ProductsContract
         $fileName,
         ?RequestOptions $requestOptions = null
     ): ProductUpdateFilesResponse {
-        $args = ['fileName' => $fileName];
         [$parsed, $options] = ProductUpdateFilesParams::parseRequest(
-            $args,
+            ['fileName' => $fileName],
             $requestOptions
         );
         $resp = $this->client->request(
