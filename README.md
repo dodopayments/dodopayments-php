@@ -62,7 +62,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 <?php
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
-use Dodopayments\Errors\APIConnectionError;
+use Dodopayments\Core\Errors\APIConnectionError;
 
 try {
   $checkoutSessionResponse = $client->checkoutSessions->create(

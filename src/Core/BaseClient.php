@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core;
 
-use Dodopayments\Errors\APIStatusError;
+use Dodopayments\Core\Errors\APIStatusError;
 use Dodopayments\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;

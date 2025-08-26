@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\LicensesContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\Licenses\LicenseActivateParams;
 use Dodopayments\Licenses\LicenseDeactivateParams;
@@ -30,9 +29,8 @@ final class LicensesService implements LicensesContract
         $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        $args = ['licenseKey' => $licenseKey, 'name' => $name];
         [$parsed, $options] = LicenseActivateParams::parseRequest(
-            $args,
+            ['licenseKey' => $licenseKey, 'name' => $name],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -55,13 +53,12 @@ final class LicensesService implements LicensesContract
         $licenseKeyInstanceID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        $args = [
-            'licenseKey' => $licenseKey,
-            'licenseKeyInstanceID' => $licenseKeyInstanceID,
-        ];
         [$parsed, $options] = LicenseDeactivateParams::parseRequest(
-            $args,
-            $requestOptions
+            [
+                'licenseKey' => $licenseKey,
+                'licenseKeyInstanceID' => $licenseKeyInstanceID,
+            ],
+            $requestOptions,
         );
 
         return $this->client->request(
@@ -81,15 +78,12 @@ final class LicensesService implements LicensesContract
         $licenseKeyInstanceID = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = LicenseValidateParams::parseRequest(
             [
                 'licenseKey' => $licenseKey,
                 'licenseKeyInstanceID' => $licenseKeyInstanceID,
             ],
-        );
-        [$parsed, $options] = LicenseValidateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',

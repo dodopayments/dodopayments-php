@@ -1,11 +1,11 @@
 <?php
 
-namespace Dodopayments\Errors;
+namespace Dodopayments\Core\Errors;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class APIError extends Error
+class APIError extends DodopaymentsError
 {
     public ?int $status = null;
 

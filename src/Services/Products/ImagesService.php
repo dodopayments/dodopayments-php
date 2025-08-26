@@ -7,7 +7,6 @@ namespace Dodopayments\Services\Products;
 use Dodopayments\Client;
 use Dodopayments\Contracts\Products\ImagesContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Products\Images\ImageUpdateResponse;
@@ -26,9 +25,8 @@ final class ImagesService implements ImagesContract
         $forceUpdate = omit,
         ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse {
-        $args = Util::array_filter_omit(['forceUpdate' => $forceUpdate]);
         [$parsed, $options] = ImageUpdateParams::parseRequest(
-            $args,
+            ['forceUpdate' => $forceUpdate],
             $requestOptions
         );
         $resp = $this->client->request(

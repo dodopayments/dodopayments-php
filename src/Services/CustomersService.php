@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\CustomersContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerListParams;
@@ -37,12 +36,9 @@ final class CustomersService implements CustomersContract
         $phoneNumber = omit,
         ?RequestOptions $requestOptions = null
     ): Customer {
-        $args = Util::array_filter_omit(
-            ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber]
-        );
         [$parsed, $options] = CustomerCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -79,11 +75,8 @@ final class CustomersService implements CustomersContract
         $phoneNumber = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        $args = Util::array_filter_omit(
-            ['name' => $name, 'phoneNumber' => $phoneNumber]
-        );
         [$parsed, $options] = CustomerUpdateParams::parseRequest(
-            $args,
+            ['name' => $name, 'phoneNumber' => $phoneNumber],
             $requestOptions
         );
         $resp = $this->client->request(
@@ -108,12 +101,9 @@ final class CustomersService implements CustomersContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        $args = Util::array_filter_omit(
-            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize]
-        );
         [$parsed, $options] = CustomerListParams::parseRequest(
-            $args,
-            $requestOptions
+            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'get',

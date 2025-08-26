@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Contracts\WebhooksContract;
 use Dodopayments\Core\Conversion;
-use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\Responses\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Services\Webhooks\HeadersService;
@@ -56,7 +55,7 @@ final class WebhooksService implements WebhooksContract
         $rateLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = WebhookCreateParams::parseRequest(
             [
                 'url' => $url,
                 'description' => $description,
@@ -67,10 +66,7 @@ final class WebhooksService implements WebhooksContract
                 'metadata' => $metadata,
                 'rateLimit' => $rateLimit,
             ],
-        );
-        [$parsed, $options] = WebhookCreateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'post',
@@ -122,7 +118,7 @@ final class WebhooksService implements WebhooksContract
         $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        $args = Util::array_filter_omit(
+        [$parsed, $options] = WebhookUpdateParams::parseRequest(
             [
                 'description' => $description,
                 'disabled' => $disabled,
@@ -131,10 +127,7 @@ final class WebhooksService implements WebhooksContract
                 'rateLimit' => $rateLimit,
                 'url' => $url,
             ],
-        );
-        [$parsed, $options] = WebhookUpdateParams::parseRequest(
-            $args,
-            $requestOptions
+            $requestOptions,
         );
         $resp = $this->client->request(
             method: 'patch',
@@ -158,11 +151,8 @@ final class WebhooksService implements WebhooksContract
         $limit = omit,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        $args = Util::array_filter_omit(
-            ['iterator' => $iterator, 'limit' => $limit]
-        );
         [$parsed, $options] = WebhookListParams::parseRequest(
-            $args,
+            ['iterator' => $iterator, 'limit' => $limit],
             $requestOptions
         );
         $resp = $this->client->request(
