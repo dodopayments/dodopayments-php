@@ -71,10 +71,15 @@ $client = new Client(
   environment: "test_mode",
 );
 
-$pages = $client->payments->list();
+$page = $client->payments->list();
 
-foreach ($this->$pages->getItems() as $page) {
-  var_dump($page->brand_id);
+// fetch items from the current page
+foreach ($page->getItems() as $item) {
+  var_dump($item->brand_id);
+}
+// make additional network requests to fetch items from all pages, including and after the current page
+foreach ($page->pagingEachItem() as $item) {
+  var_dump($item->brand_id);
 }
 ```
 
