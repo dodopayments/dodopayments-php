@@ -10,7 +10,7 @@ use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\AddonsContract;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -47,29 +47,28 @@ final class AddonsService implements AddonsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'addons',
             body: (object) $parsed,
-            options: $options
+            options: $options,
+            convert: AddonResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(AddonResponse::class, value: $resp);
     }
 
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['addons/%1$s', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: AddonResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(AddonResponse::class, value: $resp);
     }
 
     /**
@@ -101,15 +100,15 @@ final class AddonsService implements AddonsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'patch',
             path: ['addons/%1$s', $id],
             body: (object) $parsed,
             options: $options,
+            convert: AddonResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(AddonResponse::class, value: $resp);
     }
 
     /**
@@ -125,28 +124,28 @@ final class AddonsService implements AddonsContract
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'addons',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: AddonResponse::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(AddonResponse::class, value: $resp);
     }
 
     public function updateImages(
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'put',
             path: ['addons/%1$s/images', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: AddonUpdateImagesResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(AddonUpdateImagesResponse::class, value: $resp);
     }
 }

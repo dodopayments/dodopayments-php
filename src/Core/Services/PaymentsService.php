@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\PaymentsContract;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -80,29 +80,28 @@ final class PaymentsService implements PaymentsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'payments',
             body: (object) $parsed,
             options: $options,
+            convert: PaymentNewResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(PaymentNewResponse::class, value: $resp);
     }
 
     public function retrieve(
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): Payment {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['payments/%1$s', $paymentID],
             options: $requestOptions,
+            convert: Payment::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Payment::class, value: $resp);
     }
 
     /**
@@ -139,28 +138,28 @@ final class PaymentsService implements PaymentsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'payments',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: PaymentListResponse::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(PaymentListResponse::class, value: $resp);
     }
 
     public function retrieveLineItems(
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): PaymentGetLineItemsResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['payments/%1$s/line-items', $paymentID],
             options: $requestOptions,
+            convert: PaymentGetLineItemsResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(PaymentGetLineItemsResponse::class, value: $resp);
     }
 }

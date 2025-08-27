@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\DisputesContract;
 use Dodopayments\Disputes\DisputeListParams;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
@@ -24,14 +24,13 @@ final class DisputesService implements DisputesContract
         string $disputeID,
         ?RequestOptions $requestOptions = null
     ): GetDispute {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['disputes/%1$s', $disputeID],
             options: $requestOptions,
+            convert: GetDispute::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(GetDispute::class, value: $resp);
     }
 
     /**
@@ -65,14 +64,15 @@ final class DisputesService implements DisputesContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'disputes',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: DisputeListResponse::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(DisputeListResponse::class, value: $resp);
     }
 }

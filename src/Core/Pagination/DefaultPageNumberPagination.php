@@ -25,7 +25,7 @@ final class DefaultPageNumberPagination extends AbstractPage
         $this->items = $body['items'] ?? [];
     }
 
-    public function nextPageRequestOptions(): PageRequestOptions
+    public function nextRequest(): PageRequestOptions
     {
         $currentPage = $this->options->getQueryAsInt('page_number') ?? 1;
 
