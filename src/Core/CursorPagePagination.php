@@ -13,12 +13,17 @@ use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\RequestOptions;
 
 /**
+ * @phpstan-type cursor_page_pagination = array{
+ *   data?: list<mixed>|null, iterator?: string|null, done?: bool|null
+ * }
+ *
  * @template TItem
  *
  * @implements BasePage<TItem>
  */
 final class CursorPagePagination implements BasePage
 {
+    /** @use SdkModel<cursor_page_pagination> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

@@ -11,8 +11,19 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
+/**
+ * @phpstan-type addon_update_params = array{
+ *   currency?: Currency::*,
+ *   description?: string|null,
+ *   imageID?: string|null,
+ *   name?: string|null,
+ *   price?: int|null,
+ *   taxCategory?: TaxCategory::*,
+ * }
+ */
 final class AddonUpdateParams implements BaseModel
 {
+    /** @use SdkModel<addon_update_params> */
     use SdkModel;
     use SdkParams;
 

@@ -11,9 +11,12 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * Patch a webhook by id.
+ *
+ * @phpstan-type header_update_params = array{headers: array<string, string>}
  */
 final class HeaderUpdateParams implements BaseModel
 {
+    /** @use SdkModel<header_update_params> */
     use SdkModel;
     use SdkParams;
 

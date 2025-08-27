@@ -10,8 +10,17 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 
+/**
+ * @phpstan-type subscription_change_plan_params = array{
+ *   productID: string,
+ *   prorationBillingMode: ProrationBillingMode::*,
+ *   quantity: int,
+ *   addons?: list<AttachAddon>|null,
+ * }
+ */
 final class SubscriptionChangePlanParams implements BaseModel
 {
+    /** @use SdkModel<subscription_change_plan_params> */
     use SdkModel;
     use SdkParams;
 

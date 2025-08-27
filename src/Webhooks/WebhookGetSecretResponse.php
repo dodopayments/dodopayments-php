@@ -8,8 +8,12 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type webhook_get_secret_response = array{secret: string}
+ */
 final class WebhookGetSecretResponse implements BaseModel
 {
+    /** @use SdkModel<webhook_get_secret_response> */
     use SdkModel;
 
     #[Api]

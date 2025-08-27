@@ -8,8 +8,12 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type brand_list_response = array{items: list<Brand>}
+ */
 final class BrandListResponse implements BaseModel
 {
+    /** @use SdkModel<brand_list_response> */
     use SdkModel;
 
     /**

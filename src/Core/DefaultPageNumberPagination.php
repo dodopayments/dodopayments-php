@@ -13,12 +13,15 @@ use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\RequestOptions;
 
 /**
+ * @phpstan-type default_page_number_pagination = array{items?: list<mixed>|null}
+ *
  * @template TItem
  *
  * @implements BasePage<TItem>
  */
 final class DefaultPageNumberPagination implements BasePage
 {
+    /** @use SdkModel<default_page_number_pagination> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

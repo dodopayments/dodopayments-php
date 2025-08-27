@@ -8,8 +8,12 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type license_validate_response = array{valid: bool}
+ */
 final class LicenseValidateResponse implements BaseModel
 {
+    /** @use SdkModel<license_validate_response> */
     use SdkModel;
 
     #[Api]

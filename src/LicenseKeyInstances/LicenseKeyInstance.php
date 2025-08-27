@@ -8,8 +8,18 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type license_key_instance = array{
+ *   id: string,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   licenseKeyID: string,
+ *   name: string,
+ * }
+ */
 final class LicenseKeyInstance implements BaseModel
 {
+    /** @use SdkModel<license_key_instance> */
     use SdkModel;
 
     #[Api]

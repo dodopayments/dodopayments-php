@@ -11,9 +11,18 @@ use Dodopayments\Misc\CountryCode;
 
 /**
  * Billing address information for the session.
+ *
+ * @phpstan-type billing_address = array{
+ *   country: CountryCode::*,
+ *   city?: string|null,
+ *   state?: string|null,
+ *   street?: string|null,
+ *   zipcode?: string|null,
+ * }
  */
 final class BillingAddress implements BaseModel
 {
+    /** @use SdkModel<billing_address> */
     use SdkModel;
 
     /**

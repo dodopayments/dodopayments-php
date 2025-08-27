@@ -8,8 +8,19 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type customer_alias = array{
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   customerID: string,
+ *   email: string,
+ *   name: string,
+ *   phoneNumber?: string|null,
+ * }
+ */
 final class Customer implements BaseModel
 {
+    /** @use SdkModel<customer_alias> */
     use SdkModel;
 
     #[Api('business_id')]

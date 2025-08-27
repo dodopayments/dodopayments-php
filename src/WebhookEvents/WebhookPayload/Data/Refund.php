@@ -9,8 +9,12 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
 
+/**
+ * @phpstan-type refund_alias = array{payloadType: PayloadType::*}
+ */
 final class Refund implements BaseModel
 {
+    /** @use SdkModel<refund_alias> */
     use SdkModel;
 
     /** @var PayloadType::* $payloadType */

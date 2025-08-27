@@ -10,8 +10,24 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
+/**
+ * @phpstan-type payment_create_params = array{
+ *   billing: BillingAddress,
+ *   customer: AttachExistingCustomer|NewCustomer,
+ *   productCart: list<OneTimeProductCartItem>,
+ *   allowedPaymentMethodTypes?: list<PaymentMethodTypes::*>|null,
+ *   billingCurrency?: Currency::*,
+ *   discountCode?: string|null,
+ *   metadata?: array<string, string>,
+ *   paymentLink?: bool|null,
+ *   returnURL?: string|null,
+ *   showSavedPaymentMethods?: bool,
+ *   taxID?: string|null,
+ * }
+ */
 final class PaymentCreateParams implements BaseModel
 {
+    /** @use SdkModel<payment_create_params> */
     use SdkModel;
     use SdkParams;
 

@@ -8,8 +8,14 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type checkout_session_response = array{
+ *   checkoutURL: string, sessionID: string
+ * }
+ */
 final class CheckoutSessionResponse implements BaseModel
 {
+    /** @use SdkModel<checkout_session_response> */
     use SdkModel;
 
     /**

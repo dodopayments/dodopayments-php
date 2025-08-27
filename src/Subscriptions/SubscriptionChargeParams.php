@@ -10,8 +10,18 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
+/**
+ * @phpstan-type subscription_charge_params = array{
+ *   productPrice: int,
+ *   adaptiveCurrencyFeesInclusive?: bool|null,
+ *   metadata?: array<string, string>|null,
+ *   productCurrency?: Currency::*,
+ *   productDescription?: string|null,
+ * }
+ */
 final class SubscriptionChargeParams implements BaseModel
 {
+    /** @use SdkModel<subscription_charge_params> */
     use SdkModel;
     use SdkParams;
 

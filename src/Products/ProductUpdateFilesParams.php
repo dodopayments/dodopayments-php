@@ -9,8 +9,12 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type product_update_files_params = array{fileName: string}
+ */
 final class ProductUpdateFilesParams implements BaseModel
 {
+    /** @use SdkModel<product_update_files_params> */
     use SdkModel;
     use SdkParams;
 
