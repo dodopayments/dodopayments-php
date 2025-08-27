@@ -9,8 +9,12 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey\PayloadType;
 
+/**
+ * @phpstan-type license_key = array{payloadType: PayloadType::*}
+ */
 final class LicenseKey implements BaseModel
 {
+    /** @use SdkModel<license_key> */
     use SdkModel;
 
     /** @var PayloadType::* $payloadType */

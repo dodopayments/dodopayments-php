@@ -11,8 +11,20 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 
+/**
+ * @phpstan-type dispute_list_params = array{
+ *   createdAtGte?: \DateTimeInterface,
+ *   createdAtLte?: \DateTimeInterface,
+ *   customerID?: string,
+ *   disputeStage?: DisputeStage::*,
+ *   disputeStatus?: DisputeStatus::*,
+ *   pageNumber?: int,
+ *   pageSize?: int,
+ * }
+ */
 final class DisputeListParams implements BaseModel
 {
+    /** @use SdkModel<dispute_list_params> */
     use SdkModel;
     use SdkParams;
 

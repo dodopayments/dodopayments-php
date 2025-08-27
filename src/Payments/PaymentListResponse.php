@@ -9,8 +9,25 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
+/**
+ * @phpstan-type payment_list_response = array{
+ *   brandID: string,
+ *   createdAt: \DateTimeInterface,
+ *   currency: Currency::*,
+ *   customer: CustomerLimitedDetails,
+ *   digitalProductsDelivered: bool,
+ *   metadata: array<string, string>,
+ *   paymentID: string,
+ *   totalAmount: int,
+ *   paymentMethod?: string|null,
+ *   paymentMethodType?: string|null,
+ *   status?: IntentStatus::*|null,
+ *   subscriptionID?: string|null,
+ * }
+ */
 final class PaymentListResponse implements BaseModel
 {
+    /** @use SdkModel<payment_list_response> */
     use SdkModel;
 
     #[Api('brand_id')]

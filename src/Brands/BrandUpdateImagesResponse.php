@@ -8,8 +8,12 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type brand_update_images_response = array{imageID: string, url: string}
+ */
 final class BrandUpdateImagesResponse implements BaseModel
 {
+    /** @use SdkModel<brand_update_images_response> */
     use SdkModel;
 
     /**

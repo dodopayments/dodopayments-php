@@ -12,9 +12,21 @@ use Dodopayments\WebhookEvents\WebhookEventType;
 
 /**
  * Create a new webhook.
+ *
+ * @phpstan-type webhook_create_params = array{
+ *   url: string,
+ *   description?: string|null,
+ *   disabled?: bool|null,
+ *   filterTypes?: list<WebhookEventType::*>,
+ *   headers?: array<string, string>|null,
+ *   idempotencyKey?: string|null,
+ *   metadata?: array<string, string>|null,
+ *   rateLimit?: int|null,
+ * }
  */
 final class WebhookCreateParams implements BaseModel
 {
+    /** @use SdkModel<webhook_create_params> */
     use SdkModel;
     use SdkParams;
 

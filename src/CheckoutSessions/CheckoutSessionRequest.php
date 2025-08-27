@@ -17,8 +17,26 @@ use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
+/**
+ * @phpstan-type checkout_session_request = array{
+ *   productCart: list<ProductCart>,
+ *   allowedPaymentMethodTypes?: list<PaymentMethodTypes::*>|null,
+ *   billingAddress?: BillingAddress|null,
+ *   billingCurrency?: Currency::*|null,
+ *   confirm?: bool|null,
+ *   customer?: null|AttachExistingCustomer|NewCustomer,
+ *   customization?: Customization|null,
+ *   discountCode?: string|null,
+ *   featureFlags?: FeatureFlags|null,
+ *   metadata?: array<string, string>|null,
+ *   returnURL?: string|null,
+ *   showSavedPaymentMethods?: bool|null,
+ *   subscriptionData?: SubscriptionData|null,
+ * }
+ */
 final class CheckoutSessionRequest implements BaseModel
 {
+    /** @use SdkModel<checkout_session_request> */
     use SdkModel;
 
     /** @var list<ProductCart> $productCart */

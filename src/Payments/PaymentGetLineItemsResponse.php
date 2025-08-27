@@ -10,8 +10,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
 
+/**
+ * @phpstan-type payment_get_line_items_response = array{
+ *   currency: Currency::*, items: list<Item>
+ * }
+ */
 final class PaymentGetLineItemsResponse implements BaseModel
 {
+    /** @use SdkModel<payment_get_line_items_response> */
     use SdkModel;
 
     /** @var Currency::* $currency */

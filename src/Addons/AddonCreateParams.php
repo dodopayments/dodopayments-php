@@ -11,8 +11,18 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
+/**
+ * @phpstan-type addon_create_params = array{
+ *   currency: Currency::*,
+ *   name: string,
+ *   price: int,
+ *   taxCategory: TaxCategory::*,
+ *   description?: string|null,
+ * }
+ */
 final class AddonCreateParams implements BaseModel
 {
+    /** @use SdkModel<addon_create_params> */
     use SdkModel;
     use SdkParams;
 

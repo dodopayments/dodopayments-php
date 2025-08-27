@@ -8,8 +8,12 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type disable_on_demand = array{nextBillingDate: \DateTimeInterface}
+ */
 final class DisableOnDemand implements BaseModel
 {
+    /** @use SdkModel<disable_on_demand> */
     use SdkModel;
 
     #[Api('next_billing_date')]

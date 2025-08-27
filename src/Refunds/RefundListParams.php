@@ -10,8 +10,19 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundListParams\Status;
 
+/**
+ * @phpstan-type refund_list_params = array{
+ *   createdAtGte?: \DateTimeInterface,
+ *   createdAtLte?: \DateTimeInterface,
+ *   customerID?: string,
+ *   pageNumber?: int,
+ *   pageSize?: int,
+ *   status?: Status::*,
+ * }
+ */
 final class RefundListParams implements BaseModel
 {
+    /** @use SdkModel<refund_list_params> */
     use SdkModel;
     use SdkParams;
 

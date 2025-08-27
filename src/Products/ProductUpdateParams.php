@@ -13,8 +13,26 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 
+/**
+ * @phpstan-type product_update_params = array{
+ *   addons?: list<string>|null,
+ *   brandID?: string|null,
+ *   description?: string|null,
+ *   digitalProductDelivery?: DigitalProductDelivery|null,
+ *   imageID?: string|null,
+ *   licenseKeyActivationMessage?: string|null,
+ *   licenseKeyActivationsLimit?: int|null,
+ *   licenseKeyDuration?: LicenseKeyDuration,
+ *   licenseKeyEnabled?: bool|null,
+ *   metadata?: array<string, string>|null,
+ *   name?: string|null,
+ *   price?: OneTimePrice|RecurringPrice,
+ *   taxCategory?: TaxCategory::*,
+ * }
+ */
 final class ProductUpdateParams implements BaseModel
 {
+    /** @use SdkModel<product_update_params> */
     use SdkModel;
     use SdkParams;
 
