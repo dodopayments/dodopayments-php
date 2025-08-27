@@ -9,8 +9,14 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 
+/**
+ * @phpstan-type subscription_data = array{
+ *   onDemand?: OnDemandSubscription|null, trialPeriodDays?: int|null
+ * }
+ */
 final class SubscriptionData implements BaseModel
 {
+    /** @use SdkModel<subscription_data> */
     use SdkModel;
 
     #[Api('on_demand', nullable: true, optional: true)]

@@ -12,9 +12,21 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * POST /discounts
  * If `code` is omitted or empty, a random 16-char uppercase code is generated.
+ *
+ * @phpstan-type discount_create_params = array{
+ *   amount: int,
+ *   type: DiscountType::*,
+ *   code?: string|null,
+ *   expiresAt?: \DateTimeInterface|null,
+ *   name?: string|null,
+ *   restrictedTo?: list<string>|null,
+ *   subscriptionCycles?: int|null,
+ *   usageLimit?: int|null,
+ * }
  */
 final class DiscountCreateParams implements BaseModel
 {
+    /** @use SdkModel<discount_create_params> */
     use SdkModel;
     use SdkParams;
 

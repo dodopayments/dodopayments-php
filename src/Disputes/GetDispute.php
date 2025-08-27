@@ -9,8 +9,24 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
+/**
+ * @phpstan-type get_dispute = array{
+ *   amount: string,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   currency: string,
+ *   customer: CustomerLimitedDetails,
+ *   disputeID: string,
+ *   disputeStage: DisputeStage::*,
+ *   disputeStatus: DisputeStatus::*,
+ *   paymentID: string,
+ *   reason?: string|null,
+ *   remarks?: string|null,
+ * }
+ */
 final class GetDispute implements BaseModel
 {
+    /** @use SdkModel<get_dispute> */
     use SdkModel;
 
     /**

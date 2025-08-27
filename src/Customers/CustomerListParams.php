@@ -9,8 +9,14 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type customer_list_params = array{
+ *   email?: string, pageNumber?: int, pageSize?: int
+ * }
+ */
 final class CustomerListParams implements BaseModel
 {
+    /** @use SdkModel<customer_list_params> */
     use SdkModel;
     use SdkParams;
 

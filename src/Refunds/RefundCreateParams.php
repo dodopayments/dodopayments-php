@@ -10,8 +10,14 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
+/**
+ * @phpstan-type refund_create_params = array{
+ *   paymentID: string, items?: list<Item>|null, reason?: string|null
+ * }
+ */
 final class RefundCreateParams implements BaseModel
 {
+    /** @use SdkModel<refund_create_params> */
     use SdkModel;
     use SdkParams;
 

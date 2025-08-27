@@ -11,9 +11,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * List all webhooks.
+ *
+ * @phpstan-type webhook_list_params = array{
+ *   iterator?: string|null, limit?: int|null
+ * }
  */
 final class WebhookListParams implements BaseModel
 {
+    /** @use SdkModel<webhook_list_params> */
     use SdkModel;
     use SdkParams;
 

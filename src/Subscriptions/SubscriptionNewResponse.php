@@ -9,8 +9,23 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
+/**
+ * @phpstan-type subscription_new_response = array{
+ *   addons: list<AddonCartResponseItem>,
+ *   customer: CustomerLimitedDetails,
+ *   metadata: array<string, string>,
+ *   paymentID: string,
+ *   recurringPreTaxAmount: int,
+ *   subscriptionID: string,
+ *   clientSecret?: string|null,
+ *   discountID?: string|null,
+ *   expiresOn?: \DateTimeInterface|null,
+ *   paymentLink?: string|null,
+ * }
+ */
 final class SubscriptionNewResponse implements BaseModel
 {
+    /** @use SdkModel<subscription_new_response> */
     use SdkModel;
 
     /**

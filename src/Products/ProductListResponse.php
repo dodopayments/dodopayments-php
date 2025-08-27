@@ -12,8 +12,27 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 
+/**
+ * @phpstan-type product_list_response = array{
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   isRecurring: bool,
+ *   metadata: array<string, string>,
+ *   productID: string,
+ *   taxCategory: TaxCategory::*,
+ *   updatedAt: \DateTimeInterface,
+ *   currency?: Currency::*|null,
+ *   description?: string|null,
+ *   image?: string|null,
+ *   name?: string|null,
+ *   price?: int|null,
+ *   priceDetail?: null|OneTimePrice|RecurringPrice,
+ *   taxInclusive?: bool|null,
+ * }
+ */
 final class ProductListResponse implements BaseModel
 {
+    /** @use SdkModel<product_list_response> */
     use SdkModel;
 
     /**

@@ -13,9 +13,14 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * Sensitive headers that have been redacted are returned in the sensitive
  * field.
+ *
+ * @phpstan-type header_get_response = array{
+ *   headers: array<string, string>, sensitive: list<string>
+ * }
  */
 final class HeaderGetResponse implements BaseModel
 {
+    /** @use SdkModel<header_get_response> */
     use SdkModel;
 
     /**

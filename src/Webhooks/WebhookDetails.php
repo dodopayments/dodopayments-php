@@ -8,8 +8,22 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type webhook_details = array{
+ *   id: string,
+ *   createdAt: string,
+ *   description: string,
+ *   metadata: array<string, string>,
+ *   updatedAt: string,
+ *   url: string,
+ *   disabled?: bool|null,
+ *   filterTypes?: list<string>|null,
+ *   rateLimit?: int|null,
+ * }
+ */
 final class WebhookDetails implements BaseModel
 {
+    /** @use SdkModel<webhook_details> */
     use SdkModel;
 
     /**

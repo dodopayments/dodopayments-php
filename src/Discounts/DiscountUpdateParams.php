@@ -11,9 +11,21 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * PATCH /discounts/{discount_id}.
+ *
+ * @phpstan-type discount_update_params = array{
+ *   amount?: int|null,
+ *   code?: string|null,
+ *   expiresAt?: \DateTimeInterface|null,
+ *   name?: string|null,
+ *   restrictedTo?: list<string>|null,
+ *   subscriptionCycles?: int|null,
+ *   type?: DiscountType::*,
+ *   usageLimit?: int|null,
+ * }
  */
 final class DiscountUpdateParams implements BaseModel
 {
+    /** @use SdkModel<discount_update_params> */
     use SdkModel;
     use SdkParams;
 

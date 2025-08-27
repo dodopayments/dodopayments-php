@@ -8,8 +8,22 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
+/**
+ * @phpstan-type payment_new_response = array{
+ *   clientSecret: string,
+ *   customer: CustomerLimitedDetails,
+ *   metadata: array<string, string>,
+ *   paymentID: string,
+ *   totalAmount: int,
+ *   discountID?: string|null,
+ *   expiresOn?: \DateTimeInterface|null,
+ *   paymentLink?: string|null,
+ *   productCart?: list<OneTimeProductCartItem>|null,
+ * }
+ */
 final class PaymentNewResponse implements BaseModel
 {
+    /** @use SdkModel<payment_new_response> */
     use SdkModel;
 
     /**

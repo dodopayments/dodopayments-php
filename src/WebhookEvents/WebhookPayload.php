@@ -13,8 +13,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
+/**
+ * @phpstan-type webhook_payload = array{
+ *   businessID: string,
+ *   data: Payment|Subscription|Refund|Dispute|LicenseKey,
+ *   timestamp: \DateTimeInterface,
+ *   type: WebhookEventType::*,
+ * }
+ */
 final class WebhookPayload implements BaseModel
 {
+    /** @use SdkModel<webhook_payload> */
     use SdkModel;
 
     #[Api('business_id')]
