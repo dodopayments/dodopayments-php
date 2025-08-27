@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\ProductsContract;
 use Dodopayments\Core\Services\Products\ImagesService;
 use Dodopayments\Misc\TaxCategory;
@@ -190,6 +190,8 @@ final class ProductsService implements ProductsContract
      * - `true`: Show only recurring pricing products (e.g. subscriptions)
      * - `false`: Show only one-time price products
      * - `null` or absent: Show both types of products
+     *
+     * @return DefaultPageNumberPagination<ProductListResponse>
      */
     public function list(
         $archived = omit,
@@ -198,7 +200,7 @@ final class ProductsService implements ProductsContract
         $pageSize = omit,
         $recurring = omit,
         ?RequestOptions $requestOptions = null,
-    ): ProductListResponse {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = ProductListParams::parseRequest(
             [
                 'archived' => $archived,

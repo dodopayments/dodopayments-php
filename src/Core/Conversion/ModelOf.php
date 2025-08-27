@@ -6,6 +6,7 @@ namespace Dodopayments\Core\Conversion;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 
@@ -20,7 +21,7 @@ final class ModelOf implements Converter
     public readonly array $properties;
 
     /**
-     * @param \ReflectionClass<BaseModel> $class
+     * @param \ReflectionClass<BaseModel|BasePage<mixed>> $class
      */
     public function __construct(public readonly \ReflectionClass $class)
     {
@@ -93,8 +94,10 @@ final class ModelOf implements Converter
 
     /**
      * @param array<mixed> $data
+     *
+     * @return BaseModel|BasePage<mixed>
      */
-    public function from(array $data): BaseModel
+    public function from(array $data): BaseModel|BasePage
     {
         $instance = $this->class->newInstanceWithoutConstructor();
         $instance->__unserialize($data); // @phpstan-ignore-line
@@ -104,7 +107,7 @@ final class ModelOf implements Converter
 
     public function dump(mixed $value, DumpState $state): mixed
     {
-        if ($value instanceof BaseModel) {
+        if ($value instanceof BaseModel || $value instanceof BasePage) {
             $value = $value->toArray();
         }
 

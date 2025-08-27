@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\RefundsContract;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
@@ -66,6 +66,8 @@ final class RefundsService implements RefundsContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param Status::* $status Filter by status
+     *
+     * @return DefaultPageNumberPagination<Refund>
      */
     public function list(
         $createdAtGte = omit,
@@ -75,7 +77,7 @@ final class RefundsService implements RefundsContract
         $pageSize = omit,
         $status = omit,
         ?RequestOptions $requestOptions = null,
-    ): Refund {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = RefundListParams::parseRequest(
             [
                 'createdAtGte' => $createdAtGte,

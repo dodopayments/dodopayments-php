@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\PayoutsContract;
 use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
@@ -20,12 +20,14 @@ final class PayoutsService implements PayoutsContract
     /**
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     *
+     * @return DefaultPageNumberPagination<PayoutListResponse>
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): PayoutListResponse {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = PayoutListParams::parseRequest(
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions

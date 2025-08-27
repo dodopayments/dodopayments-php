@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountType;
 use Dodopayments\RequestOptions;
@@ -83,12 +84,14 @@ interface DiscountsContract
     /**
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
+     *
+     * @return DefaultPageNumberPagination<Discount>
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
-    ): Discount;
+    ): DefaultPageNumberPagination;
 
     public function delete(
         string $discountID,

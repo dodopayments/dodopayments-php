@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Core\Pagination;
+namespace Dodopayments\Core\Concerns;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Core\Errors\APIStatusError;
@@ -16,19 +15,20 @@ use Dodopayments\RequestOptions;
  *
  * @template Item
  *
- * @implements BasePage<Item>
- *
  * @phpstan-import-type normalized_request from \Dodopayments\Core\BaseClient
  */
-abstract class AbstractPage implements BasePage
+trait SdkPage
 {
-    public function __construct(
-        protected Converter|ConverterSource|string $convert,
-        protected Client $client,
-        protected array $request,
-        protected RequestOptions $options,
-        protected mixed $data,
-    ) {}
+    private Converter|ConverterSource|string $convert;
+
+    private Client $client;
+
+    /**
+     * normalized_request $request.
+     */
+    private array $request;
+
+    private RequestOptions $options;
 
     /**
      * @return list<Item>

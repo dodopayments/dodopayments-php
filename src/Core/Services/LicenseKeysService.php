@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\LicenseKeysContract;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
@@ -72,6 +72,8 @@ final class LicenseKeysService implements LicenseKeysContract
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product ID
      * @param Status::* $status Filter by license key status
+     *
+     * @return DefaultPageNumberPagination<LicenseKey>
      */
     public function list(
         $customerID = omit,
@@ -80,7 +82,7 @@ final class LicenseKeysService implements LicenseKeysContract
         $productID = omit,
         $status = omit,
         ?RequestOptions $requestOptions = null,
-    ): LicenseKey {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = LicenseKeyListParams::parseRequest(
             [
                 'customerID' => $customerID,
