@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\Contracts;
 
-use Dodopayments\Core\BaseClient;
-use Dodopayments\Core\Pagination\PageRequestOptions;
-use Psr\Http\Message\ResponseInterface;
+use Dodopayments\Client;
+use Dodopayments\Core\Conversion\Contracts\Converter;
+use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\RequestOptions;
 
 /**
  * @template Item
@@ -17,12 +18,15 @@ interface BasePage extends \IteratorAggregate
 {
     /**
      * @internal
+     *
+     * @param array<string, mixed> $request
      */
     public function __construct(
-        BaseClient $client,
-        PageRequestOptions $options,
-        ResponseInterface $response,
-        mixed $body,
+        Converter|ConverterSource|string $convert,
+        Client $client,
+        array $request,
+        RequestOptions $options,
+        mixed $data,
     );
 
     public function hasNextPage(): bool;

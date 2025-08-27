@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services\Products;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\Products\ImagesContract;
 use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
@@ -29,14 +28,14 @@ final class ImagesService implements ImagesContract
             ['forceUpdate' => $forceUpdate],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'put',
             path: ['products/%1$s/images', $id],
             query: $parsed,
             options: $options,
+            convert: ImageUpdateResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(ImageUpdateResponse::class, value: $resp);
     }
 }

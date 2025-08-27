@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\PayoutsContract;
 use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
@@ -30,14 +30,15 @@ final class PayoutsService implements PayoutsContract
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'payouts',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: PayoutListResponse::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(PayoutListResponse::class, value: $resp);
     }
 }

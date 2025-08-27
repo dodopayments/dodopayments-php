@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services\Customers;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\Customers\CustomerPortalContract;
 use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
@@ -29,14 +28,14 @@ final class CustomerPortalService implements CustomerPortalContract
             ['sendEmail' => $sendEmail],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: ['customers/%1$s/customer-portal/session', $customerID],
             query: $parsed,
             options: $options,
+            convert: CustomerPortalSession::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(CustomerPortalSession::class, value: $resp);
     }
 }

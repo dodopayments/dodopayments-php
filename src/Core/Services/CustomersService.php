@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\CustomersContract;
 use Dodopayments\Core\Services\Customers\CustomerPortalService;
 use Dodopayments\Customers\Customer;
@@ -40,29 +40,28 @@ final class CustomersService implements CustomersContract
             ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'customers',
             body: (object) $parsed,
             options: $options,
+            convert: Customer::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Customer::class, value: $resp);
     }
 
     public function retrieve(
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): Customer {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['customers/%1$s', $customerID],
             options: $requestOptions,
+            convert: Customer::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Customer::class, value: $resp);
     }
 
     /**
@@ -79,15 +78,15 @@ final class CustomersService implements CustomersContract
             ['name' => $name, 'phoneNumber' => $phoneNumber],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'patch',
             path: ['customers/%1$s', $customerID],
             body: (object) $parsed,
             options: $options,
+            convert: Customer::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Customer::class, value: $resp);
     }
 
     /**
@@ -105,14 +104,15 @@ final class CustomersService implements CustomersContract
             ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'customers',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: Customer::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Customer::class, value: $resp);
     }
 }

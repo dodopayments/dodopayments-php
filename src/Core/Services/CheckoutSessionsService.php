@@ -12,7 +12,6 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\CheckoutSessionsContract;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -81,14 +80,14 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'checkouts',
             body: (object) $parsed,
             options: $options,
+            convert: CheckoutSessionResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(CheckoutSessionResponse::class, value: $resp);
     }
 }

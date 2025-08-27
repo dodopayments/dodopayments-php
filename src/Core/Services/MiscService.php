@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\ServiceContracts\MiscContract;
 use Dodopayments\Misc\CountryCode;
@@ -21,13 +20,12 @@ final class MiscService implements MiscContract
     public function listSupportedCountries(
         ?RequestOptions $requestOptions = null
     ): array {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'checkout/supported_countries',
             options: $requestOptions,
+            convert: new ListOf(CountryCode::class),
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(new ListOf(CountryCode::class), value: $resp);
     }
 }

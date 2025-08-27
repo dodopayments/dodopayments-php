@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services\Webhooks;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\Webhooks\HeadersContract;
 use Dodopayments\RequestOptions;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
@@ -22,14 +21,13 @@ final class HeadersService implements HeadersContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/headers', $webhookID],
             options: $requestOptions,
+            convert: HeaderGetResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(HeaderGetResponse::class, value: $resp);
     }
 
     /**
@@ -48,11 +46,13 @@ final class HeadersService implements HeadersContract
             $requestOptions
         );
 
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s/headers', $webhookID],
             body: (object) $parsed,
             options: $options,
+            convert: null,
         );
     }
 }
