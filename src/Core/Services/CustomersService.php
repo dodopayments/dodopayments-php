@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\CustomersContract;
 use Dodopayments\Core\Services\Customers\CustomerPortalService;
 use Dodopayments\Customers\Customer;
@@ -93,13 +93,15 @@ final class CustomersService implements CustomersContract
      * @param string $email Filter by customer email
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     *
+     * @return DefaultPageNumberPagination<Customer>
      */
     public function list(
         $email = omit,
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
-    ): Customer {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = CustomerListParams::parseRequest(
             ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions,

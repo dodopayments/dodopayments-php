@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 use Dodopayments\Disputes\DisputeListResponse;
@@ -27,6 +28,8 @@ interface DisputesContract
      * @param DisputeStatus::* $disputeStatus Filter by dispute status
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     *
+     * @return DefaultPageNumberPagination<DisputeListResponse>
      */
     public function list(
         $createdAtGte = omit,
@@ -37,5 +40,5 @@ interface DisputesContract
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
-    ): DisputeListResponse;
+    ): DefaultPageNumberPagination;
 }

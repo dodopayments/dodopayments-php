@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -105,6 +106,8 @@ interface SubscriptionsContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param Status::* $status Filter by status
+     *
+     * @return DefaultPageNumberPagination<SubscriptionListResponse>
      */
     public function list(
         $brandID = omit,
@@ -115,7 +118,7 @@ interface SubscriptionsContract
         $pageSize = omit,
         $status = omit,
         ?RequestOptions $requestOptions = null,
-    ): SubscriptionListResponse;
+    ): DefaultPageNumberPagination;
 
     /**
      * @param string $productID Unique identifier of the product to subscribe to

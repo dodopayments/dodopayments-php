@@ -6,6 +6,7 @@ namespace Dodopayments\Core\ServiceContracts;
 
 use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
@@ -57,12 +58,14 @@ interface AddonsContract
     /**
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     *
+     * @return DefaultPageNumberPagination<AddonResponse>
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
-    ): AddonResponse;
+    ): DefaultPageNumberPagination;
 
     public function updateImages(
         string $id,

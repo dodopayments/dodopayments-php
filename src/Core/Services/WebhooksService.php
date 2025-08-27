@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\CursorPagePagination;
+use Dodopayments\Core\CursorPagePagination;
 use Dodopayments\Core\ServiceContracts\WebhooksContract;
 use Dodopayments\Core\Services\Webhooks\HeadersService;
 use Dodopayments\RequestOptions;
@@ -144,12 +144,14 @@ final class WebhooksService implements WebhooksContract
      *
      * @param string|null $iterator The iterator returned from a prior invocation
      * @param int|null $limit Limit the number of returned items
+     *
+     * @return CursorPagePagination<WebhookDetails>
      */
     public function list(
         $iterator = omit,
         $limit = omit,
         ?RequestOptions $requestOptions = null
-    ): WebhookDetails {
+    ): CursorPagePagination {
         [$parsed, $options] = WebhookListParams::parseRequest(
             ['iterator' => $iterator, 'limit' => $limit],
             $requestOptions

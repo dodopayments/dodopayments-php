@@ -10,7 +10,7 @@ use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\AddonsContract;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -114,12 +114,14 @@ final class AddonsService implements AddonsContract
     /**
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     *
+     * @return DefaultPageNumberPagination<AddonResponse>
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): AddonResponse {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = AddonListParams::parseRequest(
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
