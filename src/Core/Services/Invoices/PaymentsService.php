@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services\Invoices;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\Invoices\PaymentsContract;
 use Dodopayments\RequestOptions;
 
@@ -17,14 +16,13 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): string {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['invoices/payments/%1$s', $paymentID],
             headers: ['Accept' => 'application/pdf'],
             options: $requestOptions,
+            convert: 'string',
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce('string', value: $resp);
     }
 }

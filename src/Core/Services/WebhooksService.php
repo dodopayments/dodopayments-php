@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\CursorPagePagination;
 use Dodopayments\Core\ServiceContracts\WebhooksContract;
 use Dodopayments\Core\Services\Webhooks\HeadersService;
 use Dodopayments\RequestOptions;
@@ -68,15 +68,15 @@ final class WebhooksService implements WebhooksContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'webhooks',
             body: (object) $parsed,
             options: $options,
+            convert: WebhookDetails::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -86,14 +86,13 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s', $webhookID],
             options: $requestOptions,
+            convert: WebhookDetails::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -129,15 +128,15 @@ final class WebhooksService implements WebhooksContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s', $webhookID],
             body: (object) $parsed,
             options: $options,
+            convert: WebhookDetails::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -155,15 +154,16 @@ final class WebhooksService implements WebhooksContract
             ['iterator' => $iterator, 'limit' => $limit],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'webhooks',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: WebhookDetails::class,
+            page: CursorPagePagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookDetails::class, value: $resp);
     }
 
     /**
@@ -173,10 +173,12 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'delete',
             path: ['webhooks/%1$s', $webhookID],
             options: $requestOptions,
+            convert: null,
         );
     }
 
@@ -187,13 +189,12 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/secret', $webhookID],
             options: $requestOptions,
+            convert: WebhookGetSecretResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(WebhookGetSecretResponse::class, value: $resp);
     }
 }

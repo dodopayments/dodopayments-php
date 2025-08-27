@@ -10,7 +10,6 @@ use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\BrandsContract;
 use Dodopayments\RequestOptions;
 
@@ -45,15 +44,15 @@ final class BrandsService implements BrandsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'brands',
             body: (object) $parsed,
-            options: $options
+            options: $options,
+            convert: Brand::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Brand::class, value: $resp);
     }
 
     /**
@@ -63,14 +62,13 @@ final class BrandsService implements BrandsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Brand {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['brands/%1$s', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: Brand::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Brand::class, value: $resp);
     }
 
     /**
@@ -96,41 +94,39 @@ final class BrandsService implements BrandsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'patch',
             path: ['brands/%1$s', $id],
             body: (object) $parsed,
             options: $options,
+            convert: Brand::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Brand::class, value: $resp);
     }
 
     public function list(
         ?RequestOptions $requestOptions = null
     ): BrandListResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'brands',
-            options: $requestOptions
+            options: $requestOptions,
+            convert: BrandListResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(BrandListResponse::class, value: $resp);
     }
 
     public function updateImages(
         string $id,
         ?RequestOptions $requestOptions = null
     ): BrandUpdateImagesResponse {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'put',
             path: ['brands/%1$s/images', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: BrandUpdateImagesResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(BrandUpdateImagesResponse::class, value: $resp);
     }
 }

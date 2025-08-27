@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
 use Dodopayments\Core\ServiceContracts\LicensesContract;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\Licenses\LicenseActivateParams;
@@ -33,15 +32,15 @@ final class LicensesService implements LicensesContract
             ['licenseKey' => $licenseKey, 'name' => $name],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'licenses/activate',
             body: (object) $parsed,
             options: $options,
+            convert: LicenseKeyInstance::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(LicenseKeyInstance::class, value: $resp);
     }
 
     /**
@@ -61,11 +60,13 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'post',
             path: 'licenses/deactivate',
             body: (object) $parsed,
             options: $options,
+            convert: null,
         );
     }
 
@@ -85,14 +86,14 @@ final class LicensesService implements LicensesContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'licenses/validate',
             body: (object) $parsed,
             options: $options,
+            convert: LicenseValidateResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(LicenseValidateResponse::class, value: $resp);
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\DiscountsContract;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountCreateParams;
@@ -68,15 +68,15 @@ final class DiscountsService implements DiscountsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'discounts',
             body: (object) $parsed,
             options: $options,
+            convert: Discount::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Discount::class, value: $resp);
     }
 
     /**
@@ -86,14 +86,13 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): Discount {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['discounts/%1$s', $discountID],
             options: $requestOptions,
+            convert: Discount::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Discount::class, value: $resp);
     }
 
     /**
@@ -140,15 +139,15 @@ final class DiscountsService implements DiscountsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'patch',
             path: ['discounts/%1$s', $discountID],
             body: (object) $parsed,
             options: $options,
+            convert: Discount::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Discount::class, value: $resp);
     }
 
     /**
@@ -166,15 +165,16 @@ final class DiscountsService implements DiscountsContract
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'discounts',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: Discount::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Discount::class, value: $resp);
     }
 
     /**
@@ -184,10 +184,12 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'delete',
             path: ['discounts/%1$s', $discountID],
             options: $requestOptions,
+            convert: null,
         );
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\LicenseKeysContract;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
@@ -23,14 +23,13 @@ final class LicenseKeysService implements LicenseKeysContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKey {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['license_keys/%1$s', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: LicenseKey::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(LicenseKey::class, value: $resp);
     }
 
     /**
@@ -56,15 +55,15 @@ final class LicenseKeysService implements LicenseKeysContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'patch',
             path: ['license_keys/%1$s', $id],
             body: (object) $parsed,
             options: $options,
+            convert: LicenseKey::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(LicenseKey::class, value: $resp);
     }
 
     /**
@@ -92,14 +91,15 @@ final class LicenseKeysService implements LicenseKeysContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'license_keys',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: LicenseKey::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(LicenseKey::class, value: $resp);
     }
 }

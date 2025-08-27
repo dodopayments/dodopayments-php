@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\RefundsContract;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
@@ -35,29 +35,28 @@ final class RefundsService implements RefundsContract
             ['paymentID' => $paymentID, 'items' => $items, 'reason' => $reason],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'refunds',
             body: (object) $parsed,
-            options: $options
+            options: $options,
+            convert: Refund::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Refund::class, value: $resp);
     }
 
     public function retrieve(
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): Refund {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['refunds/%1$s', $refundID],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: Refund::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Refund::class, value: $resp);
     }
 
     /**
@@ -88,14 +87,15 @@ final class RefundsService implements RefundsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'refunds',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: Refund::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Refund::class, value: $resp);
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Conversion;
+use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\ProductsContract;
 use Dodopayments\Core\Services\Products\ImagesService;
 use Dodopayments\Misc\TaxCategory;
@@ -84,29 +84,28 @@ final class ProductsService implements ProductsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'post',
             path: 'products',
             body: (object) $parsed,
             options: $options,
+            convert: Product::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Product::class, value: $resp);
     }
 
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
     ): Product {
-        $resp = $this->client->request(
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: ['products/%1$s', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: Product::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(Product::class, value: $resp);
     }
 
     /**
@@ -172,11 +171,13 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'patch',
             path: ['products/%1$s', $id],
             body: (object) $parsed,
             options: $options,
+            convert: null,
         );
     }
 
@@ -208,25 +209,28 @@ final class ProductsService implements ProductsContract
             ],
             $requestOptions,
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'get',
             path: 'products',
             query: $parsed,
-            options: $options
+            options: $options,
+            convert: ProductListResponse::class,
+            page: DefaultPageNumberPagination::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(ProductListResponse::class, value: $resp);
     }
 
     public function delete(
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'delete',
             path: ['products/%1$s', $id],
-            options: $requestOptions
+            options: $requestOptions,
+            convert: null,
         );
     }
 
@@ -234,10 +238,12 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'post',
             path: ['products/%1$s/unarchive', $id],
             options: $requestOptions,
+            convert: null,
         );
     }
 
@@ -253,14 +259,14 @@ final class ProductsService implements ProductsContract
             ['fileName' => $fileName],
             $requestOptions
         );
-        $resp = $this->client->request(
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
             method: 'put',
             path: ['products/%1$s/files', $id],
             body: (object) $parsed,
             options: $options,
+            convert: ProductUpdateFilesResponse::class,
         );
-
-        // @phpstan-ignore-next-line;
-        return Conversion::coerce(ProductUpdateFilesResponse::class, value: $resp);
     }
 }

@@ -31,7 +31,7 @@ final class CursorPagePagination extends AbstractPage
         $this->done = $body['done'] ?? false;
     }
 
-    public function nextPageRequestOptions(): ?PageRequestOptions
+    public function nextRequest(): ?PageRequestOptions
     {
         $next = $this->iterator ?? null;
         if (!$next) {
