@@ -7,7 +7,7 @@ namespace Dodopayments\Core\Concerns;
 use Dodopayments\Client;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-use Dodopayments\Core\Errors\APIStatusError;
+use Dodopayments\Core\Exceptions\APIStatusException;
 use Dodopayments\RequestOptions;
 
 /**
@@ -52,7 +52,7 @@ trait SdkPage
      *
      * @return static of static<Item>
      *
-     * @throws APIStatusError
+     * @throws APIStatusException
      */
     public function getNextPage(): static
     {
