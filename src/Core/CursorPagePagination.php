@@ -68,7 +68,7 @@ final class CursorPagePagination implements BasePage
     }
 
     /** @return list<TItem> */
-    public function getPaginatedItems(): array
+    public function getItems(): array
     {
         // @phpstan-ignore-next-line
         return $this->offsetGet('data') ?? [];
@@ -93,8 +93,12 @@ final class CursorPagePagination implements BasePage
             return null;
         }
 
-        $nextRequest = $this->request;
+        $nextRequest = array_merge_recursive(
+            $this->request,
+            ['query' => ['iterator' => $next]]
+        );
 
+        // @phpstan-ignore-next-line
         return [$nextRequest, $this->options];
     }
 }

@@ -62,7 +62,7 @@ final class DefaultPageNumberPagination implements BasePage
     }
 
     /** @return list<TItem> */
-    public function getPaginatedItems(): array
+    public function getItems(): array
     {
         // @phpstan-ignore-next-line
         return $this->offsetGet('items') ?? [];

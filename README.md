@@ -44,6 +44,7 @@ $client = new Client(
 $checkoutSessionResponse = $client->checkoutSessions->create(
   productCart: [ProductCart::with(productID: "product_id", quantity: 0)]
 );
+
 var_dump($checkoutSessionResponse->session_id);
 ```
 
@@ -53,6 +54,29 @@ It is recommended to use the static `with` constructor `AttachExistingCustomer::
 and named parameters to initialize value objects.
 
 However, builders are also provided `(new AttachExistingCustomer)->withCustomerID("customer_id")`.
+
+### Pagination
+
+List methods in the Dodo Payments API are paginated.
+
+This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
+
+```php
+<?php
+
+use Dodopayments\Client;
+
+$client = new Client(
+  bearerToken: getenv("DODO_PAYMENTS_API_KEY") ?: "My Bearer Token",
+  environment: "test_mode",
+);
+
+$pages = $client->payments->list();
+
+foreach ($this->$pages->getItems() as $page) {
+  var_dump($page->brand_id);
+}
+```
 
 ### Handling errors
 
@@ -114,6 +138,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
+
 $result = $client->checkoutSessions->create(
   productCart: [ProductCart::with(productID: "product_id", quantity: 0)],
   new RequestOptions(maxRetries: 5),
