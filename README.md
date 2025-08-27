@@ -73,6 +73,8 @@ $client = new Client(
 
 $page = $client->payments->list();
 
+var_dump($page);
+
 // fetch items from the current page
 foreach ($page->getItems() as $item) {
   var_dump($item->brand_id);
