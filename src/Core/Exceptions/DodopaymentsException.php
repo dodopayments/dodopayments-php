@@ -1,8 +1,8 @@
 <?php
 
-namespace Dodopayments\Core\Errors;
+namespace Dodopayments\Core\Exceptions;
 
-class DodopaymentsError extends \Exception
+class DodopaymentsException extends \Exception
 {
     /** @var string */
     protected const DESC = 'Dodopayments Error';
