@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\SubscriptionsContract;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -175,6 +175,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param Status::* $status Filter by status
+     *
+     * @return DefaultPageNumberPagination<SubscriptionListResponse>
      */
     public function list(
         $brandID = omit,
@@ -185,7 +187,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $pageSize = omit,
         $status = omit,
         ?RequestOptions $requestOptions = null,
-    ): SubscriptionListResponse {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = SubscriptionListParams::parseRequest(
             [
                 'brandID' => $brandID,

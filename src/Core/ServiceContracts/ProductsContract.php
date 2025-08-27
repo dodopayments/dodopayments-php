@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -112,6 +113,8 @@ interface ProductsContract
      * - `true`: Show only recurring pricing products (e.g. subscriptions)
      * - `false`: Show only one-time price products
      * - `null` or absent: Show both types of products
+     *
+     * @return DefaultPageNumberPagination<ProductListResponse>
      */
     public function list(
         $archived = omit,
@@ -120,7 +123,7 @@ interface ProductsContract
         $pageSize = omit,
         $recurring = omit,
         ?RequestOptions $requestOptions = null,
-    ): ProductListResponse;
+    ): DefaultPageNumberPagination;
 
     public function delete(
         string $id,

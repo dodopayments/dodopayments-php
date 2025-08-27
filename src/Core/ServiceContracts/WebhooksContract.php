@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
+use Dodopayments\Core\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookDetails;
@@ -69,12 +70,14 @@ interface WebhooksContract
     /**
      * @param string|null $iterator The iterator returned from a prior invocation
      * @param int|null $limit Limit the number of returned items
+     *
+     * @return CursorPagePagination<WebhookDetails>
      */
     public function list(
         $iterator = omit,
         $limit = omit,
         ?RequestOptions $requestOptions = null
-    ): WebhookDetails;
+    ): CursorPagePagination;
 
     public function delete(
         string $webhookID,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Concerns;
 
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\CoerceState;
 use Dodopayments\Core\Conversion\Contracts\Converter;
@@ -244,7 +245,7 @@ trait SdkModel
      */
     private static function serialize(mixed $value): mixed
     {
-        if ($value instanceof BaseModel) {
+        if ($value instanceof BaseModel || $value instanceof BasePage) {
             return $value->toArray();
         }
 

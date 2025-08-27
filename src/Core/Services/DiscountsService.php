@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Pagination\DefaultPageNumberPagination;
+use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\DiscountsContract;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountCreateParams;
@@ -155,12 +155,14 @@ final class DiscountsService implements DiscountsContract
      *
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
+     *
+     * @return DefaultPageNumberPagination<Discount>
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
-    ): Discount {
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = DiscountListParams::parseRequest(
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
             $requestOptions
