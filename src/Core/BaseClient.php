@@ -8,7 +8,7 @@ use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Contracts\BaseStream;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-use Dodopayments\Core\Errors\APIStatusError;
+use Dodopayments\Core\Exceptions\APIStatusException;
 use Dodopayments\RequestOptions;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
@@ -203,7 +203,7 @@ class BaseClient
         }
 
         if ($code >= 400 && $code < 500) {
-            throw APIStatusError::from(request: $req, response: $rsp);
+            throw APIStatusException::from(request: $req, response: $rsp);
         }
 
         if ($code >= 500 && $retryCount < $opts->maxRetries) {
