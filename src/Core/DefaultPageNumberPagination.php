@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkPage;
 use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\RequestOptions;
 
 /**
@@ -52,7 +53,10 @@ final class DefaultPageNumberPagination implements BasePage
         self::__unserialize($data);
 
         if ($this->offsetExists('items')) {
-            $acc = Conversion::coerce($convert, value: $this->offsetGet('items'));
+            $acc = Conversion::coerce(
+                new ListOf($convert),
+                value: $this->offsetGet('items')
+            );
             $this->offsetSet('items', $acc);
         }
     }
