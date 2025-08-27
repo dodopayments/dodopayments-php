@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkPage;
 use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\RequestOptions;
 
 /**
@@ -58,7 +59,10 @@ final class CursorPagePagination implements BasePage
         self::__unserialize($data);
 
         if ($this->offsetExists('data')) {
-            $acc = Conversion::coerce($convert, value: $this->offsetGet('data'));
+            $acc = Conversion::coerce(
+                new ListOf($convert),
+                value: $this->offsetGet('data')
+            );
             $this->offsetSet('data', $acc);
         }
     }
