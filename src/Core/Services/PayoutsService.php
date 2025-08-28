@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\PayoutsContract;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
 use Dodopayments\RequestOptions;

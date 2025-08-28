@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\CursorPagePagination;
 use Dodopayments\Core\ServiceContracts\WebhooksContract;
 use Dodopayments\Core\Services\Webhooks\HeadersService;
+use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookCreateParams;

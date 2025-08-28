@@ -1,35 +1,42 @@
 <?php
 
-namespace Dodopayments\Core;
+namespace Dodopayments;
 
-use Dodopayments\Client;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkPage;
 use Dodopayments\Core\Contracts\BasePage;
+use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\RequestOptions;
 
 /**
- * @phpstan-type default_page_number_pagination = array{items?: list<mixed>|null}
+ * @phpstan-type cursor_page_pagination = array{
+ *   data?: list<mixed>|null, iterator?: string|null, done?: bool|null
+ * }
  *
  * @template TItem
  *
  * @implements BasePage<TItem>
  */
-final class DefaultPageNumberPagination implements BasePage
+final class CursorPagePagination implements BasePage
 {
-    /** @use SdkModel<default_page_number_pagination> */
+    /** @use SdkModel<cursor_page_pagination> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */
     use SdkPage;
 
-    /** @var list<TItem>|null $items */
+    /** @var list<TItem>|null $data */
     #[Api(list: 'mixed', optional: true)]
-    public ?array $items;
+    public ?array $data;
+
+    #[Api(optional: true)]
+    public ?string $iterator;
+
+    #[Api(optional: true)]
+    public ?bool $done;
 
     /**
      * @param array{
@@ -55,12 +62,12 @@ final class DefaultPageNumberPagination implements BasePage
 
         self::__unserialize($data);
 
-        if ($this->offsetExists('items')) {
+        if ($this->offsetExists('data')) {
             $acc = Conversion::coerce(
                 new ListOf($convert),
-                value: $this->offsetGet('items')
+                value: $this->offsetGet('data')
             );
-            $this->offsetSet('items', $acc);
+            $this->offsetSet('data', $acc);
         }
     }
 
@@ -68,7 +75,7 @@ final class DefaultPageNumberPagination implements BasePage
     public function getItems(): array
     {
         // @phpstan-ignore-next-line
-        return $this->offsetGet('items') ?? [];
+        return $this->offsetGet('data') ?? [];
     }
 
     /**
@@ -85,9 +92,17 @@ final class DefaultPageNumberPagination implements BasePage
      */
     public function nextRequest(): ?array
     {
-        $currentPage = $this->options->getTodoAsInt('page_number') ?? 1;
-        $nextRequest = $this->request;
+        $next = $this->iterator ?? null;
+        if (!$next) {
+            return null;
+        }
 
+        $nextRequest = array_merge_recursive(
+            $this->request,
+            ['query' => ['iterator' => $next]]
+        );
+
+        // @phpstan-ignore-next-line
         return [$nextRequest, $this->options];
     }
 }
