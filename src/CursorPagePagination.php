@@ -5,6 +5,7 @@ namespace Dodopayments;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkPage;
+use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
@@ -20,7 +21,7 @@ use Dodopayments\Core\Conversion\ListOf;
  *
  * @implements BasePage<TItem>
  */
-final class CursorPagePagination implements BasePage
+final class CursorPagePagination implements BaseModel, BasePage
 {
     /** @use SdkModel<cursor_page_pagination> */
     use SdkModel;
@@ -60,6 +61,7 @@ final class CursorPagePagination implements BasePage
             return;
         }
 
+        // @phpstan-ignore-next-line
         self::__unserialize($data);
 
         if ($this->offsetExists('data')) {
@@ -67,6 +69,7 @@ final class CursorPagePagination implements BasePage
                 new ListOf($convert),
                 value: $this->offsetGet('data')
             );
+            // @phpstan-ignore-next-line
             $this->offsetSet('data', $acc);
         }
     }

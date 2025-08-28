@@ -5,6 +5,7 @@ namespace Dodopayments;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkPage;
+use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Contracts\BasePage;
 use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
@@ -18,7 +19,7 @@ use Dodopayments\Core\Conversion\ListOf;
  *
  * @implements BasePage<TItem>
  */
-final class DefaultPageNumberPagination implements BasePage
+final class DefaultPageNumberPagination implements BaseModel, BasePage
 {
     /** @use SdkModel<default_page_number_pagination> */
     use SdkModel;
@@ -52,6 +53,7 @@ final class DefaultPageNumberPagination implements BasePage
             return;
         }
 
+        // @phpstan-ignore-next-line
         self::__unserialize($data);
 
         if ($this->offsetExists('items')) {
@@ -59,6 +61,7 @@ final class DefaultPageNumberPagination implements BasePage
                 new ListOf($convert),
                 value: $this->offsetGet('items')
             );
+            // @phpstan-ignore-next-line
             $this->offsetSet('items', $acc);
         }
     }
