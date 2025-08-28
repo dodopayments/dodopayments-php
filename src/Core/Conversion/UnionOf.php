@@ -9,6 +9,9 @@ use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @internal
+ */
 final class UnionOf implements Converter
 {
     /**
