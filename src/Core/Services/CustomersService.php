@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\CustomersContract;
 use Dodopayments\Core\Services\Customers\CustomerPortalService;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
 use const Dodopayments\Core\OMIT as omit;

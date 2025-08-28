@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\RefundsContract;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
 use Dodopayments\Refunds\RefundCreateParams\Item;

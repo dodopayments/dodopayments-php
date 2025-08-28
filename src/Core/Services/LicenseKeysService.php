@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\LicenseKeysContract;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;

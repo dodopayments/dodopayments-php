@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
-use Dodopayments\Core\DefaultPageNumberPagination;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\RequestOptions;

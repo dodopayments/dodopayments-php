@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
-use Dodopayments\Core\DefaultPageNumberPagination;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams\Status;

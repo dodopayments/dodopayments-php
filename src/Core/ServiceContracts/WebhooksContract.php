@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
-use Dodopayments\Core\CursorPagePagination;
+use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookDetails;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Core\ServiceContracts\SubscriptionsContract;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;

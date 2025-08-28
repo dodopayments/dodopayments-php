@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
-use Dodopayments\Core\DefaultPageNumberPagination;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 use Dodopayments\Disputes\DisputeListResponse;

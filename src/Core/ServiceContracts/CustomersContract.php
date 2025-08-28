@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\ServiceContracts;
 
-use Dodopayments\Core\DefaultPageNumberPagination;
 use Dodopayments\Customers\Customer;
+use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
 use const Dodopayments\Core\OMIT as omit;
