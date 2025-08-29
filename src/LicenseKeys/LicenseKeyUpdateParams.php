@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\LicenseKeys->update
+ *
  * @phpstan-type license_key_update_params = array{
  *   activationsLimit?: int|null,
  *   disabled?: bool|null,

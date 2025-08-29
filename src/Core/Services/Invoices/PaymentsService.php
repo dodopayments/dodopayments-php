@@ -12,6 +12,9 @@ final class PaymentsService implements PaymentsContract
 {
     public function __construct(private Client $client) {}
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $paymentID,
         ?RequestOptions $requestOptions = null

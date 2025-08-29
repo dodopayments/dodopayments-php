@@ -13,6 +13,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface CustomersContract
 {
     /**
+     * @api
+     *
      * @param string $email
      * @param string $name
      * @param string|null $phoneNumber
@@ -24,12 +26,17 @@ interface CustomersContract
         ?RequestOptions $requestOptions = null,
     ): Customer;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): Customer;
 
     /**
+     * @api
+     *
      * @param string|null $name
      * @param string|null $phoneNumber
      */
@@ -41,6 +48,8 @@ interface CustomersContract
     ): Customer;
 
     /**
+     * @api
+     *
      * @param string $email Filter by customer email
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100

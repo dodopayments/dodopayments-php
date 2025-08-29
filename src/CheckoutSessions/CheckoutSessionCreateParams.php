@@ -19,6 +19,8 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
+ * @see Dodopayments\CheckoutSessions->create
+ *
  * @phpstan-type checkout_session_create_params = array{
  *   productCart: list<ProductCart>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes::*>|null,

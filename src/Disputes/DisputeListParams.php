@@ -12,6 +12,8 @@ use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 
 /**
+ * @see Dodopayments\Disputes->list
+ *
  * @phpstan-type dispute_list_params = array{
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,

@@ -12,6 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * List all webhooks.
  *
+ * @see Dodopayments\Webhooks->list
+ *
  * @phpstan-type webhook_list_params = array{
  *   iterator?: string|null, limit?: int|null
  * }

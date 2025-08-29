@@ -12,6 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Patch a webhook by id.
  *
+ * @see Dodopayments\Webhooks\Headers->update
+ *
  * @phpstan-type header_update_params = array{headers: array<string, string>}
  */
 final class HeaderUpdateParams implements BaseModel

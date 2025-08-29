@@ -20,6 +20,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class WebhooksService implements WebhooksContract
 {
+    /**
+     * @@api
+     */
     public HeadersService $headers;
 
     public function __construct(private Client $client)
@@ -28,7 +31,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Create a new webhook.
+     * @api
+     *
+     * Create a new webhook
      *
      * @param string $url Url of the webhook
      * @param string|null $description
@@ -80,7 +85,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Get a webhook by id.
+     * @api
+     *
+     * Get a webhook by id
      */
     public function retrieve(
         string $webhookID,
@@ -96,7 +103,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Patch a webhook by id.
+     * @api
+     *
+     * Patch a webhook by id
      *
      * @param string|null $description Description of the webhook
      * @param bool|null $disabled to Disable the endpoint, set it to true
@@ -140,7 +149,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * List all webhooks.
+     * @api
+     *
+     * List all webhooks
      *
      * @param string|null $iterator The iterator returned from a prior invocation
      * @param int|null $limit Limit the number of returned items
@@ -169,7 +180,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Delete a webhook by id.
+     * @api
+     *
+     * Delete a webhook by id
      */
     public function delete(
         string $webhookID,
@@ -185,7 +198,9 @@ final class WebhooksService implements WebhooksContract
     }
 
     /**
-     * Get webhook secret by id.
+     * @api
+     *
+     * Get webhook secret by id
      */
     public function retrieveSecret(
         string $webhookID,

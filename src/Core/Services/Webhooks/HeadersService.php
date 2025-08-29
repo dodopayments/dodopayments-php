@@ -15,7 +15,9 @@ final class HeadersService implements HeadersContract
     public function __construct(private Client $client) {}
 
     /**
-     * Get a webhook by id.
+     * @api
+     *
+     * Get a webhook by id
      */
     public function retrieve(
         string $webhookID,
@@ -31,7 +33,9 @@ final class HeadersService implements HeadersContract
     }
 
     /**
-     * Patch a webhook by id.
+     * @api
+     *
+     * Patch a webhook by id
      *
      * @param array<string,
      * string,> $headers Object of header-value pair to update or add

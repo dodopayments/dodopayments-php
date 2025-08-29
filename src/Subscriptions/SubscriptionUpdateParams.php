@@ -12,6 +12,8 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
+ * @see Dodopayments\Subscriptions->update
+ *
  * @phpstan-type subscription_update_params = array{
  *   billing?: BillingAddress,
  *   cancelAtNextBillingDate?: bool|null,

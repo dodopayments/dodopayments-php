@@ -23,6 +23,8 @@ final class AddonsService implements AddonsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param Currency::* $currency The currency of the Addon
      * @param string $name Name of the Addon
      * @param int $price Amount of the addon
@@ -58,6 +60,9 @@ final class AddonsService implements AddonsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -72,6 +77,8 @@ final class AddonsService implements AddonsContract
     }
 
     /**
+     * @api
+     *
      * @param Currency::* $currency The currency of the Addon
      * @param string|null $description description of the Addon, optional and must be at most 1000 characters
      * @param string|null $imageID Addon image id after its uploaded to S3
@@ -112,6 +119,8 @@ final class AddonsService implements AddonsContract
     }
 
     /**
+     * @api
+     *
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      *
@@ -138,6 +147,9 @@ final class AddonsService implements AddonsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function updateImages(
         string $id,
         ?RequestOptions $requestOptions = null

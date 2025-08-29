@@ -9,12 +9,17 @@ use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 
 interface HeadersContract
 {
+    /**
+     * @api
+     */
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse;
 
     /**
+     * @api
+     *
      * @param array<string,
      * string,> $headers Object of header-value pair to update or add
      */

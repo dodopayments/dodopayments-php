@@ -14,6 +14,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface DiscountsContract
 {
     /**
+     * @api
+     *
      * @param int $amount The discount amount.
      *
      * - If `discount_type` is **not** `percentage`, `amount` is in **USD cents**. For example, `100` means `$1.00`.
@@ -46,12 +48,17 @@ interface DiscountsContract
         ?RequestOptions $requestOptions = null,
     ): Discount;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): Discount;
 
     /**
+     * @api
+     *
      * @param int|null $amount If present, update the discount amount:
      * - If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
      * - Otherwise, this represents **USD cents** (e.g., `100` = `$1.00`).
@@ -82,6 +89,8 @@ interface DiscountsContract
     ): Discount;
 
     /**
+     * @api
+     *
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
      *
@@ -93,6 +102,9 @@ interface DiscountsContract
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 
+    /**
+     * @api
+     */
     public function delete(
         string $discountID,
         ?RequestOptions $requestOptions = null

@@ -27,6 +27,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class ProductsService implements ProductsContract
 {
+    /**
+     * @@api
+     */
     public ImagesService $images;
 
     public function __construct(private Client $client)
@@ -35,6 +38,8 @@ final class ProductsService implements ProductsContract
     }
 
     /**
+     * @api
+     *
      * @param OneTimePrice|RecurringPrice $price Price configuration for the product
      * @param TaxCategory::* $taxCategory Tax category applied to this product
      * @param list<string>|null $addons Addons available for subscription product
@@ -95,6 +100,9 @@ final class ProductsService implements ProductsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -109,6 +117,8 @@ final class ProductsService implements ProductsContract
     }
 
     /**
+     * @api
+     *
      * @param list<string>|null $addons Available Addons for subscription products
      * @param string|null $brandID
      * @param string|null $description description of the product, optional and must be at most 1000 characters
@@ -182,6 +192,8 @@ final class ProductsService implements ProductsContract
     }
 
     /**
+     * @api
+     *
      * @param bool $archived List archived products
      * @param string $brandID filter by Brand id
      * @param int $pageNumber Page number default is 0
@@ -223,6 +235,9 @@ final class ProductsService implements ProductsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function delete(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -236,6 +251,9 @@ final class ProductsService implements ProductsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function unarchive(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -250,6 +268,8 @@ final class ProductsService implements ProductsContract
     }
 
     /**
+     * @api
+     *
      * @param string $fileName
      */
     public function updateFiles(

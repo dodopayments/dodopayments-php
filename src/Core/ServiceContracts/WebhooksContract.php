@@ -15,6 +15,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface WebhooksContract
 {
     /**
+     * @api
+     *
      * @param string $url Url of the webhook
      * @param string|null $description
      * @param bool|null $disabled Create the webhook in a disabled state.
@@ -41,12 +43,17 @@ interface WebhooksContract
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails;
 
     /**
+     * @api
+     *
      * @param string|null $description Description of the webhook
      * @param bool|null $disabled to Disable the endpoint, set it to true
      * @param list<WebhookEventType::*>|null $filterTypes Filter events to the endpoint.
@@ -68,6 +75,8 @@ interface WebhooksContract
     ): WebhookDetails;
 
     /**
+     * @api
+     *
      * @param string|null $iterator The iterator returned from a prior invocation
      * @param int|null $limit Limit the number of returned items
      *
@@ -79,11 +88,17 @@ interface WebhooksContract
         ?RequestOptions $requestOptions = null
     ): CursorPagePagination;
 
+    /**
+     * @api
+     */
     public function delete(
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed;
 
+    /**
+     * @api
+     */
     public function retrieveSecret(
         string $webhookID,
         ?RequestOptions $requestOptions = null
