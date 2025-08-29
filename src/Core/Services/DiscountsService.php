@@ -21,6 +21,8 @@ final class DiscountsService implements DiscountsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * POST /discounts
      * If `code` is omitted or empty, a random 16-char uppercase code is generated.
      *
@@ -80,7 +82,9 @@ final class DiscountsService implements DiscountsContract
     }
 
     /**
-     * GET /discounts/{discount_id}.
+     * @api
+     *
+     * GET /discounts/{discount_id}
      */
     public function retrieve(
         string $discountID,
@@ -96,7 +100,9 @@ final class DiscountsService implements DiscountsContract
     }
 
     /**
-     * PATCH /discounts/{discount_id}.
+     * @api
+     *
+     * PATCH /discounts/{discount_id}
      *
      * @param int|null $amount If present, update the discount amount:
      * - If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
@@ -151,7 +157,9 @@ final class DiscountsService implements DiscountsContract
     }
 
     /**
-     * GET /discounts.
+     * @api
+     *
+     * GET /discounts
      *
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
@@ -180,7 +188,9 @@ final class DiscountsService implements DiscountsContract
     }
 
     /**
-     * DELETE /discounts/{discount_id}.
+     * @api
+     *
+     * DELETE /discounts/{discount_id}
      */
     public function delete(
         string $discountID,

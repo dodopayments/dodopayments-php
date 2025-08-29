@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Licenses->activate
+ *
  * @phpstan-type license_activate_params = array{licenseKey: string, name: string}
  */
 final class LicenseActivateParams implements BaseModel

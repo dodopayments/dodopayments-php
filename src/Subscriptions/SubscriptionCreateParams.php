@@ -15,6 +15,8 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
+ * @see Dodopayments\Subscriptions->create
+ *
  * @phpstan-type subscription_create_params = array{
  *   billing: BillingAddress,
  *   customer: AttachExistingCustomer|NewCustomer,

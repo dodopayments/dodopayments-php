@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Payouts->list
+ *
  * @phpstan-type payout_list_params = array{pageNumber?: int, pageSize?: int}
  */
 final class PayoutListParams implements BaseModel

@@ -8,6 +8,9 @@ use Dodopayments\RequestOptions;
 
 interface PaymentsContract
 {
+    /**
+     * @api
+     */
     public function retrieve(
         string $paymentID,
         ?RequestOptions $requestOptions = null

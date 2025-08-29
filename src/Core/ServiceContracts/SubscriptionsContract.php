@@ -27,6 +27,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface SubscriptionsContract
 {
     /**
+     * @api
+     *
      * @param BillingAddress $billing Billing address information for the subscription
      * @param AttachExistingCustomer|NewCustomer $customer Customer details for the subscription
      * @param string $productID Unique identifier of the product to subscribe to
@@ -72,12 +74,17 @@ interface SubscriptionsContract
         ?RequestOptions $requestOptions = null,
     ): SubscriptionNewResponse;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $subscriptionID,
         ?RequestOptions $requestOptions = null
     ): Subscription;
 
     /**
+     * @api
+     *
      * @param BillingAddress $billing
      * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
      * @param DisableOnDemand|null $disableOnDemand
@@ -99,6 +106,8 @@ interface SubscriptionsContract
     ): Subscription;
 
     /**
+     * @api
+     *
      * @param string $brandID filter by Brand id
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
@@ -121,6 +130,8 @@ interface SubscriptionsContract
     ): DefaultPageNumberPagination;
 
     /**
+     * @api
+     *
      * @param string $productID Unique identifier of the product to subscribe to
      * @param ProrationBillingMode::* $prorationBillingMode Proration Billing Mode
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
@@ -137,6 +148,8 @@ interface SubscriptionsContract
     ): mixed;
 
     /**
+     * @api
+     *
      * @param int $productPrice The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the product_price (true) or added on top (false).

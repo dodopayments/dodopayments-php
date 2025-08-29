@@ -13,6 +13,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface LicensesContract
 {
     /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string $name
      */
@@ -23,6 +25,8 @@ interface LicensesContract
     ): LicenseKeyInstance;
 
     /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string $licenseKeyInstanceID
      */
@@ -33,6 +37,8 @@ interface LicensesContract
     ): mixed;
 
     /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string|null $licenseKeyInstanceID
      */

@@ -14,6 +14,8 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 
 /**
+ * @see Dodopayments\Products->create
+ *
  * @phpstan-type product_create_params = array{
  *   price: OneTimePrice|RecurringPrice,
  *   taxCategory: TaxCategory::*,

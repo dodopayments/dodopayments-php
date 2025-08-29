@@ -19,6 +19,9 @@ final class LicenseKeysService implements LicenseKeysContract
 {
     public function __construct(private Client $client) {}
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -33,6 +36,8 @@ final class LicenseKeysService implements LicenseKeysContract
     }
 
     /**
+     * @api
+     *
      * @param int|null $activationsLimit The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      * @param bool|null $disabled Indicates whether the license key should be disabled.
@@ -67,6 +72,8 @@ final class LicenseKeysService implements LicenseKeysContract
     }
 
     /**
+     * @api
+     *
      * @param string $customerID Filter by customer ID
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100

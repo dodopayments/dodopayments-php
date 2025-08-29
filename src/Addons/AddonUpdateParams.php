@@ -12,6 +12,8 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
 /**
+ * @see Dodopayments\Addons->update
+ *
  * @phpstan-type addon_update_params = array{
  *   currency?: Currency::*,
  *   description?: string|null,

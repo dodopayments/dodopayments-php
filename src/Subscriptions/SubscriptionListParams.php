@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 
 /**
+ * @see Dodopayments\Subscriptions->list
+ *
  * @phpstan-type subscription_list_params = array{
  *   brandID?: string,
  *   createdAtGte?: \DateTimeInterface,

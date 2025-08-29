@@ -16,6 +16,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface AddonsContract
 {
     /**
+     * @api
+     *
      * @param Currency::* $currency The currency of the Addon
      * @param string $name Name of the Addon
      * @param int $price Amount of the addon
@@ -31,12 +33,17 @@ interface AddonsContract
         ?RequestOptions $requestOptions = null,
     ): AddonResponse;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonResponse;
 
     /**
+     * @api
+     *
      * @param Currency::* $currency The currency of the Addon
      * @param string|null $description description of the Addon, optional and must be at most 1000 characters
      * @param string|null $imageID Addon image id after its uploaded to S3
@@ -56,6 +63,8 @@ interface AddonsContract
     ): AddonResponse;
 
     /**
+     * @api
+     *
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      *
@@ -67,6 +76,9 @@ interface AddonsContract
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 
+    /**
+     * @api
+     */
     public function updateImages(
         string $id,
         ?RequestOptions $requestOptions = null

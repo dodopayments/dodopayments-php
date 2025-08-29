@@ -12,6 +12,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface ImagesContract
 {
     /**
+     * @api
+     *
      * @param bool $forceUpdate
      */
     public function update(

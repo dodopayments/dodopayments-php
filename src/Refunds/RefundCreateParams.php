@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
 /**
+ * @see Dodopayments\Refunds->create
+ *
  * @phpstan-type refund_create_params = array{
  *   paymentID: string, items?: list<Item>|null, reason?: string|null
  * }

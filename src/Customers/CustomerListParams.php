@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Customers->list
+ *
  * @phpstan-type customer_list_params = array{
  *   email?: string, pageNumber?: int, pageSize?: int
  * }

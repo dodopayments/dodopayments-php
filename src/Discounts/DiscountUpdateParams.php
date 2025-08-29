@@ -12,6 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * PATCH /discounts/{discount_id}.
  *
+ * @see Dodopayments\Discounts->update
+ *
  * @phpstan-type discount_update_params = array{
  *   amount?: int|null,
  *   code?: string|null,

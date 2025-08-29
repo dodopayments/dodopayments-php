@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\PaymentListParams\Status;
 
 /**
+ * @see Dodopayments\Payments->list
+ *
  * @phpstan-type payment_list_params = array{
  *   brandID?: string,
  *   createdAtGte?: \DateTimeInterface,

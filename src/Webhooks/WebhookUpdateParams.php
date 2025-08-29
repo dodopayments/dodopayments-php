@@ -13,6 +13,8 @@ use Dodopayments\WebhookEvents\WebhookEventType;
 /**
  * Patch a webhook by id.
  *
+ * @see Dodopayments\Webhooks->update
+ *
  * @phpstan-type webhook_update_params = array{
  *   description?: string|null,
  *   disabled?: bool|null,

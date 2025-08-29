@@ -21,6 +21,8 @@ final class RefundsService implements RefundsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param string $paymentID the unique identifier of the payment to be refunded
      * @param list<Item>|null $items Partially Refund an Individual Item
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
@@ -46,6 +48,9 @@ final class RefundsService implements RefundsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $refundID,
         ?RequestOptions $requestOptions = null
@@ -60,6 +65,8 @@ final class RefundsService implements RefundsContract
     }
 
     /**
+     * @api
+     *
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer_id

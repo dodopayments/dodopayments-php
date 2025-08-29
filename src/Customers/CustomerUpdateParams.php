@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Customers->update
+ *
  * @phpstan-type customer_update_params = array{
  *   name?: string|null, phoneNumber?: string|null
  * }

@@ -12,6 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * GET /discounts.
  *
+ * @see Dodopayments\Discounts->list
+ *
  * @phpstan-type discount_list_params = array{pageNumber?: int, pageSize?: int}
  */
 final class DiscountListParams implements BaseModel

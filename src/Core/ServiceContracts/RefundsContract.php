@@ -15,6 +15,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface RefundsContract
 {
     /**
+     * @api
+     *
      * @param string $paymentID the unique identifier of the payment to be refunded
      * @param list<Item>|null $items Partially Refund an Individual Item
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
@@ -26,12 +28,17 @@ interface RefundsContract
         ?RequestOptions $requestOptions = null,
     ): Refund;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): Refund;
 
     /**
+     * @api
+     *
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer_id

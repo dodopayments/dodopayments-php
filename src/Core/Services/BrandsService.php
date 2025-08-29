@@ -20,6 +20,8 @@ final class BrandsService implements BrandsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param string|null $description
      * @param string|null $name
      * @param string|null $statementDescriptor
@@ -56,7 +58,9 @@ final class BrandsService implements BrandsContract
     }
 
     /**
-     * Thin handler just calls `get_brand` and wraps in `Json(...)`.
+     * @api
+     *
+     * Thin handler just calls `get_brand` and wraps in `Json(...)`
      */
     public function retrieve(
         string $id,
@@ -72,6 +76,8 @@ final class BrandsService implements BrandsContract
     }
 
     /**
+     * @api
+     *
      * @param string|null $imageID The UUID you got back from the presigned‐upload call
      * @param string|null $name
      * @param string|null $statementDescriptor
@@ -105,6 +111,9 @@ final class BrandsService implements BrandsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function list(
         ?RequestOptions $requestOptions = null
     ): BrandListResponse {
@@ -117,6 +126,9 @@ final class BrandsService implements BrandsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function updateImages(
         string $id,
         ?RequestOptions $requestOptions = null
