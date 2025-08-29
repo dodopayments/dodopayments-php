@@ -13,12 +13,17 @@ use const Dodopayments\Core\OMIT as omit;
 
 interface LicenseKeysContract
 {
+    /**
+     * @api
+     */
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKey;
 
     /**
+     * @api
+     *
      * @param int|null $activationsLimit The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      * @param bool|null $disabled Indicates whether the license key should be disabled.
@@ -35,6 +40,8 @@ interface LicenseKeysContract
     ): LicenseKey;
 
     /**
+     * @api
+     *
      * @param string $customerID Filter by customer ID
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100

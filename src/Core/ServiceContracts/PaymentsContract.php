@@ -23,6 +23,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface PaymentsContract
 {
     /**
+     * @api
+     *
      * @param BillingAddress $billing Billing address details for the payment
      * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
      * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
@@ -59,12 +61,17 @@ interface PaymentsContract
         ?RequestOptions $requestOptions = null,
     ): PaymentNewResponse;
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): Payment;
 
     /**
+     * @api
+     *
      * @param string $brandID filter by Brand id
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
@@ -88,6 +95,9 @@ interface PaymentsContract
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 
+    /**
+     * @api
+     */
     public function retrieveLineItems(
         string $paymentID,
         ?RequestOptions $requestOptions = null

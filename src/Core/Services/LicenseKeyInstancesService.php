@@ -18,6 +18,9 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
 {
     public function __construct(private Client $client) {}
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -32,6 +35,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     }
 
     /**
+     * @api
+     *
      * @param string $name
      */
     public function update(
@@ -55,6 +60,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     }
 
     /**
+     * @api
+     *
      * @param string|null $licenseKeyID Filter by license key ID
      * @param int|null $pageNumber Page number default is 0
      * @param int|null $pageSize Page size default is 10 max is 100

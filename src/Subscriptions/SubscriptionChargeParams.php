@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
+ * @see Dodopayments\Subscriptions->charge
+ *
  * @phpstan-type subscription_charge_params = array{
  *   productPrice: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,

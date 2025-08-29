@@ -14,6 +14,8 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 
 /**
+ * @see Dodopayments\Products->update
+ *
  * @phpstan-type product_update_params = array{
  *   addons?: list<string>|null,
  *   brandID?: string|null,

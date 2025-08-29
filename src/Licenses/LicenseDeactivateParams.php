@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Licenses->deactivate
+ *
  * @phpstan-type license_deactivate_params = array{
  *   licenseKey: string, licenseKeyInstanceID: string
  * }

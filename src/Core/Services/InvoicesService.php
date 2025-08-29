@@ -10,6 +10,9 @@ use Dodopayments\Core\Services\Invoices\PaymentsService;
 
 final class InvoicesService implements InvoicesContract
 {
+    /**
+     * @@api
+     */
     public PaymentsService $payments;
 
     public function __construct(private Client $client)

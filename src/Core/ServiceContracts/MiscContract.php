@@ -10,6 +10,8 @@ use Dodopayments\RequestOptions;
 interface MiscContract
 {
     /**
+     * @api
+     *
      * @return list<CountryCode::*>
      */
     public function listSupportedCountries(

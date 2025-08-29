@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Customers\CustomerPortal->create
+ *
  * @phpstan-type customer_portal_create_params = array{sendEmail?: bool}
  */
 final class CustomerPortalCreateParams implements BaseModel

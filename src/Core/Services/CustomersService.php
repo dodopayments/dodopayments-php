@@ -18,6 +18,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class CustomersService implements CustomersContract
 {
+    /**
+     * @@api
+     */
     public CustomerPortalService $customerPortal;
 
     public function __construct(private Client $client)
@@ -26,6 +29,8 @@ final class CustomersService implements CustomersContract
     }
 
     /**
+     * @api
+     *
      * @param string $email
      * @param string $name
      * @param string|null $phoneNumber
@@ -51,6 +56,9 @@ final class CustomersService implements CustomersContract
         );
     }
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $customerID,
         ?RequestOptions $requestOptions = null
@@ -65,6 +73,8 @@ final class CustomersService implements CustomersContract
     }
 
     /**
+     * @api
+     *
      * @param string|null $name
      * @param string|null $phoneNumber
      */
@@ -90,6 +100,8 @@ final class CustomersService implements CustomersContract
     }
 
     /**
+     * @api
+     *
      * @param string $email Filter by customer email
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100

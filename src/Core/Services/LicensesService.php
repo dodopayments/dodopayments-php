@@ -20,6 +20,8 @@ final class LicensesService implements LicensesContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string $name
      */
@@ -44,6 +46,8 @@ final class LicensesService implements LicensesContract
     }
 
     /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string $licenseKeyInstanceID
      */
@@ -71,6 +75,8 @@ final class LicensesService implements LicensesContract
     }
 
     /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string|null $licenseKeyInstanceID
      */

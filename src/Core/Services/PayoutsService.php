@@ -18,6 +18,8 @@ final class PayoutsService implements PayoutsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      *

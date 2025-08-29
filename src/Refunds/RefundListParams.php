@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundListParams\Status;
 
 /**
+ * @see Dodopayments\Refunds->list
+ *
  * @phpstan-type refund_list_params = array{
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,

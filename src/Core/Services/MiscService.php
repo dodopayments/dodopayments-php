@@ -15,6 +15,8 @@ final class MiscService implements MiscContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @return list<CountryCode::*>
      */
     public function listSupportedCountries(

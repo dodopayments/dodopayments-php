@@ -26,6 +26,8 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param list<ProductCart> $productCart
      * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes Customers will never see payment methods that are not in this list.
      * However, adding a method here does not guarantee customers will see it.

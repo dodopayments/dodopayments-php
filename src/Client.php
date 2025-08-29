@@ -28,40 +28,94 @@ class Client extends BaseClient
 {
     public string $bearerToken;
 
+    /**
+     * @api
+     */
     public CheckoutSessionsService $checkoutSessions;
 
+    /**
+     * @api
+     */
     public PaymentsService $payments;
 
+    /**
+     * @api
+     */
     public SubscriptionsService $subscriptions;
 
+    /**
+     * @api
+     */
     public InvoicesService $invoices;
 
+    /**
+     * @api
+     */
     public LicensesService $licenses;
 
+    /**
+     * @api
+     */
     public LicenseKeysService $licenseKeys;
 
+    /**
+     * @api
+     */
     public LicenseKeyInstancesService $licenseKeyInstances;
 
+    /**
+     * @api
+     */
     public CustomersService $customers;
 
+    /**
+     * @api
+     */
     public RefundsService $refunds;
 
+    /**
+     * @api
+     */
     public DisputesService $disputes;
 
+    /**
+     * @api
+     */
     public PayoutsService $payouts;
 
+    /**
+     * @api
+     */
     public WebhookEventsService $webhookEvents;
 
+    /**
+     * @api
+     */
     public ProductsService $products;
 
+    /**
+     * @api
+     */
     public MiscService $misc;
 
+    /**
+     * @api
+     */
     public DiscountsService $discounts;
 
+    /**
+     * @api
+     */
     public AddonsService $addons;
 
+    /**
+     * @api
+     */
     public BrandsService $brands;
 
+    /**
+     * @api
+     */
     public WebhooksService $webhooks;
 
     public function __construct(?string $bearerToken = null, ?string $baseUrl = null)

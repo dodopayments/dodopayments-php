@@ -29,6 +29,8 @@ final class PaymentsService implements PaymentsContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param BillingAddress $billing Billing address details for the payment
      * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
      * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
@@ -91,6 +93,9 @@ final class PaymentsService implements PaymentsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function retrieve(
         string $paymentID,
         ?RequestOptions $requestOptions = null
@@ -105,6 +110,8 @@ final class PaymentsService implements PaymentsContract
     }
 
     /**
+     * @api
+     *
      * @param string $brandID filter by Brand id
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
@@ -152,6 +159,9 @@ final class PaymentsService implements PaymentsContract
         );
     }
 
+    /**
+     * @api
+     */
     public function retrieveLineItems(
         string $paymentID,
         ?RequestOptions $requestOptions = null

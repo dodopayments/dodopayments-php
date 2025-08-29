@@ -17,6 +17,8 @@ final class ImagesService implements ImagesContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param bool $forceUpdate
      */
     public function update(

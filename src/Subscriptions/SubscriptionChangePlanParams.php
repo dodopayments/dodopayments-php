@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 
 /**
+ * @see Dodopayments\Subscriptions->changePlan
+ *
  * @phpstan-type subscription_change_plan_params = array{
  *   productID: string,
  *   prorationBillingMode: ProrationBillingMode::*,

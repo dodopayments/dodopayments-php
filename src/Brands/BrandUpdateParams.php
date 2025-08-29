@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Brands->update
+ *
  * @phpstan-type brand_update_params = array{
  *   imageID?: string|null,
  *   name?: string|null,

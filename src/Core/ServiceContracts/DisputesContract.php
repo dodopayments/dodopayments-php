@@ -15,12 +15,17 @@ use const Dodopayments\Core\OMIT as omit;
 
 interface DisputesContract
 {
+    /**
+     * @api
+     */
     public function retrieve(
         string $disputeID,
         ?RequestOptions $requestOptions = null
     ): GetDispute;
 
     /**
+     * @api
+     *
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer_id

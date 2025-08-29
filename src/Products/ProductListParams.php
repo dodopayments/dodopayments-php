@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Products->list
+ *
  * @phpstan-type product_list_params = array{
  *   archived?: bool,
  *   brandID?: string,

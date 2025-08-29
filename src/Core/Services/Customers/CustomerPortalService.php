@@ -17,6 +17,8 @@ final class CustomerPortalService implements CustomerPortalContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
      * @param bool $sendEmail if true, will send link to user
      */
     public function create(

@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @see Dodopayments\Licenses->validate
+ *
  * @phpstan-type license_validate_params = array{
  *   licenseKey: string, licenseKeyInstanceID?: string|null
  * }

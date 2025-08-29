@@ -12,6 +12,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface CustomerPortalContract
 {
     /**
+     * @api
+     *
      * @param bool $sendEmail if true, will send link to user
      */
     public function create(

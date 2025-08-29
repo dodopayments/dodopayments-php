@@ -21,6 +21,8 @@ use const Dodopayments\Core\OMIT as omit;
 interface CheckoutSessionsContract
 {
     /**
+     * @api
+     *
      * @param list<ProductCart> $productCart
      * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes Customers will never see payment methods that are not in this list.
      * However, adding a method here does not guarantee customers will see it.
