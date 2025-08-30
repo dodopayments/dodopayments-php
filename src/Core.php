@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core;
 
-use Dodopayments\Core\Implementation\Omittable;
+use Dodopayments\Core\Implementation\Omit;
 
-const OMIT = Omittable::OMIT;
+const OMIT = Omit::omit;
