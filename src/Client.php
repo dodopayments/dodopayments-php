@@ -23,6 +23,8 @@ use Dodopayments\Core\Services\RefundsService;
 use Dodopayments\Core\Services\SubscriptionsService;
 use Dodopayments\Core\Services\WebhookEventsService;
 use Dodopayments\Core\Services\WebhooksService;
+use Http\Discovery\Psr17FactoryDiscovery;
+use Http\Discovery\Psr18ClientDiscovery;
 
 class Client extends BaseClient
 {
@@ -128,12 +130,19 @@ class Client extends BaseClient
             'DODO_PAYMENTS_BASE_URL'
         ) ?: 'https://live.dodopayments.com';
 
+        $options = new RequestOptions(
+            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+            transporter: Psr18ClientDiscovery::find(),
+        );
+
         parent::__construct(
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
             baseUrl: $base,
-            options: new RequestOptions,
+            options: $options,
         );
 
         $this->checkoutSessions = new CheckoutSessionsService($this);
