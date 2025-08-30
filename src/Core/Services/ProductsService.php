@@ -32,6 +32,9 @@ final class ProductsService implements ProductsContract
      */
     public ImagesService $images;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->images = new ImagesService($this->client);

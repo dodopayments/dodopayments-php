@@ -10,6 +10,9 @@ use Dodopayments\RequestOptions;
 
 final class PaymentsService implements PaymentsContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

@@ -40,6 +40,8 @@ final class CursorPagePagination implements BaseModel, BasePage
     public ?bool $done;
 
     /**
+     * @internal
+     *
      * @param array{
      *   method: string,
      *   path: string,
@@ -55,7 +57,7 @@ final class CursorPagePagination implements BaseModel, BasePage
         private RequestOptions $options,
         mixed $data,
     ) {
-        self::introspect();
+        $this->initialize();
 
         if (!is_array($data)) {
             return;
@@ -82,6 +84,8 @@ final class CursorPagePagination implements BaseModel, BasePage
     }
 
     /**
+     * @internal
+     *
      * @return array{
      *   array{
      *     method: string,

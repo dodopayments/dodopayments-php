@@ -12,6 +12,9 @@ use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 
 final class HeadersService implements HeadersContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
