@@ -14,6 +14,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class ImagesService implements ImagesContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

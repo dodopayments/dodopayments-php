@@ -12,6 +12,9 @@ use Dodopayments\RequestOptions;
 
 final class MiscService implements MiscContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

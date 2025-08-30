@@ -18,6 +18,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class DiscountsService implements DiscountsContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

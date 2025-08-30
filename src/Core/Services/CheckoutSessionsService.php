@@ -23,6 +23,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class CheckoutSessionsService implements CheckoutSessionsContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**

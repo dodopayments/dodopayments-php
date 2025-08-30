@@ -17,6 +17,9 @@ use const Dodopayments\Core\OMIT as omit;
 
 final class LicenseKeysService implements LicenseKeysContract
 {
+    /**
+     * @internal
+     */
     public function __construct(private Client $client) {}
 
     /**
