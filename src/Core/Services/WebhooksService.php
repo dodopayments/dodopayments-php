@@ -25,6 +25,9 @@ final class WebhooksService implements WebhooksContract
      */
     public HeadersService $headers;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->headers = new HeadersService($this->client);

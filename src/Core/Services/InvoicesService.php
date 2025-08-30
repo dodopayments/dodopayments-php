@@ -15,6 +15,9 @@ final class InvoicesService implements InvoicesContract
      */
     public PaymentsService $payments;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->payments = new PaymentsService($this->client);

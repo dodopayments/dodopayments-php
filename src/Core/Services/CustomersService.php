@@ -23,6 +23,9 @@ final class CustomersService implements CustomersContract
      */
     public CustomerPortalService $customerPortal;
 
+    /**
+     * @internal
+     */
     public function __construct(private Client $client)
     {
         $this->customerPortal = new CustomerPortalService($this->client);

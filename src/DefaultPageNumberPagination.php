@@ -32,6 +32,8 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
     public ?array $items;
 
     /**
+     * @internal
+     *
      * @param array{
      *   method: string,
      *   path: string,
@@ -47,7 +49,7 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
         private RequestOptions $options,
         mixed $data,
     ) {
-        self::introspect();
+        $this->initialize();
 
         if (!is_array($data)) {
             return;
@@ -74,6 +76,8 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
     }
 
     /**
+     * @internal
+     *
      * @return array{
      *   array{
      *     method: string,
