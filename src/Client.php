@@ -130,7 +130,7 @@ class Client extends BaseClient
             'DODO_PAYMENTS_BASE_URL'
         ) ?: 'https://live.dodopayments.com';
 
-        $options = new RequestOptions(
+        $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
             streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
             requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
