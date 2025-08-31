@@ -1,5 +1,49 @@
 # Changelog
 
+## 1.52.0 (2025-08-31)
+
+Full Changelog: [v1.51.2...v1.52.0](https://github.com/dodopayments/dodopayments-php/compare/v1.51.2...v1.52.0)
+
+### ⚠ BREAKING CHANGES
+
+* use builders for RequestOptions
+* rename errors to exceptions
+* pagination field rename, and basic streaming docs
+* **refactor:** namespacing cleanup
+* **refactor:** clean up pagination, errors, as well as request methods
+
+### Features
+
+* ensure `-&gt;toArray()` benefits from structural typing ([9fd7591](https://github.com/dodopayments/dodopayments-php/commit/9fd759110510d16e5b45ab38d1276c368f9e8ca9))
+* expose streams and pages in the public namespace ([ca184e6](https://github.com/dodopayments/dodopayments-php/commit/ca184e6fe2f22155a7462459219d4f9823d14d57))
+* pagination field rename, and basic streaming docs ([7c656ef](https://github.com/dodopayments/dodopayments-php/commit/7c656ef44f8259323d014ca53d362336c01537a7))
+* **php:** differentiate null and omit ([c30b2a2](https://github.com/dodopayments/dodopayments-php/commit/c30b2a2d7f72c0e864fbb0c60be0d9dbd4bd7354))
+* **refactor:** clean up pagination, errors, as well as request methods ([b5d156b](https://github.com/dodopayments/dodopayments-php/commit/b5d156b934b45e055d0acef9c3a20afc3b400e26))
+* **refactor:** namespacing cleanup ([58301aa](https://github.com/dodopayments/dodopayments-php/commit/58301aac437fe7cfd00e158c37f26d47b5f62d96))
+* rename errors to exceptions ([a86ba15](https://github.com/dodopayments/dodopayments-php/commit/a86ba15629a396bc6687eec392f240383d99254d))
+* use builders for RequestOptions ([3efa4d8](https://github.com/dodopayments/dodopayments-php/commit/3efa4d8cdcdbd70194c0fcbc3b7ea35eccb23af5))
+
+
+### Bug Fixes
+
+* add create release workflow ([ce1f19d](https://github.com/dodopayments/dodopayments-php/commit/ce1f19d44b06a3517e8a4722c215035b2d671201))
+* basic pagination should work ([7d0495e](https://github.com/dodopayments/dodopayments-php/commit/7d0495ef5db5038db60b9a31bce94706a264f74e))
+* minor bugs ([7d39df1](https://github.com/dodopayments/dodopayments-php/commit/7d39df102ae3daf6ff5c66d795fd8d0c84fe9a26))
+* remove inaccurate `license` field in composer.json ([3468353](https://github.com/dodopayments/dodopayments-php/commit/3468353ebce5ec9236aabf037f5bacc87c16847f))
+* streaming internals ([6b92fef](https://github.com/dodopayments/dodopayments-php/commit/6b92fef752349de8d649d60deefbb265a78450b2))
+
+
+### Chores
+
+* add additional php doc tags ([7630e19](https://github.com/dodopayments/dodopayments-php/commit/7630e19c31d7091d30855b3f00069432f34d56d5))
+* **docs:** improve pagination examples ([0d136a9](https://github.com/dodopayments/dodopayments-php/commit/0d136a96ded76df3ea6a6fe71f6b58f49ff883b8))
+* **doc:** small improvement to pagination example ([c80cca7](https://github.com/dodopayments/dodopayments-php/commit/c80cca700b0a505a7b10efb986122cf2b1c526a1))
+* **internal:** refactored internal codepaths ([9ed7c0e](https://github.com/dodopayments/dodopayments-php/commit/9ed7c0e4bc40d509e060018efa55b3192be61c1e))
+* refactor request options ([5d8abaf](https://github.com/dodopayments/dodopayments-php/commit/5d8abaf9fcd49fb13af9dc2445cda8a49ac4c66b))
+* **refactor:** simplify base page interface ([3bf4be5](https://github.com/dodopayments/dodopayments-php/commit/3bf4be5393c3e3a02eefacd53c6273b03c0cc4f3))
+* remove `php-http/multipart-stream-builder` as a required dependency ([602e6f4](https://github.com/dodopayments/dodopayments-php/commit/602e6f4c0e91160e5ecf5c6f4501355dc8a8f82f))
+* simplify model initialization ([d69f077](https://github.com/dodopayments/dodopayments-php/commit/d69f077179e856749473d88ed349b7195a288368))
+
 ## 1.51.2 (2025-08-24)
 
 Full Changelog: [v1.51.1...v1.51.2](https://github.com/dodopayments/dodopayments-php/compare/v1.51.1...v1.51.2)
