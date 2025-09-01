@@ -95,9 +95,9 @@ final class ProductsTest extends TestCase
     }
 
     #[Test]
-    public function testDelete(): void
+    public function testArchive(): void
     {
-        $result = $this->client->products->delete('id');
+        $result = $this->client->products->archive('id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
