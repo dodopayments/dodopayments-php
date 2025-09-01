@@ -15,7 +15,7 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  *
  * @phpstan-type one_time_price = array{
  *   currency: Currency::*,
- *   discount: float,
+ *   discount: int,
  *   price: int,
  *   purchasingPowerParity: bool,
  *   type: Type::*,
@@ -41,7 +41,7 @@ final class OneTimePrice implements BaseModel
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
     #[Api]
-    public float $discount;
+    public int $discount;
 
     /**
      * The payment amount, in the smallest denomination of the currency (e.g., cents for USD).
@@ -124,7 +124,7 @@ final class OneTimePrice implements BaseModel
      */
     public static function with(
         string $currency,
-        float $discount,
+        int $discount,
         int $price,
         bool $purchasingPowerParity,
         string $type,
@@ -163,7 +163,7 @@ final class OneTimePrice implements BaseModel
     /**
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
-    public function withDiscount(float $discount): self
+    public function withDiscount(int $discount): self
     {
         $obj = clone $this;
         $obj->discount = $discount;

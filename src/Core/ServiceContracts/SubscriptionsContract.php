@@ -16,6 +16,7 @@ use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
+use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
@@ -169,4 +170,25 @@ interface SubscriptionsContract
         $productDescription = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse;
+
+    /**
+     * @api
+     *
+     * @param \DateTimeInterface|null $endDate Filter by end date (inclusive)
+     * @param string|null $meterID Filter by specific meter ID
+     * @param int|null $pageNumber Page number (default: 0)
+     * @param int|null $pageSize Page size (default: 10, max: 100)
+     * @param \DateTimeInterface|null $startDate Filter by start date (inclusive)
+     *
+     * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
+     */
+    public function retrieveUsageHistory(
+        string $subscriptionID,
+        $endDate = omit,
+        $meterID = omit,
+        $pageNumber = omit,
+        $pageSize = omit,
+        $startDate = omit,
+        ?RequestOptions $requestOptions = null,
+    ): DefaultPageNumberPagination;
 }

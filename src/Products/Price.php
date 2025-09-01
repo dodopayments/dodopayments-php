@@ -9,6 +9,7 @@ use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
  * One-time price details.
@@ -23,6 +24,6 @@ final class Price implements ConverterSource
      */
     public static function variants(): array
     {
-        return [OneTimePrice::class, RecurringPrice::class];
+        return [OneTimePrice::class, RecurringPrice::class, UsageBasedPrice::class];
     }
 }
