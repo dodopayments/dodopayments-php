@@ -142,4 +142,18 @@ final class SubscriptionsTest extends TestCase
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
+
+    #[Test]
+    public function testRetrieveUsageHistory(): void
+    {
+        if (UnsupportedMockTests::$skip) {
+            $this->markTestSkipped('skipped: currently unsupported');
+        }
+
+        $result = $this->client->subscriptions->retrieveUsageHistory(
+            'subscription_id'
+        );
+
+        $this->assertTrue(true); // @phpstan-ignore-line
+    }
 }

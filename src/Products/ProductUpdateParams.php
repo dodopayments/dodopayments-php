@@ -11,6 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 
 /**
@@ -28,7 +29,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string, string>|null,
  *   name?: string|null,
- *   price?: OneTimePrice|RecurringPrice,
+ *   price?: OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   taxCategory?: TaxCategory::*,
  * }
  */
@@ -121,7 +122,7 @@ final class ProductUpdateParams implements BaseModel
      * Price details of the product.
      */
     #[Api(nullable: true, optional: true)]
-    public OneTimePrice|RecurringPrice|null $price;
+    public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price;
 
     /**
      * Tax category of the product.
@@ -162,7 +163,7 @@ final class ProductUpdateParams implements BaseModel
         ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
         ?string $name = null,
-        OneTimePrice|RecurringPrice|null $price = null,
+        OneTimePrice|RecurringPrice|UsageBasedPrice|null $price = null,
         ?string $taxCategory = null,
     ): self {
         $obj = new self;
@@ -325,8 +326,9 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Price details of the product.
      */
-    public function withPrice(OneTimePrice|RecurringPrice $price): self
-    {
+    public function withPrice(
+        OneTimePrice|RecurringPrice|UsageBasedPrice $price
+    ): self {
         $obj = clone $this;
         $obj->price = $price;
 
