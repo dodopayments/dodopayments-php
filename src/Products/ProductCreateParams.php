@@ -11,13 +11,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 
 /**
  * @see Dodopayments\Products->create
  *
  * @phpstan-type product_create_params = array{
- *   price: OneTimePrice|RecurringPrice,
+ *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   taxCategory: TaxCategory::*,
  *   addons?: list<string>|null,
  *   brandID?: string|null,
@@ -41,7 +42,7 @@ final class ProductCreateParams implements BaseModel
      * Price configuration for the product.
      */
     #[Api]
-    public OneTimePrice|RecurringPrice $price;
+    public OneTimePrice|RecurringPrice|UsageBasedPrice $price;
 
     /**
      * Tax category applied to this product.
@@ -148,7 +149,7 @@ final class ProductCreateParams implements BaseModel
      * @param array<string, string> $metadata
      */
     public static function with(
-        OneTimePrice|RecurringPrice $price,
+        OneTimePrice|RecurringPrice|UsageBasedPrice $price,
         string $taxCategory,
         ?array $addons = null,
         ?string $brandID = null,
@@ -183,8 +184,9 @@ final class ProductCreateParams implements BaseModel
     /**
      * Price configuration for the product.
      */
-    public function withPrice(OneTimePrice|RecurringPrice $price): self
-    {
+    public function withPrice(
+        OneTimePrice|RecurringPrice|UsageBasedPrice $price
+    ): self {
         $obj = clone $this;
         $obj->price = $price;
 

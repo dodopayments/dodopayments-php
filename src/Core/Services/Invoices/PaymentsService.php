@@ -31,4 +31,21 @@ final class PaymentsService implements PaymentsContract
             convert: 'string',
         );
     }
+
+    /**
+     * @api
+     */
+    public function retrieveRefund(
+        string $refundID,
+        ?RequestOptions $requestOptions = null
+    ): string {
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'get',
+            path: ['invoices/refunds/%1$s', $refundID],
+            headers: ['Accept' => 'application/pdf'],
+            options: $requestOptions,
+            convert: 'string',
+        );
+    }
 }

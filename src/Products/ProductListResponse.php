@@ -11,6 +11,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
  * @phpstan-type product_list_response = array{
@@ -26,7 +27,7 @@ use Dodopayments\Products\Price\RecurringPrice;
  *   image?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   priceDetail?: null|OneTimePrice|RecurringPrice,
+ *   priceDetail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   taxInclusive?: bool|null,
  * }
  */
@@ -125,7 +126,7 @@ final class ProductListResponse implements BaseModel
      * Details of the price.
      */
     #[Api('price_detail', nullable: true, optional: true)]
-    public OneTimePrice|RecurringPrice|null $priceDetail;
+    public OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail;
 
     /**
      * Indicates if the price is tax inclusive.
@@ -189,7 +190,7 @@ final class ProductListResponse implements BaseModel
         ?string $image = null,
         ?string $name = null,
         ?int $price = null,
-        OneTimePrice|RecurringPrice|null $priceDetail = null,
+        OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail = null,
         ?bool $taxInclusive = null,
     ): self {
         $obj = new self;
@@ -363,7 +364,7 @@ final class ProductListResponse implements BaseModel
      * Details of the price.
      */
     public function withPriceDetail(
-        OneTimePrice|RecurringPrice $priceDetail
+        OneTimePrice|RecurringPrice|UsageBasedPrice $priceDetail
     ): self {
         $obj = clone $this;
         $obj->priceDetail = $priceDetail;

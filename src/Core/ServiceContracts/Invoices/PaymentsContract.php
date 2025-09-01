@@ -15,4 +15,12 @@ interface PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): string;
+
+    /**
+     * @api
+     */
+    public function retrieveRefund(
+        string $refundID,
+        ?RequestOptions $requestOptions = null
+    ): string;
 }

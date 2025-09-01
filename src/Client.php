@@ -15,12 +15,14 @@ use Dodopayments\Core\Services\InvoicesService;
 use Dodopayments\Core\Services\LicenseKeyInstancesService;
 use Dodopayments\Core\Services\LicenseKeysService;
 use Dodopayments\Core\Services\LicensesService;
+use Dodopayments\Core\Services\MetersService;
 use Dodopayments\Core\Services\MiscService;
 use Dodopayments\Core\Services\PaymentsService;
 use Dodopayments\Core\Services\PayoutsService;
 use Dodopayments\Core\Services\ProductsService;
 use Dodopayments\Core\Services\RefundsService;
 use Dodopayments\Core\Services\SubscriptionsService;
+use Dodopayments\Core\Services\UsageEventsService;
 use Dodopayments\Core\Services\WebhookEventsService;
 use Dodopayments\Core\Services\WebhooksService;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -120,6 +122,16 @@ class Client extends BaseClient
      */
     public WebhooksService $webhooks;
 
+    /**
+     * @api
+     */
+    public UsageEventsService $usageEvents;
+
+    /**
+     * @api
+     */
+    public MetersService $meters;
+
     public function __construct(?string $bearerToken = null, ?string $baseUrl = null)
     {
         $this->bearerToken = (string) (
@@ -163,6 +175,8 @@ class Client extends BaseClient
         $this->addons = new AddonsService($this);
         $this->brands = new BrandsService($this);
         $this->webhooks = new WebhooksService($this);
+        $this->usageEvents = new UsageEventsService($this);
+        $this->meters = new MetersService($this);
     }
 
     /** @return array<string, string> */

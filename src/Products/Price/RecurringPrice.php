@@ -16,7 +16,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *
  * @phpstan-type recurring_price = array{
  *   currency: Currency::*,
- *   discount: float,
+ *   discount: int,
  *   paymentFrequencyCount: int,
  *   paymentFrequencyInterval: TimeInterval::*,
  *   price: int,
@@ -45,7 +45,7 @@ final class RecurringPrice implements BaseModel
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
     #[Api]
-    public float $discount;
+    public int $discount;
 
     /**
      * Number of units for the payment frequency.
@@ -157,7 +157,7 @@ final class RecurringPrice implements BaseModel
      */
     public static function with(
         string $currency,
-        float $discount,
+        int $discount,
         int $paymentFrequencyCount,
         string $paymentFrequencyInterval,
         int $price,
@@ -202,7 +202,7 @@ final class RecurringPrice implements BaseModel
     /**
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
-    public function withDiscount(float $discount): self
+    public function withDiscount(int $discount): self
     {
         $obj = clone $this;
         $obj->discount = $discount;

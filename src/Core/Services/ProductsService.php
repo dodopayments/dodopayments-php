@@ -12,6 +12,7 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
@@ -43,7 +44,7 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
-     * @param OneTimePrice|RecurringPrice $price Price configuration for the product
+     * @param OneTimePrice|RecurringPrice|UsageBasedPrice $price Price configuration for the product
      * @param TaxCategory::* $taxCategory Tax category applied to this product
      * @param list<string>|null $addons Addons available for subscription product
      * @param string|null $brandID Brand id for the product, if not provided will default to primary brand
@@ -145,7 +146,7 @@ final class ProductsService implements ProductsContract
      * become applicable.
      * @param array<string, string>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
-     * @param OneTimePrice|RecurringPrice $price price details of the product
+     * @param OneTimePrice|RecurringPrice|UsageBasedPrice $price price details of the product
      * @param TaxCategory::* $taxCategory tax category of the product
      */
     public function update(
