@@ -242,7 +242,7 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      */
-    public function delete(
+    public function archive(
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {

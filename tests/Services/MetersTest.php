@@ -74,9 +74,9 @@ final class MetersTest extends TestCase
     }
 
     #[Test]
-    public function testDelete(): void
+    public function testArchive(): void
     {
-        $result = $this->client->meters->delete('id');
+        $result = $this->client->meters->archive('id');
 
         $this->assertTrue(true); // @phpstan-ignore-line
     }
