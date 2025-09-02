@@ -73,7 +73,7 @@ final class UsageEventsTest extends TestCase
                     eventID: 'event_id',
                     eventName: 'event_name',
                 )
-                    ->withMetadata(['foo' => 'bar'])
+                    ->withMetadata(['foo' => 'string'])
                     ->withTimestamp(new \DateTimeImmutable('2019-12-27T18:11:19.117Z')),
             ],
         );

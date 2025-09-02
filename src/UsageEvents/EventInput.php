@@ -7,13 +7,14 @@ namespace Dodopayments\UsageEvents;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\UsageEvents\EventInput\Metadata;
 
 /**
  * @phpstan-type event_input = array{
  *   customerID: string,
  *   eventID: string,
  *   eventName: string,
- *   metadata?: array<string, mixed>|null,
+ *   metadata?: array<string, string|float|bool>|null,
  *   timestamp?: \DateTimeInterface|null,
  * }
  */
@@ -43,9 +44,9 @@ final class EventInput implements BaseModel
     /**
      * Custom metadata. Only key value pairs are accepted, objects or arrays submitted will be rejected.
      *
-     * @var array<string, mixed>|null $metadata
+     * @var array<string, string|float|bool>|null $metadata
      */
-    #[Api(map: 'mixed', nullable: true, optional: true)]
+    #[Api(map: Metadata::class, nullable: true, optional: true)]
     public ?array $metadata;
 
     /**
@@ -79,7 +80,7 @@ final class EventInput implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed>|null $metadata
+     * @param array<string, string|float|bool>|null $metadata
      */
     public static function with(
         string $customerID,
@@ -136,7 +137,7 @@ final class EventInput implements BaseModel
     /**
      * Custom metadata. Only key value pairs are accepted, objects or arrays submitted will be rejected.
      *
-     * @param array<string, mixed>|null $metadata
+     * @param array<string, string|float|bool>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

@@ -7,6 +7,7 @@ namespace Dodopayments\UsageEvents;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
  * @phpstan-type event_alias = array{
@@ -15,7 +16,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   eventID: string,
  *   eventName: string,
  *   timestamp: \DateTimeInterface,
- *   metadata?: array<string, mixed>|null,
+ *   metadata?: array<string, string|float|bool>|null,
  * }
  */
 final class Event implements BaseModel
@@ -38,8 +39,12 @@ final class Event implements BaseModel
     #[Api]
     public \DateTimeInterface $timestamp;
 
-    /** @var array<string, mixed>|null $metadata */
-    #[Api(map: 'mixed', nullable: true, optional: true)]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string, string|float|bool>|null $metadata
+     */
+    #[Api(map: Metadata::class, nullable: true, optional: true)]
     public ?array $metadata;
 
     /**
@@ -73,7 +78,7 @@ final class Event implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, mixed>|null $metadata
+     * @param array<string, string|float|bool>|null $metadata
      */
     public static function with(
         string $businessID,
@@ -137,7 +142,9 @@ final class Event implements BaseModel
     }
 
     /**
-     * @param array<string, mixed>|null $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string, string|float|bool>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {
