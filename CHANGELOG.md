@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.52.4 (2025-09-03)
+
+Full Changelog: [v1.52.0...v1.52.4](https://github.com/dodopayments/dodopayments-php/compare/v1.52.0...v1.52.4)
+
+### Features
+
+* **api:** manual updates ([ee8f3d9](https://github.com/dodopayments/dodopayments-php/commit/ee8f3d91e5b05b22e96e40e31f0ef6ae9457634e))
+* **api:** updated openapi spec ([d36ee09](https://github.com/dodopayments/dodopayments-php/commit/d36ee093461d2f1f891ae417b65b9cca2e3f3a75))
+* updated openapi spec and added model and API functions for Usage Based Billing ([3957896](https://github.com/dodopayments/dodopayments-php/commit/39578962adb40f9d4c70a9f4d304a3b71e4810e1))
+
+
+### Chores
+
+* **internal:** refactor base client internals ([1fdf181](https://github.com/dodopayments/dodopayments-php/commit/1fdf181396d3863521a2671ee198b4e2dc2c6374))
+
 ## 1.52.0 (2025-08-31)
 
 Full Changelog: [v1.51.2...v1.52.0](https://github.com/dodopayments/dodopayments-php/compare/v1.51.2...v1.52.0)
