@@ -18,8 +18,6 @@ final class Type implements ConverterSource
 
     public const SUM = 'sum';
 
-    public const UNIQUE_COUNT = 'unique_count';
-
     public const MAX = 'max';
 
     public const LAST = 'last';

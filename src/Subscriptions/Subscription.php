@@ -10,6 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Subscriptions\Subscription\Meter;
 
 /**
  * Response struct representing subscription details.
@@ -22,6 +23,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   currency: Currency::*,
  *   customer: CustomerLimitedDetails,
  *   metadata: array<string, string>,
+ *   meters: list<Meter>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
  *   paymentFrequencyCount: int,
@@ -94,6 +96,14 @@ final class Subscription implements BaseModel
      */
     #[Api(map: 'string')]
     public array $metadata;
+
+    /**
+     * Meters associated with this subscription (for usage-based billing).
+     *
+     * @var list<Meter> $meters
+     */
+    #[Api(list: Meter::class)]
+    public array $meters;
 
     /**
      * Timestamp of the next scheduled billing. Indicates the end of current billing period.
@@ -222,6 +232,7 @@ final class Subscription implements BaseModel
      *   currency: ...,
      *   customer: ...,
      *   metadata: ...,
+     *   meters: ...,
      *   nextBillingDate: ...,
      *   onDemand: ...,
      *   paymentFrequencyCount: ...,
@@ -250,6 +261,7 @@ final class Subscription implements BaseModel
      *   ->withCurrency(...)
      *   ->withCustomer(...)
      *   ->withMetadata(...)
+     *   ->withMeters(...)
      *   ->withNextBillingDate(...)
      *   ->withOnDemand(...)
      *   ->withPaymentFrequencyCount(...)
@@ -279,6 +291,7 @@ final class Subscription implements BaseModel
      * @param list<AddonCartResponseItem> $addons
      * @param Currency::* $currency
      * @param array<string, string> $metadata
+     * @param list<Meter> $meters
      * @param TimeInterval::* $paymentFrequencyInterval
      * @param SubscriptionStatus::* $status
      * @param TimeInterval::* $subscriptionPeriodInterval
@@ -291,6 +304,7 @@ final class Subscription implements BaseModel
         string $currency,
         CustomerLimitedDetails $customer,
         array $metadata,
+        array $meters,
         \DateTimeInterface $nextBillingDate,
         bool $onDemand,
         int $paymentFrequencyCount,
@@ -319,6 +333,7 @@ final class Subscription implements BaseModel
         $obj->currency = $currency;
         $obj->customer = $customer;
         $obj->metadata = $metadata;
+        $obj->meters = $meters;
         $obj->nextBillingDate = $nextBillingDate;
         $obj->onDemand = $onDemand;
         $obj->paymentFrequencyCount = $paymentFrequencyCount;
@@ -422,6 +437,19 @@ final class Subscription implements BaseModel
     {
         $obj = clone $this;
         $obj->metadata = $metadata;
+
+        return $obj;
+    }
+
+    /**
+     * Meters associated with this subscription (for usage-based billing).
+     *
+     * @param list<Meter> $meters
+     */
+    public function withMeters(array $meters): self
+    {
+        $obj = clone $this;
+        $obj->meters = $meters;
 
         return $obj;
     }
