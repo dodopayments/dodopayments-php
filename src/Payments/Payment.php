@@ -33,6 +33,7 @@ use Dodopayments\Refunds\Refund;
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
  *   cardType?: string|null,
+ *   checkoutSessionID?: string|null,
  *   discountID?: string|null,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
@@ -178,6 +179,13 @@ final class Payment implements BaseModel
      */
     #[Api('card_type', nullable: true, optional: true)]
     public ?string $cardType;
+
+    /**
+     * If payment is made using a checkout session,
+     * this field is set to the id of the session.
+     */
+    #[Api('checkout_session_id', nullable: true, optional: true)]
+    public ?string $checkoutSessionID;
 
     /**
      * The discount id if discount is applied.
@@ -343,6 +351,7 @@ final class Payment implements BaseModel
         ?string $cardLastFour = null,
         ?string $cardNetwork = null,
         ?string $cardType = null,
+        ?string $checkoutSessionID = null,
         ?string $discountID = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
@@ -377,6 +386,7 @@ final class Payment implements BaseModel
         null !== $cardLastFour && $obj->cardLastFour = $cardLastFour;
         null !== $cardNetwork && $obj->cardNetwork = $cardNetwork;
         null !== $cardType && $obj->cardType = $cardType;
+        null !== $checkoutSessionID && $obj->checkoutSessionID = $checkoutSessionID;
         null !== $discountID && $obj->discountID = $discountID;
         null !== $errorCode && $obj->errorCode = $errorCode;
         null !== $errorMessage && $obj->errorMessage = $errorMessage;
@@ -602,6 +612,18 @@ final class Payment implements BaseModel
     {
         $obj = clone $this;
         $obj->cardType = $cardType;
+
+        return $obj;
+    }
+
+    /**
+     * If payment is made using a checkout session,
+     * this field is set to the id of the session.
+     */
+    public function withCheckoutSessionID(?string $checkoutSessionID): self
+    {
+        $obj = clone $this;
+        $obj->checkoutSessionID = $checkoutSessionID;
 
         return $obj;
     }
