@@ -10,7 +10,18 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new WebhookListParams); // set properties as needed
+ * $client->webhooks->list(...$params->toArray());
+ * ```
  * List all webhooks.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->webhooks->list(...$params->toArray());`
  *
  * @see Dodopayments\Webhooks->list
  *

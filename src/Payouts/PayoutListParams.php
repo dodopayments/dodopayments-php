@@ -10,6 +10,18 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new PayoutListParams); // set properties as needed
+ * $client->payouts->list(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->payouts->list(...$params->toArray());`
+ *
  * @see Dodopayments\Payouts->list
  *
  * @phpstan-type payout_list_params = array{pageNumber?: int, pageSize?: int}

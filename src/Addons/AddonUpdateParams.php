@@ -12,6 +12,18 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new AddonUpdateParams); // set properties as needed
+ * $client->addons->update(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->addons->update(...$params->toArray());`
+ *
  * @see Dodopayments\Addons->update
  *
  * @phpstan-type addon_update_params = array{

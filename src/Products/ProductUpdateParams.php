@@ -15,6 +15,18 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new ProductUpdateParams); // set properties as needed
+ * $client->products->update(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->products->update(...$params->toArray());`
+ *
  * @see Dodopayments\Products->update
  *
  * @phpstan-type product_update_params = array{
