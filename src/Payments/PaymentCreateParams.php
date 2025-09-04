@@ -11,6 +11,18 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new PaymentCreateParams); // set properties as needed
+ * $client->payments->create(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->payments->create(...$params->toArray());`
+ *
  * @see Dodopayments\Payments->create
  *
  * @phpstan-type payment_create_params = array{

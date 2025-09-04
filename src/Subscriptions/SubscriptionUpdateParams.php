@@ -12,6 +12,18 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new SubscriptionUpdateParams); // set properties as needed
+ * $client->subscriptions->update(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->subscriptions->update(...$params->toArray());`
+ *
  * @see Dodopayments\Subscriptions->update
  *
  * @phpstan-type subscription_update_params = array{
