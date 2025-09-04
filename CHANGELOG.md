@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.52.5 (2025-09-04)
+
+Full Changelog: [v1.52.4...v1.52.5](https://github.com/dodopayments/dodopayments-php/compare/v1.52.4...v1.52.5)
+
+### Features
+
+* **api:** updated openapi spec to v1.52.4 ([d346053](https://github.com/dodopayments/dodopayments-php/commit/d346053b03318b5ff7cf23a30a1e1d9381aa74d7))
+
+
+### Chores
+
+* document parameter object usage ([8e5584a](https://github.com/dodopayments/dodopayments-php/commit/8e5584a1fe172681646803f012ba2b43698b3bdc))
+
 ## 1.52.4 (2025-09-03)
 
 Full Changelog: [v1.52.0...v1.52.4](https://github.com/dodopayments/dodopayments-php/compare/v1.52.0...v1.52.4)
