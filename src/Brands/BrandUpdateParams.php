@@ -10,6 +10,18 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new BrandUpdateParams); // set properties as needed
+ * $client->brands->update(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->brands->update(...$params->toArray());`
+ *
  * @see Dodopayments\Brands->update
  *
  * @phpstan-type brand_update_params = array{

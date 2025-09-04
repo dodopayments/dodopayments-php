@@ -11,6 +11,18 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new SubscriptionChargeParams); // set properties as needed
+ * $client->subscriptions->charge(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->subscriptions->charge(...$params->toArray());`
+ *
  * @see Dodopayments\Subscriptions->charge
  *
  * @phpstan-type subscription_charge_params = array{

@@ -10,6 +10,18 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new LicenseDeactivateParams); // set properties as needed
+ * $client->licenses->deactivate(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->licenses->deactivate(...$params->toArray());`
+ *
  * @see Dodopayments\Licenses->deactivate
  *
  * @phpstan-type license_deactivate_params = array{

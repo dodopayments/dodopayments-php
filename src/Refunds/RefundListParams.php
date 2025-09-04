@@ -11,6 +11,18 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundListParams\Status;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new RefundListParams); // set properties as needed
+ * $client->refunds->list(...$params->toArray());
+ * ```.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->refunds->list(...$params->toArray());`
+ *
  * @see Dodopayments\Refunds->list
  *
  * @phpstan-type refund_list_params = array{

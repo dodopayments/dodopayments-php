@@ -11,7 +11,18 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookEventType;
 
 /**
+ * An object containing the method's parameters.
+ * Example usage:
+ * ```
+ * $params = (new WebhookCreateParams); // set properties as needed
+ * $client->webhooks->create(...$params->toArray());
+ * ```
  * Create a new webhook.
+ *
+ * @method toArray()
+ *   Returns the parameters as an associative array suitable for passing to the client method.
+ *
+ *   `$client->webhooks->create(...$params->toArray());`
  *
  * @see Dodopayments\Webhooks->create
  *
