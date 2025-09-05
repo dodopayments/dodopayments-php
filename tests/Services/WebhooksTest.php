@@ -31,7 +31,7 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->create(url: 'url');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -39,7 +39,7 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->create(url: 'url');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->retrieve('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -55,7 +55,7 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->update('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -67,7 +67,7 @@ final class WebhooksTest extends TestCase
 
         $result = $this->client->webhooks->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -75,7 +75,7 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->delete('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -83,6 +83,6 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->retrieveSecret('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

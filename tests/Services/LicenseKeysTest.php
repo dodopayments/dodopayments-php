@@ -31,7 +31,7 @@ final class LicenseKeysTest extends TestCase
     {
         $result = $this->client->licenseKeys->retrieve('lic_123');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -39,7 +39,7 @@ final class LicenseKeysTest extends TestCase
     {
         $result = $this->client->licenseKeys->update('lic_123');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -51,6 +51,6 @@ final class LicenseKeysTest extends TestCase
 
         $result = $this->client->licenseKeys->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

@@ -37,7 +37,7 @@ final class MetersTest extends TestCase
             name: 'name',
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -50,7 +50,7 @@ final class MetersTest extends TestCase
             name: 'name',
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -58,7 +58,7 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -70,7 +70,7 @@ final class MetersTest extends TestCase
 
         $result = $this->client->meters->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -78,7 +78,7 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->archive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -86,6 +86,6 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->unarchive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

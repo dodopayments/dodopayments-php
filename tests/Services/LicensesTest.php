@@ -33,7 +33,7 @@ final class LicensesTest extends TestCase
             name: 'name'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -44,7 +44,7 @@ final class LicensesTest extends TestCase
             name: 'name'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -55,7 +55,7 @@ final class LicensesTest extends TestCase
             licenseKeyInstanceID: 'license_key_instance_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -66,7 +66,7 @@ final class LicensesTest extends TestCase
             licenseKeyInstanceID: 'license_key_instance_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -76,7 +76,7 @@ final class LicensesTest extends TestCase
             licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -86,6 +86,6 @@ final class LicensesTest extends TestCase
             licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
