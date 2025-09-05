@@ -30,7 +30,7 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->create();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -38,7 +38,7 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -46,7 +46,7 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->update('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -54,7 +54,7 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -62,6 +62,6 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->updateImages('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

@@ -34,7 +34,7 @@ final class CheckoutSessionsTest extends TestCase
             productCart: [ProductCart::with(productID: 'product_id', quantity: 0)]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -48,6 +48,6 @@ final class CheckoutSessionsTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

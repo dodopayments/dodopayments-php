@@ -31,7 +31,7 @@ final class RefundsTest extends TestCase
     {
         $result = $this->client->refunds->create(paymentID: 'payment_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -39,7 +39,7 @@ final class RefundsTest extends TestCase
     {
         $result = $this->client->refunds->create(paymentID: 'payment_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class RefundsTest extends TestCase
     {
         $result = $this->client->refunds->retrieve('refund_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -59,6 +59,6 @@ final class RefundsTest extends TestCase
 
         $result = $this->client->refunds->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

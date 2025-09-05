@@ -43,7 +43,7 @@ final class ProductsTest extends TestCase
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -63,7 +63,7 @@ final class ProductsTest extends TestCase
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -71,7 +71,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -79,7 +79,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->update('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -91,7 +91,7 @@ final class ProductsTest extends TestCase
 
         $result = $this->client->products->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -99,7 +99,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->archive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -107,7 +107,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->unarchive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -115,7 +115,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->updateFiles('id', 'file_name');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -123,6 +123,6 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->updateFiles('id', 'file_name');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

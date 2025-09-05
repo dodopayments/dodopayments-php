@@ -30,6 +30,6 @@ final class ImagesTest extends TestCase
     {
         $result = $this->client->products->images->update('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

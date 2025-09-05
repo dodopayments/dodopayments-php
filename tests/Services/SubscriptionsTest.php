@@ -45,7 +45,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -64,7 +64,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -72,7 +72,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->retrieve('subscription_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -80,7 +80,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->update('subscription_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -92,7 +92,7 @@ final class SubscriptionsTest extends TestCase
 
         $result = $this->client->subscriptions->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -105,7 +105,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -118,7 +118,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -129,7 +129,7 @@ final class SubscriptionsTest extends TestCase
             productPrice: 0
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -140,7 +140,7 @@ final class SubscriptionsTest extends TestCase
             productPrice: 0
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -154,6 +154,6 @@ final class SubscriptionsTest extends TestCase
             'subscription_id'
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
