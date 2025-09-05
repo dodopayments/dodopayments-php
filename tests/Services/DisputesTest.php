@@ -31,7 +31,7 @@ final class DisputesTest extends TestCase
     {
         $result = $this->client->disputes->retrieve('dispute_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -43,6 +43,6 @@ final class DisputesTest extends TestCase
 
         $result = $this->client->disputes->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

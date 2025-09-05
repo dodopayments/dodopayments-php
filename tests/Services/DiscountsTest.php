@@ -35,7 +35,7 @@ final class DiscountsTest extends TestCase
             type: DiscountType::PERCENTAGE
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -46,7 +46,7 @@ final class DiscountsTest extends TestCase
             type: DiscountType::PERCENTAGE
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -54,7 +54,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->retrieve('discount_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -62,7 +62,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->update('discount_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -74,7 +74,7 @@ final class DiscountsTest extends TestCase
 
         $result = $this->client->discounts->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -82,6 +82,6 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->delete('discount_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
