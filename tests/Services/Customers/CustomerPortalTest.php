@@ -30,6 +30,6 @@ final class CustomerPortalTest extends TestCase
     {
         $result = $this->client->customers->customerPortal->create('customer_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

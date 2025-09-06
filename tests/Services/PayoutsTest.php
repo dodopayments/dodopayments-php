@@ -35,6 +35,6 @@ final class PayoutsTest extends TestCase
 
         $result = $this->client->payouts->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.0.0 (2025-09-06)
+
+Full Changelog: [v1.52.5...v2.0.0](https://github.com/dodopayments/dodopayments-php/compare/v1.52.5...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* expose services and service contracts
+
+### Features
+
+* expose services and service contracts ([9ac2730](https://github.com/dodopayments/dodopayments-php/commit/9ac27304b1055ecbeda7938ea602de80debb2490))
+
+
+### Chores
+
+* cleanup streaming ([155866a](https://github.com/dodopayments/dodopayments-php/commit/155866a630fbc8ca54ea8ff28f93edb8350b061c))
+* make more targeted phpstan ignores ([bd27f66](https://github.com/dodopayments/dodopayments-php/commit/bd27f66fb44badb2014dac8d9a243eb47e4689bd))
+
 ## 1.52.5 (2025-09-04)
 
 Full Changelog: [v1.52.4...v1.52.5](https://github.com/dodopayments/dodopayments-php/compare/v1.52.4...v1.52.5)

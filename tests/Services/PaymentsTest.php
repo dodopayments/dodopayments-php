@@ -47,7 +47,7 @@ final class PaymentsTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -68,7 +68,7 @@ final class PaymentsTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -76,7 +76,7 @@ final class PaymentsTest extends TestCase
     {
         $result = $this->client->payments->retrieve('payment_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -88,7 +88,7 @@ final class PaymentsTest extends TestCase
 
         $result = $this->client->payments->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -96,6 +96,6 @@ final class PaymentsTest extends TestCase
     {
         $result = $this->client->payments->retrieveLineItems('payment_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

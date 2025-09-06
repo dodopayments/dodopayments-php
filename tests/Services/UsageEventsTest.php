@@ -32,7 +32,7 @@ final class UsageEventsTest extends TestCase
     {
         $result = $this->client->usageEvents->retrieve('event_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -44,7 +44,7 @@ final class UsageEventsTest extends TestCase
 
         $result = $this->client->usageEvents->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -60,7 +60,7 @@ final class UsageEventsTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -78,6 +78,6 @@ final class UsageEventsTest extends TestCase
             ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

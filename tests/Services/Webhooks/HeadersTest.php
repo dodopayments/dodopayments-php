@@ -30,7 +30,7 @@ final class HeadersTest extends TestCase
     {
         $result = $this->client->webhooks->headers->retrieve('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -41,7 +41,7 @@ final class HeadersTest extends TestCase
             ['foo' => 'string']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -52,6 +52,6 @@ final class HeadersTest extends TestCase
             ['foo' => 'string']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

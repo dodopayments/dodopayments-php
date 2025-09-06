@@ -38,7 +38,7 @@ final class AddonsTest extends TestCase
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -51,7 +51,7 @@ final class AddonsTest extends TestCase
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -59,7 +59,7 @@ final class AddonsTest extends TestCase
     {
         $result = $this->client->addons->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -67,7 +67,7 @@ final class AddonsTest extends TestCase
     {
         $result = $this->client->addons->update('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -79,7 +79,7 @@ final class AddonsTest extends TestCase
 
         $result = $this->client->addons->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -87,6 +87,6 @@ final class AddonsTest extends TestCase
     {
         $result = $this->client->addons->updateImages('id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }

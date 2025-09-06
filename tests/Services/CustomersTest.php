@@ -31,7 +31,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->create(email: 'email', name: 'name');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -39,7 +39,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->create(email: 'email', name: 'name');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -47,7 +47,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->retrieve('customer_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -55,7 +55,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->update('customer_id');
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 
     #[Test]
@@ -67,6 +67,6 @@ final class CustomersTest extends TestCase
 
         $result = $this->client->customers->list();
 
-        $this->assertTrue(true); // @phpstan-ignore-line
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
 }
