@@ -27,12 +27,12 @@ use Dodopayments\Misc\TaxCategory;
  * @see Dodopayments\Addons->update
  *
  * @phpstan-type addon_update_params = array{
- *   currency?: Currency::*,
+ *   currency?: null|Currency|value-of<Currency>,
  *   description?: string|null,
  *   imageID?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   taxCategory?: TaxCategory::*,
+ *   taxCategory?: null|TaxCategory|value-of<TaxCategory>,
  * }
  */
 final class AddonUpdateParams implements BaseModel
@@ -44,7 +44,7 @@ final class AddonUpdateParams implements BaseModel
     /**
      * The currency of the Addon.
      *
-     * @var Currency::*|null $currency
+     * @var value-of<Currency>|null $currency
      */
     #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
@@ -76,7 +76,7 @@ final class AddonUpdateParams implements BaseModel
     /**
      * Tax category of the Addon.
      *
-     * @var TaxCategory::*|null $taxCategory
+     * @var value-of<TaxCategory>|null $taxCategory
      */
     #[Api(
         'tax_category',
@@ -96,25 +96,25 @@ final class AddonUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
-     * @param TaxCategory::* $taxCategory
+     * @param Currency|value-of<Currency>|null $currency
+     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
      */
     public static function with(
-        ?string $currency = null,
+        Currency|string|null $currency = null,
         ?string $description = null,
         ?string $imageID = null,
         ?string $name = null,
         ?int $price = null,
-        ?string $taxCategory = null,
+        TaxCategory|string|null $taxCategory = null,
     ): self {
         $obj = new self;
 
-        null !== $currency && $obj->currency = $currency;
+        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         null !== $description && $obj->description = $description;
         null !== $imageID && $obj->imageID = $imageID;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $taxCategory && $obj->taxCategory = $taxCategory;
+        null !== $taxCategory && $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }
@@ -122,12 +122,12 @@ final class AddonUpdateParams implements BaseModel
     /**
      * The currency of the Addon.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency>|null $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -179,12 +179,12 @@ final class AddonUpdateParams implements BaseModel
     /**
      * Tax category of the Addon.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }

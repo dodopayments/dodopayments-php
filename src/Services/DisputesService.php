@@ -45,8 +45,8 @@ final class DisputesService implements DisputesContract
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer_id
-     * @param DisputeStage::* $disputeStage Filter by dispute stage
-     * @param DisputeStatus::* $disputeStatus Filter by dispute status
+     * @param DisputeStage|value-of<DisputeStage> $disputeStage Filter by dispute stage
+     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus Filter by dispute status
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      *

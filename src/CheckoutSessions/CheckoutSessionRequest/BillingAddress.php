@@ -13,7 +13,7 @@ use Dodopayments\Misc\CountryCode;
  * Billing address information for the session.
  *
  * @phpstan-type billing_address = array{
- *   country: CountryCode::*,
+ *   country: value-of<CountryCode>,
  *   city?: string|null,
  *   state?: string|null,
  *   street?: string|null,
@@ -28,7 +28,7 @@ final class BillingAddress implements BaseModel
     /**
      * Two-letter ISO country code (ISO 3166-1 alpha-2).
      *
-     * @var CountryCode::* $country
+     * @var value-of<CountryCode> $country
      */
     #[Api(enum: CountryCode::class)]
     public string $country;
@@ -81,10 +81,10 @@ final class BillingAddress implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CountryCode::* $country
+     * @param CountryCode|value-of<CountryCode> $country
      */
     public static function with(
-        string $country,
+        CountryCode|string $country,
         ?string $city = null,
         ?string $state = null,
         ?string $street = null,
@@ -92,7 +92,7 @@ final class BillingAddress implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->country = $country;
+        $obj->country = $country instanceof CountryCode ? $country->value : $country;
 
         null !== $city && $obj->city = $city;
         null !== $state && $obj->state = $state;
@@ -105,12 +105,12 @@ final class BillingAddress implements BaseModel
     /**
      * Two-letter ISO country code (ISO 3166-1 alpha-2).
      *
-     * @param CountryCode::* $country
+     * @param CountryCode|value-of<CountryCode> $country
      */
-    public function withCountry(string $country): self
+    public function withCountry(CountryCode|string $country): self
     {
         $obj = clone $this;
-        $obj->country = $country;
+        $obj->country = $country instanceof CountryCode ? $country->value : $country;
 
         return $obj;
     }

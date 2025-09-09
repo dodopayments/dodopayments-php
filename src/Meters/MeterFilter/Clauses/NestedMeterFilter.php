@@ -17,7 +17,7 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Conjunction;
  *
  * @phpstan-type nested_meter_filter = array{
  *   clauses: list<Level1FilterCondition>|list<Level1NestedFilter>,
- *   conjunction: Conjunction::*,
+ *   conjunction: value-of<Conjunction>,
  * }
  */
 final class NestedMeterFilter implements BaseModel
@@ -33,7 +33,7 @@ final class NestedMeterFilter implements BaseModel
     #[Api(union: Clauses::class)]
     public array $clauses;
 
-    /** @var Conjunction::* $conjunction */
+    /** @var value-of<Conjunction> $conjunction */
     #[Api(enum: Conjunction::class)]
     public string $conjunction;
 
@@ -62,14 +62,16 @@ final class NestedMeterFilter implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Level1FilterCondition>|list<Level1NestedFilter> $clauses
-     * @param Conjunction::* $conjunction
+     * @param Conjunction|value-of<Conjunction> $conjunction
      */
-    public static function with(array $clauses, string $conjunction): self
-    {
+    public static function with(
+        array $clauses,
+        Conjunction|string $conjunction
+    ): self {
         $obj = new self;
 
         $obj->clauses = $clauses;
-        $obj->conjunction = $conjunction;
+        $obj->conjunction = $conjunction instanceof Conjunction ? $conjunction->value : $conjunction;
 
         return $obj;
     }
@@ -88,12 +90,12 @@ final class NestedMeterFilter implements BaseModel
     }
 
     /**
-     * @param Conjunction::* $conjunction
+     * @param Conjunction|value-of<Conjunction> $conjunction
      */
-    public function withConjunction(string $conjunction): self
+    public function withConjunction(Conjunction|string $conjunction): self
     {
         $obj = clone $this;
-        $obj->conjunction = $conjunction;
+        $obj->conjunction = $conjunction instanceof Conjunction ? $conjunction->value : $conjunction;
 
         return $obj;
     }

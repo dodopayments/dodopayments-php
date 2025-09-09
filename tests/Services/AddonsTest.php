@@ -32,10 +32,10 @@ final class AddonsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->addons->create(
-            currency: Currency::AED,
+            currency: Currency::$AED,
             name: 'name',
             price: 0,
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            taxCategory: TaxCategory::$DIGITAL_PRODUCTS,
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -45,10 +45,10 @@ final class AddonsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->addons->create(
-            currency: Currency::AED,
+            currency: Currency::$AED,
             name: 'name',
             price: 0,
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            taxCategory: TaxCategory::$DIGITAL_PRODUCTS,
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

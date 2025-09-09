@@ -12,7 +12,7 @@ interface MiscContract
     /**
      * @api
      *
-     * @return list<CountryCode::*>
+     * @return list<CountryCode|value-of<CountryCode>>
      */
     public function listSupportedCountries(
         ?RequestOptions $requestOptions = null

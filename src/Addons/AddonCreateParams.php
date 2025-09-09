@@ -27,10 +27,10 @@ use Dodopayments\Misc\TaxCategory;
  * @see Dodopayments\Addons->create
  *
  * @phpstan-type addon_create_params = array{
- *   currency: Currency::*,
+ *   currency: Currency|value-of<Currency>,
  *   name: string,
  *   price: int,
- *   taxCategory: TaxCategory::*,
+ *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   description?: string|null,
  * }
  */
@@ -43,7 +43,7 @@ final class AddonCreateParams implements BaseModel
     /**
      * The currency of the Addon.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -63,7 +63,7 @@ final class AddonCreateParams implements BaseModel
     /**
      * Tax category applied to this Addon.
      *
-     * @var TaxCategory::* $taxCategory
+     * @var value-of<TaxCategory> $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class)]
     public string $taxCategory;
@@ -102,22 +102,22 @@ final class AddonCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
-     * @param TaxCategory::* $taxCategory
+     * @param Currency|value-of<Currency> $currency
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
     public static function with(
-        string $currency,
+        Currency|string $currency,
         string $name,
         int $price,
-        string $taxCategory,
+        TaxCategory|string $taxCategory,
         ?string $description = null,
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->name = $name;
         $obj->price = $price;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         null !== $description && $obj->description = $description;
 
@@ -127,12 +127,12 @@ final class AddonCreateParams implements BaseModel
     /**
      * The currency of the Addon.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -162,12 +162,12 @@ final class AddonCreateParams implements BaseModel
     /**
      * Tax category applied to this Addon.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }

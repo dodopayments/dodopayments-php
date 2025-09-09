@@ -22,7 +22,7 @@ interface WebhooksContract
      * @param bool|null $disabled Create the webhook in a disabled state.
      *
      * Default is false
-     * @param list<WebhookEventType::*> $filterTypes Filter events to the webhook.
+     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes Filter events to the webhook.
      *
      * Webhook event will only be sent for events in the list.
      * @param array<string, string>|null $headers Custom headers to be passed
@@ -56,7 +56,7 @@ interface WebhooksContract
      *
      * @param string|null $description Description of the webhook
      * @param bool|null $disabled to Disable the endpoint, set it to true
-     * @param list<WebhookEventType::*>|null $filterTypes Filter events to the endpoint.
+     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes Filter events to the endpoint.
      *
      * Webhook event will only be sent for events in the list.
      * @param array<string, string>|null $metadata Metadata

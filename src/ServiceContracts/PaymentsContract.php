@@ -28,12 +28,12 @@ interface PaymentsContract
      * @param BillingAddress $billing Billing address details for the payment
      * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
      * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
-     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
      *
      * Customers will **never** see payment methods that are **not** in this list.
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
-     * @param Currency::* $billingCurrency Fix the currency in which the end customer is billed.
+     * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
      * @param string|null $discountCode Discount Code to apply to the transaction
      * @param array<string,
@@ -78,7 +78,7 @@ interface PaymentsContract
      * @param string $customerID Filter by customer id
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
-     * @param Status::* $status Filter by status
+     * @param Status|value-of<Status> $status Filter by status
      * @param string $subscriptionID Filter by subscription id
      *
      * @return DefaultPageNumberPagination<PaymentListResponse>

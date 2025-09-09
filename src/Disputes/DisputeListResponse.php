@@ -15,8 +15,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   currency: string,
  *   disputeID: string,
- *   disputeStage: DisputeStage::*,
- *   disputeStatus: DisputeStatus::*,
+ *   disputeStage: value-of<DisputeStage>,
+ *   disputeStatus: value-of<DisputeStatus>,
  *   paymentID: string,
  * }
  */
@@ -58,7 +58,7 @@ final class DisputeListResponse implements BaseModel
     /**
      * The current stage of the dispute process.
      *
-     * @var DisputeStage::* $disputeStage
+     * @var value-of<DisputeStage> $disputeStage
      */
     #[Api('dispute_stage', enum: DisputeStage::class)]
     public string $disputeStage;
@@ -66,7 +66,7 @@ final class DisputeListResponse implements BaseModel
     /**
      * The current status of the dispute.
      *
-     * @var DisputeStatus::* $disputeStatus
+     * @var value-of<DisputeStatus> $disputeStatus
      */
     #[Api('dispute_status', enum: DisputeStatus::class)]
     public string $disputeStatus;
@@ -118,8 +118,8 @@ final class DisputeListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DisputeStage::* $disputeStage
-     * @param DisputeStatus::* $disputeStatus
+     * @param DisputeStage|value-of<DisputeStage> $disputeStage
+     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
     public static function with(
         string $amount,
@@ -127,8 +127,8 @@ final class DisputeListResponse implements BaseModel
         \DateTimeInterface $createdAt,
         string $currency,
         string $disputeID,
-        string $disputeStage,
-        string $disputeStatus,
+        DisputeStage|string $disputeStage,
+        DisputeStatus|string $disputeStatus,
         string $paymentID,
     ): self {
         $obj = new self;
@@ -138,8 +138,8 @@ final class DisputeListResponse implements BaseModel
         $obj->createdAt = $createdAt;
         $obj->currency = $currency;
         $obj->disputeID = $disputeID;
-        $obj->disputeStage = $disputeStage;
-        $obj->disputeStatus = $disputeStatus;
+        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
+        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
         $obj->paymentID = $paymentID;
 
         return $obj;
@@ -203,12 +203,12 @@ final class DisputeListResponse implements BaseModel
     /**
      * The current stage of the dispute process.
      *
-     * @param DisputeStage::* $disputeStage
+     * @param DisputeStage|value-of<DisputeStage> $disputeStage
      */
-    public function withDisputeStage(string $disputeStage): self
+    public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj->disputeStage = $disputeStage;
+        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
 
         return $obj;
     }
@@ -216,12 +216,12 @@ final class DisputeListResponse implements BaseModel
     /**
      * The current status of the dispute.
      *
-     * @param DisputeStatus::* $disputeStatus
+     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
-    public function withDisputeStatus(string $disputeStatus): self
+    public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj->disputeStatus = $disputeStatus;
+        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
 
         return $obj;
     }

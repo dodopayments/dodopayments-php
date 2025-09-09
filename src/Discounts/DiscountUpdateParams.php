@@ -32,7 +32,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   name?: string|null,
  *   restrictedTo?: list<string>|null,
  *   subscriptionCycles?: int|null,
- *   type?: DiscountType::*,
+ *   type?: null|DiscountType|value-of<DiscountType>,
  *   usageLimit?: int|null,
  * }
  */
@@ -84,7 +84,7 @@ final class DiscountUpdateParams implements BaseModel
     /**
      * If present, update the discount type.
      *
-     * @var DiscountType::*|null $type
+     * @var value-of<DiscountType>|null $type
      */
     #[Api(enum: DiscountType::class, nullable: true, optional: true)]
     public ?string $type;
@@ -103,7 +103,7 @@ final class DiscountUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $restrictedTo
-     * @param DiscountType::* $type
+     * @param DiscountType|value-of<DiscountType>|null $type
      */
     public static function with(
         ?int $amount = null,
@@ -112,7 +112,7 @@ final class DiscountUpdateParams implements BaseModel
         ?string $name = null,
         ?array $restrictedTo = null,
         ?int $subscriptionCycles = null,
-        ?string $type = null,
+        DiscountType|string|null $type = null,
         ?int $usageLimit = null,
     ): self {
         $obj = new self;
@@ -123,7 +123,7 @@ final class DiscountUpdateParams implements BaseModel
         null !== $name && $obj->name = $name;
         null !== $restrictedTo && $obj->restrictedTo = $restrictedTo;
         null !== $subscriptionCycles && $obj->subscriptionCycles = $subscriptionCycles;
-        null !== $type && $obj->type = $type;
+        null !== $type && $obj->type = $type instanceof DiscountType ? $type->value : $type;
         null !== $usageLimit && $obj->usageLimit = $usageLimit;
 
         return $obj;
@@ -201,12 +201,12 @@ final class DiscountUpdateParams implements BaseModel
     /**
      * If present, update the discount type.
      *
-     * @param DiscountType::* $type
+     * @param DiscountType|value-of<DiscountType>|null $type
      */
-    public function withType(string $type): self
+    public function withType(DiscountType|string|null $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof DiscountType ? $type->value : $type;
 
         return $obj;
     }

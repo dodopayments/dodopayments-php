@@ -18,7 +18,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   key: string,
  *   paymentID: string,
  *   productID: string,
- *   status: LicenseKeyStatus::*,
+ *   status: value-of<LicenseKeyStatus>,
  *   activationsLimit?: int|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   subscriptionID?: string|null,
@@ -80,7 +80,7 @@ final class LicenseKey implements BaseModel
     /**
      * The current status of the license key (e.g., active, inactive, expired).
      *
-     * @var LicenseKeyStatus::* $status
+     * @var value-of<LicenseKeyStatus> $status
      */
     #[Api(enum: LicenseKeyStatus::class)]
     public string $status;
@@ -146,7 +146,7 @@ final class LicenseKey implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param LicenseKeyStatus::* $status
+     * @param LicenseKeyStatus|value-of<LicenseKeyStatus> $status
      */
     public static function with(
         string $id,
@@ -157,7 +157,7 @@ final class LicenseKey implements BaseModel
         string $key,
         string $paymentID,
         string $productID,
-        string $status,
+        LicenseKeyStatus|string $status,
         ?int $activationsLimit = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $subscriptionID = null,
@@ -172,7 +172,7 @@ final class LicenseKey implements BaseModel
         $obj->key = $key;
         $obj->paymentID = $paymentID;
         $obj->productID = $productID;
-        $obj->status = $status;
+        $obj->status = $status instanceof LicenseKeyStatus ? $status->value : $status;
 
         null !== $activationsLimit && $obj->activationsLimit = $activationsLimit;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
@@ -272,12 +272,12 @@ final class LicenseKey implements BaseModel
     /**
      * The current status of the license key (e.g., active, inactive, expired).
      *
-     * @param LicenseKeyStatus::* $status
+     * @param LicenseKeyStatus|value-of<LicenseKeyStatus> $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(LicenseKeyStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof LicenseKeyStatus ? $status->value : $status;
 
         return $obj;
     }

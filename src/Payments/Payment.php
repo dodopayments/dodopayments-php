@@ -19,7 +19,7 @@ use Dodopayments\Refunds\Refund;
  *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   customer: CustomerLimitedDetails,
  *   digitalProductsDelivered: bool,
  *   disputes: list<Dispute>,
@@ -27,9 +27,9 @@ use Dodopayments\Refunds\Refund;
  *   paymentID: string,
  *   refunds: list<Refund>,
  *   settlementAmount: int,
- *   settlementCurrency: Currency::*,
+ *   settlementCurrency: value-of<Currency>,
  *   totalAmount: int,
- *   cardIssuingCountry?: CountryCode::*|null,
+ *   cardIssuingCountry?: value-of<CountryCode>|null,
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
  *   cardType?: string|null,
@@ -42,7 +42,7 @@ use Dodopayments\Refunds\Refund;
  *   paymentMethodType?: string|null,
  *   productCart?: list<ProductCart>|null,
  *   settlementTax?: int|null,
- *   status?: IntentStatus::*|null,
+ *   status?: value-of<IntentStatus>|null,
  *   subscriptionID?: string|null,
  *   tax?: int|null,
  *   updatedAt?: \DateTimeInterface|null,
@@ -80,7 +80,7 @@ final class Payment implements BaseModel
     /**
      * Currency used for the payment.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -138,7 +138,7 @@ final class Payment implements BaseModel
      * The currency in which the settlement_amount will be credited to your Dodo balance.
      * This may differ from the customer's payment currency in adaptive pricing scenarios.
      *
-     * @var Currency::* $settlementCurrency
+     * @var value-of<Currency> $settlementCurrency
      */
     #[Api('settlement_currency', enum: Currency::class)]
     public string $settlementCurrency;
@@ -152,7 +152,7 @@ final class Payment implements BaseModel
     /**
      * ISO2 country code of the card.
      *
-     * @var CountryCode::*|null $cardIssuingCountry
+     * @var value-of<CountryCode>|null $cardIssuingCountry
      */
     #[Api(
         'card_issuing_country',
@@ -247,7 +247,7 @@ final class Payment implements BaseModel
     /**
      * Current status of the payment intent.
      *
-     * @var IntentStatus::*|null $status
+     * @var value-of<IntentStatus>|null $status
      */
     #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
     public ?string $status;
@@ -323,21 +323,21 @@ final class Payment implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      * @param list<Dispute> $disputes
      * @param array<string, string> $metadata
      * @param list<Refund> $refunds
-     * @param Currency::* $settlementCurrency
-     * @param CountryCode::* $cardIssuingCountry
+     * @param Currency|value-of<Currency> $settlementCurrency
+     * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<ProductCart>|null $productCart
-     * @param IntentStatus::* $status
+     * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
         BillingAddress $billing,
         string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
-        string $currency,
+        Currency|string $currency,
         CustomerLimitedDetails $customer,
         bool $digitalProductsDelivered,
         array $disputes,
@@ -345,9 +345,9 @@ final class Payment implements BaseModel
         string $paymentID,
         array $refunds,
         int $settlementAmount,
-        string $settlementCurrency,
+        Currency|string $settlementCurrency,
         int $totalAmount,
-        ?string $cardIssuingCountry = null,
+        CountryCode|string|null $cardIssuingCountry = null,
         ?string $cardLastFour = null,
         ?string $cardNetwork = null,
         ?string $cardType = null,
@@ -360,7 +360,7 @@ final class Payment implements BaseModel
         ?string $paymentMethodType = null,
         ?array $productCart = null,
         ?int $settlementTax = null,
-        ?string $status = null,
+        IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
         ?int $tax = null,
         ?\DateTimeInterface $updatedAt = null,
@@ -371,7 +371,7 @@ final class Payment implements BaseModel
         $obj->brandID = $brandID;
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->customer = $customer;
         $obj->digitalProductsDelivered = $digitalProductsDelivered;
         $obj->disputes = $disputes;
@@ -379,10 +379,10 @@ final class Payment implements BaseModel
         $obj->paymentID = $paymentID;
         $obj->refunds = $refunds;
         $obj->settlementAmount = $settlementAmount;
-        $obj->settlementCurrency = $settlementCurrency;
+        $obj->settlementCurrency = $settlementCurrency instanceof Currency ? $settlementCurrency->value : $settlementCurrency;
         $obj->totalAmount = $totalAmount;
 
-        null !== $cardIssuingCountry && $obj->cardIssuingCountry = $cardIssuingCountry;
+        null !== $cardIssuingCountry && $obj->cardIssuingCountry = $cardIssuingCountry instanceof CountryCode ? $cardIssuingCountry->value : $cardIssuingCountry;
         null !== $cardLastFour && $obj->cardLastFour = $cardLastFour;
         null !== $cardNetwork && $obj->cardNetwork = $cardNetwork;
         null !== $cardType && $obj->cardType = $cardType;
@@ -395,7 +395,7 @@ final class Payment implements BaseModel
         null !== $paymentMethodType && $obj->paymentMethodType = $paymentMethodType;
         null !== $productCart && $obj->productCart = $productCart;
         null !== $settlementTax && $obj->settlementTax = $settlementTax;
-        null !== $status && $obj->status = $status;
+        null !== $status && $obj->status = $status instanceof IntentStatus ? $status->value : $status;
         null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
         null !== $tax && $obj->tax = $tax;
         null !== $updatedAt && $obj->updatedAt = $updatedAt;
@@ -450,12 +450,12 @@ final class Payment implements BaseModel
     /**
      * Currency used for the payment.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -549,12 +549,13 @@ final class Payment implements BaseModel
      * The currency in which the settlement_amount will be credited to your Dodo balance.
      * This may differ from the customer's payment currency in adaptive pricing scenarios.
      *
-     * @param Currency::* $settlementCurrency
+     * @param Currency|value-of<Currency> $settlementCurrency
      */
-    public function withSettlementCurrency(string $settlementCurrency): self
-    {
+    public function withSettlementCurrency(
+        Currency|string $settlementCurrency
+    ): self {
         $obj = clone $this;
-        $obj->settlementCurrency = $settlementCurrency;
+        $obj->settlementCurrency = $settlementCurrency instanceof Currency ? $settlementCurrency->value : $settlementCurrency;
 
         return $obj;
     }
@@ -573,12 +574,13 @@ final class Payment implements BaseModel
     /**
      * ISO2 country code of the card.
      *
-     * @param CountryCode::* $cardIssuingCountry
+     * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      */
-    public function withCardIssuingCountry(string $cardIssuingCountry): self
-    {
+    public function withCardIssuingCountry(
+        CountryCode|string|null $cardIssuingCountry
+    ): self {
         $obj = clone $this;
-        $obj->cardIssuingCountry = $cardIssuingCountry;
+        $obj->cardIssuingCountry = $cardIssuingCountry instanceof CountryCode ? $cardIssuingCountry->value : $cardIssuingCountry;
 
         return $obj;
     }
@@ -723,12 +725,12 @@ final class Payment implements BaseModel
     /**
      * Current status of the payment intent.
      *
-     * @param IntentStatus::* $status
+     * @param IntentStatus|value-of<IntentStatus>|null $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(IntentStatus|string|null $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof IntentStatus ? $status->value : $status;
 
         return $obj;
     }

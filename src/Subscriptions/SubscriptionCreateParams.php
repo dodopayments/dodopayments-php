@@ -35,11 +35,11 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   productID: string,
  *   quantity: int,
  *   addons?: list<AttachAddon>|null,
- *   allowedPaymentMethodTypes?: list<PaymentMethodTypes::*>|null,
- *   billingCurrency?: Currency::*,
+ *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
+ *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
  *   metadata?: array<string, string>,
- *   onDemand?: OnDemandSubscription,
+ *   onDemand?: OnDemandSubscription|null,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
  *   showSavedPaymentMethods?: bool,
@@ -92,7 +92,7 @@ final class SubscriptionCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @var list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
+     * @var list<value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      */
     #[Api(
         'allowed_payment_method_types',
@@ -106,7 +106,7 @@ final class SubscriptionCreateParams implements BaseModel
      * Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed.
      *
-     * @var Currency::*|null $billingCurrency
+     * @var value-of<Currency>|null $billingCurrency
      */
     #[Api(
         'billing_currency',
@@ -199,8 +199,8 @@ final class SubscriptionCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AttachAddon>|null $addons
-     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
-     * @param Currency::* $billingCurrency
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
+     * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string, string> $metadata
      */
     public static function with(
@@ -210,7 +210,7 @@ final class SubscriptionCreateParams implements BaseModel
         int $quantity,
         ?array $addons = null,
         ?array $allowedPaymentMethodTypes = null,
-        ?string $billingCurrency = null,
+        Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
         ?array $metadata = null,
         ?OnDemandSubscription $onDemand = null,
@@ -228,8 +228,8 @@ final class SubscriptionCreateParams implements BaseModel
         $obj->quantity = $quantity;
 
         null !== $addons && $obj->addons = $addons;
-        null !== $allowedPaymentMethodTypes && $obj->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
-        null !== $billingCurrency && $obj->billingCurrency = $billingCurrency;
+        null !== $allowedPaymentMethodTypes && $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
+        null !== $billingCurrency && $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
         null !== $discountCode && $obj->discountCode = $discountCode;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $onDemand && $obj->onDemand = $onDemand;
@@ -307,13 +307,13 @@ final class SubscriptionCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      */
     public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes
     ): self {
         $obj = clone $this;
-        $obj->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
+        $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
 
         return $obj;
     }
@@ -322,12 +322,13 @@ final class SubscriptionCreateParams implements BaseModel
      * Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed.
      *
-     * @param Currency::* $billingCurrency
+     * @param Currency|value-of<Currency>|null $billingCurrency
      */
-    public function withBillingCurrency(string $billingCurrency): self
-    {
+    public function withBillingCurrency(
+        Currency|string|null $billingCurrency
+    ): self {
         $obj = clone $this;
-        $obj->billingCurrency = $billingCurrency;
+        $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
 
         return $obj;
     }
@@ -357,7 +358,7 @@ final class SubscriptionCreateParams implements BaseModel
         return $obj;
     }
 
-    public function withOnDemand(OnDemandSubscription $onDemand): self
+    public function withOnDemand(?OnDemandSubscription $onDemand): self
     {
         $obj = clone $this;
         $obj->onDemand = $onDemand;

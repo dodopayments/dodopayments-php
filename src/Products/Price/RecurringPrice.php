@@ -15,15 +15,15 @@ use Dodopayments\Subscriptions\TimeInterval;
  * Recurring price details.
  *
  * @phpstan-type recurring_price = array{
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   discount: int,
  *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: TimeInterval::*,
+ *   paymentFrequencyInterval: value-of<TimeInterval>,
  *   price: int,
  *   purchasingPowerParity: bool,
  *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: TimeInterval::*,
- *   type: Type::*,
+ *   subscriptionPeriodInterval: value-of<TimeInterval>,
+ *   type: value-of<Type>,
  *   taxInclusive?: bool|null,
  *   trialPeriodDays?: int|null,
  * }
@@ -36,7 +36,7 @@ final class RecurringPrice implements BaseModel
     /**
      * The currency in which the payment is made.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -57,7 +57,7 @@ final class RecurringPrice implements BaseModel
     /**
      * The time interval for the payment frequency (e.g., day, month, year).
      *
-     * @var TimeInterval::* $paymentFrequencyInterval
+     * @var value-of<TimeInterval> $paymentFrequencyInterval
      */
     #[Api('payment_frequency_interval', enum: TimeInterval::class)]
     public string $paymentFrequencyInterval;
@@ -86,12 +86,12 @@ final class RecurringPrice implements BaseModel
     /**
      * The time interval for the subscription period (e.g., day, month, year).
      *
-     * @var TimeInterval::* $subscriptionPeriodInterval
+     * @var value-of<TimeInterval> $subscriptionPeriodInterval
      */
     #[Api('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
 
-    /** @var Type::* $type */
+    /** @var value-of<Type> $type */
     #[Api(enum: Type::class)]
     public string $type;
 
@@ -150,35 +150,35 @@ final class RecurringPrice implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
-     * @param TimeInterval::* $paymentFrequencyInterval
-     * @param TimeInterval::* $subscriptionPeriodInterval
-     * @param Type::* $type
+     * @param Currency|value-of<Currency> $currency
+     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
+     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
+     * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $currency,
+        Currency|string $currency,
         int $discount,
         int $paymentFrequencyCount,
-        string $paymentFrequencyInterval,
+        TimeInterval|string $paymentFrequencyInterval,
         int $price,
         bool $purchasingPowerParity,
         int $subscriptionPeriodCount,
-        string $subscriptionPeriodInterval,
-        string $type,
+        TimeInterval|string $subscriptionPeriodInterval,
+        Type|string $type,
         ?bool $taxInclusive = null,
         ?int $trialPeriodDays = null,
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->discount = $discount;
         $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval;
+        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
         $obj->price = $price;
         $obj->purchasingPowerParity = $purchasingPowerParity;
         $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval;
-        $obj->type = $type;
+        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
         null !== $trialPeriodDays && $obj->trialPeriodDays = $trialPeriodDays;
@@ -189,12 +189,12 @@ final class RecurringPrice implements BaseModel
     /**
      * The currency in which the payment is made.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -225,13 +225,13 @@ final class RecurringPrice implements BaseModel
     /**
      * The time interval for the payment frequency (e.g., day, month, year).
      *
-     * @param TimeInterval::* $paymentFrequencyInterval
+     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      */
     public function withPaymentFrequencyInterval(
-        string $paymentFrequencyInterval
+        TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval;
+        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -276,24 +276,24 @@ final class RecurringPrice implements BaseModel
     /**
      * The time interval for the subscription period (e.g., day, month, year).
      *
-     * @param TimeInterval::* $subscriptionPeriodInterval
+     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      */
     public function withSubscriptionPeriodInterval(
-        string $subscriptionPeriodInterval
+        TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval;
+        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
 
         return $obj;
     }
 
     /**
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public function withType(string $type): self
+    public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }

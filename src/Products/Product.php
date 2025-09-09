@@ -23,7 +23,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  *   metadata: array<string, string>,
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   productID: string,
- *   taxCategory: TaxCategory::*,
+ *   taxCategory: value-of<TaxCategory>,
  *   updatedAt: \DateTimeInterface,
  *   addons?: list<string>|null,
  *   description?: string|null,
@@ -90,7 +90,7 @@ final class Product implements BaseModel
     /**
      * Tax category associated with the product.
      *
-     * @var TaxCategory::* $taxCategory
+     * @var value-of<TaxCategory> $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class)]
     public string $taxCategory;
@@ -194,7 +194,7 @@ final class Product implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string, string> $metadata
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
      */
     public static function with(
@@ -206,7 +206,7 @@ final class Product implements BaseModel
         array $metadata,
         OneTimePrice|RecurringPrice|UsageBasedPrice $price,
         string $productID,
-        string $taxCategory,
+        TaxCategory|string $taxCategory,
         \DateTimeInterface $updatedAt,
         ?array $addons = null,
         ?string $description = null,
@@ -227,7 +227,7 @@ final class Product implements BaseModel
         $obj->metadata = $metadata;
         $obj->price = $price;
         $obj->productID = $productID;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
         $obj->updatedAt = $updatedAt;
 
         null !== $addons && $obj->addons = $addons;
@@ -333,12 +333,12 @@ final class Product implements BaseModel
     /**
      * Tax category associated with the product.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }
@@ -426,7 +426,7 @@ final class Product implements BaseModel
      * Duration of the license key validity, if enabled.
      */
     public function withLicenseKeyDuration(
-        LicenseKeyDuration $licenseKeyDuration
+        ?LicenseKeyDuration $licenseKeyDuration
     ): self {
         $obj = clone $this;
         $obj->licenseKeyDuration = $licenseKeyDuration;

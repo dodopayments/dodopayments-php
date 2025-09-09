@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products\Price\UsageBasedPrice;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class Type implements ConverterSource
+enum Type: string
 {
-    use SdkEnum;
-
-    public const USAGE_BASED_PRICE = 'usage_based_price';
+    case USAGE_BASED_PRICE = 'usage_based_price';
 }

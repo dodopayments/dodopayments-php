@@ -16,9 +16,9 @@ use Dodopayments\Misc\Currency;
  *   isPartial: bool,
  *   paymentID: string,
  *   refundID: string,
- *   status: RefundStatus::*,
+ *   status: value-of<RefundStatus>,
  *   amount?: int|null,
- *   currency?: Currency::*|null,
+ *   currency?: value-of<Currency>|null,
  *   reason?: string|null,
  * }
  */
@@ -60,7 +60,7 @@ final class Refund implements BaseModel
     /**
      * The current status of the refund.
      *
-     * @var RefundStatus::* $status
+     * @var value-of<RefundStatus> $status
      */
     #[Api(enum: RefundStatus::class)]
     public string $status;
@@ -74,7 +74,7 @@ final class Refund implements BaseModel
     /**
      * The currency of the refund, represented as an ISO 4217 currency code.
      *
-     * @var Currency::*|null $currency
+     * @var value-of<Currency>|null $currency
      */
     #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
@@ -122,8 +122,8 @@ final class Refund implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param RefundStatus::* $status
-     * @param Currency::* $currency
+     * @param RefundStatus|value-of<RefundStatus> $status
+     * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
         string $businessID,
@@ -131,9 +131,9 @@ final class Refund implements BaseModel
         bool $isPartial,
         string $paymentID,
         string $refundID,
-        string $status,
+        RefundStatus|string $status,
         ?int $amount = null,
-        ?string $currency = null,
+        Currency|string|null $currency = null,
         ?string $reason = null,
     ): self {
         $obj = new self;
@@ -143,10 +143,10 @@ final class Refund implements BaseModel
         $obj->isPartial = $isPartial;
         $obj->paymentID = $paymentID;
         $obj->refundID = $refundID;
-        $obj->status = $status;
+        $obj->status = $status instanceof RefundStatus ? $status->value : $status;
 
         null !== $amount && $obj->amount = $amount;
-        null !== $currency && $obj->currency = $currency;
+        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         null !== $reason && $obj->reason = $reason;
 
         return $obj;
@@ -210,12 +210,12 @@ final class Refund implements BaseModel
     /**
      * The current status of the refund.
      *
-     * @param RefundStatus::* $status
+     * @param RefundStatus|value-of<RefundStatus> $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(RefundStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof RefundStatus ? $status->value : $status;
 
         return $obj;
     }
@@ -234,12 +234,12 @@ final class Refund implements BaseModel
     /**
      * The currency of the refund, represented as an ISO 4217 currency code.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency>|null $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }

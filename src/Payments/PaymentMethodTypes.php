@@ -4,46 +4,41 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class PaymentMethodTypes implements ConverterSource
+enum PaymentMethodTypes: string
 {
-    use SdkEnum;
+    case CREDIT = 'credit';
 
-    public const CREDIT = 'credit';
+    case DEBIT = 'debit';
 
-    public const DEBIT = 'debit';
+    case UPI_COLLECT = 'upi_collect';
 
-    public const UPI_COLLECT = 'upi_collect';
+    case UPI_INTENT = 'upi_intent';
 
-    public const UPI_INTENT = 'upi_intent';
+    case APPLE_PAY = 'apple_pay';
 
-    public const APPLE_PAY = 'apple_pay';
+    case CASHAPP = 'cashapp';
 
-    public const CASHAPP = 'cashapp';
+    case GOOGLE_PAY = 'google_pay';
 
-    public const GOOGLE_PAY = 'google_pay';
+    case MULTIBANCO = 'multibanco';
 
-    public const MULTIBANCO = 'multibanco';
+    case BANCONTACT_CARD = 'bancontact_card';
 
-    public const BANCONTACT_CARD = 'bancontact_card';
+    case EPS = 'eps';
 
-    public const EPS = 'eps';
+    case IDEAL = 'ideal';
 
-    public const IDEAL = 'ideal';
+    case PRZELEWY24 = 'przelewy24';
 
-    public const PRZELEWY24 = 'przelewy24';
+    case AFFIRM = 'affirm';
 
-    public const AFFIRM = 'affirm';
+    case KLARNA = 'klarna';
 
-    public const KLARNA = 'klarna';
+    case SEPA = 'sepa';
 
-    public const SEPA = 'sepa';
+    case ACH = 'ach';
 
-    public const ACH = 'ach';
+    case AMAZON_PAY = 'amazon_pay';
 
-    public const AMAZON_PAY = 'amazon_pay';
-
-    public const AFTERPAY_CLEARPAY = 'afterpay_clearpay';
+    case AFTERPAY_CLEARPAY = 'afterpay_clearpay';
 }

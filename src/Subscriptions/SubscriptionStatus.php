@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class SubscriptionStatus implements ConverterSource
+enum SubscriptionStatus: string
 {
-    use SdkEnum;
+    case PENDING = 'pending';
 
-    public const PENDING = 'pending';
+    case ACTIVE = 'active';
 
-    public const ACTIVE = 'active';
+    case ON_HOLD = 'on_hold';
 
-    public const ON_HOLD = 'on_hold';
+    case CANCELLED = 'cancelled';
 
-    public const CANCELLED = 'cancelled';
+    case FAILED = 'failed';
 
-    public const FAILED = 'failed';
-
-    public const EXPIRED = 'expired';
+    case EXPIRED = 'expired';
 }

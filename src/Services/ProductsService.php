@@ -45,7 +45,7 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param OneTimePrice|RecurringPrice|UsageBasedPrice $price Price configuration for the product
-     * @param TaxCategory::* $taxCategory Tax category applied to this product
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this product
      * @param list<string>|null $addons Addons available for subscription product
      * @param string|null $brandID Brand id for the product, if not provided will default to primary brand
      * @param string|null $description Optional description of the product
@@ -53,7 +53,7 @@ final class ProductsService implements ProductsContract
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
      * @param int|null $licenseKeyActivationsLimit The number of times the license key can be activated.
      * Must be 0 or greater
-     * @param LicenseKeyDuration $licenseKeyDuration Duration configuration for the license key.
+     * @param LicenseKeyDuration|null $licenseKeyDuration Duration configuration for the license key.
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period
      * @param bool|null $licenseKeyEnabled When true, generates and sends a license key to your customer.
@@ -136,7 +136,7 @@ final class ProductsService implements ProductsContract
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
-     * @param LicenseKeyDuration $licenseKeyDuration Duration of the license key if enabled.
+     * @param LicenseKeyDuration|null $licenseKeyDuration Duration of the license key if enabled.
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
@@ -146,8 +146,8 @@ final class ProductsService implements ProductsContract
      * become applicable.
      * @param array<string, string>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
-     * @param OneTimePrice|RecurringPrice|UsageBasedPrice $price price details of the product
-     * @param TaxCategory::* $taxCategory tax category of the product
+     * @param OneTimePrice|RecurringPrice|UsageBasedPrice|null $price price details of the product
+     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the product
      */
     public function update(
         string $id,

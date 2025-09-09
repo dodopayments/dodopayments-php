@@ -15,10 +15,10 @@ use Dodopayments\Misc\TaxCategory;
  *   id: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   name: string,
  *   price: int,
- *   taxCategory: TaxCategory::*,
+ *   taxCategory: value-of<TaxCategory>,
  *   updatedAt: \DateTimeInterface,
  *   description?: string|null,
  *   image?: string|null,
@@ -50,7 +50,7 @@ final class AddonResponse implements BaseModel
     /**
      * Currency of the Addon.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -70,7 +70,7 @@ final class AddonResponse implements BaseModel
     /**
      * Tax category applied to this Addon.
      *
-     * @var TaxCategory::* $taxCategory
+     * @var value-of<TaxCategory> $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class)]
     public string $taxCategory;
@@ -134,17 +134,17 @@ final class AddonResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
-     * @param TaxCategory::* $taxCategory
+     * @param Currency|value-of<Currency> $currency
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
     public static function with(
         string $id,
         string $businessID,
         \DateTimeInterface $createdAt,
-        string $currency,
+        Currency|string $currency,
         string $name,
         int $price,
-        string $taxCategory,
+        TaxCategory|string $taxCategory,
         \DateTimeInterface $updatedAt,
         ?string $description = null,
         ?string $image = null,
@@ -154,10 +154,10 @@ final class AddonResponse implements BaseModel
         $obj->id = $id;
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->name = $name;
         $obj->price = $price;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
         $obj->updatedAt = $updatedAt;
 
         null !== $description && $obj->description = $description;
@@ -202,12 +202,12 @@ final class AddonResponse implements BaseModel
     /**
      * Currency of the Addon.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -237,12 +237,12 @@ final class AddonResponse implements BaseModel
     /**
      * Tax category applied to this Addon.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }

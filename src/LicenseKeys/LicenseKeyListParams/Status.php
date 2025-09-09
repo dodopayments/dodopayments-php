@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Dodopayments\LicenseKeys\LicenseKeyListParams;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Filter by license key status.
  */
-final class Status implements ConverterSource
+enum Status: string
 {
-    use SdkEnum;
+    case ACTIVE = 'active';
 
-    public const ACTIVE = 'active';
+    case EXPIRED = 'expired';
 
-    public const EXPIRED = 'expired';
-
-    public const DISABLED = 'disabled';
+    case DISABLED = 'disabled';
 }

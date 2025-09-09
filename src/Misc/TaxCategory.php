@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace Dodopayments\Misc;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Represents the different categories of taxation applicable to various products and services.
  */
-final class TaxCategory implements ConverterSource
+enum TaxCategory: string
 {
-    use SdkEnum;
+    case DIGITAL_PRODUCTS = 'digital_products';
 
-    public const DIGITAL_PRODUCTS = 'digital_products';
+    case SAAS = 'saas';
 
-    public const SAAS = 'saas';
+    case E_BOOK = 'e_book';
 
-    public const E_BOOK = 'e_book';
-
-    public const EDTECH = 'edtech';
+    case EDTECH = 'edtech';
 }

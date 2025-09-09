@@ -44,7 +44,7 @@ interface RefundsContract
      * @param string $customerID Filter by customer_id
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
-     * @param Status::* $status Filter by status
+     * @param Status|value-of<Status> $status Filter by status
      *
      * @return DefaultPageNumberPagination<Refund>
      */

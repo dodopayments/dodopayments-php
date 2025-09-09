@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class TimeInterval implements ConverterSource
+enum TimeInterval: string
 {
-    use SdkEnum;
+    case DAY = 'Day';
 
-    public const DAY = 'Day';
+    case WEEK = 'Week';
 
-    public const WEEK = 'Week';
+    case MONTH = 'Month';
 
-    public const MONTH = 'Month';
-
-    public const YEAR = 'Year';
+    case YEAR = 'Year';
 }
