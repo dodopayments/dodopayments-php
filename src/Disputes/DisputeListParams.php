@@ -30,8 +30,8 @@ use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,
  *   customerID?: string,
- *   disputeStage?: DisputeStage::*,
- *   disputeStatus?: DisputeStatus::*,
+ *   disputeStage?: DisputeStage|value-of<DisputeStage>,
+ *   disputeStatus?: DisputeStatus|value-of<DisputeStatus>,
  *   pageNumber?: int,
  *   pageSize?: int,
  * }
@@ -63,7 +63,7 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute stage.
      *
-     * @var DisputeStage::*|null $disputeStage
+     * @var value-of<DisputeStage>|null $disputeStage
      */
     #[Api(enum: DisputeStage::class, optional: true)]
     public ?string $disputeStage;
@@ -71,7 +71,7 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute status.
      *
-     * @var DisputeStatus::*|null $disputeStatus
+     * @var value-of<DisputeStatus>|null $disputeStatus
      */
     #[Api(enum: DisputeStatus::class, optional: true)]
     public ?string $disputeStatus;
@@ -98,15 +98,15 @@ final class DisputeListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DisputeStage::* $disputeStage
-     * @param DisputeStatus::* $disputeStatus
+     * @param DisputeStage|value-of<DisputeStage> $disputeStage
+     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
     public static function with(
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
-        ?string $disputeStage = null,
-        ?string $disputeStatus = null,
+        DisputeStage|string|null $disputeStage = null,
+        DisputeStatus|string|null $disputeStatus = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
     ): self {
@@ -115,8 +115,8 @@ final class DisputeListParams implements BaseModel
         null !== $createdAtGte && $obj->createdAtGte = $createdAtGte;
         null !== $createdAtLte && $obj->createdAtLte = $createdAtLte;
         null !== $customerID && $obj->customerID = $customerID;
-        null !== $disputeStage && $obj->disputeStage = $disputeStage;
-        null !== $disputeStatus && $obj->disputeStatus = $disputeStatus;
+        null !== $disputeStage && $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
+        null !== $disputeStatus && $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
         null !== $pageNumber && $obj->pageNumber = $pageNumber;
         null !== $pageSize && $obj->pageSize = $pageSize;
 
@@ -159,12 +159,12 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute stage.
      *
-     * @param DisputeStage::* $disputeStage
+     * @param DisputeStage|value-of<DisputeStage> $disputeStage
      */
-    public function withDisputeStage(string $disputeStage): self
+    public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj->disputeStage = $disputeStage;
+        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
 
         return $obj;
     }
@@ -172,12 +172,12 @@ final class DisputeListParams implements BaseModel
     /**
      * Filter by dispute status.
      *
-     * @param DisputeStatus::* $disputeStatus
+     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
-    public function withDisputeStatus(string $disputeStatus): self
+    public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj->disputeStatus = $disputeStatus;
+        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
 
         return $obj;
     }

@@ -4,55 +4,50 @@ declare(strict_types=1);
 
 namespace Dodopayments\WebhookEvents;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Event types for Dodo events.
  */
-final class WebhookEventType implements ConverterSource
+enum WebhookEventType: string
 {
-    use SdkEnum;
+    case PAYMENT_SUCCEEDED = 'payment.succeeded';
 
-    public const PAYMENT_SUCCEEDED = 'payment.succeeded';
+    case PAYMENT_FAILED = 'payment.failed';
 
-    public const PAYMENT_FAILED = 'payment.failed';
+    case PAYMENT_PROCESSING = 'payment.processing';
 
-    public const PAYMENT_PROCESSING = 'payment.processing';
+    case PAYMENT_CANCELLED = 'payment.cancelled';
 
-    public const PAYMENT_CANCELLED = 'payment.cancelled';
+    case REFUND_SUCCEEDED = 'refund.succeeded';
 
-    public const REFUND_SUCCEEDED = 'refund.succeeded';
+    case REFUND_FAILED = 'refund.failed';
 
-    public const REFUND_FAILED = 'refund.failed';
+    case DISPUTE_OPENED = 'dispute.opened';
 
-    public const DISPUTE_OPENED = 'dispute.opened';
+    case DISPUTE_EXPIRED = 'dispute.expired';
 
-    public const DISPUTE_EXPIRED = 'dispute.expired';
+    case DISPUTE_ACCEPTED = 'dispute.accepted';
 
-    public const DISPUTE_ACCEPTED = 'dispute.accepted';
+    case DISPUTE_CANCELLED = 'dispute.cancelled';
 
-    public const DISPUTE_CANCELLED = 'dispute.cancelled';
+    case DISPUTE_CHALLENGED = 'dispute.challenged';
 
-    public const DISPUTE_CHALLENGED = 'dispute.challenged';
+    case DISPUTE_WON = 'dispute.won';
 
-    public const DISPUTE_WON = 'dispute.won';
+    case DISPUTE_LOST = 'dispute.lost';
 
-    public const DISPUTE_LOST = 'dispute.lost';
+    case SUBSCRIPTION_ACTIVE = 'subscription.active';
 
-    public const SUBSCRIPTION_ACTIVE = 'subscription.active';
+    case SUBSCRIPTION_RENEWED = 'subscription.renewed';
 
-    public const SUBSCRIPTION_RENEWED = 'subscription.renewed';
+    case SUBSCRIPTION_ON_HOLD = 'subscription.on_hold';
 
-    public const SUBSCRIPTION_ON_HOLD = 'subscription.on_hold';
+    case SUBSCRIPTION_CANCELLED = 'subscription.cancelled';
 
-    public const SUBSCRIPTION_CANCELLED = 'subscription.cancelled';
+    case SUBSCRIPTION_FAILED = 'subscription.failed';
 
-    public const SUBSCRIPTION_FAILED = 'subscription.failed';
+    case SUBSCRIPTION_EXPIRED = 'subscription.expired';
 
-    public const SUBSCRIPTION_EXPIRED = 'subscription.expired';
+    case SUBSCRIPTION_PLAN_CHANGED = 'subscription.plan_changed';
 
-    public const SUBSCRIPTION_PLAN_CHANGED = 'subscription.plan_changed';
-
-    public const LICENSE_KEY_CREATED = 'license_key.created';
+    case LICENSE_KEY_CREATED = 'license_key.created';
 }

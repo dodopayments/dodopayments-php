@@ -36,7 +36,7 @@ final class PaymentsTest extends TestCase
         $result = $this->client->payments->create(
             billing: BillingAddress::with(
                 city: 'city',
-                country: CountryCode::AF,
+                country: CountryCode::$AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',
@@ -56,7 +56,7 @@ final class PaymentsTest extends TestCase
         $result = $this->client->payments->create(
             billing: BillingAddress::with(
                 city: 'city',
-                country: CountryCode::AF,
+                country: CountryCode::$AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',

@@ -15,7 +15,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type customization_alias = array{
  *   showOnDemandTag?: bool|null,
  *   showOrderDetails?: bool|null,
- *   theme?: Theme::*|null,
+ *   theme?: value-of<Theme>|null,
  * }
  */
 final class Customization implements BaseModel
@@ -44,7 +44,7 @@ final class Customization implements BaseModel
      *
      * Default is `System`.
      *
-     * @var Theme::*|null $theme
+     * @var value-of<Theme>|null $theme
      */
     #[Api(enum: Theme::class, optional: true)]
     public ?string $theme;
@@ -59,18 +59,18 @@ final class Customization implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Theme::* $theme
+     * @param Theme|value-of<Theme> $theme
      */
     public static function with(
         ?bool $showOnDemandTag = null,
         ?bool $showOrderDetails = null,
-        ?string $theme = null,
+        Theme|string|null $theme = null,
     ): self {
         $obj = new self;
 
         null !== $showOnDemandTag && $obj->showOnDemandTag = $showOnDemandTag;
         null !== $showOrderDetails && $obj->showOrderDetails = $showOrderDetails;
-        null !== $theme && $obj->theme = $theme;
+        null !== $theme && $obj->theme = $theme instanceof Theme ? $theme->value : $theme;
 
         return $obj;
     }
@@ -106,12 +106,12 @@ final class Customization implements BaseModel
      *
      * Default is `System`.
      *
-     * @param Theme::* $theme
+     * @param Theme|value-of<Theme> $theme
      */
-    public function withTheme(string $theme): self
+    public function withTheme(Theme|string $theme): self
     {
         $obj = clone $this;
-        $obj->theme = $theme;
+        $obj->theme = $theme instanceof Theme ? $theme->value : $theme;
 
         return $obj;
     }

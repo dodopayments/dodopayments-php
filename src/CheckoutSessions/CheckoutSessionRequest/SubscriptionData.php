@@ -50,7 +50,7 @@ final class SubscriptionData implements BaseModel
         return $obj;
     }
 
-    public function withOnDemand(OnDemandSubscription $onDemand): self
+    public function withOnDemand(?OnDemandSubscription $onDemand): self
     {
         $obj = clone $this;
         $obj->onDemand = $onDemand;

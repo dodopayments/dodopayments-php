@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace Dodopayments\Brands\Brand;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class VerificationStatus implements ConverterSource
+enum VerificationStatus: string
 {
-    use SdkEnum;
+    case SUCCESS = 'Success';
 
-    public const SUCCESS = 'Success';
+    case FAIL = 'Fail';
 
-    public const FAIL = 'Fail';
+    case REVIEW = 'Review';
 
-    public const REVIEW = 'Review';
-
-    public const HOLD = 'Hold';
+    case HOLD = 'Hold';
 }

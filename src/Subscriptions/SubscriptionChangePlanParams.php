@@ -27,7 +27,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  *
  * @phpstan-type subscription_change_plan_params = array{
  *   productID: string,
- *   prorationBillingMode: ProrationBillingMode::*,
+ *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
  *   addons?: list<AttachAddon>|null,
  * }
@@ -47,7 +47,7 @@ final class SubscriptionChangePlanParams implements BaseModel
     /**
      * Proration Billing Mode.
      *
-     * @var ProrationBillingMode::* $prorationBillingMode
+     * @var value-of<ProrationBillingMode> $prorationBillingMode
      */
     #[Api('proration_billing_mode', enum: ProrationBillingMode::class)]
     public string $prorationBillingMode;
@@ -96,19 +96,19 @@ final class SubscriptionChangePlanParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ProrationBillingMode::* $prorationBillingMode
+     * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      * @param list<AttachAddon>|null $addons
      */
     public static function with(
         string $productID,
-        string $prorationBillingMode,
+        ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
     ): self {
         $obj = new self;
 
         $obj->productID = $productID;
-        $obj->prorationBillingMode = $prorationBillingMode;
+        $obj->prorationBillingMode = $prorationBillingMode instanceof ProrationBillingMode ? $prorationBillingMode->value : $prorationBillingMode;
         $obj->quantity = $quantity;
 
         null !== $addons && $obj->addons = $addons;
@@ -130,12 +130,13 @@ final class SubscriptionChangePlanParams implements BaseModel
     /**
      * Proration Billing Mode.
      *
-     * @param ProrationBillingMode::* $prorationBillingMode
+     * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      */
-    public function withProrationBillingMode(string $prorationBillingMode): self
-    {
+    public function withProrationBillingMode(
+        ProrationBillingMode|string $prorationBillingMode
+    ): self {
         $obj = clone $this;
-        $obj->prorationBillingMode = $prorationBillingMode;
+        $obj->prorationBillingMode = $prorationBillingMode instanceof ProrationBillingMode ? $prorationBillingMode->value : $prorationBillingMode;
 
         return $obj;
     }

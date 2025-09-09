@@ -20,22 +20,22 @@ use Dodopayments\Subscriptions\Subscription\Meter;
  *   billing: BillingAddress,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   customer: CustomerLimitedDetails,
  *   metadata: array<string, string>,
  *   meters: list<Meter>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
  *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: TimeInterval::*,
+ *   paymentFrequencyInterval: value-of<TimeInterval>,
  *   previousBillingDate: \DateTimeInterface,
  *   productID: string,
  *   quantity: int,
  *   recurringPreTaxAmount: int,
- *   status: SubscriptionStatus::*,
+ *   status: value-of<SubscriptionStatus>,
  *   subscriptionID: string,
  *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: TimeInterval::*,
+ *   subscriptionPeriodInterval: value-of<TimeInterval>,
  *   taxInclusive: bool,
  *   trialPeriodDays: int,
  *   cancelledAt?: \DateTimeInterface|null,
@@ -78,7 +78,7 @@ final class Subscription implements BaseModel
     /**
      * Currency used for the subscription payments.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -126,7 +126,7 @@ final class Subscription implements BaseModel
     /**
      * Time interval for payment frequency (e.g. month, year).
      *
-     * @var TimeInterval::* $paymentFrequencyInterval
+     * @var value-of<TimeInterval> $paymentFrequencyInterval
      */
     #[Api('payment_frequency_interval', enum: TimeInterval::class)]
     public string $paymentFrequencyInterval;
@@ -158,7 +158,7 @@ final class Subscription implements BaseModel
     /**
      * Current status of the subscription.
      *
-     * @var SubscriptionStatus::* $status
+     * @var value-of<SubscriptionStatus> $status
      */
     #[Api(enum: SubscriptionStatus::class)]
     public string $status;
@@ -178,7 +178,7 @@ final class Subscription implements BaseModel
     /**
      * Time interval for the subscription period (e.g. month, year).
      *
-     * @var TimeInterval::* $subscriptionPeriodInterval
+     * @var value-of<TimeInterval> $subscriptionPeriodInterval
      */
     #[Api('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
@@ -289,34 +289,34 @@ final class Subscription implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AddonCartResponseItem> $addons
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      * @param array<string, string> $metadata
      * @param list<Meter> $meters
-     * @param TimeInterval::* $paymentFrequencyInterval
-     * @param SubscriptionStatus::* $status
-     * @param TimeInterval::* $subscriptionPeriodInterval
+     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
+     * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
+     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      */
     public static function with(
         array $addons,
         BillingAddress $billing,
         bool $cancelAtNextBillingDate,
         \DateTimeInterface $createdAt,
-        string $currency,
+        Currency|string $currency,
         CustomerLimitedDetails $customer,
         array $metadata,
         array $meters,
         \DateTimeInterface $nextBillingDate,
         bool $onDemand,
         int $paymentFrequencyCount,
-        string $paymentFrequencyInterval,
+        TimeInterval|string $paymentFrequencyInterval,
         \DateTimeInterface $previousBillingDate,
         string $productID,
         int $quantity,
         int $recurringPreTaxAmount,
-        string $status,
+        SubscriptionStatus|string $status,
         string $subscriptionID,
         int $subscriptionPeriodCount,
-        string $subscriptionPeriodInterval,
+        TimeInterval|string $subscriptionPeriodInterval,
         bool $taxInclusive,
         int $trialPeriodDays,
         ?\DateTimeInterface $cancelledAt = null,
@@ -330,22 +330,22 @@ final class Subscription implements BaseModel
         $obj->billing = $billing;
         $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->customer = $customer;
         $obj->metadata = $metadata;
         $obj->meters = $meters;
         $obj->nextBillingDate = $nextBillingDate;
         $obj->onDemand = $onDemand;
         $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval;
+        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
         $obj->previousBillingDate = $previousBillingDate;
         $obj->productID = $productID;
         $obj->quantity = $quantity;
         $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
-        $obj->status = $status;
+        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
         $obj->subscriptionID = $subscriptionID;
         $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval;
+        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
         $obj->taxInclusive = $taxInclusive;
         $obj->trialPeriodDays = $trialPeriodDays;
 
@@ -407,12 +407,12 @@ final class Subscription implements BaseModel
     /**
      * Currency used for the subscription payments.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -491,13 +491,13 @@ final class Subscription implements BaseModel
     /**
      * Time interval for payment frequency (e.g. month, year).
      *
-     * @param TimeInterval::* $paymentFrequencyInterval
+     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      */
     public function withPaymentFrequencyInterval(
-        string $paymentFrequencyInterval
+        TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval;
+        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -550,12 +550,12 @@ final class Subscription implements BaseModel
     /**
      * Current status of the subscription.
      *
-     * @param SubscriptionStatus::* $status
+     * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(SubscriptionStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
 
         return $obj;
     }
@@ -586,13 +586,13 @@ final class Subscription implements BaseModel
     /**
      * Time interval for the subscription period (e.g. month, year).
      *
-     * @param TimeInterval::* $subscriptionPeriodInterval
+     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      */
     public function withSubscriptionPeriodInterval(
-        string $subscriptionPeriodInterval
+        TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval;
+        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
 
         return $obj;
     }

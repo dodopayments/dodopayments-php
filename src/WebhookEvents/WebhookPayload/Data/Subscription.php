@@ -12,14 +12,14 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type subscription_alias = array{payloadType: PayloadType::*}
+ * @phpstan-type subscription_alias = array{payloadType: value-of<PayloadType>}
  */
 final class Subscription implements BaseModel
 {
     /** @use SdkModel<subscription_alias> */
     use SdkModel;
 
-    /** @var PayloadType::* $payloadType */
+    /** @var value-of<PayloadType> $payloadType */
     #[Api('payload_type', enum: PayloadType::class)]
     public string $payloadType;
 
@@ -47,24 +47,24 @@ final class Subscription implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param PayloadType::* $payloadType
+     * @param PayloadType|value-of<PayloadType> $payloadType
      */
-    public static function with(string $payloadType): self
+    public static function with(PayloadType|string $payloadType): self
     {
         $obj = new self;
 
-        $obj->payloadType = $payloadType;
+        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
 
         return $obj;
     }
 
     /**
-     * @param PayloadType::* $payloadType
+     * @param PayloadType|value-of<PayloadType> $payloadType
      */
-    public function withPayloadType(string $payloadType): self
+    public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj->payloadType = $payloadType;
+        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
 
         return $obj;
     }

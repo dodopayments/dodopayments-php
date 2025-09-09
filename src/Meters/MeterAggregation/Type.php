@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters\MeterAggregation;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Aggregation type for the meter.
  */
-final class Type implements ConverterSource
+enum Type: string
 {
-    use SdkEnum;
+    case COUNT = 'count';
 
-    public const COUNT = 'count';
+    case SUM = 'sum';
 
-    public const SUM = 'sum';
+    case MAX = 'max';
 
-    public const MAX = 'max';
-
-    public const LAST = 'last';
+    case LAST = 'last';
 }

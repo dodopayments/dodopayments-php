@@ -30,7 +30,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   measurementUnit: string,
  *   name: string,
  *   description?: string|null,
- *   filter?: MeterFilter,
+ *   filter?: MeterFilter|null,
  * }
  */
 final class MeterCreateParams implements BaseModel
@@ -184,7 +184,7 @@ final class MeterCreateParams implements BaseModel
     /**
      * Optional filter to apply to the meter.
      */
-    public function withFilter(MeterFilter $filter): self
+    public function withFilter(?MeterFilter $filter): self
     {
         $obj = clone $this;
         $obj->filter = $filter;

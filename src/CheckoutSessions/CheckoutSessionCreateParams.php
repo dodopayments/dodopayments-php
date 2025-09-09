@@ -35,11 +35,11 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *
  * @phpstan-type checkout_session_create_params = array{
  *   productCart: list<ProductCart>,
- *   allowedPaymentMethodTypes?: list<PaymentMethodTypes::*>|null,
+ *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: BillingAddress|null,
- *   billingCurrency?: Currency::*,
+ *   billingCurrency?: null|Currency|value-of<Currency>,
  *   confirm?: bool,
- *   customer?: AttachExistingCustomer|NewCustomer,
+ *   customer?: null|AttachExistingCustomer|NewCustomer,
  *   customization?: Customization,
  *   discountCode?: string|null,
  *   featureFlags?: FeatureFlags,
@@ -67,7 +67,7 @@ final class CheckoutSessionCreateParams implements BaseModel
      * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
      * If all payment methods are unavailable, checkout session will fail.
      *
-     * @var list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
+     * @var list<value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      */
     #[Api(
         'allowed_payment_method_types',
@@ -86,7 +86,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * This field is ingored if adaptive pricing is disabled.
      *
-     * @var Currency::*|null $billingCurrency
+     * @var value-of<Currency>|null $billingCurrency
      */
     #[Api(
         'billing_currency',
@@ -168,15 +168,15 @@ final class CheckoutSessionCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ProductCart> $productCart
-     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
-     * @param Currency::* $billingCurrency
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
+     * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string, string>|null $metadata
      */
     public static function with(
         array $productCart,
         ?array $allowedPaymentMethodTypes = null,
         ?BillingAddress $billingAddress = null,
-        ?string $billingCurrency = null,
+        Currency|string|null $billingCurrency = null,
         ?bool $confirm = null,
         AttachExistingCustomer|NewCustomer|null $customer = null,
         ?Customization $customization = null,
@@ -191,9 +191,9 @@ final class CheckoutSessionCreateParams implements BaseModel
 
         $obj->productCart = $productCart;
 
-        null !== $allowedPaymentMethodTypes && $obj->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
+        null !== $allowedPaymentMethodTypes && $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
-        null !== $billingCurrency && $obj->billingCurrency = $billingCurrency;
+        null !== $billingCurrency && $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
         null !== $confirm && $obj->confirm = $confirm;
         null !== $customer && $obj->customer = $customer;
         null !== $customization && $obj->customization = $customization;
@@ -226,13 +226,13 @@ final class CheckoutSessionCreateParams implements BaseModel
      * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
      * If all payment methods are unavailable, checkout session will fail.
      *
-     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      */
     public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes
     ): self {
         $obj = clone $this;
-        $obj->allowedPaymentMethodTypes = $allowedPaymentMethodTypes;
+        $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
 
         return $obj;
     }
@@ -251,12 +251,13 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * This field is ingored if adaptive pricing is disabled.
      *
-     * @param Currency::* $billingCurrency
+     * @param Currency|value-of<Currency>|null $billingCurrency
      */
-    public function withBillingCurrency(string $billingCurrency): self
-    {
+    public function withBillingCurrency(
+        Currency|string|null $billingCurrency
+    ): self {
         $obj = clone $this;
-        $obj->billingCurrency = $billingCurrency;
+        $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
 
         return $obj;
     }
@@ -276,7 +277,7 @@ final class CheckoutSessionCreateParams implements BaseModel
      * Customer details for the session.
      */
     public function withCustomer(
-        AttachExistingCustomer|NewCustomer $customer
+        AttachExistingCustomer|NewCustomer|null $customer
     ): self {
         $obj = clone $this;
         $obj->customer = $customer;

@@ -4,300 +4,295 @@ declare(strict_types=1);
 
 namespace Dodopayments\Misc;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class Currency implements ConverterSource
+enum Currency: string
 {
-    use SdkEnum;
+    case AED = 'AED';
 
-    public const AED = 'AED';
+    case ALL = 'ALL';
 
-    public const ALL = 'ALL';
+    case AMD = 'AMD';
 
-    public const AMD = 'AMD';
+    case ANG = 'ANG';
 
-    public const ANG = 'ANG';
+    case AOA = 'AOA';
 
-    public const AOA = 'AOA';
+    case ARS = 'ARS';
 
-    public const ARS = 'ARS';
+    case AUD = 'AUD';
 
-    public const AUD = 'AUD';
+    case AWG = 'AWG';
 
-    public const AWG = 'AWG';
+    case AZN = 'AZN';
 
-    public const AZN = 'AZN';
+    case BAM = 'BAM';
 
-    public const BAM = 'BAM';
+    case BBD = 'BBD';
 
-    public const BBD = 'BBD';
+    case BDT = 'BDT';
 
-    public const BDT = 'BDT';
+    case BGN = 'BGN';
 
-    public const BGN = 'BGN';
+    case BHD = 'BHD';
 
-    public const BHD = 'BHD';
+    case BIF = 'BIF';
 
-    public const BIF = 'BIF';
+    case BMD = 'BMD';
 
-    public const BMD = 'BMD';
+    case BND = 'BND';
 
-    public const BND = 'BND';
+    case BOB = 'BOB';
 
-    public const BOB = 'BOB';
+    case BRL = 'BRL';
 
-    public const BRL = 'BRL';
+    case BSD = 'BSD';
 
-    public const BSD = 'BSD';
+    case BWP = 'BWP';
 
-    public const BWP = 'BWP';
+    case BYN = 'BYN';
 
-    public const BYN = 'BYN';
+    case BZD = 'BZD';
 
-    public const BZD = 'BZD';
+    case CAD = 'CAD';
 
-    public const CAD = 'CAD';
+    case CHF = 'CHF';
 
-    public const CHF = 'CHF';
+    case CLP = 'CLP';
 
-    public const CLP = 'CLP';
+    case CNY = 'CNY';
 
-    public const CNY = 'CNY';
+    case COP = 'COP';
 
-    public const COP = 'COP';
+    case CRC = 'CRC';
 
-    public const CRC = 'CRC';
+    case CUP = 'CUP';
 
-    public const CUP = 'CUP';
+    case CVE = 'CVE';
 
-    public const CVE = 'CVE';
+    case CZK = 'CZK';
 
-    public const CZK = 'CZK';
+    case DJF = 'DJF';
 
-    public const DJF = 'DJF';
+    case DKK = 'DKK';
 
-    public const DKK = 'DKK';
+    case DOP = 'DOP';
 
-    public const DOP = 'DOP';
+    case DZD = 'DZD';
 
-    public const DZD = 'DZD';
+    case EGP = 'EGP';
 
-    public const EGP = 'EGP';
+    case ETB = 'ETB';
 
-    public const ETB = 'ETB';
+    case EUR = 'EUR';
 
-    public const EUR = 'EUR';
+    case FJD = 'FJD';
 
-    public const FJD = 'FJD';
+    case FKP = 'FKP';
 
-    public const FKP = 'FKP';
+    case GBP = 'GBP';
 
-    public const GBP = 'GBP';
+    case GEL = 'GEL';
 
-    public const GEL = 'GEL';
+    case GHS = 'GHS';
 
-    public const GHS = 'GHS';
+    case GIP = 'GIP';
 
-    public const GIP = 'GIP';
+    case GMD = 'GMD';
 
-    public const GMD = 'GMD';
+    case GNF = 'GNF';
 
-    public const GNF = 'GNF';
+    case GTQ = 'GTQ';
 
-    public const GTQ = 'GTQ';
+    case GYD = 'GYD';
 
-    public const GYD = 'GYD';
+    case HKD = 'HKD';
 
-    public const HKD = 'HKD';
+    case HNL = 'HNL';
 
-    public const HNL = 'HNL';
+    case HRK = 'HRK';
 
-    public const HRK = 'HRK';
+    case HTG = 'HTG';
 
-    public const HTG = 'HTG';
+    case HUF = 'HUF';
 
-    public const HUF = 'HUF';
+    case IDR = 'IDR';
 
-    public const IDR = 'IDR';
+    case ILS = 'ILS';
 
-    public const ILS = 'ILS';
+    case INR = 'INR';
 
-    public const INR = 'INR';
+    case IQD = 'IQD';
 
-    public const IQD = 'IQD';
+    case JMD = 'JMD';
 
-    public const JMD = 'JMD';
+    case JOD = 'JOD';
 
-    public const JOD = 'JOD';
+    case JPY = 'JPY';
 
-    public const JPY = 'JPY';
+    case KES = 'KES';
 
-    public const KES = 'KES';
+    case KGS = 'KGS';
 
-    public const KGS = 'KGS';
+    case KHR = 'KHR';
 
-    public const KHR = 'KHR';
+    case KMF = 'KMF';
 
-    public const KMF = 'KMF';
+    case KRW = 'KRW';
 
-    public const KRW = 'KRW';
+    case KWD = 'KWD';
 
-    public const KWD = 'KWD';
+    case KYD = 'KYD';
 
-    public const KYD = 'KYD';
+    case KZT = 'KZT';
 
-    public const KZT = 'KZT';
+    case LAK = 'LAK';
 
-    public const LAK = 'LAK';
+    case LBP = 'LBP';
 
-    public const LBP = 'LBP';
+    case LKR = 'LKR';
 
-    public const LKR = 'LKR';
+    case LRD = 'LRD';
 
-    public const LRD = 'LRD';
+    case LSL = 'LSL';
 
-    public const LSL = 'LSL';
+    case LYD = 'LYD';
 
-    public const LYD = 'LYD';
+    case MAD = 'MAD';
 
-    public const MAD = 'MAD';
+    case MDL = 'MDL';
 
-    public const MDL = 'MDL';
+    case MGA = 'MGA';
 
-    public const MGA = 'MGA';
+    case MKD = 'MKD';
 
-    public const MKD = 'MKD';
+    case MMK = 'MMK';
 
-    public const MMK = 'MMK';
+    case MNT = 'MNT';
 
-    public const MNT = 'MNT';
+    case MOP = 'MOP';
 
-    public const MOP = 'MOP';
+    case MRU = 'MRU';
 
-    public const MRU = 'MRU';
+    case MUR = 'MUR';
 
-    public const MUR = 'MUR';
+    case MVR = 'MVR';
 
-    public const MVR = 'MVR';
+    case MWK = 'MWK';
 
-    public const MWK = 'MWK';
+    case MXN = 'MXN';
 
-    public const MXN = 'MXN';
+    case MYR = 'MYR';
 
-    public const MYR = 'MYR';
+    case MZN = 'MZN';
 
-    public const MZN = 'MZN';
+    case NAD = 'NAD';
 
-    public const NAD = 'NAD';
+    case NGN = 'NGN';
 
-    public const NGN = 'NGN';
+    case NIO = 'NIO';
 
-    public const NIO = 'NIO';
+    case NOK = 'NOK';
 
-    public const NOK = 'NOK';
+    case NPR = 'NPR';
 
-    public const NPR = 'NPR';
+    case NZD = 'NZD';
 
-    public const NZD = 'NZD';
+    case OMR = 'OMR';
 
-    public const OMR = 'OMR';
+    case PAB = 'PAB';
 
-    public const PAB = 'PAB';
+    case PEN = 'PEN';
 
-    public const PEN = 'PEN';
+    case PGK = 'PGK';
 
-    public const PGK = 'PGK';
+    case PHP = 'PHP';
 
-    public const PHP = 'PHP';
+    case PKR = 'PKR';
 
-    public const PKR = 'PKR';
+    case PLN = 'PLN';
 
-    public const PLN = 'PLN';
+    case PYG = 'PYG';
 
-    public const PYG = 'PYG';
+    case QAR = 'QAR';
 
-    public const QAR = 'QAR';
+    case RON = 'RON';
 
-    public const RON = 'RON';
+    case RSD = 'RSD';
 
-    public const RSD = 'RSD';
+    case RUB = 'RUB';
 
-    public const RUB = 'RUB';
+    case RWF = 'RWF';
 
-    public const RWF = 'RWF';
+    case SAR = 'SAR';
 
-    public const SAR = 'SAR';
+    case SBD = 'SBD';
 
-    public const SBD = 'SBD';
+    case SCR = 'SCR';
 
-    public const SCR = 'SCR';
+    case SEK = 'SEK';
 
-    public const SEK = 'SEK';
+    case SGD = 'SGD';
 
-    public const SGD = 'SGD';
+    case SHP = 'SHP';
 
-    public const SHP = 'SHP';
+    case SLE = 'SLE';
 
-    public const SLE = 'SLE';
+    case SLL = 'SLL';
 
-    public const SLL = 'SLL';
+    case SOS = 'SOS';
 
-    public const SOS = 'SOS';
+    case SRD = 'SRD';
 
-    public const SRD = 'SRD';
+    case SSP = 'SSP';
 
-    public const SSP = 'SSP';
+    case STN = 'STN';
 
-    public const STN = 'STN';
+    case SVC = 'SVC';
 
-    public const SVC = 'SVC';
+    case SZL = 'SZL';
 
-    public const SZL = 'SZL';
+    case THB = 'THB';
 
-    public const THB = 'THB';
+    case TND = 'TND';
 
-    public const TND = 'TND';
+    case TOP = 'TOP';
 
-    public const TOP = 'TOP';
+    case TRY = 'TRY';
 
-    public const TRY = 'TRY';
+    case TTD = 'TTD';
 
-    public const TTD = 'TTD';
+    case TWD = 'TWD';
 
-    public const TWD = 'TWD';
+    case TZS = 'TZS';
 
-    public const TZS = 'TZS';
+    case UAH = 'UAH';
 
-    public const UAH = 'UAH';
+    case UGX = 'UGX';
 
-    public const UGX = 'UGX';
+    case USD = 'USD';
 
-    public const USD = 'USD';
+    case UYU = 'UYU';
 
-    public const UYU = 'UYU';
+    case UZS = 'UZS';
 
-    public const UZS = 'UZS';
+    case VES = 'VES';
 
-    public const VES = 'VES';
+    case VND = 'VND';
 
-    public const VND = 'VND';
+    case VUV = 'VUV';
 
-    public const VUV = 'VUV';
+    case WST = 'WST';
 
-    public const WST = 'WST';
+    case XAF = 'XAF';
 
-    public const XAF = 'XAF';
+    case XCD = 'XCD';
 
-    public const XCD = 'XCD';
+    case XOF = 'XOF';
 
-    public const XOF = 'XOF';
+    case XPF = 'XPF';
 
-    public const XPF = 'XPF';
+    case YER = 'YER';
 
-    public const YER = 'YER';
+    case ZAR = 'ZAR';
 
-    public const ZAR = 'ZAR';
-
-    public const ZMW = 'ZMW';
+    case ZMW = 'ZMW';
 }

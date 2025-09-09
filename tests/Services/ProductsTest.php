@@ -34,13 +34,13 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->create(
             price: OneTimePrice::with(
-                currency: Currency::AED,
+                currency: Currency::$AED,
                 discount: 0,
                 price: 0,
                 purchasingPowerParity: true,
                 type: 'one_time_price',
             ),
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            taxCategory: TaxCategory::$DIGITAL_PRODUCTS,
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -51,7 +51,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->create(
             price: OneTimePrice::with(
-                currency: Currency::AED,
+                currency: Currency::$AED,
                 discount: 0,
                 price: 0,
                 purchasingPowerParity: true,
@@ -60,7 +60,7 @@ final class ProductsTest extends TestCase
                 ->withPayWhatYouWant(true)
                 ->withSuggestedPrice(0)
                 ->withTaxInclusive(true),
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            taxCategory: TaxCategory::$DIGITAL_PRODUCTS,
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

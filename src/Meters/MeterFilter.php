@@ -20,7 +20,7 @@ use Dodopayments\Meters\MeterFilter\Conjunction;
  *
  * @phpstan-type meter_filter = array{
  *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
- *   conjunction: Conjunction::*,
+ *   conjunction: value-of<Conjunction>,
  * }
  */
 final class MeterFilter implements BaseModel
@@ -39,7 +39,7 @@ final class MeterFilter implements BaseModel
     /**
      * Logical conjunction to apply between clauses (and/or).
      *
-     * @var Conjunction::* $conjunction
+     * @var value-of<Conjunction> $conjunction
      */
     #[Api(enum: Conjunction::class)]
     public string $conjunction;
@@ -69,14 +69,16 @@ final class MeterFilter implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<DirectFilterCondition>|list<NestedMeterFilter> $clauses
-     * @param Conjunction::* $conjunction
+     * @param Conjunction|value-of<Conjunction> $conjunction
      */
-    public static function with(array $clauses, string $conjunction): self
-    {
+    public static function with(
+        array $clauses,
+        Conjunction|string $conjunction
+    ): self {
         $obj = new self;
 
         $obj->clauses = $clauses;
-        $obj->conjunction = $conjunction;
+        $obj->conjunction = $conjunction instanceof Conjunction ? $conjunction->value : $conjunction;
 
         return $obj;
     }
@@ -97,12 +99,12 @@ final class MeterFilter implements BaseModel
     /**
      * Logical conjunction to apply between clauses (and/or).
      *
-     * @param Conjunction::* $conjunction
+     * @param Conjunction|value-of<Conjunction> $conjunction
      */
-    public function withConjunction(string $conjunction): self
+    public function withConjunction(Conjunction|string $conjunction): self
     {
         $obj = clone $this;
-        $obj->conjunction = $conjunction;
+        $obj->conjunction = $conjunction instanceof Conjunction ? $conjunction->value : $conjunction;
 
         return $obj;
     }

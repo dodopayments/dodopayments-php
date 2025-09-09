@@ -28,7 +28,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type discount_create_params = array{
  *   amount: int,
- *   type: DiscountType::*,
+ *   type: DiscountType|value-of<DiscountType>,
  *   code?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
@@ -58,7 +58,7 @@ final class DiscountCreateParams implements BaseModel
     /**
      * The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
      *
-     * @var DiscountType::* $type
+     * @var value-of<DiscountType> $type
      */
     #[Api(enum: DiscountType::class)]
     public string $type;
@@ -127,12 +127,12 @@ final class DiscountCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DiscountType::* $type
+     * @param DiscountType|value-of<DiscountType> $type
      * @param list<string>|null $restrictedTo
      */
     public static function with(
         int $amount,
-        string $type,
+        DiscountType|string $type,
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
@@ -143,7 +143,7 @@ final class DiscountCreateParams implements BaseModel
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->type = $type;
+        $obj->type = $type instanceof DiscountType ? $type->value : $type;
 
         null !== $code && $obj->code = $code;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
@@ -175,12 +175,12 @@ final class DiscountCreateParams implements BaseModel
     /**
      * The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
      *
-     * @param DiscountType::* $type
+     * @param DiscountType|value-of<DiscountType> $type
      */
-    public function withType(string $type): self
+    public function withType(DiscountType|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof DiscountType ? $type->value : $type;
 
         return $obj;
     }

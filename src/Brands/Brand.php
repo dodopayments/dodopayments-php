@@ -16,7 +16,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   enabled: bool,
  *   statementDescriptor: string,
  *   verificationEnabled: bool,
- *   verificationStatus: VerificationStatus::*,
+ *   verificationStatus: value-of<VerificationStatus>,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
@@ -45,7 +45,7 @@ final class Brand implements BaseModel
     #[Api('verification_enabled')]
     public bool $verificationEnabled;
 
-    /** @var VerificationStatus::* $verificationStatus */
+    /** @var value-of<VerificationStatus> $verificationStatus */
     #[Api('verification_status', enum: VerificationStatus::class)]
     public string $verificationStatus;
 
@@ -107,7 +107,7 @@ final class Brand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param VerificationStatus::* $verificationStatus
+     * @param VerificationStatus|value-of<VerificationStatus> $verificationStatus
      */
     public static function with(
         string $brandID,
@@ -115,7 +115,7 @@ final class Brand implements BaseModel
         bool $enabled,
         string $statementDescriptor,
         bool $verificationEnabled,
-        string $verificationStatus,
+        VerificationStatus|string $verificationStatus,
         ?string $description = null,
         ?string $image = null,
         ?string $name = null,
@@ -130,7 +130,7 @@ final class Brand implements BaseModel
         $obj->enabled = $enabled;
         $obj->statementDescriptor = $statementDescriptor;
         $obj->verificationEnabled = $verificationEnabled;
-        $obj->verificationStatus = $verificationStatus;
+        $obj->verificationStatus = $verificationStatus instanceof VerificationStatus ? $verificationStatus->value : $verificationStatus;
 
         null !== $description && $obj->description = $description;
         null !== $image && $obj->image = $image;
@@ -183,12 +183,13 @@ final class Brand implements BaseModel
     }
 
     /**
-     * @param VerificationStatus::* $verificationStatus
+     * @param VerificationStatus|value-of<VerificationStatus> $verificationStatus
      */
-    public function withVerificationStatus(string $verificationStatus): self
-    {
+    public function withVerificationStatus(
+        VerificationStatus|string $verificationStatus
+    ): self {
         $obj = clone $this;
-        $obj->verificationStatus = $verificationStatus;
+        $obj->verificationStatus = $verificationStatus instanceof VerificationStatus ? $verificationStatus->value : $verificationStatus;
 
         return $obj;
     }

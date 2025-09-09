@@ -13,7 +13,7 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
  * Filter condition with key, operator, and value.
  *
  * @phpstan-type clause_alias = array{
- *   key: string, operator: Operator::*, value: string|float|bool
+ *   key: string, operator: value-of<Operator>, value: string|float|bool
  * }
  */
 final class Clause implements BaseModel
@@ -27,7 +27,7 @@ final class Clause implements BaseModel
     #[Api]
     public string $key;
 
-    /** @var Operator::* $operator */
+    /** @var value-of<Operator> $operator */
     #[Api(enum: Operator::class)]
     public string $operator;
 
@@ -61,17 +61,17 @@ final class Clause implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Operator::* $operator
+     * @param Operator|value-of<Operator> $operator
      */
     public static function with(
         string $key,
-        string $operator,
+        Operator|string $operator,
         string|float|bool $value
     ): self {
         $obj = new self;
 
         $obj->key = $key;
-        $obj->operator = $operator;
+        $obj->operator = $operator instanceof Operator ? $operator->value : $operator;
         $obj->value = $value;
 
         return $obj;
@@ -89,12 +89,12 @@ final class Clause implements BaseModel
     }
 
     /**
-     * @param Operator::* $operator
+     * @param Operator|value-of<Operator> $operator
      */
-    public function withOperator(string $operator): self
+    public function withOperator(Operator|string $operator): self
     {
         $obj = clone $this;
-        $obj->operator = $operator;
+        $obj->operator = $operator instanceof Operator ? $operator->value : $operator;
 
         return $obj;
     }

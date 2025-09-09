@@ -23,7 +23,7 @@ interface DiscountsContract
      * - If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
      *
      * Must be at least 1.
-     * @param DiscountType::* $type The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
+     * @param DiscountType|value-of<DiscountType> $type The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
      * @param string|null $code Optionally supply a code (will be uppercased).
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
@@ -72,7 +72,7 @@ interface DiscountsContract
      * @param int|null $subscriptionCycles Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
-     * @param DiscountType::* $type if present, update the discount type
+     * @param DiscountType|value-of<DiscountType>|null $type if present, update the discount type
      * @param int|null $usageLimit
      */
     public function update(

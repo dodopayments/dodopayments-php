@@ -22,7 +22,7 @@ interface MetersContract
      * @param string $measurementUnit measurement unit
      * @param string $name Name of the meter
      * @param string|null $description Optional description of the meter
-     * @param MeterFilter $filter Optional filter to apply to the meter
+     * @param MeterFilter|null $filter Optional filter to apply to the meter
      */
     public function create(
         $aggregation,

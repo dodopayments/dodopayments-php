@@ -46,7 +46,7 @@ interface LicenseKeysContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product ID
-     * @param Status::* $status Filter by license key status
+     * @param Status|value-of<Status> $status Filter by license key status
      *
      * @return DefaultPageNumberPagination<LicenseKey>
      */

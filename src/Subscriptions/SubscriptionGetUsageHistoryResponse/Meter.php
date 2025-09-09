@@ -14,7 +14,7 @@ use Dodopayments\Misc\Currency;
  *   id: string,
  *   chargeableUnits: string,
  *   consumedUnits: string,
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   freeThreshold: int,
  *   name: string,
  *   pricePerUnit: string,
@@ -47,7 +47,7 @@ final class Meter implements BaseModel
     /**
      * Currency for the price per unit.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -117,13 +117,13 @@ final class Meter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
     public static function with(
         string $id,
         string $chargeableUnits,
         string $consumedUnits,
-        string $currency,
+        Currency|string $currency,
         int $freeThreshold,
         string $name,
         string $pricePerUnit,
@@ -134,7 +134,7 @@ final class Meter implements BaseModel
         $obj->id = $id;
         $obj->chargeableUnits = $chargeableUnits;
         $obj->consumedUnits = $consumedUnits;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->freeThreshold = $freeThreshold;
         $obj->name = $name;
         $obj->pricePerUnit = $pricePerUnit;
@@ -179,12 +179,12 @@ final class Meter implements BaseModel
     /**
      * Currency for the price per unit.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }

@@ -4,511 +4,506 @@ declare(strict_types=1);
 
 namespace Dodopayments\Misc;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * ISO country code alpha2 variant.
  */
-final class CountryCode implements ConverterSource
+enum CountryCode: string
 {
-    use SdkEnum;
+    case AF = 'AF';
 
-    public const AF = 'AF';
+    case AX = 'AX';
 
-    public const AX = 'AX';
+    case AL = 'AL';
 
-    public const AL = 'AL';
+    case DZ = 'DZ';
 
-    public const DZ = 'DZ';
+    case AS = 'AS';
 
-    public const AS = 'AS';
+    case AD = 'AD';
 
-    public const AD = 'AD';
+    case AO = 'AO';
 
-    public const AO = 'AO';
+    case AI = 'AI';
 
-    public const AI = 'AI';
+    case AQ = 'AQ';
 
-    public const AQ = 'AQ';
+    case AG = 'AG';
 
-    public const AG = 'AG';
+    case AR = 'AR';
 
-    public const AR = 'AR';
+    case AM = 'AM';
 
-    public const AM = 'AM';
+    case AW = 'AW';
 
-    public const AW = 'AW';
+    case AU = 'AU';
 
-    public const AU = 'AU';
+    case AT = 'AT';
 
-    public const AT = 'AT';
+    case AZ = 'AZ';
 
-    public const AZ = 'AZ';
+    case BS = 'BS';
 
-    public const BS = 'BS';
+    case BH = 'BH';
 
-    public const BH = 'BH';
+    case BD = 'BD';
 
-    public const BD = 'BD';
+    case BB = 'BB';
 
-    public const BB = 'BB';
+    case BY = 'BY';
 
-    public const BY = 'BY';
+    case BE = 'BE';
 
-    public const BE = 'BE';
+    case BZ = 'BZ';
 
-    public const BZ = 'BZ';
+    case BJ = 'BJ';
 
-    public const BJ = 'BJ';
+    case BM = 'BM';
 
-    public const BM = 'BM';
+    case BT = 'BT';
 
-    public const BT = 'BT';
+    case BO = 'BO';
 
-    public const BO = 'BO';
+    case BQ = 'BQ';
 
-    public const BQ = 'BQ';
+    case BA = 'BA';
 
-    public const BA = 'BA';
+    case BW = 'BW';
 
-    public const BW = 'BW';
+    case BV = 'BV';
 
-    public const BV = 'BV';
+    case BR = 'BR';
 
-    public const BR = 'BR';
+    case IO = 'IO';
 
-    public const IO = 'IO';
+    case BN = 'BN';
 
-    public const BN = 'BN';
+    case BG = 'BG';
 
-    public const BG = 'BG';
+    case BF = 'BF';
 
-    public const BF = 'BF';
+    case BI = 'BI';
 
-    public const BI = 'BI';
+    case KH = 'KH';
 
-    public const KH = 'KH';
+    case CM = 'CM';
 
-    public const CM = 'CM';
+    case CA = 'CA';
 
-    public const CA = 'CA';
+    case CV = 'CV';
 
-    public const CV = 'CV';
+    case KY = 'KY';
 
-    public const KY = 'KY';
+    case CF = 'CF';
 
-    public const CF = 'CF';
+    case TD = 'TD';
 
-    public const TD = 'TD';
+    case CL = 'CL';
 
-    public const CL = 'CL';
+    case CN = 'CN';
 
-    public const CN = 'CN';
+    case CX = 'CX';
 
-    public const CX = 'CX';
+    case CC = 'CC';
 
-    public const CC = 'CC';
+    case CO = 'CO';
 
-    public const CO = 'CO';
+    case KM = 'KM';
 
-    public const KM = 'KM';
+    case CG = 'CG';
 
-    public const CG = 'CG';
+    case CD = 'CD';
 
-    public const CD = 'CD';
+    case CK = 'CK';
 
-    public const CK = 'CK';
+    case CR = 'CR';
 
-    public const CR = 'CR';
+    case CI = 'CI';
 
-    public const CI = 'CI';
+    case HR = 'HR';
 
-    public const HR = 'HR';
+    case CU = 'CU';
 
-    public const CU = 'CU';
+    case CW = 'CW';
 
-    public const CW = 'CW';
+    case CY = 'CY';
 
-    public const CY = 'CY';
+    case CZ = 'CZ';
 
-    public const CZ = 'CZ';
+    case DK = 'DK';
 
-    public const DK = 'DK';
+    case DJ = 'DJ';
 
-    public const DJ = 'DJ';
+    case DM = 'DM';
 
-    public const DM = 'DM';
+    case DO = 'DO';
 
-    public const DO = 'DO';
+    case EC = 'EC';
 
-    public const EC = 'EC';
+    case EG = 'EG';
 
-    public const EG = 'EG';
+    case SV = 'SV';
 
-    public const SV = 'SV';
+    case GQ = 'GQ';
 
-    public const GQ = 'GQ';
+    case ER = 'ER';
 
-    public const ER = 'ER';
+    case EE = 'EE';
 
-    public const EE = 'EE';
+    case ET = 'ET';
 
-    public const ET = 'ET';
+    case FK = 'FK';
 
-    public const FK = 'FK';
+    case FO = 'FO';
 
-    public const FO = 'FO';
+    case FJ = 'FJ';
 
-    public const FJ = 'FJ';
+    case FI = 'FI';
 
-    public const FI = 'FI';
+    case FR = 'FR';
 
-    public const FR = 'FR';
+    case GF = 'GF';
 
-    public const GF = 'GF';
+    case PF = 'PF';
 
-    public const PF = 'PF';
+    case TF = 'TF';
 
-    public const TF = 'TF';
+    case GA = 'GA';
 
-    public const GA = 'GA';
+    case GM = 'GM';
 
-    public const GM = 'GM';
+    case GE = 'GE';
 
-    public const GE = 'GE';
+    case DE = 'DE';
 
-    public const DE = 'DE';
+    case GH = 'GH';
 
-    public const GH = 'GH';
+    case GI = 'GI';
 
-    public const GI = 'GI';
+    case GR = 'GR';
 
-    public const GR = 'GR';
+    case GL = 'GL';
 
-    public const GL = 'GL';
+    case GD = 'GD';
 
-    public const GD = 'GD';
+    case GP = 'GP';
 
-    public const GP = 'GP';
+    case GU = 'GU';
 
-    public const GU = 'GU';
+    case GT = 'GT';
 
-    public const GT = 'GT';
+    case GG = 'GG';
 
-    public const GG = 'GG';
+    case GN = 'GN';
 
-    public const GN = 'GN';
+    case GW = 'GW';
 
-    public const GW = 'GW';
+    case GY = 'GY';
 
-    public const GY = 'GY';
+    case HT = 'HT';
 
-    public const HT = 'HT';
+    case HM = 'HM';
 
-    public const HM = 'HM';
+    case VA = 'VA';
 
-    public const VA = 'VA';
+    case HN = 'HN';
 
-    public const HN = 'HN';
+    case HK = 'HK';
 
-    public const HK = 'HK';
+    case HU = 'HU';
 
-    public const HU = 'HU';
+    case IS = 'IS';
 
-    public const IS = 'IS';
+    case IN = 'IN';
 
-    public const IN = 'IN';
+    case ID = 'ID';
 
-    public const ID = 'ID';
+    case IR = 'IR';
 
-    public const IR = 'IR';
+    case IQ = 'IQ';
 
-    public const IQ = 'IQ';
+    case IE = 'IE';
 
-    public const IE = 'IE';
+    case IM = 'IM';
 
-    public const IM = 'IM';
+    case IL = 'IL';
 
-    public const IL = 'IL';
+    case IT = 'IT';
 
-    public const IT = 'IT';
+    case JM = 'JM';
 
-    public const JM = 'JM';
+    case JP = 'JP';
 
-    public const JP = 'JP';
+    case JE = 'JE';
 
-    public const JE = 'JE';
+    case JO = 'JO';
 
-    public const JO = 'JO';
+    case KZ = 'KZ';
 
-    public const KZ = 'KZ';
+    case KE = 'KE';
 
-    public const KE = 'KE';
+    case KI = 'KI';
 
-    public const KI = 'KI';
+    case KP = 'KP';
 
-    public const KP = 'KP';
+    case KR = 'KR';
 
-    public const KR = 'KR';
+    case KW = 'KW';
 
-    public const KW = 'KW';
+    case KG = 'KG';
 
-    public const KG = 'KG';
+    case LA = 'LA';
 
-    public const LA = 'LA';
+    case LV = 'LV';
 
-    public const LV = 'LV';
+    case LB = 'LB';
 
-    public const LB = 'LB';
+    case LS = 'LS';
 
-    public const LS = 'LS';
+    case LR = 'LR';
 
-    public const LR = 'LR';
+    case LY = 'LY';
 
-    public const LY = 'LY';
+    case LI = 'LI';
 
-    public const LI = 'LI';
+    case LT = 'LT';
 
-    public const LT = 'LT';
+    case LU = 'LU';
 
-    public const LU = 'LU';
+    case MO = 'MO';
 
-    public const MO = 'MO';
+    case MK = 'MK';
 
-    public const MK = 'MK';
+    case MG = 'MG';
 
-    public const MG = 'MG';
+    case MW = 'MW';
 
-    public const MW = 'MW';
+    case MY = 'MY';
 
-    public const MY = 'MY';
+    case MV = 'MV';
 
-    public const MV = 'MV';
+    case ML = 'ML';
 
-    public const ML = 'ML';
+    case MT = 'MT';
 
-    public const MT = 'MT';
+    case MH = 'MH';
 
-    public const MH = 'MH';
+    case MQ = 'MQ';
 
-    public const MQ = 'MQ';
+    case MR = 'MR';
 
-    public const MR = 'MR';
+    case MU = 'MU';
 
-    public const MU = 'MU';
+    case YT = 'YT';
 
-    public const YT = 'YT';
+    case MX = 'MX';
 
-    public const MX = 'MX';
+    case FM = 'FM';
 
-    public const FM = 'FM';
+    case MD = 'MD';
 
-    public const MD = 'MD';
+    case MC = 'MC';
 
-    public const MC = 'MC';
+    case MN = 'MN';
 
-    public const MN = 'MN';
+    case ME = 'ME';
 
-    public const ME = 'ME';
+    case MS = 'MS';
 
-    public const MS = 'MS';
+    case MA = 'MA';
 
-    public const MA = 'MA';
+    case MZ = 'MZ';
 
-    public const MZ = 'MZ';
+    case MM = 'MM';
 
-    public const MM = 'MM';
+    case NA = 'NA';
 
-    public const NA = 'NA';
+    case NR = 'NR';
 
-    public const NR = 'NR';
+    case NP = 'NP';
 
-    public const NP = 'NP';
+    case NL = 'NL';
 
-    public const NL = 'NL';
+    case NC = 'NC';
 
-    public const NC = 'NC';
+    case NZ = 'NZ';
 
-    public const NZ = 'NZ';
+    case NI = 'NI';
 
-    public const NI = 'NI';
+    case NE = 'NE';
 
-    public const NE = 'NE';
+    case NG = 'NG';
 
-    public const NG = 'NG';
+    case NU = 'NU';
 
-    public const NU = 'NU';
+    case NF = 'NF';
 
-    public const NF = 'NF';
+    case MP = 'MP';
 
-    public const MP = 'MP';
+    case NO = 'NO';
 
-    public const NO = 'NO';
+    case OM = 'OM';
 
-    public const OM = 'OM';
+    case PK = 'PK';
 
-    public const PK = 'PK';
+    case PW = 'PW';
 
-    public const PW = 'PW';
+    case PS = 'PS';
 
-    public const PS = 'PS';
+    case PA = 'PA';
 
-    public const PA = 'PA';
+    case PG = 'PG';
 
-    public const PG = 'PG';
+    case PY = 'PY';
 
-    public const PY = 'PY';
+    case PE = 'PE';
 
-    public const PE = 'PE';
+    case PH = 'PH';
 
-    public const PH = 'PH';
+    case PN = 'PN';
 
-    public const PN = 'PN';
+    case PL = 'PL';
 
-    public const PL = 'PL';
+    case PT = 'PT';
 
-    public const PT = 'PT';
+    case PR = 'PR';
 
-    public const PR = 'PR';
+    case QA = 'QA';
 
-    public const QA = 'QA';
+    case RE = 'RE';
 
-    public const RE = 'RE';
+    case RO = 'RO';
 
-    public const RO = 'RO';
+    case RU = 'RU';
 
-    public const RU = 'RU';
+    case RW = 'RW';
 
-    public const RW = 'RW';
+    case BL = 'BL';
 
-    public const BL = 'BL';
+    case SH = 'SH';
 
-    public const SH = 'SH';
+    case KN = 'KN';
 
-    public const KN = 'KN';
+    case LC = 'LC';
 
-    public const LC = 'LC';
+    case MF = 'MF';
 
-    public const MF = 'MF';
+    case PM = 'PM';
 
-    public const PM = 'PM';
+    case VC = 'VC';
 
-    public const VC = 'VC';
+    case WS = 'WS';
 
-    public const WS = 'WS';
+    case SM = 'SM';
 
-    public const SM = 'SM';
+    case ST = 'ST';
 
-    public const ST = 'ST';
+    case SA = 'SA';
 
-    public const SA = 'SA';
+    case SN = 'SN';
 
-    public const SN = 'SN';
+    case RS = 'RS';
 
-    public const RS = 'RS';
+    case SC = 'SC';
 
-    public const SC = 'SC';
+    case SL = 'SL';
 
-    public const SL = 'SL';
+    case SG = 'SG';
 
-    public const SG = 'SG';
+    case SX = 'SX';
 
-    public const SX = 'SX';
+    case SK = 'SK';
 
-    public const SK = 'SK';
+    case SI = 'SI';
 
-    public const SI = 'SI';
+    case SB = 'SB';
 
-    public const SB = 'SB';
+    case SO = 'SO';
 
-    public const SO = 'SO';
+    case ZA = 'ZA';
 
-    public const ZA = 'ZA';
+    case GS = 'GS';
 
-    public const GS = 'GS';
+    case SS = 'SS';
 
-    public const SS = 'SS';
+    case ES = 'ES';
 
-    public const ES = 'ES';
+    case LK = 'LK';
 
-    public const LK = 'LK';
+    case SD = 'SD';
 
-    public const SD = 'SD';
+    case SR = 'SR';
 
-    public const SR = 'SR';
+    case SJ = 'SJ';
 
-    public const SJ = 'SJ';
+    case SZ = 'SZ';
 
-    public const SZ = 'SZ';
+    case SE = 'SE';
 
-    public const SE = 'SE';
+    case CH = 'CH';
 
-    public const CH = 'CH';
+    case SY = 'SY';
 
-    public const SY = 'SY';
+    case TW = 'TW';
 
-    public const TW = 'TW';
+    case TJ = 'TJ';
 
-    public const TJ = 'TJ';
+    case TZ = 'TZ';
 
-    public const TZ = 'TZ';
+    case TH = 'TH';
 
-    public const TH = 'TH';
+    case TL = 'TL';
 
-    public const TL = 'TL';
+    case TG = 'TG';
 
-    public const TG = 'TG';
+    case TK = 'TK';
 
-    public const TK = 'TK';
+    case TO = 'TO';
 
-    public const TO = 'TO';
+    case TT = 'TT';
 
-    public const TT = 'TT';
+    case TN = 'TN';
 
-    public const TN = 'TN';
+    case TR = 'TR';
 
-    public const TR = 'TR';
+    case TM = 'TM';
 
-    public const TM = 'TM';
+    case TC = 'TC';
 
-    public const TC = 'TC';
+    case TV = 'TV';
 
-    public const TV = 'TV';
+    case UG = 'UG';
 
-    public const UG = 'UG';
+    case UA = 'UA';
 
-    public const UA = 'UA';
+    case AE = 'AE';
 
-    public const AE = 'AE';
+    case GB = 'GB';
 
-    public const GB = 'GB';
+    case UM = 'UM';
 
-    public const UM = 'UM';
+    case US = 'US';
 
-    public const US = 'US';
+    case UY = 'UY';
 
-    public const UY = 'UY';
+    case UZ = 'UZ';
 
-    public const UZ = 'UZ';
+    case VU = 'VU';
 
-    public const VU = 'VU';
+    case VE = 'VE';
 
-    public const VE = 'VE';
+    case VN = 'VN';
 
-    public const VN = 'VN';
+    case VG = 'VG';
 
-    public const VG = 'VG';
+    case VI = 'VI';
 
-    public const VI = 'VI';
+    case WF = 'WF';
 
-    public const WF = 'WF';
+    case EH = 'EH';
 
-    public const EH = 'EH';
+    case YE = 'YE';
 
-    public const YE = 'YE';
+    case ZM = 'ZM';
 
-    public const ZM = 'ZM';
-
-    public const ZW = 'ZW';
+    case ZW = 'ZW';
 }

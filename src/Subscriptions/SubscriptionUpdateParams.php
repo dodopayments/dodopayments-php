@@ -27,12 +27,12 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  * @see Dodopayments\Subscriptions->update
  *
  * @phpstan-type subscription_update_params = array{
- *   billing?: BillingAddress,
+ *   billing?: BillingAddress|null,
  *   cancelAtNextBillingDate?: bool|null,
  *   disableOnDemand?: DisableOnDemand|null,
  *   metadata?: array<string, string>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
- *   status?: SubscriptionStatus::*,
+ *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
  *   taxID?: string|null,
  * }
  */
@@ -61,7 +61,7 @@ final class SubscriptionUpdateParams implements BaseModel
     #[Api('next_billing_date', nullable: true, optional: true)]
     public ?\DateTimeInterface $nextBillingDate;
 
-    /** @var SubscriptionStatus::*|null $status */
+    /** @var value-of<SubscriptionStatus>|null $status */
     #[Api(enum: SubscriptionStatus::class, nullable: true, optional: true)]
     public ?string $status;
 
@@ -79,7 +79,7 @@ final class SubscriptionUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string, string>|null $metadata
-     * @param SubscriptionStatus::* $status
+     * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
     public static function with(
         ?BillingAddress $billing = null,
@@ -87,7 +87,7 @@ final class SubscriptionUpdateParams implements BaseModel
         ?DisableOnDemand $disableOnDemand = null,
         ?array $metadata = null,
         ?\DateTimeInterface $nextBillingDate = null,
-        ?string $status = null,
+        SubscriptionStatus|string|null $status = null,
         ?string $taxID = null,
     ): self {
         $obj = new self;
@@ -97,13 +97,13 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $disableOnDemand && $obj->disableOnDemand = $disableOnDemand;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $nextBillingDate && $obj->nextBillingDate = $nextBillingDate;
-        null !== $status && $obj->status = $status;
+        null !== $status && $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
         null !== $taxID && $obj->taxID = $taxID;
 
         return $obj;
     }
 
-    public function withBilling(BillingAddress $billing): self
+    public function withBilling(?BillingAddress $billing): self
     {
         $obj = clone $this;
         $obj->billing = $billing;
@@ -152,12 +152,12 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param SubscriptionStatus::* $status
+     * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(SubscriptionStatus|string|null $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
 
         return $obj;
     }

@@ -211,7 +211,7 @@ final class Meter implements BaseModel
      * Supports up to 3 levels of nesting to create complex filter expressions.
      * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
      */
-    public function withFilter(MeterFilter $filter): self
+    public function withFilter(?MeterFilter $filter): self
     {
         $obj = clone $this;
         $obj->filter = $filter;

@@ -37,12 +37,12 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *   imageID?: string|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDuration,
+ *   licenseKeyDuration?: LicenseKeyDuration|null,
  *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string, string>|null,
  *   name?: string|null,
- *   price?: OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   taxCategory?: TaxCategory::*,
+ *   price?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
+ *   taxCategory?: null|TaxCategory|value-of<TaxCategory>,
  * }
  */
 final class ProductUpdateParams implements BaseModel
@@ -139,7 +139,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Tax category of the product.
      *
-     * @var TaxCategory::*|null $taxCategory
+     * @var value-of<TaxCategory>|null $taxCategory
      */
     #[Api(
         'tax_category',
@@ -161,7 +161,7 @@ final class ProductUpdateParams implements BaseModel
      *
      * @param list<string>|null $addons
      * @param array<string, string>|null $metadata
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
      */
     public static function with(
         ?array $addons = null,
@@ -176,7 +176,7 @@ final class ProductUpdateParams implements BaseModel
         ?array $metadata = null,
         ?string $name = null,
         OneTimePrice|RecurringPrice|UsageBasedPrice|null $price = null,
-        ?string $taxCategory = null,
+        TaxCategory|string|null $taxCategory = null,
     ): self {
         $obj = new self;
 
@@ -192,7 +192,7 @@ final class ProductUpdateParams implements BaseModel
         null !== $metadata && $obj->metadata = $metadata;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $taxCategory && $obj->taxCategory = $taxCategory;
+        null !== $taxCategory && $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }
@@ -289,7 +289,7 @@ final class ProductUpdateParams implements BaseModel
      * the license key is valid.
      */
     public function withLicenseKeyDuration(
-        LicenseKeyDuration $licenseKeyDuration
+        ?LicenseKeyDuration $licenseKeyDuration
     ): self {
         $obj = clone $this;
         $obj->licenseKeyDuration = $licenseKeyDuration;
@@ -339,7 +339,7 @@ final class ProductUpdateParams implements BaseModel
      * Price details of the product.
      */
     public function withPrice(
-        OneTimePrice|RecurringPrice|UsageBasedPrice $price
+        OneTimePrice|RecurringPrice|UsageBasedPrice|null $price
     ): self {
         $obj = clone $this;
         $obj->price = $price;
@@ -350,12 +350,12 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Tax category of the product.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }

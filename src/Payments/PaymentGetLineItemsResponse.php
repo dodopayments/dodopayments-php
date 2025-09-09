@@ -12,7 +12,7 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
 
 /**
  * @phpstan-type payment_get_line_items_response = array{
- *   currency: Currency::*, items: list<Item>
+ *   currency: value-of<Currency>, items: list<Item>
  * }
  */
 final class PaymentGetLineItemsResponse implements BaseModel
@@ -20,7 +20,7 @@ final class PaymentGetLineItemsResponse implements BaseModel
     /** @use SdkModel<payment_get_line_items_response> */
     use SdkModel;
 
-    /** @var Currency::* $currency */
+    /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
     public string $currency;
 
@@ -52,26 +52,26 @@ final class PaymentGetLineItemsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      * @param list<Item> $items
      */
-    public static function with(string $currency, array $items): self
+    public static function with(Currency|string $currency, array $items): self
     {
         $obj = new self;
 
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->items = $items;
 
         return $obj;
     }
 
     /**
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }

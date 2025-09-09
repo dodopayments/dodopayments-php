@@ -17,7 +17,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   discountID: string,
  *   restrictedTo: list<string>,
  *   timesUsed: int,
- *   type: DiscountType::*,
+ *   type: value-of<DiscountType>,
  *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
  *   subscriptionCycles?: int|null,
@@ -80,7 +80,7 @@ final class Discount implements BaseModel
     /**
      * The type of discount, e.g. `percentage`, `flat`, or `flat_per_unit`.
      *
-     * @var DiscountType::* $type
+     * @var value-of<DiscountType> $type
      */
     #[Api(enum: DiscountType::class)]
     public string $type;
@@ -153,7 +153,7 @@ final class Discount implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string> $restrictedTo
-     * @param DiscountType::* $type
+     * @param DiscountType|value-of<DiscountType> $type
      */
     public static function with(
         int $amount,
@@ -163,7 +163,7 @@ final class Discount implements BaseModel
         string $discountID,
         array $restrictedTo,
         int $timesUsed,
-        string $type,
+        DiscountType|string $type,
         ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
         ?int $subscriptionCycles = null,
@@ -178,7 +178,7 @@ final class Discount implements BaseModel
         $obj->discountID = $discountID;
         $obj->restrictedTo = $restrictedTo;
         $obj->timesUsed = $timesUsed;
-        $obj->type = $type;
+        $obj->type = $type instanceof DiscountType ? $type->value : $type;
 
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
         null !== $name && $obj->name = $name;
@@ -274,12 +274,12 @@ final class Discount implements BaseModel
     /**
      * The type of discount, e.g. `percentage`, `flat`, or `flat_per_unit`.
      *
-     * @param DiscountType::* $type
+     * @param DiscountType|value-of<DiscountType> $type
      */
-    public function withType(string $type): self
+    public function withType(DiscountType|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof DiscountType ? $type->value : $type;
 
         return $obj;
     }
