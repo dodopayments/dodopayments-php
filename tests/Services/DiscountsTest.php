@@ -32,7 +32,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->create(
             amount: 0,
-            type: DiscountType::PERCENTAGE
+            type: DiscountType::$PERCENTAGE
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -43,7 +43,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->create(
             amount: 0,
-            type: DiscountType::PERCENTAGE
+            type: DiscountType::$PERCENTAGE
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

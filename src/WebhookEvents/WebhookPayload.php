@@ -18,7 +18,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  *   businessID: string,
  *   data: Payment|Subscription|Refund|Dispute|LicenseKey,
  *   timestamp: \DateTimeInterface,
- *   type: WebhookEventType::*,
+ *   type: value-of<WebhookEventType>,
  * }
  */
 final class WebhookPayload implements BaseModel
@@ -44,7 +44,7 @@ final class WebhookPayload implements BaseModel
     /**
      * Event types for Dodo events.
      *
-     * @var WebhookEventType::* $type
+     * @var value-of<WebhookEventType> $type
      */
     #[Api(enum: WebhookEventType::class)]
     public string $type;
@@ -77,20 +77,20 @@ final class WebhookPayload implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param WebhookEventType::* $type
+     * @param WebhookEventType|value-of<WebhookEventType> $type
      */
     public static function with(
         string $businessID,
         Payment|Subscription|Refund|Dispute|LicenseKey $data,
         \DateTimeInterface $timestamp,
-        string $type,
+        WebhookEventType|string $type,
     ): self {
         $obj = new self;
 
         $obj->businessID = $businessID;
         $obj->data = $data;
         $obj->timestamp = $timestamp;
-        $obj->type = $type;
+        $obj->type = $type instanceof WebhookEventType ? $type->value : $type;
 
         return $obj;
     }
@@ -129,12 +129,12 @@ final class WebhookPayload implements BaseModel
     /**
      * Event types for Dodo events.
      *
-     * @param WebhookEventType::* $type
+     * @param WebhookEventType|value-of<WebhookEventType> $type
      */
-    public function withType(string $type): self
+    public function withType(WebhookEventType|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof WebhookEventType ? $type->value : $type;
 
         return $obj;
     }

@@ -30,7 +30,7 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
  *   pageNumber?: int,
  *   pageSize?: int,
  *   productID?: string,
- *   status?: Status::*,
+ *   status?: Status|value-of<Status>,
  * }
  */
 final class LicenseKeyListParams implements BaseModel
@@ -66,7 +66,7 @@ final class LicenseKeyListParams implements BaseModel
     /**
      * Filter by license key status.
      *
-     * @var Status::*|null $status
+     * @var value-of<Status>|null $status
      */
     #[Api(enum: Status::class, optional: true)]
     public ?string $status;
@@ -81,14 +81,14 @@ final class LicenseKeyListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Status::* $status
+     * @param Status|value-of<Status> $status
      */
     public static function with(
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
-        ?string $status = null,
+        Status|string|null $status = null,
     ): self {
         $obj = new self;
 
@@ -96,7 +96,7 @@ final class LicenseKeyListParams implements BaseModel
         null !== $pageNumber && $obj->pageNumber = $pageNumber;
         null !== $pageSize && $obj->pageSize = $pageSize;
         null !== $productID && $obj->productID = $productID;
-        null !== $status && $obj->status = $status;
+        null !== $status && $obj->status = $status instanceof Status ? $status->value : $status;
 
         return $obj;
     }
@@ -148,12 +148,12 @@ final class LicenseKeyListParams implements BaseModel
     /**
      * Filter by license key status.
      *
-     * @param Status::* $status
+     * @param Status|value-of<Status> $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(Status|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof Status ? $status->value : $status;
 
         return $obj;
     }

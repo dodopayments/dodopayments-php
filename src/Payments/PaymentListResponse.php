@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type payment_list_response = array{
  *   brandID: string,
  *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   customer: CustomerLimitedDetails,
  *   digitalProductsDelivered: bool,
  *   metadata: array<string, string>,
@@ -21,7 +21,7 @@ use Dodopayments\Misc\Currency;
  *   totalAmount: int,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
- *   status?: IntentStatus::*|null,
+ *   status?: value-of<IntentStatus>|null,
  *   subscriptionID?: string|null,
  * }
  */
@@ -36,7 +36,7 @@ final class PaymentListResponse implements BaseModel
     #[Api('created_at')]
     public \DateTimeInterface $createdAt;
 
-    /** @var Currency::* $currency */
+    /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
     public string $currency;
 
@@ -62,7 +62,7 @@ final class PaymentListResponse implements BaseModel
     #[Api('payment_method_type', nullable: true, optional: true)]
     public ?string $paymentMethodType;
 
-    /** @var IntentStatus::*|null $status */
+    /** @var value-of<IntentStatus>|null $status */
     #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
     public ?string $status;
 
@@ -110,14 +110,14 @@ final class PaymentListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      * @param array<string, string> $metadata
-     * @param IntentStatus::* $status
+     * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
         string $brandID,
         \DateTimeInterface $createdAt,
-        string $currency,
+        Currency|string $currency,
         CustomerLimitedDetails $customer,
         bool $digitalProductsDelivered,
         array $metadata,
@@ -125,14 +125,14 @@ final class PaymentListResponse implements BaseModel
         int $totalAmount,
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
-        ?string $status = null,
+        IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
     ): self {
         $obj = new self;
 
         $obj->brandID = $brandID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->customer = $customer;
         $obj->digitalProductsDelivered = $digitalProductsDelivered;
         $obj->metadata = $metadata;
@@ -141,7 +141,7 @@ final class PaymentListResponse implements BaseModel
 
         null !== $paymentMethod && $obj->paymentMethod = $paymentMethod;
         null !== $paymentMethodType && $obj->paymentMethodType = $paymentMethodType;
-        null !== $status && $obj->status = $status;
+        null !== $status && $obj->status = $status instanceof IntentStatus ? $status->value : $status;
         null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
 
         return $obj;
@@ -164,12 +164,12 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -235,12 +235,12 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
-     * @param IntentStatus::* $status
+     * @param IntentStatus|value-of<IntentStatus>|null $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(IntentStatus|string|null $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof IntentStatus ? $status->value : $status;
 
         return $obj;
     }

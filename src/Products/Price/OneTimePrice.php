@@ -14,11 +14,11 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  * One-time price details.
  *
  * @phpstan-type one_time_price = array{
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   discount: int,
  *   price: int,
  *   purchasingPowerParity: bool,
- *   type: Type::*,
+ *   type: value-of<Type>,
  *   payWhatYouWant?: bool|null,
  *   suggestedPrice?: int|null,
  *   taxInclusive?: bool|null,
@@ -32,7 +32,7 @@ final class OneTimePrice implements BaseModel
     /**
      * The currency in which the payment is made.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -60,7 +60,7 @@ final class OneTimePrice implements BaseModel
     #[Api('purchasing_power_parity')]
     public bool $purchasingPowerParity;
 
-    /** @var Type::* $type */
+    /** @var value-of<Type> $type */
     #[Api(enum: Type::class)]
     public string $type;
 
@@ -119,26 +119,26 @@ final class OneTimePrice implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
-     * @param Type::* $type
+     * @param Currency|value-of<Currency> $currency
+     * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $currency,
+        Currency|string $currency,
         int $discount,
         int $price,
         bool $purchasingPowerParity,
-        string $type,
+        Type|string $type,
         ?bool $payWhatYouWant = null,
         ?int $suggestedPrice = null,
         ?bool $taxInclusive = null,
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->discount = $discount;
         $obj->price = $price;
         $obj->purchasingPowerParity = $purchasingPowerParity;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         null !== $payWhatYouWant && $obj->payWhatYouWant = $payWhatYouWant;
         null !== $suggestedPrice && $obj->suggestedPrice = $suggestedPrice;
@@ -150,12 +150,12 @@ final class OneTimePrice implements BaseModel
     /**
      * The currency in which the payment is made.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -199,12 +199,12 @@ final class OneTimePrice implements BaseModel
     }
 
     /**
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public function withType(string $type): self
+    public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }

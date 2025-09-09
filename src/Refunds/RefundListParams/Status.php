@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace Dodopayments\Refunds\RefundListParams;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Filter by status.
  */
-final class Status implements ConverterSource
+enum Status: string
 {
-    use SdkEnum;
+    case SUCCEEDED = 'succeeded';
 
-    public const SUCCEEDED = 'succeeded';
+    case FAILED = 'failed';
 
-    public const FAILED = 'failed';
+    case PENDING = 'pending';
 
-    public const PENDING = 'pending';
-
-    public const REVIEW = 'review';
+    case REVIEW = 'review';
 }

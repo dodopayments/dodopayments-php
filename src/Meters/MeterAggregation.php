@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterAggregation\Type;
 
 /**
- * @phpstan-type meter_aggregation = array{type: Type::*, key?: string|null}
+ * @phpstan-type meter_aggregation = array{type: value-of<Type>, key?: string|null}
  */
 final class MeterAggregation implements BaseModel
 {
@@ -20,7 +20,7 @@ final class MeterAggregation implements BaseModel
     /**
      * Aggregation type for the meter.
      *
-     * @var Type::* $type
+     * @var value-of<Type> $type
      */
     #[Api(enum: Type::class)]
     public string $type;
@@ -55,13 +55,13 @@ final class MeterAggregation implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public static function with(string $type, ?string $key = null): self
+    public static function with(Type|string $type, ?string $key = null): self
     {
         $obj = new self;
 
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         null !== $key && $obj->key = $key;
 
@@ -71,12 +71,12 @@ final class MeterAggregation implements BaseModel
     /**
      * Aggregation type for the meter.
      *
-     * @param Type::* $type
+     * @param Type|value-of<Type> $type
      */
-    public function withType(string $type): self
+    public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type;
+        $obj->type = $type instanceof Type ? $type->value : $type;
 
         return $obj;
     }

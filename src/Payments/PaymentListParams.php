@@ -32,7 +32,7 @@ use Dodopayments\Payments\PaymentListParams\Status;
  *   customerID?: string,
  *   pageNumber?: int,
  *   pageSize?: int,
- *   status?: Status::*,
+ *   status?: Status|value-of<Status>,
  *   subscriptionID?: string,
  * }
  */
@@ -81,7 +81,7 @@ final class PaymentListParams implements BaseModel
     /**
      * Filter by status.
      *
-     * @var Status::*|null $status
+     * @var value-of<Status>|null $status
      */
     #[Api(enum: Status::class, optional: true)]
     public ?string $status;
@@ -102,7 +102,7 @@ final class PaymentListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Status::* $status
+     * @param Status|value-of<Status> $status
      */
     public static function with(
         ?string $brandID = null,
@@ -111,7 +111,7 @@ final class PaymentListParams implements BaseModel
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
-        ?string $status = null,
+        Status|string|null $status = null,
         ?string $subscriptionID = null,
     ): self {
         $obj = new self;
@@ -122,7 +122,7 @@ final class PaymentListParams implements BaseModel
         null !== $customerID && $obj->customerID = $customerID;
         null !== $pageNumber && $obj->pageNumber = $pageNumber;
         null !== $pageSize && $obj->pageSize = $pageSize;
-        null !== $status && $obj->status = $status;
+        null !== $status && $obj->status = $status instanceof Status ? $status->value : $status;
         null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
 
         return $obj;
@@ -197,12 +197,12 @@ final class PaymentListParams implements BaseModel
     /**
      * Filter by status.
      *
-     * @param Status::* $status
+     * @param Status|value-of<Status> $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(Status|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof Status ? $status->value : $status;
 
         return $obj;
     }

@@ -20,9 +20,9 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   isRecurring: bool,
  *   metadata: array<string, string>,
  *   productID: string,
- *   taxCategory: TaxCategory::*,
+ *   taxCategory: value-of<TaxCategory>,
  *   updatedAt: \DateTimeInterface,
- *   currency?: Currency::*|null,
+ *   currency?: value-of<Currency>|null,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
@@ -71,7 +71,7 @@ final class ProductListResponse implements BaseModel
     /**
      * Tax category associated with the product.
      *
-     * @var TaxCategory::* $taxCategory
+     * @var value-of<TaxCategory> $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class)]
     public string $taxCategory;
@@ -85,7 +85,7 @@ final class ProductListResponse implements BaseModel
     /**
      * Currency of the price.
      *
-     * @var Currency::*|null $currency
+     * @var value-of<Currency>|null $currency
      */
     #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
@@ -174,8 +174,8 @@ final class ProductListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string, string> $metadata
-     * @param TaxCategory::* $taxCategory
-     * @param Currency::* $currency
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
+     * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
         string $businessID,
@@ -183,9 +183,9 @@ final class ProductListResponse implements BaseModel
         bool $isRecurring,
         array $metadata,
         string $productID,
-        string $taxCategory,
+        TaxCategory|string $taxCategory,
         \DateTimeInterface $updatedAt,
-        ?string $currency = null,
+        Currency|string|null $currency = null,
         ?string $description = null,
         ?string $image = null,
         ?string $name = null,
@@ -200,10 +200,10 @@ final class ProductListResponse implements BaseModel
         $obj->isRecurring = $isRecurring;
         $obj->metadata = $metadata;
         $obj->productID = $productID;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
         $obj->updatedAt = $updatedAt;
 
-        null !== $currency && $obj->currency = $currency;
+        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         null !== $description && $obj->description = $description;
         null !== $image && $obj->image = $image;
         null !== $name && $obj->name = $name;
@@ -274,12 +274,12 @@ final class ProductListResponse implements BaseModel
     /**
      * Tax category associated with the product.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }
@@ -298,12 +298,12 @@ final class ProductListResponse implements BaseModel
     /**
      * Currency of the price.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency>|null $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -364,7 +364,7 @@ final class ProductListResponse implements BaseModel
      * Details of the price.
      */
     public function withPriceDetail(
-        OneTimePrice|RecurringPrice|UsageBasedPrice $priceDetail
+        OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail
     ): self {
         $obj = clone $this;
         $obj->priceDetail = $priceDetail;

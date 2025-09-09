@@ -31,14 +31,14 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *
  * @phpstan-type product_create_params = array{
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   taxCategory: TaxCategory::*,
+ *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
  *   brandID?: string|null,
  *   description?: string|null,
  *   digitalProductDelivery?: DigitalProductDelivery|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDuration,
+ *   licenseKeyDuration?: LicenseKeyDuration|null,
  *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string, string>,
  *   name?: string|null,
@@ -59,7 +59,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Tax category applied to this product.
      *
-     * @var TaxCategory::* $taxCategory
+     * @var value-of<TaxCategory> $taxCategory
      */
     #[Api('tax_category', enum: TaxCategory::class)]
     public string $taxCategory;
@@ -156,13 +156,13 @@ final class ProductCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
      * @param array<string, string> $metadata
      */
     public static function with(
         OneTimePrice|RecurringPrice|UsageBasedPrice $price,
-        string $taxCategory,
+        TaxCategory|string $taxCategory,
         ?array $addons = null,
         ?string $brandID = null,
         ?string $description = null,
@@ -177,7 +177,7 @@ final class ProductCreateParams implements BaseModel
         $obj = new self;
 
         $obj->price = $price;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         null !== $addons && $obj->addons = $addons;
         null !== $brandID && $obj->brandID = $brandID;
@@ -208,12 +208,12 @@ final class ProductCreateParams implements BaseModel
     /**
      * Tax category applied to this product.
      *
-     * @param TaxCategory::* $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
-    public function withTaxCategory(string $taxCategory): self
+    public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory;
+        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
 
         return $obj;
     }
@@ -296,7 +296,7 @@ final class ProductCreateParams implements BaseModel
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
      */
     public function withLicenseKeyDuration(
-        LicenseKeyDuration $licenseKeyDuration
+        ?LicenseKeyDuration $licenseKeyDuration
     ): self {
         $obj = clone $this;
         $obj->licenseKeyDuration = $licenseKeyDuration;

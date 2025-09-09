@@ -4,14 +4,9 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class Conjunction implements ConverterSource
+enum Conjunction: string
 {
-    use SdkEnum;
+    case AND = 'and';
 
-    public const AND = 'and';
-
-    public const OR = 'or';
+    case OR = 'or';
 }

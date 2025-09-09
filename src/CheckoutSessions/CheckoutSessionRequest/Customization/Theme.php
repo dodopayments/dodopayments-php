@@ -4,21 +4,16 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions\CheckoutSessionRequest\Customization;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Theme of the page.
  *
  * Default is `System`.
  */
-final class Theme implements ConverterSource
+enum Theme: string
 {
-    use SdkEnum;
+    case DARK = 'dark';
 
-    public const DARK = 'dark';
+    case LIGHT = 'light';
 
-    public const LIGHT = 'light';
-
-    public const SYSTEM = 'system';
+    case SYSTEM = 'system';
 }

@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class PayloadType implements ConverterSource
+enum PayloadType: string
 {
-    use SdkEnum;
-
-    public const LICENSE_KEY = 'LicenseKey';
+    case LICENSE_KEY = 'LicenseKey';
 }

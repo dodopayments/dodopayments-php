@@ -48,17 +48,17 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param string $productID Unique identifier of the product to subscribe to
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon>|null $addons Attach addons to this subscription
-     * @param list<PaymentMethodTypes::*>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
      *
      * Customers will **never** see payment methods that are **not** in this list.
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
-     * @param Currency::* $billingCurrency Fix the currency in which the end customer is billed.
+     * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
      * @param string|null $discountCode Discount Code to apply to the subscription
      * @param array<string, string> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
-     * @param OnDemandSubscription $onDemand
+     * @param OnDemandSubscription|null $onDemand
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
@@ -137,12 +137,12 @@ final class SubscriptionsService implements SubscriptionsContract
     /**
      * @api
      *
-     * @param BillingAddress $billing
+     * @param BillingAddress|null $billing
      * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
      * @param DisableOnDemand|null $disableOnDemand
      * @param array<string, string>|null $metadata
      * @param \DateTimeInterface|null $nextBillingDate
-     * @param SubscriptionStatus::* $status
+     * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      * @param string|null $taxID
      */
     public function update(
@@ -188,7 +188,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param string $customerID Filter by customer id
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
-     * @param Status::* $status Filter by status
+     * @param Status|value-of<Status> $status Filter by status
      *
      * @return DefaultPageNumberPagination<SubscriptionListResponse>
      */
@@ -230,7 +230,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $productID Unique identifier of the product to subscribe to
-     * @param ProrationBillingMode::* $prorationBillingMode Proration Billing Mode
+     * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode Proration Billing Mode
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
@@ -272,7 +272,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * This field is ignored if adaptive pricing is not enabled for the business.
      * @param array<string,
      * string,>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
-     * @param Currency::* $productCurrency Optional currency of the product price. If not specified, defaults to the currency of the product.
+     * @param Currency|value-of<Currency>|null $productCurrency Optional currency of the product price. If not specified, defaults to the currency of the product.
      * @param string|null $productDescription Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */

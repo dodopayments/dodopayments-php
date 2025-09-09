@@ -16,12 +16,12 @@ use Dodopayments\Payouts\PayoutListResponse\Status;
  *   businessID: string,
  *   chargebacks: int,
  *   createdAt: \DateTimeInterface,
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   fee: int,
  *   paymentMethod: string,
  *   payoutID: string,
  *   refunds: int,
- *   status: Status::*,
+ *   status: value-of<Status>,
  *   tax: int,
  *   updatedAt: \DateTimeInterface,
  *   name?: string|null,
@@ -61,7 +61,7 @@ final class PayoutListResponse implements BaseModel
     /**
      * The currency of the payout, represented as an ISO 4217 currency code.
      *
-     * @var Currency::* $currency
+     * @var value-of<Currency> $currency
      */
     #[Api(enum: Currency::class)]
     public string $currency;
@@ -93,7 +93,7 @@ final class PayoutListResponse implements BaseModel
     /**
      * The current status of the payout.
      *
-     * @var Status::* $status
+     * @var value-of<Status> $status
      */
     #[Api(enum: Status::class)]
     public string $status;
@@ -177,20 +177,20 @@ final class PayoutListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
-     * @param Status::* $status
+     * @param Currency|value-of<Currency> $currency
+     * @param Status|value-of<Status> $status
      */
     public static function with(
         int $amount,
         string $businessID,
         int $chargebacks,
         \DateTimeInterface $createdAt,
-        string $currency,
+        Currency|string $currency,
         int $fee,
         string $paymentMethod,
         string $payoutID,
         int $refunds,
-        string $status,
+        Status|string $status,
         int $tax,
         \DateTimeInterface $updatedAt,
         ?string $name = null,
@@ -203,12 +203,12 @@ final class PayoutListResponse implements BaseModel
         $obj->businessID = $businessID;
         $obj->chargebacks = $chargebacks;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->fee = $fee;
         $obj->paymentMethod = $paymentMethod;
         $obj->payoutID = $payoutID;
         $obj->refunds = $refunds;
-        $obj->status = $status;
+        $obj->status = $status instanceof Status ? $status->value : $status;
         $obj->tax = $tax;
         $obj->updatedAt = $updatedAt;
 
@@ -266,12 +266,12 @@ final class PayoutListResponse implements BaseModel
     /**
      * The currency of the payout, represented as an ISO 4217 currency code.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }
@@ -323,12 +323,12 @@ final class PayoutListResponse implements BaseModel
     /**
      * The current status of the payout.
      *
-     * @param Status::* $status
+     * @param Status|value-of<Status> $status
      */
-    public function withStatus(string $status): self
+    public function withStatus(Status|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status;
+        $obj->status = $status instanceof Status ? $status->value : $status;
 
         return $obj;
     }

@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionChangePlanParams;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
 /**
  * Proration Billing Mode.
  */
-final class ProrationBillingMode implements ConverterSource
+enum ProrationBillingMode: string
 {
-    use SdkEnum;
+    case PRORATED_IMMEDIATELY = 'prorated_immediately';
 
-    public const PRORATED_IMMEDIATELY = 'prorated_immediately';
+    case FULL_IMMEDIATELY = 'full_immediately';
 
-    public const FULL_IMMEDIATELY = 'full_immediately';
-
-    public const DIFFERENCE_IMMEDIATELY = 'difference_immediately';
+    case DIFFERENCE_IMMEDIATELY = 'difference_immediately';
 }

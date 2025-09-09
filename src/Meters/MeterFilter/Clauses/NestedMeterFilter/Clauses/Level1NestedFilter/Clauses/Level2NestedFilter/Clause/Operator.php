@@ -4,26 +4,21 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Clause;
 
-use Dodopayments\Core\Concerns\SdkEnum;
-use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-
-final class Operator implements ConverterSource
+enum Operator: string
 {
-    use SdkEnum;
+    case EQUALS = 'equals';
 
-    public const EQUALS = 'equals';
+    case NOT_EQUALS = 'not_equals';
 
-    public const NOT_EQUALS = 'not_equals';
+    case GREATER_THAN = 'greater_than';
 
-    public const GREATER_THAN = 'greater_than';
+    case GREATER_THAN_OR_EQUALS = 'greater_than_or_equals';
 
-    public const GREATER_THAN_OR_EQUALS = 'greater_than_or_equals';
+    case LESS_THAN = 'less_than';
 
-    public const LESS_THAN = 'less_than';
+    case LESS_THAN_OR_EQUALS = 'less_than_or_equals';
 
-    public const LESS_THAN_OR_EQUALS = 'less_than_or_equals';
+    case CONTAINS = 'contains';
 
-    public const CONTAINS = 'contains';
-
-    public const DOES_NOT_CONTAIN = 'does_not_contain';
+    case DOES_NOT_CONTAIN = 'does_not_contain';
 }

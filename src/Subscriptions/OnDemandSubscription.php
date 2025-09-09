@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type on_demand_subscription = array{
  *   mandateOnly: bool,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   productCurrency?: Currency::*|null,
+ *   productCurrency?: value-of<Currency>|null,
  *   productDescription?: string|null,
  *   productPrice?: int|null,
  * }
@@ -39,7 +39,7 @@ final class OnDemandSubscription implements BaseModel
     /**
      * Optional currency of the product price. If not specified, defaults to the currency of the product.
      *
-     * @var Currency::*|null $productCurrency
+     * @var value-of<Currency>|null $productCurrency
      */
     #[Api(
         'product_currency',
@@ -89,12 +89,12 @@ final class OnDemandSubscription implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $productCurrency
+     * @param Currency|value-of<Currency>|null $productCurrency
      */
     public static function with(
         bool $mandateOnly,
         ?bool $adaptiveCurrencyFeesInclusive = null,
-        ?string $productCurrency = null,
+        Currency|string|null $productCurrency = null,
         ?string $productDescription = null,
         ?int $productPrice = null,
     ): self {
@@ -103,7 +103,7 @@ final class OnDemandSubscription implements BaseModel
         $obj->mandateOnly = $mandateOnly;
 
         null !== $adaptiveCurrencyFeesInclusive && $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
-        null !== $productCurrency && $obj->productCurrency = $productCurrency;
+        null !== $productCurrency && $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
         null !== $productDescription && $obj->productDescription = $productDescription;
         null !== $productPrice && $obj->productPrice = $productPrice;
 
@@ -137,12 +137,13 @@ final class OnDemandSubscription implements BaseModel
     /**
      * Optional currency of the product price. If not specified, defaults to the currency of the product.
      *
-     * @param Currency::* $productCurrency
+     * @param Currency|value-of<Currency>|null $productCurrency
      */
-    public function withProductCurrency(string $productCurrency): self
-    {
+    public function withProductCurrency(
+        Currency|string|null $productCurrency
+    ): self {
         $obj = clone $this;
-        $obj->productCurrency = $productCurrency;
+        $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
 
         return $obj;
     }

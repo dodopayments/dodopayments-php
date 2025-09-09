@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
  * Response struct representing usage-based meter cart details for a subscription.
  *
  * @phpstan-type meter_alias = array{
- *   currency: Currency::*,
+ *   currency: value-of<Currency>,
  *   freeThreshold: int,
  *   measurementUnit: string,
  *   meterID: string,
@@ -27,7 +27,7 @@ final class Meter implements BaseModel
     /** @use SdkModel<meter_alias> */
     use SdkModel;
 
-    /** @var Currency::* $currency */
+    /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
     public string $currency;
 
@@ -86,10 +86,10 @@ final class Meter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
     public static function with(
-        string $currency,
+        Currency|string $currency,
         int $freeThreshold,
         string $measurementUnit,
         string $meterID,
@@ -99,7 +99,7 @@ final class Meter implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
         $obj->freeThreshold = $freeThreshold;
         $obj->measurementUnit = $measurementUnit;
         $obj->meterID = $meterID;
@@ -112,12 +112,12 @@ final class Meter implements BaseModel
     }
 
     /**
-     * @param Currency::* $currency
+     * @param Currency|value-of<Currency> $currency
      */
-    public function withCurrency(string $currency): self
+    public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
 
         return $obj;
     }

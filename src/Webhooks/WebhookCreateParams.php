@@ -30,7 +30,7 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  *   url: string,
  *   description?: string|null,
  *   disabled?: bool|null,
- *   filterTypes?: list<WebhookEventType::*>,
+ *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>,
  *   headers?: array<string, string>|null,
  *   idempotencyKey?: string|null,
  *   metadata?: array<string, string>|null,
@@ -65,7 +65,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var list<WebhookEventType::*>|null $filterTypes
+     * @var list<value-of<WebhookEventType>>|null $filterTypes
      */
     #[Api('filter_types', list: WebhookEventType::class, optional: true)]
     public ?array $filterTypes;
@@ -120,7 +120,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebhookEventType::*> $filterTypes
+     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes
      * @param array<string, string>|null $headers
      * @param array<string, string>|null $metadata
      */
@@ -140,7 +140,7 @@ final class WebhookCreateParams implements BaseModel
 
         null !== $description && $obj->description = $description;
         null !== $disabled && $obj->disabled = $disabled;
-        null !== $filterTypes && $obj->filterTypes = $filterTypes;
+        null !== $filterTypes && $obj->filterTypes = array_map(fn ($v) => $v instanceof WebhookEventType ? $v->value : $v, $filterTypes);
         null !== $headers && $obj->headers = $headers;
         null !== $idempotencyKey && $obj->idempotencyKey = $idempotencyKey;
         null !== $metadata && $obj->metadata = $metadata;
@@ -186,12 +186,12 @@ final class WebhookCreateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @param list<WebhookEventType::*> $filterTypes
+     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes
      */
     public function withFilterTypes(array $filterTypes): self
     {
         $obj = clone $this;
-        $obj->filterTypes = $filterTypes;
+        $obj->filterTypes = array_map(fn ($v) => $v instanceof WebhookEventType ? $v->value : $v, $filterTypes);
 
         return $obj;
     }

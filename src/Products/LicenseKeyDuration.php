@@ -11,7 +11,7 @@ use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-type license_key_duration = array{
- *   count: int, interval: TimeInterval::*
+ *   count: int, interval: value-of<TimeInterval>
  * }
  */
 final class LicenseKeyDuration implements BaseModel
@@ -22,7 +22,7 @@ final class LicenseKeyDuration implements BaseModel
     #[Api]
     public int $count;
 
-    /** @var TimeInterval::* $interval */
+    /** @var value-of<TimeInterval> $interval */
     #[Api(enum: TimeInterval::class)]
     public string $interval;
 
@@ -50,14 +50,14 @@ final class LicenseKeyDuration implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TimeInterval::* $interval
+     * @param TimeInterval|value-of<TimeInterval> $interval
      */
-    public static function with(int $count, string $interval): self
+    public static function with(int $count, TimeInterval|string $interval): self
     {
         $obj = new self;
 
         $obj->count = $count;
-        $obj->interval = $interval;
+        $obj->interval = $interval instanceof TimeInterval ? $interval->value : $interval;
 
         return $obj;
     }
@@ -71,12 +71,12 @@ final class LicenseKeyDuration implements BaseModel
     }
 
     /**
-     * @param TimeInterval::* $interval
+     * @param TimeInterval|value-of<TimeInterval> $interval
      */
-    public function withInterval(string $interval): self
+    public function withInterval(TimeInterval|string $interval): self
     {
         $obj = clone $this;
-        $obj->interval = $interval;
+        $obj->interval = $interval instanceof TimeInterval ? $interval->value : $interval;
 
         return $obj;
     }
