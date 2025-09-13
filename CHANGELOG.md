@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.53.2 (2025-09-13)
+
+Full Changelog: [v1.53.0...v1.53.2](https://github.com/dodopayments/dodopayments-php/compare/v1.53.0...v1.53.2)
+
+### Features
+
+* **api:** updated openapi spec to v1.53.2 with customer credits. ([4a3006e](https://github.com/dodopayments/dodopayments-php/commit/4a3006e606ee11aa5b5e7c54fa8858cd1604f8c9))
+
 ## 1.53.0 (2025-09-13)
 
 Full Changelog: [v1.52.5...v1.53.0](https://github.com/dodopayments/dodopayments-php/compare/v1.52.5...v1.53.0)
