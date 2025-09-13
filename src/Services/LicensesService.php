@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\Licenses\LicenseActivateParams;
 use Dodopayments\Licenses\LicenseDeactivateParams;
@@ -27,6 +28,8 @@ final class LicensesService implements LicensesContract
      *
      * @param string $licenseKey
      * @param string $name
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
      */
     public function activate(
         $licenseKey,
@@ -82,6 +85,8 @@ final class LicensesService implements LicensesContract
      *
      * @param string $licenseKey
      * @param string|null $licenseKeyInstanceID
+     *
+     * @return LicenseValidateResponse<HasRawResponse>
      */
     public function validate(
         $licenseKey,

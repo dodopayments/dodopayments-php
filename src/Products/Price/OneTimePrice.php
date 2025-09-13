@@ -19,7 +19,7 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  *   price: int,
  *   purchasingPowerParity: bool,
  *   type: value-of<Type>,
- *   payWhatYouWant?: bool|null,
+ *   payWhatYouWant?: bool,
  *   suggestedPrice?: int|null,
  *   taxInclusive?: bool|null,
  * }

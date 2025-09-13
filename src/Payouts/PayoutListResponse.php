@@ -28,6 +28,10 @@ use Dodopayments\Payouts\PayoutListResponse\Status;
  *   payoutDocumentURL?: string|null,
  *   remarks?: string|null,
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class PayoutListResponse implements BaseModel
 {

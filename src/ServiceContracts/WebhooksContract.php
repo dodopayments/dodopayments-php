@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
@@ -30,6 +31,8 @@ interface WebhooksContract
      * @param array<string, string>|null $metadata Metadata to be passed to the webhook
      * Defaut is {}
      * @param int|null $rateLimit
+     *
+     * @return WebhookDetails<HasRawResponse>
      */
     public function create(
         $url,
@@ -45,6 +48,8 @@ interface WebhooksContract
 
     /**
      * @api
+     *
+     * @return WebhookDetails<HasRawResponse>
      */
     public function retrieve(
         string $webhookID,
@@ -62,6 +67,8 @@ interface WebhooksContract
      * @param array<string, string>|null $metadata Metadata
      * @param int|null $rateLimit Rate limit
      * @param string|null $url Url endpoint
+     *
+     * @return WebhookDetails<HasRawResponse>
      */
     public function update(
         string $webhookID,
@@ -98,6 +105,8 @@ interface WebhooksContract
 
     /**
      * @api
+     *
+     * @return WebhookGetSecretResponse<HasRawResponse>
      */
     public function retrieveSecret(
         string $webhookID,

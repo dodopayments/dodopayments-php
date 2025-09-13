@@ -10,6 +10,10 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type subscription_charge_response = array{paymentID: string}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class SubscriptionChargeResponse implements BaseModel
 {

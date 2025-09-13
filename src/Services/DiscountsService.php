@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountCreateParams;
@@ -48,6 +49,8 @@ final class DiscountsService implements DiscountsContract
      * all recurring payments related to the subscription.
      * @param int|null $usageLimit How many times this discount can be used (if any).
      * Must be >= 1 if provided.
+     *
+     * @return Discount<HasRawResponse>
      */
     public function create(
         $amount,
@@ -88,6 +91,8 @@ final class DiscountsService implements DiscountsContract
      * @api
      *
      * GET /discounts/{discount_id}
+     *
+     * @return Discount<HasRawResponse>
      */
     public function retrieve(
         string $discountID,
@@ -122,6 +127,8 @@ final class DiscountsService implements DiscountsContract
      * all recurring payments related to the subscription.
      * @param DiscountType|value-of<DiscountType>|null $type if present, update the discount type
      * @param int|null $usageLimit
+     *
+     * @return Discount<HasRawResponse>
      */
     public function update(
         string $discountID,

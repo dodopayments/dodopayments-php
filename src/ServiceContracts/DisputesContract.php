@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
@@ -17,6 +18,8 @@ interface DisputesContract
 {
     /**
      * @api
+     *
+     * @return GetDispute<HasRawResponse>
      */
     public function retrieve(
         string $disputeID,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -45,6 +46,8 @@ interface PaymentsContract
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
      * False by default
      * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
+     *
+     * @return PaymentNewResponse<HasRawResponse>
      */
     public function create(
         $billing,
@@ -63,6 +66,8 @@ interface PaymentsContract
 
     /**
      * @api
+     *
+     * @return Payment<HasRawResponse>
      */
     public function retrieve(
         string $paymentID,
@@ -97,6 +102,8 @@ interface PaymentsContract
 
     /**
      * @api
+     *
+     * @return PaymentGetLineItemsResponse<HasRawResponse>
      */
     public function retrieveLineItems(
         string $paymentID,

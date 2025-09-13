@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type item_alias = array{
- *   itemID: string, amount?: int|null, taxInclusive?: bool|null
+ *   itemID: string, amount?: int|null, taxInclusive?: bool
  * }
  */
 final class Item implements BaseModel

@@ -23,14 +23,14 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   allowedPaymentMethodTypes?: list<value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: BillingAddress|null,
  *   billingCurrency?: value-of<Currency>|null,
- *   confirm?: bool|null,
+ *   confirm?: bool,
  *   customer?: null|AttachExistingCustomer|NewCustomer,
- *   customization?: Customization|null,
+ *   customization?: Customization,
  *   discountCode?: string|null,
- *   featureFlags?: FeatureFlags|null,
+ *   featureFlags?: FeatureFlags,
  *   metadata?: array<string, string>|null,
  *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool|null,
+ *   showSavedPaymentMethods?: bool,
  *   subscriptionData?: SubscriptionData|null,
  * }
  */

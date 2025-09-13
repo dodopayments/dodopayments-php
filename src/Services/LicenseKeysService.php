@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
@@ -24,6 +25,8 @@ final class LicenseKeysService implements LicenseKeysContract
 
     /**
      * @api
+     *
+     * @return LicenseKey<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -47,6 +50,8 @@ final class LicenseKeysService implements LicenseKeysContract
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
      * @param \DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
+     *
+     * @return LicenseKey<HasRawResponse>
      */
     public function update(
         string $id,

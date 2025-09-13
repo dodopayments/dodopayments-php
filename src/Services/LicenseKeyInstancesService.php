@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
@@ -23,6 +24,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
 
     /**
      * @api
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -41,6 +44,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @api
      *
      * @param string $name
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
      */
     public function update(
         string $id,

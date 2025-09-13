@@ -10,6 +10,7 @@ use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsContract;
 
@@ -30,6 +31,8 @@ final class BrandsService implements BrandsContract
      * @param string|null $statementDescriptor
      * @param string|null $supportEmail
      * @param string|null $url
+     *
+     * @return Brand<HasRawResponse>
      */
     public function create(
         $description = omit,
@@ -64,6 +67,8 @@ final class BrandsService implements BrandsContract
      * @api
      *
      * Thin handler just calls `get_brand` and wraps in `Json(...)`
+     *
+     * @return Brand<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -85,6 +90,8 @@ final class BrandsService implements BrandsContract
      * @param string|null $name
      * @param string|null $statementDescriptor
      * @param string|null $supportEmail
+     *
+     * @return Brand<HasRawResponse>
      */
     public function update(
         string $id,
@@ -116,6 +123,8 @@ final class BrandsService implements BrandsContract
 
     /**
      * @api
+     *
+     * @return BrandListResponse<HasRawResponse>
      */
     public function list(
         ?RequestOptions $requestOptions = null
@@ -131,6 +140,8 @@ final class BrandsService implements BrandsContract
 
     /**
      * @api
+     *
+     * @return BrandUpdateImagesResponse<HasRawResponse>
      */
     public function updateImages(
         string $id,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\UsageEventsContract;
@@ -47,6 +48,8 @@ final class UsageEventsService implements UsageEventsContract
      * ```text
      * GET /events/api_call_12345
      * ```
+     *
+     * @return Event<HasRawResponse>
      */
     public function retrieve(
         string $eventID,
@@ -170,6 +173,8 @@ final class UsageEventsService implements UsageEventsContract
      * ```
      *
      * @param list<EventInput> $events List of events to be pushed
+     *
+     * @return UsageEventIngestResponse<HasRawResponse>
      */
     public function ingest(
         $events,

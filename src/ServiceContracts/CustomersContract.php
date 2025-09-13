@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Customers\Customer;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
@@ -18,6 +19,8 @@ interface CustomersContract
      * @param string $email
      * @param string $name
      * @param string|null $phoneNumber
+     *
+     * @return Customer<HasRawResponse>
      */
     public function create(
         $email,
@@ -28,6 +31,8 @@ interface CustomersContract
 
     /**
      * @api
+     *
+     * @return Customer<HasRawResponse>
      */
     public function retrieve(
         string $customerID,
@@ -39,6 +44,8 @@ interface CustomersContract
      *
      * @param string|null $name
      * @param string|null $phoneNumber
+     *
+     * @return Customer<HasRawResponse>
      */
     public function update(
         string $customerID,
