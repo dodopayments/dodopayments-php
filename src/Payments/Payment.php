@@ -11,7 +11,7 @@ use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\Payment\ProductCart;
-use Dodopayments\Refunds\Refund;
+use Dodopayments\Payments\Payment\Refund;
 
 /**
  * @phpstan-type payment_alias = array{

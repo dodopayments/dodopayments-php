@@ -15,6 +15,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersContract;
 use Dodopayments\Services\Customers\CustomerPortalService;
+use Dodopayments\Services\Customers\WalletsService;
 
 use const Dodopayments\Core\OMIT as omit;
 
@@ -26,11 +27,17 @@ final class CustomersService implements CustomersContract
     public CustomerPortalService $customerPortal;
 
     /**
+     * @@api
+     */
+    public WalletsService $wallets;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
     {
         $this->customerPortal = new CustomerPortalService($client);
+        $this->wallets = new WalletsService($client);
     }
 
     /**

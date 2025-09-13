@@ -7,8 +7,8 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\Licenses\LicenseActivateParams;
+use Dodopayments\Licenses\LicenseActivateResponse;
 use Dodopayments\Licenses\LicenseDeactivateParams;
 use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\Licenses\LicenseValidateResponse;
@@ -30,7 +30,7 @@ final class LicensesService implements LicensesContract
      * @param string $licenseKey
      * @param string $name
      *
-     * @return LicenseKeyInstance<HasRawResponse>
+     * @return LicenseActivateResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -38,7 +38,7 @@ final class LicensesService implements LicensesContract
         $licenseKey,
         $name,
         ?RequestOptions $requestOptions = null
-    ): LicenseKeyInstance {
+    ): LicenseActivateResponse {
         $params = ['licenseKey' => $licenseKey, 'name' => $name];
 
         return $this->activateRaw($params, $requestOptions);
@@ -49,14 +49,14 @@ final class LicensesService implements LicensesContract
      *
      * @param array<string, mixed> $params
      *
-     * @return LicenseKeyInstance<HasRawResponse>
+     * @return LicenseActivateResponse<HasRawResponse>
      *
      * @throws APIException
      */
     public function activateRaw(
         array $params,
         ?RequestOptions $requestOptions = null
-    ): LicenseKeyInstance {
+    ): LicenseActivateResponse {
         [$parsed, $options] = LicenseActivateParams::parseRequest(
             $params,
             $requestOptions
@@ -68,7 +68,7 @@ final class LicensesService implements LicensesContract
             path: 'licenses/activate',
             body: (object) $parsed,
             options: $options,
-            convert: LicenseKeyInstance::class,
+            convert: LicenseActivateResponse::class,
         );
     }
 

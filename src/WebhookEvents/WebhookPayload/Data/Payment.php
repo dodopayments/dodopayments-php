@@ -14,7 +14,7 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\IntentStatus;
 use Dodopayments\Payments\Payment\ProductCart;
-use Dodopayments\Refunds\Refund;
+use Dodopayments\Payments\Payment\Refund;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
 
 /**

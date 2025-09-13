@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 
 /**
  * An object containing the method's parameters.
@@ -28,6 +29,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type subscription_charge_params = array{
  *   productPrice: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
+ *   customerBalanceConfig?: CustomerBalanceConfig|null,
  *   metadata?: array<string, string>|null,
  *   productCurrency?: null|Currency|value-of<Currency>,
  *   productDescription?: string|null,
@@ -52,6 +54,12 @@ final class SubscriptionChargeParams implements BaseModel
      */
     #[Api('adaptive_currency_fees_inclusive', nullable: true, optional: true)]
     public ?bool $adaptiveCurrencyFeesInclusive;
+
+    /**
+     * Specify how customer balance is used for the payment.
+     */
+    #[Api('customer_balance_config', nullable: true, optional: true)]
+    public ?CustomerBalanceConfig $customerBalanceConfig;
 
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
@@ -111,6 +119,7 @@ final class SubscriptionChargeParams implements BaseModel
     public static function with(
         int $productPrice,
         ?bool $adaptiveCurrencyFeesInclusive = null,
+        ?CustomerBalanceConfig $customerBalanceConfig = null,
         ?array $metadata = null,
         Currency|string|null $productCurrency = null,
         ?string $productDescription = null,
@@ -120,6 +129,7 @@ final class SubscriptionChargeParams implements BaseModel
         $obj->productPrice = $productPrice;
 
         null !== $adaptiveCurrencyFeesInclusive && $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
+        null !== $customerBalanceConfig && $obj->customerBalanceConfig = $customerBalanceConfig;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $productCurrency && $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
         null !== $productDescription && $obj->productDescription = $productDescription;
@@ -148,6 +158,18 @@ final class SubscriptionChargeParams implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
+
+        return $obj;
+    }
+
+    /**
+     * Specify how customer balance is used for the payment.
+     */
+    public function withCustomerBalanceConfig(
+        ?CustomerBalanceConfig $customerBalanceConfig
+    ): self {
+        $obj = clone $this;
+        $obj->customerBalanceConfig = $customerBalanceConfig;
 
         return $obj;
     }

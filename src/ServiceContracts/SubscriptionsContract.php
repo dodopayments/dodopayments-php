@@ -17,6 +17,7 @@ use Dodopayments\Subscriptions\AttachAddon;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
+use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
@@ -242,6 +243,7 @@ interface SubscriptionsContract
      * For example, to charge $1.00, pass `100`.
      * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
+     * @param CustomerBalanceConfig|null $customerBalanceConfig Specify how customer balance is used for the payment
      * @param array<string,
      * string,>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param Currency|value-of<Currency>|null $productCurrency Optional currency of the product price. If not specified, defaults to the currency of the product.
@@ -256,6 +258,7 @@ interface SubscriptionsContract
         string $subscriptionID,
         $productPrice,
         $adaptiveCurrencyFeesInclusive = omit,
+        $customerBalanceConfig = omit,
         $metadata = omit,
         $productCurrency = omit,
         $productDescription = omit,
