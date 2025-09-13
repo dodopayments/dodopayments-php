@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -71,6 +72,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * Must be between 0 and 10000 days
      *
      * @return SubscriptionNewResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $billing,
@@ -90,25 +93,43 @@ final class SubscriptionsService implements SubscriptionsContract
         $trialPeriodDays = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionNewResponse {
+        $params = [
+            'billing' => $billing,
+            'customer' => $customer,
+            'productID' => $productID,
+            'quantity' => $quantity,
+            'addons' => $addons,
+            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+            'billingCurrency' => $billingCurrency,
+            'discountCode' => $discountCode,
+            'metadata' => $metadata,
+            'onDemand' => $onDemand,
+            'paymentLink' => $paymentLink,
+            'returnURL' => $returnURL,
+            'showSavedPaymentMethods' => $showSavedPaymentMethods,
+            'taxID' => $taxID,
+            'trialPeriodDays' => $trialPeriodDays,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return SubscriptionNewResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): SubscriptionNewResponse {
         [$parsed, $options] = SubscriptionCreateParams::parseRequest(
-            [
-                'billing' => $billing,
-                'customer' => $customer,
-                'productID' => $productID,
-                'quantity' => $quantity,
-                'addons' => $addons,
-                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-                'billingCurrency' => $billingCurrency,
-                'discountCode' => $discountCode,
-                'metadata' => $metadata,
-                'onDemand' => $onDemand,
-                'paymentLink' => $paymentLink,
-                'returnURL' => $returnURL,
-                'showSavedPaymentMethods' => $showSavedPaymentMethods,
-                'taxID' => $taxID,
-                'trialPeriodDays' => $trialPeriodDays,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -125,10 +146,29 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $subscriptionID,
         ?RequestOptions $requestOptions = null
+    ): Subscription {
+        $params = [];
+
+        return $this->retrieveRaw($subscriptionID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $subscriptionID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): Subscription {
         // @phpstan-ignore-next-line;
         return $this->client->request(
@@ -151,6 +191,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param string|null $taxID
      *
      * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $subscriptionID,
@@ -163,17 +205,36 @@ final class SubscriptionsService implements SubscriptionsContract
         $taxID = omit,
         ?RequestOptions $requestOptions = null,
     ): Subscription {
+        $params = [
+            'billing' => $billing,
+            'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
+            'disableOnDemand' => $disableOnDemand,
+            'metadata' => $metadata,
+            'nextBillingDate' => $nextBillingDate,
+            'status' => $status,
+            'taxID' => $taxID,
+        ];
+
+        return $this->updateRaw($subscriptionID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $subscriptionID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): Subscription {
         [$parsed, $options] = SubscriptionUpdateParams::parseRequest(
-            [
-                'billing' => $billing,
-                'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
-                'disableOnDemand' => $disableOnDemand,
-                'metadata' => $metadata,
-                'nextBillingDate' => $nextBillingDate,
-                'status' => $status,
-                'taxID' => $taxID,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -198,6 +259,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param Status|value-of<Status> $status Filter by status
      *
      * @return DefaultPageNumberPagination<SubscriptionListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $brandID = omit,
@@ -209,17 +272,35 @@ final class SubscriptionsService implements SubscriptionsContract
         $status = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'brandID' => $brandID,
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'customerID' => $customerID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'status' => $status,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<SubscriptionListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = SubscriptionListParams::parseRequest(
-            [
-                'brandID' => $brandID,
-                'createdAtGte' => $createdAtGte,
-                'createdAtLte' => $createdAtLte,
-                'customerID' => $customerID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'status' => $status,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -241,6 +322,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     *
+     * @throws APIException
      */
     public function changePlan(
         string $subscriptionID,
@@ -250,14 +333,31 @@ final class SubscriptionsService implements SubscriptionsContract
         $addons = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed {
+        $params = [
+            'productID' => $productID,
+            'prorationBillingMode' => $prorationBillingMode,
+            'quantity' => $quantity,
+            'addons' => $addons,
+        ];
+
+        return $this->changePlanRaw($subscriptionID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function changePlanRaw(
+        string $subscriptionID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): mixed {
         [$parsed, $options] = SubscriptionChangePlanParams::parseRequest(
-            [
-                'productID' => $productID,
-                'prorationBillingMode' => $prorationBillingMode,
-                'quantity' => $quantity,
-                'addons' => $addons,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -284,6 +384,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * If not specified, the stored description of the product will be used.
      *
      * @return SubscriptionChargeResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function charge(
         string $subscriptionID,
@@ -294,15 +396,34 @@ final class SubscriptionsService implements SubscriptionsContract
         $productDescription = omit,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse {
+        $params = [
+            'productPrice' => $productPrice,
+            'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
+            'metadata' => $metadata,
+            'productCurrency' => $productCurrency,
+            'productDescription' => $productDescription,
+        ];
+
+        return $this->chargeRaw($subscriptionID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return SubscriptionChargeResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function chargeRaw(
+        string $subscriptionID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): SubscriptionChargeResponse {
         [$parsed, $options] = SubscriptionChargeParams::parseRequest(
-            [
-                'productPrice' => $productPrice,
-                'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
-                'metadata' => $metadata,
-                'productCurrency' => $productCurrency,
-                'productDescription' => $productDescription,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -357,6 +478,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param \DateTimeInterface|null $startDate Filter by start date (inclusive)
      *
      * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
+     *
+     * @throws APIException
      */
     public function retrieveUsageHistory(
         string $subscriptionID,
@@ -367,15 +490,38 @@ final class SubscriptionsService implements SubscriptionsContract
         $startDate = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'endDate' => $endDate,
+            'meterID' => $meterID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'startDate' => $startDate,
+        ];
+
+        return $this->retrieveUsageHistoryRaw(
+            $subscriptionID,
+            $params,
+            $requestOptions
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveUsageHistoryRaw(
+        string $subscriptionID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = SubscriptionRetrieveUsageHistoryParams::parseRequest(
-            [
-                'endDate' => $endDate,
-                'meterID' => $meterID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'startDate' => $startDate,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

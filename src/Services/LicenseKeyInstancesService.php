@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
@@ -26,9 +27,28 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @api
      *
      * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKeyInstance {
+        $params = [];
+
+        return $this->retrieveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
         // @phpstan-ignore-next-line;
@@ -46,14 +66,35 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @param string $name
      *
      * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
         $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
+        $params = ['name' => $name];
+
+        return $this->updateRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKeyInstance {
         [$parsed, $options] = LicenseKeyInstanceUpdateParams::parseRequest(
-            ['name' => $name],
+            $params,
             $requestOptions
         );
 
@@ -75,6 +116,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @param int|null $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<LicenseKeyInstance>
+     *
+     * @throws APIException
      */
     public function list(
         $licenseKeyID = omit,
@@ -82,13 +125,31 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'licenseKeyID' => $licenseKeyID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<LicenseKeyInstance>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
-            [
-                'licenseKeyID' => $licenseKeyID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

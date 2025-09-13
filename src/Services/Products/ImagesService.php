@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Products;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
@@ -26,14 +27,35 @@ final class ImagesService implements ImagesContract
      * @param bool $forceUpdate
      *
      * @return ImageUpdateResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
         $forceUpdate = omit,
         ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse {
+        $params = ['forceUpdate' => $forceUpdate];
+
+        return $this->updateRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return ImageUpdateResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): ImageUpdateResponse {
         [$parsed, $options] = ImageUpdateParams::parseRequest(
-            ['forceUpdate' => $forceUpdate],
+            $params,
             $requestOptions
         );
 

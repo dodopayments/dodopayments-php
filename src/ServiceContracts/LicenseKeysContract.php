@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
@@ -18,9 +19,24 @@ interface LicenseKeysContract
      * @api
      *
      * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKey;
+
+    /**
+     * @api
+     *
+     * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): LicenseKey;
 
@@ -35,6 +51,8 @@ interface LicenseKeysContract
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      *
      * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
@@ -47,6 +65,21 @@ interface LicenseKeysContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKey;
+
+    /**
+     * @api
+     *
      * @param string $customerID Filter by customer ID
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
@@ -54,6 +87,8 @@ interface LicenseKeysContract
      * @param Status|value-of<Status> $status Filter by license key status
      *
      * @return DefaultPageNumberPagination<LicenseKey>
+     *
+     * @throws APIException
      */
     public function list(
         $customerID = omit,
@@ -62,5 +97,19 @@ interface LicenseKeysContract
         $productID = omit,
         $status = omit,
         ?RequestOptions $requestOptions = null,
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<LicenseKey>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 }

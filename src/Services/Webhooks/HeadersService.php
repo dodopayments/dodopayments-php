@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Webhooks;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Webhooks\HeadersContract;
@@ -24,9 +25,28 @@ final class HeadersService implements HeadersContract
      * Get a webhook by id
      *
      * @return HeaderGetResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): HeaderGetResponse {
+        $params = [];
+
+        return $this->retrieveRaw($webhookID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return HeaderGetResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $webhookID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse {
         // @phpstan-ignore-next-line;
@@ -45,14 +65,33 @@ final class HeadersService implements HeadersContract
      *
      * @param array<string,
      * string,> $headers Object of header-value pair to update or add
+     *
+     * @throws APIException
      */
     public function update(
         string $webhookID,
         $headers,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        $params = ['headers' => $headers];
+
+        return $this->updateRaw($webhookID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $webhookID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
         [$parsed, $options] = HeaderUpdateParams::parseRequest(
-            ['headers' => $headers],
+            $params,
             $requestOptions
         );
 

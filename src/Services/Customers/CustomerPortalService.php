@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
@@ -23,14 +24,33 @@ final class CustomerPortalService implements CustomerPortalContract
      * @api
      *
      * @param bool $sendEmail if true, will send link to user
+     *
+     * @throws APIException
      */
     public function create(
         string $customerID,
         $sendEmail = omit,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession {
+        $params = ['sendEmail' => $sendEmail];
+
+        return $this->createRaw($customerID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        string $customerID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): CustomerPortalSession {
         [$parsed, $options] = CustomerPortalCreateParams::parseRequest(
-            ['sendEmail' => $sendEmail],
+            $params,
             $requestOptions
         );
 

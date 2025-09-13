@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
@@ -51,6 +52,8 @@ final class DiscountsService implements DiscountsContract
      * Must be >= 1 if provided.
      *
      * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $amount,
@@ -63,18 +66,36 @@ final class DiscountsService implements DiscountsContract
         $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount {
+        $params = [
+            'amount' => $amount,
+            'type' => $type,
+            'code' => $code,
+            'expiresAt' => $expiresAt,
+            'name' => $name,
+            'restrictedTo' => $restrictedTo,
+            'subscriptionCycles' => $subscriptionCycles,
+            'usageLimit' => $usageLimit,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Discount {
         [$parsed, $options] = DiscountCreateParams::parseRequest(
-            [
-                'amount' => $amount,
-                'type' => $type,
-                'code' => $code,
-                'expiresAt' => $expiresAt,
-                'name' => $name,
-                'restrictedTo' => $restrictedTo,
-                'subscriptionCycles' => $subscriptionCycles,
-                'usageLimit' => $usageLimit,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -93,9 +114,28 @@ final class DiscountsService implements DiscountsContract
      * GET /discounts/{discount_id}
      *
      * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $discountID,
+        ?RequestOptions $requestOptions = null
+    ): Discount {
+        $params = [];
+
+        return $this->retrieveRaw($discountID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $discountID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Discount {
         // @phpstan-ignore-next-line;
@@ -129,6 +169,8 @@ final class DiscountsService implements DiscountsContract
      * @param int|null $usageLimit
      *
      * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $discountID,
@@ -142,18 +184,37 @@ final class DiscountsService implements DiscountsContract
         $usageLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): Discount {
+        $params = [
+            'amount' => $amount,
+            'code' => $code,
+            'expiresAt' => $expiresAt,
+            'name' => $name,
+            'restrictedTo' => $restrictedTo,
+            'subscriptionCycles' => $subscriptionCycles,
+            'type' => $type,
+            'usageLimit' => $usageLimit,
+        ];
+
+        return $this->updateRaw($discountID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $discountID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Discount {
         [$parsed, $options] = DiscountUpdateParams::parseRequest(
-            [
-                'amount' => $amount,
-                'code' => $code,
-                'expiresAt' => $expiresAt,
-                'name' => $name,
-                'restrictedTo' => $restrictedTo,
-                'subscriptionCycles' => $subscriptionCycles,
-                'type' => $type,
-                'usageLimit' => $usageLimit,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -175,14 +236,34 @@ final class DiscountsService implements DiscountsContract
      * @param int $pageSize page size (default = 10, max = 100)
      *
      * @return DefaultPageNumberPagination<Discount>
+     *
+     * @throws APIException
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
+        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Discount>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = DiscountListParams::parseRequest(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $params,
             $requestOptions
         );
 
@@ -201,9 +282,26 @@ final class DiscountsService implements DiscountsContract
      * @api
      *
      * DELETE /discounts/{discount_id}
+     *
+     * @throws APIException
      */
     public function delete(
         string $discountID,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
+        $params = [];
+
+        return $this->deleteRaw($discountID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $discountID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line;

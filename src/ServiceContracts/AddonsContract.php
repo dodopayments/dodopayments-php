@@ -6,6 +6,7 @@ namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -26,6 +27,8 @@ interface AddonsContract
      * @param string|null $description Optional description of the Addon
      *
      * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $currency,
@@ -39,10 +42,39 @@ interface AddonsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): AddonResponse;
+
+    /**
+     * @api
+     *
+     * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): AddonResponse;
+
+    /**
+     * @api
+     *
+     * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonResponse;
 
@@ -57,6 +89,8 @@ interface AddonsContract
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon
      *
      * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
@@ -72,10 +106,27 @@ interface AddonsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): AddonResponse;
+
+    /**
+     * @api
+     *
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<AddonResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $pageNumber = omit,
@@ -86,10 +137,39 @@ interface AddonsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<AddonResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
      * @return AddonUpdateImagesResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function updateImages(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): AddonUpdateImagesResponse;
+
+    /**
+     * @api
+     *
+     * @return AddonUpdateImagesResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateImagesRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse;
 }

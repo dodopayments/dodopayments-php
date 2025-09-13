@@ -10,6 +10,7 @@ use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -36,6 +37,8 @@ final class AddonsService implements AddonsContract
      * @param string|null $description Optional description of the Addon
      *
      * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $currency,
@@ -45,15 +48,33 @@ final class AddonsService implements AddonsContract
         $description = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
+        $params = [
+            'currency' => $currency,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+            'description' => $description,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): AddonResponse {
         [$parsed, $options] = AddonCreateParams::parseRequest(
-            [
-                'currency' => $currency,
-                'name' => $name,
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-                'description' => $description,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -70,9 +91,28 @@ final class AddonsService implements AddonsContract
      * @api
      *
      * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): AddonResponse {
+        $params = [];
+
+        return $this->retrieveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
         // @phpstan-ignore-next-line;
@@ -95,6 +135,8 @@ final class AddonsService implements AddonsContract
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon
      *
      * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
@@ -106,16 +148,35 @@ final class AddonsService implements AddonsContract
         $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
+        $params = [
+            'currency' => $currency,
+            'description' => $description,
+            'imageID' => $imageID,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+        ];
+
+        return $this->updateRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return AddonResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): AddonResponse {
         [$parsed, $options] = AddonUpdateParams::parseRequest(
-            [
-                'currency' => $currency,
-                'description' => $description,
-                'imageID' => $imageID,
-                'name' => $name,
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -135,14 +196,34 @@ final class AddonsService implements AddonsContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<AddonResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
+        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<AddonResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = AddonListParams::parseRequest(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $params,
             $requestOptions
         );
 
@@ -161,9 +242,28 @@ final class AddonsService implements AddonsContract
      * @api
      *
      * @return AddonUpdateImagesResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function updateImages(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): AddonUpdateImagesResponse {
+        $params = [];
+
+        return $this->updateImagesRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return AddonUpdateImagesResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateImagesRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse {
         // @phpstan-ignore-next-line;

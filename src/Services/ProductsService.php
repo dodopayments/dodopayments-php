@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
@@ -63,6 +64,8 @@ final class ProductsService implements ProductsContract
      * @param string|null $name Optional name of the product
      *
      * @return Product<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $price,
@@ -79,22 +82,40 @@ final class ProductsService implements ProductsContract
         $name = omit,
         ?RequestOptions $requestOptions = null,
     ): Product {
+        $params = [
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+            'addons' => $addons,
+            'brandID' => $brandID,
+            'description' => $description,
+            'digitalProductDelivery' => $digitalProductDelivery,
+            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+            'licenseKeyDuration' => $licenseKeyDuration,
+            'licenseKeyEnabled' => $licenseKeyEnabled,
+            'metadata' => $metadata,
+            'name' => $name,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Product<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Product {
         [$parsed, $options] = ProductCreateParams::parseRequest(
-            [
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-                'addons' => $addons,
-                'brandID' => $brandID,
-                'description' => $description,
-                'digitalProductDelivery' => $digitalProductDelivery,
-                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-                'licenseKeyDuration' => $licenseKeyDuration,
-                'licenseKeyEnabled' => $licenseKeyEnabled,
-                'metadata' => $metadata,
-                'name' => $name,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -111,9 +132,28 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @return Product<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): Product {
+        $params = [];
+
+        return $this->retrieveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return Product<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Product {
         // @phpstan-ignore-next-line;
@@ -153,6 +193,8 @@ final class ProductsService implements ProductsContract
      * @param string|null $name name of the product, optional and must be at most 100 characters
      * @param OneTimePrice|RecurringPrice|UsageBasedPrice|null $price price details of the product
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the product
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
@@ -171,23 +213,40 @@ final class ProductsService implements ProductsContract
         $taxCategory = omit,
         ?RequestOptions $requestOptions = null,
     ): mixed {
+        $params = [
+            'addons' => $addons,
+            'brandID' => $brandID,
+            'description' => $description,
+            'digitalProductDelivery' => $digitalProductDelivery,
+            'imageID' => $imageID,
+            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+            'licenseKeyDuration' => $licenseKeyDuration,
+            'licenseKeyEnabled' => $licenseKeyEnabled,
+            'metadata' => $metadata,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+        ];
+
+        return $this->updateRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
         [$parsed, $options] = ProductUpdateParams::parseRequest(
-            [
-                'addons' => $addons,
-                'brandID' => $brandID,
-                'description' => $description,
-                'digitalProductDelivery' => $digitalProductDelivery,
-                'imageID' => $imageID,
-                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-                'licenseKeyDuration' => $licenseKeyDuration,
-                'licenseKeyEnabled' => $licenseKeyEnabled,
-                'metadata' => $metadata,
-                'name' => $name,
-                'price' => $price,
-                'taxCategory' => $taxCategory,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -213,6 +272,8 @@ final class ProductsService implements ProductsContract
      * - `null` or absent: Show both types of products
      *
      * @return DefaultPageNumberPagination<ProductListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $archived = omit,
@@ -222,15 +283,33 @@ final class ProductsService implements ProductsContract
         $recurring = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'archived' => $archived,
+            'brandID' => $brandID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'recurring' => $recurring,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<ProductListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = ProductListParams::parseRequest(
-            [
-                'archived' => $archived,
-                'brandID' => $brandID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'recurring' => $recurring,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -246,9 +325,26 @@ final class ProductsService implements ProductsContract
 
     /**
      * @api
+     *
+     * @throws APIException
      */
     public function archive(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
+        $params = [];
+
+        return $this->archiveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function archiveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line;
@@ -262,9 +358,26 @@ final class ProductsService implements ProductsContract
 
     /**
      * @api
+     *
+     * @throws APIException
      */
     public function unarchive(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
+        $params = [];
+
+        return $this->unarchiveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function unarchiveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line;
@@ -282,14 +395,35 @@ final class ProductsService implements ProductsContract
      * @param string $fileName
      *
      * @return ProductUpdateFilesResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function updateFiles(
         string $id,
         $fileName,
         ?RequestOptions $requestOptions = null
     ): ProductUpdateFilesResponse {
+        $params = ['fileName' => $fileName];
+
+        return $this->updateFilesRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return ProductUpdateFilesResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateFilesRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): ProductUpdateFilesResponse {
         [$parsed, $options] = ProductUpdateFilesParams::parseRequest(
-            ['fileName' => $fileName],
+            $params,
             $requestOptions
         );
 

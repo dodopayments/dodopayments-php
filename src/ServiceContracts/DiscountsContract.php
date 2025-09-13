@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
@@ -38,6 +39,8 @@ interface DiscountsContract
      * Must be >= 1 if provided.
      *
      * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $amount,
@@ -54,11 +57,40 @@ interface DiscountsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Discount;
+
+    /**
+     * @api
+     *
+     * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $discountID,
         ?RequestOptions $requestOptions = null
+    ): Discount;
+
+    /**
+     * @api
+     *
+     * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $discountID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): Discount;
 
     /**
@@ -81,6 +113,8 @@ interface DiscountsContract
      * @param int|null $usageLimit
      *
      * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $discountID,
@@ -98,10 +132,27 @@ interface DiscountsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return Discount<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $discountID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): Discount;
+
+    /**
+     * @api
+     *
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
      *
      * @return DefaultPageNumberPagination<Discount>
+     *
+     * @throws APIException
      */
     public function list(
         $pageNumber = omit,
@@ -111,9 +162,36 @@ interface DiscountsContract
 
     /**
      * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Discount>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @throws APIException
      */
     public function delete(
         string $discountID,
         ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $discountID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): mixed;
 }

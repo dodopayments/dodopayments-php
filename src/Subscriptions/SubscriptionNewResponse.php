@@ -22,7 +22,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   expiresOn?: \DateTimeInterface|null,
  *   paymentLink?: string|null,
  * }
- * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * When used in a response, this type parameter can define a $rawResponse property.
  * @template TRawResponse of object = object{}
  *
  * @mixin TRawResponse

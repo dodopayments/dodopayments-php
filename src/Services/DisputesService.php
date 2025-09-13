@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams;
@@ -28,9 +29,28 @@ final class DisputesService implements DisputesContract
      * @api
      *
      * @return GetDispute<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $disputeID,
+        ?RequestOptions $requestOptions = null
+    ): GetDispute {
+        $params = [];
+
+        return $this->retrieveRaw($disputeID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return GetDispute<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $disputeID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): GetDispute {
         // @phpstan-ignore-next-line;
@@ -54,6 +74,8 @@ final class DisputesService implements DisputesContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<DisputeListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $createdAtGte = omit,
@@ -65,17 +87,35 @@ final class DisputesService implements DisputesContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'customerID' => $customerID,
+            'disputeStage' => $disputeStage,
+            'disputeStatus' => $disputeStatus,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<DisputeListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = DisputeListParams::parseRequest(
-            [
-                'createdAtGte' => $createdAtGte,
-                'createdAtLte' => $createdAtLte,
-                'customerID' => $customerID,
-                'disputeStage' => $disputeStage,
-                'disputeStatus' => $disputeStatus,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
