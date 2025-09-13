@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts\Webhooks;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 
@@ -11,6 +12,8 @@ interface HeadersContract
 {
     /**
      * @api
+     *
+     * @return HeaderGetResponse<HasRawResponse>
      */
     public function retrieve(
         string $webhookID,

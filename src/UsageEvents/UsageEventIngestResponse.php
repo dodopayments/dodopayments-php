@@ -10,6 +10,10 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type usage_event_ingest_response = array{ingestedCount: int}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class UsageEventIngestResponse implements BaseModel
 {

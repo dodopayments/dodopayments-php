@@ -6,6 +6,7 @@ namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -23,6 +24,8 @@ interface AddonsContract
      * @param int $price Amount of the addon
      * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this Addon
      * @param string|null $description Optional description of the Addon
+     *
+     * @return AddonResponse<HasRawResponse>
      */
     public function create(
         $currency,
@@ -35,6 +38,8 @@ interface AddonsContract
 
     /**
      * @api
+     *
+     * @return AddonResponse<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -50,6 +55,8 @@ interface AddonsContract
      * @param string|null $name name of the Addon, optional and must be at most 100 characters
      * @param int|null $price Amount of the addon
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon
+     *
+     * @return AddonResponse<HasRawResponse>
      */
     public function update(
         string $id,
@@ -78,6 +85,8 @@ interface AddonsContract
 
     /**
      * @api
+     *
+     * @return AddonUpdateImagesResponse<HasRawResponse>
      */
     public function updateImages(
         string $id,

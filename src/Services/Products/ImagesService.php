@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Products;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
@@ -23,6 +24,8 @@ final class ImagesService implements ImagesContract
      * @api
      *
      * @param bool $forceUpdate
+     *
+     * @return ImageUpdateResponse<HasRawResponse>
      */
     public function update(
         string $id,

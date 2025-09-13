@@ -20,6 +20,6 @@ final class InvoicesService implements InvoicesContract
      */
     public function __construct(private Client $client)
     {
-        $this->payments = new PaymentsService($this->client);
+        $this->payments = new PaymentsService($client);
     }
 }

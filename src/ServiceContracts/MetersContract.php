@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterAggregation;
@@ -23,6 +24,8 @@ interface MetersContract
      * @param string $name Name of the meter
      * @param string|null $description Optional description of the meter
      * @param MeterFilter|null $filter Optional filter to apply to the meter
+     *
+     * @return Meter<HasRawResponse>
      */
     public function create(
         $aggregation,
@@ -36,6 +39,8 @@ interface MetersContract
 
     /**
      * @api
+     *
+     * @return Meter<HasRawResponse>
      */
     public function retrieve(
         string $id,

@@ -20,6 +20,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   filterTypes?: list<string>|null,
  *   rateLimit?: int|null,
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class WebhookDetails implements BaseModel
 {

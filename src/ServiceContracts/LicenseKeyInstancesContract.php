@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\RequestOptions;
@@ -14,6 +15,8 @@ interface LicenseKeyInstancesContract
 {
     /**
      * @api
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -24,6 +27,8 @@ interface LicenseKeyInstancesContract
      * @api
      *
      * @param string $name
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
      */
     public function update(
         string $id,

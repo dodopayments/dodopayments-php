@@ -10,6 +10,10 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type license_validate_response = array{valid: bool}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class LicenseValidateResponse implements BaseModel
 {

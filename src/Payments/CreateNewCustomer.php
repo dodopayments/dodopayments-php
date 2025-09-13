@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type create_new_customer = array{
  *   email: string,
  *   name: string,
- *   createNewCustomer?: bool|null,
+ *   createNewCustomer?: bool,
  *   phoneNumber?: string|null,
  * }
  */
