@@ -13,6 +13,7 @@ use Dodopayments\Refunds\RefundCreateParams;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams;
 use Dodopayments\Refunds\RefundListParams\Status;
+use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\RefundsContract;
 
@@ -124,7 +125,7 @@ final class RefundsService implements RefundsContract
      * @param int $pageSize Page size default is 10 max is 100
      * @param Status|value-of<Status> $status Filter by status
      *
-     * @return DefaultPageNumberPagination<Refund>
+     * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */
@@ -154,7 +155,7 @@ final class RefundsService implements RefundsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return DefaultPageNumberPagination<Refund>
+     * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */
@@ -173,7 +174,7 @@ final class RefundsService implements RefundsContract
             path: 'refunds',
             query: $parsed,
             options: $options,
-            convert: Refund::class,
+            convert: RefundListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
     }
