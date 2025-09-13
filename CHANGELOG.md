@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.53.0 (2025-09-13)
+
+Full Changelog: [v1.52.5...v1.53.0](https://github.com/dodopayments/dodopayments-php/compare/v1.52.5...v1.53.0)
+
+### ⚠ BREAKING CHANGES
+
+* expose services and service contracts
+
+### Features
+
+* **client:** add raw methods ([0e4dcfc](https://github.com/dodopayments/dodopayments-php/commit/0e4dcfc13cbeab22bc23a931f674f7ea04581528))
+* **client:** support raw responses ([a5352d4](https://github.com/dodopayments/dodopayments-php/commit/a5352d45127f1eca414c90846ba469489578498b))
+* **client:** use real enums ([c3d1d9e](https://github.com/dodopayments/dodopayments-php/commit/c3d1d9e49458ad2ae2e87955b5c2efa137abba0f))
+* expose services and service contracts ([9ac2730](https://github.com/dodopayments/dodopayments-php/commit/9ac27304b1055ecbeda7938ea602de80debb2490))
+
+
+### Chores
+
+* cleanup streaming ([155866a](https://github.com/dodopayments/dodopayments-php/commit/155866a630fbc8ca54ea8ff28f93edb8350b061c))
+* fix lints in UnionOf ([0993f23](https://github.com/dodopayments/dodopayments-php/commit/0993f2361c3fb7905692337a7f7ae452ad68dfab))
+* make more targeted phpstan ignores ([bd27f66](https://github.com/dodopayments/dodopayments-php/commit/bd27f66fb44badb2014dac8d9a243eb47e4689bd))
+
 ## 1.52.5 (2025-09-04)
 
 Full Changelog: [v1.52.4...v1.52.5](https://github.com/dodopayments/dodopayments-php/compare/v1.52.4...v1.52.5)
