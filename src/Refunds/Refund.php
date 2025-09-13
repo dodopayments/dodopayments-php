@@ -8,11 +8,13 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
  * @phpstan-type refund_alias = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
+ *   customer: CustomerLimitedDetails,
  *   isPartial: bool,
  *   paymentID: string,
  *   refundID: string,
@@ -42,6 +44,12 @@ final class Refund implements BaseModel
      */
     #[Api('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * Details about the customer for this refund (from the associated payment).
+     */
+    #[Api]
+    public CustomerLimitedDetails $customer;
 
     /**
      * If true the refund is a partial refund.
@@ -97,6 +105,7 @@ final class Refund implements BaseModel
      * Refund::with(
      *   businessID: ...,
      *   createdAt: ...,
+     *   customer: ...,
      *   isPartial: ...,
      *   paymentID: ...,
      *   refundID: ...,
@@ -110,6 +119,7 @@ final class Refund implements BaseModel
      * (new Refund)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
+     *   ->withCustomer(...)
      *   ->withIsPartial(...)
      *   ->withPaymentID(...)
      *   ->withRefundID(...)
@@ -132,6 +142,7 @@ final class Refund implements BaseModel
     public static function with(
         string $businessID,
         \DateTimeInterface $createdAt,
+        CustomerLimitedDetails $customer,
         bool $isPartial,
         string $paymentID,
         string $refundID,
@@ -144,6 +155,7 @@ final class Refund implements BaseModel
 
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
+        $obj->customer = $customer;
         $obj->isPartial = $isPartial;
         $obj->paymentID = $paymentID;
         $obj->refundID = $refundID;
@@ -174,6 +186,17 @@ final class Refund implements BaseModel
     {
         $obj = clone $this;
         $obj->createdAt = $createdAt;
+
+        return $obj;
+    }
+
+    /**
+     * Details about the customer for this refund (from the associated payment).
+     */
+    public function withCustomer(CustomerLimitedDetails $customer): self
+    {
+        $obj = clone $this;
+        $obj->customer = $customer;
 
         return $obj;
     }

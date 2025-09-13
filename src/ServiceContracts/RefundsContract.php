@@ -10,6 +10,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams\Status;
+use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 
 use const Dodopayments\Core\OMIT as omit;
@@ -83,7 +84,7 @@ interface RefundsContract
      * @param int $pageSize Page size default is 10 max is 100
      * @param Status|value-of<Status> $status Filter by status
      *
-     * @return DefaultPageNumberPagination<Refund>
+     * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */
@@ -102,7 +103,7 @@ interface RefundsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return DefaultPageNumberPagination<Refund>
+     * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */

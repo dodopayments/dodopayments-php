@@ -2,34 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\WebhookEvents\WebhookPayload\Data;
+namespace Dodopayments\Refunds;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\Refunds\RefundStatus;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
 
 /**
- * @phpstan-type refund_alias = array{
+ * @phpstan-type refund_list_response = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   customer: CustomerLimitedDetails,
  *   isPartial: bool,
  *   paymentID: string,
  *   refundID: string,
  *   status: value-of<RefundStatus>,
  *   amount?: int|null,
- *   currency?: value-of<Currency>,
+ *   currency?: value-of<Currency>|null,
  *   reason?: string|null,
- *   payloadType: value-of<PayloadType>,
  * }
+ * When used in a response, this type parameter can define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
-final class Refund implements BaseModel
+final class RefundListResponse implements BaseModel
 {
-    /** @use SdkModel<refund_alias> */
+    /** @use SdkModel<refund_list_response> */
     use SdkModel;
 
     /**
@@ -43,9 +42,6 @@ final class Refund implements BaseModel
      */
     #[Api('created_at')]
     public \DateTimeInterface $createdAt;
-
-    #[Api]
-    public CustomerLimitedDetails $customer;
 
     /**
      * If true the refund is a partial refund.
@@ -65,7 +61,11 @@ final class Refund implements BaseModel
     #[Api('refund_id')]
     public string $refundID;
 
-    /** @var value-of<RefundStatus> $status */
+    /**
+     * The current status of the refund.
+     *
+     * @var value-of<RefundStatus> $status
+     */
     #[Api(enum: RefundStatus::class)]
     public string $status;
 
@@ -75,8 +75,12 @@ final class Refund implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?int $amount;
 
-    /** @var value-of<Currency>|null $currency */
-    #[Api(enum: Currency::class, optional: true)]
+    /**
+     * The currency of the refund, represented as an ISO 4217 currency code.
+     *
+     * @var value-of<Currency>|null $currency
+     */
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
     public ?string $currency;
 
     /**
@@ -85,39 +89,31 @@ final class Refund implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?string $reason;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Api('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
-     * `new Refund()` is missing required properties by the API.
+     * `new RefundListResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Refund::with(
+     * RefundListResponse::with(
      *   businessID: ...,
      *   createdAt: ...,
-     *   customer: ...,
      *   isPartial: ...,
      *   paymentID: ...,
      *   refundID: ...,
      *   status: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Refund)
+     * (new RefundListResponse)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
-     *   ->withCustomer(...)
      *   ->withIsPartial(...)
      *   ->withPaymentID(...)
      *   ->withRefundID(...)
      *   ->withStatus(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -131,18 +127,15 @@ final class Refund implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param RefundStatus|value-of<RefundStatus> $status
-     * @param PayloadType|value-of<PayloadType> $payloadType
-     * @param Currency|value-of<Currency> $currency
+     * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
         string $businessID,
         \DateTimeInterface $createdAt,
-        CustomerLimitedDetails $customer,
         bool $isPartial,
         string $paymentID,
         string $refundID,
         RefundStatus|string $status,
-        PayloadType|string $payloadType,
         ?int $amount = null,
         Currency|string|null $currency = null,
         ?string $reason = null,
@@ -151,12 +144,10 @@ final class Refund implements BaseModel
 
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
-        $obj->customer = $customer;
         $obj->isPartial = $isPartial;
         $obj->paymentID = $paymentID;
         $obj->refundID = $refundID;
         $obj->status = $status instanceof RefundStatus ? $status->value : $status;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
 
         null !== $amount && $obj->amount = $amount;
         null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
@@ -183,14 +174,6 @@ final class Refund implements BaseModel
     {
         $obj = clone $this;
         $obj->createdAt = $createdAt;
-
-        return $obj;
-    }
-
-    public function withCustomer(CustomerLimitedDetails $customer): self
-    {
-        $obj = clone $this;
-        $obj->customer = $customer;
 
         return $obj;
     }
@@ -229,6 +212,8 @@ final class Refund implements BaseModel
     }
 
     /**
+     * The current status of the refund.
+     *
      * @param RefundStatus|value-of<RefundStatus> $status
      */
     public function withStatus(RefundStatus|string $status): self
@@ -251,9 +236,11 @@ final class Refund implements BaseModel
     }
 
     /**
-     * @param Currency|value-of<Currency> $currency
+     * The currency of the refund, represented as an ISO 4217 currency code.
+     *
+     * @param Currency|value-of<Currency>|null $currency
      */
-    public function withCurrency(Currency|string $currency): self
+    public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
         $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
@@ -268,17 +255,6 @@ final class Refund implements BaseModel
     {
         $obj = clone $this;
         $obj->reason = $reason;
-
-        return $obj;
-    }
-
-    /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
-     */
-    public function withPayloadType(PayloadType|string $payloadType): self
-    {
-        $obj = clone $this;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
 
         return $obj;
     }
