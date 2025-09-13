@@ -10,11 +10,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 
 /**
- * @phpstan-type dispute_alias = array{payloadType: value-of<PayloadType>}
+ * @phpstan-type unnamed_type_with_intersection_parent3 = array{
+ *   payloadType: value-of<PayloadType>
+ * }
  */
 final class Dispute implements BaseModel
 {
-    /** @use SdkModel<dispute_alias> */
+    /** @use SdkModel<unnamed_type_with_intersection_parent3> */
     use SdkModel;
 
     /** @var value-of<PayloadType> $payloadType */

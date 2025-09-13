@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
@@ -38,7 +39,7 @@ final class ProductsService implements ProductsContract
      */
     public function __construct(private Client $client)
     {
-        $this->images = new ImagesService($this->client);
+        $this->images = new ImagesService($client);
     }
 
     /**
@@ -60,6 +61,8 @@ final class ProductsService implements ProductsContract
      * Defaults to false
      * @param array<string, string> $metadata Additional metadata for the product
      * @param string|null $name Optional name of the product
+     *
+     * @return Product<HasRawResponse>
      */
     public function create(
         $price,
@@ -106,6 +109,8 @@ final class ProductsService implements ProductsContract
 
     /**
      * @api
+     *
+     * @return Product<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -275,6 +280,8 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param string $fileName
+     *
+     * @return ProductUpdateFilesResponse<HasRawResponse>
      */
     public function updateFiles(
         string $id,

@@ -10,11 +10,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type feature_flags = array{
- *   allowCurrencySelection?: bool|null,
- *   allowDiscountCode?: bool|null,
- *   allowPhoneNumberCollection?: bool|null,
- *   allowTaxID?: bool|null,
- *   alwaysCreateNewCustomer?: bool|null,
+ *   allowCurrencySelection?: bool,
+ *   allowDiscountCode?: bool,
+ *   allowPhoneNumberCollection?: bool,
+ *   allowTaxID?: bool,
+ *   alwaysCreateNewCustomer?: bool,
  * }
  */
 final class FeatureFlags implements BaseModel

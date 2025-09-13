@@ -12,6 +12,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type checkout_session_response = array{
  *   checkoutURL: string, sessionID: string
  * }
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class CheckoutSessionResponse implements BaseModel
 {

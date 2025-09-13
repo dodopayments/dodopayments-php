@@ -10,11 +10,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
 
 /**
- * @phpstan-type refund_alias = array{payloadType: value-of<PayloadType>}
+ * @phpstan-type unnamed_type_with_intersection_parent2 = array{
+ *   payloadType: value-of<PayloadType>
+ * }
  */
 final class Refund implements BaseModel
 {
-    /** @use SdkModel<refund_alias> */
+    /** @use SdkModel<unnamed_type_with_intersection_parent2> */
     use SdkModel;
 
     /** @var value-of<PayloadType> $payloadType */

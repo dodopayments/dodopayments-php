@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerListParams;
@@ -28,7 +29,7 @@ final class CustomersService implements CustomersContract
      */
     public function __construct(private Client $client)
     {
-        $this->customerPortal = new CustomerPortalService($this->client);
+        $this->customerPortal = new CustomerPortalService($client);
     }
 
     /**
@@ -37,6 +38,8 @@ final class CustomersService implements CustomersContract
      * @param string $email
      * @param string $name
      * @param string|null $phoneNumber
+     *
+     * @return Customer<HasRawResponse>
      */
     public function create(
         $email,
@@ -61,6 +64,8 @@ final class CustomersService implements CustomersContract
 
     /**
      * @api
+     *
+     * @return Customer<HasRawResponse>
      */
     public function retrieve(
         string $customerID,
@@ -80,6 +85,8 @@ final class CustomersService implements CustomersContract
      *
      * @param string|null $name
      * @param string|null $phoneNumber
+     *
+     * @return Customer<HasRawResponse>
      */
     public function update(
         string $customerID,

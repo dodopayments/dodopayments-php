@@ -7,6 +7,7 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Brands\Brand;
 use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 
 use const Dodopayments\Core\OMIT as omit;
@@ -21,6 +22,8 @@ interface BrandsContract
      * @param string|null $statementDescriptor
      * @param string|null $supportEmail
      * @param string|null $url
+     *
+     * @return Brand<HasRawResponse>
      */
     public function create(
         $description = omit,
@@ -33,6 +36,8 @@ interface BrandsContract
 
     /**
      * @api
+     *
+     * @return Brand<HasRawResponse>
      */
     public function retrieve(
         string $id,
@@ -46,6 +51,8 @@ interface BrandsContract
      * @param string|null $name
      * @param string|null $statementDescriptor
      * @param string|null $supportEmail
+     *
+     * @return Brand<HasRawResponse>
      */
     public function update(
         string $id,
@@ -58,6 +65,8 @@ interface BrandsContract
 
     /**
      * @api
+     *
+     * @return BrandListResponse<HasRawResponse>
      */
     public function list(
         ?RequestOptions $requestOptions = null
@@ -65,6 +74,8 @@ interface BrandsContract
 
     /**
      * @api
+     *
+     * @return BrandUpdateImagesResponse<HasRawResponse>
      */
     public function updateImages(
         string $id,

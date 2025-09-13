@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\WebhooksContract;
@@ -30,7 +31,7 @@ final class WebhooksService implements WebhooksContract
      */
     public function __construct(private Client $client)
     {
-        $this->headers = new HeadersService($this->client);
+        $this->headers = new HeadersService($client);
     }
 
     /**
@@ -51,6 +52,8 @@ final class WebhooksService implements WebhooksContract
      * @param array<string, string>|null $metadata Metadata to be passed to the webhook
      * Defaut is {}
      * @param int|null $rateLimit
+     *
+     * @return WebhookDetails<HasRawResponse>
      */
     public function create(
         $url,
@@ -91,6 +94,8 @@ final class WebhooksService implements WebhooksContract
      * @api
      *
      * Get a webhook by id
+     *
+     * @return WebhookDetails<HasRawResponse>
      */
     public function retrieve(
         string $webhookID,
@@ -118,6 +123,8 @@ final class WebhooksService implements WebhooksContract
      * @param array<string, string>|null $metadata Metadata
      * @param int|null $rateLimit Rate limit
      * @param string|null $url Url endpoint
+     *
+     * @return WebhookDetails<HasRawResponse>
      */
     public function update(
         string $webhookID,
@@ -204,6 +211,8 @@ final class WebhooksService implements WebhooksContract
      * @api
      *
      * Get webhook secret by id
+     *
+     * @return WebhookGetSecretResponse<HasRawResponse>
      */
     public function retrieveSecret(
         string $webhookID,

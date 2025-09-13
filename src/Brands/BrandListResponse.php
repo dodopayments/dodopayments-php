@@ -10,6 +10,10 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type brand_list_response = array{items: list<Brand>}
+ * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * @template TRawResponse of object = object{}
+ *
+ * @mixin TRawResponse
  */
 final class BrandListResponse implements BaseModel
 {

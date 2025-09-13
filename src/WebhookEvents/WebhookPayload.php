@@ -16,7 +16,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 /**
  * @phpstan-type webhook_payload = array{
  *   businessID: string,
- *   data: Payment|Subscription|Refund|Dispute|LicenseKey,
+ *   data: STAINLESS_FIXME_payment_alias|STAINLESS_FIXME_subscription_alias|STAINLESS_FIXME_refund_alias|STAINLESS_FIXME_dispute_alias|STAINLESS_FIXME_license_key,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<WebhookEventType>,
  * }

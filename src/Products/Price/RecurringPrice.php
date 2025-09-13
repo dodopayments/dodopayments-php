@@ -25,7 +25,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   subscriptionPeriodInterval: value-of<TimeInterval>,
  *   type: value-of<Type>,
  *   taxInclusive?: bool|null,
- *   trialPeriodDays?: int|null,
+ *   trialPeriodDays?: int,
  * }
  */
 final class RecurringPrice implements BaseModel

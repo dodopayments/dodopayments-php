@@ -12,11 +12,13 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type subscription_alias = array{payloadType: value-of<PayloadType>}
+ * @phpstan-type unnamed_type_with_intersection_parent1 = array{
+ *   payloadType: value-of<PayloadType>
+ * }
  */
 final class Subscription implements BaseModel
 {
-    /** @use SdkModel<subscription_alias> */
+    /** @use SdkModel<unnamed_type_with_intersection_parent1> */
     use SdkModel;
 
     /** @var value-of<PayloadType> $payloadType */

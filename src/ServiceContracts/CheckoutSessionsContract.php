@@ -10,6 +10,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
@@ -42,6 +43,8 @@ interface CheckoutSessionsContract
      * @param string|null $returnURL the url to redirect after payment failure or success
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
      * @param SubscriptionData|null $subscriptionData
+     *
+     * @return CheckoutSessionResponse<HasRawResponse>
      */
     public function create(
         $productCart,

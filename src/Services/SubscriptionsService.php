@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -68,6 +69,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param int|null $trialPeriodDays Optional trial period in days
      * If specified, this value overrides the trial period set in the product's price
      * Must be between 0 and 10000 days
+     *
+     * @return SubscriptionNewResponse<HasRawResponse>
      */
     public function create(
         $billing,
@@ -120,6 +123,8 @@ final class SubscriptionsService implements SubscriptionsContract
 
     /**
      * @api
+     *
+     * @return Subscription<HasRawResponse>
      */
     public function retrieve(
         string $subscriptionID,
@@ -144,6 +149,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param \DateTimeInterface|null $nextBillingDate
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      * @param string|null $taxID
+     *
+     * @return Subscription<HasRawResponse>
      */
     public function update(
         string $subscriptionID,
@@ -275,6 +282,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param Currency|value-of<Currency>|null $productCurrency Optional currency of the product price. If not specified, defaults to the currency of the product.
      * @param string|null $productDescription Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
+     *
+     * @return SubscriptionChargeResponse<HasRawResponse>
      */
     public function charge(
         string $subscriptionID,

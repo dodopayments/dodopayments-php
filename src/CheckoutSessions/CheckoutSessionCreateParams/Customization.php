@@ -13,9 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * Customization for the checkout session page.
  *
  * @phpstan-type customization_alias = array{
- *   showOnDemandTag?: bool|null,
- *   showOrderDetails?: bool|null,
- *   theme?: value-of<Theme>|null,
+ *   showOnDemandTag?: bool, showOrderDetails?: bool, theme?: value-of<Theme>
  * }
  */
 final class Customization implements BaseModel

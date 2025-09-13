@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
@@ -29,6 +30,8 @@ final class RefundsService implements RefundsContract
      * @param string $paymentID the unique identifier of the payment to be refunded
      * @param list<Item>|null $items Partially Refund an Individual Item
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
+     *
+     * @return Refund<HasRawResponse>
      */
     public function create(
         $paymentID,
@@ -53,6 +56,8 @@ final class RefundsService implements RefundsContract
 
     /**
      * @api
+     *
+     * @return Refund<HasRawResponse>
      */
     public function retrieve(
         string $refundID,
