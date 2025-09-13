@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -48,6 +49,8 @@ interface PaymentsContract
      * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
      *
      * @return PaymentNewResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $billing,
@@ -67,10 +70,39 @@ interface PaymentsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return PaymentNewResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): PaymentNewResponse;
+
+    /**
+     * @api
+     *
      * @return Payment<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $paymentID,
+        ?RequestOptions $requestOptions = null
+    ): Payment;
+
+    /**
+     * @api
+     *
+     * @return Payment<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $paymentID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Payment;
 
@@ -87,6 +119,8 @@ interface PaymentsContract
      * @param string $subscriptionID Filter by subscription id
      *
      * @return DefaultPageNumberPagination<PaymentListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $brandID = omit,
@@ -103,10 +137,39 @@ interface PaymentsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<PaymentListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
      * @return PaymentGetLineItemsResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieveLineItems(
         string $paymentID,
+        ?RequestOptions $requestOptions = null
+    ): PaymentGetLineItemsResponse;
+
+    /**
+     * @api
+     *
+     * @return PaymentGetLineItemsResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveLineItemsRaw(
+        string $paymentID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): PaymentGetLineItemsResponse;
 }

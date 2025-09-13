@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
@@ -43,6 +44,8 @@ interface ProductsContract
      * @param string|null $name Optional name of the product
      *
      * @return Product<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $price,
@@ -63,10 +66,39 @@ interface ProductsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return Product<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Product;
+
+    /**
+     * @api
+     *
+     * @return Product<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): Product;
+
+    /**
+     * @api
+     *
+     * @return Product<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Product;
 
@@ -98,6 +130,8 @@ interface ProductsContract
      * @param string|null $name name of the product, optional and must be at most 100 characters
      * @param OneTimePrice|RecurringPrice|UsageBasedPrice|null $price price details of the product
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the product
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
@@ -120,6 +154,19 @@ interface ProductsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
      * @param bool $archived List archived products
      * @param string $brandID filter by Brand id
      * @param int $pageNumber Page number default is 0
@@ -130,6 +177,8 @@ interface ProductsContract
      * - `null` or absent: Show both types of products
      *
      * @return DefaultPageNumberPagination<ProductListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $archived = omit,
@@ -142,6 +191,22 @@ interface ProductsContract
 
     /**
      * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<ProductListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @throws APIException
      */
     public function archive(
         string $id,
@@ -150,6 +215,19 @@ interface ProductsContract
 
     /**
      * @api
+     *
+     * @throws APIException
+     */
+    public function archiveRaw(
+        string $id,
+        mixed $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
+     * @throws APIException
      */
     public function unarchive(
         string $id,
@@ -159,13 +237,41 @@ interface ProductsContract
     /**
      * @api
      *
+     * @throws APIException
+     */
+    public function unarchiveRaw(
+        string $id,
+        mixed $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
      * @param string $fileName
      *
      * @return ProductUpdateFilesResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function updateFiles(
         string $id,
         $fileName,
+        ?RequestOptions $requestOptions = null
+    ): ProductUpdateFilesResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return ProductUpdateFilesResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateFilesRaw(
+        string $id,
+        array $params,
         ?RequestOptions $requestOptions = null
     ): ProductUpdateFilesResponse;
 }

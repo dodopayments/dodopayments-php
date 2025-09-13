@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
@@ -26,6 +27,8 @@ interface MetersContract
      * @param MeterFilter|null $filter Optional filter to apply to the meter
      *
      * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $aggregation,
@@ -40,10 +43,39 @@ interface MetersContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Meter;
+
+    /**
+     * @api
+     *
+     * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): Meter;
+
+    /**
+     * @api
+     *
+     * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Meter;
 
@@ -55,6 +87,8 @@ interface MetersContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<Meter>
+     *
+     * @throws APIException
      */
     public function list(
         $archived = omit,
@@ -65,6 +99,22 @@ interface MetersContract
 
     /**
      * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Meter>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @throws APIException
      */
     public function archive(
         string $id,
@@ -73,9 +123,33 @@ interface MetersContract
 
     /**
      * @api
+     *
+     * @throws APIException
+     */
+    public function archiveRaw(
+        string $id,
+        mixed $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
+     * @throws APIException
      */
     public function unarchive(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function unarchiveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed;
 }

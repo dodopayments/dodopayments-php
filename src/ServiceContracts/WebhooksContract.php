@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
@@ -33,6 +34,8 @@ interface WebhooksContract
      * @param int|null $rateLimit
      *
      * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $url,
@@ -49,10 +52,39 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): WebhookDetails;
+
+    /**
+     * @api
+     *
+     * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookDetails;
+
+    /**
+     * @api
+     *
+     * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $webhookID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails;
 
@@ -69,6 +101,8 @@ interface WebhooksContract
      * @param string|null $url Url endpoint
      *
      * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $webhookID,
@@ -84,10 +118,27 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $webhookID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): WebhookDetails;
+
+    /**
+     * @api
+     *
      * @param string|null $iterator The iterator returned from a prior invocation
      * @param int|null $limit Limit the number of returned items
      *
      * @return CursorPagePagination<WebhookDetails>
+     *
+     * @throws APIException
      */
     public function list(
         $iterator = omit,
@@ -97,6 +148,22 @@ interface WebhooksContract
 
     /**
      * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return CursorPagePagination<WebhookDetails>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): CursorPagePagination;
+
+    /**
+     * @api
+     *
+     * @throws APIException
      */
     public function delete(
         string $webhookID,
@@ -106,10 +173,36 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $webhookID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
      * @return WebhookGetSecretResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieveSecret(
         string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookGetSecretResponse;
+
+    /**
+     * @api
+     *
+     * @return WebhookGetSecretResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveSecretRaw(
+        string $webhookID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse;
 }

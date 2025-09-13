@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\Licenses\LicenseActivateParams;
@@ -30,14 +31,34 @@ final class LicensesService implements LicensesContract
      * @param string $name
      *
      * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function activate(
         $licenseKey,
         $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
+        $params = ['licenseKey' => $licenseKey, 'name' => $name];
+
+        return $this->activateRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function activateRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKeyInstance {
         [$parsed, $options] = LicenseActivateParams::parseRequest(
-            ['licenseKey' => $licenseKey, 'name' => $name],
+            $params,
             $requestOptions
         );
 
@@ -56,18 +77,36 @@ final class LicensesService implements LicensesContract
      *
      * @param string $licenseKey
      * @param string $licenseKeyInstanceID
+     *
+     * @throws APIException
      */
     public function deactivate(
         $licenseKey,
         $licenseKeyInstanceID,
         ?RequestOptions $requestOptions = null
     ): mixed {
+        $params = [
+            'licenseKey' => $licenseKey,
+            'licenseKeyInstanceID' => $licenseKeyInstanceID,
+        ];
+
+        return $this->deactivateRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function deactivateRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
         [$parsed, $options] = LicenseDeactivateParams::parseRequest(
-            [
-                'licenseKey' => $licenseKey,
-                'licenseKeyInstanceID' => $licenseKeyInstanceID,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -87,18 +126,38 @@ final class LicensesService implements LicensesContract
      * @param string|null $licenseKeyInstanceID
      *
      * @return LicenseValidateResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validate(
         $licenseKey,
         $licenseKeyInstanceID = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
+        $params = [
+            'licenseKey' => $licenseKey,
+            'licenseKeyInstanceID' => $licenseKeyInstanceID,
+        ];
+
+        return $this->validateRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseValidateResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LicenseValidateResponse {
         [$parsed, $options] = LicenseValidateParams::parseRequest(
-            [
-                'licenseKey' => $licenseKey,
-                'licenseKeyInstanceID' => $licenseKeyInstanceID,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
