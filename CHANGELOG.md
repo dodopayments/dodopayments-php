@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.53.3 (2025-09-13)
+
+Full Changelog: [v1.53.2...v1.53.3](https://github.com/dodopayments/dodopayments-php/compare/v1.53.2...v1.53.3)
+
+### Features
+
+* **api:** added typescript sdk for migration and updated org info ([3348900](https://github.com/dodopayments/dodopayments-php/commit/334890023290025fee15fcaec7b633acb4aea6cc))
+
 ## 1.53.2 (2025-09-13)
 
 Full Changelog: [v1.53.0...v1.53.2](https://github.com/dodopayments/dodopayments-php/compare/v1.53.0...v1.53.2)
