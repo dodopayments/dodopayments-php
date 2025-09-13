@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
@@ -23,6 +24,8 @@ interface RefundsContract
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      *
      * @return Refund<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $paymentID,
@@ -34,10 +37,39 @@ interface RefundsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
      * @return Refund<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Refund;
+
+    /**
+     * @api
+     *
+     * @return Refund<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $refundID,
+        ?RequestOptions $requestOptions = null
+    ): Refund;
+
+    /**
+     * @api
+     *
+     * @return Refund<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $refundID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Refund;
 
@@ -52,6 +84,8 @@ interface RefundsContract
      * @param Status|value-of<Status> $status Filter by status
      *
      * @return DefaultPageNumberPagination<Refund>
+     *
+     * @throws APIException
      */
     public function list(
         $createdAtGte = omit,
@@ -61,5 +95,19 @@ interface RefundsContract
         $pageSize = omit,
         $status = omit,
         ?RequestOptions $requestOptions = null,
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Refund>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 }

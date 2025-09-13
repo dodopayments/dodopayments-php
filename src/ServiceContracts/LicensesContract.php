@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\Licenses\LicenseValidateResponse;
@@ -20,6 +21,8 @@ interface LicensesContract
      * @param string $name
      *
      * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function activate(
         $licenseKey,
@@ -30,8 +33,24 @@ interface LicensesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseKeyInstance<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function activateRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKeyInstance;
+
+    /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string $licenseKeyInstanceID
+     *
+     * @throws APIException
      */
     public function deactivate(
         $licenseKey,
@@ -42,14 +61,42 @@ interface LicensesContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function deactivateRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
      * @param string $licenseKey
      * @param string|null $licenseKeyInstanceID
      *
      * @return LicenseValidateResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function validate(
         $licenseKey,
         $licenseKeyInstanceID = omit,
         ?RequestOptions $requestOptions = null,
+    ): LicenseValidateResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseValidateResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function validateRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): LicenseValidateResponse;
 }

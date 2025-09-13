@@ -12,6 +12,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -53,6 +54,8 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param SubscriptionData|null $subscriptionData
      *
      * @return CheckoutSessionResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $productCart,
@@ -70,23 +73,41 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         $subscriptionData = omit,
         ?RequestOptions $requestOptions = null,
     ): CheckoutSessionResponse {
+        $params = [
+            'productCart' => $productCart,
+            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+            'billingAddress' => $billingAddress,
+            'billingCurrency' => $billingCurrency,
+            'confirm' => $confirm,
+            'customer' => $customer,
+            'customization' => $customization,
+            'discountCode' => $discountCode,
+            'featureFlags' => $featureFlags,
+            'metadata' => $metadata,
+            'returnURL' => $returnURL,
+            'showSavedPaymentMethods' => $showSavedPaymentMethods,
+            'subscriptionData' => $subscriptionData,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return CheckoutSessionResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): CheckoutSessionResponse {
         [$parsed, $options] = CheckoutSessionCreateParams::parseRequest(
-            [
-                'productCart' => $productCart,
-                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-                'billingAddress' => $billingAddress,
-                'billingCurrency' => $billingCurrency,
-                'confirm' => $confirm,
-                'customer' => $customer,
-                'customization' => $customization,
-                'discountCode' => $discountCode,
-                'featureFlags' => $featureFlags,
-                'metadata' => $metadata,
-                'returnURL' => $returnURL,
-                'showSavedPaymentMethods' => $showSavedPaymentMethods,
-                'subscriptionData' => $subscriptionData,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

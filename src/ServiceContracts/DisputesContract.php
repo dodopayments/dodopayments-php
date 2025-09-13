@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
@@ -20,9 +21,24 @@ interface DisputesContract
      * @api
      *
      * @return GetDispute<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $disputeID,
+        ?RequestOptions $requestOptions = null
+    ): GetDispute;
+
+    /**
+     * @api
+     *
+     * @return GetDispute<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $disputeID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): GetDispute;
 
@@ -38,6 +54,8 @@ interface DisputesContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<DisputeListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $createdAtGte = omit,
@@ -48,5 +66,19 @@ interface DisputesContract
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<DisputeListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
@@ -27,14 +28,34 @@ final class PayoutsService implements PayoutsContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<PayoutListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $pageNumber = omit,
         $pageSize = omit,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
+        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<PayoutListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = PayoutListParams::parseRequest(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize],
+            $params,
             $requestOptions
         );
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
@@ -19,9 +20,24 @@ interface UsageEventsContract
      * @api
      *
      * @return Event<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $eventID,
+        ?RequestOptions $requestOptions = null
+    ): Event;
+
+    /**
+     * @api
+     *
+     * @return Event<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $eventID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Event;
 
@@ -37,6 +53,8 @@ interface UsageEventsContract
      * @param \DateTimeInterface $start Filter events created after this timestamp
      *
      * @return DefaultPageNumberPagination<Event>
+     *
+     * @throws APIException
      */
     public function list(
         $customerID = omit,
@@ -52,12 +70,42 @@ interface UsageEventsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Event>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
      * @param list<EventInput> $events List of events to be pushed
      *
      * @return UsageEventIngestResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function ingest(
         $events,
+        ?RequestOptions $requestOptions = null
+    ): UsageEventIngestResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UsageEventIngestResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function ingestRaw(
+        array $params,
         ?RequestOptions $requestOptions = null
     ): UsageEventIngestResponse;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
@@ -50,9 +51,28 @@ final class UsageEventsService implements UsageEventsContract
      * ```
      *
      * @return Event<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $eventID,
+        ?RequestOptions $requestOptions = null
+    ): Event {
+        $params = [];
+
+        return $this->retrieveRaw($eventID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return Event<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $eventID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Event {
         // @phpstan-ignore-next-line;
@@ -102,6 +122,8 @@ final class UsageEventsService implements UsageEventsContract
      * @param \DateTimeInterface $start Filter events created after this timestamp
      *
      * @return DefaultPageNumberPagination<Event>
+     *
+     * @throws APIException
      */
     public function list(
         $customerID = omit,
@@ -113,17 +135,35 @@ final class UsageEventsService implements UsageEventsContract
         $start = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'customerID' => $customerID,
+            'end' => $end,
+            'eventName' => $eventName,
+            'meterID' => $meterID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'start' => $start,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Event>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = UsageEventListParams::parseRequest(
-            [
-                'customerID' => $customerID,
-                'end' => $end,
-                'eventName' => $eventName,
-                'meterID' => $meterID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'start' => $start,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -175,13 +215,33 @@ final class UsageEventsService implements UsageEventsContract
      * @param list<EventInput> $events List of events to be pushed
      *
      * @return UsageEventIngestResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function ingest(
         $events,
         ?RequestOptions $requestOptions = null
     ): UsageEventIngestResponse {
+        $params = ['events' => $events];
+
+        return $this->ingestRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return UsageEventIngestResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function ingestRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): UsageEventIngestResponse {
         [$parsed, $options] = UsageEventIngestParams::parseRequest(
-            ['events' => $events],
+            $params,
             $requestOptions
         );
 

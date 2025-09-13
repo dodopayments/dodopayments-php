@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
@@ -27,9 +28,28 @@ final class LicenseKeysService implements LicenseKeysContract
      * @api
      *
      * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKey {
+        $params = [];
+
+        return $this->retrieveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): LicenseKey {
         // @phpstan-ignore-next-line;
@@ -52,6 +72,8 @@ final class LicenseKeysService implements LicenseKeysContract
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      *
      * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $id,
@@ -60,13 +82,32 @@ final class LicenseKeysService implements LicenseKeysContract
         $expiresAt = omit,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
+        $params = [
+            'activationsLimit' => $activationsLimit,
+            'disabled' => $disabled,
+            'expiresAt' => $expiresAt,
+        ];
+
+        return $this->updateRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return LicenseKey<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $id,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): LicenseKey {
         [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
-            [
-                'activationsLimit' => $activationsLimit,
-                'disabled' => $disabled,
-                'expiresAt' => $expiresAt,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -89,6 +130,8 @@ final class LicenseKeysService implements LicenseKeysContract
      * @param Status|value-of<Status> $status Filter by license key status
      *
      * @return DefaultPageNumberPagination<LicenseKey>
+     *
+     * @throws APIException
      */
     public function list(
         $customerID = omit,
@@ -98,15 +141,33 @@ final class LicenseKeysService implements LicenseKeysContract
         $status = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'customerID' => $customerID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'productID' => $productID,
+            'status' => $status,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<LicenseKey>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = LicenseKeyListParams::parseRequest(
-            [
-                'customerID' => $customerID,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-                'productID' => $productID,
-                'status' => $status,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

@@ -14,7 +14,7 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
  * @phpstan-type payment_get_line_items_response = array{
  *   currency: value-of<Currency>, items: list<Item>
  * }
- * When used in a response, this type parameter can be used to define a $rawResponse property.
+ * When used in a response, this type parameter can define a $rawResponse property.
  * @template TRawResponse of object = object{}
  *
  * @mixin TRawResponse

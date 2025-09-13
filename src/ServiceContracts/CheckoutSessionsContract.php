@@ -10,6 +10,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -45,6 +46,8 @@ interface CheckoutSessionsContract
      * @param SubscriptionData|null $subscriptionData
      *
      * @return CheckoutSessionResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $productCart,
@@ -61,5 +64,19 @@ interface CheckoutSessionsContract
         $showSavedPaymentMethods = omit,
         $subscriptionData = omit,
         ?RequestOptions $requestOptions = null,
+    ): CheckoutSessionResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return CheckoutSessionResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
     ): CheckoutSessionResponse;
 }

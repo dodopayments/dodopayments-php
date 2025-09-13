@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\ServiceContracts;
 
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -58,6 +59,8 @@ interface SubscriptionsContract
      * Must be between 0 and 10000 days
      *
      * @return SubscriptionNewResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $billing,
@@ -81,11 +84,40 @@ interface SubscriptionsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return SubscriptionNewResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): SubscriptionNewResponse;
+
+    /**
+     * @api
+     *
      * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $subscriptionID,
         ?RequestOptions $requestOptions = null
+    ): Subscription;
+
+    /**
+     * @api
+     *
+     * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $subscriptionID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
     ): Subscription;
 
     /**
@@ -100,6 +132,8 @@ interface SubscriptionsContract
      * @param string|null $taxID
      *
      * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $subscriptionID,
@@ -116,6 +150,21 @@ interface SubscriptionsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return Subscription<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $subscriptionID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): Subscription;
+
+    /**
+     * @api
+     *
      * @param string $brandID filter by Brand id
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
@@ -125,6 +174,8 @@ interface SubscriptionsContract
      * @param Status|value-of<Status> $status Filter by status
      *
      * @return DefaultPageNumberPagination<SubscriptionListResponse>
+     *
+     * @throws APIException
      */
     public function list(
         $brandID = omit,
@@ -140,11 +191,27 @@ interface SubscriptionsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<SubscriptionListResponse>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
      * @param string $productID Unique identifier of the product to subscribe to
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode Proration Billing Mode
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     *
+     * @throws APIException
      */
     public function changePlan(
         string $subscriptionID,
@@ -152,6 +219,19 @@ interface SubscriptionsContract
         $prorationBillingMode,
         $quantity,
         $addons = omit,
+        ?RequestOptions $requestOptions = null,
+    ): mixed;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @throws APIException
+     */
+    public function changePlanRaw(
+        string $subscriptionID,
+        array $params,
         ?RequestOptions $requestOptions = null,
     ): mixed;
 
@@ -169,6 +249,8 @@ interface SubscriptionsContract
      * If not specified, the stored description of the product will be used.
      *
      * @return SubscriptionChargeResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function charge(
         string $subscriptionID,
@@ -183,6 +265,21 @@ interface SubscriptionsContract
     /**
      * @api
      *
+     * @param array<string, mixed> $params
+     *
+     * @return SubscriptionChargeResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function chargeRaw(
+        string $subscriptionID,
+        array $params,
+        ?RequestOptions $requestOptions = null,
+    ): SubscriptionChargeResponse;
+
+    /**
+     * @api
+     *
      * @param \DateTimeInterface|null $endDate Filter by end date (inclusive)
      * @param string|null $meterID Filter by specific meter ID
      * @param int|null $pageNumber Page number (default: 0)
@@ -190,6 +287,8 @@ interface SubscriptionsContract
      * @param \DateTimeInterface|null $startDate Filter by start date (inclusive)
      *
      * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
+     *
+     * @throws APIException
      */
     public function retrieveUsageHistory(
         string $subscriptionID,
@@ -198,6 +297,21 @@ interface SubscriptionsContract
         $pageNumber = omit,
         $pageSize = omit,
         $startDate = omit,
+        ?RequestOptions $requestOptions = null,
+    ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveUsageHistoryRaw(
+        string $subscriptionID,
+        array $params,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 }

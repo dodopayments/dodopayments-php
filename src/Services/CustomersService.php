@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
@@ -40,6 +41,8 @@ final class CustomersService implements CustomersContract
      * @param string|null $phoneNumber
      *
      * @return Customer<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $email,
@@ -47,9 +50,29 @@ final class CustomersService implements CustomersContract
         $phoneNumber = omit,
         ?RequestOptions $requestOptions = null
     ): Customer {
+        $params = [
+            'email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Customer<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Customer {
         [$parsed, $options] = CustomerCreateParams::parseRequest(
-            ['email' => $email, 'name' => $name, 'phoneNumber' => $phoneNumber],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -66,9 +89,28 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @return Customer<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $customerID,
+        ?RequestOptions $requestOptions = null
+    ): Customer {
+        $params = [];
+
+        return $this->retrieveRaw($customerID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return Customer<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $customerID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Customer {
         // @phpstan-ignore-next-line;
@@ -87,6 +129,8 @@ final class CustomersService implements CustomersContract
      * @param string|null $phoneNumber
      *
      * @return Customer<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $customerID,
@@ -94,8 +138,27 @@ final class CustomersService implements CustomersContract
         $phoneNumber = omit,
         ?RequestOptions $requestOptions = null,
     ): Customer {
+        $params = ['name' => $name, 'phoneNumber' => $phoneNumber];
+
+        return $this->updateRaw($customerID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Customer<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $customerID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Customer {
         [$parsed, $options] = CustomerUpdateParams::parseRequest(
-            ['name' => $name, 'phoneNumber' => $phoneNumber],
+            $params,
             $requestOptions
         );
 
@@ -117,6 +180,8 @@ final class CustomersService implements CustomersContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<Customer>
+     *
+     * @throws APIException
      */
     public function list(
         $email = omit,
@@ -124,9 +189,29 @@ final class CustomersService implements CustomersContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Customer>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = CustomerListParams::parseRequest(
-            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;

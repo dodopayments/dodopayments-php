@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
@@ -35,6 +36,8 @@ final class MetersService implements MetersContract
      * @param MeterFilter|null $filter Optional filter to apply to the meter
      *
      * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $aggregation,
@@ -45,16 +48,34 @@ final class MetersService implements MetersContract
         $filter = omit,
         ?RequestOptions $requestOptions = null,
     ): Meter {
+        $params = [
+            'aggregation' => $aggregation,
+            'eventName' => $eventName,
+            'measurementUnit' => $measurementUnit,
+            'name' => $name,
+            'description' => $description,
+            'filter' => $filter,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): Meter {
         [$parsed, $options] = MeterCreateParams::parseRequest(
-            [
-                'aggregation' => $aggregation,
-                'eventName' => $eventName,
-                'measurementUnit' => $measurementUnit,
-                'name' => $name,
-                'description' => $description,
-                'filter' => $filter,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -71,9 +92,28 @@ final class MetersService implements MetersContract
      * @api
      *
      * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): Meter {
+        $params = [];
+
+        return $this->retrieveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return Meter<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Meter {
         // @phpstan-ignore-next-line;
@@ -93,6 +133,8 @@ final class MetersService implements MetersContract
      * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<Meter>
+     *
+     * @throws APIException
      */
     public function list(
         $archived = omit,
@@ -100,13 +142,31 @@ final class MetersService implements MetersContract
         $pageSize = omit,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
+        $params = [
+            'archived' => $archived,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return DefaultPageNumberPagination<Meter>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): DefaultPageNumberPagination {
         [$parsed, $options] = MeterListParams::parseRequest(
-            [
-                'archived' => $archived,
-                'pageNumber' => $pageNumber,
-                'pageSize' => $pageSize,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -122,9 +182,26 @@ final class MetersService implements MetersContract
 
     /**
      * @api
+     *
+     * @throws APIException
      */
     public function archive(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
+        $params = [];
+
+        return $this->archiveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function archiveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line;
@@ -138,9 +215,26 @@ final class MetersService implements MetersContract
 
     /**
      * @api
+     *
+     * @throws APIException
      */
     public function unarchive(
         string $id,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
+        $params = [];
+
+        return $this->unarchiveRaw($id, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function unarchiveRaw(
+        string $id,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line;

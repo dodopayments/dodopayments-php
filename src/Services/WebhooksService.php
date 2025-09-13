@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
@@ -54,6 +55,8 @@ final class WebhooksService implements WebhooksContract
      * @param int|null $rateLimit
      *
      * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function create(
         $url,
@@ -66,18 +69,36 @@ final class WebhooksService implements WebhooksContract
         $rateLimit = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
+        $params = [
+            'url' => $url,
+            'description' => $description,
+            'disabled' => $disabled,
+            'filterTypes' => $filterTypes,
+            'headers' => $headers,
+            'idempotencyKey' => $idempotencyKey,
+            'metadata' => $metadata,
+            'rateLimit' => $rateLimit,
+        ];
+
+        return $this->createRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function createRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): WebhookDetails {
         [$parsed, $options] = WebhookCreateParams::parseRequest(
-            [
-                'url' => $url,
-                'description' => $description,
-                'disabled' => $disabled,
-                'filterTypes' => $filterTypes,
-                'headers' => $headers,
-                'idempotencyKey' => $idempotencyKey,
-                'metadata' => $metadata,
-                'rateLimit' => $rateLimit,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -96,9 +117,28 @@ final class WebhooksService implements WebhooksContract
      * Get a webhook by id
      *
      * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieve(
         string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookDetails {
+        $params = [];
+
+        return $this->retrieveRaw($webhookID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveRaw(
+        string $webhookID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
         // @phpstan-ignore-next-line;
@@ -125,6 +165,8 @@ final class WebhooksService implements WebhooksContract
      * @param string|null $url Url endpoint
      *
      * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function update(
         string $webhookID,
@@ -136,16 +178,35 @@ final class WebhooksService implements WebhooksContract
         $url = omit,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
+        $params = [
+            'description' => $description,
+            'disabled' => $disabled,
+            'filterTypes' => $filterTypes,
+            'metadata' => $metadata,
+            'rateLimit' => $rateLimit,
+            'url' => $url,
+        ];
+
+        return $this->updateRaw($webhookID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return WebhookDetails<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function updateRaw(
+        string $webhookID,
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): WebhookDetails {
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
-            [
-                'description' => $description,
-                'disabled' => $disabled,
-                'filterTypes' => $filterTypes,
-                'metadata' => $metadata,
-                'rateLimit' => $rateLimit,
-                'url' => $url,
-            ],
-            $requestOptions,
+            $params,
+            $requestOptions
         );
 
         // @phpstan-ignore-next-line;
@@ -167,14 +228,34 @@ final class WebhooksService implements WebhooksContract
      * @param int|null $limit Limit the number of returned items
      *
      * @return CursorPagePagination<WebhookDetails>
+     *
+     * @throws APIException
      */
     public function list(
         $iterator = omit,
         $limit = omit,
         ?RequestOptions $requestOptions = null
     ): CursorPagePagination {
+        $params = ['iterator' => $iterator, 'limit' => $limit];
+
+        return $this->listRaw($params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, mixed> $params
+     *
+     * @return CursorPagePagination<WebhookDetails>
+     *
+     * @throws APIException
+     */
+    public function listRaw(
+        array $params,
+        ?RequestOptions $requestOptions = null
+    ): CursorPagePagination {
         [$parsed, $options] = WebhookListParams::parseRequest(
-            ['iterator' => $iterator, 'limit' => $limit],
+            $params,
             $requestOptions
         );
 
@@ -193,9 +274,26 @@ final class WebhooksService implements WebhooksContract
      * @api
      *
      * Delete a webhook by id
+     *
+     * @throws APIException
      */
     public function delete(
         string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): mixed {
+        $params = [];
+
+        return $this->deleteRaw($webhookID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function deleteRaw(
+        string $webhookID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line;
@@ -213,9 +311,28 @@ final class WebhooksService implements WebhooksContract
      * Get webhook secret by id
      *
      * @return WebhookGetSecretResponse<HasRawResponse>
+     *
+     * @throws APIException
      */
     public function retrieveSecret(
         string $webhookID,
+        ?RequestOptions $requestOptions = null
+    ): WebhookGetSecretResponse {
+        $params = [];
+
+        return $this->retrieveSecretRaw($webhookID, $params, $requestOptions);
+    }
+
+    /**
+     * @api
+     *
+     * @return WebhookGetSecretResponse<HasRawResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveSecretRaw(
+        string $webhookID,
+        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
         // @phpstan-ignore-next-line;
