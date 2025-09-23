@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.53.4 (2025-09-23)
+
+Full Changelog: [v1.53.3...v1.53.4](https://github.com/dodopayments/dodopayments-php/compare/v1.53.3...v1.53.4)
+
+### Chores
+
+* **docs:** update readme formatting ([7c4f4aa](https://github.com/dodopayments/dodopayments-php/commit/7c4f4aad04da0c4f13629e548aadffc2690b152d))
+
 ## 1.53.3 (2025-09-13)
 
 Full Changelog: [v1.53.2...v1.53.3](https://github.com/dodopayments/dodopayments-php/compare/v1.53.2...v1.53.3)
