@@ -145,7 +145,6 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
-
 $result = $client->checkoutSessions->create(
   productCart: [ProductCart::with(productID: "product_id", quantity: 0)],
   requestOptions: RequestOptions::with(maxRetries: 5),
