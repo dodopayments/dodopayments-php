@@ -16,7 +16,6 @@ use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
-use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDelivery1;
 use Dodopayments\RequestOptions;
 
 use const Dodopayments\Core\OMIT as omit;
@@ -108,7 +107,7 @@ interface ProductsContract
      * @param list<string>|null $addons Available Addons for subscription products
      * @param string|null $brandID
      * @param string|null $description description of the product, optional and must be at most 1000 characters
-     * @param DigitalProductDelivery1|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|null $digitalProductDelivery Choose how you would like you digital product delivered
      * @param string|null $imageID Product image id after its uploaded to S3
      * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.
      *
