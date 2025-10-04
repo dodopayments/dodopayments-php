@@ -170,15 +170,15 @@ final class RecurringPrice implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->discount = $discount;
         $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
+        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
         $obj->price = $price;
         $obj->purchasingPowerParity = $purchasingPowerParity;
         $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $obj['type'] = $type;
 
         null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
         null !== $trialPeriodDays && $obj->trialPeriodDays = $trialPeriodDays;
@@ -194,7 +194,7 @@ final class RecurringPrice implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -231,7 +231,7 @@ final class RecurringPrice implements BaseModel
         TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
+        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -282,7 +282,7 @@ final class RecurringPrice implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
+        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
         return $obj;
     }
@@ -293,7 +293,7 @@ final class RecurringPrice implements BaseModel
     public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

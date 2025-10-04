@@ -6,7 +6,9 @@ namespace Dodopayments\Licenses;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Licenses\LicenseActivateResponse\Product;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
@@ -20,15 +22,13 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   name: string,
  *   product: Product,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class LicenseActivateResponse implements BaseModel
+final class LicenseActivateResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<license_activate_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * License key instance ID.

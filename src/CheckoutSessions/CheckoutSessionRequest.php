@@ -175,9 +175,9 @@ final class CheckoutSessionRequest implements BaseModel
 
         $obj->productCart = $productCart;
 
-        null !== $allowedPaymentMethodTypes && $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
+        null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingAddress && $obj->billingAddress = $billingAddress;
-        null !== $billingCurrency && $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
+        null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
         null !== $confirm && $obj->confirm = $confirm;
         null !== $customer && $obj->customer = $customer;
         null !== $customization && $obj->customization = $customization;
@@ -216,7 +216,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?array $allowedPaymentMethodTypes
     ): self {
         $obj = clone $this;
-        $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
+        $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
 
         return $obj;
     }
@@ -241,7 +241,7 @@ final class CheckoutSessionRequest implements BaseModel
         Currency|string|null $billingCurrency
     ): self {
         $obj = clone $this;
-        $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
+        $obj['billingCurrency'] = $billingCurrency;
 
         return $obj;
     }

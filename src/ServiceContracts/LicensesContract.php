@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Licenses\LicenseActivateResponse;
 use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
@@ -20,8 +19,6 @@ interface LicensesContract
      * @param string $licenseKey
      * @param string $name
      *
-     * @return LicenseActivateResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function activate(
@@ -34,8 +31,6 @@ interface LicensesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LicenseActivateResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -76,8 +71,6 @@ interface LicensesContract
      * @param string $licenseKey
      * @param string|null $licenseKeyInstanceID
      *
-     * @return LicenseValidateResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function validate(
@@ -90,8 +83,6 @@ interface LicensesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LicenseValidateResponse<HasRawResponse>
      *
      * @throws APIException
      */

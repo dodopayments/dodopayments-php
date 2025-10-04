@@ -6,7 +6,9 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type payment_new_response = array{
@@ -20,15 +22,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   paymentLink?: string|null,
  *   productCart?: list<OneTimeProductCartItem>|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class PaymentNewResponse implements BaseModel
+final class PaymentNewResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<payment_new_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Client secret used to load Dodo checkout SDK

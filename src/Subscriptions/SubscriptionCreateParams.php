@@ -228,8 +228,8 @@ final class SubscriptionCreateParams implements BaseModel
         $obj->quantity = $quantity;
 
         null !== $addons && $obj->addons = $addons;
-        null !== $allowedPaymentMethodTypes && $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
-        null !== $billingCurrency && $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
+        null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
         null !== $discountCode && $obj->discountCode = $discountCode;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $onDemand && $obj->onDemand = $onDemand;
@@ -313,7 +313,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?array $allowedPaymentMethodTypes
     ): self {
         $obj = clone $this;
-        $obj->allowedPaymentMethodTypes = array_map(fn ($v) => $v instanceof PaymentMethodTypes ? $v->value : $v, $allowedPaymentMethodTypes);
+        $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
 
         return $obj;
     }
@@ -328,7 +328,7 @@ final class SubscriptionCreateParams implements BaseModel
         Currency|string|null $billingCurrency
     ): self {
         $obj = clone $this;
-        $obj->billingCurrency = $billingCurrency instanceof Currency ? $billingCurrency->value : $billingCurrency;
+        $obj['billingCurrency'] = $billingCurrency;
 
         return $obj;
     }

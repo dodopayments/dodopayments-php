@@ -99,7 +99,7 @@ final class Meter implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->freeThreshold = $freeThreshold;
         $obj->measurementUnit = $measurementUnit;
         $obj->meterID = $meterID;
@@ -117,7 +117,7 @@ final class Meter implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

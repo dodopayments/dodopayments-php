@@ -109,12 +109,12 @@ final class AddonUpdateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        null !== $currency && $obj['currency'] = $currency;
         null !== $description && $obj->description = $description;
         null !== $imageID && $obj->imageID = $imageID;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $taxCategory && $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        null !== $taxCategory && $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -127,7 +127,7 @@ final class AddonUpdateParams implements BaseModel
     public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -184,7 +184,7 @@ final class AddonUpdateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }

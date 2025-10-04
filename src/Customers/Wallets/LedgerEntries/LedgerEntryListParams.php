@@ -68,7 +68,7 @@ final class LedgerEntryListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        null !== $currency && $obj['currency'] = $currency;
         null !== $pageNumber && $obj->pageNumber = $pageNumber;
         null !== $pageSize && $obj->pageSize = $pageSize;
 
@@ -83,7 +83,7 @@ final class LedgerEntryListParams implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

@@ -108,7 +108,7 @@ final class SubscriptionChangePlanParams implements BaseModel
         $obj = new self;
 
         $obj->productID = $productID;
-        $obj->prorationBillingMode = $prorationBillingMode instanceof ProrationBillingMode ? $prorationBillingMode->value : $prorationBillingMode;
+        $obj['prorationBillingMode'] = $prorationBillingMode;
         $obj->quantity = $quantity;
 
         null !== $addons && $obj->addons = $addons;
@@ -136,7 +136,7 @@ final class SubscriptionChangePlanParams implements BaseModel
         ProrationBillingMode|string $prorationBillingMode
     ): self {
         $obj = clone $this;
-        $obj->prorationBillingMode = $prorationBillingMode instanceof ProrationBillingMode ? $prorationBillingMode->value : $prorationBillingMode;
+        $obj['prorationBillingMode'] = $prorationBillingMode;
 
         return $obj;
     }

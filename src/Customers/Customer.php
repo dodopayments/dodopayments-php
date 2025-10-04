@@ -6,7 +6,9 @@ namespace Dodopayments\Customers;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type customer_alias = array{
@@ -17,15 +19,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   name: string,
  *   phoneNumber?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Customer implements BaseModel
+final class Customer implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<customer_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('business_id')]
     public string $businessID;

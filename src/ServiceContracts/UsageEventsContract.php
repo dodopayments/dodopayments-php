@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\UsageEvents\Event;
@@ -19,25 +18,10 @@ interface UsageEventsContract
     /**
      * @api
      *
-     * @return Event<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $eventID,
-        ?RequestOptions $requestOptions = null
-    ): Event;
-
-    /**
-     * @api
-     *
-     * @return Event<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $eventID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Event;
 
@@ -86,8 +70,6 @@ interface UsageEventsContract
      *
      * @param list<EventInput> $events List of events to be pushed
      *
-     * @return UsageEventIngestResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function ingest(
@@ -99,8 +81,6 @@ interface UsageEventsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return UsageEventIngestResponse<HasRawResponse>
      *
      * @throws APIException
      */

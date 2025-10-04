@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Customers\Customer;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
@@ -21,8 +20,6 @@ interface CustomersContract
      * @param string $name
      * @param string|null $phoneNumber
      *
-     * @return Customer<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -37,8 +34,6 @@ interface CustomersContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Customer<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -48,8 +43,6 @@ interface CustomersContract
 
     /**
      * @api
-     *
-     * @return Customer<HasRawResponse>
      *
      * @throws APIException
      */
@@ -61,23 +54,8 @@ interface CustomersContract
     /**
      * @api
      *
-     * @return Customer<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $customerID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
-    ): Customer;
-
-    /**
-     * @api
-     *
      * @param string|null $name
      * @param string|null $phoneNumber
-     *
-     * @return Customer<HasRawResponse>
      *
      * @throws APIException
      */
@@ -92,8 +70,6 @@ interface CustomersContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Customer<HasRawResponse>
      *
      * @throws APIException
      */

@@ -6,19 +6,19 @@ namespace Dodopayments\Webhooks;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type webhook_get_secret_response = array{secret: string}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class WebhookGetSecretResponse implements BaseModel
+final class WebhookGetSecretResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<webhook_get_secret_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $secret;

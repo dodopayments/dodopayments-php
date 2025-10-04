@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
@@ -28,29 +27,10 @@ final class DisputesService implements DisputesContract
     /**
      * @api
      *
-     * @return GetDispute<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $disputeID,
-        ?RequestOptions $requestOptions = null
-    ): GetDispute {
-        $params = [];
-
-        return $this->retrieveRaw($disputeID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return GetDispute<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $disputeID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): GetDispute {
         // @phpstan-ignore-next-line;

@@ -57,7 +57,7 @@ final class LicenseKeyDuration implements BaseModel
         $obj = new self;
 
         $obj->count = $count;
-        $obj->interval = $interval instanceof TimeInterval ? $interval->value : $interval;
+        $obj['interval'] = $interval;
 
         return $obj;
     }
@@ -76,7 +76,7 @@ final class LicenseKeyDuration implements BaseModel
     public function withInterval(TimeInterval|string $interval): self
     {
         $obj = clone $this;
-        $obj->interval = $interval instanceof TimeInterval ? $interval->value : $interval;
+        $obj['interval'] = $interval;
 
         return $obj;
     }

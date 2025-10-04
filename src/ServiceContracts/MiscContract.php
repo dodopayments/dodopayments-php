@@ -20,16 +20,4 @@ interface MiscContract
     public function listSupportedCountries(
         ?RequestOptions $requestOptions = null
     ): array;
-
-    /**
-     * @api
-     *
-     * @return list<CountryCode|value-of<CountryCode>>
-     *
-     * @throws APIException
-     */
-    public function listSupportedCountriesRaw(
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): array;
 }

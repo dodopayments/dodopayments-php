@@ -6,7 +6,9 @@ namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -30,15 +32,13 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   priceDetail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   taxInclusive?: bool|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class ProductListResponse implements BaseModel
+final class ProductListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<product_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Unique identifier for the business to which the product belongs.
@@ -204,10 +204,10 @@ final class ProductListResponse implements BaseModel
         $obj->isRecurring = $isRecurring;
         $obj->metadata = $metadata;
         $obj->productID = $productID;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
         $obj->updatedAt = $updatedAt;
 
-        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        null !== $currency && $obj['currency'] = $currency;
         null !== $description && $obj->description = $description;
         null !== $image && $obj->image = $image;
         null !== $name && $obj->name = $name;
@@ -283,7 +283,7 @@ final class ProductListResponse implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -307,7 +307,7 @@ final class ProductListResponse implements BaseModel
     public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

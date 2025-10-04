@@ -155,11 +155,11 @@ final class Refund implements BaseModel
         $obj->isPartial = $isPartial;
         $obj->paymentID = $paymentID;
         $obj->refundID = $refundID;
-        $obj->status = $status instanceof RefundStatus ? $status->value : $status;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['status'] = $status;
+        $obj['payloadType'] = $payloadType;
 
         null !== $amount && $obj->amount = $amount;
-        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        null !== $currency && $obj['currency'] = $currency;
         null !== $reason && $obj->reason = $reason;
 
         return $obj;
@@ -234,7 +234,7 @@ final class Refund implements BaseModel
     public function withStatus(RefundStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof RefundStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -256,7 +256,7 @@ final class Refund implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -278,7 +278,7 @@ final class Refund implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['payloadType'] = $payloadType;
 
         return $obj;
     }

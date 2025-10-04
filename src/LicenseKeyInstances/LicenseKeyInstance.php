@@ -6,7 +6,9 @@ namespace Dodopayments\LicenseKeyInstances;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type license_key_instance = array{
@@ -16,15 +18,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   licenseKeyID: string,
  *   name: string,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class LicenseKeyInstance implements BaseModel
+final class LicenseKeyInstance implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<license_key_instance> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;

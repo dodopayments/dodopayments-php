@@ -146,8 +146,8 @@ final class Dispute implements BaseModel
         $obj->createdAt = $createdAt;
         $obj->currency = $currency;
         $obj->disputeID = $disputeID;
-        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
-        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
+        $obj['disputeStage'] = $disputeStage;
+        $obj['disputeStatus'] = $disputeStatus;
         $obj->paymentID = $paymentID;
 
         null !== $remarks && $obj->remarks = $remarks;
@@ -218,7 +218,7 @@ final class Dispute implements BaseModel
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
+        $obj['disputeStage'] = $disputeStage;
 
         return $obj;
     }
@@ -231,7 +231,7 @@ final class Dispute implements BaseModel
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
+        $obj['disputeStatus'] = $disputeStatus;
 
         return $obj;
     }

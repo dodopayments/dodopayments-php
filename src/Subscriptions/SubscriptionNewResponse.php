@@ -6,7 +6,9 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
@@ -22,15 +24,13 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   expiresOn?: \DateTimeInterface|null,
  *   paymentLink?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class SubscriptionNewResponse implements BaseModel
+final class SubscriptionNewResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<subscription_new_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Addons associated with this subscription.

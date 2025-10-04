@@ -6,7 +6,9 @@ namespace Dodopayments\LicenseKeys;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type license_key = array{
@@ -23,15 +25,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   expiresAt?: \DateTimeInterface|null,
  *   subscriptionID?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class LicenseKey implements BaseModel
+final class LicenseKey implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<license_key> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * The unique identifier of the license key.
@@ -176,7 +176,7 @@ final class LicenseKey implements BaseModel
         $obj->key = $key;
         $obj->paymentID = $paymentID;
         $obj->productID = $productID;
-        $obj->status = $status instanceof LicenseKeyStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         null !== $activationsLimit && $obj->activationsLimit = $activationsLimit;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
@@ -281,7 +281,7 @@ final class LicenseKey implements BaseModel
     public function withStatus(LicenseKeyStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof LicenseKeyStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }

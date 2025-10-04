@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
@@ -33,8 +32,6 @@ interface WebhooksContract
      * Defaut is {}
      * @param int|null $rateLimit
      *
-     * @return WebhookDetails<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -54,8 +51,6 @@ interface WebhooksContract
      *
      * @param array<string, mixed> $params
      *
-     * @return WebhookDetails<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -66,25 +61,10 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @return WebhookDetails<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookDetails;
-
-    /**
-     * @api
-     *
-     * @return WebhookDetails<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails;
 
@@ -99,8 +79,6 @@ interface WebhooksContract
      * @param array<string, string>|null $metadata Metadata
      * @param int|null $rateLimit Rate limit
      * @param string|null $url Url endpoint
-     *
-     * @return WebhookDetails<HasRawResponse>
      *
      * @throws APIException
      */
@@ -119,8 +97,6 @@ interface WebhooksContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return WebhookDetails<HasRawResponse>
      *
      * @throws APIException
      */
@@ -175,34 +151,8 @@ interface WebhooksContract
      *
      * @throws APIException
      */
-    public function deleteRaw(
-        string $webhookID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @return WebhookGetSecretResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
     public function retrieveSecret(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookGetSecretResponse;
-
-    /**
-     * @api
-     *
-     * @return WebhookGetSecretResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveSecretRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse;
 }

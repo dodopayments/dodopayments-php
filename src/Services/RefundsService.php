@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
@@ -33,8 +32,6 @@ final class RefundsService implements RefundsContract
      * @param list<Item>|null $items Partially Refund an Individual Item
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      *
-     * @return Refund<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -54,8 +51,6 @@ final class RefundsService implements RefundsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Refund<HasRawResponse>
      *
      * @throws APIException
      */
@@ -81,29 +76,10 @@ final class RefundsService implements RefundsContract
     /**
      * @api
      *
-     * @return Refund<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $refundID,
-        ?RequestOptions $requestOptions = null
-    ): Refund {
-        $params = [];
-
-        return $this->retrieveRaw($refundID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return Refund<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $refundID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Refund {
         // @phpstan-ignore-next-line;

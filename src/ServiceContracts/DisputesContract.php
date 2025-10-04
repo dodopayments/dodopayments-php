@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
@@ -20,25 +19,10 @@ interface DisputesContract
     /**
      * @api
      *
-     * @return GetDispute<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $disputeID,
-        ?RequestOptions $requestOptions = null
-    ): GetDispute;
-
-    /**
-     * @api
-     *
-     * @return GetDispute<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $disputeID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): GetDispute;
 

@@ -123,7 +123,7 @@ final class DiscountUpdateParams implements BaseModel
         null !== $name && $obj->name = $name;
         null !== $restrictedTo && $obj->restrictedTo = $restrictedTo;
         null !== $subscriptionCycles && $obj->subscriptionCycles = $subscriptionCycles;
-        null !== $type && $obj->type = $type instanceof DiscountType ? $type->value : $type;
+        null !== $type && $obj['type'] = $type;
         null !== $usageLimit && $obj->usageLimit = $usageLimit;
 
         return $obj;
@@ -206,7 +206,7 @@ final class DiscountUpdateParams implements BaseModel
     public function withType(DiscountType|string|null $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof DiscountType ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

@@ -11,6 +11,8 @@ use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Core\Conversion\ListOf;
+use Dodopayments\Core\Util;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @phpstan-type cursor_page_pagination = array{
@@ -55,9 +57,11 @@ final class CursorPagePagination implements BaseModel, BasePage
         private Client $client,
         private array $request,
         private RequestOptions $options,
-        mixed $data,
+        ResponseInterface $response,
     ) {
         $this->initialize();
+
+        $data = Util::decodeContent($response);
 
         if (!is_array($data)) {
             return;

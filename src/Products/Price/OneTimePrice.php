@@ -134,11 +134,11 @@ final class OneTimePrice implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->discount = $discount;
         $obj->price = $price;
         $obj->purchasingPowerParity = $purchasingPowerParity;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         null !== $payWhatYouWant && $obj->payWhatYouWant = $payWhatYouWant;
         null !== $suggestedPrice && $obj->suggestedPrice = $suggestedPrice;
@@ -155,7 +155,7 @@ final class OneTimePrice implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -204,7 +204,7 @@ final class OneTimePrice implements BaseModel
     public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

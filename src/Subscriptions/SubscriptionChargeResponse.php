@@ -6,19 +6,19 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type subscription_charge_response = array{paymentID: string}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class SubscriptionChargeResponse implements BaseModel
+final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<subscription_charge_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('payment_id')]
     public string $paymentID;

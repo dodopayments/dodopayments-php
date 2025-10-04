@@ -97,7 +97,7 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $disableOnDemand && $obj->disableOnDemand = $disableOnDemand;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $nextBillingDate && $obj->nextBillingDate = $nextBillingDate;
-        null !== $status && $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
+        null !== $status && $obj['status'] = $status;
         null !== $taxID && $obj->taxID = $taxID;
 
         return $obj;
@@ -157,7 +157,7 @@ final class SubscriptionUpdateParams implements BaseModel
     public function withStatus(SubscriptionStatus|string|null $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }

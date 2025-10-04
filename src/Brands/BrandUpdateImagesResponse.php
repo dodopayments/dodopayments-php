@@ -6,19 +6,19 @@ namespace Dodopayments\Brands;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type brand_update_images_response = array{imageID: string, url: string}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class BrandUpdateImagesResponse implements BaseModel
+final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<brand_update_images_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * UUID that will be used as the image identifier/key suffix.

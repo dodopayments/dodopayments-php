@@ -16,7 +16,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 /**
  * @phpstan-type webhook_payload = array{
  *   businessID: string,
- *   data: payment_alias|subscription_alias|refund_alias|dispute_alias|license_key,
+ *   data: Payment|Subscription|Refund|Dispute|LicenseKey,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<WebhookEventType>,
  * }
@@ -90,7 +90,7 @@ final class WebhookPayload implements BaseModel
         $obj->businessID = $businessID;
         $obj->data = $data;
         $obj->timestamp = $timestamp;
-        $obj->type = $type instanceof WebhookEventType ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }
@@ -134,7 +134,7 @@ final class WebhookPayload implements BaseModel
     public function withType(WebhookEventType|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof WebhookEventType ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

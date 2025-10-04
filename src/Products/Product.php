@@ -6,7 +6,9 @@ namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
@@ -34,15 +36,13 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  *   licenseKeyDuration?: LicenseKeyDuration|null,
  *   name?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Product implements BaseModel
+final class Product implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<product_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('brand_id')]
     public string $brandID;
@@ -231,7 +231,7 @@ final class Product implements BaseModel
         $obj->metadata = $metadata;
         $obj->price = $price;
         $obj->productID = $productID;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
         $obj->updatedAt = $updatedAt;
 
         null !== $addons && $obj->addons = $addons;
@@ -342,7 +342,7 @@ final class Product implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }

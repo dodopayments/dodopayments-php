@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterAggregation;
@@ -26,8 +25,6 @@ interface MetersContract
      * @param string|null $description Optional description of the meter
      * @param MeterFilter|null $filter Optional filter to apply to the meter
      *
-     * @return Meter<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -45,8 +42,6 @@ interface MetersContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Meter<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -57,25 +52,10 @@ interface MetersContract
     /**
      * @api
      *
-     * @return Meter<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): Meter;
-
-    /**
-     * @api
-     *
-     * @return Meter<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Meter;
 
@@ -126,30 +106,8 @@ interface MetersContract
      *
      * @throws APIException
      */
-    public function archiveRaw(
-        string $id,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
     public function unarchive(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function unarchiveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): mixed;
 }

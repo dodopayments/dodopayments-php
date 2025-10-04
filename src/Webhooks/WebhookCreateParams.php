@@ -140,7 +140,7 @@ final class WebhookCreateParams implements BaseModel
 
         null !== $description && $obj->description = $description;
         null !== $disabled && $obj->disabled = $disabled;
-        null !== $filterTypes && $obj->filterTypes = array_map(fn ($v) => $v instanceof WebhookEventType ? $v->value : $v, $filterTypes);
+        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
         null !== $headers && $obj->headers = $headers;
         null !== $idempotencyKey && $obj->idempotencyKey = $idempotencyKey;
         null !== $metadata && $obj->metadata = $metadata;
@@ -191,7 +191,7 @@ final class WebhookCreateParams implements BaseModel
     public function withFilterTypes(array $filterTypes): self
     {
         $obj = clone $this;
-        $obj->filterTypes = array_map(fn ($v) => $v instanceof WebhookEventType ? $v->value : $v, $filterTypes);
+        $obj['filterTypes'] = $filterTypes;
 
         return $obj;
     }
