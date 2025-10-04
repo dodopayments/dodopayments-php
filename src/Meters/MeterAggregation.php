@@ -61,7 +61,7 @@ final class MeterAggregation implements BaseModel
     {
         $obj = new self;
 
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         null !== $key && $obj->key = $key;
 
@@ -76,7 +76,7 @@ final class MeterAggregation implements BaseModel
     public function withType(Type|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof Type ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

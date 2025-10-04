@@ -6,7 +6,9 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
@@ -24,15 +26,13 @@ use Dodopayments\Misc\Currency;
  *   status?: value-of<IntentStatus>|null,
  *   subscriptionID?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class PaymentListResponse implements BaseModel
+final class PaymentListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<payment_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('brand_id')]
     public string $brandID;
@@ -136,7 +136,7 @@ final class PaymentListResponse implements BaseModel
 
         $obj->brandID = $brandID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->customer = $customer;
         $obj->digitalProductsDelivered = $digitalProductsDelivered;
         $obj->metadata = $metadata;
@@ -145,7 +145,7 @@ final class PaymentListResponse implements BaseModel
 
         null !== $paymentMethod && $obj->paymentMethod = $paymentMethod;
         null !== $paymentMethodType && $obj->paymentMethodType = $paymentMethodType;
-        null !== $status && $obj->status = $status instanceof IntentStatus ? $status->value : $status;
+        null !== $status && $obj['status'] = $status;
         null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
 
         return $obj;
@@ -173,7 +173,7 @@ final class PaymentListResponse implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -244,7 +244,7 @@ final class PaymentListResponse implements BaseModel
     public function withStatus(IntentStatus|string|null $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof IntentStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }

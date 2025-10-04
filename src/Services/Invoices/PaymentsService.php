@@ -25,21 +25,6 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): string {
-        $params = [];
-
-        return $this->retrieveRaw($paymentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $paymentID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): string {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'get',
@@ -57,21 +42,6 @@ final class PaymentsService implements PaymentsContract
      */
     public function retrieveRefund(
         string $refundID,
-        ?RequestOptions $requestOptions = null
-    ): string {
-        $params = [];
-
-        return $this->retrieveRefundRaw($refundID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function retrieveRefundRaw(
-        string $refundID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): string {
         // @phpstan-ignore-next-line;

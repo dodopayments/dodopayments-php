@@ -6,19 +6,19 @@ namespace Dodopayments\Brands;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type brand_list_response = array{items: list<Brand>}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class BrandListResponse implements BaseModel
+final class BrandListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<brand_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * List of brands for this business.

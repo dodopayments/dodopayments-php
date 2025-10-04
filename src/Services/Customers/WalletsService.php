@@ -6,7 +6,6 @@ namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Customers\Wallets\WalletListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\WalletsContract;
@@ -30,29 +29,10 @@ final class WalletsService implements WalletsContract
     /**
      * @api
      *
-     * @return WalletListResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function list(
         string $customerID,
-        ?RequestOptions $requestOptions = null
-    ): WalletListResponse {
-        $params = [];
-
-        return $this->listRaw($customerID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return WalletListResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        string $customerID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WalletListResponse {
         // @phpstan-ignore-next-line;

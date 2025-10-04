@@ -35,7 +35,7 @@ final class SubscriptionsTest extends TestCase
         $result = $this->client->subscriptions->create(
             billing: BillingAddress::with(
                 city: 'city',
-                country: CountryCode::$AF,
+                country: CountryCode::AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',
@@ -54,7 +54,7 @@ final class SubscriptionsTest extends TestCase
         $result = $this->client->subscriptions->create(
             billing: BillingAddress::with(
                 city: 'city',
-                country: CountryCode::$AF,
+                country: CountryCode::AF,
                 state: 'state',
                 street: 'street',
                 zipcode: 'zipcode',

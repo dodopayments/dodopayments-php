@@ -177,7 +177,7 @@ final class ProductCreateParams implements BaseModel
         $obj = new self;
 
         $obj->price = $price;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         null !== $addons && $obj->addons = $addons;
         null !== $brandID && $obj->brandID = $brandID;
@@ -213,7 +213,7 @@ final class ProductCreateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }

@@ -6,21 +6,21 @@ namespace Dodopayments\CheckoutSessions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type checkout_session_response = array{
  *   checkoutURL: string, sessionID: string
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class CheckoutSessionResponse implements BaseModel
+final class CheckoutSessionResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<checkout_session_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Checkout url.

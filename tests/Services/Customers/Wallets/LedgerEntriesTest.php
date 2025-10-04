@@ -33,7 +33,7 @@ final class LedgerEntriesTest extends TestCase
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
             amount: 0,
-            currency: Currency::$AED,
+            currency: Currency::AED,
             entryType: 'credit'
         );
 
@@ -46,7 +46,7 @@ final class LedgerEntriesTest extends TestCase
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
             amount: 0,
-            currency: Currency::$AED,
+            currency: Currency::AED,
             entryType: 'credit'
         );
 

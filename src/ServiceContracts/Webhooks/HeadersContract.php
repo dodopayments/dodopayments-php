@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts\Webhooks;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 
@@ -14,25 +13,10 @@ interface HeadersContract
     /**
      * @api
      *
-     * @return HeaderGetResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): HeaderGetResponse;
-
-    /**
-     * @api
-     *
-     * @return HeaderGetResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse;
 

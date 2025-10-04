@@ -192,7 +192,7 @@ final class ProductUpdateParams implements BaseModel
         null !== $metadata && $obj->metadata = $metadata;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $taxCategory && $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        null !== $taxCategory && $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -355,7 +355,7 @@ final class ProductUpdateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }

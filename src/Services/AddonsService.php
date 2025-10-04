@@ -11,7 +11,6 @@ use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -35,8 +34,6 @@ final class AddonsService implements AddonsContract
      * @param int $price Amount of the addon
      * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this Addon
      * @param string|null $description Optional description of the Addon
-     *
-     * @return AddonResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -64,8 +61,6 @@ final class AddonsService implements AddonsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return AddonResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -90,29 +85,10 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @return AddonResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): AddonResponse {
-        $params = [];
-
-        return $this->retrieveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return AddonResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
         // @phpstan-ignore-next-line;
@@ -133,8 +109,6 @@ final class AddonsService implements AddonsContract
      * @param string|null $name name of the Addon, optional and must be at most 100 characters
      * @param int|null $price Amount of the addon
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon
-     *
-     * @return AddonResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -164,8 +138,6 @@ final class AddonsService implements AddonsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return AddonResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -241,29 +213,10 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @return AddonUpdateImagesResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): AddonUpdateImagesResponse {
-        $params = [];
-
-        return $this->updateImagesRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return AddonUpdateImagesResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function updateImagesRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse {
         // @phpstan-ignore-next-line;

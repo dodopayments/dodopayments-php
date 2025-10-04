@@ -6,7 +6,9 @@ namespace Dodopayments\Disputes;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type dispute_list_response = array{
@@ -19,15 +21,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   disputeStatus: value-of<DisputeStatus>,
  *   paymentID: string,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class DisputeListResponse implements BaseModel
+final class DisputeListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<dispute_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.
@@ -142,8 +142,8 @@ final class DisputeListResponse implements BaseModel
         $obj->createdAt = $createdAt;
         $obj->currency = $currency;
         $obj->disputeID = $disputeID;
-        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
-        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
+        $obj['disputeStage'] = $disputeStage;
+        $obj['disputeStatus'] = $disputeStatus;
         $obj->paymentID = $paymentID;
 
         return $obj;
@@ -212,7 +212,7 @@ final class DisputeListResponse implements BaseModel
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
+        $obj['disputeStage'] = $disputeStage;
 
         return $obj;
     }
@@ -225,7 +225,7 @@ final class DisputeListResponse implements BaseModel
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
+        $obj['disputeStatus'] = $disputeStatus;
 
         return $obj;
     }

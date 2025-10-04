@@ -108,8 +108,8 @@ final class LedgerEntryCreateParams implements BaseModel
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
-        $obj->entryType = $entryType instanceof EntryType ? $entryType->value : $entryType;
+        $obj['currency'] = $currency;
+        $obj['entryType'] = $entryType;
 
         null !== $idempotencyKey && $obj->idempotencyKey = $idempotencyKey;
         null !== $reason && $obj->reason = $reason;
@@ -133,7 +133,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -146,7 +146,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withEntryType(EntryType|string $entryType): self
     {
         $obj = clone $this;
-        $obj->entryType = $entryType instanceof EntryType ? $entryType->value : $entryType;
+        $obj['entryType'] = $entryType;
 
         return $obj;
     }

@@ -6,19 +6,19 @@ namespace Dodopayments\UsageEvents;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type usage_event_ingest_response = array{ingestedCount: int}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class UsageEventIngestResponse implements BaseModel
+final class UsageEventIngestResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<usage_event_ingest_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('ingested_count')]
     public int $ingestedCount;

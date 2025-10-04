@@ -92,7 +92,7 @@ final class BillingAddress implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->country = $country instanceof CountryCode ? $country->value : $country;
+        $obj['country'] = $country;
 
         null !== $city && $obj->city = $city;
         null !== $state && $obj->state = $state;
@@ -110,7 +110,7 @@ final class BillingAddress implements BaseModel
     public function withCountry(CountryCode|string $country): self
     {
         $obj = clone $this;
-        $obj->country = $country instanceof CountryCode ? $country->value : $country;
+        $obj['country'] = $country;
 
         return $obj;
     }

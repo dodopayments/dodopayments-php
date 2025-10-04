@@ -68,7 +68,7 @@ final class Customization implements BaseModel
 
         null !== $showOnDemandTag && $obj->showOnDemandTag = $showOnDemandTag;
         null !== $showOrderDetails && $obj->showOrderDetails = $showOrderDetails;
-        null !== $theme && $obj->theme = $theme instanceof Theme ? $theme->value : $theme;
+        null !== $theme && $obj['theme'] = $theme;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class Customization implements BaseModel
     public function withTheme(Theme|string $theme): self
     {
         $obj = clone $this;
-        $obj->theme = $theme instanceof Theme ? $theme->value : $theme;
+        $obj['theme'] = $theme;
 
         return $obj;
     }

@@ -6,7 +6,9 @@ namespace Dodopayments\Discounts;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type discount_alias = array{
@@ -23,15 +25,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   subscriptionCycles?: int|null,
  *   usageLimit?: int|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Discount implements BaseModel
+final class Discount implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<discount_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * The discount amount.
@@ -182,7 +182,7 @@ final class Discount implements BaseModel
         $obj->discountID = $discountID;
         $obj->restrictedTo = $restrictedTo;
         $obj->timesUsed = $timesUsed;
-        $obj->type = $type instanceof DiscountType ? $type->value : $type;
+        $obj['type'] = $type;
 
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
         null !== $name && $obj->name = $name;
@@ -283,7 +283,7 @@ final class Discount implements BaseModel
     public function withType(DiscountType|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof DiscountType ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

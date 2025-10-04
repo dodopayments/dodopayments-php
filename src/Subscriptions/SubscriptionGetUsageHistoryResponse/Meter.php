@@ -134,7 +134,7 @@ final class Meter implements BaseModel
         $obj->id = $id;
         $obj->chargeableUnits = $chargeableUnits;
         $obj->consumedUnits = $consumedUnits;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->freeThreshold = $freeThreshold;
         $obj->name = $name;
         $obj->pricePerUnit = $pricePerUnit;
@@ -184,7 +184,7 @@ final class Meter implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

@@ -7,7 +7,6 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -26,8 +25,6 @@ interface AddonsContract
      * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this Addon
      * @param string|null $description Optional description of the Addon
      *
-     * @return AddonResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -44,8 +41,6 @@ interface AddonsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return AddonResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -56,25 +51,10 @@ interface AddonsContract
     /**
      * @api
      *
-     * @return AddonResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): AddonResponse;
-
-    /**
-     * @api
-     *
-     * @return AddonResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonResponse;
 
@@ -87,8 +67,6 @@ interface AddonsContract
      * @param string|null $name name of the Addon, optional and must be at most 100 characters
      * @param int|null $price Amount of the addon
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon
-     *
-     * @return AddonResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -107,8 +85,6 @@ interface AddonsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return AddonResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -151,25 +127,10 @@ interface AddonsContract
     /**
      * @api
      *
-     * @return AddonUpdateImagesResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): AddonUpdateImagesResponse;
-
-    /**
-     * @api
-     *
-     * @return AddonUpdateImagesResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function updateImagesRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse;
 }

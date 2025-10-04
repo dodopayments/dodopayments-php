@@ -6,19 +6,19 @@ namespace Dodopayments\Licenses;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type license_validate_response = array{valid: bool}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class LicenseValidateResponse implements BaseModel
+final class LicenseValidateResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<license_validate_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public bool $valid;

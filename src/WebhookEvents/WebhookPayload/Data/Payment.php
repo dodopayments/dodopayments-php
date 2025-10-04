@@ -360,7 +360,7 @@ final class Payment implements BaseModel
         $obj->brandID = $brandID;
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->customer = $customer;
         $obj->digitalProductsDelivered = $digitalProductsDelivered;
         $obj->disputes = $disputes;
@@ -368,11 +368,11 @@ final class Payment implements BaseModel
         $obj->paymentID = $paymentID;
         $obj->refunds = $refunds;
         $obj->settlementAmount = $settlementAmount;
-        $obj->settlementCurrency = $settlementCurrency instanceof Currency ? $settlementCurrency->value : $settlementCurrency;
+        $obj['settlementCurrency'] = $settlementCurrency;
         $obj->totalAmount = $totalAmount;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['payloadType'] = $payloadType;
 
-        null !== $cardIssuingCountry && $obj->cardIssuingCountry = $cardIssuingCountry instanceof CountryCode ? $cardIssuingCountry->value : $cardIssuingCountry;
+        null !== $cardIssuingCountry && $obj['cardIssuingCountry'] = $cardIssuingCountry;
         null !== $cardLastFour && $obj->cardLastFour = $cardLastFour;
         null !== $cardNetwork && $obj->cardNetwork = $cardNetwork;
         null !== $cardType && $obj->cardType = $cardType;
@@ -385,7 +385,7 @@ final class Payment implements BaseModel
         null !== $paymentMethodType && $obj->paymentMethodType = $paymentMethodType;
         null !== $productCart && $obj->productCart = $productCart;
         null !== $settlementTax && $obj->settlementTax = $settlementTax;
-        null !== $status && $obj->status = $status instanceof IntentStatus ? $status->value : $status;
+        null !== $status && $obj['status'] = $status;
         null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
         null !== $tax && $obj->tax = $tax;
         null !== $updatedAt && $obj->updatedAt = $updatedAt;
@@ -440,7 +440,7 @@ final class Payment implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -534,7 +534,7 @@ final class Payment implements BaseModel
         Currency|string $settlementCurrency
     ): self {
         $obj = clone $this;
-        $obj->settlementCurrency = $settlementCurrency instanceof Currency ? $settlementCurrency->value : $settlementCurrency;
+        $obj['settlementCurrency'] = $settlementCurrency;
 
         return $obj;
     }
@@ -559,7 +559,7 @@ final class Payment implements BaseModel
         CountryCode|string $cardIssuingCountry
     ): self {
         $obj = clone $this;
-        $obj->cardIssuingCountry = $cardIssuingCountry instanceof CountryCode ? $cardIssuingCountry->value : $cardIssuingCountry;
+        $obj['cardIssuingCountry'] = $cardIssuingCountry;
 
         return $obj;
     }
@@ -707,7 +707,7 @@ final class Payment implements BaseModel
     public function withStatus(IntentStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof IntentStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -751,7 +751,7 @@ final class Payment implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['payloadType'] = $payloadType;
 
         return $obj;
     }

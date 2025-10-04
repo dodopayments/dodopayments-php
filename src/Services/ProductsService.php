@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
@@ -62,8 +61,6 @@ final class ProductsService implements ProductsContract
      * @param array<string, string> $metadata Additional metadata for the product
      * @param string|null $name Optional name of the product
      *
-     * @return Product<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -104,8 +101,6 @@ final class ProductsService implements ProductsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Product<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -130,29 +125,10 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
-     * @return Product<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): Product {
-        $params = [];
-
-        return $this->retrieveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return Product<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Product {
         // @phpstan-ignore-next-line;
@@ -331,21 +307,6 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        $params = [];
-
-        return $this->archiveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function archiveRaw(
-        string $id,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'delete',
@@ -364,21 +325,6 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        $params = [];
-
-        return $this->unarchiveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function unarchiveRaw(
-        string $id,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'post',
@@ -392,8 +338,6 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param string $fileName
-     *
-     * @return ProductUpdateFilesResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -411,8 +355,6 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return ProductUpdateFilesResponse<HasRawResponse>
      *
      * @throws APIException
      */

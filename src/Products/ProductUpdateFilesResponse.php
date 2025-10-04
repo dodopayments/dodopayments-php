@@ -6,19 +6,19 @@ namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type product_update_files_response = array{fileID: string, url: string}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class ProductUpdateFilesResponse implements BaseModel
+final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<product_update_files_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('file_id')]
     public string $fileID;

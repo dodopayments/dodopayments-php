@@ -28,22 +28,6 @@ final class MiscService implements MiscContract
     public function listSupportedCountries(
         ?RequestOptions $requestOptions = null
     ): array {
-        $params = [];
-
-        return $this->listSupportedCountriesRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return list<CountryCode|value-of<CountryCode>>
-     *
-     * @throws APIException
-     */
-    public function listSupportedCountriesRaw(
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): array {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'get',

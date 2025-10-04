@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
@@ -42,8 +41,6 @@ interface ProductsContract
      * @param array<string, string> $metadata Additional metadata for the product
      * @param string|null $name Optional name of the product
      *
-     * @return Product<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -67,8 +64,6 @@ interface ProductsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Product<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -79,25 +74,10 @@ interface ProductsContract
     /**
      * @api
      *
-     * @return Product<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): Product;
-
-    /**
-     * @api
-     *
-     * @return Product<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Product;
 
@@ -217,17 +197,6 @@ interface ProductsContract
      *
      * @throws APIException
      */
-    public function archiveRaw(
-        string $id,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
     public function unarchive(
         string $id,
         ?RequestOptions $requestOptions = null
@@ -236,20 +205,7 @@ interface ProductsContract
     /**
      * @api
      *
-     * @throws APIException
-     */
-    public function unarchiveRaw(
-        string $id,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
      * @param string $fileName
-     *
-     * @return ProductUpdateFilesResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -263,8 +219,6 @@ interface ProductsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return ProductUpdateFilesResponse<HasRawResponse>
      *
      * @throws APIException
      */

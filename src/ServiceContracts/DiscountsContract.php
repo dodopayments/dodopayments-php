@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountType;
@@ -38,8 +37,6 @@ interface DiscountsContract
      * @param int|null $usageLimit How many times this discount can be used (if any).
      * Must be >= 1 if provided.
      *
-     * @return Discount<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -59,8 +56,6 @@ interface DiscountsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Discount<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -71,26 +66,11 @@ interface DiscountsContract
     /**
      * @api
      *
-     * @return Discount<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $discountID,
         ?RequestOptions $requestOptions = null
-    ): Discount;
-
-    /**
-     * @api
-     *
-     * @return Discount<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $discountID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
     ): Discount;
 
     /**
@@ -112,8 +92,6 @@ interface DiscountsContract
      * @param DiscountType|value-of<DiscountType>|null $type if present, update the discount type
      * @param int|null $usageLimit
      *
-     * @return Discount<HasRawResponse>
-     *
      * @throws APIException
      */
     public function update(
@@ -133,8 +111,6 @@ interface DiscountsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Discount<HasRawResponse>
      *
      * @throws APIException
      */
@@ -182,16 +158,5 @@ interface DiscountsContract
     public function delete(
         string $discountID,
         ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $discountID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
     ): mixed;
 }

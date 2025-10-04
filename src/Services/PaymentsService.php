@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -57,8 +56,6 @@ final class PaymentsService implements PaymentsContract
      * False by default
      * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
      *
-     * @return PaymentNewResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -97,8 +94,6 @@ final class PaymentsService implements PaymentsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return PaymentNewResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -123,29 +118,10 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
-     * @return Payment<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
-    ): Payment {
-        $params = [];
-
-        return $this->retrieveRaw($paymentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return Payment<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $paymentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Payment {
         // @phpstan-ignore-next-line;
@@ -230,29 +206,10 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
-     * @return PaymentGetLineItemsResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieveLineItems(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
-    ): PaymentGetLineItemsResponse {
-        $params = [];
-
-        return $this->retrieveLineItemsRaw($paymentID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return PaymentGetLineItemsResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveLineItemsRaw(
-        string $paymentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): PaymentGetLineItemsResponse {
         // @phpstan-ignore-next-line;

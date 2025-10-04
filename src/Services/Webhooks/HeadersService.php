@@ -6,7 +6,6 @@ namespace Dodopayments\Services\Webhooks;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Webhooks\HeadersContract;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
@@ -24,29 +23,10 @@ final class HeadersService implements HeadersContract
      *
      * Get a webhook by id
      *
-     * @return HeaderGetResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): HeaderGetResponse {
-        $params = [];
-
-        return $this->retrieveRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return HeaderGetResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse {
         // @phpstan-ignore-next-line;

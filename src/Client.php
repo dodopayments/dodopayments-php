@@ -134,11 +134,9 @@ class Client extends BaseClient
 
     public function __construct(?string $bearerToken = null, ?string $baseUrl = null)
     {
-        $this->bearerToken = (string) (
-            $bearerToken ?? getenv('DODO_PAYMENTS_API_KEY')
-        );
+        $this->bearerToken = (string) ($bearerToken ?? getenv('DODO_PAYMENTS_API_KEY'));
 
-        $base = $baseUrl ?? getenv(
+        $baseUrl ??= getenv(
             'DODO_PAYMENTS_BASE_URL'
         ) ?: 'https://live.dodopayments.com';
 
@@ -153,7 +151,7 @@ class Client extends BaseClient
             headers: [
                 'Content-Type' => 'application/json', 'Accept' => 'application/json',
             ],
-            baseUrl: $base,
+            baseUrl: $baseUrl,
             options: $options,
         );
 

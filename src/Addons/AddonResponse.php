@@ -6,7 +6,9 @@ namespace Dodopayments\Addons;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
@@ -23,15 +25,13 @@ use Dodopayments\Misc\TaxCategory;
  *   description?: string|null,
  *   image?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class AddonResponse implements BaseModel
+final class AddonResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<addon_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * id of the Addon.
@@ -158,10 +158,10 @@ final class AddonResponse implements BaseModel
         $obj->id = $id;
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->name = $name;
         $obj->price = $price;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
         $obj->updatedAt = $updatedAt;
 
         null !== $description && $obj->description = $description;
@@ -211,7 +211,7 @@ final class AddonResponse implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -246,7 +246,7 @@ final class AddonResponse implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj->taxCategory = $taxCategory instanceof TaxCategory ? $taxCategory->value : $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }

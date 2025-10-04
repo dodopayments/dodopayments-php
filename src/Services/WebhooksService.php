@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\WebhooksContract;
@@ -54,8 +53,6 @@ final class WebhooksService implements WebhooksContract
      * Defaut is {}
      * @param int|null $rateLimit
      *
-     * @return WebhookDetails<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -88,8 +85,6 @@ final class WebhooksService implements WebhooksContract
      *
      * @param array<string, mixed> $params
      *
-     * @return WebhookDetails<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -116,29 +111,10 @@ final class WebhooksService implements WebhooksContract
      *
      * Get a webhook by id
      *
-     * @return WebhookDetails<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookDetails {
-        $params = [];
-
-        return $this->retrieveRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return WebhookDetails<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
         // @phpstan-ignore-next-line;
@@ -163,8 +139,6 @@ final class WebhooksService implements WebhooksContract
      * @param array<string, string>|null $metadata Metadata
      * @param int|null $rateLimit Rate limit
      * @param string|null $url Url endpoint
-     *
-     * @return WebhookDetails<HasRawResponse>
      *
      * @throws APIException
      */
@@ -194,8 +168,6 @@ final class WebhooksService implements WebhooksContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return WebhookDetails<HasRawResponse>
      *
      * @throws APIException
      */
@@ -281,21 +253,6 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        $params = [];
-
-        return $this->deleteRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @throws APIException
-     */
-    public function deleteRaw(
-        string $webhookID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed {
         // @phpstan-ignore-next-line;
         return $this->client->request(
             method: 'delete',
@@ -310,29 +267,10 @@ final class WebhooksService implements WebhooksContract
      *
      * Get webhook secret by id
      *
-     * @return WebhookGetSecretResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieveSecret(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
-    ): WebhookGetSecretResponse {
-        $params = [];
-
-        return $this->retrieveSecretRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return WebhookGetSecretResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveSecretRaw(
-        string $webhookID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
         // @phpstan-ignore-next-line;

@@ -13,7 +13,6 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
@@ -52,8 +51,6 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param string|null $returnURL the url to redirect after payment failure or success
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
      * @param SubscriptionData|null $subscriptionData
-     *
-     * @return CheckoutSessionResponse<HasRawResponse>
      *
      * @throws APIException
      */
@@ -96,8 +93,6 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return CheckoutSessionResponse<HasRawResponse>
      *
      * @throws APIException
      */

@@ -6,7 +6,9 @@ namespace Dodopayments\Webhooks;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type webhook_details = array{
@@ -20,15 +22,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   filterTypes?: list<string>|null,
  *   rateLimit?: int|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class WebhookDetails implements BaseModel
+final class WebhookDetails implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<webhook_details> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * The webhook's ID.
