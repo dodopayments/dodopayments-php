@@ -6,21 +6,21 @@ namespace Dodopayments\Customers\Wallets;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type wallet_list_response = array{
  *   items: list<CustomerWallet>, totalBalanceUsd: int
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class WalletListResponse implements BaseModel
+final class WalletListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<wallet_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /** @var list<CustomerWallet> $items */
     #[Api(list: CustomerWallet::class)]

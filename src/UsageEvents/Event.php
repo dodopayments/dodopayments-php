@@ -6,7 +6,9 @@ namespace Dodopayments\UsageEvents;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
@@ -18,15 +20,13 @@ use Dodopayments\UsageEvents\Event\Metadata;
  *   timestamp: \DateTimeInterface,
  *   metadata?: array<string, string|float|bool>|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Event implements BaseModel
+final class Event implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<event_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('business_id')]
     public string $businessID;

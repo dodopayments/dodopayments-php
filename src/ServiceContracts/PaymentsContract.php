@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -48,8 +47,6 @@ interface PaymentsContract
      * False by default
      * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
      *
-     * @return PaymentNewResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -72,8 +69,6 @@ interface PaymentsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return PaymentNewResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -84,25 +79,10 @@ interface PaymentsContract
     /**
      * @api
      *
-     * @return Payment<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
-    ): Payment;
-
-    /**
-     * @api
-     *
-     * @return Payment<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $paymentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Payment;
 
@@ -151,25 +131,10 @@ interface PaymentsContract
     /**
      * @api
      *
-     * @return PaymentGetLineItemsResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieveLineItems(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
-    ): PaymentGetLineItemsResponse;
-
-    /**
-     * @api
-     *
-     * @return PaymentGetLineItemsResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveLineItemsRaw(
-        string $paymentID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): PaymentGetLineItemsResponse;
 }

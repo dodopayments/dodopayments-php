@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\RequestOptions;
@@ -17,8 +16,6 @@ interface LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @return LicenseKeyInstance<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
@@ -29,22 +26,7 @@ interface LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @return LicenseKeyInstance<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
-        ?RequestOptions $requestOptions = null
-    ): LicenseKeyInstance;
-
-    /**
-     * @api
-     *
      * @param string $name
-     *
-     * @return LicenseKeyInstance<HasRawResponse>
      *
      * @throws APIException
      */
@@ -58,8 +40,6 @@ interface LicenseKeyInstancesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LicenseKeyInstance<HasRawResponse>
      *
      * @throws APIException
      */

@@ -105,7 +105,7 @@ final class RefundListParams implements BaseModel
         null !== $customerID && $obj->customerID = $customerID;
         null !== $pageNumber && $obj->pageNumber = $pageNumber;
         null !== $pageSize && $obj->pageSize = $pageSize;
-        null !== $status && $obj->status = $status instanceof Status ? $status->value : $status;
+        null !== $status && $obj['status'] = $status;
 
         return $obj;
     }
@@ -173,7 +173,7 @@ final class RefundListParams implements BaseModel
     public function withStatus(Status|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof Status ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }

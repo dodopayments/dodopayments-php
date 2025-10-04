@@ -71,7 +71,7 @@ final class DirectFilterCondition implements BaseModel
         $obj = new self;
 
         $obj->key = $key;
-        $obj->operator = $operator instanceof Operator ? $operator->value : $operator;
+        $obj['operator'] = $operator;
         $obj->value = $value;
 
         return $obj;
@@ -94,7 +94,7 @@ final class DirectFilterCondition implements BaseModel
     public function withOperator(Operator|string $operator): self
     {
         $obj = clone $this;
-        $obj->operator = $operator instanceof Operator ? $operator->value : $operator;
+        $obj['operator'] = $operator;
 
         return $obj;
     }

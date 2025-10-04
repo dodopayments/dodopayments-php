@@ -6,19 +6,19 @@ namespace Dodopayments\Products\Images;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type image_update_response = array{url: string, imageID?: string|null}
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class ImageUpdateResponse implements BaseModel
+final class ImageUpdateResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<image_update_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $url;

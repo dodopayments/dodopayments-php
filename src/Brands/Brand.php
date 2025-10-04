@@ -7,7 +7,9 @@ namespace Dodopayments\Brands;
 use Dodopayments\Brands\Brand\VerificationStatus;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type brand_alias = array{
@@ -24,15 +26,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   supportEmail?: string|null,
  *   url?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Brand implements BaseModel
+final class Brand implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<brand_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api('brand_id')]
     public string $brandID;
@@ -134,7 +134,7 @@ final class Brand implements BaseModel
         $obj->enabled = $enabled;
         $obj->statementDescriptor = $statementDescriptor;
         $obj->verificationEnabled = $verificationEnabled;
-        $obj->verificationStatus = $verificationStatus instanceof VerificationStatus ? $verificationStatus->value : $verificationStatus;
+        $obj['verificationStatus'] = $verificationStatus;
 
         null !== $description && $obj->description = $description;
         null !== $image && $obj->image = $image;
@@ -193,7 +193,7 @@ final class Brand implements BaseModel
         VerificationStatus|string $verificationStatus
     ): self {
         $obj = clone $this;
-        $obj->verificationStatus = $verificationStatus instanceof VerificationStatus ? $verificationStatus->value : $verificationStatus;
+        $obj['verificationStatus'] = $verificationStatus;
 
         return $obj;
     }

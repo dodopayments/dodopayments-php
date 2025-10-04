@@ -11,7 +11,6 @@ use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsContract;
 
@@ -32,8 +31,6 @@ final class BrandsService implements BrandsContract
      * @param string|null $statementDescriptor
      * @param string|null $supportEmail
      * @param string|null $url
-     *
-     * @return Brand<HasRawResponse>
      *
      * @throws APIException
      */
@@ -61,8 +58,6 @@ final class BrandsService implements BrandsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Brand<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -89,29 +84,10 @@ final class BrandsService implements BrandsContract
      *
      * Thin handler just calls `get_brand` and wraps in `Json(...)`
      *
-     * @return Brand<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): Brand {
-        $params = [];
-
-        return $this->retrieveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return Brand<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Brand {
         // @phpstan-ignore-next-line;
@@ -130,8 +106,6 @@ final class BrandsService implements BrandsContract
      * @param string|null $name
      * @param string|null $statementDescriptor
      * @param string|null $supportEmail
-     *
-     * @return Brand<HasRawResponse>
      *
      * @throws APIException
      */
@@ -158,8 +132,6 @@ final class BrandsService implements BrandsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return Brand<HasRawResponse>
-     *
      * @throws APIException
      */
     public function updateRaw(
@@ -185,27 +157,9 @@ final class BrandsService implements BrandsContract
     /**
      * @api
      *
-     * @return BrandListResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function list(
-        ?RequestOptions $requestOptions = null
-    ): BrandListResponse {
-        $params = [];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return BrandListResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): BrandListResponse {
         // @phpstan-ignore-next-line;
@@ -220,29 +174,10 @@ final class BrandsService implements BrandsContract
     /**
      * @api
      *
-     * @return BrandUpdateImagesResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): BrandUpdateImagesResponse {
-        $params = [];
-
-        return $this->updateImagesRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return BrandUpdateImagesResponse<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function updateImagesRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): BrandUpdateImagesResponse {
         // @phpstan-ignore-next-line;

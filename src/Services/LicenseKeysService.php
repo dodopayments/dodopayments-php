@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
@@ -27,29 +26,10 @@ final class LicenseKeysService implements LicenseKeysContract
     /**
      * @api
      *
-     * @return LicenseKey<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): LicenseKey {
-        $params = [];
-
-        return $this->retrieveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return LicenseKey<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): LicenseKey {
         // @phpstan-ignore-next-line;
@@ -70,8 +50,6 @@ final class LicenseKeysService implements LicenseKeysContract
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
      * @param \DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
-     *
-     * @return LicenseKey<HasRawResponse>
      *
      * @throws APIException
      */
@@ -95,8 +73,6 @@ final class LicenseKeysService implements LicenseKeysContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LicenseKey<HasRawResponse>
      *
      * @throws APIException
      */

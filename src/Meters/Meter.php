@@ -6,7 +6,9 @@ namespace Dodopayments\Meters;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type meter_alias = array{
@@ -21,15 +23,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   description?: string|null,
  *   filter?: MeterFilter|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Meter implements BaseModel
+final class Meter implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<meter_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;

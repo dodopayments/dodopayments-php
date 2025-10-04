@@ -68,7 +68,7 @@ final class Level2NestedFilter implements BaseModel
         $obj = new self;
 
         $obj->clauses = $clauses;
-        $obj->conjunction = $conjunction instanceof Conjunction ? $conjunction->value : $conjunction;
+        $obj['conjunction'] = $conjunction;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class Level2NestedFilter implements BaseModel
     public function withConjunction(Conjunction|string $conjunction): self
     {
         $obj = clone $this;
-        $obj->conjunction = $conjunction instanceof Conjunction ? $conjunction->value : $conjunction;
+        $obj['conjunction'] = $conjunction;
 
         return $obj;
     }

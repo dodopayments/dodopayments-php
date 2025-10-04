@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -59,8 +58,6 @@ interface SubscriptionsContract
      * If specified, this value overrides the trial period set in the product's price
      * Must be between 0 and 10000 days
      *
-     * @return SubscriptionNewResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -87,8 +84,6 @@ interface SubscriptionsContract
      *
      * @param array<string, mixed> $params
      *
-     * @return SubscriptionNewResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function createRaw(
@@ -99,26 +94,11 @@ interface SubscriptionsContract
     /**
      * @api
      *
-     * @return Subscription<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $subscriptionID,
         ?RequestOptions $requestOptions = null
-    ): Subscription;
-
-    /**
-     * @api
-     *
-     * @return Subscription<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $subscriptionID,
-        mixed $params,
-        ?RequestOptions $requestOptions = null,
     ): Subscription;
 
     /**
@@ -131,8 +111,6 @@ interface SubscriptionsContract
      * @param \DateTimeInterface|null $nextBillingDate
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      * @param string|null $taxID
-     *
-     * @return Subscription<HasRawResponse>
      *
      * @throws APIException
      */
@@ -152,8 +130,6 @@ interface SubscriptionsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Subscription<HasRawResponse>
      *
      * @throws APIException
      */
@@ -250,8 +226,6 @@ interface SubscriptionsContract
      * @param string|null $productDescription Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      *
-     * @return SubscriptionChargeResponse<HasRawResponse>
-     *
      * @throws APIException
      */
     public function charge(
@@ -269,8 +243,6 @@ interface SubscriptionsContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return SubscriptionChargeResponse<HasRawResponse>
      *
      * @throws APIException
      */

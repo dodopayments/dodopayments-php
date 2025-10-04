@@ -6,7 +6,9 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
 
@@ -14,15 +16,13 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
  * @phpstan-type payment_get_line_items_response = array{
  *   currency: value-of<Currency>, items: list<Item>
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class PaymentGetLineItemsResponse implements BaseModel
+final class PaymentGetLineItemsResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<payment_get_line_items_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
@@ -63,7 +63,7 @@ final class PaymentGetLineItemsResponse implements BaseModel
     {
         $obj = new self;
 
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->items = $items;
 
         return $obj;
@@ -75,7 +75,7 @@ final class PaymentGetLineItemsResponse implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

@@ -179,8 +179,8 @@ final class LicenseKey implements BaseModel
         $obj->key = $key;
         $obj->paymentID = $paymentID;
         $obj->productID = $productID;
-        $obj->status = $status instanceof LicenseKeyStatus ? $status->value : $status;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['status'] = $status;
+        $obj['payloadType'] = $payloadType;
 
         null !== $activationsLimit && $obj->activationsLimit = $activationsLimit;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
@@ -283,7 +283,7 @@ final class LicenseKey implements BaseModel
     public function withStatus(LicenseKeyStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof LicenseKeyStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -327,7 +327,7 @@ final class LicenseKey implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['payloadType'] = $payloadType;
 
         return $obj;
     }

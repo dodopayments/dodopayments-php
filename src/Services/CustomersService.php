@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerListParams;
@@ -47,8 +46,6 @@ final class CustomersService implements CustomersContract
      * @param string $name
      * @param string|null $phoneNumber
      *
-     * @return Customer<HasRawResponse>
-     *
      * @throws APIException
      */
     public function create(
@@ -68,8 +65,6 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Customer<HasRawResponse>
      *
      * @throws APIException
      */
@@ -95,29 +90,10 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
-     * @return Customer<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $customerID,
-        ?RequestOptions $requestOptions = null
-    ): Customer {
-        $params = [];
-
-        return $this->retrieveRaw($customerID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return Customer<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $customerID,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): Customer {
         // @phpstan-ignore-next-line;
@@ -134,8 +110,6 @@ final class CustomersService implements CustomersContract
      *
      * @param string|null $name
      * @param string|null $phoneNumber
-     *
-     * @return Customer<HasRawResponse>
      *
      * @throws APIException
      */
@@ -154,8 +128,6 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return Customer<HasRawResponse>
      *
      * @throws APIException
      */

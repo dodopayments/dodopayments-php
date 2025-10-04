@@ -143,7 +143,7 @@ final class DiscountCreateParams implements BaseModel
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->type = $type instanceof DiscountType ? $type->value : $type;
+        $obj['type'] = $type;
 
         null !== $code && $obj->code = $code;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
@@ -180,7 +180,7 @@ final class DiscountCreateParams implements BaseModel
     public function withType(DiscountType|string $type): self
     {
         $obj = clone $this;
-        $obj->type = $type instanceof DiscountType ? $type->value : $type;
+        $obj['type'] = $type;
 
         return $obj;
     }

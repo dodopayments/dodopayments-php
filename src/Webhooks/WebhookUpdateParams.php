@@ -113,7 +113,7 @@ final class WebhookUpdateParams implements BaseModel
 
         null !== $description && $obj->description = $description;
         null !== $disabled && $obj->disabled = $disabled;
-        null !== $filterTypes && $obj->filterTypes = array_map(fn ($v) => $v instanceof WebhookEventType ? $v->value : $v, $filterTypes);
+        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $rateLimit && $obj->rateLimit = $rateLimit;
         null !== $url && $obj->url = $url;
@@ -153,7 +153,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withFilterTypes(?array $filterTypes): self
     {
         $obj = clone $this;
-        $obj->filterTypes = array_map(fn ($v) => $v instanceof WebhookEventType ? $v->value : $v, $filterTypes);
+        $obj['filterTypes'] = $filterTypes;
 
         return $obj;
     }

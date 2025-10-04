@@ -6,7 +6,9 @@ namespace Dodopayments\Customers\Wallets\LedgerEntries;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction\EventType;
 use Dodopayments\Misc\Currency;
 
@@ -25,15 +27,13 @@ use Dodopayments\Misc\Currency;
  *   reason?: string|null,
  *   referenceObjectID?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class CustomerWalletTransaction implements BaseModel
+final class CustomerWalletTransaction implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<customer_wallet_transaction> */
     use SdkModel;
+
+    use SdkResponse;
 
     #[Api]
     public string $id;
@@ -143,9 +143,9 @@ final class CustomerWalletTransaction implements BaseModel
         $obj->beforeBalance = $beforeBalance;
         $obj->businessID = $businessID;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->customerID = $customerID;
-        $obj->eventType = $eventType instanceof EventType ? $eventType->value : $eventType;
+        $obj['eventType'] = $eventType;
         $obj->isCredit = $isCredit;
 
         null !== $reason && $obj->reason = $reason;
@@ -208,7 +208,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -227,7 +227,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withEventType(EventType|string $eventType): self
     {
         $obj = clone $this;
-        $obj->eventType = $eventType instanceof EventType ? $eventType->value : $eventType;
+        $obj['eventType'] = $eventType;
 
         return $obj;
     }

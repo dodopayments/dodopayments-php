@@ -6,7 +6,9 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
 
 /**
@@ -15,15 +17,13 @@ use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
  *   meters: list<Meter>,
  *   startDate: \DateTimeInterface,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class SubscriptionGetUsageHistoryResponse implements BaseModel
+final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<subscription_get_usage_history_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * End date of the billing period.

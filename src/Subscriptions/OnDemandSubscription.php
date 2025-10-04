@@ -103,7 +103,7 @@ final class OnDemandSubscription implements BaseModel
         $obj->mandateOnly = $mandateOnly;
 
         null !== $adaptiveCurrencyFeesInclusive && $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
-        null !== $productCurrency && $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
+        null !== $productCurrency && $obj['productCurrency'] = $productCurrency;
         null !== $productDescription && $obj->productDescription = $productDescription;
         null !== $productPrice && $obj->productPrice = $productPrice;
 
@@ -143,7 +143,7 @@ final class OnDemandSubscription implements BaseModel
         Currency|string|null $productCurrency
     ): self {
         $obj = clone $this;
-        $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
+        $obj['productCurrency'] = $productCurrency;
 
         return $obj;
     }

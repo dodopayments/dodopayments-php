@@ -6,7 +6,9 @@ namespace Dodopayments\Refunds;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
@@ -21,15 +23,13 @@ use Dodopayments\Misc\Currency;
  *   currency?: value-of<Currency>|null,
  *   reason?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class RefundListResponse implements BaseModel
+final class RefundListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<refund_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * The unique identifier of the business issuing the refund.
@@ -147,10 +147,10 @@ final class RefundListResponse implements BaseModel
         $obj->isPartial = $isPartial;
         $obj->paymentID = $paymentID;
         $obj->refundID = $refundID;
-        $obj->status = $status instanceof RefundStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         null !== $amount && $obj->amount = $amount;
-        null !== $currency && $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        null !== $currency && $obj['currency'] = $currency;
         null !== $reason && $obj->reason = $reason;
 
         return $obj;
@@ -219,7 +219,7 @@ final class RefundListResponse implements BaseModel
     public function withStatus(RefundStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof RefundStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -243,7 +243,7 @@ final class RefundListResponse implements BaseModel
     public function withCurrency(Currency|string|null $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

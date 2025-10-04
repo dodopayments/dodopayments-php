@@ -6,7 +6,6 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Implementation\HasRawResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
@@ -26,29 +25,10 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @return LicenseKeyInstance<HasRawResponse>
-     *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
-    ): LicenseKeyInstance {
-        $params = [];
-
-        return $this->retrieveRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @return LicenseKeyInstance<HasRawResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveRaw(
-        string $id,
-        mixed $params,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
         // @phpstan-ignore-next-line;
@@ -64,8 +44,6 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @api
      *
      * @param string $name
-     *
-     * @return LicenseKeyInstance<HasRawResponse>
      *
      * @throws APIException
      */
@@ -83,8 +61,6 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @api
      *
      * @param array<string, mixed> $params
-     *
-     * @return LicenseKeyInstance<HasRawResponse>
      *
      * @throws APIException
      */

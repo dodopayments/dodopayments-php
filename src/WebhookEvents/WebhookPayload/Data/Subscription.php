@@ -321,25 +321,25 @@ final class Subscription implements BaseModel
         $obj->billing = $billing;
         $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->customer = $customer;
         $obj->metadata = $metadata;
         $obj->meters = $meters;
         $obj->nextBillingDate = $nextBillingDate;
         $obj->onDemand = $onDemand;
         $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
+        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
         $obj->previousBillingDate = $previousBillingDate;
         $obj->productID = $productID;
         $obj->quantity = $quantity;
         $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
-        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
+        $obj['status'] = $status;
         $obj->subscriptionID = $subscriptionID;
         $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
+        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
         $obj->taxInclusive = $taxInclusive;
         $obj->trialPeriodDays = $trialPeriodDays;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['payloadType'] = $payloadType;
 
         null !== $cancelledAt && $obj->cancelledAt = $cancelledAt;
         null !== $discountCyclesRemaining && $obj->discountCyclesRemaining = $discountCyclesRemaining;
@@ -399,7 +399,7 @@ final class Subscription implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -479,7 +479,7 @@ final class Subscription implements BaseModel
         TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
+        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -535,7 +535,7 @@ final class Subscription implements BaseModel
     public function withStatus(SubscriptionStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -570,7 +570,7 @@ final class Subscription implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
+        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
         return $obj;
     }
@@ -648,7 +648,7 @@ final class Subscription implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj->payloadType = $payloadType instanceof PayloadType ? $payloadType->value : $payloadType;
+        $obj['payloadType'] = $payloadType;
 
         return $obj;
     }

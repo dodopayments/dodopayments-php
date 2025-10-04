@@ -6,7 +6,9 @@ namespace Dodopayments\Webhooks\Headers;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * The value of the headers is returned in the `headers` field.
@@ -17,15 +19,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type header_get_response = array{
  *   headers: array<string, string>, sensitive: list<string>
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class HeaderGetResponse implements BaseModel
+final class HeaderGetResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<header_get_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * List of headers configured.

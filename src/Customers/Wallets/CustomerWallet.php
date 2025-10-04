@@ -83,7 +83,7 @@ final class CustomerWallet implements BaseModel
 
         $obj->balance = $balance;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->customerID = $customerID;
         $obj->updatedAt = $updatedAt;
 
@@ -112,7 +112,7 @@ final class CustomerWallet implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }

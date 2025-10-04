@@ -131,7 +131,7 @@ final class SubscriptionChargeParams implements BaseModel
         null !== $adaptiveCurrencyFeesInclusive && $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
         null !== $customerBalanceConfig && $obj->customerBalanceConfig = $customerBalanceConfig;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $productCurrency && $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
+        null !== $productCurrency && $obj['productCurrency'] = $productCurrency;
         null !== $productDescription && $obj->productDescription = $productDescription;
 
         return $obj;
@@ -196,7 +196,7 @@ final class SubscriptionChargeParams implements BaseModel
         Currency|string|null $productCurrency
     ): self {
         $obj = clone $this;
-        $obj->productCurrency = $productCurrency instanceof Currency ? $productCurrency->value : $productCurrency;
+        $obj['productCurrency'] = $productCurrency;
 
         return $obj;
     }

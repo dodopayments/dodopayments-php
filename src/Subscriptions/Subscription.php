@@ -6,7 +6,9 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -43,15 +45,13 @@ use Dodopayments\Subscriptions\Subscription\Meter;
  *   discountID?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class Subscription implements BaseModel
+final class Subscription implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<subscription_alias> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * Addons associated with this subscription.
@@ -334,22 +334,22 @@ final class Subscription implements BaseModel
         $obj->billing = $billing;
         $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->customer = $customer;
         $obj->metadata = $metadata;
         $obj->meters = $meters;
         $obj->nextBillingDate = $nextBillingDate;
         $obj->onDemand = $onDemand;
         $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
+        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
         $obj->previousBillingDate = $previousBillingDate;
         $obj->productID = $productID;
         $obj->quantity = $quantity;
         $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
-        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
+        $obj['status'] = $status;
         $obj->subscriptionID = $subscriptionID;
         $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
+        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
         $obj->taxInclusive = $taxInclusive;
         $obj->trialPeriodDays = $trialPeriodDays;
 
@@ -416,7 +416,7 @@ final class Subscription implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -501,7 +501,7 @@ final class Subscription implements BaseModel
         TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj->paymentFrequencyInterval = $paymentFrequencyInterval instanceof TimeInterval ? $paymentFrequencyInterval->value : $paymentFrequencyInterval;
+        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -559,7 +559,7 @@ final class Subscription implements BaseModel
     public function withStatus(SubscriptionStatus|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof SubscriptionStatus ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }
@@ -596,7 +596,7 @@ final class Subscription implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodInterval = $subscriptionPeriodInterval instanceof TimeInterval ? $subscriptionPeriodInterval->value : $subscriptionPeriodInterval;
+        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
         return $obj;
     }

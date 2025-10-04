@@ -6,7 +6,9 @@ namespace Dodopayments\Payouts;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payouts\PayoutListResponse\Status;
 
@@ -28,15 +30,13 @@ use Dodopayments\Payouts\PayoutListResponse\Status;
  *   payoutDocumentURL?: string|null,
  *   remarks?: string|null,
  * }
- * When used in a response, this type parameter can define a $rawResponse property.
- * @template TRawResponse of object = object{}
- *
- * @mixin TRawResponse
  */
-final class PayoutListResponse implements BaseModel
+final class PayoutListResponse implements BaseModel, ResponseConverter
 {
     /** @use SdkModel<payout_list_response> */
     use SdkModel;
+
+    use SdkResponse;
 
     /**
      * The total amount of the payout.
@@ -207,12 +207,12 @@ final class PayoutListResponse implements BaseModel
         $obj->businessID = $businessID;
         $obj->chargebacks = $chargebacks;
         $obj->createdAt = $createdAt;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
         $obj->fee = $fee;
         $obj->paymentMethod = $paymentMethod;
         $obj->payoutID = $payoutID;
         $obj->refunds = $refunds;
-        $obj->status = $status instanceof Status ? $status->value : $status;
+        $obj['status'] = $status;
         $obj->tax = $tax;
         $obj->updatedAt = $updatedAt;
 
@@ -275,7 +275,7 @@ final class PayoutListResponse implements BaseModel
     public function withCurrency(Currency|string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency instanceof Currency ? $currency->value : $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -332,7 +332,7 @@ final class PayoutListResponse implements BaseModel
     public function withStatus(Status|string $status): self
     {
         $obj = clone $this;
-        $obj->status = $status instanceof Status ? $status->value : $status;
+        $obj['status'] = $status;
 
         return $obj;
     }

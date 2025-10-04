@@ -115,8 +115,8 @@ final class DisputeListParams implements BaseModel
         null !== $createdAtGte && $obj->createdAtGte = $createdAtGte;
         null !== $createdAtLte && $obj->createdAtLte = $createdAtLte;
         null !== $customerID && $obj->customerID = $customerID;
-        null !== $disputeStage && $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
-        null !== $disputeStatus && $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
+        null !== $disputeStage && $obj['disputeStage'] = $disputeStage;
+        null !== $disputeStatus && $obj['disputeStatus'] = $disputeStatus;
         null !== $pageNumber && $obj->pageNumber = $pageNumber;
         null !== $pageSize && $obj->pageSize = $pageSize;
 
@@ -164,7 +164,7 @@ final class DisputeListParams implements BaseModel
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj->disputeStage = $disputeStage instanceof DisputeStage ? $disputeStage->value : $disputeStage;
+        $obj['disputeStage'] = $disputeStage;
 
         return $obj;
     }
@@ -177,7 +177,7 @@ final class DisputeListParams implements BaseModel
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj->disputeStatus = $disputeStatus instanceof DisputeStatus ? $disputeStatus->value : $disputeStatus;
+        $obj['disputeStatus'] = $disputeStatus;
 
         return $obj;
     }
