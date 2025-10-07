@@ -146,7 +146,7 @@ final class ProductsService implements ProductsContract
      * @param list<string>|null $addons Available Addons for subscription products
      * @param string|null $brandID
      * @param string|null $description description of the product, optional and must be at most 1000 characters
-     * @param Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param ProductUpdateParams\DigitalProductDelivery|null $digitalProductDelivery Choose how you would like you digital product delivered
      * @param string|null $imageID Product image id after its uploaded to S3
      * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.
      *
