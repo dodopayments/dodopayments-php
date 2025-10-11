@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.53.5 (2025-10-11)
+
+Full Changelog: [v1.53.4...v1.53.5](https://github.com/dodopayments/dodopayments-php/compare/v1.53.4...v1.53.5)
+
+### Bug Fixes
+
+* **ci:** release doctor workflow ([38adb51](https://github.com/dodopayments/dodopayments-php/commit/38adb512afd70a66931ba50ef4b5f4ad6a7389b5))
+* **client:** properly import fully qualified names ([116eabc](https://github.com/dodopayments/dodopayments-php/commit/116eabc275a87671ced664912f23317a91b409a3))
+
+
+### Chores
+
+* add license ([dae8941](https://github.com/dodopayments/dodopayments-php/commit/dae89419bd244a1161f7cbad003cc8e3de0b1138))
+* **internal:** restructure some imports ([4cd3db5](https://github.com/dodopayments/dodopayments-php/commit/4cd3db5713a25e2f64210190b613932a4ae223c6))
+* refactor methods ([410b8fc](https://github.com/dodopayments/dodopayments-php/commit/410b8fc1441584ecf457bcc8b87493991ce3c9ce))
+
 ## 1.53.4 (2025-09-23)
 
 Full Changelog: [v1.53.3...v1.53.4](https://github.com/dodopayments/dodopayments-php/compare/v1.53.3...v1.53.4)
