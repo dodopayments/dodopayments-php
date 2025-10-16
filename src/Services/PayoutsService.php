@@ -24,6 +24,8 @@ final class PayoutsService implements PayoutsContract
     /**
      * @api
      *
+     * @param \DateTimeInterface $createdAtGte Get payouts created after this time (inclusive)
+     * @param \DateTimeInterface $createdAtLte Get payouts created before this time (inclusive)
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      *
@@ -32,11 +34,18 @@ final class PayoutsService implements PayoutsContract
      * @throws APIException
      */
     public function list(
+        $createdAtGte = omit,
+        $createdAtLte = omit,
         $pageNumber = omit,
         $pageSize = omit,
-        ?RequestOptions $requestOptions = null
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+        $params = [
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
 
         return $this->listRaw($params, $requestOptions);
     }

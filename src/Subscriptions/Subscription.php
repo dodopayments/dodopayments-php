@@ -44,6 +44,7 @@ use Dodopayments\Subscriptions\Subscription\Meter;
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
+ *   taxID?: string|null,
  * }
  */
 final class Subscription implements BaseModel, ResponseConverter
@@ -224,6 +225,12 @@ final class Subscription implements BaseModel, ResponseConverter
     public ?\DateTimeInterface $expiresAt;
 
     /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    #[Api('tax_id', nullable: true, optional: true)]
+    public ?string $taxID;
+
+    /**
      * `new Subscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -327,6 +334,7 @@ final class Subscription implements BaseModel, ResponseConverter
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
         ?\DateTimeInterface $expiresAt = null,
+        ?string $taxID = null,
     ): self {
         $obj = new self;
 
@@ -357,6 +365,7 @@ final class Subscription implements BaseModel, ResponseConverter
         null !== $discountCyclesRemaining && $obj->discountCyclesRemaining = $discountCyclesRemaining;
         null !== $discountID && $obj->discountID = $discountID;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
+        null !== $taxID && $obj->taxID = $taxID;
 
         return $obj;
     }
@@ -664,6 +673,17 @@ final class Subscription implements BaseModel, ResponseConverter
     {
         $obj = clone $this;
         $obj->expiresAt = $expiresAt;
+
+        return $obj;
+    }
+
+    /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    public function withTaxID(?string $taxID): self
+    {
+        $obj = clone $this;
+        $obj->taxID = $taxID;
 
         return $obj;
     }
