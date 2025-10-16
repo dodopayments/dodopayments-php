@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type customer_limited_details = array{
- *   customerID: string, email: string, name: string
+ *   customerID: string, email: string, name: string, phoneNumber?: string|null
  * }
  */
 final class CustomerLimitedDetails implements BaseModel
@@ -35,6 +35,12 @@ final class CustomerLimitedDetails implements BaseModel
      */
     #[Api]
     public string $name;
+
+    /**
+     * Phone number of the customer.
+     */
+    #[Api('phone_number', nullable: true, optional: true)]
+    public ?string $phoneNumber;
 
     /**
      * `new CustomerLimitedDetails()` is missing required properties by the API.
@@ -63,13 +69,16 @@ final class CustomerLimitedDetails implements BaseModel
     public static function with(
         string $customerID,
         string $email,
-        string $name
+        string $name,
+        ?string $phoneNumber = null
     ): self {
         $obj = new self;
 
         $obj->customerID = $customerID;
         $obj->email = $email;
         $obj->name = $name;
+
+        null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
 
         return $obj;
     }
@@ -103,6 +112,17 @@ final class CustomerLimitedDetails implements BaseModel
     {
         $obj = clone $this;
         $obj->name = $name;
+
+        return $obj;
+    }
+
+    /**
+     * Phone number of the customer.
+     */
+    public function withPhoneNumber(?string $phoneNumber): self
+    {
+        $obj = clone $this;
+        $obj->phoneNumber = $phoneNumber;
 
         return $obj;
     }

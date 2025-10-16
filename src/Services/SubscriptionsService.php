@@ -58,6 +58,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
      * @param string|null $discountCode Discount Code to apply to the subscription
+     * @param bool|null $force3DS Override merchant default 3DS behaviour for this subscription
      * @param array<string, string> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
      * @param OnDemandSubscription|null $onDemand
@@ -82,6 +83,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $allowedPaymentMethodTypes = omit,
         $billingCurrency = omit,
         $discountCode = omit,
+        $force3DS = omit,
         $metadata = omit,
         $onDemand = omit,
         $paymentLink = omit,
@@ -100,6 +102,7 @@ final class SubscriptionsService implements SubscriptionsContract
             'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
             'billingCurrency' => $billingCurrency,
             'discountCode' => $discountCode,
+            'force3DS' => $force3DS,
             'metadata' => $metadata,
             'onDemand' => $onDemand,
             'paymentLink' => $paymentLink,

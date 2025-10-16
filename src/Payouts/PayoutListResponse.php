@@ -51,7 +51,9 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public string $businessID;
 
     /**
-     * The total value of chargebacks associated with the payout.
+     * @deprecated
+     *
+     * The total value of chargebacks associated with the payout
      */
     #[Api]
     public int $chargebacks;
@@ -89,7 +91,9 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public string $payoutID;
 
     /**
-     * The total value of refunds associated with the payout.
+     * @deprecated
+     *
+     * The total value of refunds associated with the payout
      */
     #[Api]
     public int $refunds;
@@ -103,7 +107,9 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public string $status;
 
     /**
-     * The tax applied to the payout.
+     * @deprecated
+     *
+     * The tax applied to the payout
      */
     #[Api]
     public int $tax;

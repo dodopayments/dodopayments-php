@@ -13,13 +13,22 @@ use Dodopayments\Core\Contracts\BaseModel;
  * Customization for the checkout session page.
  *
  * @phpstan-type customization_alias = array{
- *   showOnDemandTag?: bool, showOrderDetails?: bool, theme?: value-of<Theme>
+ *   forceLanguage?: string|null,
+ *   showOnDemandTag?: bool,
+ *   showOrderDetails?: bool,
+ *   theme?: value-of<Theme>,
  * }
  */
 final class Customization implements BaseModel
 {
     /** @use SdkModel<customization_alias> */
     use SdkModel;
+
+    /**
+     * Force the checkout interface to render in a specific language (e.g. `en`, `es`).
+     */
+    #[Api('force_language', nullable: true, optional: true)]
+    public ?string $forceLanguage;
 
     /**
      * Show on demand tag.
@@ -60,15 +69,28 @@ final class Customization implements BaseModel
      * @param Theme|value-of<Theme> $theme
      */
     public static function with(
+        ?string $forceLanguage = null,
         ?bool $showOnDemandTag = null,
         ?bool $showOrderDetails = null,
         Theme|string|null $theme = null,
     ): self {
         $obj = new self;
 
+        null !== $forceLanguage && $obj->forceLanguage = $forceLanguage;
         null !== $showOnDemandTag && $obj->showOnDemandTag = $showOnDemandTag;
         null !== $showOrderDetails && $obj->showOrderDetails = $showOrderDetails;
         null !== $theme && $obj['theme'] = $theme;
+
+        return $obj;
+    }
+
+    /**
+     * Force the checkout interface to render in a specific language (e.g. `en`, `es`).
+     */
+    public function withForceLanguage(?string $forceLanguage): self
+    {
+        $obj = clone $this;
+        $obj->forceLanguage = $forceLanguage;
 
         return $obj;
     }
