@@ -38,6 +38,7 @@ interface CheckoutSessionsContract
      * @param Customization $customization Customization for the checkout session page
      * @param string|null $discountCode
      * @param FeatureFlags $featureFlags
+     * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
      * @param array<string,
      * string,>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param string|null $returnURL the url to redirect after payment failure or success
@@ -56,6 +57,7 @@ interface CheckoutSessionsContract
         $customization = omit,
         $discountCode = omit,
         $featureFlags = omit,
+        $force3DS = omit,
         $metadata = omit,
         $returnURL = omit,
         $showSavedPaymentMethods = omit,

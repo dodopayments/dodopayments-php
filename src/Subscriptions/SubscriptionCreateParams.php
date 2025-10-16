@@ -38,6 +38,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
+ *   force3DS?: bool|null,
  *   metadata?: array<string, string>,
  *   onDemand?: OnDemandSubscription|null,
  *   paymentLink?: bool|null,
@@ -121,6 +122,12 @@ final class SubscriptionCreateParams implements BaseModel
      */
     #[Api('discount_code', nullable: true, optional: true)]
     public ?string $discountCode;
+
+    /**
+     * Override merchant default 3DS behaviour for this subscription.
+     */
+    #[Api('force_3ds', nullable: true, optional: true)]
+    public ?bool $force3DS;
 
     /**
      * Additional metadata for the subscription
@@ -212,6 +219,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
+        ?bool $force3DS = null,
         ?array $metadata = null,
         ?OnDemandSubscription $onDemand = null,
         ?bool $paymentLink = null,
@@ -231,6 +239,7 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
         null !== $discountCode && $obj->discountCode = $discountCode;
+        null !== $force3DS && $obj->force3DS = $force3DS;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $onDemand && $obj->onDemand = $onDemand;
         null !== $paymentLink && $obj->paymentLink = $paymentLink;
@@ -340,6 +349,17 @@ final class SubscriptionCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->discountCode = $discountCode;
+
+        return $obj;
+    }
+
+    /**
+     * Override merchant default 3DS behaviour for this subscription.
+     */
+    public function withForce3DS(?bool $force3DS): self
+    {
+        $obj = clone $this;
+        $obj->force3DS = $force3DS;
 
         return $obj;
     }

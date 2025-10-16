@@ -46,6 +46,7 @@ final class PaymentsService implements PaymentsContract
      * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
      * @param string|null $discountCode Discount Code to apply to the transaction
+     * @param bool|null $force3DS Override merchant default 3DS behaviour for this payment
      * @param array<string,
      * string,> $metadata Additional metadata associated with the payment.
      * Defaults to empty if not provided.
@@ -65,6 +66,7 @@ final class PaymentsService implements PaymentsContract
         $allowedPaymentMethodTypes = omit,
         $billingCurrency = omit,
         $discountCode = omit,
+        $force3DS = omit,
         $metadata = omit,
         $paymentLink = omit,
         $returnURL = omit,
@@ -79,6 +81,7 @@ final class PaymentsService implements PaymentsContract
             'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
             'billingCurrency' => $billingCurrency,
             'discountCode' => $discountCode,
+            'force3DS' => $force3DS,
             'metadata' => $metadata,
             'paymentLink' => $paymentLink,
             'returnURL' => $returnURL,

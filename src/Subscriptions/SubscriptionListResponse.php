@@ -40,6 +40,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   cancelledAt?: \DateTimeInterface|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
+ *   taxID?: string|null,
  * }
  */
 final class SubscriptionListResponse implements BaseModel, ResponseConverter
@@ -198,6 +199,12 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
     public ?string $discountID;
 
     /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    #[Api('tax_id', nullable: true, optional: true)]
+    public ?string $taxID;
+
+    /**
      * `new SubscriptionListResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -292,6 +299,7 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
         ?\DateTimeInterface $cancelledAt = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
+        ?string $taxID = null,
     ): self {
         $obj = new self;
 
@@ -319,6 +327,7 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
         null !== $cancelledAt && $obj->cancelledAt = $cancelledAt;
         null !== $discountCyclesRemaining && $obj->discountCyclesRemaining = $discountCyclesRemaining;
         null !== $discountID && $obj->discountID = $discountID;
+        null !== $taxID && $obj->taxID = $taxID;
 
         return $obj;
     }
@@ -589,6 +598,17 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
     {
         $obj = clone $this;
         $obj->discountID = $discountID;
+
+        return $obj;
+    }
+
+    /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    public function withTaxID(?string $taxID): self
+    {
+        $obj = clone $this;
+        $obj->taxID = $taxID;
 
         return $obj;
     }

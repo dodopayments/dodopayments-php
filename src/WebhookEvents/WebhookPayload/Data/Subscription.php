@@ -46,6 +46,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
+ *   taxID?: string|null,
  *   payloadType: value-of<PayloadType>,
  * }
  */
@@ -202,6 +203,12 @@ final class Subscription implements BaseModel
     #[Api('expires_at', nullable: true, optional: true)]
     public ?\DateTimeInterface $expiresAt;
 
+    /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    #[Api('tax_id', nullable: true, optional: true)]
+    public ?string $taxID;
+
     /** @var value-of<PayloadType> $payloadType */
     #[Api('payload_type', enum: PayloadType::class)]
     public string $payloadType;
@@ -314,6 +321,7 @@ final class Subscription implements BaseModel
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
         ?\DateTimeInterface $expiresAt = null,
+        ?string $taxID = null,
     ): self {
         $obj = new self;
 
@@ -345,6 +353,7 @@ final class Subscription implements BaseModel
         null !== $discountCyclesRemaining && $obj->discountCyclesRemaining = $discountCyclesRemaining;
         null !== $discountID && $obj->discountID = $discountID;
         null !== $expiresAt && $obj->expiresAt = $expiresAt;
+        null !== $taxID && $obj->taxID = $taxID;
 
         return $obj;
     }
@@ -638,6 +647,17 @@ final class Subscription implements BaseModel
     {
         $obj = clone $this;
         $obj->expiresAt = $expiresAt;
+
+        return $obj;
+    }
+
+    /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    public function withTaxID(?string $taxID): self
+    {
+        $obj = clone $this;
+        $obj->taxID = $taxID;
 
         return $obj;
     }

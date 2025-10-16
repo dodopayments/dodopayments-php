@@ -32,6 +32,7 @@ use Dodopayments\Misc\Currency;
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
+ *   force3DS?: bool|null,
  *   metadata?: array<string, string>,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
@@ -101,6 +102,12 @@ final class PaymentCreateParams implements BaseModel
      */
     #[Api('discount_code', nullable: true, optional: true)]
     public ?string $discountCode;
+
+    /**
+     * Override merchant default 3DS behaviour for this payment.
+     */
+    #[Api('force_3ds', nullable: true, optional: true)]
+    public ?bool $force3DS;
 
     /**
      * Additional metadata associated with the payment.
@@ -176,6 +183,7 @@ final class PaymentCreateParams implements BaseModel
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
+        ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $paymentLink = null,
         ?string $returnURL = null,
@@ -191,6 +199,7 @@ final class PaymentCreateParams implements BaseModel
         null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
         null !== $discountCode && $obj->discountCode = $discountCode;
+        null !== $force3DS && $obj->force3DS = $force3DS;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $paymentLink && $obj->paymentLink = $paymentLink;
         null !== $returnURL && $obj->returnURL = $returnURL;
@@ -276,6 +285,17 @@ final class PaymentCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->discountCode = $discountCode;
+
+        return $obj;
+    }
+
+    /**
+     * Override merchant default 3DS behaviour for this payment.
+     */
+    public function withForce3DS(?bool $force3DS): self
+    {
+        $obj = clone $this;
+        $obj->force3DS = $force3DS;
 
         return $obj;
     }
