@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type new_customer = array{
- *   email: string, name: string, phoneNumber?: string|null
+ *   email: string, name?: string|null, phoneNumber?: string|null
  * }
  */
 final class NewCustomer implements BaseModel
@@ -18,11 +18,19 @@ final class NewCustomer implements BaseModel
     /** @use SdkModel<new_customer> */
     use SdkModel;
 
+    /**
+     * Email is required for creating a new customer.
+     */
     #[Api]
     public string $email;
 
-    #[Api]
-    public string $name;
+    /**
+     * Optional full name of the customer. If provided during session creation,
+     * it is persisted and becomes immutable for the session. If omitted here,
+     * it can be provided later via the confirm API.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?string $name;
 
     #[Api('phone_number', nullable: true, optional: true)]
     public ?string $phoneNumber;
@@ -32,13 +40,13 @@ final class NewCustomer implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * NewCustomer::with(email: ..., name: ...)
+     * NewCustomer::with(email: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new NewCustomer)->withEmail(...)->withName(...)
+     * (new NewCustomer)->withEmail(...)
      * ```
      */
     public function __construct()
@@ -53,19 +61,22 @@ final class NewCustomer implements BaseModel
      */
     public static function with(
         string $email,
-        string $name,
+        ?string $name = null,
         ?string $phoneNumber = null
     ): self {
         $obj = new self;
 
         $obj->email = $email;
-        $obj->name = $name;
 
+        null !== $name && $obj->name = $name;
         null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
 
         return $obj;
     }
 
+    /**
+     * Email is required for creating a new customer.
+     */
     public function withEmail(string $email): self
     {
         $obj = clone $this;
@@ -74,7 +85,12 @@ final class NewCustomer implements BaseModel
         return $obj;
     }
 
-    public function withName(string $name): self
+    /**
+     * Optional full name of the customer. If provided during session creation,
+     * it is persisted and becomes immutable for the session. If omitted here,
+     * it can be provided later via the confirm API.
+     */
+    public function withName(?string $name): self
     {
         $obj = clone $this;
         $obj->name = $name;
