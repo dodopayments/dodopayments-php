@@ -1,5 +1,92 @@
 # Changelog
 
+## 1.55.7 (2025-10-17)
+
+Full Changelog: [v1.54.0...v1.55.7](https://github.com/dodopayments/dodopayments-php/compare/v1.54.0...v1.55.7)
+
+### ⚠ BREAKING CHANGES
+
+* expose services and service contracts
+* use builders for RequestOptions
+* rename errors to exceptions
+* pagination field rename, and basic streaming docs
+* **refactor:** namespacing cleanup
+* **refactor:** clean up pagination, errors, as well as request methods
+
+### Features
+
+* **api:** added typescript sdk for migration and updated org info ([0ff81ce](https://github.com/dodopayments/dodopayments-php/commit/0ff81ce033753b457c0ce25ea9d20a618d7d45ec))
+* **api:** manual updates ([ac111df](https://github.com/dodopayments/dodopayments-php/commit/ac111df2bdc40a1fcb33d81aa2678725b8f72a24))
+* **api:** manual updates ([4899538](https://github.com/dodopayments/dodopayments-php/commit/4899538a3d81d6b576d21418e3140e374e09fcc5))
+* **api:** manual updates ([314c164](https://github.com/dodopayments/dodopayments-php/commit/314c1646977563ce44c89c3502d38a0477ef9516))
+* **api:** manual updates ([456cef4](https://github.com/dodopayments/dodopayments-php/commit/456cef4fb062a356d93eb5807367e01683fb3cfc))
+* **api:** updated code for v1.49.0 ([2f11401](https://github.com/dodopayments/dodopayments-php/commit/2f11401933e80547455caaab6687edb6e9dfc0b0))
+* **api:** updated example ([8e831fa](https://github.com/dodopayments/dodopayments-php/commit/8e831fa84b859f2842563b6f19ce7c4f80455cf9))
+* **api:** updated openapi spec ([db4e970](https://github.com/dodopayments/dodopayments-php/commit/db4e970fc7b84c96fb0bc7fd5c38f2ad56043cb3))
+* **api:** updated openapi spec to v1.51.0 and added checkout sessions ([e3747da](https://github.com/dodopayments/dodopayments-php/commit/e3747dad6edb7e44fb4bb7af764b1c404921202c))
+* **api:** updated openapi spec to v1.52.4 ([a41b0fe](https://github.com/dodopayments/dodopayments-php/commit/a41b0fe16f41fc5c5ebf406a2d06174fcfac6f3f))
+* **api:** updated openapi spec to v1.53.2 with customer credits. ([796225e](https://github.com/dodopayments/dodopayments-php/commit/796225e56a5db6eb969ffdb655dd33c3ca96d821))
+* **api:** updated openapi spec to v1.55.0 ([16061fa](https://github.com/dodopayments/dodopayments-php/commit/16061fac230fcce64edfadfb738521cfc519f411))
+* **api:** updates for openapi spec v1.55.7 ([870139f](https://github.com/dodopayments/dodopayments-php/commit/870139f0a910f9849f2b82fafa0c2b7b4018aaab))
+* **client:** add raw methods ([33091a7](https://github.com/dodopayments/dodopayments-php/commit/33091a779da533a141ad8f378fbd2b71ce949676))
+* **client:** add streaming ([9ac0aba](https://github.com/dodopayments/dodopayments-php/commit/9ac0aba4d3443a834880869d8833620fbf65148a))
+* **client:** improve error handling ([bc41da0](https://github.com/dodopayments/dodopayments-php/commit/bc41da0a9cac5598bbf40d4e5225eaa364403299))
+* **client:** support raw responses ([9445e26](https://github.com/dodopayments/dodopayments-php/commit/9445e26f77eabc089ff32fad5ff5c5e3968ac2e1))
+* **client:** use named parameters in methods ([455b054](https://github.com/dodopayments/dodopayments-php/commit/455b054d3d70dc9e63c96ccb72fa69bfc1112603))
+* **client:** use real enums ([84cfbd8](https://github.com/dodopayments/dodopayments-php/commit/84cfbd8617e941b58e4fe6a57ba8383641358368))
+* **client:** use with for constructors ([298b248](https://github.com/dodopayments/dodopayments-php/commit/298b248aad82496df82b6be1366a58bf3ddbfb04))
+* ensure `-&gt;toArray()` benefits from structural typing ([09d46b8](https://github.com/dodopayments/dodopayments-php/commit/09d46b8006ae333898d602d3551314a3f285f57d))
+* expose services and service contracts ([a824cdf](https://github.com/dodopayments/dodopayments-php/commit/a824cdf7fa3aad21a5a20d9454ad0cd81b729d91))
+* expose streams and pages in the public namespace ([2b3c319](https://github.com/dodopayments/dodopayments-php/commit/2b3c319d34939c8c870197d95accca3c11d8195d))
+* pagination field rename, and basic streaming docs ([a2a6f1b](https://github.com/dodopayments/dodopayments-php/commit/a2a6f1b7a38295202e559b66cb3ffec405e113ce))
+* **php:** differentiate null and omit ([bd40b01](https://github.com/dodopayments/dodopayments-php/commit/bd40b0199c46c4a0085181a00040b24e200f0d92))
+* **php:** rename internal types ([459c841](https://github.com/dodopayments/dodopayments-php/commit/459c8412f2d84901fe371bec952f54898b58ce42))
+* **refactor:** clean up pagination, errors, as well as request methods ([c4d84f9](https://github.com/dodopayments/dodopayments-php/commit/c4d84f924f3fab31d324829513b7601a329f40b7))
+* **refactor:** namespacing cleanup ([9c4cbc0](https://github.com/dodopayments/dodopayments-php/commit/9c4cbc033c3299600823c891e8e622ecd5d79187))
+* rename errors to exceptions ([9ba6a0e](https://github.com/dodopayments/dodopayments-php/commit/9ba6a0e8945f0ad8e9367b515ab472540ba7df01))
+* updated openapi spec and added model and API functions for Usage Based Billing ([7f83f85](https://github.com/dodopayments/dodopayments-php/commit/7f83f85b8d7a8e381786bd1171ca61f409fb5a43))
+* use builders for RequestOptions ([fc20ab0](https://github.com/dodopayments/dodopayments-php/commit/fc20ab00e8b98b0490993a8ad23f7ba96789ca95))
+
+
+### Bug Fixes
+
+* add create release workflow ([b435dcd](https://github.com/dodopayments/dodopayments-php/commit/b435dcddb6454bcd6c6c2a2efe764e15effc913d))
+* basic pagination should work ([e861ff5](https://github.com/dodopayments/dodopayments-php/commit/e861ff5c57d5686fadf27c4c4c0150bd6915605d))
+* **ci:** release doctor workflow ([30d6d13](https://github.com/dodopayments/dodopayments-php/commit/30d6d13eb75b72f56f123d4a634a0f51ecf4cf6e))
+* **client:** elide null named parameters ([4722a21](https://github.com/dodopayments/dodopayments-php/commit/4722a212a8d023467a9bbd5948ef898d4677ec32))
+* **client:** properly import fully qualified names ([4a85f31](https://github.com/dodopayments/dodopayments-php/commit/4a85f31b9d1c035dd546dc74fe37ef8646abdef8))
+* inverted retry condition ([ea85f3a](https://github.com/dodopayments/dodopayments-php/commit/ea85f3a058088da90859897684c790c038e34da0))
+* minor bugs ([a2284e7](https://github.com/dodopayments/dodopayments-php/commit/a2284e7de2a6db1b12d3c86c63c49798b1ec34c8))
+* remove inaccurate `license` field in composer.json ([cc13acc](https://github.com/dodopayments/dodopayments-php/commit/cc13accc8b7aeb38b0e76ba2a3a44dd4b0543ff2))
+* streaming internals ([742ac0b](https://github.com/dodopayments/dodopayments-php/commit/742ac0bd94684d65996d5ad00d0c64a7c9a55ac0))
+
+
+### Chores
+
+* add additional php doc tags ([89c8461](https://github.com/dodopayments/dodopayments-php/commit/89c8461cd6e6d592764ad10b1f0b928abd085c15))
+* add license ([c31fe12](https://github.com/dodopayments/dodopayments-php/commit/c31fe12f4d29ebe2321f4327354909e39db24932))
+* cleanup streaming ([c53640e](https://github.com/dodopayments/dodopayments-php/commit/c53640ede99269771aa284ca68ab12e22902b580))
+* **docs:** improve pagination examples ([1836833](https://github.com/dodopayments/dodopayments-php/commit/18368339ab44782919675045adbf97cf0381113f))
+* **doc:** small improvement to pagination example ([4ec91ce](https://github.com/dodopayments/dodopayments-php/commit/4ec91ce22358a0f8efd88595e5d4f8db91141e31))
+* **docs:** update readme formatting ([feb03ec](https://github.com/dodopayments/dodopayments-php/commit/feb03ece509fbf69d5b56a0e30c4dc68575088ad))
+* document parameter object usage ([288df51](https://github.com/dodopayments/dodopayments-php/commit/288df51f56bceeabc3903c12830cc338c4180d9b))
+* fix lints in UnionOf ([8040a6a](https://github.com/dodopayments/dodopayments-php/commit/8040a6ad284727eac3771f3c3e6c266b6e3f315a))
+* improve model annotations ([e5c64f3](https://github.com/dodopayments/dodopayments-php/commit/e5c64f38305e8752f2a6ebc4adc40326439053ae))
+* **internal:** refactor base client internals ([6ad1efe](https://github.com/dodopayments/dodopayments-php/commit/6ad1efefe3ac1555b6fe1f013982caad37b578d1))
+* **internal:** refactored internal codepaths ([b879dde](https://github.com/dodopayments/dodopayments-php/commit/b879dde06273b94698479af0f300473b3aa5850d))
+* **internal:** remove unnecessary internal aliasing ([89ab0fc](https://github.com/dodopayments/dodopayments-php/commit/89ab0fcab6d665cc1f555127aaadcde1133cb031))
+* **internal:** restructure some imports ([d76ca30](https://github.com/dodopayments/dodopayments-php/commit/d76ca305c759df586c4b706c61cda2585731ce77))
+* intuitively order union types ([5a6063e](https://github.com/dodopayments/dodopayments-php/commit/5a6063e96f92a32e6abf8b19601fe483654d3492))
+* make more targeted phpstan ignores ([9f42db5](https://github.com/dodopayments/dodopayments-php/commit/9f42db5ecc9c47601541a372a5d47619c5d9c7cd))
+* readme improvements ([5092584](https://github.com/dodopayments/dodopayments-php/commit/5092584b131ff88387f9f762ef8afaa3773ae9aa))
+* refactor methods ([b0608e2](https://github.com/dodopayments/dodopayments-php/commit/b0608e22d8d99e27e4b9fee5bd711c41f21f9a11))
+* refactor request options ([8c00327](https://github.com/dodopayments/dodopayments-php/commit/8c00327b51f5a6bb4c2c1e489dbb4a8c9d1a39a1))
+* **refactor:** simplify base page interface ([bf012fc](https://github.com/dodopayments/dodopayments-php/commit/bf012fcc469249513acce0b200eb0504cb4c5cde))
+* remove `php-http/multipart-stream-builder` as a required dependency ([d85600e](https://github.com/dodopayments/dodopayments-php/commit/d85600eb507eebae8e0fe28765b43635a82eab2b))
+* remove type aliases ([389c945](https://github.com/dodopayments/dodopayments-php/commit/389c9457e3d27f3252370ef72b7c43a40c96ef9e))
+* simplify model initialization ([53b832b](https://github.com/dodopayments/dodopayments-php/commit/53b832be3e292bc0cf47eb2a1f64efad94f76cb9))
+* sync repo ([3e3d0b8](https://github.com/dodopayments/dodopayments-php/commit/3e3d0b86e59bfeb53290771dae5d47ef910e112a))
+
 ## 1.54.0 (2025-10-16)
 
 Full Changelog: [v1.53.5...v1.54.0](https://github.com/dodopayments/dodopayments-php/compare/v1.53.5...v1.54.0)
