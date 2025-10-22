@@ -12,18 +12,6 @@ use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new DisputeListParams); // set properties as needed
- * $client->disputes->list(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->disputes->list(...$params->toArray());`
- *
  * @see Dodopayments\Disputes->list
  *
  * @phpstan-type dispute_list_params = array{

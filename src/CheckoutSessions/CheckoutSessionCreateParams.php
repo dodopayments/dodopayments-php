@@ -19,18 +19,6 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new CheckoutSessionCreateParams); // set properties as needed
- * $client->checkoutSessions->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->checkoutSessions->create(...$params->toArray());`
- *
  * @see Dodopayments\CheckoutSessions->create
  *
  * @phpstan-type checkout_session_create_params = array{

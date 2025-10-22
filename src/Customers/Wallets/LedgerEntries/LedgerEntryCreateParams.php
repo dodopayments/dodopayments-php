@@ -12,18 +12,6 @@ use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryCreateParams\EntryTy
 use Dodopayments\Misc\Currency;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new LedgerEntryCreateParams); // set properties as needed
- * $client->customers.wallets.ledgerEntries->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->customers.wallets.ledgerEntries->create(...$params->toArray());`
- *
  * @see Dodopayments\Customers\Wallets\LedgerEntries->create
  *
  * @phpstan-type ledger_entry_create_params = array{

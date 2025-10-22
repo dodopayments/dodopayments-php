@@ -10,18 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new LicenseKeyUpdateParams); // set properties as needed
- * $client->licenseKeys->update(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->licenseKeys->update(...$params->toArray());`
- *
  * @see Dodopayments\LicenseKeys->update
  *
  * @phpstan-type license_key_update_params = array{
