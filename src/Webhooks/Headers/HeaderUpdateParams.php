@@ -10,18 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new HeaderUpdateParams); // set properties as needed
- * $client->webhooks.headers->update(...$params->toArray());
- * ```
  * Patch a webhook by id.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->webhooks.headers->update(...$params->toArray());`
  *
  * @see Dodopayments\Webhooks\Headers->update
  *

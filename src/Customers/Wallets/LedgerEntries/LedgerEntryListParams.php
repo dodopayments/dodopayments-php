@@ -11,18 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new LedgerEntryListParams); // set properties as needed
- * $client->customers.wallets.ledgerEntries->list(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->customers.wallets.ledgerEntries->list(...$params->toArray());`
- *
  * @see Dodopayments\Customers\Wallets\LedgerEntries->list
  *
  * @phpstan-type ledger_entry_list_params = array{

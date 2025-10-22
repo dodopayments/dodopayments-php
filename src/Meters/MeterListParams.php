@@ -10,18 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new MeterListParams); // set properties as needed
- * $client->meters->list(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->meters->list(...$params->toArray());`
- *
  * @see Dodopayments\Meters->list
  *
  * @phpstan-type meter_list_params = array{

@@ -11,18 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new SubscriptionChangePlanParams); // set properties as needed
- * $client->subscriptions->changePlan(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->subscriptions->changePlan(...$params->toArray());`
- *
  * @see Dodopayments\Subscriptions->changePlan
  *
  * @phpstan-type subscription_change_plan_params = array{

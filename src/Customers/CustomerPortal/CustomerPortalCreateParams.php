@@ -10,18 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new CustomerPortalCreateParams); // set properties as needed
- * $client->customers.customerPortal->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->customers.customerPortal->create(...$params->toArray());`
- *
  * @see Dodopayments\Customers\CustomerPortal->create
  *
  * @phpstan-type customer_portal_create_params = array{sendEmail?: bool}

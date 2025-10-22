@@ -15,18 +15,6 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new ProductCreateParams); // set properties as needed
- * $client->products->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->products->create(...$params->toArray());`
- *
  * @see Dodopayments\Products->create
  *
  * @phpstan-type product_create_params = array{
