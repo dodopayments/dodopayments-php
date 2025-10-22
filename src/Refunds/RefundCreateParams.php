@@ -11,18 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new RefundCreateParams); // set properties as needed
- * $client->refunds->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->refunds->create(...$params->toArray());`
- *
  * @see Dodopayments\Refunds->create
  *
  * @phpstan-type refund_create_params = array{

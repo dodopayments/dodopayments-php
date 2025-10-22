@@ -15,18 +15,6 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new SubscriptionCreateParams); // set properties as needed
- * $client->subscriptions->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->subscriptions->create(...$params->toArray());`
- *
  * @see Dodopayments\Subscriptions->create
  *
  * @phpstan-type subscription_create_params = array{

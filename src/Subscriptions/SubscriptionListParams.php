@@ -11,18 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new SubscriptionListParams); // set properties as needed
- * $client->subscriptions->list(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->subscriptions->list(...$params->toArray());`
- *
  * @see Dodopayments\Subscriptions->list
  *
  * @phpstan-type subscription_list_params = array{

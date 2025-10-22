@@ -10,18 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new DiscountListParams); // set properties as needed
- * $client->discounts->list(...$params->toArray());
- * ```
  * GET /discounts.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->discounts->list(...$params->toArray());`
  *
  * @see Dodopayments\Discounts->list
  *

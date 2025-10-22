@@ -10,17 +10,11 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new UsageEventListParams); // set properties as needed
- * $client->usageEvents->list(...$params->toArray());
- * ```
  * Fetch events from your account with powerful filtering capabilities. This endpoint is ideal for:
  * - Debugging event ingestion issues
  * - Analyzing customer usage patterns
  * - Building custom analytics dashboards
- * - Auditing billing-related events.
+ * - Auditing billing-related events
  *
  * ## Filtering Options:
  * - **Customer filtering**: Filter by specific customer ID
@@ -41,11 +35,6 @@ use Dodopayments\Core\Contracts\BaseModel;
  * - Get events from last 24 hours: `?start=2024-01-14T10:30:00Z&end=2024-01-15T10:30:00Z`
  * - Get events with meter filtering: `?meter_id=mtr_xyz789`
  * - Paginate results: `?page_size=50&page_number=2`
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->usageEvents->list(...$params->toArray());`
  *
  * @see Dodopayments\UsageEvents->list
  *

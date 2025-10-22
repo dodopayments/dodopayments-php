@@ -10,16 +10,10 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new UsageEventIngestParams); // set properties as needed
- * $client->usageEvents->ingest(...$params->toArray());
- * ```
  * This endpoint allows you to ingest custom events that can be used for:
  * - Usage-based billing and metering
  * - Analytics and reporting
- * - Customer behavior tracking.
+ * - Customer behavior tracking
  *
  * ## Important Notes:
  * - **Duplicate Prevention**:
@@ -47,11 +41,6 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   ]
  * }
  * ```
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->usageEvents->ingest(...$params->toArray());`
  *
  * @see Dodopayments\UsageEvents->ingest
  *

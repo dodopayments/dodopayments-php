@@ -10,12 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new SubscriptionRetrieveUsageHistoryParams); // set properties as needed
- * $client->subscriptions->retrieveUsageHistory(...$params->toArray());
- * ```
  * Get detailed usage history for a subscription that includes usage-based billing (metered components).
  * This endpoint provides insights into customer usage patterns and billing calculations over time.
  *
@@ -47,11 +41,6 @@ use Dodopayments\Core\Contracts\BaseModel;
  * - Filter by meter: `?meter_id=mtr_api_requests`
  * - Paginate results: `?page_size=20&page_number=1`
  * - Recent usage: `?start_date=2024-03-01T00:00:00Z` (from March 1st to now)
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->subscriptions->retrieveUsageHistory(...$params->toArray());`
  *
  * @see Dodopayments\Subscriptions->retrieveUsageHistory
  *

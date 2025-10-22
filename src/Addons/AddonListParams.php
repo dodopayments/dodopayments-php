@@ -10,18 +10,6 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new AddonListParams); // set properties as needed
- * $client->addons->list(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->addons->list(...$params->toArray());`
- *
  * @see Dodopayments\Addons->list
  *
  * @phpstan-type addon_list_params = array{pageNumber?: int, pageSize?: int}

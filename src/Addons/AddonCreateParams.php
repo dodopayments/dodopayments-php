@@ -12,18 +12,6 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new AddonCreateParams); // set properties as needed
- * $client->addons->create(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->addons->create(...$params->toArray());`
- *
  * @see Dodopayments\Addons->create
  *
  * @phpstan-type addon_create_params = array{

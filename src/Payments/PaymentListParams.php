@@ -11,18 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\PaymentListParams\Status;
 
 /**
- * An object containing the method's parameters.
- * Example usage:
- * ```
- * $params = (new PaymentListParams); // set properties as needed
- * $client->payments->list(...$params->toArray());
- * ```.
- *
- * @method toArray()
- *   Returns the parameters as an associative array suitable for passing to the client method.
- *
- *   `$client->payments->list(...$params->toArray());`
- *
  * @see Dodopayments\Payments->list
  *
  * @phpstan-type payment_list_params = array{
