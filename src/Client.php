@@ -90,11 +90,6 @@ class Client extends BaseClient
     /**
      * @api
      */
-    public WebhookEventsService $webhookEvents;
-
-    /**
-     * @api
-     */
     public ProductsService $products;
 
     /**
@@ -121,6 +116,11 @@ class Client extends BaseClient
      * @api
      */
     public WebhooksService $webhooks;
+
+    /**
+     * @api
+     */
+    public WebhookEventsService $webhookEvents;
 
     /**
      * @api
@@ -166,13 +166,13 @@ class Client extends BaseClient
         $this->refunds = new RefundsService($this);
         $this->disputes = new DisputesService($this);
         $this->payouts = new PayoutsService($this);
-        $this->webhookEvents = new WebhookEventsService($this);
         $this->products = new ProductsService($this);
         $this->misc = new MiscService($this);
         $this->discounts = new DiscountsService($this);
         $this->addons = new AddonsService($this);
         $this->brands = new BrandsService($this);
         $this->webhooks = new WebhooksService($this);
+        $this->webhookEvents = new WebhookEventsService($this);
         $this->usageEvents = new UsageEventsService($this);
         $this->meters = new MetersService($this);
     }
