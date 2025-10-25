@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.0.0 (2025-10-25)
+
+Full Changelog: [v1.55.7...v2.0.0](https://github.com/dodopayments/dodopayments-php/compare/v1.55.7...v2.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* remove confusing `toArray()` alias to `__serialize()` in favour of `toProperties()`
+
+### Features
+
+* **api:** added unwrap functions for webhooks ([53c402b](https://github.com/dodopayments/dodopayments-php/commit/53c402b44cd39d48f56bba425bd4ce882ef01ee9))
+* remove confusing `toArray()` alias to `__serialize()` in favour of `toProperties()` ([fff4e65](https://github.com/dodopayments/dodopayments-php/commit/fff4e65beefab2b9de15356364c54826b9d9b890))
+
 ## 1.55.7 (2025-10-17)
 
 Full Changelog: [v1.54.0...v1.55.7](https://github.com/dodopayments/dodopayments-php/compare/v1.54.0...v1.55.7)
