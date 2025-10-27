@@ -50,4 +50,12 @@ final class CheckoutSessionsTest extends TestCase
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
+
+    #[Test]
+    public function testRetrieve(): void
+    {
+        $result = $this->client->checkoutSessions->retrieve('id');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
 }
