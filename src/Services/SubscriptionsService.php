@@ -164,6 +164,7 @@ final class SubscriptionsService implements SubscriptionsContract
      *
      * @param BillingAddress|null $billing
      * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
+     * @param string|null $customerName
      * @param DisableOnDemand|null $disableOnDemand
      * @param array<string, string>|null $metadata
      * @param \DateTimeInterface|null $nextBillingDate
@@ -176,6 +177,7 @@ final class SubscriptionsService implements SubscriptionsContract
         string $subscriptionID,
         $billing = omit,
         $cancelAtNextBillingDate = omit,
+        $customerName = omit,
         $disableOnDemand = omit,
         $metadata = omit,
         $nextBillingDate = omit,
@@ -186,6 +188,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $params = [
             'billing' => $billing,
             'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
+            'customerName' => $customerName,
             'disableOnDemand' => $disableOnDemand,
             'metadata' => $metadata,
             'nextBillingDate' => $nextBillingDate,
