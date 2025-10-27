@@ -17,6 +17,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  * @phpstan-type subscription_update_params = array{
  *   billing?: BillingAddress|null,
  *   cancelAtNextBillingDate?: bool|null,
+ *   customerName?: string|null,
  *   disableOnDemand?: DisableOnDemand|null,
  *   metadata?: array<string, string>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
@@ -38,6 +39,9 @@ final class SubscriptionUpdateParams implements BaseModel
      */
     #[Api('cancel_at_next_billing_date', nullable: true, optional: true)]
     public ?bool $cancelAtNextBillingDate;
+
+    #[Api('customer_name', nullable: true, optional: true)]
+    public ?string $customerName;
 
     #[Api('disable_on_demand', nullable: true, optional: true)]
     public ?DisableOnDemand $disableOnDemand;
@@ -72,6 +76,7 @@ final class SubscriptionUpdateParams implements BaseModel
     public static function with(
         ?BillingAddress $billing = null,
         ?bool $cancelAtNextBillingDate = null,
+        ?string $customerName = null,
         ?DisableOnDemand $disableOnDemand = null,
         ?array $metadata = null,
         ?\DateTimeInterface $nextBillingDate = null,
@@ -82,6 +87,7 @@ final class SubscriptionUpdateParams implements BaseModel
 
         null !== $billing && $obj->billing = $billing;
         null !== $cancelAtNextBillingDate && $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
+        null !== $customerName && $obj->customerName = $customerName;
         null !== $disableOnDemand && $obj->disableOnDemand = $disableOnDemand;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $nextBillingDate && $obj->nextBillingDate = $nextBillingDate;
@@ -107,6 +113,14 @@ final class SubscriptionUpdateParams implements BaseModel
     ): self {
         $obj = clone $this;
         $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
+
+        return $obj;
+    }
+
+    public function withCustomerName(?string $customerName): self
+    {
+        $obj = clone $this;
+        $obj->customerName = $customerName;
 
         return $obj;
     }

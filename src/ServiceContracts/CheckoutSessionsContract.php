@@ -10,6 +10,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
+use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
@@ -76,4 +77,14 @@ interface CheckoutSessionsContract
         array $params,
         ?RequestOptions $requestOptions = null
     ): CheckoutSessionResponse;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function retrieve(
+        string $id,
+        ?RequestOptions $requestOptions = null
+    ): CheckoutSessionStatus;
 }

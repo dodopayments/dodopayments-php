@@ -11,6 +11,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
+use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Misc\Currency;
@@ -115,6 +116,24 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
             body: (object) $parsed,
             options: $options,
             convert: CheckoutSessionResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function retrieve(
+        string $id,
+        ?RequestOptions $requestOptions = null
+    ): CheckoutSessionStatus {
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'get',
+            path: ['checkouts/%1$s', $id],
+            options: $requestOptions,
+            convert: CheckoutSessionStatus::class,
         );
     }
 }
