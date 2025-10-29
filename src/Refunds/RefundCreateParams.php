@@ -14,7 +14,10 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
  * @see Dodopayments\Refunds->create
  *
  * @phpstan-type refund_create_params = array{
- *   paymentID: string, items?: list<Item>|null, reason?: string|null
+ *   paymentID: string,
+ *   items?: list<Item>|null,
+ *   metadata?: array<string, string>,
+ *   reason?: string|null,
  * }
  */
 final class RefundCreateParams implements BaseModel
@@ -36,6 +39,14 @@ final class RefundCreateParams implements BaseModel
      */
     #[Api(list: Item::class, nullable: true, optional: true)]
     public ?array $items;
+
+    /**
+     * Additional metadata associated with the refund.
+     *
+     * @var array<string, string>|null $metadata
+     */
+    #[Api(map: 'string', optional: true)]
+    public ?array $metadata;
 
     /**
      * The reason for the refund, if any. Maximum length is 3000 characters. Optional.
@@ -68,17 +79,20 @@ final class RefundCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Item>|null $items
+     * @param array<string, string> $metadata
      */
     public static function with(
         string $paymentID,
         ?array $items = null,
-        ?string $reason = null
+        ?array $metadata = null,
+        ?string $reason = null,
     ): self {
         $obj = new self;
 
         $obj->paymentID = $paymentID;
 
         null !== $items && $obj->items = $items;
+        null !== $metadata && $obj->metadata = $metadata;
         null !== $reason && $obj->reason = $reason;
 
         return $obj;
@@ -104,6 +118,19 @@ final class RefundCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->items = $items;
+
+        return $obj;
+    }
+
+    /**
+     * Additional metadata associated with the refund.
+     *
+     * @param array<string, string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
         return $obj;
     }
