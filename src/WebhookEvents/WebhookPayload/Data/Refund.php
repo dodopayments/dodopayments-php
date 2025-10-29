@@ -18,6 +18,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
  *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
  *   isPartial: bool,
+ *   metadata: array<string, string>,
  *   paymentID: string,
  *   refundID: string,
  *   status: value-of<RefundStatus>,
@@ -52,6 +53,14 @@ final class Refund implements BaseModel
      */
     #[Api('is_partial')]
     public bool $isPartial;
+
+    /**
+     * Additional metadata stored with the refund.
+     *
+     * @var array<string, string> $metadata
+     */
+    #[Api(map: 'string')]
+    public array $metadata;
 
     /**
      * The unique identifier of the payment associated with the refund.
@@ -99,6 +108,7 @@ final class Refund implements BaseModel
      *   createdAt: ...,
      *   customer: ...,
      *   isPartial: ...,
+     *   metadata: ...,
      *   paymentID: ...,
      *   refundID: ...,
      *   status: ...,
@@ -114,6 +124,7 @@ final class Refund implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withCustomer(...)
      *   ->withIsPartial(...)
+     *   ->withMetadata(...)
      *   ->withPaymentID(...)
      *   ->withRefundID(...)
      *   ->withStatus(...)
@@ -130,6 +141,7 @@ final class Refund implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string, string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param PayloadType|value-of<PayloadType> $payloadType
      * @param Currency|value-of<Currency> $currency
@@ -139,6 +151,7 @@ final class Refund implements BaseModel
         \DateTimeInterface $createdAt,
         CustomerLimitedDetails $customer,
         bool $isPartial,
+        array $metadata,
         string $paymentID,
         string $refundID,
         RefundStatus|string $status,
@@ -153,6 +166,7 @@ final class Refund implements BaseModel
         $obj->createdAt = $createdAt;
         $obj->customer = $customer;
         $obj->isPartial = $isPartial;
+        $obj->metadata = $metadata;
         $obj->paymentID = $paymentID;
         $obj->refundID = $refundID;
         $obj['status'] = $status;
@@ -202,6 +216,19 @@ final class Refund implements BaseModel
     {
         $obj = clone $this;
         $obj->isPartial = $isPartial;
+
+        return $obj;
+    }
+
+    /**
+     * Additional metadata stored with the refund.
+     *
+     * @param array<string, string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
         return $obj;
     }

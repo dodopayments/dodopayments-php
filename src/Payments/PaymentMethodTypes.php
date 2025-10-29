@@ -30,6 +30,8 @@ enum PaymentMethodTypes: string
 
     case PRZELEWY24 = 'przelewy24';
 
+    case PAYPAL = 'paypal';
+
     case AFFIRM = 'affirm';
 
     case KLARNA = 'klarna';

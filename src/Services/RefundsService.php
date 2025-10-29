@@ -30,6 +30,8 @@ final class RefundsService implements RefundsContract
      *
      * @param string $paymentID the unique identifier of the payment to be refunded
      * @param list<Item>|null $items Partially Refund an Individual Item
+     * @param array<string,
+     * string,> $metadata Additional metadata associated with the refund
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      *
      * @throws APIException
@@ -37,11 +39,15 @@ final class RefundsService implements RefundsContract
     public function create(
         $paymentID,
         $items = omit,
+        $metadata = omit,
         $reason = omit,
         ?RequestOptions $requestOptions = null,
     ): Refund {
         $params = [
-            'paymentID' => $paymentID, 'items' => $items, 'reason' => $reason,
+            'paymentID' => $paymentID,
+            'items' => $items,
+            'metadata' => $metadata,
+            'reason' => $reason,
         ];
 
         return $this->createRaw($params, $requestOptions);
