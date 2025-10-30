@@ -12,13 +12,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Licenses->deactivate
  *
- * @phpstan-type license_deactivate_params = array{
+ * @phpstan-type LicenseDeactivateParamsShape = array{
  *   licenseKey: string, licenseKeyInstanceID: string
  * }
  */
 final class LicenseDeactivateParams implements BaseModel
 {
-    /** @use SdkModel<license_deactivate_params> */
+    /** @use SdkModel<LicenseDeactivateParamsShape> */
     use SdkModel;
     use SdkParams;
 

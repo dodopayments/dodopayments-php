@@ -10,13 +10,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Products\Product\DigitalProductDelivery\File;
 
 /**
- * @phpstan-type digital_product_delivery = array{
+ * @phpstan-type DigitalProductDeliveryShape = array{
  *   externalURL?: string|null, files?: list<File>|null, instructions?: string|null
  * }
  */
 final class DigitalProductDelivery implements BaseModel
 {
-    /** @use SdkModel<digital_product_delivery> */
+    /** @use SdkModel<DigitalProductDeliveryShape> */
     use SdkModel;
 
     /**

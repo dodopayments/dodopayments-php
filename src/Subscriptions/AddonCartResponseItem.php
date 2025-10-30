@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type addon_cart_response_item = array{addonID: string, quantity: int}
+ * @phpstan-type AddonCartResponseItemShape = array{addonID: string, quantity: int}
  */
 final class AddonCartResponseItem implements BaseModel
 {
-    /** @use SdkModel<addon_cart_response_item> */
+    /** @use SdkModel<AddonCartResponseItemShape> */
     use SdkModel;
 
     #[Api('addon_id')]

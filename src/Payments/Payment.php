@@ -16,7 +16,7 @@ use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\Payment\Refund;
 
 /**
- * @phpstan-type payment_alias = array{
+ * @phpstan-type PaymentShape = array{
  *   billing: BillingAddress,
  *   brandID: string,
  *   businessID: string,
@@ -52,7 +52,7 @@ use Dodopayments\Payments\Payment\Refund;
  */
 final class Payment implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<payment_alias> */
+    /** @use SdkModel<PaymentShape> */
     use SdkModel;
 
     use SdkResponse;

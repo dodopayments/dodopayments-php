@@ -11,11 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type product_update_files_response = array{fileID: string, url: string}
+ * @phpstan-type ProductUpdateFilesResponseShape = array{
+ *   fileID: string, url: string
+ * }
  */
 final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<product_update_files_response> */
+    /** @use SdkModel<ProductUpdateFilesResponseShape> */
     use SdkModel;
 
     use SdkResponse;

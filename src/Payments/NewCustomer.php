@@ -9,13 +9,13 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type new_customer = array{
+ * @phpstan-type NewCustomerShape = array{
  *   email: string, name?: string|null, phoneNumber?: string|null
  * }
  */
 final class NewCustomer implements BaseModel
 {
-    /** @use SdkModel<new_customer> */
+    /** @use SdkModel<NewCustomerShape> */
     use SdkModel;
 
     /**

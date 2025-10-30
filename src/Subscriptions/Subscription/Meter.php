@@ -12,7 +12,7 @@ use Dodopayments\Misc\Currency;
 /**
  * Response struct representing usage-based meter cart details for a subscription.
  *
- * @phpstan-type meter_alias = array{
+ * @phpstan-type MeterShape = array{
  *   currency: value-of<Currency>,
  *   freeThreshold: int,
  *   measurementUnit: string,
@@ -24,7 +24,7 @@ use Dodopayments\Misc\Currency;
  */
 final class Meter implements BaseModel
 {
-    /** @use SdkModel<meter_alias> */
+    /** @use SdkModel<MeterShape> */
     use SdkModel;
 
     /** @var value-of<Currency> $currency */

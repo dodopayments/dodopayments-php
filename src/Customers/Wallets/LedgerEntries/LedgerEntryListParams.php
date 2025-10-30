@@ -13,13 +13,13 @@ use Dodopayments\Misc\Currency;
 /**
  * @see Dodopayments\Customers\Wallets\LedgerEntries->list
  *
- * @phpstan-type ledger_entry_list_params = array{
+ * @phpstan-type LedgerEntryListParamsShape = array{
  *   currency?: Currency|value-of<Currency>, pageNumber?: int, pageSize?: int
  * }
  */
 final class LedgerEntryListParams implements BaseModel
 {
-    /** @use SdkModel<ledger_entry_list_params> */
+    /** @use SdkModel<LedgerEntryListParamsShape> */
     use SdkModel;
     use SdkParams;
 

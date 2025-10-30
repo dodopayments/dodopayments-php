@@ -13,7 +13,7 @@ use Dodopayments\Refunds\RefundStatus;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
 
 /**
- * @phpstan-type refund_alias = array{
+ * @phpstan-type RefundShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
@@ -30,7 +30,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
  */
 final class Refund implements BaseModel
 {
-    /** @use SdkModel<refund_alias> */
+    /** @use SdkModel<RefundShape> */
     use SdkModel;
 
     /**

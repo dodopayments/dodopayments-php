@@ -17,7 +17,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 /**
  * @see Dodopayments\Products->update
  *
- * @phpstan-type product_update_params = array{
+ * @phpstan-type ProductUpdateParamsShape = array{
  *   addons?: list<string>|null,
  *   brandID?: string|null,
  *   description?: string|null,
@@ -35,7 +35,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  */
 final class ProductUpdateParams implements BaseModel
 {
-    /** @use SdkModel<product_update_params> */
+    /** @use SdkModel<ProductUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

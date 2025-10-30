@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\LicenseKeys->update
  *
- * @phpstan-type license_key_update_params = array{
+ * @phpstan-type LicenseKeyUpdateParamsShape = array{
  *   activationsLimit?: int|null,
  *   disabled?: bool|null,
  *   expiresAt?: \DateTimeInterface|null,
@@ -20,7 +20,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class LicenseKeyUpdateParams implements BaseModel
 {
-    /** @use SdkModel<license_key_update_params> */
+    /** @use SdkModel<LicenseKeyUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

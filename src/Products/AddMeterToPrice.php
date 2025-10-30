@@ -9,7 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type add_meter_to_price = array{
+ * @phpstan-type AddMeterToPriceShape = array{
  *   meterID: string,
  *   pricePerUnit: string,
  *   description?: string|null,
@@ -20,7 +20,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class AddMeterToPrice implements BaseModel
 {
-    /** @use SdkModel<add_meter_to_price> */
+    /** @use SdkModel<AddMeterToPriceShape> */
     use SdkModel;
 
     #[Api('meter_id')]

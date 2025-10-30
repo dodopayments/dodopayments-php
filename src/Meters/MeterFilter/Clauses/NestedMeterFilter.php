@@ -15,14 +15,14 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Conjunction;
 /**
  * Level 1 nested filter - can contain Level 2 filters.
  *
- * @phpstan-type nested_meter_filter = array{
+ * @phpstan-type NestedMeterFilterShape = array{
  *   clauses: list<Level1FilterCondition>|list<Level1NestedFilter>,
  *   conjunction: value-of<Conjunction>,
  * }
  */
 final class NestedMeterFilter implements BaseModel
 {
-    /** @use SdkModel<nested_meter_filter> */
+    /** @use SdkModel<NestedMeterFilterShape> */
     use SdkModel;
 
     /**

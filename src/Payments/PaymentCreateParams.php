@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
 /**
  * @see Dodopayments\Payments->create
  *
- * @phpstan-type payment_create_params = array{
+ * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress,
  *   customer: AttachExistingCustomer|NewCustomer,
  *   productCart: list<OneTimeProductCartItem>,
@@ -30,7 +30,7 @@ use Dodopayments\Misc\Currency;
  */
 final class PaymentCreateParams implements BaseModel
 {
-    /** @use SdkModel<payment_create_params> */
+    /** @use SdkModel<PaymentCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 
