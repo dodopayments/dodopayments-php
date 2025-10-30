@@ -18,14 +18,14 @@ use Dodopayments\Meters\MeterFilter\Conjunction;
  * Supports up to 3 levels of nesting to create complex filter expressions.
  * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
  *
- * @phpstan-type meter_filter = array{
+ * @phpstan-type MeterFilterShape = array{
  *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
  *   conjunction: value-of<Conjunction>,
  * }
  */
 final class MeterFilter implements BaseModel
 {
-    /** @use SdkModel<meter_filter> */
+    /** @use SdkModel<MeterFilterShape> */
     use SdkModel;
 
     /**

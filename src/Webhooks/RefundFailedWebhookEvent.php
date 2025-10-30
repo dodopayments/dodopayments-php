@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\RefundFailedWebhookEvent\Data;
 use Dodopayments\Webhooks\RefundFailedWebhookEvent\Type;
 
 /**
- * @phpstan-type refund_failed_webhook_event = array{
+ * @phpstan-type RefundFailedWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\RefundFailedWebhookEvent\Type;
  */
 final class RefundFailedWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<refund_failed_webhook_event> */
+    /** @use SdkModel<RefundFailedWebhookEventShape> */
     use SdkModel;
 
     /**

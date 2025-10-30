@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type on_demand_subscription = array{
+ * @phpstan-type OnDemandSubscriptionShape = array{
  *   mandateOnly: bool,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   productCurrency?: value-of<Currency>|null,
@@ -20,7 +20,7 @@ use Dodopayments\Misc\Currency;
  */
 final class OnDemandSubscription implements BaseModel
 {
-    /** @use SdkModel<on_demand_subscription> */
+    /** @use SdkModel<OnDemandSubscriptionShape> */
     use SdkModel;
 
     /**

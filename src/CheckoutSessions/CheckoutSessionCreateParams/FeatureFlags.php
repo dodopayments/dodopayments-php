@@ -9,7 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type feature_flags = array{
+ * @phpstan-type FeatureFlagsShape = array{
  *   allowCurrencySelection?: bool,
  *   allowDiscountCode?: bool,
  *   allowPhoneNumberCollection?: bool,
@@ -19,7 +19,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class FeatureFlags implements BaseModel
 {
-    /** @use SdkModel<feature_flags> */
+    /** @use SdkModel<FeatureFlagsShape> */
     use SdkModel;
 
     /**

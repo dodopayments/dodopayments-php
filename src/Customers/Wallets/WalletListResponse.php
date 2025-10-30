@@ -11,13 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type wallet_list_response = array{
+ * @phpstan-type WalletListResponseShape = array{
  *   items: list<CustomerWallet>, totalBalanceUsd: int
  * }
  */
 final class WalletListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<wallet_list_response> */
+    /** @use SdkModel<WalletListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

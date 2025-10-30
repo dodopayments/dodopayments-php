@@ -14,13 +14,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Webhooks->list
  *
- * @phpstan-type webhook_list_params = array{
+ * @phpstan-type WebhookListParamsShape = array{
  *   iterator?: string|null, limit?: int|null
  * }
  */
 final class WebhookListParams implements BaseModel
 {
-    /** @use SdkModel<webhook_list_params> */
+    /** @use SdkModel<WebhookListParamsShape> */
     use SdkModel;
     use SdkParams;
 

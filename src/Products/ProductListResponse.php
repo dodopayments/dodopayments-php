@@ -16,7 +16,7 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
- * @phpstan-type product_list_response = array{
+ * @phpstan-type ProductListResponseShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   isRecurring: bool,
@@ -35,7 +35,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  */
 final class ProductListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<product_list_response> */
+    /** @use SdkModel<ProductListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

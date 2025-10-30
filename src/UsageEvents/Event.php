@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
- * @phpstan-type event_alias = array{
+ * @phpstan-type EventShape = array{
  *   businessID: string,
  *   customerID: string,
  *   eventID: string,
@@ -23,7 +23,7 @@ use Dodopayments\UsageEvents\Event\Metadata;
  */
 final class Event implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<event_alias> */
+    /** @use SdkModel<EventShape> */
     use SdkModel;
 
     use SdkResponse;

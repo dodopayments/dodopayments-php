@@ -9,11 +9,11 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type file_alias = array{fileID: string, fileName: string, url: string}
+ * @phpstan-type FileShape = array{fileID: string, fileName: string, url: string}
  */
 final class File implements BaseModel
 {
-    /** @use SdkModel<file_alias> */
+    /** @use SdkModel<FileShape> */
     use SdkModel;
 
     #[Api('file_id')]

@@ -11,14 +11,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Specify how customer balance is used for the payment.
  *
- * @phpstan-type customer_balance_config = array{
+ * @phpstan-type CustomerBalanceConfigShape = array{
  *   allowCustomerCreditsPurchase?: bool|null,
  *   allowCustomerCreditsUsage?: bool|null,
  * }
  */
 final class CustomerBalanceConfig implements BaseModel
 {
-    /** @use SdkModel<customer_balance_config> */
+    /** @use SdkModel<CustomerBalanceConfigShape> */
     use SdkModel;
 
     /**

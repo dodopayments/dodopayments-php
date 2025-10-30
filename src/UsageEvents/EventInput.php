@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\UsageEvents\EventInput\Metadata;
 
 /**
- * @phpstan-type event_input = array{
+ * @phpstan-type EventInputShape = array{
  *   customerID: string,
  *   eventID: string,
  *   eventName: string,
@@ -20,7 +20,7 @@ use Dodopayments\UsageEvents\EventInput\Metadata;
  */
 final class EventInput implements BaseModel
 {
-    /** @use SdkModel<event_input> */
+    /** @use SdkModel<EventInputShape> */
     use SdkModel;
 
     /**

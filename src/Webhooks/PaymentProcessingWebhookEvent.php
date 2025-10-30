@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data;
 use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Type;
 
 /**
- * @phpstan-type payment_processing_webhook_event = array{
+ * @phpstan-type PaymentProcessingWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Type;
  */
 final class PaymentProcessingWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<payment_processing_webhook_event> */
+    /** @use SdkModel<PaymentProcessingWebhookEventShape> */
     use SdkModel;
 
     /**

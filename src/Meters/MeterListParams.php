@@ -12,13 +12,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Meters->list
  *
- * @phpstan-type meter_list_params = array{
+ * @phpstan-type MeterListParamsShape = array{
  *   archived?: bool, pageNumber?: int, pageSize?: int
  * }
  */
 final class MeterListParams implements BaseModel
 {
-    /** @use SdkModel<meter_list_params> */
+    /** @use SdkModel<MeterListParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type webhook_get_secret_response = array{secret: string}
+ * @phpstan-type WebhookGetSecretResponseShape = array{secret: string}
  */
 final class WebhookGetSecretResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<webhook_get_secret_response> */
+    /** @use SdkModel<WebhookGetSecretResponseShape> */
     use SdkModel;
 
     use SdkResponse;

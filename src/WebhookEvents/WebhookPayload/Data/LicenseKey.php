@@ -11,7 +11,7 @@ use Dodopayments\LicenseKeys\LicenseKeyStatus;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey\PayloadType;
 
 /**
- * @phpstan-type license_key = array{
+ * @phpstan-type LicenseKeyShape = array{
  *   id: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -29,7 +29,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey\PayloadType;
  */
 final class LicenseKey implements BaseModel
 {
-    /** @use SdkModel<license_key> */
+    /** @use SdkModel<LicenseKeyShape> */
     use SdkModel;
 
     /**

@@ -15,7 +15,7 @@ use Dodopayments\Subscriptions\TimeInterval;
 /**
  * Usage Based price details.
  *
- * @phpstan-type usage_based_price = array{
+ * @phpstan-type UsageBasedPriceShape = array{
  *   currency: value-of<Currency>,
  *   discount: int,
  *   fixedPrice: int,
@@ -31,7 +31,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  */
 final class UsageBasedPrice implements BaseModel
 {
-    /** @use SdkModel<usage_based_price> */
+    /** @use SdkModel<UsageBasedPriceShape> */
     use SdkModel;
 
     /**

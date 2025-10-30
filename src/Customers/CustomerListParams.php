@@ -12,13 +12,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Customers->list
  *
- * @phpstan-type customer_list_params = array{
+ * @phpstan-type CustomerListParamsShape = array{
  *   email?: string, pageNumber?: int, pageSize?: int
  * }
  */
 final class CustomerListParams implements BaseModel
 {
-    /** @use SdkModel<customer_list_params> */
+    /** @use SdkModel<CustomerListParamsShape> */
     use SdkModel;
     use SdkParams;
 

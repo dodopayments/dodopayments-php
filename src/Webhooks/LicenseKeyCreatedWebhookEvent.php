@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data;
 use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Type;
 
 /**
- * @phpstan-type license_key_created_webhook_event = array{
+ * @phpstan-type LicenseKeyCreatedWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Type;
  */
 final class LicenseKeyCreatedWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<license_key_created_webhook_event> */
+    /** @use SdkModel<LicenseKeyCreatedWebhookEventShape> */
     use SdkModel;
 
     /**

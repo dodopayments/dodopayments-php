@@ -14,7 +14,7 @@ use Dodopayments\Subscriptions\TimeInterval;
 /**
  * Recurring price details.
  *
- * @phpstan-type recurring_price = array{
+ * @phpstan-type RecurringPriceShape = array{
  *   currency: value-of<Currency>,
  *   discount: int,
  *   paymentFrequencyCount: int,
@@ -30,7 +30,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  */
 final class RecurringPrice implements BaseModel
 {
-    /** @use SdkModel<recurring_price> */
+    /** @use SdkModel<RecurringPriceShape> */
     use SdkModel;
 
     /**

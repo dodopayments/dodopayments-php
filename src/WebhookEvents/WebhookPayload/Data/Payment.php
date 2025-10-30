@@ -18,7 +18,7 @@ use Dodopayments\Payments\Payment\Refund;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
 
 /**
- * @phpstan-type payment_alias = array{
+ * @phpstan-type PaymentShape = array{
  *   billing: BillingAddress,
  *   brandID: string,
  *   businessID: string,
@@ -55,7 +55,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
  */
 final class Payment implements BaseModel
 {
-    /** @use SdkModel<payment_alias> */
+    /** @use SdkModel<PaymentShape> */
     use SdkModel;
 
     #[Api]

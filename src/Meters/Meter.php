@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type meter_alias = array{
+ * @phpstan-type MeterShape = array{
  *   id: string,
  *   aggregation: MeterAggregation,
  *   businessID: string,
@@ -26,7 +26,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class Meter implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<meter_alias> */
+    /** @use SdkModel<MeterShape> */
     use SdkModel;
 
     use SdkResponse;
