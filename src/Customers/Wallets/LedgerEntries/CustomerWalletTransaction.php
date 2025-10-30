@@ -13,7 +13,7 @@ use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction\Event
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type customer_wallet_transaction = array{
+ * @phpstan-type CustomerWalletTransactionShape = array{
  *   id: string,
  *   afterBalance: int,
  *   amount: int,
@@ -30,7 +30,7 @@ use Dodopayments\Misc\Currency;
  */
 final class CustomerWalletTransaction implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<customer_wallet_transaction> */
+    /** @use SdkModel<CustomerWalletTransactionShape> */
     use SdkModel;
 
     use SdkResponse;

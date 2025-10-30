@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent\Data;
 use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent\Type;
 
 /**
- * @phpstan-type subscription_cancelled_webhook_event = array{
+ * @phpstan-type SubscriptionCancelledWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent\Type;
  */
 final class SubscriptionCancelledWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<subscription_cancelled_webhook_event> */
+    /** @use SdkModel<SubscriptionCancelledWebhookEventShape> */
     use SdkModel;
 
     /**

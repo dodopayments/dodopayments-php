@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
- * @phpstan-type refund_alias = array{
+ * @phpstan-type RefundShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
@@ -29,7 +29,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  */
 final class Refund implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<refund_alias> */
+    /** @use SdkModel<RefundShape> */
     use SdkModel;
 
     use SdkResponse;

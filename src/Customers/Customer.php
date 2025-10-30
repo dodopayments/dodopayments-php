@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type customer_alias = array{
+ * @phpstan-type CustomerShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
@@ -22,7 +22,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class Customer implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<customer_alias> */
+    /** @use SdkModel<CustomerShape> */
     use SdkModel;
 
     use SdkResponse;

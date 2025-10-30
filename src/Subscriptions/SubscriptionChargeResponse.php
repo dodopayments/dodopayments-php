@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type subscription_charge_response = array{paymentID: string}
+ * @phpstan-type SubscriptionChargeResponseShape = array{paymentID: string}
  */
 final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<subscription_charge_response> */
+    /** @use SdkModel<SubscriptionChargeResponseShape> */
     use SdkModel;
 
     use SdkResponse;

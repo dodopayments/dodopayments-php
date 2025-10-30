@@ -9,11 +9,11 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type product_cart = array{productID: string, quantity: int}
+ * @phpstan-type ProductCartShape = array{productID: string, quantity: int}
  */
 final class ProductCart implements BaseModel
 {
-    /** @use SdkModel<product_cart> */
+    /** @use SdkModel<ProductCartShape> */
     use SdkModel;
 
     #[Api('product_id')]

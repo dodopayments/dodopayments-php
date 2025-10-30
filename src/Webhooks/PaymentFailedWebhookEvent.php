@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\PaymentFailedWebhookEvent\Data;
 use Dodopayments\Webhooks\PaymentFailedWebhookEvent\Type;
 
 /**
- * @phpstan-type payment_failed_webhook_event = array{
+ * @phpstan-type PaymentFailedWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\PaymentFailedWebhookEvent\Type;
  */
 final class PaymentFailedWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<payment_failed_webhook_event> */
+    /** @use SdkModel<PaymentFailedWebhookEventShape> */
     use SdkModel;
 
     /**

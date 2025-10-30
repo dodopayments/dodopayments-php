@@ -15,7 +15,7 @@ use Dodopayments\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type default_page_number_pagination = array{items?: list<mixed>|null}
+ * @phpstan-type DefaultPageNumberPaginationShape = array{items?: list<mixed>|null}
  *
  * @template TItem
  *
@@ -23,7 +23,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class DefaultPageNumberPagination implements BaseModel, BasePage
 {
-    /** @use SdkModel<default_page_number_pagination> */
+    /** @use SdkModel<DefaultPageNumberPaginationShape> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

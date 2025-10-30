@@ -12,13 +12,13 @@ use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Operator;
 /**
  * Filter condition with key, operator, and value.
  *
- * @phpstan-type direct_filter_condition = array{
+ * @phpstan-type DirectFilterConditionShape = array{
  *   key: string, operator: value-of<Operator>, value: string|float|bool
  * }
  */
 final class DirectFilterCondition implements BaseModel
 {
-    /** @use SdkModel<direct_filter_condition> */
+    /** @use SdkModel<DirectFilterConditionShape> */
     use SdkModel;
 
     /**

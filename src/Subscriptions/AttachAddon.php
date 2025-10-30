@@ -9,11 +9,11 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type attach_addon = array{addonID: string, quantity: int}
+ * @phpstan-type AttachAddonShape = array{addonID: string, quantity: int}
  */
 final class AttachAddon implements BaseModel
 {
-    /** @use SdkModel<attach_addon> */
+    /** @use SdkModel<AttachAddonShape> */
     use SdkModel;
 
     #[Api('addon_id')]

@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type meter_alias = array{
+ * @phpstan-type MeterShape = array{
  *   id: string,
  *   chargeableUnits: string,
  *   consumedUnits: string,
@@ -23,7 +23,7 @@ use Dodopayments\Misc\Currency;
  */
 final class Meter implements BaseModel
 {
-    /** @use SdkModel<meter_alias> */
+    /** @use SdkModel<MeterShape> */
     use SdkModel;
 
     /**

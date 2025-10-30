@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type refund_list_response = array{
+ * @phpstan-type RefundListResponseShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   isPartial: bool,
@@ -26,7 +26,7 @@ use Dodopayments\Misc\Currency;
  */
 final class RefundListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<refund_list_response> */
+    /** @use SdkModel<RefundListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

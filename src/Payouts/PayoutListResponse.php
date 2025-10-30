@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payouts\PayoutListResponse\Status;
 
 /**
- * @phpstan-type payout_list_response = array{
+ * @phpstan-type PayoutListResponseShape = array{
  *   amount: int,
  *   businessID: string,
  *   chargebacks: int,
@@ -33,7 +33,7 @@ use Dodopayments\Payouts\PayoutListResponse\Status;
  */
 final class PayoutListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<payout_list_response> */
+    /** @use SdkModel<PayoutListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

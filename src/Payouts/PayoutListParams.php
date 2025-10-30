@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Payouts->list
  *
- * @phpstan-type payout_list_params = array{
+ * @phpstan-type PayoutListParamsShape = array{
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,
  *   pageNumber?: int,
@@ -21,7 +21,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class PayoutListParams implements BaseModel
 {
-    /** @use SdkModel<payout_list_params> */
+    /** @use SdkModel<PayoutListParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
- * @phpstan-type get_dispute = array{
+ * @phpstan-type GetDisputeShape = array{
  *   amount: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -28,7 +28,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  */
 final class GetDispute implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<get_dispute> */
+    /** @use SdkModel<GetDisputeShape> */
     use SdkModel;
 
     use SdkResponse;

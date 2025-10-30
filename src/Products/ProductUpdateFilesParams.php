@@ -12,11 +12,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Products->updateFiles
  *
- * @phpstan-type product_update_files_params = array{fileName: string}
+ * @phpstan-type ProductUpdateFilesParamsShape = array{fileName: string}
  */
 final class ProductUpdateFilesParams implements BaseModel
 {
-    /** @use SdkModel<product_update_files_params> */
+    /** @use SdkModel<ProductUpdateFilesParamsShape> */
     use SdkModel;
     use SdkParams;
 

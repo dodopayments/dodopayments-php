@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type license_key = array{
+ * @phpstan-type LicenseKeyShape = array{
  *   id: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -28,7 +28,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class LicenseKey implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<license_key> */
+    /** @use SdkModel<LicenseKeyShape> */
     use SdkModel;
 
     use SdkResponse;

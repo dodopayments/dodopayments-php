@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type usage_event_ingest_response = array{ingestedCount: int}
+ * @phpstan-type UsageEventIngestResponseShape = array{ingestedCount: int}
  */
 final class UsageEventIngestResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<usage_event_ingest_response> */
+    /** @use SdkModel<UsageEventIngestResponseShape> */
     use SdkModel;
 
     use SdkResponse;

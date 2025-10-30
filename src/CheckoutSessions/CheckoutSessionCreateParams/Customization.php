@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Customization for the checkout session page.
  *
- * @phpstan-type customization_alias = array{
+ * @phpstan-type CustomizationShape = array{
  *   forceLanguage?: string|null,
  *   showOnDemandTag?: bool,
  *   showOrderDetails?: bool,
@@ -21,7 +21,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class Customization implements BaseModel
 {
-    /** @use SdkModel<customization_alias> */
+    /** @use SdkModel<CustomizationShape> */
     use SdkModel;
 
     /**

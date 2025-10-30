@@ -15,7 +15,7 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  *
  * @see Dodopayments\Webhooks->update
  *
- * @phpstan-type webhook_update_params = array{
+ * @phpstan-type WebhookUpdateParamsShape = array{
  *   description?: string|null,
  *   disabled?: bool|null,
  *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>|null,
@@ -26,7 +26,7 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  */
 final class WebhookUpdateParams implements BaseModel
 {
-    /** @use SdkModel<webhook_update_params> */
+    /** @use SdkModel<WebhookUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

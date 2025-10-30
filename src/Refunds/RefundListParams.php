@@ -13,7 +13,7 @@ use Dodopayments\Refunds\RefundListParams\Status;
 /**
  * @see Dodopayments\Refunds->list
  *
- * @phpstan-type refund_list_params = array{
+ * @phpstan-type RefundListParamsShape = array{
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,
  *   customerID?: string,
@@ -24,7 +24,7 @@ use Dodopayments\Refunds\RefundListParams\Status;
  */
 final class RefundListParams implements BaseModel
 {
-    /** @use SdkModel<refund_list_params> */
+    /** @use SdkModel<RefundListParamsShape> */
     use SdkModel;
     use SdkParams;
 

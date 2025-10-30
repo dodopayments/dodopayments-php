@@ -19,7 +19,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type subscription_alias = array{
+ * @phpstan-type SubscriptionShape = array{
  *   addons: list<AddonCartResponseItem>,
  *   billing: BillingAddress,
  *   cancelAtNextBillingDate: bool,
@@ -52,7 +52,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  */
 final class Subscription implements BaseModel
 {
-    /** @use SdkModel<subscription_alias> */
+    /** @use SdkModel<SubscriptionShape> */
     use SdkModel;
 
     /**

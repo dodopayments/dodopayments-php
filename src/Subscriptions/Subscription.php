@@ -17,7 +17,7 @@ use Dodopayments\Subscriptions\Subscription\Meter;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type subscription_alias = array{
+ * @phpstan-type SubscriptionShape = array{
  *   addons: list<AddonCartResponseItem>,
  *   billing: BillingAddress,
  *   cancelAtNextBillingDate: bool,
@@ -49,7 +49,7 @@ use Dodopayments\Subscriptions\Subscription\Meter;
  */
 final class Subscription implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<subscription_alias> */
+    /** @use SdkModel<SubscriptionShape> */
     use SdkModel;
 
     use SdkResponse;

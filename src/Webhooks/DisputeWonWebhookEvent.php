@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\DisputeWonWebhookEvent\Data;
 use Dodopayments\Webhooks\DisputeWonWebhookEvent\Type;
 
 /**
- * @phpstan-type dispute_won_webhook_event = array{
+ * @phpstan-type DisputeWonWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\DisputeWonWebhookEvent\Type;
  */
 final class DisputeWonWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<dispute_won_webhook_event> */
+    /** @use SdkModel<DisputeWonWebhookEventShape> */
     use SdkModel;
 
     /**

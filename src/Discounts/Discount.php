@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type discount_alias = array{
+ * @phpstan-type DiscountShape = array{
  *   amount: int,
  *   businessID: string,
  *   code: string,
@@ -28,7 +28,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class Discount implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<discount_alias> */
+    /** @use SdkModel<DiscountShape> */
     use SdkModel;
 
     use SdkResponse;

@@ -13,7 +13,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 
 /**
- * @phpstan-type dispute_alias = array{
+ * @phpstan-type DisputeShape = array{
  *   amount: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -30,7 +30,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
  */
 final class Dispute implements BaseModel
 {
-    /** @use SdkModel<dispute_alias> */
+    /** @use SdkModel<DisputeShape> */
     use SdkModel;
 
     /**

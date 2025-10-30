@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\SubscriptionActiveWebhookEvent\Data;
 use Dodopayments\Webhooks\SubscriptionActiveWebhookEvent\Type;
 
 /**
- * @phpstan-type subscription_active_webhook_event = array{
+ * @phpstan-type SubscriptionActiveWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\SubscriptionActiveWebhookEvent\Type;
  */
 final class SubscriptionActiveWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<subscription_active_webhook_event> */
+    /** @use SdkModel<SubscriptionActiveWebhookEventShape> */
     use SdkModel;
 
     /**

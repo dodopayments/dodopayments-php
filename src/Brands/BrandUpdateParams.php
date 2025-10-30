@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Brands->update
  *
- * @phpstan-type brand_update_params = array{
+ * @phpstan-type BrandUpdateParamsShape = array{
  *   imageID?: string|null,
  *   name?: string|null,
  *   statementDescriptor?: string|null,
@@ -21,7 +21,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class BrandUpdateParams implements BaseModel
 {
-    /** @use SdkModel<brand_update_params> */
+    /** @use SdkModel<BrandUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

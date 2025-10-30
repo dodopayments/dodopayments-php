@@ -44,11 +44,11 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\UsageEvents->ingest
  *
- * @phpstan-type usage_event_ingest_params = array{events: list<EventInput>}
+ * @phpstan-type UsageEventIngestParamsShape = array{events: list<EventInput>}
  */
 final class UsageEventIngestParams implements BaseModel
 {
-    /** @use SdkModel<usage_event_ingest_params> */
+    /** @use SdkModel<UsageEventIngestParamsShape> */
     use SdkModel;
     use SdkParams;
 

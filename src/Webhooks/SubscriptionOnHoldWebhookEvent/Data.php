@@ -19,7 +19,7 @@ use Dodopayments\Webhooks\SubscriptionOnHoldWebhookEvent\Data\PayloadType;
 /**
  * Event-specific data.
  *
- * @phpstan-type data_alias = array{
+ * @phpstan-type DataShape = array{
  *   addons: list<AddonCartResponseItem>,
  *   billing: BillingAddress,
  *   cancelAtNextBillingDate: bool,
@@ -52,7 +52,7 @@ use Dodopayments\Webhooks\SubscriptionOnHoldWebhookEvent\Data\PayloadType;
  */
 final class Data implements BaseModel
 {
-    /** @use SdkModel<data_alias> */
+    /** @use SdkModel<DataShape> */
     use SdkModel;
 
     /**

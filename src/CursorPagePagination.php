@@ -15,7 +15,7 @@ use Dodopayments\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @phpstan-type cursor_page_pagination = array{
+ * @phpstan-type CursorPagePaginationShape = array{
  *   data?: list<mixed>|null, iterator?: string|null, done?: bool|null
  * }
  *
@@ -25,7 +25,7 @@ use Psr\Http\Message\ResponseInterface;
  */
 final class CursorPagePagination implements BaseModel, BasePage
 {
-    /** @use SdkModel<cursor_page_pagination> */
+    /** @use SdkModel<CursorPagePaginationShape> */
     use SdkModel;
 
     /** @use SdkPage<TItem> */

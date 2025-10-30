@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Products->list
  *
- * @phpstan-type product_list_params = array{
+ * @phpstan-type ProductListParamsShape = array{
  *   archived?: bool,
  *   brandID?: string,
  *   pageNumber?: int,
@@ -22,7 +22,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class ProductListParams implements BaseModel
 {
-    /** @use SdkModel<product_list_params> */
+    /** @use SdkModel<ProductListParamsShape> */
     use SdkModel;
     use SdkParams;
 

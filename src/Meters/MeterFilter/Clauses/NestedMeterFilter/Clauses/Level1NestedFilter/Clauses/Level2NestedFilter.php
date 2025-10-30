@@ -13,13 +13,13 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
 /**
  * Level 3 nested filter (final nesting level).
  *
- * @phpstan-type level2_nested_filter = array{
+ * @phpstan-type Level2NestedFilterShape = array{
  *   clauses: list<Clause>, conjunction: value-of<Conjunction>
  * }
  */
 final class Level2NestedFilter implements BaseModel
 {
-    /** @use SdkModel<level2_nested_filter> */
+    /** @use SdkModel<Level2NestedFilterShape> */
     use SdkModel;
 
     /**

@@ -21,7 +21,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
 /**
  * @see Dodopayments\CheckoutSessions->create
  *
- * @phpstan-type checkout_session_create_params = array{
+ * @phpstan-type CheckoutSessionCreateParamsShape = array{
  *   productCart: list<ProductCart>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: BillingAddress|null,
@@ -40,7 +40,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  */
 final class CheckoutSessionCreateParams implements BaseModel
 {
-    /** @use SdkModel<checkout_session_create_params> */
+    /** @use SdkModel<CheckoutSessionCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

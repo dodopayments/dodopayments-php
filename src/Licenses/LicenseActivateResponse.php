@@ -13,7 +13,7 @@ use Dodopayments\Licenses\LicenseActivateResponse\Product;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
- * @phpstan-type license_activate_response = array{
+ * @phpstan-type LicenseActivateResponseShape = array{
  *   id: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -25,7 +25,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  */
 final class LicenseActivateResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<license_activate_response> */
+    /** @use SdkModel<LicenseActivateResponseShape> */
     use SdkModel;
 
     use SdkResponse;

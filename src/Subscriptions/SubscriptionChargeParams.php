@@ -14,7 +14,7 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 /**
  * @see Dodopayments\Subscriptions->charge
  *
- * @phpstan-type subscription_charge_params = array{
+ * @phpstan-type SubscriptionChargeParamsShape = array{
  *   productPrice: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   customerBalanceConfig?: CustomerBalanceConfig|null,
@@ -25,7 +25,7 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
  */
 final class SubscriptionChargeParams implements BaseModel
 {
-    /** @use SdkModel<subscription_charge_params> */
+    /** @use SdkModel<SubscriptionChargeParamsShape> */
     use SdkModel;
     use SdkParams;
 

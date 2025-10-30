@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type dispute_list_response = array{
+ * @phpstan-type DisputeListResponseShape = array{
  *   amount: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -24,7 +24,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class DisputeListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<dispute_list_response> */
+    /** @use SdkModel<DisputeListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

@@ -13,7 +13,7 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
 /**
  * One-time price details.
  *
- * @phpstan-type one_time_price = array{
+ * @phpstan-type OneTimePriceShape = array{
  *   currency: value-of<Currency>,
  *   discount: int,
  *   price: int,
@@ -26,7 +26,7 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  */
 final class OneTimePrice implements BaseModel
 {
-    /** @use SdkModel<one_time_price> */
+    /** @use SdkModel<OneTimePriceShape> */
     use SdkModel;
 
     /**

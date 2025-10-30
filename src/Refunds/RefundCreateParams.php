@@ -13,7 +13,7 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
 /**
  * @see Dodopayments\Refunds->create
  *
- * @phpstan-type refund_create_params = array{
+ * @phpstan-type RefundCreateParamsShape = array{
  *   paymentID: string,
  *   items?: list<Item>|null,
  *   metadata?: array<string, string>,
@@ -22,7 +22,7 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
  */
 final class RefundCreateParams implements BaseModel
 {
-    /** @use SdkModel<refund_create_params> */
+    /** @use SdkModel<RefundCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -13,7 +13,7 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 /**
  * @see Dodopayments\Subscriptions->list
  *
- * @phpstan-type subscription_list_params = array{
+ * @phpstan-type SubscriptionListParamsShape = array{
  *   brandID?: string,
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,
@@ -25,7 +25,7 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
  */
 final class SubscriptionListParams implements BaseModel
 {
-    /** @use SdkModel<subscription_list_params> */
+    /** @use SdkModel<SubscriptionListParamsShape> */
     use SdkModel;
     use SdkParams;
 

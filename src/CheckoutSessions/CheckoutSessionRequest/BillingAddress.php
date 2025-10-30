@@ -12,7 +12,7 @@ use Dodopayments\Misc\CountryCode;
 /**
  * Billing address information for the session.
  *
- * @phpstan-type billing_address = array{
+ * @phpstan-type BillingAddressShape = array{
  *   country: value-of<CountryCode>,
  *   city?: string|null,
  *   state?: string|null,
@@ -22,7 +22,7 @@ use Dodopayments\Misc\CountryCode;
  */
 final class BillingAddress implements BaseModel
 {
-    /** @use SdkModel<billing_address> */
+    /** @use SdkModel<BillingAddressShape> */
     use SdkModel;
 
     /**

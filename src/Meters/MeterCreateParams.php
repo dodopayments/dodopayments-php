@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Meters->create
  *
- * @phpstan-type meter_create_params = array{
+ * @phpstan-type MeterCreateParamsShape = array{
  *   aggregation: MeterAggregation,
  *   eventName: string,
  *   measurementUnit: string,
@@ -23,7 +23,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class MeterCreateParams implements BaseModel
 {
-    /** @use SdkModel<meter_create_params> */
+    /** @use SdkModel<MeterCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

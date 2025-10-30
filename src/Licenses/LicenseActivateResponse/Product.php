@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Related product info. Present if the license key is tied to a product.
  *
- * @phpstan-type product_alias = array{productID: string, name?: string|null}
+ * @phpstan-type ProductShape = array{productID: string, name?: string|null}
  */
 final class Product implements BaseModel
 {
-    /** @use SdkModel<product_alias> */
+    /** @use SdkModel<ProductShape> */
     use SdkModel;
 
     /**

@@ -17,7 +17,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
 /**
  * @see Dodopayments\Subscriptions->create
  *
- * @phpstan-type subscription_create_params = array{
+ * @phpstan-type SubscriptionCreateParamsShape = array{
  *   billing: BillingAddress,
  *   customer: AttachExistingCustomer|NewCustomer,
  *   productID: string,
@@ -38,7 +38,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  */
 final class SubscriptionCreateParams implements BaseModel
 {
-    /** @use SdkModel<subscription_create_params> */
+    /** @use SdkModel<SubscriptionCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

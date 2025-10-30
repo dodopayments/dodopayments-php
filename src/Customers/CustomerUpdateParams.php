@@ -12,13 +12,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Customers->update
  *
- * @phpstan-type customer_update_params = array{
+ * @phpstan-type CustomerUpdateParamsShape = array{
  *   name?: string|null, phoneNumber?: string|null
  * }
  */
 final class CustomerUpdateParams implements BaseModel
 {
-    /** @use SdkModel<customer_update_params> */
+    /** @use SdkModel<CustomerUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

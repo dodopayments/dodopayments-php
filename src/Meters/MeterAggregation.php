@@ -10,11 +10,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterAggregation\Type;
 
 /**
- * @phpstan-type meter_aggregation = array{type: value-of<Type>, key?: string|null}
+ * @phpstan-type MeterAggregationShape = array{
+ *   type: value-of<Type>, key?: string|null
+ * }
  */
 final class MeterAggregation implements BaseModel
 {
-    /** @use SdkModel<meter_aggregation> */
+    /** @use SdkModel<MeterAggregationShape> */
     use SdkModel;
 
     /**

@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data;
 use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Type;
 
 /**
- * @phpstan-type payment_cancelled_webhook_event = array{
+ * @phpstan-type PaymentCancelledWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Type;
  */
 final class PaymentCancelledWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<payment_cancelled_webhook_event> */
+    /** @use SdkModel<PaymentCancelledWebhookEventShape> */
     use SdkModel;
 
     /**

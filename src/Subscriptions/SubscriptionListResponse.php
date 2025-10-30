@@ -16,7 +16,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type subscription_list_response = array{
+ * @phpstan-type SubscriptionListResponseShape = array{
  *   billing: BillingAddress,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
@@ -45,7 +45,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  */
 final class SubscriptionListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<subscription_list_response> */
+    /** @use SdkModel<SubscriptionListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

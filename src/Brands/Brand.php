@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type brand_alias = array{
+ * @phpstan-type BrandShape = array{
  *   brandID: string,
  *   businessID: string,
  *   enabled: bool,
@@ -29,7 +29,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class Brand implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<brand_alias> */
+    /** @use SdkModel<BrandShape> */
     use SdkModel;
 
     use SdkResponse;

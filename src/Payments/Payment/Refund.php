@@ -11,7 +11,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Refunds\RefundStatus;
 
 /**
- * @phpstan-type refund_alias = array{
+ * @phpstan-type RefundShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   isPartial: bool,
@@ -25,7 +25,7 @@ use Dodopayments\Refunds\RefundStatus;
  */
 final class Refund implements BaseModel
 {
-    /** @use SdkModel<refund_alias> */
+    /** @use SdkModel<RefundShape> */
     use SdkModel;
 
     /**

@@ -16,13 +16,13 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  * Sensitive headers that have been redacted are returned in the sensitive
  * field.
  *
- * @phpstan-type header_get_response = array{
+ * @phpstan-type HeaderGetResponseShape = array{
  *   headers: array<string, string>, sensitive: list<string>
  * }
  */
 final class HeaderGetResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<header_get_response> */
+    /** @use SdkModel<HeaderGetResponseShape> */
     use SdkModel;
 
     use SdkResponse;

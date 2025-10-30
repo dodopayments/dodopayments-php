@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\IntentStatus;
 
 /**
- * @phpstan-type checkout_session_status = array{
+ * @phpstan-type CheckoutSessionStatusShape = array{
  *   id: string,
  *   createdAt: \DateTimeInterface,
  *   customerEmail?: string|null,
@@ -23,7 +23,7 @@ use Dodopayments\Payments\IntentStatus;
  */
 final class CheckoutSessionStatus implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<checkout_session_status> */
+    /** @use SdkModel<CheckoutSessionStatusShape> */
     use SdkModel;
 
     use SdkResponse;

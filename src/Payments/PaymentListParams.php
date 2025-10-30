@@ -13,7 +13,7 @@ use Dodopayments\Payments\PaymentListParams\Status;
 /**
  * @see Dodopayments\Payments->list
  *
- * @phpstan-type payment_list_params = array{
+ * @phpstan-type PaymentListParamsShape = array{
  *   brandID?: string,
  *   createdAtGte?: \DateTimeInterface,
  *   createdAtLte?: \DateTimeInterface,
@@ -26,7 +26,7 @@ use Dodopayments\Payments\PaymentListParams\Status;
  */
 final class PaymentListParams implements BaseModel
 {
-    /** @use SdkModel<payment_list_params> */
+    /** @use SdkModel<PaymentListParamsShape> */
     use SdkModel;
     use SdkParams;
 

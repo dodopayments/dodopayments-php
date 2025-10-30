@@ -14,7 +14,7 @@ use Dodopayments\Misc\Currency;
 /**
  * @see Dodopayments\Customers\Wallets\LedgerEntries->create
  *
- * @phpstan-type ledger_entry_create_params = array{
+ * @phpstan-type LedgerEntryCreateParamsShape = array{
  *   amount: int,
  *   currency: Currency|value-of<Currency>,
  *   entryType: EntryType|value-of<EntryType>,
@@ -24,7 +24,7 @@ use Dodopayments\Misc\Currency;
  */
 final class LedgerEntryCreateParams implements BaseModel
 {
-    /** @use SdkModel<ledger_entry_create_params> */
+    /** @use SdkModel<LedgerEntryCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

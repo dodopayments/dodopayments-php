@@ -16,7 +16,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product\DigitalProductDelivery;
 
 /**
- * @phpstan-type product_alias = array{
+ * @phpstan-type ProductShape = array{
  *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -39,7 +39,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  */
 final class Product implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<product_alias> */
+    /** @use SdkModel<ProductShape> */
     use SdkModel;
 
     use SdkResponse;

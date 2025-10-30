@@ -12,13 +12,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Licenses->validate
  *
- * @phpstan-type license_validate_params = array{
+ * @phpstan-type LicenseValidateParamsShape = array{
  *   licenseKey: string, licenseKeyInstanceID?: string|null
  * }
  */
 final class LicenseValidateParams implements BaseModel
 {
-    /** @use SdkModel<license_validate_params> */
+    /** @use SdkModel<LicenseValidateParamsShape> */
     use SdkModel;
     use SdkParams;
 

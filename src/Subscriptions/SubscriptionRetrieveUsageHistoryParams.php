@@ -44,7 +44,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Subscriptions->retrieveUsageHistory
  *
- * @phpstan-type subscription_retrieve_usage_history_params = array{
+ * @phpstan-type SubscriptionRetrieveUsageHistoryParamsShape = array{
  *   endDate?: \DateTimeInterface|null,
  *   meterID?: string|null,
  *   pageNumber?: int|null,
@@ -54,7 +54,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
 {
-    /** @use SdkModel<subscription_retrieve_usage_history_params> */
+    /** @use SdkModel<SubscriptionRetrieveUsageHistoryParamsShape> */
     use SdkModel;
     use SdkParams;
 
