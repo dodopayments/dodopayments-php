@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
 
 /**
- * @phpstan-type subscription_get_usage_history_response = array{
+ * @phpstan-type SubscriptionGetUsageHistoryResponseShape = array{
  *   endDate: \DateTimeInterface,
  *   meters: list<Meter>,
  *   startDate: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
  */
 final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<subscription_get_usage_history_response> */
+    /** @use SdkModel<SubscriptionGetUsageHistoryResponseShape> */
     use SdkModel;
 
     use SdkResponse;

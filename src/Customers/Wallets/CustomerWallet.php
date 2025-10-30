@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type customer_wallet = array{
+ * @phpstan-type CustomerWalletShape = array{
  *   balance: int,
  *   createdAt: \DateTimeInterface,
  *   currency: value-of<Currency>,
@@ -20,7 +20,7 @@ use Dodopayments\Misc\Currency;
  */
 final class CustomerWallet implements BaseModel
 {
-    /** @use SdkModel<customer_wallet> */
+    /** @use SdkModel<CustomerWalletShape> */
     use SdkModel;
 
     #[Api]

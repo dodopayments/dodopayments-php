@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type webhook_details = array{
+ * @phpstan-type WebhookDetailsShape = array{
  *   id: string,
  *   createdAt: string,
  *   description: string,
@@ -25,7 +25,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class WebhookDetails implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<webhook_details> */
+    /** @use SdkModel<WebhookDetailsShape> */
     use SdkModel;
 
     use SdkResponse;

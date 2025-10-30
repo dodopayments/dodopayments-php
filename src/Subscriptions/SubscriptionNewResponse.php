@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
- * @phpstan-type subscription_new_response = array{
+ * @phpstan-type SubscriptionNewResponseShape = array{
  *   addons: list<AddonCartResponseItem>,
  *   customer: CustomerLimitedDetails,
  *   metadata: array<string, string>,
@@ -27,7 +27,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  */
 final class SubscriptionNewResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<subscription_new_response> */
+    /** @use SdkModel<SubscriptionNewResponseShape> */
     use SdkModel;
 
     use SdkResponse;

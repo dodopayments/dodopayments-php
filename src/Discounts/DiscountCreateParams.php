@@ -15,7 +15,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Discounts->create
  *
- * @phpstan-type discount_create_params = array{
+ * @phpstan-type DiscountCreateParamsShape = array{
  *   amount: int,
  *   type: DiscountType|value-of<DiscountType>,
  *   code?: string|null,
@@ -28,7 +28,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class DiscountCreateParams implements BaseModel
 {
-    /** @use SdkModel<discount_create_params> */
+    /** @use SdkModel<DiscountCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

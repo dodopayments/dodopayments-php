@@ -14,7 +14,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 /**
  * @see Dodopayments\Subscriptions->update
  *
- * @phpstan-type subscription_update_params = array{
+ * @phpstan-type SubscriptionUpdateParamsShape = array{
  *   billing?: BillingAddress|null,
  *   cancelAtNextBillingDate?: bool|null,
  *   customerName?: string|null,
@@ -27,7 +27,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  */
 final class SubscriptionUpdateParams implements BaseModel
 {
-    /** @use SdkModel<subscription_update_params> */
+    /** @use SdkModel<SubscriptionUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

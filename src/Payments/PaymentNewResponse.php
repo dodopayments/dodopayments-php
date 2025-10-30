@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type payment_new_response = array{
+ * @phpstan-type PaymentNewResponseShape = array{
  *   clientSecret: string,
  *   customer: CustomerLimitedDetails,
  *   metadata: array<string, string>,
@@ -25,7 +25,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  */
 final class PaymentNewResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<payment_new_response> */
+    /** @use SdkModel<PaymentNewResponseShape> */
     use SdkModel;
 
     use SdkResponse;

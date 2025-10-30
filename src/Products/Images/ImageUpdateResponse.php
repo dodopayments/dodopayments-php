@@ -11,11 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type image_update_response = array{url: string, imageID?: string|null}
+ * @phpstan-type ImageUpdateResponseShape = array{
+ *   url: string, imageID?: string|null
+ * }
  */
 final class ImageUpdateResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<image_update_response> */
+    /** @use SdkModel<ImageUpdateResponseShape> */
     use SdkModel;
 
     use SdkResponse;

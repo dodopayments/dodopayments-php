@@ -9,13 +9,13 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type item_alias = array{
+ * @phpstan-type ItemShape = array{
  *   itemID: string, amount?: int|null, taxInclusive?: bool
  * }
  */
 final class Item implements BaseModel
 {
-    /** @use SdkModel<item_alias> */
+    /** @use SdkModel<ItemShape> */
     use SdkModel;
 
     /**

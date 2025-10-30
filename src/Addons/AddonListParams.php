@@ -12,11 +12,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Addons->list
  *
- * @phpstan-type addon_list_params = array{pageNumber?: int, pageSize?: int}
+ * @phpstan-type AddonListParamsShape = array{pageNumber?: int, pageSize?: int}
  */
 final class AddonListParams implements BaseModel
 {
-    /** @use SdkModel<addon_list_params> */
+    /** @use SdkModel<AddonListParamsShape> */
     use SdkModel;
     use SdkParams;
 

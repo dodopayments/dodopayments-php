@@ -14,7 +14,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Discounts->update
  *
- * @phpstan-type discount_update_params = array{
+ * @phpstan-type DiscountUpdateParamsShape = array{
  *   amount?: int|null,
  *   code?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
@@ -27,7 +27,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class DiscountUpdateParams implements BaseModel
 {
-    /** @use SdkModel<discount_update_params> */
+    /** @use SdkModel<DiscountUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

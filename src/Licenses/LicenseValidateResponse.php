@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type license_validate_response = array{valid: bool}
+ * @phpstan-type LicenseValidateResponseShape = array{valid: bool}
  */
 final class LicenseValidateResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<license_validate_response> */
+    /** @use SdkModel<LicenseValidateResponseShape> */
     use SdkModel;
 
     use SdkResponse;

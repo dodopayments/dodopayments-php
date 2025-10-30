@@ -17,7 +17,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 /**
  * @see Dodopayments\Products->create
  *
- * @phpstan-type product_create_params = array{
+ * @phpstan-type ProductCreateParamsShape = array{
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
@@ -34,7 +34,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  */
 final class ProductCreateParams implements BaseModel
 {
-    /** @use SdkModel<product_create_params> */
+    /** @use SdkModel<ProductCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

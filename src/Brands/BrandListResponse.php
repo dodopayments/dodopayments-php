@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type brand_list_response = array{items: list<Brand>}
+ * @phpstan-type BrandListResponseShape = array{items: list<Brand>}
  */
 final class BrandListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<brand_list_response> */
+    /** @use SdkModel<BrandListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

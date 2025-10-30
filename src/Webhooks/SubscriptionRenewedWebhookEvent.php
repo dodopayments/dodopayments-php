@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Data;
 use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Type;
 
 /**
- * @phpstan-type subscription_renewed_webhook_event = array{
+ * @phpstan-type SubscriptionRenewedWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Type;
  */
 final class SubscriptionRenewedWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<subscription_renewed_webhook_event> */
+    /** @use SdkModel<SubscriptionRenewedWebhookEventShape> */
     use SdkModel;
 
     /**

@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
- * @phpstan-type payment_list_response = array{
+ * @phpstan-type PaymentListResponseShape = array{
  *   brandID: string,
  *   createdAt: \DateTimeInterface,
  *   currency: value-of<Currency>,
@@ -29,7 +29,7 @@ use Dodopayments\Misc\Currency;
  */
 final class PaymentListResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<payment_list_response> */
+    /** @use SdkModel<PaymentListResponseShape> */
     use SdkModel;
 
     use SdkResponse;

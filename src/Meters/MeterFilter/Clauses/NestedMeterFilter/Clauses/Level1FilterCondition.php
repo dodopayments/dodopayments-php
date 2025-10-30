@@ -12,13 +12,13 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Filt
 /**
  * Filter condition with key, operator, and value.
  *
- * @phpstan-type level1_filter_condition = array{
+ * @phpstan-type Level1FilterConditionShape = array{
  *   key: string, operator: value-of<Operator>, value: string|float|bool
  * }
  */
 final class Level1FilterCondition implements BaseModel
 {
-    /** @use SdkModel<level1_filter_condition> */
+    /** @use SdkModel<Level1FilterConditionShape> */
     use SdkModel;
 
     /**

@@ -11,13 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type checkout_session_response = array{
+ * @phpstan-type CheckoutSessionResponseShape = array{
  *   checkoutURL: string, sessionID: string
  * }
  */
 final class CheckoutSessionResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<checkout_session_response> */
+    /** @use SdkModel<CheckoutSessionResponseShape> */
     use SdkModel;
 
     use SdkResponse;

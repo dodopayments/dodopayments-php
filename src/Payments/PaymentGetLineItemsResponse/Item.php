@@ -9,7 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type item_alias = array{
+ * @phpstan-type ItemShape = array{
  *   amount: int,
  *   itemsID: string,
  *   refundableAmount: int,
@@ -20,7 +20,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class Item implements BaseModel
 {
-    /** @use SdkModel<item_alias> */
+    /** @use SdkModel<ItemShape> */
     use SdkModel;
 
     #[Api]

@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Brands->create
  *
- * @phpstan-type brand_create_params = array{
+ * @phpstan-type BrandCreateParamsShape = array{
  *   description?: string|null,
  *   name?: string|null,
  *   statementDescriptor?: string|null,
@@ -22,7 +22,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class BrandCreateParams implements BaseModel
 {
-    /** @use SdkModel<brand_create_params> */
+    /** @use SdkModel<BrandCreateParamsShape> */
     use SdkModel;
     use SdkParams;
 

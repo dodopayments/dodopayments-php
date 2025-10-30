@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\PaymentSucceededWebhookEvent\Data\PayloadType;
 /**
  * Event-specific data.
  *
- * @phpstan-type data_alias = array{
+ * @phpstan-type DataShape = array{
  *   billing: BillingAddress,
  *   brandID: string,
  *   businessID: string,
@@ -57,7 +57,7 @@ use Dodopayments\Webhooks\PaymentSucceededWebhookEvent\Data\PayloadType;
  */
 final class Data implements BaseModel
 {
-    /** @use SdkModel<data_alias> */
+    /** @use SdkModel<DataShape> */
     use SdkModel;
 
     #[Api]

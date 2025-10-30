@@ -14,11 +14,11 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Webhooks\Headers->update
  *
- * @phpstan-type header_update_params = array{headers: array<string, string>}
+ * @phpstan-type HeaderUpdateParamsShape = array{headers: array<string, string>}
  */
 final class HeaderUpdateParams implements BaseModel
 {
-    /** @use SdkModel<header_update_params> */
+    /** @use SdkModel<HeaderUpdateParamsShape> */
     use SdkModel;
     use SdkParams;
 

@@ -38,7 +38,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\UsageEvents->list
  *
- * @phpstan-type usage_event_list_params = array{
+ * @phpstan-type UsageEventListParamsShape = array{
  *   customerID?: string,
  *   end?: \DateTimeInterface,
  *   eventName?: string,
@@ -50,7 +50,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  */
 final class UsageEventListParams implements BaseModel
 {
-    /** @use SdkModel<usage_event_list_params> */
+    /** @use SdkModel<UsageEventListParamsShape> */
     use SdkModel;
     use SdkParams;
 

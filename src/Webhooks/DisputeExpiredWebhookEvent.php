@@ -11,7 +11,7 @@ use Dodopayments\Webhooks\DisputeExpiredWebhookEvent\Data;
 use Dodopayments\Webhooks\DisputeExpiredWebhookEvent\Type;
 
 /**
- * @phpstan-type dispute_expired_webhook_event = array{
+ * @phpstan-type DisputeExpiredWebhookEventShape = array{
  *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\DisputeExpiredWebhookEvent\Type;
  */
 final class DisputeExpiredWebhookEvent implements BaseModel
 {
-    /** @use SdkModel<dispute_expired_webhook_event> */
+    /** @use SdkModel<DisputeExpiredWebhookEventShape> */
     use SdkModel;
 
     /**

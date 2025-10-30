@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
 /**
- * @phpstan-type addon_response = array{
+ * @phpstan-type AddonResponseShape = array{
  *   id: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
@@ -28,7 +28,7 @@ use Dodopayments\Misc\TaxCategory;
  */
 final class AddonResponse implements BaseModel, ResponseConverter
 {
-    /** @use SdkModel<addon_response> */
+    /** @use SdkModel<AddonResponseShape> */
     use SdkModel;
 
     use SdkResponse;
