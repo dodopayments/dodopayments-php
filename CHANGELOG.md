@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.2 (2025-10-30)
+
+Full Changelog: [v2.1.1...v2.1.2](https://github.com/dodopayments/dodopayments-php/compare/v2.1.1...v2.1.2)
+
+### Chores
+
+* use pascal case for phpstan typedefs ([c53f3d4](https://github.com/dodopayments/dodopayments-php/commit/c53f3d43609e2233acfeeabb8f41b779e42fb3a1))
+
 ## 2.1.1 (2025-10-29)
 
 Full Changelog: [v2.1.0...v2.1.1](https://github.com/dodopayments/dodopayments-php/compare/v2.1.0...v2.1.1)
