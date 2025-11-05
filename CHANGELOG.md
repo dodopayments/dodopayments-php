@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.1.2 (2025-11-05)
+
+Full Changelog: [v2.1.1...v2.1.2](https://github.com/dodopayments/dodopayments-php/compare/v2.1.1...v2.1.2)
+
+### Bug Fixes
+
+* ensure auth methods return non-nullable arrays ([66e1b0a](https://github.com/dodopayments/dodopayments-php/commit/66e1b0a838df0f7a3eb5c940fb7b9b512ef23c2f))
+
+
+### Chores
+
+* **client:** send metadata headers ([eeb8e64](https://github.com/dodopayments/dodopayments-php/commit/eeb8e648b1702a7b4d63741fdc6cb43ce32eabf9))
+* use pascal case for phpstan typedefs ([c53f3d4](https://github.com/dodopayments/dodopayments-php/commit/c53f3d43609e2233acfeeabb8f41b779e42fb3a1))
+
 ## 2.1.1 (2025-10-29)
 
 Full Changelog: [v2.1.0...v2.1.1](https://github.com/dodopayments/dodopayments-php/compare/v2.1.0...v2.1.1)
