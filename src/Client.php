@@ -190,10 +190,8 @@ class Client extends BaseClient
     /** @return array<string, string> */
     protected function authHeaders(): array
     {
-        if (!$this->bearerToken) {
-            return [];
-        }
-
-        return ['Authorization' => "Bearer {$this->bearerToken}"];
+        return $this->bearerToken ? [
+            'Authorization' => "Bearer {$this->bearerToken}",
+        ] : [];
     }
 }
