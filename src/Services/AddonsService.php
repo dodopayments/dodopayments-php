@@ -17,8 +17,6 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\AddonsContract;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class AddonsService implements AddonsContract
 {
     /**
@@ -29,47 +27,23 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @param Currency|value-of<Currency> $currency The currency of the Addon
-     * @param string $name Name of the Addon
-     * @param int $price Amount of the addon
-     * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this Addon
-     * @param string|null $description Optional description of the Addon
+     * @param array{
+     *   currency: value-of<Currency>,
+     *   name: string,
+     *   price: int,
+     *   tax_category: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory,
+     *   description?: string|null,
+     * }|AddonCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $currency,
-        $name,
-        $price,
-        $taxCategory,
-        $description = omit,
-        ?RequestOptions $requestOptions = null,
-    ): AddonResponse {
-        $params = [
-            'currency' => $currency,
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-            'description' => $description,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|AddonCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
         [$parsed, $options] = AddonCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -103,52 +77,25 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @param Currency|value-of<Currency>|null $currency The currency of the Addon
-     * @param string|null $description description of the Addon, optional and must be at most 1000 characters
-     * @param string|null $imageID Addon image id after its uploaded to S3
-     * @param string|null $name name of the Addon, optional and must be at most 100 characters
-     * @param int|null $price Amount of the addon
-     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon
+     * @param array{
+     *   currency?: value-of<Currency>,
+     *   description?: string|null,
+     *   image_id?: string|null,
+     *   name?: string|null,
+     *   price?: int|null,
+     *   tax_category?: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory|null,
+     * }|AddonUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        $currency = omit,
-        $description = omit,
-        $imageID = omit,
-        $name = omit,
-        $price = omit,
-        $taxCategory = omit,
+        array|AddonUpdateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): AddonResponse {
-        $params = [
-            'currency' => $currency,
-            'description' => $description,
-            'imageID' => $imageID,
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-        ];
-
-        return $this->updateRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $id,
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): AddonResponse {
         [$parsed, $options] = AddonUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -164,39 +111,19 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
+     * @param array{page_number?: int, page_size?: int}|AddonListParams $params
      *
      * @return DefaultPageNumberPagination<AddonResponse>
      *
      * @throws APIException
      */
     public function list(
-        $pageNumber = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null
-    ): DefaultPageNumberPagination {
-        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<AddonResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|AddonListParams $params,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
         [$parsed, $options] = AddonListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

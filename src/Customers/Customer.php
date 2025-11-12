@@ -12,12 +12,12 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type CustomerShape = array{
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   customerID: string,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   customer_id: string,
  *   email: string,
  *   name: string,
- *   phoneNumber?: string|null,
+ *   phone_number?: string|null,
  * }
  */
 final class Customer implements BaseModel, ResponseConverter
@@ -27,14 +27,14 @@ final class Customer implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
-    #[Api('customer_id')]
-    public string $customerID;
+    #[Api]
+    public string $customer_id;
 
     #[Api]
     public string $email;
@@ -42,8 +42,8 @@ final class Customer implements BaseModel, ResponseConverter
     #[Api]
     public string $name;
 
-    #[Api('phone_number', nullable: true, optional: true)]
-    public ?string $phoneNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?string $phone_number;
 
     /**
      * `new Customer()` is missing required properties by the API.
@@ -51,7 +51,7 @@ final class Customer implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * Customer::with(
-     *   businessID: ..., createdAt: ..., customerID: ..., email: ..., name: ...
+     *   business_id: ..., created_at: ..., customer_id: ..., email: ..., name: ...
      * )
      * ```
      *
@@ -77,22 +77,22 @@ final class Customer implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        string $customerID,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        string $customer_id,
         string $email,
         string $name,
-        ?string $phoneNumber = null,
+        ?string $phone_number = null,
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->customerID = $customerID;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->customer_id = $customer_id;
         $obj->email = $email;
         $obj->name = $name;
 
-        null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
+        null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -140,7 +140,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phoneNumber = $phoneNumber;
+        $obj->phone_number = $phoneNumber;
 
         return $obj;
     }

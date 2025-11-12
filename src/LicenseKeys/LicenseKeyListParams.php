@@ -14,10 +14,10 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
  * @see Dodopayments\LicenseKeys->list
  *
  * @phpstan-type LicenseKeyListParamsShape = array{
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   productID?: string,
+ *   customer_id?: string,
+ *   page_number?: int,
+ *   page_size?: int,
+ *   product_id?: string,
  *   status?: Status|value-of<Status>,
  * }
  */
@@ -31,25 +31,25 @@ final class LicenseKeyListParams implements BaseModel
      * Filter by customer ID.
      */
     #[Api(optional: true)]
-    public ?string $customerID;
+    public ?string $customer_id;
 
     /**
      * Page number default is 0.
      */
     #[Api(optional: true)]
-    public ?int $pageNumber;
+    public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     /**
      * Filter by product ID.
      */
     #[Api(optional: true)]
-    public ?string $productID;
+    public ?string $product_id;
 
     /**
      * Filter by license key status.
@@ -72,18 +72,18 @@ final class LicenseKeyListParams implements BaseModel
      * @param Status|value-of<Status> $status
      */
     public static function with(
-        ?string $customerID = null,
-        ?int $pageNumber = null,
-        ?int $pageSize = null,
-        ?string $productID = null,
+        ?string $customer_id = null,
+        ?int $page_number = null,
+        ?int $page_size = null,
+        ?string $product_id = null,
         Status|string|null $status = null,
     ): self {
         $obj = new self;
 
-        null !== $customerID && $obj->customerID = $customerID;
-        null !== $pageNumber && $obj->pageNumber = $pageNumber;
-        null !== $pageSize && $obj->pageSize = $pageSize;
-        null !== $productID && $obj->productID = $productID;
+        null !== $customer_id && $obj->customer_id = $customer_id;
+        null !== $page_number && $obj->page_number = $page_number;
+        null !== $page_size && $obj->page_size = $page_size;
+        null !== $product_id && $obj->product_id = $product_id;
         null !== $status && $obj['status'] = $status;
 
         return $obj;
@@ -95,7 +95,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->pageNumber = $pageNumber;
+        $obj->page_number = $pageNumber;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }
@@ -128,7 +128,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }

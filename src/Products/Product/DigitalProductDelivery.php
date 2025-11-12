@@ -11,7 +11,9 @@ use Dodopayments\Products\Product\DigitalProductDelivery\File;
 
 /**
  * @phpstan-type DigitalProductDeliveryShape = array{
- *   externalURL?: string|null, files?: list<File>|null, instructions?: string|null
+ *   external_url?: string|null,
+ *   files?: list<File>|null,
+ *   instructions?: string|null,
  * }
  */
 final class DigitalProductDelivery implements BaseModel
@@ -22,8 +24,8 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    #[Api('external_url', nullable: true, optional: true)]
-    public ?string $externalURL;
+    #[Api(nullable: true, optional: true)]
+    public ?string $external_url;
 
     /**
      * Uploaded files ids of digital product.
@@ -52,13 +54,13 @@ final class DigitalProductDelivery implements BaseModel
      * @param list<File>|null $files
      */
     public static function with(
-        ?string $externalURL = null,
+        ?string $external_url = null,
         ?array $files = null,
         ?string $instructions = null,
     ): self {
         $obj = new self;
 
-        null !== $externalURL && $obj->externalURL = $externalURL;
+        null !== $external_url && $obj->external_url = $external_url;
         null !== $files && $obj->files = $files;
         null !== $instructions && $obj->instructions = $instructions;
 
@@ -71,7 +73,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withExternalURL(?string $externalURL): self
     {
         $obj = clone $this;
-        $obj->externalURL = $externalURL;
+        $obj->external_url = $externalURL;
 
         return $obj;
     }

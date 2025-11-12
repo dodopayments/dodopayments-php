@@ -14,12 +14,12 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  * @phpstan-type MeterShape = array{
  *   id: string,
  *   aggregation: MeterAggregation,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   eventName: string,
- *   measurementUnit: string,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   event_name: string,
+ *   measurement_unit: string,
  *   name: string,
- *   updatedAt: \DateTimeInterface,
+ *   updated_at: \DateTimeInterface,
  *   description?: string|null,
  *   filter?: MeterFilter|null,
  * }
@@ -37,23 +37,23 @@ final class Meter implements BaseModel, ResponseConverter
     #[Api]
     public MeterAggregation $aggregation;
 
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
-    #[Api('event_name')]
-    public string $eventName;
+    #[Api]
+    public string $event_name;
 
-    #[Api('measurement_unit')]
-    public string $measurementUnit;
+    #[Api]
+    public string $measurement_unit;
 
     #[Api]
     public string $name;
 
-    #[Api('updated_at')]
-    public \DateTimeInterface $updatedAt;
+    #[Api]
+    public \DateTimeInterface $updated_at;
 
     #[Api(nullable: true, optional: true)]
     public ?string $description;
@@ -75,12 +75,12 @@ final class Meter implements BaseModel, ResponseConverter
      * Meter::with(
      *   id: ...,
      *   aggregation: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
-     *   eventName: ...,
-     *   measurementUnit: ...,
+     *   business_id: ...,
+     *   created_at: ...,
+     *   event_name: ...,
+     *   measurement_unit: ...,
      *   name: ...,
-     *   updatedAt: ...,
+     *   updated_at: ...,
      * )
      * ```
      *
@@ -111,12 +111,12 @@ final class Meter implements BaseModel, ResponseConverter
     public static function with(
         string $id,
         MeterAggregation $aggregation,
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        string $eventName,
-        string $measurementUnit,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        string $event_name,
+        string $measurement_unit,
         string $name,
-        \DateTimeInterface $updatedAt,
+        \DateTimeInterface $updated_at,
         ?string $description = null,
         ?MeterFilter $filter = null,
     ): self {
@@ -124,12 +124,12 @@ final class Meter implements BaseModel, ResponseConverter
 
         $obj->id = $id;
         $obj->aggregation = $aggregation;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->eventName = $eventName;
-        $obj->measurementUnit = $measurementUnit;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->event_name = $event_name;
+        $obj->measurement_unit = $measurement_unit;
         $obj->name = $name;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updated_at;
 
         null !== $description && $obj->description = $description;
         null !== $filter && $obj->filter = $filter;
@@ -156,7 +156,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -164,7 +164,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -172,7 +172,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->eventName = $eventName;
+        $obj->event_name = $eventName;
 
         return $obj;
     }
@@ -180,7 +180,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withMeasurementUnit(string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj->measurementUnit = $measurementUnit;
+        $obj->measurement_unit = $measurementUnit;
 
         return $obj;
     }
@@ -196,7 +196,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }

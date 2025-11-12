@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CustomerLimitedDetailsShape = array{
- *   customerID: string, email: string, name: string, phoneNumber?: string|null
+ *   customer_id: string, email: string, name: string, phone_number?: string|null
  * }
  */
 final class CustomerLimitedDetails implements BaseModel
@@ -21,8 +21,8 @@ final class CustomerLimitedDetails implements BaseModel
     /**
      * Unique identifier for the customer.
      */
-    #[Api('customer_id')]
-    public string $customerID;
+    #[Api]
+    public string $customer_id;
 
     /**
      * Email address of the customer.
@@ -39,15 +39,15 @@ final class CustomerLimitedDetails implements BaseModel
     /**
      * Phone number of the customer.
      */
-    #[Api('phone_number', nullable: true, optional: true)]
-    public ?string $phoneNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?string $phone_number;
 
     /**
      * `new CustomerLimitedDetails()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CustomerLimitedDetails::with(customerID: ..., email: ..., name: ...)
+     * CustomerLimitedDetails::with(customer_id: ..., email: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -67,18 +67,18 @@ final class CustomerLimitedDetails implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $customerID,
+        string $customer_id,
         string $email,
         string $name,
-        ?string $phoneNumber = null
+        ?string $phone_number = null,
     ): self {
         $obj = new self;
 
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customer_id;
         $obj->email = $email;
         $obj->name = $name;
 
-        null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
+        null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phoneNumber = $phoneNumber;
+        $obj->phone_number = $phoneNumber;
 
         return $obj;
     }

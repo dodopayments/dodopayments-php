@@ -14,9 +14,9 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
  * @see Dodopayments\Refunds->create
  *
  * @phpstan-type RefundCreateParamsShape = array{
- *   paymentID: string,
+ *   payment_id: string,
  *   items?: list<Item>|null,
- *   metadata?: array<string, string>,
+ *   metadata?: array<string,string>,
  *   reason?: string|null,
  * }
  */
@@ -29,8 +29,8 @@ final class RefundCreateParams implements BaseModel
     /**
      * The unique identifier of the payment to be refunded.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * Partially Refund an Individual Item.
@@ -43,7 +43,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * Additional metadata associated with the refund.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', optional: true)]
     public ?array $metadata;
@@ -59,7 +59,7 @@ final class RefundCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * RefundCreateParams::with(paymentID: ...)
+     * RefundCreateParams::with(payment_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,17 +79,17 @@ final class RefundCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Item>|null $items
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public static function with(
-        string $paymentID,
+        string $payment_id,
         ?array $items = null,
         ?array $metadata = null,
         ?string $reason = null,
     ): self {
         $obj = new self;
 
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $payment_id;
 
         null !== $items && $obj->items = $items;
         null !== $metadata && $obj->metadata = $metadata;
@@ -104,7 +104,7 @@ final class RefundCreateParams implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * Additional metadata associated with the refund.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {

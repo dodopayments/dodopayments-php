@@ -13,17 +13,17 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type LicenseKeyShape = array{
  *   id: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   customerID: string,
- *   instancesCount: int,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   customer_id: string,
+ *   instances_count: int,
  *   key: string,
- *   paymentID: string,
- *   productID: string,
+ *   payment_id: string,
+ *   product_id: string,
  *   status: value-of<LicenseKeyStatus>,
- *   activationsLimit?: int|null,
- *   expiresAt?: \DateTimeInterface|null,
- *   subscriptionID?: string|null,
+ *   activations_limit?: int|null,
+ *   expires_at?: \DateTimeInterface|null,
+ *   subscription_id?: string|null,
  * }
  */
 final class LicenseKey implements BaseModel, ResponseConverter
@@ -42,26 +42,26 @@ final class LicenseKey implements BaseModel, ResponseConverter
     /**
      * The unique identifier of the business associated with the license key.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The timestamp indicating when the license key was created, in UTC.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * The unique identifier of the customer associated with the license key.
      */
-    #[Api('customer_id')]
-    public string $customerID;
+    #[Api]
+    public string $customer_id;
 
     /**
      * The current number of instances activated for this license key.
      */
-    #[Api('instances_count')]
-    public int $instancesCount;
+    #[Api]
+    public int $instances_count;
 
     /**
      * The license key string.
@@ -72,14 +72,14 @@ final class LicenseKey implements BaseModel, ResponseConverter
     /**
      * The unique identifier of the payment associated with the license key.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * The unique identifier of the product associated with the license key.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     /**
      * The current status of the license key (e.g., active, inactive, expired).
@@ -92,20 +92,20 @@ final class LicenseKey implements BaseModel, ResponseConverter
     /**
      * The maximum number of activations allowed for this license key.
      */
-    #[Api('activations_limit', nullable: true, optional: true)]
-    public ?int $activationsLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $activations_limit;
 
     /**
      * The timestamp indicating when the license key expires, in UTC.
      */
-    #[Api('expires_at', nullable: true, optional: true)]
-    public ?\DateTimeInterface $expiresAt;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $expires_at;
 
     /**
      * The unique identifier of the subscription associated with the license key, if any.
      */
-    #[Api('subscription_id', nullable: true, optional: true)]
-    public ?string $subscriptionID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $subscription_id;
 
     /**
      * `new LicenseKey()` is missing required properties by the API.
@@ -114,13 +114,13 @@ final class LicenseKey implements BaseModel, ResponseConverter
      * ```
      * LicenseKey::with(
      *   id: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
-     *   customerID: ...,
-     *   instancesCount: ...,
+     *   business_id: ...,
+     *   created_at: ...,
+     *   customer_id: ...,
+     *   instances_count: ...,
      *   key: ...,
-     *   paymentID: ...,
-     *   productID: ...,
+     *   payment_id: ...,
+     *   product_id: ...,
      *   status: ...,
      * )
      * ```
@@ -154,33 +154,33 @@ final class LicenseKey implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        string $customerID,
-        int $instancesCount,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        string $customer_id,
+        int $instances_count,
         string $key,
-        string $paymentID,
-        string $productID,
+        string $payment_id,
+        string $product_id,
         LicenseKeyStatus|string $status,
-        ?int $activationsLimit = null,
-        ?\DateTimeInterface $expiresAt = null,
-        ?string $subscriptionID = null,
+        ?int $activations_limit = null,
+        ?\DateTimeInterface $expires_at = null,
+        ?string $subscription_id = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->customerID = $customerID;
-        $obj->instancesCount = $instancesCount;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->customer_id = $customer_id;
+        $obj->instances_count = $instances_count;
         $obj->key = $key;
-        $obj->paymentID = $paymentID;
-        $obj->productID = $productID;
+        $obj->payment_id = $payment_id;
+        $obj->product_id = $product_id;
         $obj['status'] = $status;
 
-        null !== $activationsLimit && $obj->activationsLimit = $activationsLimit;
-        null !== $expiresAt && $obj->expiresAt = $expiresAt;
-        null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
+        null !== $activations_limit && $obj->activations_limit = $activations_limit;
+        null !== $expires_at && $obj->expires_at = $expires_at;
+        null !== $subscription_id && $obj->subscription_id = $subscription_id;
 
         return $obj;
     }
@@ -202,7 +202,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -213,7 +213,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -224,7 +224,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withInstancesCount(int $instancesCount): self
     {
         $obj = clone $this;
-        $obj->instancesCount = $instancesCount;
+        $obj->instances_count = $instancesCount;
 
         return $obj;
     }
@@ -257,7 +257,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }
@@ -292,7 +292,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withActivationsLimit(?int $activationsLimit): self
     {
         $obj = clone $this;
-        $obj->activationsLimit = $activationsLimit;
+        $obj->activations_limit = $activationsLimit;
 
         return $obj;
     }
@@ -303,7 +303,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expiresAt = $expiresAt;
+        $obj->expires_at = $expiresAt;
 
         return $obj;
     }
@@ -314,7 +314,7 @@ final class LicenseKey implements BaseModel, ResponseConverter
     public function withSubscriptionID(?string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscriptionID = $subscriptionID;
+        $obj->subscription_id = $subscriptionID;
 
         return $obj;
     }

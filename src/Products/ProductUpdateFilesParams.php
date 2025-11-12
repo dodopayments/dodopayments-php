@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Products->updateFiles
  *
- * @phpstan-type ProductUpdateFilesParamsShape = array{fileName: string}
+ * @phpstan-type ProductUpdateFilesParamsShape = array{file_name: string}
  */
 final class ProductUpdateFilesParams implements BaseModel
 {
@@ -20,15 +20,15 @@ final class ProductUpdateFilesParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api('file_name')]
-    public string $fileName;
+    #[Api]
+    public string $file_name;
 
     /**
      * `new ProductUpdateFilesParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ProductUpdateFilesParams::with(fileName: ...)
+     * ProductUpdateFilesParams::with(file_name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -47,11 +47,11 @@ final class ProductUpdateFilesParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $fileName): self
+    public static function with(string $file_name): self
     {
         $obj = new self;
 
-        $obj->fileName = $fileName;
+        $obj->file_name = $file_name;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class ProductUpdateFilesParams implements BaseModel
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj->fileName = $fileName;
+        $obj->file_name = $fileName;
 
         return $obj;
     }

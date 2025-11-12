@@ -19,16 +19,16 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *
  * @phpstan-type ProductCreateParamsShape = array{
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   taxCategory: TaxCategory|value-of<TaxCategory>,
+ *   tax_category: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
- *   brandID?: string|null,
+ *   brand_id?: string|null,
  *   description?: string|null,
- *   digitalProductDelivery?: DigitalProductDelivery|null,
- *   licenseKeyActivationMessage?: string|null,
- *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDuration|null,
- *   licenseKeyEnabled?: bool|null,
- *   metadata?: array<string, string>,
+ *   digital_product_delivery?: DigitalProductDelivery|null,
+ *   license_key_activation_message?: string|null,
+ *   license_key_activations_limit?: int|null,
+ *   license_key_duration?: LicenseKeyDuration|null,
+ *   license_key_enabled?: bool|null,
+ *   metadata?: array<string,string>,
  *   name?: string|null,
  * }
  */
@@ -47,10 +47,10 @@ final class ProductCreateParams implements BaseModel
     /**
      * Tax category applied to this product.
      *
-     * @var value-of<TaxCategory> $taxCategory
+     * @var value-of<TaxCategory> $tax_category
      */
-    #[Api('tax_category', enum: TaxCategory::class)]
-    public string $taxCategory;
+    #[Api(enum: TaxCategory::class)]
+    public string $tax_category;
 
     /**
      * Addons available for subscription product.
@@ -63,8 +63,8 @@ final class ProductCreateParams implements BaseModel
     /**
      * Brand id for the product, if not provided will default to primary brand.
      */
-    #[Api('brand_id', nullable: true, optional: true)]
-    public ?string $brandID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $brand_id;
 
     /**
      * Optional description of the product.
@@ -75,41 +75,41 @@ final class ProductCreateParams implements BaseModel
     /**
      * Choose how you would like you digital product delivered.
      */
-    #[Api('digital_product_delivery', nullable: true, optional: true)]
-    public ?DigitalProductDelivery $digitalProductDelivery;
+    #[Api(nullable: true, optional: true)]
+    public ?DigitalProductDelivery $digital_product_delivery;
 
     /**
      * Optional message displayed during license key activation.
      */
-    #[Api('license_key_activation_message', nullable: true, optional: true)]
-    public ?string $licenseKeyActivationMessage;
+    #[Api(nullable: true, optional: true)]
+    public ?string $license_key_activation_message;
 
     /**
      * The number of times the license key can be activated.
      * Must be 0 or greater.
      */
-    #[Api('license_key_activations_limit', nullable: true, optional: true)]
-    public ?int $licenseKeyActivationsLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $license_key_activations_limit;
 
     /**
      * Duration configuration for the license key.
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
      */
-    #[Api('license_key_duration', nullable: true, optional: true)]
-    public ?LicenseKeyDuration $licenseKeyDuration;
+    #[Api(nullable: true, optional: true)]
+    public ?LicenseKeyDuration $license_key_duration;
 
     /**
      * When true, generates and sends a license key to your customer.
      * Defaults to false.
      */
-    #[Api('license_key_enabled', nullable: true, optional: true)]
-    public ?bool $licenseKeyEnabled;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $license_key_enabled;
 
     /**
      * Additional metadata for the product.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', optional: true)]
     public ?array $metadata;
@@ -125,7 +125,7 @@ final class ProductCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ProductCreateParams::with(price: ..., taxCategory: ...)
+     * ProductCreateParams::with(price: ..., tax_category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -144,37 +144,37 @@ final class ProductCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param TaxCategory|value-of<TaxCategory> $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $tax_category
      * @param list<string>|null $addons
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public static function with(
         OneTimePrice|RecurringPrice|UsageBasedPrice $price,
-        TaxCategory|string $taxCategory,
+        TaxCategory|string $tax_category,
         ?array $addons = null,
-        ?string $brandID = null,
+        ?string $brand_id = null,
         ?string $description = null,
-        ?DigitalProductDelivery $digitalProductDelivery = null,
-        ?string $licenseKeyActivationMessage = null,
-        ?int $licenseKeyActivationsLimit = null,
-        ?LicenseKeyDuration $licenseKeyDuration = null,
-        ?bool $licenseKeyEnabled = null,
+        ?DigitalProductDelivery $digital_product_delivery = null,
+        ?string $license_key_activation_message = null,
+        ?int $license_key_activations_limit = null,
+        ?LicenseKeyDuration $license_key_duration = null,
+        ?bool $license_key_enabled = null,
         ?array $metadata = null,
         ?string $name = null,
     ): self {
         $obj = new self;
 
         $obj->price = $price;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $tax_category;
 
         null !== $addons && $obj->addons = $addons;
-        null !== $brandID && $obj->brandID = $brandID;
+        null !== $brand_id && $obj->brand_id = $brand_id;
         null !== $description && $obj->description = $description;
-        null !== $digitalProductDelivery && $obj->digitalProductDelivery = $digitalProductDelivery;
-        null !== $licenseKeyActivationMessage && $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
-        null !== $licenseKeyActivationsLimit && $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
-        null !== $licenseKeyDuration && $obj->licenseKeyDuration = $licenseKeyDuration;
-        null !== $licenseKeyEnabled && $obj->licenseKeyEnabled = $licenseKeyEnabled;
+        null !== $digital_product_delivery && $obj->digital_product_delivery = $digital_product_delivery;
+        null !== $license_key_activation_message && $obj->license_key_activation_message = $license_key_activation_message;
+        null !== $license_key_activations_limit && $obj->license_key_activations_limit = $license_key_activations_limit;
+        null !== $license_key_duration && $obj->license_key_duration = $license_key_duration;
+        null !== $license_key_enabled && $obj->license_key_enabled = $license_key_enabled;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $name && $obj->name = $name;
 
@@ -201,7 +201,7 @@ final class ProductCreateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $taxCategory;
 
         return $obj;
     }
@@ -225,7 +225,7 @@ final class ProductCreateParams implements BaseModel
     public function withBrandID(?string $brandID): self
     {
         $obj = clone $this;
-        $obj->brandID = $brandID;
+        $obj->brand_id = $brandID;
 
         return $obj;
     }
@@ -248,7 +248,7 @@ final class ProductCreateParams implements BaseModel
         ?DigitalProductDelivery $digitalProductDelivery
     ): self {
         $obj = clone $this;
-        $obj->digitalProductDelivery = $digitalProductDelivery;
+        $obj->digital_product_delivery = $digitalProductDelivery;
 
         return $obj;
     }
@@ -260,7 +260,7 @@ final class ProductCreateParams implements BaseModel
         ?string $licenseKeyActivationMessage
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
+        $obj->license_key_activation_message = $licenseKeyActivationMessage;
 
         return $obj;
     }
@@ -273,7 +273,7 @@ final class ProductCreateParams implements BaseModel
         ?int $licenseKeyActivationsLimit
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
+        $obj->license_key_activations_limit = $licenseKeyActivationsLimit;
 
         return $obj;
     }
@@ -287,7 +287,7 @@ final class ProductCreateParams implements BaseModel
         ?LicenseKeyDuration $licenseKeyDuration
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyDuration = $licenseKeyDuration;
+        $obj->license_key_duration = $licenseKeyDuration;
 
         return $obj;
     }
@@ -299,7 +299,7 @@ final class ProductCreateParams implements BaseModel
     public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {
         $obj = clone $this;
-        $obj->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj->license_key_enabled = $licenseKeyEnabled;
 
         return $obj;
     }
@@ -307,7 +307,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {

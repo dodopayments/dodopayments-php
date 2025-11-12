@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Customers\CustomerPortal->create
  *
- * @phpstan-type CustomerPortalCreateParamsShape = array{sendEmail?: bool}
+ * @phpstan-type CustomerPortalCreateParamsShape = array{send_email?: bool}
  */
 final class CustomerPortalCreateParams implements BaseModel
 {
@@ -24,7 +24,7 @@ final class CustomerPortalCreateParams implements BaseModel
      * If true, will send link to user.
      */
     #[Api(optional: true)]
-    public ?bool $sendEmail;
+    public ?bool $send_email;
 
     public function __construct()
     {
@@ -36,11 +36,11 @@ final class CustomerPortalCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?bool $sendEmail = null): self
+    public static function with(?bool $send_email = null): self
     {
         $obj = new self;
 
-        null !== $sendEmail && $obj->sendEmail = $sendEmail;
+        null !== $send_email && $obj->send_email = $send_email;
 
         return $obj;
     }
@@ -51,7 +51,7 @@ final class CustomerPortalCreateParams implements BaseModel
     public function withSendEmail(bool $sendEmail): self
     {
         $obj = clone $this;
-        $obj->sendEmail = $sendEmail;
+        $obj->send_email = $sendEmail;
 
         return $obj;
     }

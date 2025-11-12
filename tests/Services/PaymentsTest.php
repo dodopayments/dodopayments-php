@@ -3,10 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,19 +29,17 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->payments->create(
-            billing: BillingAddress::with(
-                city: 'city',
-                country: CountryCode::AF,
-                state: 'state',
-                street: 'street',
-                zipcode: 'zipcode',
-            ),
-            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
-            productCart: [
-                OneTimeProductCartItem::with(productID: 'product_id', quantity: 0),
+        $result = $this->client->payments->create([
+            'billing' => [
+                'city' => 'city',
+                'country' => 'AF',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
             ],
-        );
+            'customer' => ['customer_id' => 'customer_id'],
+            'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -53,20 +47,19 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->payments->create(
-            billing: BillingAddress::with(
-                city: 'city',
-                country: CountryCode::AF,
-                state: 'state',
-                street: 'street',
-                zipcode: 'zipcode',
-            ),
-            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
-            productCart: [
-                OneTimeProductCartItem::with(productID: 'product_id', quantity: 0)
-                    ->withAmount(0),
+        $result = $this->client->payments->create([
+            'billing' => [
+                'city' => 'city',
+                'country' => 'AF',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
             ],
-        );
+            'customer' => ['customer_id' => 'customer_id'],
+            'product_cart' => [
+                ['product_id' => 'product_id', 'quantity' => 0, 'amount' => 0],
+            ],
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -86,7 +79,7 @@ final class PaymentsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->payments->list();
+        $result = $this->client->payments->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

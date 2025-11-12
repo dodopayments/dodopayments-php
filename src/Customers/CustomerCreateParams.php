@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Customers->create
  *
  * @phpstan-type CustomerCreateParamsShape = array{
- *   email: string, name: string, phoneNumber?: string|null
+ *   email: string, name: string, phone_number?: string|null
  * }
  */
 final class CustomerCreateParams implements BaseModel
@@ -28,8 +28,8 @@ final class CustomerCreateParams implements BaseModel
     #[Api]
     public string $name;
 
-    #[Api('phone_number', nullable: true, optional: true)]
-    public ?string $phoneNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?string $phone_number;
 
     /**
      * `new CustomerCreateParams()` is missing required properties by the API.
@@ -58,14 +58,14 @@ final class CustomerCreateParams implements BaseModel
     public static function with(
         string $email,
         string $name,
-        ?string $phoneNumber = null
+        ?string $phone_number = null
     ): self {
         $obj = new self;
 
         $obj->email = $email;
         $obj->name = $name;
 
-        null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
+        null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class CustomerCreateParams implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phoneNumber = $phoneNumber;
+        $obj->phone_number = $phoneNumber;
 
         return $obj;
     }

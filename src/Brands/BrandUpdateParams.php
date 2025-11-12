@@ -13,10 +13,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Brands->update
  *
  * @phpstan-type BrandUpdateParamsShape = array{
- *   imageID?: string|null,
+ *   image_id?: string|null,
  *   name?: string|null,
- *   statementDescriptor?: string|null,
- *   supportEmail?: string|null,
+ *   statement_descriptor?: string|null,
+ *   support_email?: string|null,
  * }
  */
 final class BrandUpdateParams implements BaseModel
@@ -28,17 +28,17 @@ final class BrandUpdateParams implements BaseModel
     /**
      * The UUID you got back from the presigned‐upload call.
      */
-    #[Api('image_id', nullable: true, optional: true)]
-    public ?string $imageID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $image_id;
 
     #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('statement_descriptor', nullable: true, optional: true)]
-    public ?string $statementDescriptor;
+    #[Api(nullable: true, optional: true)]
+    public ?string $statement_descriptor;
 
-    #[Api('support_email', nullable: true, optional: true)]
-    public ?string $supportEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $support_email;
 
     public function __construct()
     {
@@ -51,17 +51,17 @@ final class BrandUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $imageID = null,
+        ?string $image_id = null,
         ?string $name = null,
-        ?string $statementDescriptor = null,
-        ?string $supportEmail = null,
+        ?string $statement_descriptor = null,
+        ?string $support_email = null,
     ): self {
         $obj = new self;
 
-        null !== $imageID && $obj->imageID = $imageID;
+        null !== $image_id && $obj->image_id = $image_id;
         null !== $name && $obj->name = $name;
-        null !== $statementDescriptor && $obj->statementDescriptor = $statementDescriptor;
-        null !== $supportEmail && $obj->supportEmail = $supportEmail;
+        null !== $statement_descriptor && $obj->statement_descriptor = $statement_descriptor;
+        null !== $support_email && $obj->support_email = $support_email;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class BrandUpdateParams implements BaseModel
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->imageID = $imageID;
+        $obj->image_id = $imageID;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class BrandUpdateParams implements BaseModel
     public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $obj = clone $this;
-        $obj->statementDescriptor = $statementDescriptor;
+        $obj->statement_descriptor = $statementDescriptor;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class BrandUpdateParams implements BaseModel
     public function withSupportEmail(?string $supportEmail): self
     {
         $obj = clone $this;
-        $obj->supportEmail = $supportEmail;
+        $obj->support_email = $supportEmail;
 
         return $obj;
     }

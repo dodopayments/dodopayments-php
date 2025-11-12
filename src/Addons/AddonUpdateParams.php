@@ -17,10 +17,10 @@ use Dodopayments\Misc\TaxCategory;
  * @phpstan-type AddonUpdateParamsShape = array{
  *   currency?: null|Currency|value-of<Currency>,
  *   description?: string|null,
- *   imageID?: string|null,
+ *   image_id?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   taxCategory?: null|TaxCategory|value-of<TaxCategory>,
+ *   tax_category?: null|TaxCategory|value-of<TaxCategory>,
  * }
  */
 final class AddonUpdateParams implements BaseModel
@@ -46,8 +46,8 @@ final class AddonUpdateParams implements BaseModel
     /**
      * Addon image id after its uploaded to S3.
      */
-    #[Api('image_id', nullable: true, optional: true)]
-    public ?string $imageID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $image_id;
 
     /**
      * Name of the Addon, optional and must be at most 100 characters.
@@ -64,15 +64,10 @@ final class AddonUpdateParams implements BaseModel
     /**
      * Tax category of the Addon.
      *
-     * @var value-of<TaxCategory>|null $taxCategory
+     * @var value-of<TaxCategory>|null $tax_category
      */
-    #[Api(
-        'tax_category',
-        enum: TaxCategory::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?string $taxCategory;
+    #[Api(enum: TaxCategory::class, nullable: true, optional: true)]
+    public ?string $tax_category;
 
     public function __construct()
     {
@@ -85,24 +80,24 @@ final class AddonUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency>|null $currency
-     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
+     * @param TaxCategory|value-of<TaxCategory>|null $tax_category
      */
     public static function with(
         Currency|string|null $currency = null,
         ?string $description = null,
-        ?string $imageID = null,
+        ?string $image_id = null,
         ?string $name = null,
         ?int $price = null,
-        TaxCategory|string|null $taxCategory = null,
+        TaxCategory|string|null $tax_category = null,
     ): self {
         $obj = new self;
 
         null !== $currency && $obj['currency'] = $currency;
         null !== $description && $obj->description = $description;
-        null !== $imageID && $obj->imageID = $imageID;
+        null !== $image_id && $obj->image_id = $image_id;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $taxCategory && $obj['taxCategory'] = $taxCategory;
+        null !== $tax_category && $obj['tax_category'] = $tax_category;
 
         return $obj;
     }
@@ -137,7 +132,7 @@ final class AddonUpdateParams implements BaseModel
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->imageID = $imageID;
+        $obj->image_id = $imageID;
 
         return $obj;
     }
@@ -172,7 +167,7 @@ final class AddonUpdateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
         $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $taxCategory;
 
         return $obj;
     }

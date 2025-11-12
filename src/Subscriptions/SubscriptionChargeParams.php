@@ -15,12 +15,12 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
  * @see Dodopayments\Subscriptions->charge
  *
  * @phpstan-type SubscriptionChargeParamsShape = array{
- *   productPrice: int,
- *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   customerBalanceConfig?: CustomerBalanceConfig|null,
- *   metadata?: array<string, string>|null,
- *   productCurrency?: null|Currency|value-of<Currency>,
- *   productDescription?: string|null,
+ *   product_price: int,
+ *   adaptive_currency_fees_inclusive?: bool|null,
+ *   customer_balance_config?: CustomerBalanceConfig|null,
+ *   metadata?: array<string,string>|null,
+ *   product_currency?: null|Currency|value-of<Currency>,
+ *   product_description?: string|null,
  * }
  */
 final class SubscriptionChargeParams implements BaseModel
@@ -33,26 +33,26 @@ final class SubscriptionChargeParams implements BaseModel
      * The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api('product_price')]
-    public int $productPrice;
+    #[Api]
+    public int $product_price;
 
     /**
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    #[Api('adaptive_currency_fees_inclusive', nullable: true, optional: true)]
-    public ?bool $adaptiveCurrencyFeesInclusive;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $adaptive_currency_fees_inclusive;
 
     /**
      * Specify how customer balance is used for the payment.
      */
-    #[Api('customer_balance_config', nullable: true, optional: true)]
-    public ?CustomerBalanceConfig $customerBalanceConfig;
+    #[Api(nullable: true, optional: true)]
+    public ?CustomerBalanceConfig $customer_balance_config;
 
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
@@ -60,29 +60,24 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Optional currency of the product price. If not specified, defaults to the currency of the product.
      *
-     * @var value-of<Currency>|null $productCurrency
+     * @var value-of<Currency>|null $product_currency
      */
-    #[Api(
-        'product_currency',
-        enum: Currency::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?string $productCurrency;
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    public ?string $product_currency;
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    #[Api('product_description', nullable: true, optional: true)]
-    public ?string $productDescription;
+    #[Api(nullable: true, optional: true)]
+    public ?string $product_description;
 
     /**
      * `new SubscriptionChargeParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * SubscriptionChargeParams::with(productPrice: ...)
+     * SubscriptionChargeParams::with(product_price: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -101,26 +96,26 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string>|null $metadata
-     * @param Currency|value-of<Currency>|null $productCurrency
+     * @param array<string,string>|null $metadata
+     * @param Currency|value-of<Currency>|null $product_currency
      */
     public static function with(
-        int $productPrice,
-        ?bool $adaptiveCurrencyFeesInclusive = null,
-        ?CustomerBalanceConfig $customerBalanceConfig = null,
+        int $product_price,
+        ?bool $adaptive_currency_fees_inclusive = null,
+        ?CustomerBalanceConfig $customer_balance_config = null,
         ?array $metadata = null,
-        Currency|string|null $productCurrency = null,
-        ?string $productDescription = null,
+        Currency|string|null $product_currency = null,
+        ?string $product_description = null,
     ): self {
         $obj = new self;
 
-        $obj->productPrice = $productPrice;
+        $obj->product_price = $product_price;
 
-        null !== $adaptiveCurrencyFeesInclusive && $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
-        null !== $customerBalanceConfig && $obj->customerBalanceConfig = $customerBalanceConfig;
+        null !== $adaptive_currency_fees_inclusive && $obj->adaptive_currency_fees_inclusive = $adaptive_currency_fees_inclusive;
+        null !== $customer_balance_config && $obj->customer_balance_config = $customer_balance_config;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $productCurrency && $obj['productCurrency'] = $productCurrency;
-        null !== $productDescription && $obj->productDescription = $productDescription;
+        null !== $product_currency && $obj['product_currency'] = $product_currency;
+        null !== $product_description && $obj->product_description = $product_description;
 
         return $obj;
     }
@@ -132,7 +127,7 @@ final class SubscriptionChargeParams implements BaseModel
     public function withProductPrice(int $productPrice): self
     {
         $obj = clone $this;
-        $obj->productPrice = $productPrice;
+        $obj->product_price = $productPrice;
 
         return $obj;
     }
@@ -145,7 +140,7 @@ final class SubscriptionChargeParams implements BaseModel
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
         $obj = clone $this;
-        $obj->adaptiveCurrencyFeesInclusive = $adaptiveCurrencyFeesInclusive;
+        $obj->adaptive_currency_fees_inclusive = $adaptiveCurrencyFeesInclusive;
 
         return $obj;
     }
@@ -157,7 +152,7 @@ final class SubscriptionChargeParams implements BaseModel
         ?CustomerBalanceConfig $customerBalanceConfig
     ): self {
         $obj = clone $this;
-        $obj->customerBalanceConfig = $customerBalanceConfig;
+        $obj->customer_balance_config = $customerBalanceConfig;
 
         return $obj;
     }
@@ -165,7 +160,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @param array<string, string>|null $metadata
+     * @param array<string,string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {
@@ -184,7 +179,7 @@ final class SubscriptionChargeParams implements BaseModel
         Currency|string|null $productCurrency
     ): self {
         $obj = clone $this;
-        $obj['productCurrency'] = $productCurrency;
+        $obj['product_currency'] = $productCurrency;
 
         return $obj;
     }
@@ -196,7 +191,7 @@ final class SubscriptionChargeParams implements BaseModel
     public function withProductDescription(?string $productDescription): self
     {
         $obj = clone $this;
-        $obj->productDescription = $productDescription;
+        $obj->product_description = $productDescription;
 
         return $obj;
     }

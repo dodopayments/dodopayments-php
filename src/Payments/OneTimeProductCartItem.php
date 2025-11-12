@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type OneTimeProductCartItemShape = array{
- *   productID: string, quantity: int, amount?: int|null
+ *   product_id: string, quantity: int, amount?: int|null
  * }
  */
 final class OneTimeProductCartItem implements BaseModel
@@ -18,8 +18,8 @@ final class OneTimeProductCartItem implements BaseModel
     /** @use SdkModel<OneTimeProductCartItemShape> */
     use SdkModel;
 
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     #[Api]
     public int $quantity;
@@ -37,7 +37,7 @@ final class OneTimeProductCartItem implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * OneTimeProductCartItem::with(productID: ..., quantity: ...)
+     * OneTimeProductCartItem::with(product_id: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -57,13 +57,13 @@ final class OneTimeProductCartItem implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $productID,
+        string $product_id,
         int $quantity,
         ?int $amount = null
     ): self {
         $obj = new self;
 
-        $obj->productID = $productID;
+        $obj->product_id = $product_id;
         $obj->quantity = $quantity;
 
         null !== $amount && $obj->amount = $amount;
@@ -74,7 +74,7 @@ final class OneTimeProductCartItem implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }

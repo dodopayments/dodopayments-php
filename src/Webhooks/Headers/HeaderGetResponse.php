@@ -17,7 +17,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  * field.
  *
  * @phpstan-type HeaderGetResponseShape = array{
- *   headers: array<string, string>, sensitive: list<string>
+ *   headers: array<string,string>, sensitive: list<string>
  * }
  */
 final class HeaderGetResponse implements BaseModel, ResponseConverter
@@ -30,7 +30,7 @@ final class HeaderGetResponse implements BaseModel, ResponseConverter
     /**
      * List of headers configured.
      *
-     * @var array<string, string> $headers
+     * @var array<string,string> $headers
      */
     #[Api(map: 'string')]
     public array $headers;
@@ -67,7 +67,7 @@ final class HeaderGetResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $headers
+     * @param array<string,string> $headers
      * @param list<string> $sensitive
      */
     public static function with(array $headers, array $sensitive): self
@@ -83,7 +83,7 @@ final class HeaderGetResponse implements BaseModel, ResponseConverter
     /**
      * List of headers configured.
      *
-     * @param array<string, string> $headers
+     * @param array<string,string> $headers
      */
     public function withHeaders(array $headers): self
     {

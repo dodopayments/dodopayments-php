@@ -10,11 +10,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type FeatureFlagsShape = array{
- *   allowCurrencySelection?: bool,
- *   allowDiscountCode?: bool,
- *   allowPhoneNumberCollection?: bool,
- *   allowTaxID?: bool,
- *   alwaysCreateNewCustomer?: bool,
+ *   allow_currency_selection?: bool|null,
+ *   allow_discount_code?: bool|null,
+ *   allow_phone_number_collection?: bool|null,
+ *   allow_tax_id?: bool|null,
+ *   always_create_new_customer?: bool|null,
  * }
  */
 final class FeatureFlags implements BaseModel
@@ -27,32 +27,32 @@ final class FeatureFlags implements BaseModel
      *
      * Default is true
      */
-    #[Api('allow_currency_selection', optional: true)]
-    public ?bool $allowCurrencySelection;
+    #[Api(optional: true)]
+    public ?bool $allow_currency_selection;
 
     /**
      * If the customer is allowed to apply discount code, set it to true.
      *
      * Default is true
      */
-    #[Api('allow_discount_code', optional: true)]
-    public ?bool $allowDiscountCode;
+    #[Api(optional: true)]
+    public ?bool $allow_discount_code;
 
     /**
      * If phone number is collected from customer, set it to rue.
      *
      * Default is true
      */
-    #[Api('allow_phone_number_collection', optional: true)]
-    public ?bool $allowPhoneNumberCollection;
+    #[Api(optional: true)]
+    public ?bool $allow_phone_number_collection;
 
     /**
      * If the customer is allowed to add tax id, set it to true.
      *
      * Default is true
      */
-    #[Api('allow_tax_id', optional: true)]
-    public ?bool $allowTaxID;
+    #[Api(optional: true)]
+    public ?bool $allow_tax_id;
 
     /**
      * Set to true if a new customer object should be created.
@@ -60,8 +60,8 @@ final class FeatureFlags implements BaseModel
      *
      * Default is false
      */
-    #[Api('always_create_new_customer', optional: true)]
-    public ?bool $alwaysCreateNewCustomer;
+    #[Api(optional: true)]
+    public ?bool $always_create_new_customer;
 
     public function __construct()
     {
@@ -74,19 +74,19 @@ final class FeatureFlags implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?bool $allowCurrencySelection = null,
-        ?bool $allowDiscountCode = null,
-        ?bool $allowPhoneNumberCollection = null,
-        ?bool $allowTaxID = null,
-        ?bool $alwaysCreateNewCustomer = null,
+        ?bool $allow_currency_selection = null,
+        ?bool $allow_discount_code = null,
+        ?bool $allow_phone_number_collection = null,
+        ?bool $allow_tax_id = null,
+        ?bool $always_create_new_customer = null,
     ): self {
         $obj = new self;
 
-        null !== $allowCurrencySelection && $obj->allowCurrencySelection = $allowCurrencySelection;
-        null !== $allowDiscountCode && $obj->allowDiscountCode = $allowDiscountCode;
-        null !== $allowPhoneNumberCollection && $obj->allowPhoneNumberCollection = $allowPhoneNumberCollection;
-        null !== $allowTaxID && $obj->allowTaxID = $allowTaxID;
-        null !== $alwaysCreateNewCustomer && $obj->alwaysCreateNewCustomer = $alwaysCreateNewCustomer;
+        null !== $allow_currency_selection && $obj->allow_currency_selection = $allow_currency_selection;
+        null !== $allow_discount_code && $obj->allow_discount_code = $allow_discount_code;
+        null !== $allow_phone_number_collection && $obj->allow_phone_number_collection = $allow_phone_number_collection;
+        null !== $allow_tax_id && $obj->allow_tax_id = $allow_tax_id;
+        null !== $always_create_new_customer && $obj->always_create_new_customer = $always_create_new_customer;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCurrencySelection
     ): self {
         $obj = clone $this;
-        $obj->allowCurrencySelection = $allowCurrencySelection;
+        $obj->allow_currency_selection = $allowCurrencySelection;
 
         return $obj;
     }
@@ -113,7 +113,7 @@ final class FeatureFlags implements BaseModel
     public function withAllowDiscountCode(bool $allowDiscountCode): self
     {
         $obj = clone $this;
-        $obj->allowDiscountCode = $allowDiscountCode;
+        $obj->allow_discount_code = $allowDiscountCode;
 
         return $obj;
     }
@@ -127,7 +127,7 @@ final class FeatureFlags implements BaseModel
         bool $allowPhoneNumberCollection
     ): self {
         $obj = clone $this;
-        $obj->allowPhoneNumberCollection = $allowPhoneNumberCollection;
+        $obj->allow_phone_number_collection = $allowPhoneNumberCollection;
 
         return $obj;
     }
@@ -140,7 +140,7 @@ final class FeatureFlags implements BaseModel
     public function withAllowTaxID(bool $allowTaxID): self
     {
         $obj = clone $this;
-        $obj->allowTaxID = $allowTaxID;
+        $obj->allow_tax_id = $allowTaxID;
 
         return $obj;
     }
@@ -155,7 +155,7 @@ final class FeatureFlags implements BaseModel
         bool $alwaysCreateNewCustomer
     ): self {
         $obj = clone $this;
-        $obj->alwaysCreateNewCustomer = $alwaysCreateNewCustomer;
+        $obj->always_create_new_customer = $alwaysCreateNewCustomer;
 
         return $obj;
     }

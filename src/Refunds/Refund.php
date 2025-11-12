@@ -14,13 +14,13 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
  * @phpstan-type RefundShape = array{
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
- *   isPartial: bool,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   refundID: string,
+ *   is_partial: bool,
+ *   metadata: array<string,string>,
+ *   payment_id: string,
+ *   refund_id: string,
  *   status: value-of<RefundStatus>,
  *   amount?: int|null,
  *   currency?: value-of<Currency>|null,
@@ -37,14 +37,14 @@ final class Refund implements BaseModel, ResponseConverter
     /**
      * The unique identifier of the business issuing the refund.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * Details about the customer for this refund (from the associated payment).
@@ -55,13 +55,13 @@ final class Refund implements BaseModel, ResponseConverter
     /**
      * If true the refund is a partial refund.
      */
-    #[Api('is_partial')]
-    public bool $isPartial;
+    #[Api]
+    public bool $is_partial;
 
     /**
      * Additional metadata stored with the refund.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -69,14 +69,14 @@ final class Refund implements BaseModel, ResponseConverter
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * The unique identifier of the refund.
      */
-    #[Api('refund_id')]
-    public string $refundID;
+    #[Api]
+    public string $refund_id;
 
     /**
      * The current status of the refund.
@@ -112,13 +112,13 @@ final class Refund implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * Refund::with(
-     *   businessID: ...,
-     *   createdAt: ...,
+     *   business_id: ...,
+     *   created_at: ...,
      *   customer: ...,
-     *   isPartial: ...,
+     *   is_partial: ...,
      *   metadata: ...,
-     *   paymentID: ...,
-     *   refundID: ...,
+     *   payment_id: ...,
+     *   refund_id: ...,
      *   status: ...,
      * )
      * ```
@@ -147,18 +147,18 @@ final class Refund implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
-        string $businessID,
-        \DateTimeInterface $createdAt,
+        string $business_id,
+        \DateTimeInterface $created_at,
         CustomerLimitedDetails $customer,
-        bool $isPartial,
+        bool $is_partial,
         array $metadata,
-        string $paymentID,
-        string $refundID,
+        string $payment_id,
+        string $refund_id,
         RefundStatus|string $status,
         ?int $amount = null,
         Currency|string|null $currency = null,
@@ -166,13 +166,13 @@ final class Refund implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
         $obj->customer = $customer;
-        $obj->isPartial = $isPartial;
+        $obj->is_partial = $is_partial;
         $obj->metadata = $metadata;
-        $obj->paymentID = $paymentID;
-        $obj->refundID = $refundID;
+        $obj->payment_id = $payment_id;
+        $obj->refund_id = $refund_id;
         $obj['status'] = $status;
 
         null !== $amount && $obj->amount = $amount;
@@ -188,7 +188,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -199,7 +199,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -221,7 +221,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withIsPartial(bool $isPartial): self
     {
         $obj = clone $this;
-        $obj->isPartial = $isPartial;
+        $obj->is_partial = $isPartial;
 
         return $obj;
     }
@@ -229,7 +229,7 @@ final class Refund implements BaseModel, ResponseConverter
     /**
      * Additional metadata stored with the refund.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -245,7 +245,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -256,7 +256,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withRefundID(string $refundID): self
     {
         $obj = clone $this;
-        $obj->refundID = $refundID;
+        $obj->refund_id = $refundID;
 
         return $obj;
     }

@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Products\Images->update
  *
- * @phpstan-type ImageUpdateParamsShape = array{forceUpdate?: bool}
+ * @phpstan-type ImageUpdateParamsShape = array{force_update?: bool}
  */
 final class ImageUpdateParams implements BaseModel
 {
@@ -21,7 +21,7 @@ final class ImageUpdateParams implements BaseModel
     use SdkParams;
 
     #[Api(optional: true)]
-    public ?bool $forceUpdate;
+    public ?bool $force_update;
 
     public function __construct()
     {
@@ -33,11 +33,11 @@ final class ImageUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(?bool $forceUpdate = null): self
+    public static function with(?bool $force_update = null): self
     {
         $obj = new self;
 
-        null !== $forceUpdate && $obj->forceUpdate = $forceUpdate;
+        null !== $force_update && $obj->force_update = $force_update;
 
         return $obj;
     }
@@ -45,7 +45,7 @@ final class ImageUpdateParams implements BaseModel
     public function withForceUpdate(bool $forceUpdate): self
     {
         $obj = clone $this;
-        $obj->forceUpdate = $forceUpdate;
+        $obj->force_update = $forceUpdate;
 
         return $obj;
     }

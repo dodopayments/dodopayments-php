@@ -13,10 +13,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Payouts->list
  *
  * @phpstan-type PayoutListParamsShape = array{
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   pageNumber?: int,
- *   pageSize?: int,
+ *   created_at_gte?: \DateTimeInterface,
+ *   created_at_lte?: \DateTimeInterface,
+ *   page_number?: int,
+ *   page_size?: int,
  * }
  */
 final class PayoutListParams implements BaseModel
@@ -29,25 +29,25 @@ final class PayoutListParams implements BaseModel
      * Get payouts created after this time (inclusive).
      */
     #[Api(optional: true)]
-    public ?\DateTimeInterface $createdAtGte;
+    public ?\DateTimeInterface $created_at_gte;
 
     /**
      * Get payouts created before this time (inclusive).
      */
     #[Api(optional: true)]
-    public ?\DateTimeInterface $createdAtLte;
+    public ?\DateTimeInterface $created_at_lte;
 
     /**
      * Page number default is 0.
      */
     #[Api(optional: true)]
-    public ?int $pageNumber;
+    public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     public function __construct()
     {
@@ -60,17 +60,17 @@ final class PayoutListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?\DateTimeInterface $createdAtGte = null,
-        ?\DateTimeInterface $createdAtLte = null,
-        ?int $pageNumber = null,
-        ?int $pageSize = null,
+        ?\DateTimeInterface $created_at_gte = null,
+        ?\DateTimeInterface $created_at_lte = null,
+        ?int $page_number = null,
+        ?int $page_size = null,
     ): self {
         $obj = new self;
 
-        null !== $createdAtGte && $obj->createdAtGte = $createdAtGte;
-        null !== $createdAtLte && $obj->createdAtLte = $createdAtLte;
-        null !== $pageNumber && $obj->pageNumber = $pageNumber;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $created_at_gte && $obj->created_at_gte = $created_at_gte;
+        null !== $created_at_lte && $obj->created_at_lte = $created_at_lte;
+        null !== $page_number && $obj->page_number = $page_number;
+        null !== $page_size && $obj->page_size = $page_size;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class PayoutListParams implements BaseModel
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
         $obj = clone $this;
-        $obj->createdAtGte = $createdAtGte;
+        $obj->created_at_gte = $createdAtGte;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class PayoutListParams implements BaseModel
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
         $obj = clone $this;
-        $obj->createdAtLte = $createdAtLte;
+        $obj->created_at_lte = $createdAtLte;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class PayoutListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->pageNumber = $pageNumber;
+        $obj->page_number = $pageNumber;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class PayoutListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }

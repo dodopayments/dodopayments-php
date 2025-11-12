@@ -7,55 +7,24 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
-use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\Webhooks\WebhookCreateParams;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
-
-use const Dodopayments\Core\OMIT as omit;
+use Dodopayments\Webhooks\WebhookListParams;
+use Dodopayments\Webhooks\WebhookUpdateParams;
 
 interface WebhooksContract
 {
     /**
      * @api
      *
-     * @param string $url Url of the webhook
-     * @param string|null $description
-     * @param bool|null $disabled Create the webhook in a disabled state.
-     *
-     * Default is false
-     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes Filter events to the webhook.
-     *
-     * Webhook event will only be sent for events in the list.
-     * @param array<string, string>|null $headers Custom headers to be passed
-     * @param string|null $idempotencyKey The request's idempotency key
-     * @param array<string, string>|null $metadata Metadata to be passed to the webhook
-     * Defaut is {}
-     * @param int|null $rateLimit
+     * @param array<mixed>|WebhookCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $url,
-        $description = omit,
-        $disabled = omit,
-        $filterTypes = omit,
-        $headers = omit,
-        $idempotencyKey = omit,
-        $metadata = omit,
-        $rateLimit = omit,
+        array|WebhookCreateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): WebhookDetails;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): WebhookDetails;
 
     /**
@@ -71,68 +40,27 @@ interface WebhooksContract
     /**
      * @api
      *
-     * @param string|null $description Description of the webhook
-     * @param bool|null $disabled to Disable the endpoint, set it to true
-     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes Filter events to the endpoint.
-     *
-     * Webhook event will only be sent for events in the list.
-     * @param array<string, string>|null $metadata Metadata
-     * @param int|null $rateLimit Rate limit
-     * @param string|null $url Url endpoint
+     * @param array<mixed>|WebhookUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        $description = omit,
-        $disabled = omit,
-        $filterTypes = omit,
-        $metadata = omit,
-        $rateLimit = omit,
-        $url = omit,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): WebhookDetails;
-
-    /**
-     * @api
-     *
-     * @param string|null $iterator The iterator returned from a prior invocation
-     * @param int|null $limit Limit the number of returned items
+     * @param array<mixed>|WebhookListParams $params
      *
      * @return CursorPagePagination<WebhookDetails>
      *
      * @throws APIException
      */
     public function list(
-        $iterator = omit,
-        $limit = omit,
-        ?RequestOptions $requestOptions = null
-    ): CursorPagePagination;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return CursorPagePagination<WebhookDetails>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|WebhookListParams $params,
         ?RequestOptions $requestOptions = null
     ): CursorPagePagination;
 

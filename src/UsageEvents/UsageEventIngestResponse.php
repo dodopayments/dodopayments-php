@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type UsageEventIngestResponseShape = array{ingestedCount: int}
+ * @phpstan-type UsageEventIngestResponseShape = array{ingested_count: int}
  */
 final class UsageEventIngestResponse implements BaseModel, ResponseConverter
 {
@@ -20,15 +20,15 @@ final class UsageEventIngestResponse implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('ingested_count')]
-    public int $ingestedCount;
+    #[Api]
+    public int $ingested_count;
 
     /**
      * `new UsageEventIngestResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UsageEventIngestResponse::with(ingestedCount: ...)
+     * UsageEventIngestResponse::with(ingested_count: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -47,11 +47,11 @@ final class UsageEventIngestResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $ingestedCount): self
+    public static function with(int $ingested_count): self
     {
         $obj = new self;
 
-        $obj->ingestedCount = $ingestedCount;
+        $obj->ingested_count = $ingested_count;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class UsageEventIngestResponse implements BaseModel, ResponseConverter
     public function withIngestedCount(int $ingestedCount): self
     {
         $obj = clone $this;
-        $obj->ingestedCount = $ingestedCount;
+        $obj->ingested_count = $ingestedCount;
 
         return $obj;
     }

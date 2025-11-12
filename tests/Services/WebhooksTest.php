@@ -29,7 +29,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->webhooks->create(url: 'url');
+        $result = $this->client->webhooks->create(['url' => 'url']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -37,7 +37,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->webhooks->create(url: 'url');
+        $result = $this->client->webhooks->create(['url' => 'url']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -53,7 +53,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->webhooks->update('webhook_id');
+        $result = $this->client->webhooks->update('webhook_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -65,7 +65,7 @@ final class WebhooksTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->webhooks->list();
+        $result = $this->client->webhooks->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

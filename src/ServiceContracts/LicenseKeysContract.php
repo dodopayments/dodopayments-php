@@ -7,10 +7,9 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
-use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
+use Dodopayments\LicenseKeys\LicenseKeyListParams;
+use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
-
-use const Dodopayments\Core\OMIT as omit;
 
 interface LicenseKeysContract
 {
@@ -27,69 +26,27 @@ interface LicenseKeysContract
     /**
      * @api
      *
-     * @param int|null $activationsLimit The updated activation limit for the license key.
-     * Use `null` to remove the limit, or omit this field to leave it unchanged.
-     * @param bool|null $disabled Indicates whether the license key should be disabled.
-     * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
-     * @param \DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
-     * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
+     * @param array<mixed>|LicenseKeyUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        $activationsLimit = omit,
-        $disabled = omit,
-        $expiresAt = omit,
+        array|LicenseKeyUpdateParams $params,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $id,
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): LicenseKey;
-
-    /**
-     * @api
-     *
-     * @param string $customerID Filter by customer ID
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
-     * @param string $productID Filter by product ID
-     * @param Status|value-of<Status> $status Filter by license key status
+     * @param array<mixed>|LicenseKeyListParams $params
      *
      * @return DefaultPageNumberPagination<LicenseKey>
      *
      * @throws APIException
      */
     public function list(
-        $customerID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        $productID = omit,
-        $status = omit,
+        array|LicenseKeyListParams $params,
         ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<LicenseKey>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 }

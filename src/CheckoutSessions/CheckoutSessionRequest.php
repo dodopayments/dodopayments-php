@@ -19,20 +19,20 @@ use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
  * @phpstan-type CheckoutSessionRequestShape = array{
- *   productCart: list<ProductCart>,
- *   allowedPaymentMethodTypes?: list<value-of<PaymentMethodTypes>>|null,
- *   billingAddress?: BillingAddress|null,
- *   billingCurrency?: value-of<Currency>|null,
- *   confirm?: bool,
+ *   product_cart: list<ProductCart>,
+ *   allowed_payment_method_types?: list<value-of<PaymentMethodTypes>>|null,
+ *   billing_address?: BillingAddress|null,
+ *   billing_currency?: value-of<Currency>|null,
+ *   confirm?: bool|null,
  *   customer?: null|AttachExistingCustomer|NewCustomer,
- *   customization?: Customization,
- *   discountCode?: string|null,
- *   featureFlags?: FeatureFlags,
- *   force3DS?: bool|null,
- *   metadata?: array<string, string>|null,
- *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool,
- *   subscriptionData?: SubscriptionData|null,
+ *   customization?: Customization|null,
+ *   discount_code?: string|null,
+ *   feature_flags?: FeatureFlags|null,
+ *   force_3ds?: bool|null,
+ *   metadata?: array<string,string>|null,
+ *   return_url?: string|null,
+ *   show_saved_payment_methods?: bool|null,
+ *   subscription_data?: SubscriptionData|null,
  * }
  */
 final class CheckoutSessionRequest implements BaseModel
@@ -40,9 +40,9 @@ final class CheckoutSessionRequest implements BaseModel
     /** @use SdkModel<CheckoutSessionRequestShape> */
     use SdkModel;
 
-    /** @var list<ProductCart> $productCart */
-    #[Api('product_cart', list: ProductCart::class)]
-    public array $productCart;
+    /** @var list<ProductCart> $product_cart */
+    #[Api(list: ProductCart::class)]
+    public array $product_cart;
 
     /**
      * Customers will never see payment methods that are not in this list.
@@ -52,34 +52,24 @@ final class CheckoutSessionRequest implements BaseModel
      * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
      * If all payment methods are unavailable, checkout session will fail.
      *
-     * @var list<value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
+     * @var list<value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      */
-    #[Api(
-        'allowed_payment_method_types',
-        list: PaymentMethodTypes::class,
-        nullable: true,
-        optional: true,
-    )]
-    public ?array $allowedPaymentMethodTypes;
+    #[Api(list: PaymentMethodTypes::class, nullable: true, optional: true)]
+    public ?array $allowed_payment_method_types;
 
     /**
      * Billing address information for the session.
      */
-    #[Api('billing_address', nullable: true, optional: true)]
-    public ?BillingAddress $billingAddress;
+    #[Api(nullable: true, optional: true)]
+    public ?BillingAddress $billing_address;
 
     /**
      * This field is ingored if adaptive pricing is disabled.
      *
-     * @var value-of<Currency>|null $billingCurrency
+     * @var value-of<Currency>|null $billing_currency
      */
-    #[Api(
-        'billing_currency',
-        enum: Currency::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?string $billingCurrency;
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    public ?string $billing_currency;
 
     /**
      * If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
@@ -99,22 +89,22 @@ final class CheckoutSessionRequest implements BaseModel
     #[Api(optional: true)]
     public ?Customization $customization;
 
-    #[Api('discount_code', nullable: true, optional: true)]
-    public ?string $discountCode;
+    #[Api(nullable: true, optional: true)]
+    public ?string $discount_code;
 
-    #[Api('feature_flags', optional: true)]
-    public ?FeatureFlags $featureFlags;
+    #[Api(optional: true)]
+    public ?FeatureFlags $feature_flags;
 
     /**
      * Override merchant default 3DS behaviour for this session.
      */
-    #[Api('force_3ds', nullable: true, optional: true)]
-    public ?bool $force3DS;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $force_3ds;
 
     /**
      * Additional metadata associated with the payment. Defaults to empty if not provided.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
@@ -122,24 +112,24 @@ final class CheckoutSessionRequest implements BaseModel
     /**
      * The url to redirect after payment failure or success.
      */
-    #[Api('return_url', nullable: true, optional: true)]
-    public ?string $returnURL;
+    #[Api(nullable: true, optional: true)]
+    public ?string $return_url;
 
     /**
      * Display saved payment methods of a returning customer False by default.
      */
-    #[Api('show_saved_payment_methods', optional: true)]
-    public ?bool $showSavedPaymentMethods;
+    #[Api(optional: true)]
+    public ?bool $show_saved_payment_methods;
 
-    #[Api('subscription_data', nullable: true, optional: true)]
-    public ?SubscriptionData $subscriptionData;
+    #[Api(nullable: true, optional: true)]
+    public ?SubscriptionData $subscription_data;
 
     /**
      * `new CheckoutSessionRequest()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CheckoutSessionRequest::with(productCart: ...)
+     * CheckoutSessionRequest::with(product_cart: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -158,44 +148,44 @@ final class CheckoutSessionRequest implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ProductCart> $productCart
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
-     * @param Currency|value-of<Currency>|null $billingCurrency
-     * @param array<string, string>|null $metadata
+     * @param list<ProductCart> $product_cart
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
+     * @param Currency|value-of<Currency>|null $billing_currency
+     * @param array<string,string>|null $metadata
      */
     public static function with(
-        array $productCart,
-        ?array $allowedPaymentMethodTypes = null,
-        ?BillingAddress $billingAddress = null,
-        Currency|string|null $billingCurrency = null,
+        array $product_cart,
+        ?array $allowed_payment_method_types = null,
+        ?BillingAddress $billing_address = null,
+        Currency|string|null $billing_currency = null,
         ?bool $confirm = null,
         AttachExistingCustomer|NewCustomer|null $customer = null,
         ?Customization $customization = null,
-        ?string $discountCode = null,
-        ?FeatureFlags $featureFlags = null,
-        ?bool $force3DS = null,
+        ?string $discount_code = null,
+        ?FeatureFlags $feature_flags = null,
+        ?bool $force_3ds = null,
         ?array $metadata = null,
-        ?string $returnURL = null,
-        ?bool $showSavedPaymentMethods = null,
-        ?SubscriptionData $subscriptionData = null,
+        ?string $return_url = null,
+        ?bool $show_saved_payment_methods = null,
+        ?SubscriptionData $subscription_data = null,
     ): self {
         $obj = new self;
 
-        $obj->productCart = $productCart;
+        $obj->product_cart = $product_cart;
 
-        null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
-        null !== $billingAddress && $obj->billingAddress = $billingAddress;
-        null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
+        null !== $allowed_payment_method_types && $obj['allowed_payment_method_types'] = $allowed_payment_method_types;
+        null !== $billing_address && $obj->billing_address = $billing_address;
+        null !== $billing_currency && $obj['billing_currency'] = $billing_currency;
         null !== $confirm && $obj->confirm = $confirm;
         null !== $customer && $obj->customer = $customer;
         null !== $customization && $obj->customization = $customization;
-        null !== $discountCode && $obj->discountCode = $discountCode;
-        null !== $featureFlags && $obj->featureFlags = $featureFlags;
-        null !== $force3DS && $obj->force3DS = $force3DS;
+        null !== $discount_code && $obj->discount_code = $discount_code;
+        null !== $feature_flags && $obj->feature_flags = $feature_flags;
+        null !== $force_3ds && $obj->force_3ds = $force_3ds;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $returnURL && $obj->returnURL = $returnURL;
-        null !== $showSavedPaymentMethods && $obj->showSavedPaymentMethods = $showSavedPaymentMethods;
-        null !== $subscriptionData && $obj->subscriptionData = $subscriptionData;
+        null !== $return_url && $obj->return_url = $return_url;
+        null !== $show_saved_payment_methods && $obj->show_saved_payment_methods = $show_saved_payment_methods;
+        null !== $subscription_data && $obj->subscription_data = $subscription_data;
 
         return $obj;
     }
@@ -206,7 +196,7 @@ final class CheckoutSessionRequest implements BaseModel
     public function withProductCart(array $productCart): self
     {
         $obj = clone $this;
-        $obj->productCart = $productCart;
+        $obj->product_cart = $productCart;
 
         return $obj;
     }
@@ -225,7 +215,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?array $allowedPaymentMethodTypes
     ): self {
         $obj = clone $this;
-        $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        $obj['allowed_payment_method_types'] = $allowedPaymentMethodTypes;
 
         return $obj;
     }
@@ -236,7 +226,7 @@ final class CheckoutSessionRequest implements BaseModel
     public function withBillingAddress(?BillingAddress $billingAddress): self
     {
         $obj = clone $this;
-        $obj->billingAddress = $billingAddress;
+        $obj->billing_address = $billingAddress;
 
         return $obj;
     }
@@ -250,7 +240,7 @@ final class CheckoutSessionRequest implements BaseModel
         Currency|string|null $billingCurrency
     ): self {
         $obj = clone $this;
-        $obj['billingCurrency'] = $billingCurrency;
+        $obj['billing_currency'] = $billingCurrency;
 
         return $obj;
     }
@@ -292,7 +282,7 @@ final class CheckoutSessionRequest implements BaseModel
     public function withDiscountCode(?string $discountCode): self
     {
         $obj = clone $this;
-        $obj->discountCode = $discountCode;
+        $obj->discount_code = $discountCode;
 
         return $obj;
     }
@@ -300,7 +290,7 @@ final class CheckoutSessionRequest implements BaseModel
     public function withFeatureFlags(FeatureFlags $featureFlags): self
     {
         $obj = clone $this;
-        $obj->featureFlags = $featureFlags;
+        $obj->feature_flags = $featureFlags;
 
         return $obj;
     }
@@ -311,7 +301,7 @@ final class CheckoutSessionRequest implements BaseModel
     public function withForce3DS(?bool $force3DS): self
     {
         $obj = clone $this;
-        $obj->force3DS = $force3DS;
+        $obj->force_3ds = $force3DS;
 
         return $obj;
     }
@@ -319,7 +309,7 @@ final class CheckoutSessionRequest implements BaseModel
     /**
      * Additional metadata associated with the payment. Defaults to empty if not provided.
      *
-     * @param array<string, string>|null $metadata
+     * @param array<string,string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {
@@ -335,7 +325,7 @@ final class CheckoutSessionRequest implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj->returnURL = $returnURL;
+        $obj->return_url = $returnURL;
 
         return $obj;
     }
@@ -347,7 +337,7 @@ final class CheckoutSessionRequest implements BaseModel
         bool $showSavedPaymentMethods
     ): self {
         $obj = clone $this;
-        $obj->showSavedPaymentMethods = $showSavedPaymentMethods;
+        $obj->show_saved_payment_methods = $showSavedPaymentMethods;
 
         return $obj;
     }
@@ -356,7 +346,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?SubscriptionData $subscriptionData
     ): self {
         $obj = clone $this;
-        $obj->subscriptionData = $subscriptionData;
+        $obj->subscription_data = $subscriptionData;
 
         return $obj;
     }

@@ -37,7 +37,7 @@ final class LicenseKeysTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->licenseKeys->update('lic_123');
+        $result = $this->client->licenseKeys->update('lic_123', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -49,7 +49,7 @@ final class LicenseKeysTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->licenseKeys->list();
+        $result = $this->client->licenseKeys->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -15,13 +15,13 @@ use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
  * @see Dodopayments\Disputes->list
  *
  * @phpstan-type DisputeListParamsShape = array{
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   disputeStage?: DisputeStage|value-of<DisputeStage>,
- *   disputeStatus?: DisputeStatus|value-of<DisputeStatus>,
- *   pageNumber?: int,
- *   pageSize?: int,
+ *   created_at_gte?: \DateTimeInterface,
+ *   created_at_lte?: \DateTimeInterface,
+ *   customer_id?: string,
+ *   dispute_stage?: DisputeStage|value-of<DisputeStage>,
+ *   dispute_status?: DisputeStatus|value-of<DisputeStatus>,
+ *   page_number?: int,
+ *   page_size?: int,
  * }
  */
 final class DisputeListParams implements BaseModel
@@ -34,47 +34,47 @@ final class DisputeListParams implements BaseModel
      * Get events after this created time.
      */
     #[Api(optional: true)]
-    public ?\DateTimeInterface $createdAtGte;
+    public ?\DateTimeInterface $created_at_gte;
 
     /**
      * Get events created before this time.
      */
     #[Api(optional: true)]
-    public ?\DateTimeInterface $createdAtLte;
+    public ?\DateTimeInterface $created_at_lte;
 
     /**
      * Filter by customer_id.
      */
     #[Api(optional: true)]
-    public ?string $customerID;
+    public ?string $customer_id;
 
     /**
      * Filter by dispute stage.
      *
-     * @var value-of<DisputeStage>|null $disputeStage
+     * @var value-of<DisputeStage>|null $dispute_stage
      */
     #[Api(enum: DisputeStage::class, optional: true)]
-    public ?string $disputeStage;
+    public ?string $dispute_stage;
 
     /**
      * Filter by dispute status.
      *
-     * @var value-of<DisputeStatus>|null $disputeStatus
+     * @var value-of<DisputeStatus>|null $dispute_status
      */
     #[Api(enum: DisputeStatus::class, optional: true)]
-    public ?string $disputeStatus;
+    public ?string $dispute_status;
 
     /**
      * Page number default is 0.
      */
     #[Api(optional: true)]
-    public ?int $pageNumber;
+    public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     public function __construct()
     {
@@ -86,27 +86,27 @@ final class DisputeListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DisputeStage|value-of<DisputeStage> $disputeStage
-     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
+     * @param DisputeStage|value-of<DisputeStage> $dispute_stage
+     * @param DisputeStatus|value-of<DisputeStatus> $dispute_status
      */
     public static function with(
-        ?\DateTimeInterface $createdAtGte = null,
-        ?\DateTimeInterface $createdAtLte = null,
-        ?string $customerID = null,
-        DisputeStage|string|null $disputeStage = null,
-        DisputeStatus|string|null $disputeStatus = null,
-        ?int $pageNumber = null,
-        ?int $pageSize = null,
+        ?\DateTimeInterface $created_at_gte = null,
+        ?\DateTimeInterface $created_at_lte = null,
+        ?string $customer_id = null,
+        DisputeStage|string|null $dispute_stage = null,
+        DisputeStatus|string|null $dispute_status = null,
+        ?int $page_number = null,
+        ?int $page_size = null,
     ): self {
         $obj = new self;
 
-        null !== $createdAtGte && $obj->createdAtGte = $createdAtGte;
-        null !== $createdAtLte && $obj->createdAtLte = $createdAtLte;
-        null !== $customerID && $obj->customerID = $customerID;
-        null !== $disputeStage && $obj['disputeStage'] = $disputeStage;
-        null !== $disputeStatus && $obj['disputeStatus'] = $disputeStatus;
-        null !== $pageNumber && $obj->pageNumber = $pageNumber;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $created_at_gte && $obj->created_at_gte = $created_at_gte;
+        null !== $created_at_lte && $obj->created_at_lte = $created_at_lte;
+        null !== $customer_id && $obj->customer_id = $customer_id;
+        null !== $dispute_stage && $obj['dispute_stage'] = $dispute_stage;
+        null !== $dispute_status && $obj['dispute_status'] = $dispute_status;
+        null !== $page_number && $obj->page_number = $page_number;
+        null !== $page_size && $obj->page_size = $page_size;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class DisputeListParams implements BaseModel
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
         $obj = clone $this;
-        $obj->createdAtGte = $createdAtGte;
+        $obj->created_at_gte = $createdAtGte;
 
         return $obj;
     }
@@ -128,7 +128,7 @@ final class DisputeListParams implements BaseModel
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
         $obj = clone $this;
-        $obj->createdAtLte = $createdAtLte;
+        $obj->created_at_lte = $createdAtLte;
 
         return $obj;
     }
@@ -139,7 +139,7 @@ final class DisputeListParams implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -152,7 +152,7 @@ final class DisputeListParams implements BaseModel
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj['disputeStage'] = $disputeStage;
+        $obj['dispute_stage'] = $disputeStage;
 
         return $obj;
     }
@@ -165,7 +165,7 @@ final class DisputeListParams implements BaseModel
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj['disputeStatus'] = $disputeStatus;
+        $obj['dispute_status'] = $disputeStatus;
 
         return $obj;
     }
@@ -176,7 +176,7 @@ final class DisputeListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->pageNumber = $pageNumber;
+        $obj->page_number = $pageNumber;
 
         return $obj;
     }
@@ -187,7 +187,7 @@ final class DisputeListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }
