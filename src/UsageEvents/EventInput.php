@@ -11,10 +11,10 @@ use Dodopayments\UsageEvents\EventInput\Metadata;
 
 /**
  * @phpstan-type EventInputShape = array{
- *   customerID: string,
- *   eventID: string,
- *   eventName: string,
- *   metadata?: array<string, string|float|bool>|null,
+ *   customer_id: string,
+ *   event_id: string,
+ *   event_name: string,
+ *   metadata?: array<string,string|float|bool>|null,
  *   timestamp?: \DateTimeInterface|null,
  * }
  */
@@ -26,25 +26,25 @@ final class EventInput implements BaseModel
     /**
      * customer_id of the customer whose usage needs to be tracked.
      */
-    #[Api('customer_id')]
-    public string $customerID;
+    #[Api]
+    public string $customer_id;
 
     /**
      * Event Id acts as an idempotency key. Any subsequent requests with the same event_id will be ignored.
      */
-    #[Api('event_id')]
-    public string $eventID;
+    #[Api]
+    public string $event_id;
 
     /**
      * Name of the event.
      */
-    #[Api('event_name')]
-    public string $eventName;
+    #[Api]
+    public string $event_name;
 
     /**
      * Custom metadata. Only key value pairs are accepted, objects or arrays submitted will be rejected.
      *
-     * @var array<string, string|float|bool>|null $metadata
+     * @var array<string,string|float|bool>|null $metadata
      */
     #[Api(map: Metadata::class, nullable: true, optional: true)]
     public ?array $metadata;
@@ -61,7 +61,7 @@ final class EventInput implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * EventInput::with(customerID: ..., eventID: ..., eventName: ...)
+     * EventInput::with(customer_id: ..., event_id: ..., event_name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -80,20 +80,20 @@ final class EventInput implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string|float|bool>|null $metadata
+     * @param array<string,string|float|bool>|null $metadata
      */
     public static function with(
-        string $customerID,
-        string $eventID,
-        string $eventName,
+        string $customer_id,
+        string $event_id,
+        string $event_name,
         ?array $metadata = null,
         ?\DateTimeInterface $timestamp = null,
     ): self {
         $obj = new self;
 
-        $obj->customerID = $customerID;
-        $obj->eventID = $eventID;
-        $obj->eventName = $eventName;
+        $obj->customer_id = $customer_id;
+        $obj->event_id = $event_id;
+        $obj->event_name = $event_name;
 
         null !== $metadata && $obj->metadata = $metadata;
         null !== $timestamp && $obj->timestamp = $timestamp;
@@ -107,7 +107,7 @@ final class EventInput implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -118,7 +118,7 @@ final class EventInput implements BaseModel
     public function withEventID(string $eventID): self
     {
         $obj = clone $this;
-        $obj->eventID = $eventID;
+        $obj->event_id = $eventID;
 
         return $obj;
     }
@@ -129,7 +129,7 @@ final class EventInput implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->eventName = $eventName;
+        $obj->event_name = $eventName;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class EventInput implements BaseModel
     /**
      * Custom metadata. Only key value pairs are accepted, objects or arrays submitted will be rejected.
      *
-     * @param array<string, string|float|bool>|null $metadata
+     * @param array<string,string|float|bool>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

@@ -6,91 +6,31 @@ namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\NewCustomer;
-use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
-use Dodopayments\Subscriptions\AttachAddon;
-use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
-use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
-use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
+use Dodopayments\Subscriptions\SubscriptionCreateParams;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
-use Dodopayments\Subscriptions\SubscriptionListParams\Status;
+use Dodopayments\Subscriptions\SubscriptionListParams;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
-use Dodopayments\Subscriptions\SubscriptionStatus;
-use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
-
-use const Dodopayments\Core\OMIT as omit;
+use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 
 interface SubscriptionsContract
 {
     /**
      * @api
      *
-     * @param BillingAddress $billing Billing address information for the subscription
-     * @param AttachExistingCustomer|NewCustomer $customer Customer details for the subscription
-     * @param string $productID Unique identifier of the product to subscribe to
-     * @param int $quantity Number of units to subscribe for. Must be at least 1.
-     * @param list<AttachAddon>|null $addons Attach addons to this subscription
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
-     *
-     * Customers will **never** see payment methods that are **not** in this list.
-     * However, adding a method here **does not guarantee** customers will see it.
-     * Availability still depends on other factors (e.g., customer location, merchant settings).
-     * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
-     * If Dodo Payments cannot support that currency for this transaction, it will not proceed
-     * @param string|null $discountCode Discount Code to apply to the subscription
-     * @param bool|null $force3DS Override merchant default 3DS behaviour for this subscription
-     * @param array<string, string> $metadata Additional metadata for the subscription
-     * Defaults to empty if not specified
-     * @param OnDemandSubscription|null $onDemand
-     * @param bool|null $paymentLink If true, generates a payment link.
-     * Defaults to false if not specified.
-     * @param string|null $returnURL Optional URL to redirect after successful subscription creation
-     * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
-     * False by default
-     * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
-     * @param int|null $trialPeriodDays Optional trial period in days
-     * If specified, this value overrides the trial period set in the product's price
-     * Must be between 0 and 10000 days
+     * @param array<mixed>|SubscriptionCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $billing,
-        $customer,
-        $productID,
-        $quantity,
-        $addons = omit,
-        $allowedPaymentMethodTypes = omit,
-        $billingCurrency = omit,
-        $discountCode = omit,
-        $force3DS = omit,
-        $metadata = omit,
-        $onDemand = omit,
-        $paymentLink = omit,
-        $returnURL = omit,
-        $showSavedPaymentMethods = omit,
-        $taxID = omit,
-        $trialPeriodDays = omit,
+        array|SubscriptionCreateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): SubscriptionNewResponse;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): SubscriptionNewResponse;
 
     /**
@@ -106,164 +46,60 @@ interface SubscriptionsContract
     /**
      * @api
      *
-     * @param BillingAddress|null $billing
-     * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
-     * @param string|null $customerName
-     * @param DisableOnDemand|null $disableOnDemand
-     * @param array<string, string>|null $metadata
-     * @param \DateTimeInterface|null $nextBillingDate
-     * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
-     * @param string|null $taxID
+     * @param array<mixed>|SubscriptionUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $subscriptionID,
-        $billing = omit,
-        $cancelAtNextBillingDate = omit,
-        $customerName = omit,
-        $disableOnDemand = omit,
-        $metadata = omit,
-        $nextBillingDate = omit,
-        $status = omit,
-        $taxID = omit,
+        array|SubscriptionUpdateParams $params,
         ?RequestOptions $requestOptions = null,
     ): Subscription;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $subscriptionID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
-    ): Subscription;
-
-    /**
-     * @api
-     *
-     * @param string $brandID filter by Brand id
-     * @param \DateTimeInterface $createdAtGte Get events after this created time
-     * @param \DateTimeInterface $createdAtLte Get events created before this time
-     * @param string $customerID Filter by customer id
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
-     * @param Status|value-of<Status> $status Filter by status
+     * @param array<mixed>|SubscriptionListParams $params
      *
      * @return DefaultPageNumberPagination<SubscriptionListResponse>
      *
      * @throws APIException
      */
     public function list(
-        $brandID = omit,
-        $createdAtGte = omit,
-        $createdAtLte = omit,
-        $customerID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        $status = omit,
+        array|SubscriptionListParams $params,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<SubscriptionListResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): DefaultPageNumberPagination;
-
-    /**
-     * @api
-     *
-     * @param string $productID Unique identifier of the product to subscribe to
-     * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode Proration Billing Mode
-     * @param int $quantity Number of units to subscribe for. Must be at least 1.
-     * @param list<AttachAddon>|null $addons Addons for the new plan.
-     * Note : Leaving this empty would remove any existing addons
+     * @param array<mixed>|SubscriptionChangePlanParams $params
      *
      * @throws APIException
      */
     public function changePlan(
         string $subscriptionID,
-        $productID,
-        $prorationBillingMode,
-        $quantity,
-        $addons = omit,
+        array|SubscriptionChangePlanParams $params,
         ?RequestOptions $requestOptions = null,
     ): mixed;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function changePlanRaw(
-        string $subscriptionID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @param int $productPrice The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).
-     * For example, to charge $1.00, pass `100`.
-     * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
-     * This field is ignored if adaptive pricing is not enabled for the business.
-     * @param CustomerBalanceConfig|null $customerBalanceConfig Specify how customer balance is used for the payment
-     * @param array<string,
-     * string,>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
-     * @param Currency|value-of<Currency>|null $productCurrency Optional currency of the product price. If not specified, defaults to the currency of the product.
-     * @param string|null $productDescription Optional product description override for billing and line items.
-     * If not specified, the stored description of the product will be used.
+     * @param array<mixed>|SubscriptionChargeParams $params
      *
      * @throws APIException
      */
     public function charge(
         string $subscriptionID,
-        $productPrice,
-        $adaptiveCurrencyFeesInclusive = omit,
-        $customerBalanceConfig = omit,
-        $metadata = omit,
-        $productCurrency = omit,
-        $productDescription = omit,
+        array|SubscriptionChargeParams $params,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function chargeRaw(
-        string $subscriptionID,
-        array $params,
-        ?RequestOptions $requestOptions = null,
-    ): SubscriptionChargeResponse;
-
-    /**
-     * @api
-     *
-     * @param \DateTimeInterface|null $endDate Filter by end date (inclusive)
-     * @param string|null $meterID Filter by specific meter ID
-     * @param int|null $pageNumber Page number (default: 0)
-     * @param int|null $pageSize Page size (default: 10, max: 100)
-     * @param \DateTimeInterface|null $startDate Filter by start date (inclusive)
+     * @param array<mixed>|SubscriptionRetrieveUsageHistoryParams $params
      *
      * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
      *
@@ -271,26 +107,7 @@ interface SubscriptionsContract
      */
     public function retrieveUsageHistory(
         string $subscriptionID,
-        $endDate = omit,
-        $meterID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        $startDate = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
-     *
-     * @throws APIException
-     */
-    public function retrieveUsageHistoryRaw(
-        string $subscriptionID,
-        array $params,
+        array|SubscriptionRetrieveUsageHistoryParams $params,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 }

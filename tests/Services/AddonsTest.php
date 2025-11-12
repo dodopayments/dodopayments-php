@@ -3,8 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Misc\TaxCategory;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -31,12 +29,12 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->addons->create(
-            currency: Currency::AED,
-            name: 'name',
-            price: 0,
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
-        );
+        $result = $this->client->addons->create([
+            'currency' => 'AED',
+            'name' => 'name',
+            'price' => 0,
+            'tax_category' => 'digital_products',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -44,12 +42,12 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->addons->create(
-            currency: Currency::AED,
-            name: 'name',
-            price: 0,
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
-        );
+        $result = $this->client->addons->create([
+            'currency' => 'AED',
+            'name' => 'name',
+            'price' => 0,
+            'tax_category' => 'digital_products',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -65,7 +63,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->addons->update('id');
+        $result = $this->client->addons->update('id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -77,7 +75,7 @@ final class AddonsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->addons->list();
+        $result = $this->client->addons->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

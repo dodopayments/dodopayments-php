@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type AddonUpdateImagesResponseShape = array{
- *   imageID: string, url: string
+ *   image_id: string, url: string
  * }
  */
 final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
@@ -22,8 +22,8 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('image_id')]
-    public string $imageID;
+    #[Api]
+    public string $image_id;
 
     #[Api]
     public string $url;
@@ -33,7 +33,7 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
      *
      * To enforce required parameters use
      * ```
-     * AddonUpdateImagesResponse::with(imageID: ..., url: ...)
+     * AddonUpdateImagesResponse::with(image_id: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,11 +52,11 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $imageID, string $url): self
+    public static function with(string $image_id, string $url): self
     {
         $obj = new self;
 
-        $obj->imageID = $imageID;
+        $obj->image_id = $image_id;
         $obj->url = $url;
 
         return $obj;
@@ -65,7 +65,7 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
     public function withImageID(string $imageID): self
     {
         $obj = clone $this;
-        $obj->imageID = $imageID;
+        $obj->image_id = $imageID;
 
         return $obj;
     }

@@ -17,23 +17,23 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
 
 /**
  * @phpstan-type ProductShape = array{
- *   brandID: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   isRecurring: bool,
- *   licenseKeyEnabled: bool,
- *   metadata: array<string, string>,
+ *   brand_id: string,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   is_recurring: bool,
+ *   license_key_enabled: bool,
+ *   metadata: array<string,string>,
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   productID: string,
- *   taxCategory: value-of<TaxCategory>,
- *   updatedAt: \DateTimeInterface,
+ *   product_id: string,
+ *   tax_category: value-of<TaxCategory>,
+ *   updated_at: \DateTimeInterface,
  *   addons?: list<string>|null,
  *   description?: string|null,
- *   digitalProductDelivery?: DigitalProductDelivery|null,
+ *   digital_product_delivery?: DigitalProductDelivery|null,
  *   image?: string|null,
- *   licenseKeyActivationMessage?: string|null,
- *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDuration|null,
+ *   license_key_activation_message?: string|null,
+ *   license_key_activations_limit?: int|null,
+ *   license_key_duration?: LicenseKeyDuration|null,
  *   name?: string|null,
  * }
  */
@@ -44,37 +44,37 @@ final class Product implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('brand_id')]
-    public string $brandID;
+    #[Api]
+    public string $brand_id;
 
     /**
      * Unique identifier for the business to which the product belongs.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * Timestamp when the product was created.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
-    #[Api('is_recurring')]
-    public bool $isRecurring;
+    #[Api]
+    public bool $is_recurring;
 
     /**
      * Indicates whether the product requires a license key.
      */
-    #[Api('license_key_enabled')]
-    public bool $licenseKeyEnabled;
+    #[Api]
+    public bool $license_key_enabled;
 
     /**
      * Additional custom data associated with the product.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -88,22 +88,22 @@ final class Product implements BaseModel, ResponseConverter
     /**
      * Unique identifier for the product.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     /**
      * Tax category associated with the product.
      *
-     * @var value-of<TaxCategory> $taxCategory
+     * @var value-of<TaxCategory> $tax_category
      */
-    #[Api('tax_category', enum: TaxCategory::class)]
-    public string $taxCategory;
+    #[Api(enum: TaxCategory::class)]
+    public string $tax_category;
 
     /**
      * Timestamp when the product was last updated.
      */
-    #[Api('updated_at')]
-    public \DateTimeInterface $updatedAt;
+    #[Api]
+    public \DateTimeInterface $updated_at;
 
     /**
      * Available Addons for subscription products.
@@ -119,8 +119,8 @@ final class Product implements BaseModel, ResponseConverter
     #[Api(nullable: true, optional: true)]
     public ?string $description;
 
-    #[Api('digital_product_delivery', nullable: true, optional: true)]
-    public ?DigitalProductDelivery $digitalProductDelivery;
+    #[Api(nullable: true, optional: true)]
+    public ?DigitalProductDelivery $digital_product_delivery;
 
     /**
      * URL of the product image, optional.
@@ -131,20 +131,20 @@ final class Product implements BaseModel, ResponseConverter
     /**
      * Message sent upon license key activation, if applicable.
      */
-    #[Api('license_key_activation_message', nullable: true, optional: true)]
-    public ?string $licenseKeyActivationMessage;
+    #[Api(nullable: true, optional: true)]
+    public ?string $license_key_activation_message;
 
     /**
      * Limit on the number of activations for the license key, if enabled.
      */
-    #[Api('license_key_activations_limit', nullable: true, optional: true)]
-    public ?int $licenseKeyActivationsLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $license_key_activations_limit;
 
     /**
      * Duration of the license key validity, if enabled.
      */
-    #[Api('license_key_duration', nullable: true, optional: true)]
-    public ?LicenseKeyDuration $licenseKeyDuration;
+    #[Api(nullable: true, optional: true)]
+    public ?LicenseKeyDuration $license_key_duration;
 
     /**
      * Name of the product, optional.
@@ -158,16 +158,16 @@ final class Product implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * Product::with(
-     *   brandID: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
-     *   isRecurring: ...,
-     *   licenseKeyEnabled: ...,
+     *   brand_id: ...,
+     *   business_id: ...,
+     *   created_at: ...,
+     *   is_recurring: ...,
+     *   license_key_enabled: ...,
      *   metadata: ...,
      *   price: ...,
-     *   productID: ...,
-     *   taxCategory: ...,
-     *   updatedAt: ...,
+     *   product_id: ...,
+     *   tax_category: ...,
+     *   updated_at: ...,
      * )
      * ```
      *
@@ -197,50 +197,50 @@ final class Product implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $metadata
-     * @param TaxCategory|value-of<TaxCategory> $taxCategory
+     * @param array<string,string> $metadata
+     * @param TaxCategory|value-of<TaxCategory> $tax_category
      * @param list<string>|null $addons
      */
     public static function with(
-        string $brandID,
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        bool $isRecurring,
-        bool $licenseKeyEnabled,
+        string $brand_id,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        bool $is_recurring,
+        bool $license_key_enabled,
         array $metadata,
         OneTimePrice|RecurringPrice|UsageBasedPrice $price,
-        string $productID,
-        TaxCategory|string $taxCategory,
-        \DateTimeInterface $updatedAt,
+        string $product_id,
+        TaxCategory|string $tax_category,
+        \DateTimeInterface $updated_at,
         ?array $addons = null,
         ?string $description = null,
-        ?DigitalProductDelivery $digitalProductDelivery = null,
+        ?DigitalProductDelivery $digital_product_delivery = null,
         ?string $image = null,
-        ?string $licenseKeyActivationMessage = null,
-        ?int $licenseKeyActivationsLimit = null,
-        ?LicenseKeyDuration $licenseKeyDuration = null,
+        ?string $license_key_activation_message = null,
+        ?int $license_key_activations_limit = null,
+        ?LicenseKeyDuration $license_key_duration = null,
         ?string $name = null,
     ): self {
         $obj = new self;
 
-        $obj->brandID = $brandID;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->isRecurring = $isRecurring;
-        $obj->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj->brand_id = $brand_id;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->is_recurring = $is_recurring;
+        $obj->license_key_enabled = $license_key_enabled;
         $obj->metadata = $metadata;
         $obj->price = $price;
-        $obj->productID = $productID;
-        $obj['taxCategory'] = $taxCategory;
-        $obj->updatedAt = $updatedAt;
+        $obj->product_id = $product_id;
+        $obj['tax_category'] = $tax_category;
+        $obj->updated_at = $updated_at;
 
         null !== $addons && $obj->addons = $addons;
         null !== $description && $obj->description = $description;
-        null !== $digitalProductDelivery && $obj->digitalProductDelivery = $digitalProductDelivery;
+        null !== $digital_product_delivery && $obj->digital_product_delivery = $digital_product_delivery;
         null !== $image && $obj->image = $image;
-        null !== $licenseKeyActivationMessage && $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
-        null !== $licenseKeyActivationsLimit && $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
-        null !== $licenseKeyDuration && $obj->licenseKeyDuration = $licenseKeyDuration;
+        null !== $license_key_activation_message && $obj->license_key_activation_message = $license_key_activation_message;
+        null !== $license_key_activations_limit && $obj->license_key_activations_limit = $license_key_activations_limit;
+        null !== $license_key_duration && $obj->license_key_duration = $license_key_duration;
         null !== $name && $obj->name = $name;
 
         return $obj;
@@ -249,7 +249,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brandID = $brandID;
+        $obj->brand_id = $brandID;
 
         return $obj;
     }
@@ -260,7 +260,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -271,7 +271,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -282,7 +282,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withIsRecurring(bool $isRecurring): self
     {
         $obj = clone $this;
-        $obj->isRecurring = $isRecurring;
+        $obj->is_recurring = $isRecurring;
 
         return $obj;
     }
@@ -293,7 +293,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withLicenseKeyEnabled(bool $licenseKeyEnabled): self
     {
         $obj = clone $this;
-        $obj->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj->license_key_enabled = $licenseKeyEnabled;
 
         return $obj;
     }
@@ -301,7 +301,7 @@ final class Product implements BaseModel, ResponseConverter
     /**
      * Additional custom data associated with the product.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -329,7 +329,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }
@@ -342,7 +342,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $taxCategory;
 
         return $obj;
     }
@@ -353,7 +353,7 @@ final class Product implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }
@@ -386,7 +386,7 @@ final class Product implements BaseModel, ResponseConverter
         ?DigitalProductDelivery $digitalProductDelivery
     ): self {
         $obj = clone $this;
-        $obj->digitalProductDelivery = $digitalProductDelivery;
+        $obj->digital_product_delivery = $digitalProductDelivery;
 
         return $obj;
     }
@@ -409,7 +409,7 @@ final class Product implements BaseModel, ResponseConverter
         ?string $licenseKeyActivationMessage
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
+        $obj->license_key_activation_message = $licenseKeyActivationMessage;
 
         return $obj;
     }
@@ -421,7 +421,7 @@ final class Product implements BaseModel, ResponseConverter
         ?int $licenseKeyActivationsLimit
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
+        $obj->license_key_activations_limit = $licenseKeyActivationsLimit;
 
         return $obj;
     }
@@ -433,7 +433,7 @@ final class Product implements BaseModel, ResponseConverter
         ?LicenseKeyDuration $licenseKeyDuration
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyDuration = $licenseKeyDuration;
+        $obj->license_key_duration = $licenseKeyDuration;
 
         return $obj;
     }

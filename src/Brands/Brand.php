@@ -13,17 +13,17 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BrandShape = array{
- *   brandID: string,
- *   businessID: string,
+ *   brand_id: string,
+ *   business_id: string,
  *   enabled: bool,
- *   statementDescriptor: string,
- *   verificationEnabled: bool,
- *   verificationStatus: value-of<VerificationStatus>,
+ *   statement_descriptor: string,
+ *   verification_enabled: bool,
+ *   verification_status: value-of<VerificationStatus>,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
- *   reasonForHold?: string|null,
- *   supportEmail?: string|null,
+ *   reason_for_hold?: string|null,
+ *   support_email?: string|null,
  *   url?: string|null,
  * }
  */
@@ -34,24 +34,24 @@ final class Brand implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('brand_id')]
-    public string $brandID;
+    #[Api]
+    public string $brand_id;
 
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     #[Api]
     public bool $enabled;
 
-    #[Api('statement_descriptor')]
-    public string $statementDescriptor;
+    #[Api]
+    public string $statement_descriptor;
 
-    #[Api('verification_enabled')]
-    public bool $verificationEnabled;
+    #[Api]
+    public bool $verification_enabled;
 
-    /** @var value-of<VerificationStatus> $verificationStatus */
-    #[Api('verification_status', enum: VerificationStatus::class)]
-    public string $verificationStatus;
+    /** @var value-of<VerificationStatus> $verification_status */
+    #[Api(enum: VerificationStatus::class)]
+    public string $verification_status;
 
     #[Api(nullable: true, optional: true)]
     public ?string $description;
@@ -65,11 +65,11 @@ final class Brand implements BaseModel, ResponseConverter
     /**
      * Incase the brand verification fails or is put on hold.
      */
-    #[Api('reason_for_hold', nullable: true, optional: true)]
-    public ?string $reasonForHold;
+    #[Api(nullable: true, optional: true)]
+    public ?string $reason_for_hold;
 
-    #[Api('support_email', nullable: true, optional: true)]
-    public ?string $supportEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $support_email;
 
     #[Api(nullable: true, optional: true)]
     public ?string $url;
@@ -80,12 +80,12 @@ final class Brand implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * Brand::with(
-     *   brandID: ...,
-     *   businessID: ...,
+     *   brand_id: ...,
+     *   business_id: ...,
      *   enabled: ...,
-     *   statementDescriptor: ...,
-     *   verificationEnabled: ...,
-     *   verificationStatus: ...,
+     *   statement_descriptor: ...,
+     *   verification_enabled: ...,
+     *   verification_status: ...,
      * )
      * ```
      *
@@ -111,36 +111,36 @@ final class Brand implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param VerificationStatus|value-of<VerificationStatus> $verificationStatus
+     * @param VerificationStatus|value-of<VerificationStatus> $verification_status
      */
     public static function with(
-        string $brandID,
-        string $businessID,
+        string $brand_id,
+        string $business_id,
         bool $enabled,
-        string $statementDescriptor,
-        bool $verificationEnabled,
-        VerificationStatus|string $verificationStatus,
+        string $statement_descriptor,
+        bool $verification_enabled,
+        VerificationStatus|string $verification_status,
         ?string $description = null,
         ?string $image = null,
         ?string $name = null,
-        ?string $reasonForHold = null,
-        ?string $supportEmail = null,
+        ?string $reason_for_hold = null,
+        ?string $support_email = null,
         ?string $url = null,
     ): self {
         $obj = new self;
 
-        $obj->brandID = $brandID;
-        $obj->businessID = $businessID;
+        $obj->brand_id = $brand_id;
+        $obj->business_id = $business_id;
         $obj->enabled = $enabled;
-        $obj->statementDescriptor = $statementDescriptor;
-        $obj->verificationEnabled = $verificationEnabled;
-        $obj['verificationStatus'] = $verificationStatus;
+        $obj->statement_descriptor = $statement_descriptor;
+        $obj->verification_enabled = $verification_enabled;
+        $obj['verification_status'] = $verification_status;
 
         null !== $description && $obj->description = $description;
         null !== $image && $obj->image = $image;
         null !== $name && $obj->name = $name;
-        null !== $reasonForHold && $obj->reasonForHold = $reasonForHold;
-        null !== $supportEmail && $obj->supportEmail = $supportEmail;
+        null !== $reason_for_hold && $obj->reason_for_hold = $reason_for_hold;
+        null !== $support_email && $obj->support_email = $support_email;
         null !== $url && $obj->url = $url;
 
         return $obj;
@@ -149,7 +149,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brandID = $brandID;
+        $obj->brand_id = $brandID;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -173,7 +173,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withStatementDescriptor(string $statementDescriptor): self
     {
         $obj = clone $this;
-        $obj->statementDescriptor = $statementDescriptor;
+        $obj->statement_descriptor = $statementDescriptor;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withVerificationEnabled(bool $verificationEnabled): self
     {
         $obj = clone $this;
-        $obj->verificationEnabled = $verificationEnabled;
+        $obj->verification_enabled = $verificationEnabled;
 
         return $obj;
     }
@@ -193,7 +193,7 @@ final class Brand implements BaseModel, ResponseConverter
         VerificationStatus|string $verificationStatus
     ): self {
         $obj = clone $this;
-        $obj['verificationStatus'] = $verificationStatus;
+        $obj['verification_status'] = $verificationStatus;
 
         return $obj;
     }
@@ -228,7 +228,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withReasonForHold(?string $reasonForHold): self
     {
         $obj = clone $this;
-        $obj->reasonForHold = $reasonForHold;
+        $obj->reason_for_hold = $reasonForHold;
 
         return $obj;
     }
@@ -236,7 +236,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withSupportEmail(?string $supportEmail): self
     {
         $obj = clone $this;
-        $obj->supportEmail = $supportEmail;
+        $obj->support_email = $supportEmail;
 
         return $obj;
     }

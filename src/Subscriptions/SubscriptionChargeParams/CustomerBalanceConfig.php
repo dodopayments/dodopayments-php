@@ -12,8 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  * Specify how customer balance is used for the payment.
  *
  * @phpstan-type CustomerBalanceConfigShape = array{
- *   allowCustomerCreditsPurchase?: bool|null,
- *   allowCustomerCreditsUsage?: bool|null,
+ *   allow_customer_credits_purchase?: bool|null,
+ *   allow_customer_credits_usage?: bool|null,
  * }
  */
 final class CustomerBalanceConfig implements BaseModel
@@ -24,14 +24,14 @@ final class CustomerBalanceConfig implements BaseModel
     /**
      * Allows Customer Credit to be purchased to settle payments.
      */
-    #[Api('allow_customer_credits_purchase', nullable: true, optional: true)]
-    public ?bool $allowCustomerCreditsPurchase;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $allow_customer_credits_purchase;
 
     /**
      * Allows Customer Credit Balance to be used to settle payments.
      */
-    #[Api('allow_customer_credits_usage', nullable: true, optional: true)]
-    public ?bool $allowCustomerCreditsUsage;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $allow_customer_credits_usage;
 
     public function __construct()
     {
@@ -44,13 +44,13 @@ final class CustomerBalanceConfig implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?bool $allowCustomerCreditsPurchase = null,
-        ?bool $allowCustomerCreditsUsage = null,
+        ?bool $allow_customer_credits_purchase = null,
+        ?bool $allow_customer_credits_usage = null,
     ): self {
         $obj = new self;
 
-        null !== $allowCustomerCreditsPurchase && $obj->allowCustomerCreditsPurchase = $allowCustomerCreditsPurchase;
-        null !== $allowCustomerCreditsUsage && $obj->allowCustomerCreditsUsage = $allowCustomerCreditsUsage;
+        null !== $allow_customer_credits_purchase && $obj->allow_customer_credits_purchase = $allow_customer_credits_purchase;
+        null !== $allow_customer_credits_usage && $obj->allow_customer_credits_usage = $allow_customer_credits_usage;
 
         return $obj;
     }
@@ -62,7 +62,7 @@ final class CustomerBalanceConfig implements BaseModel
         ?bool $allowCustomerCreditsPurchase
     ): self {
         $obj = clone $this;
-        $obj->allowCustomerCreditsPurchase = $allowCustomerCreditsPurchase;
+        $obj->allow_customer_credits_purchase = $allowCustomerCreditsPurchase;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class CustomerBalanceConfig implements BaseModel
         ?bool $allowCustomerCreditsUsage
     ): self {
         $obj = clone $this;
-        $obj->allowCustomerCreditsUsage = $allowCustomerCreditsUsage;
+        $obj->allow_customer_credits_usage = $allowCustomerCreditsUsage;
 
         return $obj;
     }

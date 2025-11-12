@@ -39,8 +39,8 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
      * @param array{
      *   method: string,
      *   path: string,
-     *   query: array<string, mixed>,
-     *   headers: array<string, string|list<string>|null>,
+     *   query: array<string,mixed>,
+     *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
      * } $request
      */
@@ -86,8 +86,8 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
      *   array{
      *     method: string,
      *     path: string,
-     *     query: array<string, mixed>,
-     *     headers: array<string, string|list<string>|null>,
+     *     query: array<string,mixed>,
+     *     headers: array<string,string|list<string>|null>,
      *     body: mixed,
      *   },
      *   RequestOptions,

@@ -18,7 +18,7 @@ use Dodopayments\Misc\TaxCategory;
  *   currency: Currency|value-of<Currency>,
  *   name: string,
  *   price: int,
- *   taxCategory: TaxCategory|value-of<TaxCategory>,
+ *   tax_category: TaxCategory|value-of<TaxCategory>,
  *   description?: string|null,
  * }
  */
@@ -51,10 +51,10 @@ final class AddonCreateParams implements BaseModel
     /**
      * Tax category applied to this Addon.
      *
-     * @var value-of<TaxCategory> $taxCategory
+     * @var value-of<TaxCategory> $tax_category
      */
-    #[Api('tax_category', enum: TaxCategory::class)]
-    public string $taxCategory;
+    #[Api(enum: TaxCategory::class)]
+    public string $tax_category;
 
     /**
      * Optional description of the Addon.
@@ -67,7 +67,7 @@ final class AddonCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * AddonCreateParams::with(currency: ..., name: ..., price: ..., taxCategory: ...)
+     * AddonCreateParams::with(currency: ..., name: ..., price: ..., tax_category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -91,13 +91,13 @@ final class AddonCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param TaxCategory|value-of<TaxCategory> $taxCategory
+     * @param TaxCategory|value-of<TaxCategory> $tax_category
      */
     public static function with(
         Currency|string $currency,
         string $name,
         int $price,
-        TaxCategory|string $taxCategory,
+        TaxCategory|string $tax_category,
         ?string $description = null,
     ): self {
         $obj = new self;
@@ -105,7 +105,7 @@ final class AddonCreateParams implements BaseModel
         $obj['currency'] = $currency;
         $obj->name = $name;
         $obj->price = $price;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $tax_category;
 
         null !== $description && $obj->description = $description;
 
@@ -155,7 +155,7 @@ final class AddonCreateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $taxCategory;
 
         return $obj;
     }

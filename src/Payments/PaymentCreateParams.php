@@ -16,16 +16,16 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress,
  *   customer: AttachExistingCustomer|NewCustomer,
- *   productCart: list<OneTimeProductCartItem>,
- *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
- *   billingCurrency?: null|Currency|value-of<Currency>,
- *   discountCode?: string|null,
- *   force3DS?: bool|null,
- *   metadata?: array<string, string>,
- *   paymentLink?: bool|null,
- *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool,
- *   taxID?: string|null,
+ *   product_cart: list<OneTimeProductCartItem>,
+ *   allowed_payment_method_types?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
+ *   billing_currency?: null|Currency|value-of<Currency>,
+ *   discount_code?: string|null,
+ *   force_3ds?: bool|null,
+ *   metadata?: array<string,string>,
+ *   payment_link?: bool|null,
+ *   return_url?: string|null,
+ *   show_saved_payment_methods?: bool,
+ *   tax_id?: string|null,
  * }
  */
 final class PaymentCreateParams implements BaseModel
@@ -49,10 +49,10 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @var list<OneTimeProductCartItem> $productCart
+     * @var list<OneTimeProductCartItem> $product_cart
      */
-    #[Api('product_cart', list: OneTimeProductCartItem::class)]
-    public array $productCart;
+    #[Api(list: OneTimeProductCartItem::class)]
+    public array $product_cart;
 
     /**
      * List of payment methods allowed during checkout.
@@ -61,47 +61,37 @@ final class PaymentCreateParams implements BaseModel
      * However, adding a method here **does not guarantee** customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
-     * @var list<value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
+     * @var list<value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      */
-    #[Api(
-        'allowed_payment_method_types',
-        list: PaymentMethodTypes::class,
-        nullable: true,
-        optional: true,
-    )]
-    public ?array $allowedPaymentMethodTypes;
+    #[Api(list: PaymentMethodTypes::class, nullable: true, optional: true)]
+    public ?array $allowed_payment_method_types;
 
     /**
      * Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed.
      *
-     * @var value-of<Currency>|null $billingCurrency
+     * @var value-of<Currency>|null $billing_currency
      */
-    #[Api(
-        'billing_currency',
-        enum: Currency::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?string $billingCurrency;
+    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    public ?string $billing_currency;
 
     /**
      * Discount Code to apply to the transaction.
      */
-    #[Api('discount_code', nullable: true, optional: true)]
-    public ?string $discountCode;
+    #[Api(nullable: true, optional: true)]
+    public ?string $discount_code;
 
     /**
      * Override merchant default 3DS behaviour for this payment.
      */
-    #[Api('force_3ds', nullable: true, optional: true)]
-    public ?bool $force3DS;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $force_3ds;
 
     /**
      * Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', optional: true)]
     public ?array $metadata;
@@ -109,35 +99,35 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Whether to generate a payment link. Defaults to false if not specified.
      */
-    #[Api('payment_link', nullable: true, optional: true)]
-    public ?bool $paymentLink;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $payment_link;
 
     /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
-    #[Api('return_url', nullable: true, optional: true)]
-    public ?string $returnURL;
+    #[Api(nullable: true, optional: true)]
+    public ?string $return_url;
 
     /**
      * Display saved payment methods of a returning customer
      * False by default.
      */
-    #[Api('show_saved_payment_methods', optional: true)]
-    public ?bool $showSavedPaymentMethods;
+    #[Api(optional: true)]
+    public ?bool $show_saved_payment_methods;
 
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    #[Api('tax_id', nullable: true, optional: true)]
-    public ?string $taxID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $tax_id;
 
     /**
      * `new PaymentCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * PaymentCreateParams::with(billing: ..., customer: ..., productCart: ...)
+     * PaymentCreateParams::with(billing: ..., customer: ..., product_cart: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -159,40 +149,40 @@ final class PaymentCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<OneTimeProductCartItem> $productCart
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
-     * @param Currency|value-of<Currency>|null $billingCurrency
-     * @param array<string, string> $metadata
+     * @param list<OneTimeProductCartItem> $product_cart
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
+     * @param Currency|value-of<Currency>|null $billing_currency
+     * @param array<string,string> $metadata
      */
     public static function with(
         BillingAddress $billing,
         AttachExistingCustomer|NewCustomer $customer,
-        array $productCart,
-        ?array $allowedPaymentMethodTypes = null,
-        Currency|string|null $billingCurrency = null,
-        ?string $discountCode = null,
-        ?bool $force3DS = null,
+        array $product_cart,
+        ?array $allowed_payment_method_types = null,
+        Currency|string|null $billing_currency = null,
+        ?string $discount_code = null,
+        ?bool $force_3ds = null,
         ?array $metadata = null,
-        ?bool $paymentLink = null,
-        ?string $returnURL = null,
-        ?bool $showSavedPaymentMethods = null,
-        ?string $taxID = null,
+        ?bool $payment_link = null,
+        ?string $return_url = null,
+        ?bool $show_saved_payment_methods = null,
+        ?string $tax_id = null,
     ): self {
         $obj = new self;
 
         $obj->billing = $billing;
         $obj->customer = $customer;
-        $obj->productCart = $productCart;
+        $obj->product_cart = $product_cart;
 
-        null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
-        null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
-        null !== $discountCode && $obj->discountCode = $discountCode;
-        null !== $force3DS && $obj->force3DS = $force3DS;
+        null !== $allowed_payment_method_types && $obj['allowed_payment_method_types'] = $allowed_payment_method_types;
+        null !== $billing_currency && $obj['billing_currency'] = $billing_currency;
+        null !== $discount_code && $obj->discount_code = $discount_code;
+        null !== $force_3ds && $obj->force_3ds = $force_3ds;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $paymentLink && $obj->paymentLink = $paymentLink;
-        null !== $returnURL && $obj->returnURL = $returnURL;
-        null !== $showSavedPaymentMethods && $obj->showSavedPaymentMethods = $showSavedPaymentMethods;
-        null !== $taxID && $obj->taxID = $taxID;
+        null !== $payment_link && $obj->payment_link = $payment_link;
+        null !== $return_url && $obj->return_url = $return_url;
+        null !== $show_saved_payment_methods && $obj->show_saved_payment_methods = $show_saved_payment_methods;
+        null !== $tax_id && $obj->tax_id = $tax_id;
 
         return $obj;
     }
@@ -228,7 +218,7 @@ final class PaymentCreateParams implements BaseModel
     public function withProductCart(array $productCart): self
     {
         $obj = clone $this;
-        $obj->productCart = $productCart;
+        $obj->product_cart = $productCart;
 
         return $obj;
     }
@@ -246,7 +236,7 @@ final class PaymentCreateParams implements BaseModel
         ?array $allowedPaymentMethodTypes
     ): self {
         $obj = clone $this;
-        $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        $obj['allowed_payment_method_types'] = $allowedPaymentMethodTypes;
 
         return $obj;
     }
@@ -261,7 +251,7 @@ final class PaymentCreateParams implements BaseModel
         Currency|string|null $billingCurrency
     ): self {
         $obj = clone $this;
-        $obj['billingCurrency'] = $billingCurrency;
+        $obj['billing_currency'] = $billingCurrency;
 
         return $obj;
     }
@@ -272,7 +262,7 @@ final class PaymentCreateParams implements BaseModel
     public function withDiscountCode(?string $discountCode): self
     {
         $obj = clone $this;
-        $obj->discountCode = $discountCode;
+        $obj->discount_code = $discountCode;
 
         return $obj;
     }
@@ -283,7 +273,7 @@ final class PaymentCreateParams implements BaseModel
     public function withForce3DS(?bool $force3DS): self
     {
         $obj = clone $this;
-        $obj->force3DS = $force3DS;
+        $obj->force_3ds = $force3DS;
 
         return $obj;
     }
@@ -292,7 +282,7 @@ final class PaymentCreateParams implements BaseModel
      * Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -308,7 +298,7 @@ final class PaymentCreateParams implements BaseModel
     public function withPaymentLink(?bool $paymentLink): self
     {
         $obj = clone $this;
-        $obj->paymentLink = $paymentLink;
+        $obj->payment_link = $paymentLink;
 
         return $obj;
     }
@@ -320,7 +310,7 @@ final class PaymentCreateParams implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj->returnURL = $returnURL;
+        $obj->return_url = $returnURL;
 
         return $obj;
     }
@@ -333,7 +323,7 @@ final class PaymentCreateParams implements BaseModel
         bool $showSavedPaymentMethods
     ): self {
         $obj = clone $this;
-        $obj->showSavedPaymentMethods = $showSavedPaymentMethods;
+        $obj->show_saved_payment_methods = $showSavedPaymentMethods;
 
         return $obj;
     }
@@ -344,7 +334,7 @@ final class PaymentCreateParams implements BaseModel
     public function withTaxID(?string $taxID): self
     {
         $obj = clone $this;
-        $obj->taxID = $taxID;
+        $obj->tax_id = $taxID;
 
         return $obj;
     }

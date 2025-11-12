@@ -14,11 +14,11 @@ use Dodopayments\Misc\Currency;
  *
  * @phpstan-type MeterShape = array{
  *   currency: value-of<Currency>,
- *   freeThreshold: int,
- *   measurementUnit: string,
- *   meterID: string,
+ *   free_threshold: int,
+ *   measurement_unit: string,
+ *   meter_id: string,
  *   name: string,
- *   pricePerUnit: string,
+ *   price_per_unit: string,
  *   description?: string|null,
  * }
  */
@@ -31,20 +31,20 @@ final class Meter implements BaseModel
     #[Api(enum: Currency::class)]
     public string $currency;
 
-    #[Api('free_threshold')]
-    public int $freeThreshold;
+    #[Api]
+    public int $free_threshold;
 
-    #[Api('measurement_unit')]
-    public string $measurementUnit;
+    #[Api]
+    public string $measurement_unit;
 
-    #[Api('meter_id')]
-    public string $meterID;
+    #[Api]
+    public string $meter_id;
 
     #[Api]
     public string $name;
 
-    #[Api('price_per_unit')]
-    public string $pricePerUnit;
+    #[Api]
+    public string $price_per_unit;
 
     #[Api(nullable: true, optional: true)]
     public ?string $description;
@@ -56,11 +56,11 @@ final class Meter implements BaseModel
      * ```
      * Meter::with(
      *   currency: ...,
-     *   freeThreshold: ...,
-     *   measurementUnit: ...,
-     *   meterID: ...,
+     *   free_threshold: ...,
+     *   measurement_unit: ...,
+     *   meter_id: ...,
      *   name: ...,
-     *   pricePerUnit: ...,
+     *   price_per_unit: ...,
      * )
      * ```
      *
@@ -90,21 +90,21 @@ final class Meter implements BaseModel
      */
     public static function with(
         Currency|string $currency,
-        int $freeThreshold,
-        string $measurementUnit,
-        string $meterID,
+        int $free_threshold,
+        string $measurement_unit,
+        string $meter_id,
         string $name,
-        string $pricePerUnit,
+        string $price_per_unit,
         ?string $description = null,
     ): self {
         $obj = new self;
 
         $obj['currency'] = $currency;
-        $obj->freeThreshold = $freeThreshold;
-        $obj->measurementUnit = $measurementUnit;
-        $obj->meterID = $meterID;
+        $obj->free_threshold = $free_threshold;
+        $obj->measurement_unit = $measurement_unit;
+        $obj->meter_id = $meter_id;
         $obj->name = $name;
-        $obj->pricePerUnit = $pricePerUnit;
+        $obj->price_per_unit = $price_per_unit;
 
         null !== $description && $obj->description = $description;
 
@@ -125,7 +125,7 @@ final class Meter implements BaseModel
     public function withFreeThreshold(int $freeThreshold): self
     {
         $obj = clone $this;
-        $obj->freeThreshold = $freeThreshold;
+        $obj->free_threshold = $freeThreshold;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class Meter implements BaseModel
     public function withMeasurementUnit(string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj->measurementUnit = $measurementUnit;
+        $obj->measurement_unit = $measurementUnit;
 
         return $obj;
     }
@@ -141,7 +141,7 @@ final class Meter implements BaseModel
     public function withMeterID(string $meterID): self
     {
         $obj = clone $this;
-        $obj->meterID = $meterID;
+        $obj->meter_id = $meterID;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class Meter implements BaseModel
     public function withPricePerUnit(string $pricePerUnit): self
     {
         $obj = clone $this;
-        $obj->pricePerUnit = $pricePerUnit;
+        $obj->price_per_unit = $pricePerUnit;
 
         return $obj;
     }

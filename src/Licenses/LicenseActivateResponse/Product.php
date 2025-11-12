@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Related product info. Present if the license key is tied to a product.
  *
- * @phpstan-type ProductShape = array{productID: string, name?: string|null}
+ * @phpstan-type ProductShape = array{product_id: string, name?: string|null}
  */
 final class Product implements BaseModel
 {
@@ -21,8 +21,8 @@ final class Product implements BaseModel
     /**
      * Unique identifier for the product.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     /**
      * Name of the product, if set by the merchant.
@@ -35,7 +35,7 @@ final class Product implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Product::with(productID: ...)
+     * Product::with(product_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -54,11 +54,11 @@ final class Product implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $productID, ?string $name = null): self
+    public static function with(string $product_id, ?string $name = null): self
     {
         $obj = new self;
 
-        $obj->productID = $productID;
+        $obj->product_id = $product_id;
 
         null !== $name && $obj->name = $name;
 
@@ -71,7 +71,7 @@ final class Product implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }

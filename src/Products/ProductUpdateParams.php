@@ -19,18 +19,18 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *
  * @phpstan-type ProductUpdateParamsShape = array{
  *   addons?: list<string>|null,
- *   brandID?: string|null,
+ *   brand_id?: string|null,
  *   description?: string|null,
- *   digitalProductDelivery?: DigitalProductDelivery|null,
- *   imageID?: string|null,
- *   licenseKeyActivationMessage?: string|null,
- *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDuration|null,
- *   licenseKeyEnabled?: bool|null,
- *   metadata?: array<string, string>|null,
+ *   digital_product_delivery?: DigitalProductDelivery|null,
+ *   image_id?: string|null,
+ *   license_key_activation_message?: string|null,
+ *   license_key_activations_limit?: int|null,
+ *   license_key_duration?: LicenseKeyDuration|null,
+ *   license_key_enabled?: bool|null,
+ *   metadata?: array<string,string>|null,
  *   name?: string|null,
  *   price?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   taxCategory?: null|TaxCategory|value-of<TaxCategory>,
+ *   tax_category?: null|TaxCategory|value-of<TaxCategory>,
  * }
  */
 final class ProductUpdateParams implements BaseModel
@@ -47,8 +47,8 @@ final class ProductUpdateParams implements BaseModel
     #[Api(list: 'string', nullable: true, optional: true)]
     public ?array $addons;
 
-    #[Api('brand_id', nullable: true, optional: true)]
-    public ?string $brandID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $brand_id;
 
     /**
      * Description of the product, optional and must be at most 1000 characters.
@@ -59,14 +59,14 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Choose how you would like you digital product delivered.
      */
-    #[Api('digital_product_delivery', nullable: true, optional: true)]
-    public ?DigitalProductDelivery $digitalProductDelivery;
+    #[Api(nullable: true, optional: true)]
+    public ?DigitalProductDelivery $digital_product_delivery;
 
     /**
      * Product image id after its uploaded to S3.
      */
-    #[Api('image_id', nullable: true, optional: true)]
-    public ?string $imageID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $image_id;
 
     /**
      * Message sent to the customer upon license key activation.
@@ -74,8 +74,8 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
      * activating the license key.
      */
-    #[Api('license_key_activation_message', nullable: true, optional: true)]
-    public ?string $licenseKeyActivationMessage;
+    #[Api(nullable: true, optional: true)]
+    public ?string $license_key_activation_message;
 
     /**
      * Limit for the number of activations for the license key.
@@ -83,8 +83,8 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
      */
-    #[Api('license_key_activations_limit', nullable: true, optional: true)]
-    public ?int $licenseKeyActivationsLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $license_key_activations_limit;
 
     /**
      * Duration of the license key if enabled.
@@ -92,8 +92,8 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
      */
-    #[Api('license_key_duration', nullable: true, optional: true)]
-    public ?LicenseKeyDuration $licenseKeyDuration;
+    #[Api(nullable: true, optional: true)]
+    public ?LicenseKeyDuration $license_key_duration;
 
     /**
      * Whether the product requires a license key.
@@ -101,13 +101,13 @@ final class ProductUpdateParams implements BaseModel
      * If `true`, additional fields related to license key (duration, activations limit, activation message)
      * become applicable.
      */
-    #[Api('license_key_enabled', nullable: true, optional: true)]
-    public ?bool $licenseKeyEnabled;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $license_key_enabled;
 
     /**
      * Additional metadata for the product.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
@@ -127,15 +127,10 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Tax category of the product.
      *
-     * @var value-of<TaxCategory>|null $taxCategory
+     * @var value-of<TaxCategory>|null $tax_category
      */
-    #[Api(
-        'tax_category',
-        enum: TaxCategory::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?string $taxCategory;
+    #[Api(enum: TaxCategory::class, nullable: true, optional: true)]
+    public ?string $tax_category;
 
     public function __construct()
     {
@@ -148,39 +143,39 @@ final class ProductUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $addons
-     * @param array<string, string>|null $metadata
-     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
+     * @param array<string,string>|null $metadata
+     * @param TaxCategory|value-of<TaxCategory>|null $tax_category
      */
     public static function with(
         ?array $addons = null,
-        ?string $brandID = null,
+        ?string $brand_id = null,
         ?string $description = null,
-        ?DigitalProductDelivery $digitalProductDelivery = null,
-        ?string $imageID = null,
-        ?string $licenseKeyActivationMessage = null,
-        ?int $licenseKeyActivationsLimit = null,
-        ?LicenseKeyDuration $licenseKeyDuration = null,
-        ?bool $licenseKeyEnabled = null,
+        ?DigitalProductDelivery $digital_product_delivery = null,
+        ?string $image_id = null,
+        ?string $license_key_activation_message = null,
+        ?int $license_key_activations_limit = null,
+        ?LicenseKeyDuration $license_key_duration = null,
+        ?bool $license_key_enabled = null,
         ?array $metadata = null,
         ?string $name = null,
         OneTimePrice|RecurringPrice|UsageBasedPrice|null $price = null,
-        TaxCategory|string|null $taxCategory = null,
+        TaxCategory|string|null $tax_category = null,
     ): self {
         $obj = new self;
 
         null !== $addons && $obj->addons = $addons;
-        null !== $brandID && $obj->brandID = $brandID;
+        null !== $brand_id && $obj->brand_id = $brand_id;
         null !== $description && $obj->description = $description;
-        null !== $digitalProductDelivery && $obj->digitalProductDelivery = $digitalProductDelivery;
-        null !== $imageID && $obj->imageID = $imageID;
-        null !== $licenseKeyActivationMessage && $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
-        null !== $licenseKeyActivationsLimit && $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
-        null !== $licenseKeyDuration && $obj->licenseKeyDuration = $licenseKeyDuration;
-        null !== $licenseKeyEnabled && $obj->licenseKeyEnabled = $licenseKeyEnabled;
+        null !== $digital_product_delivery && $obj->digital_product_delivery = $digital_product_delivery;
+        null !== $image_id && $obj->image_id = $image_id;
+        null !== $license_key_activation_message && $obj->license_key_activation_message = $license_key_activation_message;
+        null !== $license_key_activations_limit && $obj->license_key_activations_limit = $license_key_activations_limit;
+        null !== $license_key_duration && $obj->license_key_duration = $license_key_duration;
+        null !== $license_key_enabled && $obj->license_key_enabled = $license_key_enabled;
         null !== $metadata && $obj->metadata = $metadata;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $taxCategory && $obj['taxCategory'] = $taxCategory;
+        null !== $tax_category && $obj['tax_category'] = $tax_category;
 
         return $obj;
     }
@@ -201,7 +196,7 @@ final class ProductUpdateParams implements BaseModel
     public function withBrandID(?string $brandID): self
     {
         $obj = clone $this;
-        $obj->brandID = $brandID;
+        $obj->brand_id = $brandID;
 
         return $obj;
     }
@@ -224,7 +219,7 @@ final class ProductUpdateParams implements BaseModel
         ?DigitalProductDelivery $digitalProductDelivery
     ): self {
         $obj = clone $this;
-        $obj->digitalProductDelivery = $digitalProductDelivery;
+        $obj->digital_product_delivery = $digitalProductDelivery;
 
         return $obj;
     }
@@ -235,7 +230,7 @@ final class ProductUpdateParams implements BaseModel
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->imageID = $imageID;
+        $obj->image_id = $imageID;
 
         return $obj;
     }
@@ -250,7 +245,7 @@ final class ProductUpdateParams implements BaseModel
         ?string $licenseKeyActivationMessage
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyActivationMessage = $licenseKeyActivationMessage;
+        $obj->license_key_activation_message = $licenseKeyActivationMessage;
 
         return $obj;
     }
@@ -265,7 +260,7 @@ final class ProductUpdateParams implements BaseModel
         ?int $licenseKeyActivationsLimit
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyActivationsLimit = $licenseKeyActivationsLimit;
+        $obj->license_key_activations_limit = $licenseKeyActivationsLimit;
 
         return $obj;
     }
@@ -280,7 +275,7 @@ final class ProductUpdateParams implements BaseModel
         ?LicenseKeyDuration $licenseKeyDuration
     ): self {
         $obj = clone $this;
-        $obj->licenseKeyDuration = $licenseKeyDuration;
+        $obj->license_key_duration = $licenseKeyDuration;
 
         return $obj;
     }
@@ -294,7 +289,7 @@ final class ProductUpdateParams implements BaseModel
     public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {
         $obj = clone $this;
-        $obj->licenseKeyEnabled = $licenseKeyEnabled;
+        $obj->license_key_enabled = $licenseKeyEnabled;
 
         return $obj;
     }
@@ -302,7 +297,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @param array<string, string>|null $metadata
+     * @param array<string,string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {
@@ -343,7 +338,7 @@ final class ProductUpdateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
         $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $taxCategory;
 
         return $obj;
     }

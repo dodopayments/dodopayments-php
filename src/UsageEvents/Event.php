@@ -13,12 +13,12 @@ use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
  * @phpstan-type EventShape = array{
- *   businessID: string,
- *   customerID: string,
- *   eventID: string,
- *   eventName: string,
+ *   business_id: string,
+ *   customer_id: string,
+ *   event_id: string,
+ *   event_name: string,
  *   timestamp: \DateTimeInterface,
- *   metadata?: array<string, string|float|bool>|null,
+ *   metadata?: array<string,string|float|bool>|null,
  * }
  */
 final class Event implements BaseModel, ResponseConverter
@@ -28,17 +28,17 @@ final class Event implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
-    #[Api('customer_id')]
-    public string $customerID;
+    #[Api]
+    public string $customer_id;
 
-    #[Api('event_id')]
-    public string $eventID;
+    #[Api]
+    public string $event_id;
 
-    #[Api('event_name')]
-    public string $eventName;
+    #[Api]
+    public string $event_name;
 
     #[Api]
     public \DateTimeInterface $timestamp;
@@ -46,7 +46,7 @@ final class Event implements BaseModel, ResponseConverter
     /**
      * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      *
-     * @var array<string, string|float|bool>|null $metadata
+     * @var array<string,string|float|bool>|null $metadata
      */
     #[Api(map: Metadata::class, nullable: true, optional: true)]
     public ?array $metadata;
@@ -57,7 +57,11 @@ final class Event implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * Event::with(
-     *   businessID: ..., customerID: ..., eventID: ..., eventName: ..., timestamp: ...
+     *   business_id: ...,
+     *   customer_id: ...,
+     *   event_id: ...,
+     *   event_name: ...,
+     *   timestamp: ...,
      * )
      * ```
      *
@@ -82,22 +86,22 @@ final class Event implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string|float|bool>|null $metadata
+     * @param array<string,string|float|bool>|null $metadata
      */
     public static function with(
-        string $businessID,
-        string $customerID,
-        string $eventID,
-        string $eventName,
+        string $business_id,
+        string $customer_id,
+        string $event_id,
+        string $event_name,
         \DateTimeInterface $timestamp,
         ?array $metadata = null,
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
-        $obj->customerID = $customerID;
-        $obj->eventID = $eventID;
-        $obj->eventName = $eventName;
+        $obj->business_id = $business_id;
+        $obj->customer_id = $customer_id;
+        $obj->event_id = $event_id;
+        $obj->event_name = $event_name;
         $obj->timestamp = $timestamp;
 
         null !== $metadata && $obj->metadata = $metadata;
@@ -108,7 +112,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -116,7 +120,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -124,7 +128,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withEventID(string $eventID): self
     {
         $obj = clone $this;
-        $obj->eventID = $eventID;
+        $obj->event_id = $eventID;
 
         return $obj;
     }
@@ -132,7 +136,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->eventName = $eventName;
+        $obj->event_name = $eventName;
 
         return $obj;
     }
@@ -148,7 +152,7 @@ final class Event implements BaseModel, ResponseConverter
     /**
      * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      *
-     * @param array<string, string|float|bool>|null $metadata
+     * @param array<string,string|float|bool>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

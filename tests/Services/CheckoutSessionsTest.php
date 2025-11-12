@@ -2,9 +2,7 @@
 
 namespace Tests\Services;
 
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\Client;
-use Dodopayments\Subscriptions\AttachAddon;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -30,9 +28,9 @@ final class CheckoutSessionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->checkoutSessions->create(
-            productCart: [ProductCart::with(productID: 'product_id', quantity: 0)]
-        );
+        $result = $this->client->checkoutSessions->create([
+            'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -40,13 +38,16 @@ final class CheckoutSessionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->checkoutSessions->create(
-            productCart: [
-                ProductCart::with(productID: 'product_id', quantity: 0)
-                    ->withAddons([AttachAddon::with(addonID: 'addon_id', quantity: 0)])
-                    ->withAmount(0),
+        $result = $this->client->checkoutSessions->create([
+            'product_cart' => [
+                [
+                    'product_id' => 'product_id',
+                    'quantity' => 0,
+                    'addons' => [['addon_id' => 'addon_id', 'quantity' => 0]],
+                    'amount' => 0,
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

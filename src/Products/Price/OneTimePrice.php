@@ -17,11 +17,11 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  *   currency: value-of<Currency>,
  *   discount: int,
  *   price: int,
- *   purchasingPowerParity: bool,
+ *   purchasing_power_parity: bool,
  *   type: value-of<Type>,
- *   payWhatYouWant?: bool,
- *   suggestedPrice?: int|null,
- *   taxInclusive?: bool|null,
+ *   pay_what_you_want?: bool|null,
+ *   suggested_price?: int|null,
+ *   tax_inclusive?: bool|null,
  * }
  */
 final class OneTimePrice implements BaseModel
@@ -57,8 +57,8 @@ final class OneTimePrice implements BaseModel
      * Indicates if purchasing power parity adjustments are applied to the price.
      * Purchasing power parity feature is not available as of now.
      */
-    #[Api('purchasing_power_parity')]
-    public bool $purchasingPowerParity;
+    #[Api]
+    public bool $purchasing_power_parity;
 
     /** @var value-of<Type> $type */
     #[Api(enum: Type::class)]
@@ -68,21 +68,21 @@ final class OneTimePrice implements BaseModel
      * Indicates whether the customer can pay any amount they choose.
      * If set to `true`, the [`price`](Self::price) field is the minimum amount.
      */
-    #[Api('pay_what_you_want', optional: true)]
-    public ?bool $payWhatYouWant;
+    #[Api(optional: true)]
+    public ?bool $pay_what_you_want;
 
     /**
      * A suggested price for the user to pay. This value is only considered if
      * [`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored.
      */
-    #[Api('suggested_price', nullable: true, optional: true)]
-    public ?int $suggestedPrice;
+    #[Api(nullable: true, optional: true)]
+    public ?int $suggested_price;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', nullable: true, optional: true)]
-    public ?bool $taxInclusive;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $tax_inclusive;
 
     /**
      * `new OneTimePrice()` is missing required properties by the API.
@@ -93,7 +93,7 @@ final class OneTimePrice implements BaseModel
      *   currency: ...,
      *   discount: ...,
      *   price: ...,
-     *   purchasingPowerParity: ...,
+     *   purchasing_power_parity: ...,
      *   type: ...,
      * )
      * ```
@@ -126,23 +126,23 @@ final class OneTimePrice implements BaseModel
         Currency|string $currency,
         int $discount,
         int $price,
-        bool $purchasingPowerParity,
+        bool $purchasing_power_parity,
         Type|string $type,
-        ?bool $payWhatYouWant = null,
-        ?int $suggestedPrice = null,
-        ?bool $taxInclusive = null,
+        ?bool $pay_what_you_want = null,
+        ?int $suggested_price = null,
+        ?bool $tax_inclusive = null,
     ): self {
         $obj = new self;
 
         $obj['currency'] = $currency;
         $obj->discount = $discount;
         $obj->price = $price;
-        $obj->purchasingPowerParity = $purchasingPowerParity;
+        $obj->purchasing_power_parity = $purchasing_power_parity;
         $obj['type'] = $type;
 
-        null !== $payWhatYouWant && $obj->payWhatYouWant = $payWhatYouWant;
-        null !== $suggestedPrice && $obj->suggestedPrice = $suggestedPrice;
-        null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
+        null !== $pay_what_you_want && $obj->pay_what_you_want = $pay_what_you_want;
+        null !== $suggested_price && $obj->suggested_price = $suggested_price;
+        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
 
         return $obj;
     }
@@ -193,7 +193,7 @@ final class OneTimePrice implements BaseModel
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
         $obj = clone $this;
-        $obj->purchasingPowerParity = $purchasingPowerParity;
+        $obj->purchasing_power_parity = $purchasingPowerParity;
 
         return $obj;
     }
@@ -216,7 +216,7 @@ final class OneTimePrice implements BaseModel
     public function withPayWhatYouWant(bool $payWhatYouWant): self
     {
         $obj = clone $this;
-        $obj->payWhatYouWant = $payWhatYouWant;
+        $obj->pay_what_you_want = $payWhatYouWant;
 
         return $obj;
     }
@@ -228,7 +228,7 @@ final class OneTimePrice implements BaseModel
     public function withSuggestedPrice(?int $suggestedPrice): self
     {
         $obj = clone $this;
-        $obj->suggestedPrice = $suggestedPrice;
+        $obj->suggested_price = $suggestedPrice;
 
         return $obj;
     }
@@ -239,7 +239,7 @@ final class OneTimePrice implements BaseModel
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->taxInclusive = $taxInclusive;
+        $obj->tax_inclusive = $taxInclusive;
 
         return $obj;
     }

@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ProductUpdateFilesResponseShape = array{
- *   fileID: string, url: string
+ *   file_id: string, url: string
  * }
  */
 final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
@@ -22,8 +22,8 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('file_id')]
-    public string $fileID;
+    #[Api]
+    public string $file_id;
 
     #[Api]
     public string $url;
@@ -33,7 +33,7 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
      *
      * To enforce required parameters use
      * ```
-     * ProductUpdateFilesResponse::with(fileID: ..., url: ...)
+     * ProductUpdateFilesResponse::with(file_id: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,11 +52,11 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $fileID, string $url): self
+    public static function with(string $file_id, string $url): self
     {
         $obj = new self;
 
-        $obj->fileID = $fileID;
+        $obj->file_id = $file_id;
         $obj->url = $url;
 
         return $obj;
@@ -65,7 +65,7 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->fileID = $fileID;
+        $obj->file_id = $fileID;
 
         return $obj;
     }

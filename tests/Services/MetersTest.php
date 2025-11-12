@@ -3,7 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Meters\MeterAggregation;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -30,12 +29,12 @@ final class MetersTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->meters->create(
-            aggregation: MeterAggregation::with(type: 'count'),
-            eventName: 'event_name',
-            measurementUnit: 'measurement_unit',
-            name: 'name',
-        );
+        $result = $this->client->meters->create([
+            'aggregation' => ['type' => 'count'],
+            'event_name' => 'event_name',
+            'measurement_unit' => 'measurement_unit',
+            'name' => 'name',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -43,12 +42,12 @@ final class MetersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->meters->create(
-            aggregation: MeterAggregation::with(type: 'count')->withKey('key'),
-            eventName: 'event_name',
-            measurementUnit: 'measurement_unit',
-            name: 'name',
-        );
+        $result = $this->client->meters->create([
+            'aggregation' => ['type' => 'count', 'key' => 'key'],
+            'event_name' => 'event_name',
+            'measurement_unit' => 'measurement_unit',
+            'name' => 'name',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -68,7 +67,7 @@ final class MetersTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->meters->list();
+        $result = $this->client->meters->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

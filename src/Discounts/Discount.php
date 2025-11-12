@@ -13,17 +13,17 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type DiscountShape = array{
  *   amount: int,
- *   businessID: string,
+ *   business_id: string,
  *   code: string,
- *   createdAt: \DateTimeInterface,
- *   discountID: string,
- *   restrictedTo: list<string>,
- *   timesUsed: int,
+ *   created_at: \DateTimeInterface,
+ *   discount_id: string,
+ *   restricted_to: list<string>,
+ *   times_used: int,
  *   type: value-of<DiscountType>,
- *   expiresAt?: \DateTimeInterface|null,
+ *   expires_at?: \DateTimeInterface|null,
  *   name?: string|null,
- *   subscriptionCycles?: int|null,
- *   usageLimit?: int|null,
+ *   subscription_cycles?: int|null,
+ *   usage_limit?: int|null,
  * }
  */
 final class Discount implements BaseModel, ResponseConverter
@@ -46,8 +46,8 @@ final class Discount implements BaseModel, ResponseConverter
     /**
      * The business this discount belongs to.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The discount code (up to 16 chars).
@@ -58,28 +58,28 @@ final class Discount implements BaseModel, ResponseConverter
     /**
      * Timestamp when the discount is created.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * The unique discount ID.
      */
-    #[Api('discount_id')]
-    public string $discountID;
+    #[Api]
+    public string $discount_id;
 
     /**
      * List of product IDs to which this discount is restricted.
      *
-     * @var list<string> $restrictedTo
+     * @var list<string> $restricted_to
      */
-    #[Api('restricted_to', list: 'string')]
-    public array $restrictedTo;
+    #[Api(list: 'string')]
+    public array $restricted_to;
 
     /**
      * How many times this discount has been used.
      */
-    #[Api('times_used')]
-    public int $timesUsed;
+    #[Api]
+    public int $times_used;
 
     /**
      * The type of discount, e.g. `percentage`, `flat`, or `flat_per_unit`.
@@ -92,8 +92,8 @@ final class Discount implements BaseModel, ResponseConverter
     /**
      * Optional date/time after which discount is expired.
      */
-    #[Api('expires_at', nullable: true, optional: true)]
-    public ?\DateTimeInterface $expiresAt;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $expires_at;
 
     /**
      * Name for the Discount.
@@ -106,14 +106,14 @@ final class Discount implements BaseModel, ResponseConverter
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api('subscription_cycles', nullable: true, optional: true)]
-    public ?int $subscriptionCycles;
+    #[Api(nullable: true, optional: true)]
+    public ?int $subscription_cycles;
 
     /**
      * Usage limit for this discount, if any.
      */
-    #[Api('usage_limit', nullable: true, optional: true)]
-    public ?int $usageLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $usage_limit;
 
     /**
      * `new Discount()` is missing required properties by the API.
@@ -122,12 +122,12 @@ final class Discount implements BaseModel, ResponseConverter
      * ```
      * Discount::with(
      *   amount: ...,
-     *   businessID: ...,
+     *   business_id: ...,
      *   code: ...,
-     *   createdAt: ...,
-     *   discountID: ...,
-     *   restrictedTo: ...,
-     *   timesUsed: ...,
+     *   created_at: ...,
+     *   discount_id: ...,
+     *   restricted_to: ...,
+     *   times_used: ...,
      *   type: ...,
      * )
      * ```
@@ -156,38 +156,38 @@ final class Discount implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string> $restrictedTo
+     * @param list<string> $restricted_to
      * @param DiscountType|value-of<DiscountType> $type
      */
     public static function with(
         int $amount,
-        string $businessID,
+        string $business_id,
         string $code,
-        \DateTimeInterface $createdAt,
-        string $discountID,
-        array $restrictedTo,
-        int $timesUsed,
+        \DateTimeInterface $created_at,
+        string $discount_id,
+        array $restricted_to,
+        int $times_used,
         DiscountType|string $type,
-        ?\DateTimeInterface $expiresAt = null,
+        ?\DateTimeInterface $expires_at = null,
         ?string $name = null,
-        ?int $subscriptionCycles = null,
-        ?int $usageLimit = null,
+        ?int $subscription_cycles = null,
+        ?int $usage_limit = null,
     ): self {
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->businessID = $businessID;
+        $obj->business_id = $business_id;
         $obj->code = $code;
-        $obj->createdAt = $createdAt;
-        $obj->discountID = $discountID;
-        $obj->restrictedTo = $restrictedTo;
-        $obj->timesUsed = $timesUsed;
+        $obj->created_at = $created_at;
+        $obj->discount_id = $discount_id;
+        $obj->restricted_to = $restricted_to;
+        $obj->times_used = $times_used;
         $obj['type'] = $type;
 
-        null !== $expiresAt && $obj->expiresAt = $expiresAt;
+        null !== $expires_at && $obj->expires_at = $expires_at;
         null !== $name && $obj->name = $name;
-        null !== $subscriptionCycles && $obj->subscriptionCycles = $subscriptionCycles;
-        null !== $usageLimit && $obj->usageLimit = $usageLimit;
+        null !== $subscription_cycles && $obj->subscription_cycles = $subscription_cycles;
+        null !== $usage_limit && $obj->usage_limit = $usage_limit;
 
         return $obj;
     }
@@ -213,7 +213,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -246,7 +246,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withDiscountID(string $discountID): self
     {
         $obj = clone $this;
-        $obj->discountID = $discountID;
+        $obj->discount_id = $discountID;
 
         return $obj;
     }
@@ -259,7 +259,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withRestrictedTo(array $restrictedTo): self
     {
         $obj = clone $this;
-        $obj->restrictedTo = $restrictedTo;
+        $obj->restricted_to = $restrictedTo;
 
         return $obj;
     }
@@ -270,7 +270,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withTimesUsed(int $timesUsed): self
     {
         $obj = clone $this;
-        $obj->timesUsed = $timesUsed;
+        $obj->times_used = $timesUsed;
 
         return $obj;
     }
@@ -294,7 +294,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expiresAt = $expiresAt;
+        $obj->expires_at = $expiresAt;
 
         return $obj;
     }
@@ -318,7 +318,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
         $obj = clone $this;
-        $obj->subscriptionCycles = $subscriptionCycles;
+        $obj->subscription_cycles = $subscriptionCycles;
 
         return $obj;
     }
@@ -329,7 +329,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withUsageLimit(?int $usageLimit): self
     {
         $obj = clone $this;
-        $obj->usageLimit = $usageLimit;
+        $obj->usage_limit = $usageLimit;
 
         return $obj;
     }

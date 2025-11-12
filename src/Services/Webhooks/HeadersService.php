@@ -43,36 +43,18 @@ final class HeadersService implements HeadersContract
      *
      * Patch a webhook by id
      *
-     * @param array<string,
-     * string,> $headers Object of header-value pair to update or add
+     * @param array{headers: array<string,string>}|HeaderUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        $headers,
-        ?RequestOptions $requestOptions = null
-    ): mixed {
-        $params = ['headers' => $headers];
-
-        return $this->updateRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|HeaderUpdateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): mixed {
         [$parsed, $options] = HeaderUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

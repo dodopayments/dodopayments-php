@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type WalletListResponseShape = array{
- *   items: list<CustomerWallet>, totalBalanceUsd: int
+ *   items: list<CustomerWallet>, total_balance_usd: int
  * }
  */
 final class WalletListResponse implements BaseModel, ResponseConverter
@@ -29,15 +29,15 @@ final class WalletListResponse implements BaseModel, ResponseConverter
     /**
      * Sum of all wallet balances converted to USD (in smallest unit).
      */
-    #[Api('total_balance_usd')]
-    public int $totalBalanceUsd;
+    #[Api]
+    public int $total_balance_usd;
 
     /**
      * `new WalletListResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WalletListResponse::with(items: ..., totalBalanceUsd: ...)
+     * WalletListResponse::with(items: ..., total_balance_usd: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,12 +58,12 @@ final class WalletListResponse implements BaseModel, ResponseConverter
      *
      * @param list<CustomerWallet> $items
      */
-    public static function with(array $items, int $totalBalanceUsd): self
+    public static function with(array $items, int $total_balance_usd): self
     {
         $obj = new self;
 
         $obj->items = $items;
-        $obj->totalBalanceUsd = $totalBalanceUsd;
+        $obj->total_balance_usd = $total_balance_usd;
 
         return $obj;
     }
@@ -85,7 +85,7 @@ final class WalletListResponse implements BaseModel, ResponseConverter
     public function withTotalBalanceUsd(int $totalBalanceUsd): self
     {
         $obj = clone $this;
-        $obj->totalBalanceUsd = $totalBalanceUsd;
+        $obj->total_balance_usd = $totalBalanceUsd;
 
         return $obj;
     }

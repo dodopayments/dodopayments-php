@@ -22,32 +22,32 @@ use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Data\PayloadType;
  * @phpstan-type DataShape = array{
  *   addons: list<AddonCartResponseItem>,
  *   billing: BillingAddress,
- *   cancelAtNextBillingDate: bool,
- *   createdAt: \DateTimeInterface,
+ *   cancel_at_next_billing_date: bool,
+ *   created_at: \DateTimeInterface,
  *   currency: value-of<Currency>,
  *   customer: CustomerLimitedDetails,
- *   metadata: array<string, string>,
+ *   metadata: array<string,string>,
  *   meters: list<Meter>,
- *   nextBillingDate: \DateTimeInterface,
- *   onDemand: bool,
- *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: value-of<TimeInterval>,
- *   previousBillingDate: \DateTimeInterface,
- *   productID: string,
+ *   next_billing_date: \DateTimeInterface,
+ *   on_demand: bool,
+ *   payment_frequency_count: int,
+ *   payment_frequency_interval: value-of<TimeInterval>,
+ *   previous_billing_date: \DateTimeInterface,
+ *   product_id: string,
  *   quantity: int,
- *   recurringPreTaxAmount: int,
+ *   recurring_pre_tax_amount: int,
  *   status: value-of<SubscriptionStatus>,
- *   subscriptionID: string,
- *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: value-of<TimeInterval>,
- *   taxInclusive: bool,
- *   trialPeriodDays: int,
- *   cancelledAt?: \DateTimeInterface|null,
- *   discountCyclesRemaining?: int|null,
- *   discountID?: string|null,
- *   expiresAt?: \DateTimeInterface|null,
- *   taxID?: string|null,
- *   payloadType?: value-of<PayloadType>,
+ *   subscription_id: string,
+ *   subscription_period_count: int,
+ *   subscription_period_interval: value-of<TimeInterval>,
+ *   tax_inclusive: bool,
+ *   trial_period_days: int,
+ *   cancelled_at?: \DateTimeInterface|null,
+ *   discount_cycles_remaining?: int|null,
+ *   discount_id?: string|null,
+ *   expires_at?: \DateTimeInterface|null,
+ *   tax_id?: string|null,
+ *   payload_type?: value-of<PayloadType>|null,
  * }
  */
 final class Data implements BaseModel
@@ -69,14 +69,14 @@ final class Data implements BaseModel
     /**
      * Indicates if the subscription will cancel at the next billing date.
      */
-    #[Api('cancel_at_next_billing_date')]
-    public bool $cancelAtNextBillingDate;
+    #[Api]
+    public bool $cancel_at_next_billing_date;
 
     /**
      * Timestamp when the subscription was created.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
@@ -88,7 +88,7 @@ final class Data implements BaseModel
     /**
      * Additional custom data associated with the subscription.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -104,36 +104,36 @@ final class Data implements BaseModel
     /**
      * Timestamp of the next scheduled billing. Indicates the end of current billing period.
      */
-    #[Api('next_billing_date')]
-    public \DateTimeInterface $nextBillingDate;
+    #[Api]
+    public \DateTimeInterface $next_billing_date;
 
     /**
      * Wether the subscription is on-demand or not.
      */
-    #[Api('on_demand')]
-    public bool $onDemand;
+    #[Api]
+    public bool $on_demand;
 
     /**
      * Number of payment frequency intervals.
      */
-    #[Api('payment_frequency_count')]
-    public int $paymentFrequencyCount;
+    #[Api]
+    public int $payment_frequency_count;
 
-    /** @var value-of<TimeInterval> $paymentFrequencyInterval */
-    #[Api('payment_frequency_interval', enum: TimeInterval::class)]
-    public string $paymentFrequencyInterval;
+    /** @var value-of<TimeInterval> $payment_frequency_interval */
+    #[Api(enum: TimeInterval::class)]
+    public string $payment_frequency_interval;
 
     /**
      * Timestamp of the last payment. Indicates the start of current billing period.
      */
-    #[Api('previous_billing_date')]
-    public \DateTimeInterface $previousBillingDate;
+    #[Api]
+    public \DateTimeInterface $previous_billing_date;
 
     /**
      * Identifier of the product associated with this subscription.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     /**
      * Number of units/items included in the subscription.
@@ -144,8 +144,8 @@ final class Data implements BaseModel
     /**
      * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
      */
-    #[Api('recurring_pre_tax_amount')]
-    public int $recurringPreTaxAmount;
+    #[Api]
+    public int $recurring_pre_tax_amount;
 
     /** @var value-of<SubscriptionStatus> $status */
     #[Api(enum: SubscriptionStatus::class)]
@@ -154,68 +154,68 @@ final class Data implements BaseModel
     /**
      * Unique identifier for the subscription.
      */
-    #[Api('subscription_id')]
-    public string $subscriptionID;
+    #[Api]
+    public string $subscription_id;
 
     /**
      * Number of subscription period intervals.
      */
-    #[Api('subscription_period_count')]
-    public int $subscriptionPeriodCount;
+    #[Api]
+    public int $subscription_period_count;
 
-    /** @var value-of<TimeInterval> $subscriptionPeriodInterval */
-    #[Api('subscription_period_interval', enum: TimeInterval::class)]
-    public string $subscriptionPeriodInterval;
+    /** @var value-of<TimeInterval> $subscription_period_interval */
+    #[Api(enum: TimeInterval::class)]
+    public string $subscription_period_interval;
 
     /**
      * Indicates if the recurring_pre_tax_amount is tax inclusive.
      */
-    #[Api('tax_inclusive')]
-    public bool $taxInclusive;
+    #[Api]
+    public bool $tax_inclusive;
 
     /**
      * Number of days in the trial period (0 if no trial).
      */
-    #[Api('trial_period_days')]
-    public int $trialPeriodDays;
+    #[Api]
+    public int $trial_period_days;
 
     /**
      * Cancelled timestamp if the subscription is cancelled.
      */
-    #[Api('cancelled_at', nullable: true, optional: true)]
-    public ?\DateTimeInterface $cancelledAt;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $cancelled_at;
 
     /**
      * Number of remaining discount cycles if discount is applied.
      */
-    #[Api('discount_cycles_remaining', nullable: true, optional: true)]
-    public ?int $discountCyclesRemaining;
+    #[Api(nullable: true, optional: true)]
+    public ?int $discount_cycles_remaining;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', nullable: true, optional: true)]
-    public ?string $discountID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $discount_id;
 
     /**
      * Timestamp when the subscription will expire.
      */
-    #[Api('expires_at', nullable: true, optional: true)]
-    public ?\DateTimeInterface $expiresAt;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $expires_at;
 
     /**
      * Tax identifier provided for this subscription (if applicable).
      */
-    #[Api('tax_id', nullable: true, optional: true)]
-    public ?string $taxID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $tax_id;
 
     /**
      * The type of payload in the data field.
      *
-     * @var value-of<PayloadType>|null $payloadType
+     * @var value-of<PayloadType>|null $payload_type
      */
-    #[Api('payload_type', enum: PayloadType::class, optional: true)]
-    public ?string $payloadType;
+    #[Api(enum: PayloadType::class, optional: true)]
+    public ?string $payload_type;
 
     /**
      * `new Data()` is missing required properties by the API.
@@ -225,26 +225,26 @@ final class Data implements BaseModel
      * Data::with(
      *   addons: ...,
      *   billing: ...,
-     *   cancelAtNextBillingDate: ...,
-     *   createdAt: ...,
+     *   cancel_at_next_billing_date: ...,
+     *   created_at: ...,
      *   currency: ...,
      *   customer: ...,
      *   metadata: ...,
      *   meters: ...,
-     *   nextBillingDate: ...,
-     *   onDemand: ...,
-     *   paymentFrequencyCount: ...,
-     *   paymentFrequencyInterval: ...,
-     *   previousBillingDate: ...,
-     *   productID: ...,
+     *   next_billing_date: ...,
+     *   on_demand: ...,
+     *   payment_frequency_count: ...,
+     *   payment_frequency_interval: ...,
+     *   previous_billing_date: ...,
+     *   product_id: ...,
      *   quantity: ...,
-     *   recurringPreTaxAmount: ...,
+     *   recurring_pre_tax_amount: ...,
      *   status: ...,
-     *   subscriptionID: ...,
-     *   subscriptionPeriodCount: ...,
-     *   subscriptionPeriodInterval: ...,
-     *   taxInclusive: ...,
-     *   trialPeriodDays: ...,
+     *   subscription_id: ...,
+     *   subscription_period_count: ...,
+     *   subscription_period_interval: ...,
+     *   tax_inclusive: ...,
+     *   trial_period_days: ...,
      * )
      * ```
      *
@@ -288,74 +288,74 @@ final class Data implements BaseModel
      *
      * @param list<AddonCartResponseItem> $addons
      * @param Currency|value-of<Currency> $currency
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      * @param list<Meter> $meters
-     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
+     * @param TimeInterval|value-of<TimeInterval> $payment_frequency_interval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
-     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param TimeInterval|value-of<TimeInterval> $subscription_period_interval
+     * @param PayloadType|value-of<PayloadType> $payload_type
      */
     public static function with(
         array $addons,
         BillingAddress $billing,
-        bool $cancelAtNextBillingDate,
-        \DateTimeInterface $createdAt,
+        bool $cancel_at_next_billing_date,
+        \DateTimeInterface $created_at,
         Currency|string $currency,
         CustomerLimitedDetails $customer,
         array $metadata,
         array $meters,
-        \DateTimeInterface $nextBillingDate,
-        bool $onDemand,
-        int $paymentFrequencyCount,
-        TimeInterval|string $paymentFrequencyInterval,
-        \DateTimeInterface $previousBillingDate,
-        string $productID,
+        \DateTimeInterface $next_billing_date,
+        bool $on_demand,
+        int $payment_frequency_count,
+        TimeInterval|string $payment_frequency_interval,
+        \DateTimeInterface $previous_billing_date,
+        string $product_id,
         int $quantity,
-        int $recurringPreTaxAmount,
+        int $recurring_pre_tax_amount,
         SubscriptionStatus|string $status,
-        string $subscriptionID,
-        int $subscriptionPeriodCount,
-        TimeInterval|string $subscriptionPeriodInterval,
-        bool $taxInclusive,
-        int $trialPeriodDays,
-        ?\DateTimeInterface $cancelledAt = null,
-        ?int $discountCyclesRemaining = null,
-        ?string $discountID = null,
-        ?\DateTimeInterface $expiresAt = null,
-        ?string $taxID = null,
-        PayloadType|string|null $payloadType = null,
+        string $subscription_id,
+        int $subscription_period_count,
+        TimeInterval|string $subscription_period_interval,
+        bool $tax_inclusive,
+        int $trial_period_days,
+        ?\DateTimeInterface $cancelled_at = null,
+        ?int $discount_cycles_remaining = null,
+        ?string $discount_id = null,
+        ?\DateTimeInterface $expires_at = null,
+        ?string $tax_id = null,
+        PayloadType|string|null $payload_type = null,
     ): self {
         $obj = new self;
 
         $obj->addons = $addons;
         $obj->billing = $billing;
-        $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
-        $obj->createdAt = $createdAt;
+        $obj->cancel_at_next_billing_date = $cancel_at_next_billing_date;
+        $obj->created_at = $created_at;
         $obj['currency'] = $currency;
         $obj->customer = $customer;
         $obj->metadata = $metadata;
         $obj->meters = $meters;
-        $obj->nextBillingDate = $nextBillingDate;
-        $obj->onDemand = $onDemand;
-        $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
-        $obj->previousBillingDate = $previousBillingDate;
-        $obj->productID = $productID;
+        $obj->next_billing_date = $next_billing_date;
+        $obj->on_demand = $on_demand;
+        $obj->payment_frequency_count = $payment_frequency_count;
+        $obj['payment_frequency_interval'] = $payment_frequency_interval;
+        $obj->previous_billing_date = $previous_billing_date;
+        $obj->product_id = $product_id;
         $obj->quantity = $quantity;
-        $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
+        $obj->recurring_pre_tax_amount = $recurring_pre_tax_amount;
         $obj['status'] = $status;
-        $obj->subscriptionID = $subscriptionID;
-        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
-        $obj->taxInclusive = $taxInclusive;
-        $obj->trialPeriodDays = $trialPeriodDays;
+        $obj->subscription_id = $subscription_id;
+        $obj->subscription_period_count = $subscription_period_count;
+        $obj['subscription_period_interval'] = $subscription_period_interval;
+        $obj->tax_inclusive = $tax_inclusive;
+        $obj->trial_period_days = $trial_period_days;
 
-        null !== $cancelledAt && $obj->cancelledAt = $cancelledAt;
-        null !== $discountCyclesRemaining && $obj->discountCyclesRemaining = $discountCyclesRemaining;
-        null !== $discountID && $obj->discountID = $discountID;
-        null !== $expiresAt && $obj->expiresAt = $expiresAt;
-        null !== $taxID && $obj->taxID = $taxID;
-        null !== $payloadType && $obj['payloadType'] = $payloadType;
+        null !== $cancelled_at && $obj->cancelled_at = $cancelled_at;
+        null !== $discount_cycles_remaining && $obj->discount_cycles_remaining = $discount_cycles_remaining;
+        null !== $discount_id && $obj->discount_id = $discount_id;
+        null !== $expires_at && $obj->expires_at = $expires_at;
+        null !== $tax_id && $obj->tax_id = $tax_id;
+        null !== $payload_type && $obj['payload_type'] = $payload_type;
 
         return $obj;
     }
@@ -388,7 +388,7 @@ final class Data implements BaseModel
         bool $cancelAtNextBillingDate
     ): self {
         $obj = clone $this;
-        $obj->cancelAtNextBillingDate = $cancelAtNextBillingDate;
+        $obj->cancel_at_next_billing_date = $cancelAtNextBillingDate;
 
         return $obj;
     }
@@ -399,7 +399,7 @@ final class Data implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -426,7 +426,7 @@ final class Data implements BaseModel
     /**
      * Additional custom data associated with the subscription.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -456,7 +456,7 @@ final class Data implements BaseModel
         \DateTimeInterface $nextBillingDate
     ): self {
         $obj = clone $this;
-        $obj->nextBillingDate = $nextBillingDate;
+        $obj->next_billing_date = $nextBillingDate;
 
         return $obj;
     }
@@ -467,7 +467,7 @@ final class Data implements BaseModel
     public function withOnDemand(bool $onDemand): self
     {
         $obj = clone $this;
-        $obj->onDemand = $onDemand;
+        $obj->on_demand = $onDemand;
 
         return $obj;
     }
@@ -478,7 +478,7 @@ final class Data implements BaseModel
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
         $obj = clone $this;
-        $obj->paymentFrequencyCount = $paymentFrequencyCount;
+        $obj->payment_frequency_count = $paymentFrequencyCount;
 
         return $obj;
     }
@@ -490,7 +490,7 @@ final class Data implements BaseModel
         TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $obj['payment_frequency_interval'] = $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -502,7 +502,7 @@ final class Data implements BaseModel
         \DateTimeInterface $previousBillingDate
     ): self {
         $obj = clone $this;
-        $obj->previousBillingDate = $previousBillingDate;
+        $obj->previous_billing_date = $previousBillingDate;
 
         return $obj;
     }
@@ -513,7 +513,7 @@ final class Data implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }
@@ -535,7 +535,7 @@ final class Data implements BaseModel
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
         $obj = clone $this;
-        $obj->recurringPreTaxAmount = $recurringPreTaxAmount;
+        $obj->recurring_pre_tax_amount = $recurringPreTaxAmount;
 
         return $obj;
     }
@@ -557,7 +557,7 @@ final class Data implements BaseModel
     public function withSubscriptionID(string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscriptionID = $subscriptionID;
+        $obj->subscription_id = $subscriptionID;
 
         return $obj;
     }
@@ -569,7 +569,7 @@ final class Data implements BaseModel
         int $subscriptionPeriodCount
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
+        $obj->subscription_period_count = $subscriptionPeriodCount;
 
         return $obj;
     }
@@ -581,7 +581,7 @@ final class Data implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $obj['subscription_period_interval'] = $subscriptionPeriodInterval;
 
         return $obj;
     }
@@ -592,7 +592,7 @@ final class Data implements BaseModel
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->taxInclusive = $taxInclusive;
+        $obj->tax_inclusive = $taxInclusive;
 
         return $obj;
     }
@@ -603,7 +603,7 @@ final class Data implements BaseModel
     public function withTrialPeriodDays(int $trialPeriodDays): self
     {
         $obj = clone $this;
-        $obj->trialPeriodDays = $trialPeriodDays;
+        $obj->trial_period_days = $trialPeriodDays;
 
         return $obj;
     }
@@ -614,7 +614,7 @@ final class Data implements BaseModel
     public function withCancelledAt(?\DateTimeInterface $cancelledAt): self
     {
         $obj = clone $this;
-        $obj->cancelledAt = $cancelledAt;
+        $obj->cancelled_at = $cancelledAt;
 
         return $obj;
     }
@@ -626,7 +626,7 @@ final class Data implements BaseModel
         ?int $discountCyclesRemaining
     ): self {
         $obj = clone $this;
-        $obj->discountCyclesRemaining = $discountCyclesRemaining;
+        $obj->discount_cycles_remaining = $discountCyclesRemaining;
 
         return $obj;
     }
@@ -637,7 +637,7 @@ final class Data implements BaseModel
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discountID = $discountID;
+        $obj->discount_id = $discountID;
 
         return $obj;
     }
@@ -648,7 +648,7 @@ final class Data implements BaseModel
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expiresAt = $expiresAt;
+        $obj->expires_at = $expiresAt;
 
         return $obj;
     }
@@ -659,7 +659,7 @@ final class Data implements BaseModel
     public function withTaxID(?string $taxID): self
     {
         $obj = clone $this;
-        $obj->taxID = $taxID;
+        $obj->tax_id = $taxID;
 
         return $obj;
     }
@@ -672,7 +672,7 @@ final class Data implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj['payloadType'] = $payloadType;
+        $obj['payload_type'] = $payloadType;
 
         return $obj;
     }

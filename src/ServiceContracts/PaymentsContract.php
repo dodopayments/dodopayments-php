@@ -6,76 +6,26 @@ namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\NewCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
+use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
-use Dodopayments\Payments\PaymentListParams\Status;
+use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListResponse;
-use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Payments\PaymentNewResponse;
 use Dodopayments\RequestOptions;
-
-use const Dodopayments\Core\OMIT as omit;
 
 interface PaymentsContract
 {
     /**
      * @api
      *
-     * @param BillingAddress $billing Billing address details for the payment
-     * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
-     * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
-     *
-     * Customers will **never** see payment methods that are **not** in this list.
-     * However, adding a method here **does not guarantee** customers will see it.
-     * Availability still depends on other factors (e.g., customer location, merchant settings).
-     * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
-     * If Dodo Payments cannot support that currency for this transaction, it will not proceed
-     * @param string|null $discountCode Discount Code to apply to the transaction
-     * @param bool|null $force3DS Override merchant default 3DS behaviour for this payment
-     * @param array<string,
-     * string,> $metadata Additional metadata associated with the payment.
-     * Defaults to empty if not provided.
-     * @param bool|null $paymentLink Whether to generate a payment link. Defaults to false if not specified.
-     * @param string|null $returnURL Optional URL to redirect the customer after payment.
-     * Must be a valid URL if provided.
-     * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
-     * False by default
-     * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
+     * @param array<mixed>|PaymentCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $billing,
-        $customer,
-        $productCart,
-        $allowedPaymentMethodTypes = omit,
-        $billingCurrency = omit,
-        $discountCode = omit,
-        $force3DS = omit,
-        $metadata = omit,
-        $paymentLink = omit,
-        $returnURL = omit,
-        $showSavedPaymentMethods = omit,
-        $taxID = omit,
+        array|PaymentCreateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): PaymentNewResponse;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): PaymentNewResponse;
 
     /**
@@ -91,42 +41,14 @@ interface PaymentsContract
     /**
      * @api
      *
-     * @param string $brandID filter by Brand id
-     * @param \DateTimeInterface $createdAtGte Get events after this created time
-     * @param \DateTimeInterface $createdAtLte Get events created before this time
-     * @param string $customerID Filter by customer id
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
-     * @param Status|value-of<Status> $status Filter by status
-     * @param string $subscriptionID Filter by subscription id
+     * @param array<mixed>|PaymentListParams $params
      *
      * @return DefaultPageNumberPagination<PaymentListResponse>
      *
      * @throws APIException
      */
     public function list(
-        $brandID = omit,
-        $createdAtGte = omit,
-        $createdAtLte = omit,
-        $customerID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        $status = omit,
-        $subscriptionID = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<PaymentListResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|PaymentListParams $params,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 

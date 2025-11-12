@@ -17,8 +17,8 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type LedgerEntryCreateParamsShape = array{
  *   amount: int,
  *   currency: Currency|value-of<Currency>,
- *   entryType: EntryType|value-of<EntryType>,
- *   idempotencyKey?: string|null,
+ *   entry_type: EntryType|value-of<EntryType>,
+ *   idempotency_key?: string|null,
  *   reason?: string|null,
  * }
  */
@@ -42,16 +42,16 @@ final class LedgerEntryCreateParams implements BaseModel
     /**
      * Type of ledger entry - credit or debit.
      *
-     * @var value-of<EntryType> $entryType
+     * @var value-of<EntryType> $entry_type
      */
-    #[Api('entry_type', enum: EntryType::class)]
-    public string $entryType;
+    #[Api(enum: EntryType::class)]
+    public string $entry_type;
 
     /**
      * Optional idempotency key to prevent duplicate entries.
      */
-    #[Api('idempotency_key', nullable: true, optional: true)]
-    public ?string $idempotencyKey;
+    #[Api(nullable: true, optional: true)]
+    public ?string $idempotency_key;
 
     #[Api(nullable: true, optional: true)]
     public ?string $reason;
@@ -61,7 +61,7 @@ final class LedgerEntryCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * LedgerEntryCreateParams::with(amount: ..., currency: ..., entryType: ...)
+     * LedgerEntryCreateParams::with(amount: ..., currency: ..., entry_type: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -84,22 +84,22 @@ final class LedgerEntryCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param EntryType|value-of<EntryType> $entryType
+     * @param EntryType|value-of<EntryType> $entry_type
      */
     public static function with(
         int $amount,
         Currency|string $currency,
-        EntryType|string $entryType,
-        ?string $idempotencyKey = null,
+        EntryType|string $entry_type,
+        ?string $idempotency_key = null,
         ?string $reason = null,
     ): self {
         $obj = new self;
 
         $obj->amount = $amount;
         $obj['currency'] = $currency;
-        $obj['entryType'] = $entryType;
+        $obj['entry_type'] = $entry_type;
 
-        null !== $idempotencyKey && $obj->idempotencyKey = $idempotencyKey;
+        null !== $idempotency_key && $obj->idempotency_key = $idempotency_key;
         null !== $reason && $obj->reason = $reason;
 
         return $obj;
@@ -134,7 +134,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withEntryType(EntryType|string $entryType): self
     {
         $obj = clone $this;
-        $obj['entryType'] = $entryType;
+        $obj['entry_type'] = $entryType;
 
         return $obj;
     }
@@ -145,7 +145,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withIdempotencyKey(?string $idempotencyKey): self
     {
         $obj = clone $this;
-        $obj->idempotencyKey = $idempotencyKey;
+        $obj->idempotency_key = $idempotencyKey;
 
         return $obj;
     }

@@ -13,9 +13,9 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type LicenseKeyInstanceShape = array{
  *   id: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   licenseKeyID: string,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   license_key_id: string,
  *   name: string,
  * }
  */
@@ -29,14 +29,14 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     #[Api]
     public string $id;
 
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
-    #[Api('license_key_id')]
-    public string $licenseKeyID;
+    #[Api]
+    public string $license_key_id;
 
     #[Api]
     public string $name;
@@ -47,7 +47,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * LicenseKeyInstance::with(
-     *   id: ..., businessID: ..., createdAt: ..., licenseKeyID: ..., name: ...
+     *   id: ..., business_id: ..., created_at: ..., license_key_id: ..., name: ...
      * )
      * ```
      *
@@ -74,17 +74,17 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        string $licenseKeyID,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        string $license_key_id,
         string $name,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->licenseKeyID = $licenseKeyID;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->license_key_id = $license_key_id;
         $obj->name = $name;
 
         return $obj;
@@ -101,7 +101,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withLicenseKeyID(string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj->licenseKeyID = $licenseKeyID;
+        $obj->license_key_id = $licenseKeyID;
 
         return $obj;
     }

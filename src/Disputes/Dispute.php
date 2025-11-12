@@ -11,13 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type DisputeShape = array{
  *   amount: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
  *   currency: string,
- *   disputeID: string,
- *   disputeStage: value-of<DisputeStage>,
- *   disputeStatus: value-of<DisputeStatus>,
- *   paymentID: string,
+ *   dispute_id: string,
+ *   dispute_stage: value-of<DisputeStage>,
+ *   dispute_status: value-of<DisputeStatus>,
+ *   payment_id: string,
  *   remarks?: string|null,
  * }
  */
@@ -35,14 +35,14 @@ final class Dispute implements BaseModel
     /**
      * The unique identifier of the business involved in the dispute.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The timestamp of when the dispute was created, in UTC.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * The currency of the disputed amount, represented as an ISO 4217 currency code.
@@ -53,30 +53,30 @@ final class Dispute implements BaseModel
     /**
      * The unique identifier of the dispute.
      */
-    #[Api('dispute_id')]
-    public string $disputeID;
+    #[Api]
+    public string $dispute_id;
 
     /**
      * The current stage of the dispute process.
      *
-     * @var value-of<DisputeStage> $disputeStage
+     * @var value-of<DisputeStage> $dispute_stage
      */
-    #[Api('dispute_stage', enum: DisputeStage::class)]
-    public string $disputeStage;
+    #[Api(enum: DisputeStage::class)]
+    public string $dispute_stage;
 
     /**
      * The current status of the dispute.
      *
-     * @var value-of<DisputeStatus> $disputeStatus
+     * @var value-of<DisputeStatus> $dispute_status
      */
-    #[Api('dispute_status', enum: DisputeStatus::class)]
-    public string $disputeStatus;
+    #[Api(enum: DisputeStatus::class)]
+    public string $dispute_status;
 
     /**
      * The unique identifier of the payment associated with the dispute.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * Remarks.
@@ -91,13 +91,13 @@ final class Dispute implements BaseModel
      * ```
      * Dispute::with(
      *   amount: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
+     *   business_id: ...,
+     *   created_at: ...,
      *   currency: ...,
-     *   disputeID: ...,
-     *   disputeStage: ...,
-     *   disputeStatus: ...,
-     *   paymentID: ...,
+     *   dispute_id: ...,
+     *   dispute_stage: ...,
+     *   dispute_status: ...,
+     *   payment_id: ...,
      * )
      * ```
      *
@@ -125,30 +125,30 @@ final class Dispute implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DisputeStage|value-of<DisputeStage> $disputeStage
-     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
+     * @param DisputeStage|value-of<DisputeStage> $dispute_stage
+     * @param DisputeStatus|value-of<DisputeStatus> $dispute_status
      */
     public static function with(
         string $amount,
-        string $businessID,
-        \DateTimeInterface $createdAt,
+        string $business_id,
+        \DateTimeInterface $created_at,
         string $currency,
-        string $disputeID,
-        DisputeStage|string $disputeStage,
-        DisputeStatus|string $disputeStatus,
-        string $paymentID,
+        string $dispute_id,
+        DisputeStage|string $dispute_stage,
+        DisputeStatus|string $dispute_status,
+        string $payment_id,
         ?string $remarks = null,
     ): self {
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
         $obj->currency = $currency;
-        $obj->disputeID = $disputeID;
-        $obj['disputeStage'] = $disputeStage;
-        $obj['disputeStatus'] = $disputeStatus;
-        $obj->paymentID = $paymentID;
+        $obj->dispute_id = $dispute_id;
+        $obj['dispute_stage'] = $dispute_stage;
+        $obj['dispute_status'] = $dispute_status;
+        $obj->payment_id = $payment_id;
 
         null !== $remarks && $obj->remarks = $remarks;
 
@@ -172,7 +172,7 @@ final class Dispute implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -183,7 +183,7 @@ final class Dispute implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -205,7 +205,7 @@ final class Dispute implements BaseModel
     public function withDisputeID(string $disputeID): self
     {
         $obj = clone $this;
-        $obj->disputeID = $disputeID;
+        $obj->dispute_id = $disputeID;
 
         return $obj;
     }
@@ -218,7 +218,7 @@ final class Dispute implements BaseModel
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj['disputeStage'] = $disputeStage;
+        $obj['dispute_stage'] = $disputeStage;
 
         return $obj;
     }
@@ -231,7 +231,7 @@ final class Dispute implements BaseModel
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj['disputeStatus'] = $disputeStatus;
+        $obj['dispute_status'] = $disputeStatus;
 
         return $obj;
     }
@@ -242,7 +242,7 @@ final class Dispute implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }

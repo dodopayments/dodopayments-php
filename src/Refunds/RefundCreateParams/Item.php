@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ItemShape = array{
- *   itemID: string, amount?: int|null, taxInclusive?: bool
+ *   item_id: string, amount?: int|null, tax_inclusive?: bool|null
  * }
  */
 final class Item implements BaseModel
@@ -21,8 +21,8 @@ final class Item implements BaseModel
     /**
      * The id of the item (i.e. `product_id` or `addon_id`).
      */
-    #[Api('item_id')]
-    public string $itemID;
+    #[Api]
+    public string $item_id;
 
     /**
      * The amount to refund. if None the whole item is refunded.
@@ -33,15 +33,15 @@ final class Item implements BaseModel
     /**
      * Specify if tax is inclusive of the refund. Default true.
      */
-    #[Api('tax_inclusive', optional: true)]
-    public ?bool $taxInclusive;
+    #[Api(optional: true)]
+    public ?bool $tax_inclusive;
 
     /**
      * `new Item()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Item::with(itemID: ...)
+     * Item::with(item_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -61,16 +61,16 @@ final class Item implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $itemID,
+        string $item_id,
         ?int $amount = null,
-        ?bool $taxInclusive = null
+        ?bool $tax_inclusive = null
     ): self {
         $obj = new self;
 
-        $obj->itemID = $itemID;
+        $obj->item_id = $item_id;
 
         null !== $amount && $obj->amount = $amount;
-        null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
+        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class Item implements BaseModel
     public function withItemID(string $itemID): self
     {
         $obj = clone $this;
-        $obj->itemID = $itemID;
+        $obj->item_id = $itemID;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class Item implements BaseModel
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->taxInclusive = $taxInclusive;
+        $obj->tax_inclusive = $taxInclusive;
 
         return $obj;
     }

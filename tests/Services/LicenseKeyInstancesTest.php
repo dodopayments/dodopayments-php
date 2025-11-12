@@ -37,7 +37,10 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->licenseKeyInstances->update('lki_123', 'name');
+        $result = $this->client->licenseKeyInstances->update(
+            'lki_123',
+            ['name' => 'name']
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -45,7 +48,10 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testUpdateWithOptionalParams(): void
     {
-        $result = $this->client->licenseKeyInstances->update('lki_123', 'name');
+        $result = $this->client->licenseKeyInstances->update(
+            'lki_123',
+            ['name' => 'name']
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -57,7 +63,7 @@ final class LicenseKeyInstancesTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->licenseKeyInstances->list();
+        $result = $this->client->licenseKeyInstances->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -14,7 +14,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Webhooks\Headers->update
  *
- * @phpstan-type HeaderUpdateParamsShape = array{headers: array<string, string>}
+ * @phpstan-type HeaderUpdateParamsShape = array{headers: array<string,string>}
  */
 final class HeaderUpdateParams implements BaseModel
 {
@@ -25,7 +25,7 @@ final class HeaderUpdateParams implements BaseModel
     /**
      * Object of header-value pair to update or add.
      *
-     * @var array<string, string> $headers
+     * @var array<string,string> $headers
      */
     #[Api(map: 'string')]
     public array $headers;
@@ -54,7 +54,7 @@ final class HeaderUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $headers
+     * @param array<string,string> $headers
      */
     public static function with(array $headers): self
     {
@@ -68,7 +68,7 @@ final class HeaderUpdateParams implements BaseModel
     /**
      * Object of header-value pair to update or add.
      *
-     * @param array<string, string> $headers
+     * @param array<string,string> $headers
      */
     public function withHeaders(array $headers): self
     {

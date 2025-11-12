@@ -3,7 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\UsageEvents\EventInput;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -42,7 +41,7 @@ final class UsageEventsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->usageEvents->list();
+        $result = $this->client->usageEvents->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -50,15 +49,15 @@ final class UsageEventsTest extends TestCase
     #[Test]
     public function testIngest(): void
     {
-        $result = $this->client->usageEvents->ingest(
-            [
-                EventInput::with(
-                    customerID: 'customer_id',
-                    eventID: 'event_id',
-                    eventName: 'event_name',
-                ),
+        $result = $this->client->usageEvents->ingest([
+            'events' => [
+                [
+                    'customer_id' => 'customer_id',
+                    'event_id' => 'event_id',
+                    'event_name' => 'event_name',
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -66,17 +65,17 @@ final class UsageEventsTest extends TestCase
     #[Test]
     public function testIngestWithOptionalParams(): void
     {
-        $result = $this->client->usageEvents->ingest(
-            [
-                EventInput::with(
-                    customerID: 'customer_id',
-                    eventID: 'event_id',
-                    eventName: 'event_name',
-                )
-                    ->withMetadata(['foo' => 'string'])
-                    ->withTimestamp(new \DateTimeImmutable('2019-12-27T18:11:19.117Z')),
+        $result = $this->client->usageEvents->ingest([
+            'events' => [
+                [
+                    'customer_id' => 'customer_id',
+                    'event_id' => 'event_id',
+                    'event_name' => 'event_name',
+                    'metadata' => ['foo' => 'string'],
+                    'timestamp' => '2019-12-27T18:11:19.117Z',
+                ],
             ],
-        );
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -187,7 +187,7 @@ class Client extends BaseClient
         $this->meters = new MetersService($this);
     }
 
-    /** @return array<string, string> */
+    /** @return array<string,string> */
     protected function authHeaders(): array
     {
         return $this->bearerToken ? [

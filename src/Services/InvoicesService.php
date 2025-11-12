@@ -11,7 +11,7 @@ use Dodopayments\Services\Invoices\PaymentsService;
 final class InvoicesService implements InvoicesContract
 {
     /**
-     * @@api
+     * @api
      */
     public PaymentsService $payments;
 

@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
- * @phpstan-type SubscriptionChargeResponseShape = array{paymentID: string}
+ * @phpstan-type SubscriptionChargeResponseShape = array{payment_id: string}
  */
 final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
 {
@@ -20,15 +20,15 @@ final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * `new SubscriptionChargeResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * SubscriptionChargeResponse::with(paymentID: ...)
+     * SubscriptionChargeResponse::with(payment_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -47,11 +47,11 @@ final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $paymentID): self
+    public static function with(string $payment_id): self
     {
         $obj = new self;
 
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $payment_id;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }

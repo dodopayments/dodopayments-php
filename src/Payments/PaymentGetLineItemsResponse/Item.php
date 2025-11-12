@@ -11,8 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type ItemShape = array{
  *   amount: int,
- *   itemsID: string,
- *   refundableAmount: int,
+ *   items_id: string,
+ *   refundable_amount: int,
  *   tax: int,
  *   description?: string|null,
  *   name?: string|null,
@@ -26,11 +26,11 @@ final class Item implements BaseModel
     #[Api]
     public int $amount;
 
-    #[Api('items_id')]
-    public string $itemsID;
+    #[Api]
+    public string $items_id;
 
-    #[Api('refundable_amount')]
-    public int $refundableAmount;
+    #[Api]
+    public int $refundable_amount;
 
     #[Api]
     public int $tax;
@@ -46,7 +46,7 @@ final class Item implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Item::with(amount: ..., itemsID: ..., refundableAmount: ..., tax: ...)
+     * Item::with(amount: ..., items_id: ..., refundable_amount: ..., tax: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -71,8 +71,8 @@ final class Item implements BaseModel
      */
     public static function with(
         int $amount,
-        string $itemsID,
-        int $refundableAmount,
+        string $items_id,
+        int $refundable_amount,
         int $tax,
         ?string $description = null,
         ?string $name = null,
@@ -80,8 +80,8 @@ final class Item implements BaseModel
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->itemsID = $itemsID;
-        $obj->refundableAmount = $refundableAmount;
+        $obj->items_id = $items_id;
+        $obj->refundable_amount = $refundable_amount;
         $obj->tax = $tax;
 
         null !== $description && $obj->description = $description;
@@ -101,7 +101,7 @@ final class Item implements BaseModel
     public function withItemsID(string $itemsID): self
     {
         $obj = clone $this;
-        $obj->itemsID = $itemsID;
+        $obj->items_id = $itemsID;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class Item implements BaseModel
     public function withRefundableAmount(int $refundableAmount): self
     {
         $obj = clone $this;
-        $obj->refundableAmount = $refundableAmount;
+        $obj->refundable_amount = $refundableAmount;
 
         return $obj;
     }

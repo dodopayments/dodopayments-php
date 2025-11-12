@@ -28,7 +28,7 @@ final class ImagesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->products->images->update('id');
+        $result = $this->client->products->images->update('id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

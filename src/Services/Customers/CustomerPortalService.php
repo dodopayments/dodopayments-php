@@ -11,8 +11,6 @@ use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\CustomerPortalContract;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class CustomerPortalService implements CustomerPortalContract
 {
     /**
@@ -23,35 +21,18 @@ final class CustomerPortalService implements CustomerPortalContract
     /**
      * @api
      *
-     * @param bool $sendEmail if true, will send link to user
+     * @param array{send_email?: bool}|CustomerPortalCreateParams $params
      *
      * @throws APIException
      */
     public function create(
         string $customerID,
-        $sendEmail = omit,
+        array|CustomerPortalCreateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): CustomerPortalSession {
-        $params = ['sendEmail' => $sendEmail];
-
-        return $this->createRaw($customerID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        string $customerID,
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): CustomerPortalSession {
         [$parsed, $options] = CustomerPortalCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

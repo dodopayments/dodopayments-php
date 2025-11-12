@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ImageUpdateResponseShape = array{
- *   url: string, imageID?: string|null
+ *   url: string, image_id?: string|null
  * }
  */
 final class ImageUpdateResponse implements BaseModel, ResponseConverter
@@ -25,8 +25,8 @@ final class ImageUpdateResponse implements BaseModel, ResponseConverter
     #[Api]
     public string $url;
 
-    #[Api('image_id', nullable: true, optional: true)]
-    public ?string $imageID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $image_id;
 
     /**
      * `new ImageUpdateResponse()` is missing required properties by the API.
@@ -52,13 +52,13 @@ final class ImageUpdateResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $url, ?string $imageID = null): self
+    public static function with(string $url, ?string $image_id = null): self
     {
         $obj = new self;
 
         $obj->url = $url;
 
-        null !== $imageID && $obj->imageID = $imageID;
+        null !== $image_id && $obj->image_id = $image_id;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class ImageUpdateResponse implements BaseModel, ResponseConverter
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->imageID = $imageID;
+        $obj->image_id = $imageID;
 
         return $obj;
     }

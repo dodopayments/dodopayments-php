@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Customers->update
  *
  * @phpstan-type CustomerUpdateParamsShape = array{
- *   name?: string|null, phoneNumber?: string|null
+ *   name?: string|null, phone_number?: string|null
  * }
  */
 final class CustomerUpdateParams implements BaseModel
@@ -25,8 +25,8 @@ final class CustomerUpdateParams implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?string $name;
 
-    #[Api('phone_number', nullable: true, optional: true)]
-    public ?string $phoneNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?string $phone_number;
 
     public function __construct()
     {
@@ -40,12 +40,12 @@ final class CustomerUpdateParams implements BaseModel
      */
     public static function with(
         ?string $name = null,
-        ?string $phoneNumber = null
+        ?string $phone_number = null
     ): self {
         $obj = new self;
 
         null !== $name && $obj->name = $name;
-        null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
+        null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
     }
@@ -61,7 +61,7 @@ final class CustomerUpdateParams implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phoneNumber = $phoneNumber;
+        $obj->phone_number = $phoneNumber;
 
         return $obj;
     }

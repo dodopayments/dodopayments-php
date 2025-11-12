@@ -11,8 +11,6 @@ use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Products\ImagesContract;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class ImagesService implements ImagesContract
 {
     /**
@@ -23,35 +21,18 @@ final class ImagesService implements ImagesContract
     /**
      * @api
      *
-     * @param bool $forceUpdate
+     * @param array{force_update?: bool}|ImageUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        $forceUpdate = omit,
-        ?RequestOptions $requestOptions = null
-    ): ImageUpdateResponse {
-        $params = ['forceUpdate' => $forceUpdate];
-
-        return $this->updateRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $id,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|ImageUpdateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): ImageUpdateResponse {
         [$parsed, $options] = ImageUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

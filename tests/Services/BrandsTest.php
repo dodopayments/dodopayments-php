@@ -28,7 +28,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->brands->create();
+        $result = $this->client->brands->create([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -44,7 +44,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->brands->update('id');
+        $result = $this->client->brands->update('id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
