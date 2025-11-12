@@ -3,9 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\BillingAddress;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,18 +29,18 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->subscriptions->create(
-            billing: BillingAddress::with(
-                city: 'city',
-                country: CountryCode::AF,
-                state: 'state',
-                street: 'street',
-                zipcode: 'zipcode',
-            ),
-            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
-            productID: 'product_id',
-            quantity: 0,
-        );
+        $result = $this->client->subscriptions->create([
+            'billing' => [
+                'city' => 'city',
+                'country' => 'AF',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
+            ],
+            'customer' => ['customer_id' => 'customer_id'],
+            'product_id' => 'product_id',
+            'quantity' => 0,
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -51,18 +48,18 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->subscriptions->create(
-            billing: BillingAddress::with(
-                city: 'city',
-                country: CountryCode::AF,
-                state: 'state',
-                street: 'street',
-                zipcode: 'zipcode',
-            ),
-            customer: AttachExistingCustomer::with(customerID: 'customer_id'),
-            productID: 'product_id',
-            quantity: 0,
-        );
+        $result = $this->client->subscriptions->create([
+            'billing' => [
+                'city' => 'city',
+                'country' => 'AF',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
+            ],
+            'customer' => ['customer_id' => 'customer_id'],
+            'product_id' => 'product_id',
+            'quantity' => 0,
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -78,7 +75,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->subscriptions->update('subscription_id');
+        $result = $this->client->subscriptions->update('subscription_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -90,7 +87,7 @@ final class SubscriptionsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->subscriptions->list();
+        $result = $this->client->subscriptions->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -100,9 +97,11 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->changePlan(
             'subscription_id',
-            productID: 'product_id',
-            prorationBillingMode: 'prorated_immediately',
-            quantity: 0,
+            [
+                'product_id' => 'product_id',
+                'proration_billing_mode' => 'prorated_immediately',
+                'quantity' => 0,
+            ],
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -113,9 +112,11 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->changePlan(
             'subscription_id',
-            productID: 'product_id',
-            prorationBillingMode: 'prorated_immediately',
-            quantity: 0,
+            [
+                'product_id' => 'product_id',
+                'proration_billing_mode' => 'prorated_immediately',
+                'quantity' => 0,
+            ],
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -126,7 +127,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->charge(
             'subscription_id',
-            productPrice: 0
+            ['product_price' => 0]
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -137,7 +138,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->charge(
             'subscription_id',
-            productPrice: 0
+            ['product_price' => 0]
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -151,7 +152,8 @@ final class SubscriptionsTest extends TestCase
         }
 
         $result = $this->client->subscriptions->retrieveUsageHistory(
-            'subscription_id'
+            'subscription_id',
+            []
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

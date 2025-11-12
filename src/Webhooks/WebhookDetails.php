@@ -13,14 +13,14 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 /**
  * @phpstan-type WebhookDetailsShape = array{
  *   id: string,
- *   createdAt: string,
+ *   created_at: string,
  *   description: string,
- *   metadata: array<string, string>,
- *   updatedAt: string,
+ *   metadata: array<string,string>,
+ *   updated_at: string,
  *   url: string,
  *   disabled?: bool|null,
- *   filterTypes?: list<string>|null,
- *   rateLimit?: int|null,
+ *   filter_types?: list<string>|null,
+ *   rate_limit?: int|null,
  * }
  */
 final class WebhookDetails implements BaseModel, ResponseConverter
@@ -39,8 +39,8 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     /**
      * Created at timestamp.
      */
-    #[Api('created_at')]
-    public string $createdAt;
+    #[Api]
+    public string $created_at;
 
     /**
      * An example webhook name.
@@ -51,7 +51,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     /**
      * Metadata of the webhook.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -59,8 +59,8 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     /**
      * Updated at timestamp.
      */
-    #[Api('updated_at')]
-    public string $updatedAt;
+    #[Api]
+    public string $updated_at;
 
     /**
      * Url endpoint of the webhook.
@@ -81,16 +81,16 @@ final class WebhookDetails implements BaseModel, ResponseConverter
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var list<string>|null $filterTypes
+     * @var list<string>|null $filter_types
      */
-    #[Api('filter_types', list: 'string', nullable: true, optional: true)]
-    public ?array $filterTypes;
+    #[Api(list: 'string', nullable: true, optional: true)]
+    public ?array $filter_types;
 
     /**
      * Configured rate limit.
      */
-    #[Api('rate_limit', nullable: true, optional: true)]
-    public ?int $rateLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $rate_limit;
 
     /**
      * `new WebhookDetails()` is missing required properties by the API.
@@ -99,10 +99,10 @@ final class WebhookDetails implements BaseModel, ResponseConverter
      * ```
      * WebhookDetails::with(
      *   id: ...,
-     *   createdAt: ...,
+     *   created_at: ...,
      *   description: ...,
      *   metadata: ...,
-     *   updatedAt: ...,
+     *   updated_at: ...,
      *   url: ...,
      * )
      * ```
@@ -129,32 +129,32 @@ final class WebhookDetails implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $metadata
-     * @param list<string>|null $filterTypes
+     * @param array<string,string> $metadata
+     * @param list<string>|null $filter_types
      */
     public static function with(
         string $id,
-        string $createdAt,
+        string $created_at,
         string $description,
         array $metadata,
-        string $updatedAt,
+        string $updated_at,
         string $url,
         ?bool $disabled = null,
-        ?array $filterTypes = null,
-        ?int $rateLimit = null,
+        ?array $filter_types = null,
+        ?int $rate_limit = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $created_at;
         $obj->description = $description;
         $obj->metadata = $metadata;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updated_at;
         $obj->url = $url;
 
         null !== $disabled && $obj->disabled = $disabled;
-        null !== $filterTypes && $obj->filterTypes = $filterTypes;
-        null !== $rateLimit && $obj->rateLimit = $rateLimit;
+        null !== $filter_types && $obj->filter_types = $filter_types;
+        null !== $rate_limit && $obj->rate_limit = $rate_limit;
 
         return $obj;
     }
@@ -176,7 +176,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -195,7 +195,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     /**
      * Metadata of the webhook.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -211,7 +211,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withUpdatedAt(string $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }
@@ -250,7 +250,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withFilterTypes(?array $filterTypes): self
     {
         $obj = clone $this;
-        $obj->filterTypes = $filterTypes;
+        $obj->filter_types = $filterTypes;
 
         return $obj;
     }
@@ -261,7 +261,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj->rateLimit = $rateLimit;
+        $obj->rate_limit = $rateLimit;
 
         return $obj;
     }

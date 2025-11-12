@@ -10,19 +10,16 @@ use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\WebhooksContract;
 use Dodopayments\Services\Webhooks\HeadersService;
-use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookCreateParams;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Webhooks\WebhookListParams;
 use Dodopayments\Webhooks\WebhookUpdateParams;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class WebhooksService implements WebhooksContract
 {
     /**
-     * @@api
+     * @api
      */
     public HeadersService $headers;
 
@@ -39,61 +36,26 @@ final class WebhooksService implements WebhooksContract
      *
      * Create a new webhook
      *
-     * @param string $url Url of the webhook
-     * @param string|null $description
-     * @param bool|null $disabled Create the webhook in a disabled state.
-     *
-     * Default is false
-     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes Filter events to the webhook.
-     *
-     * Webhook event will only be sent for events in the list.
-     * @param array<string, string>|null $headers Custom headers to be passed
-     * @param string|null $idempotencyKey The request's idempotency key
-     * @param array<string, string>|null $metadata Metadata to be passed to the webhook
-     * Defaut is {}
-     * @param int|null $rateLimit
+     * @param array{
+     *   url: string,
+     *   description?: string|null,
+     *   disabled?: bool|null,
+     *   filter_types?: list<"payment.succeeded"|"payment.failed"|"payment.processing"|"payment.cancelled"|"refund.succeeded"|"refund.failed"|"dispute.opened"|"dispute.expired"|"dispute.accepted"|"dispute.cancelled"|"dispute.challenged"|"dispute.won"|"dispute.lost"|"subscription.active"|"subscription.renewed"|"subscription.on_hold"|"subscription.cancelled"|"subscription.failed"|"subscription.expired"|"subscription.plan_changed"|"license_key.created">,
+     *   headers?: array<string,string>|null,
+     *   idempotency_key?: string|null,
+     *   metadata?: array<string,string>|null,
+     *   rate_limit?: int|null,
+     * }|WebhookCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $url,
-        $description = omit,
-        $disabled = omit,
-        $filterTypes = omit,
-        $headers = omit,
-        $idempotencyKey = omit,
-        $metadata = omit,
-        $rateLimit = omit,
-        ?RequestOptions $requestOptions = null,
-    ): WebhookDetails {
-        $params = [
-            'url' => $url,
-            'description' => $description,
-            'disabled' => $disabled,
-            'filterTypes' => $filterTypes,
-            'headers' => $headers,
-            'idempotencyKey' => $idempotencyKey,
-            'metadata' => $metadata,
-            'rateLimit' => $rateLimit,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|WebhookCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
         [$parsed, $options] = WebhookCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -131,54 +93,25 @@ final class WebhooksService implements WebhooksContract
      *
      * Patch a webhook by id
      *
-     * @param string|null $description Description of the webhook
-     * @param bool|null $disabled to Disable the endpoint, set it to true
-     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes Filter events to the endpoint.
-     *
-     * Webhook event will only be sent for events in the list.
-     * @param array<string, string>|null $metadata Metadata
-     * @param int|null $rateLimit Rate limit
-     * @param string|null $url Url endpoint
+     * @param array{
+     *   description?: string|null,
+     *   disabled?: bool|null,
+     *   filter_types?: list<"payment.succeeded"|"payment.failed"|"payment.processing"|"payment.cancelled"|"refund.succeeded"|"refund.failed"|"dispute.opened"|"dispute.expired"|"dispute.accepted"|"dispute.cancelled"|"dispute.challenged"|"dispute.won"|"dispute.lost"|"subscription.active"|"subscription.renewed"|"subscription.on_hold"|"subscription.cancelled"|"subscription.failed"|"subscription.expired"|"subscription.plan_changed"|"license_key.created">|null,
+     *   metadata?: array<string,string>|null,
+     *   rate_limit?: int|null,
+     *   url?: string|null,
+     * }|WebhookUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        $description = omit,
-        $disabled = omit,
-        $filterTypes = omit,
-        $metadata = omit,
-        $rateLimit = omit,
-        $url = omit,
+        array|WebhookUpdateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): WebhookDetails {
-        $params = [
-            'description' => $description,
-            'disabled' => $disabled,
-            'filterTypes' => $filterTypes,
-            'metadata' => $metadata,
-            'rateLimit' => $rateLimit,
-            'url' => $url,
-        ];
-
-        return $this->updateRaw($webhookID, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $webhookID,
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): WebhookDetails {
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -196,39 +129,19 @@ final class WebhooksService implements WebhooksContract
      *
      * List all webhooks
      *
-     * @param string|null $iterator The iterator returned from a prior invocation
-     * @param int|null $limit Limit the number of returned items
+     * @param array{iterator?: string|null, limit?: int|null}|WebhookListParams $params
      *
      * @return CursorPagePagination<WebhookDetails>
      *
      * @throws APIException
      */
     public function list(
-        $iterator = omit,
-        $limit = omit,
-        ?RequestOptions $requestOptions = null
-    ): CursorPagePagination {
-        $params = ['iterator' => $iterator, 'limit' => $limit];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return CursorPagePagination<WebhookDetails>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|WebhookListParams $params,
         ?RequestOptions $requestOptions = null
     ): CursorPagePagination {
         [$parsed, $options] = WebhookListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

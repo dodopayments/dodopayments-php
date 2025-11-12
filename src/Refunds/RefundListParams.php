@@ -14,11 +14,11 @@ use Dodopayments\Refunds\RefundListParams\Status;
  * @see Dodopayments\Refunds->list
  *
  * @phpstan-type RefundListParamsShape = array{
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
+ *   created_at_gte?: \DateTimeInterface,
+ *   created_at_lte?: \DateTimeInterface,
+ *   customer_id?: string,
+ *   page_number?: int,
+ *   page_size?: int,
  *   status?: Status|value-of<Status>,
  * }
  */
@@ -32,31 +32,31 @@ final class RefundListParams implements BaseModel
      * Get events after this created time.
      */
     #[Api(optional: true)]
-    public ?\DateTimeInterface $createdAtGte;
+    public ?\DateTimeInterface $created_at_gte;
 
     /**
      * Get events created before this time.
      */
     #[Api(optional: true)]
-    public ?\DateTimeInterface $createdAtLte;
+    public ?\DateTimeInterface $created_at_lte;
 
     /**
      * Filter by customer_id.
      */
     #[Api(optional: true)]
-    public ?string $customerID;
+    public ?string $customer_id;
 
     /**
      * Page number default is 0.
      */
     #[Api(optional: true)]
-    public ?int $pageNumber;
+    public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     /**
      * Filter by status.
@@ -79,20 +79,20 @@ final class RefundListParams implements BaseModel
      * @param Status|value-of<Status> $status
      */
     public static function with(
-        ?\DateTimeInterface $createdAtGte = null,
-        ?\DateTimeInterface $createdAtLte = null,
-        ?string $customerID = null,
-        ?int $pageNumber = null,
-        ?int $pageSize = null,
+        ?\DateTimeInterface $created_at_gte = null,
+        ?\DateTimeInterface $created_at_lte = null,
+        ?string $customer_id = null,
+        ?int $page_number = null,
+        ?int $page_size = null,
         Status|string|null $status = null,
     ): self {
         $obj = new self;
 
-        null !== $createdAtGte && $obj->createdAtGte = $createdAtGte;
-        null !== $createdAtLte && $obj->createdAtLte = $createdAtLte;
-        null !== $customerID && $obj->customerID = $customerID;
-        null !== $pageNumber && $obj->pageNumber = $pageNumber;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $created_at_gte && $obj->created_at_gte = $created_at_gte;
+        null !== $created_at_lte && $obj->created_at_lte = $created_at_lte;
+        null !== $customer_id && $obj->customer_id = $customer_id;
+        null !== $page_number && $obj->page_number = $page_number;
+        null !== $page_size && $obj->page_size = $page_size;
         null !== $status && $obj['status'] = $status;
 
         return $obj;
@@ -104,7 +104,7 @@ final class RefundListParams implements BaseModel
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
         $obj = clone $this;
-        $obj->createdAtGte = $createdAtGte;
+        $obj->created_at_gte = $createdAtGte;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class RefundListParams implements BaseModel
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
         $obj = clone $this;
-        $obj->createdAtLte = $createdAtLte;
+        $obj->created_at_lte = $createdAtLte;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class RefundListParams implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customerID = $customerID;
+        $obj->customer_id = $customerID;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class RefundListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->pageNumber = $pageNumber;
+        $obj->page_number = $pageNumber;
 
         return $obj;
     }
@@ -148,7 +148,7 @@ final class RefundListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }

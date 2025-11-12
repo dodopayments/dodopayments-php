@@ -34,16 +34,15 @@ Parameters with a default value must be set by name.
 <?php
 
 use Dodopayments\Client;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 
 $client = new Client(
   bearerToken: getenv("DODO_PAYMENTS_API_KEY") ?: "My Bearer Token",
   environment: "test_mode",
 );
 
-$checkoutSessionResponse = $client->checkoutSessions->create(
-  productCart: [ProductCart::with(productID: "product_id", quantity: 0)]
-);
+$checkoutSessionResponse = $client->checkoutSessions->create([
+  "product_cart" => [["product_id" => "product_id", "quantity" => 0]]
+]);
 
 var_dump($checkoutSessionResponse->session_id);
 ```
@@ -71,7 +70,7 @@ $client = new Client(
   environment: "test_mode",
 );
 
-$page = $client->payments->list();
+$page = $client->payments->list([]);
 
 var_dump($page);
 
@@ -92,13 +91,12 @@ When the library is unable to connect to the API, or if the API returns a non-su
 ```php
 <?php
 
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\Core\Exceptions\APIConnectionException;
 
 try {
-  $checkoutSessionResponse = $client->checkoutSessions->create(
-    productCart: [ProductCart::with(productID: "product_id", quantity: 0)]
-  );
+  $checkoutSessionResponse = $client->checkoutSessions->create([
+    "product_cart" => [["product_id" => "product_id", "quantity" => 0]]
+  ]);
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
@@ -139,15 +137,14 @@ You can use the `maxRetries` option to configure or disable this:
 
 use Dodopayments\Client;
 use Dodopayments\RequestOptions;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 
 // Configure the default for all requests:
 $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
 $result = $client->checkoutSessions->create(
-  productCart: [ProductCart::with(productID: "product_id", quantity: 0)],
-  requestOptions: RequestOptions::with(maxRetries: 5),
+  ["product_cart" => [["product_id" => "product_id", "quantity" => 0]]],
+  RequestOptions::with(maxRetries: 5),
 );
 ```
 
@@ -165,18 +162,15 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 <?php
 
 use Dodopayments\RequestOptions;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 
 $checkoutSessionResponse = $client->checkoutSessions->create(
-  productCart: [ProductCart::with(productID: "product_id", quantity: 0)],
-  requestOptions: RequestOptions::with(
+  ["product_cart" => [["product_id" => "product_id", "quantity" => 0]]],
+  RequestOptions::with(
     extraQueryParams: ["my_query_parameter" => "value"],
     extraBodyParams: ["my_body_parameter" => "value"],
     extraHeaders: ["my-header" => "value"],
   ),
 );
-
-var_dump($checkoutSessionResponse["my_undocumented_property"]);
 ```
 
 #### Undocumented request params

@@ -7,9 +7,9 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
+use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
+use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
-
-use const Dodopayments\Core\OMIT as omit;
 
 interface LicenseKeyInstancesContract
 {
@@ -26,58 +26,27 @@ interface LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @param string $name
+     * @param array<mixed>|LicenseKeyInstanceUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        $name,
-        ?RequestOptions $requestOptions = null
+        array|LicenseKeyInstanceUpdateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): LicenseKeyInstance;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $id,
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): LicenseKeyInstance;
-
-    /**
-     * @api
-     *
-     * @param string|null $licenseKeyID Filter by license key ID
-     * @param int|null $pageNumber Page number default is 0
-     * @param int|null $pageSize Page size default is 10 max is 100
+     * @param array<mixed>|LicenseKeyInstanceListParams $params
      *
      * @return DefaultPageNumberPagination<LicenseKeyInstance>
      *
      * @throws APIException
      */
     public function list(
-        $licenseKeyID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
+        array|LicenseKeyInstanceListParams $params,
         ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<LicenseKeyInstance>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 }

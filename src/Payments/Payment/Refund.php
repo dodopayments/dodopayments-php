@@ -12,11 +12,11 @@ use Dodopayments\Refunds\RefundStatus;
 
 /**
  * @phpstan-type RefundShape = array{
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   isPartial: bool,
- *   paymentID: string,
- *   refundID: string,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   is_partial: bool,
+ *   payment_id: string,
+ *   refund_id: string,
  *   status: value-of<RefundStatus>,
  *   amount?: int|null,
  *   currency?: value-of<Currency>|null,
@@ -31,32 +31,32 @@ final class Refund implements BaseModel
     /**
      * The unique identifier of the business issuing the refund.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * If true the refund is a partial refund.
      */
-    #[Api('is_partial')]
-    public bool $isPartial;
+    #[Api]
+    public bool $is_partial;
 
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * The unique identifier of the refund.
      */
-    #[Api('refund_id')]
-    public string $refundID;
+    #[Api]
+    public string $refund_id;
 
     /**
      * The current status of the refund.
@@ -92,11 +92,11 @@ final class Refund implements BaseModel
      * To enforce required parameters use
      * ```
      * Refund::with(
-     *   businessID: ...,
-     *   createdAt: ...,
-     *   isPartial: ...,
-     *   paymentID: ...,
-     *   refundID: ...,
+     *   business_id: ...,
+     *   created_at: ...,
+     *   is_partial: ...,
+     *   payment_id: ...,
+     *   refund_id: ...,
      *   status: ...,
      * )
      * ```
@@ -127,11 +127,11 @@ final class Refund implements BaseModel
      * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        bool $isPartial,
-        string $paymentID,
-        string $refundID,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        bool $is_partial,
+        string $payment_id,
+        string $refund_id,
         RefundStatus|string $status,
         ?int $amount = null,
         Currency|string|null $currency = null,
@@ -139,11 +139,11 @@ final class Refund implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->isPartial = $isPartial;
-        $obj->paymentID = $paymentID;
-        $obj->refundID = $refundID;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->is_partial = $is_partial;
+        $obj->payment_id = $payment_id;
+        $obj->refund_id = $refund_id;
         $obj['status'] = $status;
 
         null !== $amount && $obj->amount = $amount;
@@ -159,7 +159,7 @@ final class Refund implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -170,7 +170,7 @@ final class Refund implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class Refund implements BaseModel
     public function withIsPartial(bool $isPartial): self
     {
         $obj = clone $this;
-        $obj->isPartial = $isPartial;
+        $obj->is_partial = $isPartial;
 
         return $obj;
     }
@@ -192,7 +192,7 @@ final class Refund implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -203,7 +203,7 @@ final class Refund implements BaseModel
     public function withRefundID(string $refundID): self
     {
         $obj = clone $this;
-        $obj->refundID = $refundID;
+        $obj->refund_id = $refundID;
 
         return $obj;
     }

@@ -18,15 +18,15 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-type UsageBasedPriceShape = array{
  *   currency: value-of<Currency>,
  *   discount: int,
- *   fixedPrice: int,
- *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: value-of<TimeInterval>,
- *   purchasingPowerParity: bool,
- *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: value-of<TimeInterval>,
+ *   fixed_price: int,
+ *   payment_frequency_count: int,
+ *   payment_frequency_interval: value-of<TimeInterval>,
+ *   purchasing_power_parity: bool,
+ *   subscription_period_count: int,
+ *   subscription_period_interval: value-of<TimeInterval>,
  *   type: value-of<Type>,
  *   meters?: list<AddMeterToPrice>|null,
- *   taxInclusive?: bool|null,
+ *   tax_inclusive?: bool|null,
  * }
  */
 final class UsageBasedPrice implements BaseModel
@@ -52,45 +52,45 @@ final class UsageBasedPrice implements BaseModel
      * The fixed payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api('fixed_price')]
-    public int $fixedPrice;
+    #[Api]
+    public int $fixed_price;
 
     /**
      * Number of units for the payment frequency.
      * For example, a value of `1` with a `payment_frequency_interval` of `month` represents monthly payments.
      */
-    #[Api('payment_frequency_count')]
-    public int $paymentFrequencyCount;
+    #[Api]
+    public int $payment_frequency_count;
 
     /**
      * The time interval for the payment frequency (e.g., day, month, year).
      *
-     * @var value-of<TimeInterval> $paymentFrequencyInterval
+     * @var value-of<TimeInterval> $payment_frequency_interval
      */
-    #[Api('payment_frequency_interval', enum: TimeInterval::class)]
-    public string $paymentFrequencyInterval;
+    #[Api(enum: TimeInterval::class)]
+    public string $payment_frequency_interval;
 
     /**
      * Indicates if purchasing power parity adjustments are applied to the price.
      * Purchasing power parity feature is not available as of now.
      */
-    #[Api('purchasing_power_parity')]
-    public bool $purchasingPowerParity;
+    #[Api]
+    public bool $purchasing_power_parity;
 
     /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
-    #[Api('subscription_period_count')]
-    public int $subscriptionPeriodCount;
+    #[Api]
+    public int $subscription_period_count;
 
     /**
      * The time interval for the subscription period (e.g., day, month, year).
      *
-     * @var value-of<TimeInterval> $subscriptionPeriodInterval
+     * @var value-of<TimeInterval> $subscription_period_interval
      */
-    #[Api('subscription_period_interval', enum: TimeInterval::class)]
-    public string $subscriptionPeriodInterval;
+    #[Api(enum: TimeInterval::class)]
+    public string $subscription_period_interval;
 
     /** @var value-of<Type> $type */
     #[Api(enum: Type::class)]
@@ -103,8 +103,8 @@ final class UsageBasedPrice implements BaseModel
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', nullable: true, optional: true)]
-    public ?bool $taxInclusive;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $tax_inclusive;
 
     /**
      * `new UsageBasedPrice()` is missing required properties by the API.
@@ -114,12 +114,12 @@ final class UsageBasedPrice implements BaseModel
      * UsageBasedPrice::with(
      *   currency: ...,
      *   discount: ...,
-     *   fixedPrice: ...,
-     *   paymentFrequencyCount: ...,
-     *   paymentFrequencyInterval: ...,
-     *   purchasingPowerParity: ...,
-     *   subscriptionPeriodCount: ...,
-     *   subscriptionPeriodInterval: ...,
+     *   fixed_price: ...,
+     *   payment_frequency_count: ...,
+     *   payment_frequency_interval: ...,
+     *   purchasing_power_parity: ...,
+     *   subscription_period_count: ...,
+     *   subscription_period_interval: ...,
      *   type: ...,
      * )
      * ```
@@ -150,38 +150,38 @@ final class UsageBasedPrice implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
-     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
+     * @param TimeInterval|value-of<TimeInterval> $payment_frequency_interval
+     * @param TimeInterval|value-of<TimeInterval> $subscription_period_interval
      * @param Type|value-of<Type> $type
      * @param list<AddMeterToPrice>|null $meters
      */
     public static function with(
         Currency|string $currency,
         int $discount,
-        int $fixedPrice,
-        int $paymentFrequencyCount,
-        TimeInterval|string $paymentFrequencyInterval,
-        bool $purchasingPowerParity,
-        int $subscriptionPeriodCount,
-        TimeInterval|string $subscriptionPeriodInterval,
+        int $fixed_price,
+        int $payment_frequency_count,
+        TimeInterval|string $payment_frequency_interval,
+        bool $purchasing_power_parity,
+        int $subscription_period_count,
+        TimeInterval|string $subscription_period_interval,
         Type|string $type,
         ?array $meters = null,
-        ?bool $taxInclusive = null,
+        ?bool $tax_inclusive = null,
     ): self {
         $obj = new self;
 
         $obj['currency'] = $currency;
         $obj->discount = $discount;
-        $obj->fixedPrice = $fixedPrice;
-        $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
-        $obj->purchasingPowerParity = $purchasingPowerParity;
-        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $obj->fixed_price = $fixed_price;
+        $obj->payment_frequency_count = $payment_frequency_count;
+        $obj['payment_frequency_interval'] = $payment_frequency_interval;
+        $obj->purchasing_power_parity = $purchasing_power_parity;
+        $obj->subscription_period_count = $subscription_period_count;
+        $obj['subscription_period_interval'] = $subscription_period_interval;
         $obj['type'] = $type;
 
         null !== $meters && $obj->meters = $meters;
-        null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
+        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
 
         return $obj;
     }
@@ -217,7 +217,7 @@ final class UsageBasedPrice implements BaseModel
     public function withFixedPrice(int $fixedPrice): self
     {
         $obj = clone $this;
-        $obj->fixedPrice = $fixedPrice;
+        $obj->fixed_price = $fixedPrice;
 
         return $obj;
     }
@@ -229,7 +229,7 @@ final class UsageBasedPrice implements BaseModel
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
         $obj = clone $this;
-        $obj->paymentFrequencyCount = $paymentFrequencyCount;
+        $obj->payment_frequency_count = $paymentFrequencyCount;
 
         return $obj;
     }
@@ -243,7 +243,7 @@ final class UsageBasedPrice implements BaseModel
         TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $obj['payment_frequency_interval'] = $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -255,7 +255,7 @@ final class UsageBasedPrice implements BaseModel
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
         $obj = clone $this;
-        $obj->purchasingPowerParity = $purchasingPowerParity;
+        $obj->purchasing_power_parity = $purchasingPowerParity;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class UsageBasedPrice implements BaseModel
         int $subscriptionPeriodCount
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
+        $obj->subscription_period_count = $subscriptionPeriodCount;
 
         return $obj;
     }
@@ -282,7 +282,7 @@ final class UsageBasedPrice implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $obj['subscription_period_interval'] = $subscriptionPeriodInterval;
 
         return $obj;
     }
@@ -315,7 +315,7 @@ final class UsageBasedPrice implements BaseModel
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->taxInclusive = $taxInclusive;
+        $obj->tax_inclusive = $taxInclusive;
 
         return $obj;
     }

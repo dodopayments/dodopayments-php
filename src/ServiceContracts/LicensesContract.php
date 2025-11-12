@@ -5,89 +5,48 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Licenses\LicenseActivateParams;
 use Dodopayments\Licenses\LicenseActivateResponse;
+use Dodopayments\Licenses\LicenseDeactivateParams;
+use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
-
-use const Dodopayments\Core\OMIT as omit;
 
 interface LicensesContract
 {
     /**
      * @api
      *
-     * @param string $licenseKey
-     * @param string $name
+     * @param array<mixed>|LicenseActivateParams $params
      *
      * @throws APIException
      */
     public function activate(
-        $licenseKey,
-        $name,
-        ?RequestOptions $requestOptions = null
+        array|LicenseActivateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): LicenseActivateResponse;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function activateRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): LicenseActivateResponse;
-
-    /**
-     * @api
-     *
-     * @param string $licenseKey
-     * @param string $licenseKeyInstanceID
+     * @param array<mixed>|LicenseDeactivateParams $params
      *
      * @throws APIException
      */
     public function deactivate(
-        $licenseKey,
-        $licenseKeyInstanceID,
+        array|LicenseDeactivateParams $params,
         ?RequestOptions $requestOptions = null,
     ): mixed;
 
     /**
      * @api
      *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function deactivateRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
-    ): mixed;
-
-    /**
-     * @api
-     *
-     * @param string $licenseKey
-     * @param string|null $licenseKeyInstanceID
+     * @param array<mixed>|LicenseValidateParams $params
      *
      * @throws APIException
      */
     public function validate(
-        $licenseKey,
-        $licenseKeyInstanceID = omit,
+        array|LicenseValidateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): LicenseValidateResponse;
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function validateRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): LicenseValidateResponse;
 }

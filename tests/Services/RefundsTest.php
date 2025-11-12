@@ -29,7 +29,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->refunds->create(paymentID: 'payment_id');
+        $result = $this->client->refunds->create(['payment_id' => 'payment_id']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -37,7 +37,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->refunds->create(paymentID: 'payment_id');
+        $result = $this->client->refunds->create(['payment_id' => 'payment_id']);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -57,7 +57,7 @@ final class RefundsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->refunds->list();
+        $result = $this->client->refunds->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

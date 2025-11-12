@@ -7,10 +7,9 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentCreateParams;
@@ -18,12 +17,9 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListParams\Status;
 use Dodopayments\Payments\PaymentListResponse;
-use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Payments\PaymentNewResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\PaymentsContract;
-
-use const Dodopayments\Core\OMIT as omit;
 
 final class PaymentsService implements PaymentsContract
 {
@@ -35,77 +31,38 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
-     * @param BillingAddress $billing Billing address details for the payment
-     * @param AttachExistingCustomer|NewCustomer $customer Customer information for the payment
-     * @param list<OneTimeProductCartItem> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
-     *
-     * Customers will **never** see payment methods that are **not** in this list.
-     * However, adding a method here **does not guarantee** customers will see it.
-     * Availability still depends on other factors (e.g., customer location, merchant settings).
-     * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
-     * If Dodo Payments cannot support that currency for this transaction, it will not proceed
-     * @param string|null $discountCode Discount Code to apply to the transaction
-     * @param bool|null $force3DS Override merchant default 3DS behaviour for this payment
-     * @param array<string,
-     * string,> $metadata Additional metadata associated with the payment.
-     * Defaults to empty if not provided.
-     * @param bool|null $paymentLink Whether to generate a payment link. Defaults to false if not specified.
-     * @param string|null $returnURL Optional URL to redirect the customer after payment.
-     * Must be a valid URL if provided.
-     * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
-     * False by default
-     * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
+     * @param array{
+     *   billing: array{
+     *     city: string,
+     *     country: "AF"|"AX"|"AL"|"DZ"|"AS"|"AD"|"AO"|"AI"|"AQ"|"AG"|"AR"|"AM"|"AW"|"AU"|"AT"|"AZ"|"BS"|"BH"|"BD"|"BB"|"BY"|"BE"|"BZ"|"BJ"|"BM"|"BT"|"BO"|"BQ"|"BA"|"BW"|"BV"|"BR"|"IO"|"BN"|"BG"|"BF"|"BI"|"KH"|"CM"|"CA"|"CV"|"KY"|"CF"|"TD"|"CL"|"CN"|"CX"|"CC"|"CO"|"KM"|"CG"|"CD"|"CK"|"CR"|"CI"|"HR"|"CU"|"CW"|"CY"|"CZ"|"DK"|"DJ"|"DM"|"DO"|"EC"|"EG"|"SV"|"GQ"|"ER"|"EE"|"ET"|"FK"|"FO"|"FJ"|"FI"|"FR"|"GF"|"PF"|"TF"|"GA"|"GM"|"GE"|"DE"|"GH"|"GI"|"GR"|"GL"|"GD"|"GP"|"GU"|"GT"|"GG"|"GN"|"GW"|"GY"|"HT"|"HM"|"VA"|"HN"|"HK"|"HU"|"IS"|"IN"|"ID"|"IR"|"IQ"|"IE"|"IM"|"IL"|"IT"|"JM"|"JP"|"JE"|"JO"|"KZ"|"KE"|"KI"|"KP"|"KR"|"KW"|"KG"|"LA"|"LV"|"LB"|"LS"|"LR"|"LY"|"LI"|"LT"|"LU"|"MO"|"MK"|"MG"|"MW"|"MY"|"MV"|"ML"|"MT"|"MH"|"MQ"|"MR"|"MU"|"YT"|"MX"|"FM"|"MD"|"MC"|"MN"|"ME"|"MS"|"MA"|"MZ"|"MM"|"NA"|"NR"|"NP"|"NL"|"NC"|"NZ"|"NI"|"NE"|"NG"|"NU"|"NF"|"MP"|"NO"|"OM"|"PK"|"PW"|"PS"|"PA"|"PG"|"PY"|"PE"|"PH"|"PN"|"PL"|"PT"|"PR"|"QA"|"RE"|"RO"|"RU"|"RW"|"BL"|"SH"|"KN"|"LC"|"MF"|"PM"|"VC"|"WS"|"SM"|"ST"|"SA"|"SN"|"RS"|"SC"|"SL"|"SG"|"SX"|"SK"|"SI"|"SB"|"SO"|"ZA"|"GS"|"SS"|"ES"|"LK"|"SD"|"SR"|"SJ"|"SZ"|"SE"|"CH"|"SY"|"TW"|"TJ"|"TZ"|"TH"|"TL"|"TG"|"TK"|"TO"|"TT"|"TN"|"TR"|"TM"|"TC"|"TV"|"UG"|"UA"|"AE"|"GB"|"UM"|"US"|"UY"|"UZ"|"VU"|"VE"|"VN"|"VG"|"VI"|"WF"|"EH"|"YE"|"ZM"|"ZW"|CountryCode,
+     *     state: string,
+     *     street: string,
+     *     zipcode: string,
+     *   }|BillingAddress,
+     *   customer: array<string,mixed>,
+     *   product_cart: list<array{
+     *     product_id: string, quantity: int, amount?: int|null
+     *   }|OneTimeProductCartItem>,
+     *   allowed_payment_method_types?: list<"credit"|"debit"|"upi_collect"|"upi_intent"|"apple_pay"|"cashapp"|"google_pay"|"multibanco"|"bancontact_card"|"eps"|"ideal"|"przelewy24"|"paypal"|"affirm"|"klarna"|"sepa"|"ach"|"amazon_pay"|"afterpay_clearpay">|null,
+     *   billing_currency?: value-of<Currency>,
+     *   discount_code?: string|null,
+     *   force_3ds?: bool|null,
+     *   metadata?: array<string,string>,
+     *   payment_link?: bool|null,
+     *   return_url?: string|null,
+     *   show_saved_payment_methods?: bool,
+     *   tax_id?: string|null,
+     * }|PaymentCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $billing,
-        $customer,
-        $productCart,
-        $allowedPaymentMethodTypes = omit,
-        $billingCurrency = omit,
-        $discountCode = omit,
-        $force3DS = omit,
-        $metadata = omit,
-        $paymentLink = omit,
-        $returnURL = omit,
-        $showSavedPaymentMethods = omit,
-        $taxID = omit,
-        ?RequestOptions $requestOptions = null,
-    ): PaymentNewResponse {
-        $params = [
-            'billing' => $billing,
-            'customer' => $customer,
-            'productCart' => $productCart,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingCurrency' => $billingCurrency,
-            'discountCode' => $discountCode,
-            'force3DS' => $force3DS,
-            'metadata' => $metadata,
-            'paymentLink' => $paymentLink,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'taxID' => $taxID,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|PaymentCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): PaymentNewResponse {
         [$parsed, $options] = PaymentCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -139,60 +96,28 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
-     * @param string $brandID filter by Brand id
-     * @param \DateTimeInterface $createdAtGte Get events after this created time
-     * @param \DateTimeInterface $createdAtLte Get events created before this time
-     * @param string $customerID Filter by customer id
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
-     * @param Status|value-of<Status> $status Filter by status
-     * @param string $subscriptionID Filter by subscription id
+     * @param array{
+     *   brand_id?: string,
+     *   created_at_gte?: string|\DateTimeInterface,
+     *   created_at_lte?: string|\DateTimeInterface,
+     *   customer_id?: string,
+     *   page_number?: int,
+     *   page_size?: int,
+     *   status?: value-of<Status>,
+     *   subscription_id?: string,
+     * }|PaymentListParams $params
      *
      * @return DefaultPageNumberPagination<PaymentListResponse>
      *
      * @throws APIException
      */
     public function list(
-        $brandID = omit,
-        $createdAtGte = omit,
-        $createdAtLte = omit,
-        $customerID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        $status = omit,
-        $subscriptionID = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination {
-        $params = [
-            'brandID' => $brandID,
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-            'subscriptionID' => $subscriptionID,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<PaymentListResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|PaymentListParams $params,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
         [$parsed, $options] = PaymentListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

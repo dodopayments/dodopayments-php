@@ -12,7 +12,7 @@ use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Type;
 
 /**
  * @phpstan-type PaymentProcessingWebhookEventShape = array{
- *   businessID: string,
+ *   business_id: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<Type>,
@@ -26,8 +26,8 @@ final class PaymentProcessingWebhookEvent implements BaseModel
     /**
      * The business identifier.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * Event-specific data.
@@ -55,7 +55,7 @@ final class PaymentProcessingWebhookEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * PaymentProcessingWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
+     *   business_id: ..., data: ..., timestamp: ..., type: ...
      * )
      * ```
      *
@@ -82,14 +82,14 @@ final class PaymentProcessingWebhookEvent implements BaseModel
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $businessID,
+        string $business_id,
         Data $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
+        $obj->business_id = $business_id;
         $obj->data = $data;
         $obj->timestamp = $timestamp;
         $obj['type'] = $type;
@@ -103,7 +103,7 @@ final class PaymentProcessingWebhookEvent implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }

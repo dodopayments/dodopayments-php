@@ -15,10 +15,10 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 /**
  * @phpstan-type LicenseActivateResponseShape = array{
  *   id: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
- *   licenseKeyID: string,
+ *   license_key_id: string,
  *   name: string,
  *   product: Product,
  * }
@@ -39,14 +39,14 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     /**
      * Business ID.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * Creation timestamp.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * Limited customer details associated with the license key.
@@ -57,8 +57,8 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     /**
      * Associated license key ID.
      */
-    #[Api('license_key_id')]
-    public string $licenseKeyID;
+    #[Api]
+    public string $license_key_id;
 
     /**
      * Instance name.
@@ -79,10 +79,10 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
      * ```
      * LicenseActivateResponse::with(
      *   id: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
+     *   business_id: ...,
+     *   created_at: ...,
      *   customer: ...,
-     *   licenseKeyID: ...,
+     *   license_key_id: ...,
      *   name: ...,
      *   product: ...,
      * )
@@ -113,20 +113,20 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         string $id,
-        string $businessID,
-        \DateTimeInterface $createdAt,
+        string $business_id,
+        \DateTimeInterface $created_at,
         CustomerLimitedDetails $customer,
-        string $licenseKeyID,
+        string $license_key_id,
         string $name,
         Product $product,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
         $obj->customer = $customer;
-        $obj->licenseKeyID = $licenseKeyID;
+        $obj->license_key_id = $license_key_id;
         $obj->name = $name;
         $obj->product = $product;
 
@@ -150,7 +150,7 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -161,7 +161,7 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -183,7 +183,7 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withLicenseKeyID(string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj->licenseKeyID = $licenseKeyID;
+        $obj->license_key_id = $licenseKeyID;
 
         return $obj;
     }

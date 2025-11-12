@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\LicenseKeyInstances->list
  *
  * @phpstan-type LicenseKeyInstanceListParamsShape = array{
- *   licenseKeyID?: string|null, pageNumber?: int|null, pageSize?: int|null
+ *   license_key_id?: string|null, page_number?: int|null, page_size?: int|null
  * }
  */
 final class LicenseKeyInstanceListParams implements BaseModel
@@ -26,19 +26,19 @@ final class LicenseKeyInstanceListParams implements BaseModel
      * Filter by license key ID.
      */
     #[Api(nullable: true, optional: true)]
-    public ?string $licenseKeyID;
+    public ?string $license_key_id;
 
     /**
      * Page number default is 0.
      */
     #[Api(nullable: true, optional: true)]
-    public ?int $pageNumber;
+    public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Api(nullable: true, optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     public function __construct()
     {
@@ -51,15 +51,15 @@ final class LicenseKeyInstanceListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $licenseKeyID = null,
-        ?int $pageNumber = null,
-        ?int $pageSize = null
+        ?string $license_key_id = null,
+        ?int $page_number = null,
+        ?int $page_size = null,
     ): self {
         $obj = new self;
 
-        null !== $licenseKeyID && $obj->licenseKeyID = $licenseKeyID;
-        null !== $pageNumber && $obj->pageNumber = $pageNumber;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $license_key_id && $obj->license_key_id = $license_key_id;
+        null !== $page_number && $obj->page_number = $page_number;
+        null !== $page_size && $obj->page_size = $page_size;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class LicenseKeyInstanceListParams implements BaseModel
     public function withLicenseKeyID(?string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj->licenseKeyID = $licenseKeyID;
+        $obj->license_key_id = $licenseKeyID;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class LicenseKeyInstanceListParams implements BaseModel
     public function withPageNumber(?int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->pageNumber = $pageNumber;
+        $obj->page_number = $pageNumber;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class LicenseKeyInstanceListParams implements BaseModel
     public function withPageSize(?int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }

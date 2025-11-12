@@ -17,20 +17,20 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
  * @phpstan-type ProductListResponseShape = array{
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
- *   isRecurring: bool,
- *   metadata: array<string, string>,
- *   productID: string,
- *   taxCategory: value-of<TaxCategory>,
- *   updatedAt: \DateTimeInterface,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
+ *   is_recurring: bool,
+ *   metadata: array<string,string>,
+ *   product_id: string,
+ *   tax_category: value-of<TaxCategory>,
+ *   updated_at: \DateTimeInterface,
  *   currency?: value-of<Currency>|null,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   priceDetail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   taxInclusive?: bool|null,
+ *   price_detail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
+ *   tax_inclusive?: bool|null,
  * }
  */
 final class ProductListResponse implements BaseModel, ResponseConverter
@@ -43,25 +43,25 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     /**
      * Unique identifier for the business to which the product belongs.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * Timestamp when the product was created.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
-    #[Api('is_recurring')]
-    public bool $isRecurring;
+    #[Api]
+    public bool $is_recurring;
 
     /**
      * Additional custom data associated with the product.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -69,22 +69,22 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     /**
      * Unique identifier for the product.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     /**
      * Tax category associated with the product.
      *
-     * @var value-of<TaxCategory> $taxCategory
+     * @var value-of<TaxCategory> $tax_category
      */
-    #[Api('tax_category', enum: TaxCategory::class)]
-    public string $taxCategory;
+    #[Api(enum: TaxCategory::class)]
+    public string $tax_category;
 
     /**
      * Timestamp when the product was last updated.
      */
-    #[Api('updated_at')]
-    public \DateTimeInterface $updatedAt;
+    #[Api]
+    public \DateTimeInterface $updated_at;
 
     /**
      * Currency of the price.
@@ -129,14 +129,14 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     /**
      * Details of the price.
      */
-    #[Api('price_detail', nullable: true, optional: true)]
-    public OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail;
+    #[Api(nullable: true, optional: true)]
+    public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price_detail;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', nullable: true, optional: true)]
-    public ?bool $taxInclusive;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $tax_inclusive;
 
     /**
      * `new ProductListResponse()` is missing required properties by the API.
@@ -144,13 +144,13 @@ final class ProductListResponse implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * ProductListResponse::with(
-     *   businessID: ...,
-     *   createdAt: ...,
-     *   isRecurring: ...,
+     *   business_id: ...,
+     *   created_at: ...,
+     *   is_recurring: ...,
      *   metadata: ...,
-     *   productID: ...,
-     *   taxCategory: ...,
-     *   updatedAt: ...,
+     *   product_id: ...,
+     *   tax_category: ...,
+     *   updated_at: ...,
      * )
      * ```
      *
@@ -177,43 +177,43 @@ final class ProductListResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $metadata
-     * @param TaxCategory|value-of<TaxCategory> $taxCategory
+     * @param array<string,string> $metadata
+     * @param TaxCategory|value-of<TaxCategory> $tax_category
      * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
-        string $businessID,
-        \DateTimeInterface $createdAt,
-        bool $isRecurring,
+        string $business_id,
+        \DateTimeInterface $created_at,
+        bool $is_recurring,
         array $metadata,
-        string $productID,
-        TaxCategory|string $taxCategory,
-        \DateTimeInterface $updatedAt,
+        string $product_id,
+        TaxCategory|string $tax_category,
+        \DateTimeInterface $updated_at,
         Currency|string|null $currency = null,
         ?string $description = null,
         ?string $image = null,
         ?string $name = null,
         ?int $price = null,
-        OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail = null,
-        ?bool $taxInclusive = null,
+        OneTimePrice|RecurringPrice|UsageBasedPrice|null $price_detail = null,
+        ?bool $tax_inclusive = null,
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
-        $obj->isRecurring = $isRecurring;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
+        $obj->is_recurring = $is_recurring;
         $obj->metadata = $metadata;
-        $obj->productID = $productID;
-        $obj['taxCategory'] = $taxCategory;
-        $obj->updatedAt = $updatedAt;
+        $obj->product_id = $product_id;
+        $obj['tax_category'] = $tax_category;
+        $obj->updated_at = $updated_at;
 
         null !== $currency && $obj['currency'] = $currency;
         null !== $description && $obj->description = $description;
         null !== $image && $obj->image = $image;
         null !== $name && $obj->name = $name;
         null !== $price && $obj->price = $price;
-        null !== $priceDetail && $obj->priceDetail = $priceDetail;
-        null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
+        null !== $price_detail && $obj->price_detail = $price_detail;
+        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
 
         return $obj;
     }
@@ -224,7 +224,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -246,7 +246,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withIsRecurring(bool $isRecurring): self
     {
         $obj = clone $this;
-        $obj->isRecurring = $isRecurring;
+        $obj->is_recurring = $isRecurring;
 
         return $obj;
     }
@@ -254,7 +254,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     /**
      * Additional custom data associated with the product.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -270,7 +270,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }
@@ -283,7 +283,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $obj['tax_category'] = $taxCategory;
 
         return $obj;
     }
@@ -294,7 +294,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }
@@ -371,7 +371,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
         OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail
     ): self {
         $obj = clone $this;
-        $obj->priceDetail = $priceDetail;
+        $obj->price_detail = $priceDetail;
 
         return $obj;
     }
@@ -382,7 +382,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->taxInclusive = $taxInclusive;
+        $obj->tax_inclusive = $taxInclusive;
 
         return $obj;
     }

@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BrandUpdateImagesResponseShape = array{
- *   imageID: string, url: string
+ *   image_id: string, url: string
  * }
  */
 final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
@@ -25,8 +25,8 @@ final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
     /**
      * UUID that will be used as the image identifier/key suffix.
      */
-    #[Api('image_id')]
-    public string $imageID;
+    #[Api]
+    public string $image_id;
 
     /**
      * Presigned URL to upload the image.
@@ -39,7 +39,7 @@ final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
      *
      * To enforce required parameters use
      * ```
-     * BrandUpdateImagesResponse::with(imageID: ..., url: ...)
+     * BrandUpdateImagesResponse::with(image_id: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,11 +58,11 @@ final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $imageID, string $url): self
+    public static function with(string $image_id, string $url): self
     {
         $obj = new self;
 
-        $obj->imageID = $imageID;
+        $obj->image_id = $image_id;
         $obj->url = $url;
 
         return $obj;
@@ -74,7 +74,7 @@ final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
     public function withImageID(string $imageID): self
     {
         $obj = clone $this;
-        $obj->imageID = $imageID;
+        $obj->image_id = $imageID;
 
         return $obj;
     }

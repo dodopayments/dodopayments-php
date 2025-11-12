@@ -11,15 +11,17 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Response struct representing subscription details.
  *
- * @phpstan-type AddonCartResponseItemShape = array{addonID: string, quantity: int}
+ * @phpstan-type AddonCartResponseItemShape = array{
+ *   addon_id: string, quantity: int
+ * }
  */
 final class AddonCartResponseItem implements BaseModel
 {
     /** @use SdkModel<AddonCartResponseItemShape> */
     use SdkModel;
 
-    #[Api('addon_id')]
-    public string $addonID;
+    #[Api]
+    public string $addon_id;
 
     #[Api]
     public int $quantity;
@@ -29,7 +31,7 @@ final class AddonCartResponseItem implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * AddonCartResponseItem::with(addonID: ..., quantity: ...)
+     * AddonCartResponseItem::with(addon_id: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,11 +50,11 @@ final class AddonCartResponseItem implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $addonID, int $quantity): self
+    public static function with(string $addon_id, int $quantity): self
     {
         $obj = new self;
 
-        $obj->addonID = $addonID;
+        $obj->addon_id = $addon_id;
         $obj->quantity = $quantity;
 
         return $obj;
@@ -61,7 +63,7 @@ final class AddonCartResponseItem implements BaseModel
     public function withAddonID(string $addonID): self
     {
         $obj = clone $this;
-        $obj->addonID = $addonID;
+        $obj->addon_id = $addonID;
 
         return $obj;
     }

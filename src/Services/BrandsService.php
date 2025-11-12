@@ -14,8 +14,6 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsContract;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class BrandsService implements BrandsContract
 {
     /**
@@ -26,47 +24,23 @@ final class BrandsService implements BrandsContract
     /**
      * @api
      *
-     * @param string|null $description
-     * @param string|null $name
-     * @param string|null $statementDescriptor
-     * @param string|null $supportEmail
-     * @param string|null $url
+     * @param array{
+     *   description?: string|null,
+     *   name?: string|null,
+     *   statement_descriptor?: string|null,
+     *   support_email?: string|null,
+     *   url?: string|null,
+     * }|BrandCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $description = omit,
-        $name = omit,
-        $statementDescriptor = omit,
-        $supportEmail = omit,
-        $url = omit,
-        ?RequestOptions $requestOptions = null,
-    ): Brand {
-        $params = [
-            'description' => $description,
-            'name' => $name,
-            'statementDescriptor' => $statementDescriptor,
-            'supportEmail' => $supportEmail,
-            'url' => $url,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|BrandCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Brand {
         [$parsed, $options] = BrandCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -102,46 +76,23 @@ final class BrandsService implements BrandsContract
     /**
      * @api
      *
-     * @param string|null $imageID The UUID you got back from the presigned‐upload call
-     * @param string|null $name
-     * @param string|null $statementDescriptor
-     * @param string|null $supportEmail
+     * @param array{
+     *   image_id?: string|null,
+     *   name?: string|null,
+     *   statement_descriptor?: string|null,
+     *   support_email?: string|null,
+     * }|BrandUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        $imageID = omit,
-        $name = omit,
-        $statementDescriptor = omit,
-        $supportEmail = omit,
+        array|BrandUpdateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): Brand {
-        $params = [
-            'imageID' => $imageID,
-            'name' => $name,
-            'statementDescriptor' => $statementDescriptor,
-            'supportEmail' => $supportEmail,
-        ];
-
-        return $this->updateRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $id,
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): Brand {
         [$parsed, $options] = BrandUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

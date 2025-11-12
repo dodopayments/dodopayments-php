@@ -17,15 +17,15 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-type RecurringPriceShape = array{
  *   currency: value-of<Currency>,
  *   discount: int,
- *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: value-of<TimeInterval>,
+ *   payment_frequency_count: int,
+ *   payment_frequency_interval: value-of<TimeInterval>,
  *   price: int,
- *   purchasingPowerParity: bool,
- *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: value-of<TimeInterval>,
+ *   purchasing_power_parity: bool,
+ *   subscription_period_count: int,
+ *   subscription_period_interval: value-of<TimeInterval>,
  *   type: value-of<Type>,
- *   taxInclusive?: bool|null,
- *   trialPeriodDays?: int,
+ *   tax_inclusive?: bool|null,
+ *   trial_period_days?: int|null,
  * }
  */
 final class RecurringPrice implements BaseModel
@@ -51,16 +51,16 @@ final class RecurringPrice implements BaseModel
      * Number of units for the payment frequency.
      * For example, a value of `1` with a `payment_frequency_interval` of `month` represents monthly payments.
      */
-    #[Api('payment_frequency_count')]
-    public int $paymentFrequencyCount;
+    #[Api]
+    public int $payment_frequency_count;
 
     /**
      * The time interval for the payment frequency (e.g., day, month, year).
      *
-     * @var value-of<TimeInterval> $paymentFrequencyInterval
+     * @var value-of<TimeInterval> $payment_frequency_interval
      */
-    #[Api('payment_frequency_interval', enum: TimeInterval::class)]
-    public string $paymentFrequencyInterval;
+    #[Api(enum: TimeInterval::class)]
+    public string $payment_frequency_interval;
 
     /**
      * The payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD).
@@ -73,23 +73,23 @@ final class RecurringPrice implements BaseModel
      * Indicates if purchasing power parity adjustments are applied to the price.
      * Purchasing power parity feature is not available as of now.
      */
-    #[Api('purchasing_power_parity')]
-    public bool $purchasingPowerParity;
+    #[Api]
+    public bool $purchasing_power_parity;
 
     /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
-    #[Api('subscription_period_count')]
-    public int $subscriptionPeriodCount;
+    #[Api]
+    public int $subscription_period_count;
 
     /**
      * The time interval for the subscription period (e.g., day, month, year).
      *
-     * @var value-of<TimeInterval> $subscriptionPeriodInterval
+     * @var value-of<TimeInterval> $subscription_period_interval
      */
-    #[Api('subscription_period_interval', enum: TimeInterval::class)]
-    public string $subscriptionPeriodInterval;
+    #[Api(enum: TimeInterval::class)]
+    public string $subscription_period_interval;
 
     /** @var value-of<Type> $type */
     #[Api(enum: Type::class)]
@@ -98,14 +98,14 @@ final class RecurringPrice implements BaseModel
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api('tax_inclusive', nullable: true, optional: true)]
-    public ?bool $taxInclusive;
+    #[Api(nullable: true, optional: true)]
+    public ?bool $tax_inclusive;
 
     /**
      * Number of days for the trial period. A value of `0` indicates no trial period.
      */
-    #[Api('trial_period_days', optional: true)]
-    public ?int $trialPeriodDays;
+    #[Api(optional: true)]
+    public ?int $trial_period_days;
 
     /**
      * `new RecurringPrice()` is missing required properties by the API.
@@ -115,12 +115,12 @@ final class RecurringPrice implements BaseModel
      * RecurringPrice::with(
      *   currency: ...,
      *   discount: ...,
-     *   paymentFrequencyCount: ...,
-     *   paymentFrequencyInterval: ...,
+     *   payment_frequency_count: ...,
+     *   payment_frequency_interval: ...,
      *   price: ...,
-     *   purchasingPowerParity: ...,
-     *   subscriptionPeriodCount: ...,
-     *   subscriptionPeriodInterval: ...,
+     *   purchasing_power_parity: ...,
+     *   subscription_period_count: ...,
+     *   subscription_period_interval: ...,
      *   type: ...,
      * )
      * ```
@@ -151,37 +151,37 @@ final class RecurringPrice implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
-     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
+     * @param TimeInterval|value-of<TimeInterval> $payment_frequency_interval
+     * @param TimeInterval|value-of<TimeInterval> $subscription_period_interval
      * @param Type|value-of<Type> $type
      */
     public static function with(
         Currency|string $currency,
         int $discount,
-        int $paymentFrequencyCount,
-        TimeInterval|string $paymentFrequencyInterval,
+        int $payment_frequency_count,
+        TimeInterval|string $payment_frequency_interval,
         int $price,
-        bool $purchasingPowerParity,
-        int $subscriptionPeriodCount,
-        TimeInterval|string $subscriptionPeriodInterval,
+        bool $purchasing_power_parity,
+        int $subscription_period_count,
+        TimeInterval|string $subscription_period_interval,
         Type|string $type,
-        ?bool $taxInclusive = null,
-        ?int $trialPeriodDays = null,
+        ?bool $tax_inclusive = null,
+        ?int $trial_period_days = null,
     ): self {
         $obj = new self;
 
         $obj['currency'] = $currency;
         $obj->discount = $discount;
-        $obj->paymentFrequencyCount = $paymentFrequencyCount;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $obj->payment_frequency_count = $payment_frequency_count;
+        $obj['payment_frequency_interval'] = $payment_frequency_interval;
         $obj->price = $price;
-        $obj->purchasingPowerParity = $purchasingPowerParity;
-        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $obj->purchasing_power_parity = $purchasing_power_parity;
+        $obj->subscription_period_count = $subscription_period_count;
+        $obj['subscription_period_interval'] = $subscription_period_interval;
         $obj['type'] = $type;
 
-        null !== $taxInclusive && $obj->taxInclusive = $taxInclusive;
-        null !== $trialPeriodDays && $obj->trialPeriodDays = $trialPeriodDays;
+        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
+        null !== $trial_period_days && $obj->trial_period_days = $trial_period_days;
 
         return $obj;
     }
@@ -217,7 +217,7 @@ final class RecurringPrice implements BaseModel
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
         $obj = clone $this;
-        $obj->paymentFrequencyCount = $paymentFrequencyCount;
+        $obj->payment_frequency_count = $paymentFrequencyCount;
 
         return $obj;
     }
@@ -231,7 +231,7 @@ final class RecurringPrice implements BaseModel
         TimeInterval|string $paymentFrequencyInterval
     ): self {
         $obj = clone $this;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $obj['payment_frequency_interval'] = $paymentFrequencyInterval;
 
         return $obj;
     }
@@ -255,7 +255,7 @@ final class RecurringPrice implements BaseModel
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
         $obj = clone $this;
-        $obj->purchasingPowerParity = $purchasingPowerParity;
+        $obj->purchasing_power_parity = $purchasingPowerParity;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class RecurringPrice implements BaseModel
         int $subscriptionPeriodCount
     ): self {
         $obj = clone $this;
-        $obj->subscriptionPeriodCount = $subscriptionPeriodCount;
+        $obj->subscription_period_count = $subscriptionPeriodCount;
 
         return $obj;
     }
@@ -282,7 +282,7 @@ final class RecurringPrice implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
         $obj = clone $this;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $obj['subscription_period_interval'] = $subscriptionPeriodInterval;
 
         return $obj;
     }
@@ -304,7 +304,7 @@ final class RecurringPrice implements BaseModel
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->taxInclusive = $taxInclusive;
+        $obj->tax_inclusive = $taxInclusive;
 
         return $obj;
     }
@@ -315,7 +315,7 @@ final class RecurringPrice implements BaseModel
     public function withTrialPeriodDays(int $trialPeriodDays): self
     {
         $obj = clone $this;
-        $obj->trialPeriodDays = $trialPeriodDays;
+        $obj->trial_period_days = $trialPeriodDays;
 
         return $obj;
     }

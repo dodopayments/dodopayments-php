@@ -14,8 +14,8 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  * @see Dodopayments\Subscriptions->changePlan
  *
  * @phpstan-type SubscriptionChangePlanParamsShape = array{
- *   productID: string,
- *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
+ *   product_id: string,
+ *   proration_billing_mode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
  *   addons?: list<AttachAddon>|null,
  * }
@@ -29,16 +29,16 @@ final class SubscriptionChangePlanParams implements BaseModel
     /**
      * Unique identifier of the product to subscribe to.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     /**
      * Proration Billing Mode.
      *
-     * @var value-of<ProrationBillingMode> $prorationBillingMode
+     * @var value-of<ProrationBillingMode> $proration_billing_mode
      */
-    #[Api('proration_billing_mode', enum: ProrationBillingMode::class)]
-    public string $prorationBillingMode;
+    #[Api(enum: ProrationBillingMode::class)]
+    public string $proration_billing_mode;
 
     /**
      * Number of units to subscribe for. Must be at least 1.
@@ -61,7 +61,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * To enforce required parameters use
      * ```
      * SubscriptionChangePlanParams::with(
-     *   productID: ..., prorationBillingMode: ..., quantity: ...
+     *   product_id: ..., proration_billing_mode: ..., quantity: ...
      * )
      * ```
      *
@@ -84,19 +84,19 @@ final class SubscriptionChangePlanParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
+     * @param ProrationBillingMode|value-of<ProrationBillingMode> $proration_billing_mode
      * @param list<AttachAddon>|null $addons
      */
     public static function with(
-        string $productID,
-        ProrationBillingMode|string $prorationBillingMode,
+        string $product_id,
+        ProrationBillingMode|string $proration_billing_mode,
         int $quantity,
         ?array $addons = null,
     ): self {
         $obj = new self;
 
-        $obj->productID = $productID;
-        $obj['prorationBillingMode'] = $prorationBillingMode;
+        $obj->product_id = $product_id;
+        $obj['proration_billing_mode'] = $proration_billing_mode;
         $obj->quantity = $quantity;
 
         null !== $addons && $obj->addons = $addons;
@@ -110,7 +110,7 @@ final class SubscriptionChangePlanParams implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class SubscriptionChangePlanParams implements BaseModel
         ProrationBillingMode|string $prorationBillingMode
     ): self {
         $obj = clone $this;
-        $obj['prorationBillingMode'] = $prorationBillingMode;
+        $obj['proration_billing_mode'] = $prorationBillingMode;
 
         return $obj;
     }

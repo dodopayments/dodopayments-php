@@ -15,8 +15,6 @@ use Dodopayments\Meters\MeterListParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MetersContract;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class MetersService implements MetersContract
 {
     /**
@@ -27,50 +25,28 @@ final class MetersService implements MetersContract
     /**
      * @api
      *
-     * @param MeterAggregation $aggregation Aggregation configuration for the meter
-     * @param string $eventName Event name to track
-     * @param string $measurementUnit measurement unit
-     * @param string $name Name of the meter
-     * @param string|null $description Optional description of the meter
-     * @param MeterFilter|null $filter Optional filter to apply to the meter
+     * @param array{
+     *   aggregation: array{
+     *     type: "count"|"sum"|"max"|"last", key?: string|null
+     *   }|MeterAggregation,
+     *   event_name: string,
+     *   measurement_unit: string,
+     *   name: string,
+     *   description?: string|null,
+     *   filter?: array{
+     *     clauses: list<array<mixed>>|list<array<mixed>>, conjunction: "and"|"or"
+     *   }|MeterFilter|null,
+     * }|MeterCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $aggregation,
-        $eventName,
-        $measurementUnit,
-        $name,
-        $description = omit,
-        $filter = omit,
-        ?RequestOptions $requestOptions = null,
-    ): Meter {
-        $params = [
-            'aggregation' => $aggregation,
-            'eventName' => $eventName,
-            'measurementUnit' => $measurementUnit,
-            'name' => $name,
-            'description' => $description,
-            'filter' => $filter,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|MeterCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Meter {
         [$parsed, $options] = MeterCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -104,45 +80,21 @@ final class MetersService implements MetersContract
     /**
      * @api
      *
-     * @param bool $archived List archived meters
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
+     * @param array{
+     *   archived?: bool, page_number?: int, page_size?: int
+     * }|MeterListParams $params
      *
      * @return DefaultPageNumberPagination<Meter>
      *
      * @throws APIException
      */
     public function list(
-        $archived = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination {
-        $params = [
-            'archived' => $archived,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<Meter>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|MeterListParams $params,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
         [$parsed, $options] = MeterListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

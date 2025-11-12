@@ -14,8 +14,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type MeterCreateParamsShape = array{
  *   aggregation: MeterAggregation,
- *   eventName: string,
- *   measurementUnit: string,
+ *   event_name: string,
+ *   measurement_unit: string,
  *   name: string,
  *   description?: string|null,
  *   filter?: MeterFilter|null,
@@ -36,14 +36,14 @@ final class MeterCreateParams implements BaseModel
     /**
      * Event name to track.
      */
-    #[Api('event_name')]
-    public string $eventName;
+    #[Api]
+    public string $event_name;
 
     /**
      * measurement unit.
      */
-    #[Api('measurement_unit')]
-    public string $measurementUnit;
+    #[Api]
+    public string $measurement_unit;
 
     /**
      * Name of the meter.
@@ -69,7 +69,7 @@ final class MeterCreateParams implements BaseModel
      * To enforce required parameters use
      * ```
      * MeterCreateParams::with(
-     *   aggregation: ..., eventName: ..., measurementUnit: ..., name: ...
+     *   aggregation: ..., event_name: ..., measurement_unit: ..., name: ...
      * )
      * ```
      *
@@ -95,8 +95,8 @@ final class MeterCreateParams implements BaseModel
      */
     public static function with(
         MeterAggregation $aggregation,
-        string $eventName,
-        string $measurementUnit,
+        string $event_name,
+        string $measurement_unit,
         string $name,
         ?string $description = null,
         ?MeterFilter $filter = null,
@@ -104,8 +104,8 @@ final class MeterCreateParams implements BaseModel
         $obj = new self;
 
         $obj->aggregation = $aggregation;
-        $obj->eventName = $eventName;
-        $obj->measurementUnit = $measurementUnit;
+        $obj->event_name = $event_name;
+        $obj->measurement_unit = $measurement_unit;
         $obj->name = $name;
 
         null !== $description && $obj->description = $description;
@@ -131,7 +131,7 @@ final class MeterCreateParams implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->eventName = $eventName;
+        $obj->event_name = $eventName;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class MeterCreateParams implements BaseModel
     public function withMeasurementUnit(string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj->measurementUnit = $measurementUnit;
+        $obj->measurement_unit = $measurementUnit;
 
         return $obj;
     }

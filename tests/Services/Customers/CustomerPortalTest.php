@@ -28,7 +28,10 @@ final class CustomerPortalTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->customers->customerPortal->create('customer_id');
+        $result = $this->client->customers->customerPortal->create(
+            'customer_id',
+            []
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

@@ -13,8 +13,6 @@ use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeyInstancesContract;
 
-use const Dodopayments\Core\OMIT as omit;
-
 final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
 {
     /**
@@ -43,35 +41,18 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @param string $name
+     * @param array{name: string}|LicenseKeyInstanceUpdateParams $params
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        $name,
-        ?RequestOptions $requestOptions = null
-    ): LicenseKeyInstance {
-        $params = ['name' => $name];
-
-        return $this->updateRaw($id, $params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function updateRaw(
-        string $id,
-        array $params,
-        ?RequestOptions $requestOptions = null
+        array|LicenseKeyInstanceUpdateParams $params,
+        ?RequestOptions $requestOptions = null,
     ): LicenseKeyInstance {
         [$parsed, $options] = LicenseKeyInstanceUpdateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -87,45 +68,21 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @param string|null $licenseKeyID Filter by license key ID
-     * @param int|null $pageNumber Page number default is 0
-     * @param int|null $pageSize Page size default is 10 max is 100
+     * @param array{
+     *   license_key_id?: string|null, page_number?: int|null, page_size?: int|null
+     * }|LicenseKeyInstanceListParams $params
      *
      * @return DefaultPageNumberPagination<LicenseKeyInstance>
      *
      * @throws APIException
      */
     public function list(
-        $licenseKeyID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
+        array|LicenseKeyInstanceListParams $params,
         ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination {
-        $params = [
-            'licenseKeyID' => $licenseKeyID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<LicenseKeyInstance>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
         [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

@@ -15,17 +15,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 /**
  * @phpstan-type DisputeShape = array{
  *   amount: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
  *   currency: string,
  *   customer: CustomerLimitedDetails,
- *   disputeID: string,
- *   disputeStage: value-of<DisputeStage>,
- *   disputeStatus: value-of<DisputeStatus>,
- *   paymentID: string,
+ *   dispute_id: string,
+ *   dispute_stage: value-of<DisputeStage>,
+ *   dispute_status: value-of<DisputeStatus>,
+ *   payment_id: string,
  *   reason?: string|null,
  *   remarks?: string|null,
- *   payloadType: value-of<PayloadType>,
+ *   payload_type: value-of<PayloadType>,
  * }
  */
 final class Dispute implements BaseModel
@@ -42,14 +42,14 @@ final class Dispute implements BaseModel
     /**
      * The unique identifier of the business involved in the dispute.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The timestamp of when the dispute was created, in UTC.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * The currency of the disputed amount, represented as an ISO 4217 currency code.
@@ -63,22 +63,22 @@ final class Dispute implements BaseModel
     /**
      * The unique identifier of the dispute.
      */
-    #[Api('dispute_id')]
-    public string $disputeID;
+    #[Api]
+    public string $dispute_id;
 
-    /** @var value-of<DisputeStage> $disputeStage */
-    #[Api('dispute_stage', enum: DisputeStage::class)]
-    public string $disputeStage;
+    /** @var value-of<DisputeStage> $dispute_stage */
+    #[Api(enum: DisputeStage::class)]
+    public string $dispute_stage;
 
-    /** @var value-of<DisputeStatus> $disputeStatus */
-    #[Api('dispute_status', enum: DisputeStatus::class)]
-    public string $disputeStatus;
+    /** @var value-of<DisputeStatus> $dispute_status */
+    #[Api(enum: DisputeStatus::class)]
+    public string $dispute_status;
 
     /**
      * The unique identifier of the payment associated with the dispute.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * Reason for the dispute.
@@ -92,9 +92,9 @@ final class Dispute implements BaseModel
     #[Api(nullable: true, optional: true)]
     public ?string $remarks;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Api('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
+    /** @var value-of<PayloadType> $payload_type */
+    #[Api(enum: PayloadType::class)]
+    public string $payload_type;
 
     /**
      * `new Dispute()` is missing required properties by the API.
@@ -103,15 +103,15 @@ final class Dispute implements BaseModel
      * ```
      * Dispute::with(
      *   amount: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
+     *   business_id: ...,
+     *   created_at: ...,
      *   currency: ...,
      *   customer: ...,
-     *   disputeID: ...,
-     *   disputeStage: ...,
-     *   disputeStatus: ...,
-     *   paymentID: ...,
-     *   payloadType: ...,
+     *   dispute_id: ...,
+     *   dispute_stage: ...,
+     *   dispute_status: ...,
+     *   payment_id: ...,
+     *   payload_type: ...,
      * )
      * ```
      *
@@ -141,36 +141,36 @@ final class Dispute implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DisputeStage|value-of<DisputeStage> $disputeStage
-     * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param DisputeStage|value-of<DisputeStage> $dispute_stage
+     * @param DisputeStatus|value-of<DisputeStatus> $dispute_status
+     * @param PayloadType|value-of<PayloadType> $payload_type
      */
     public static function with(
         string $amount,
-        string $businessID,
-        \DateTimeInterface $createdAt,
+        string $business_id,
+        \DateTimeInterface $created_at,
         string $currency,
         CustomerLimitedDetails $customer,
-        string $disputeID,
-        DisputeStage|string $disputeStage,
-        DisputeStatus|string $disputeStatus,
-        string $paymentID,
-        PayloadType|string $payloadType,
+        string $dispute_id,
+        DisputeStage|string $dispute_stage,
+        DisputeStatus|string $dispute_status,
+        string $payment_id,
+        PayloadType|string $payload_type,
         ?string $reason = null,
         ?string $remarks = null,
     ): self {
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
         $obj->currency = $currency;
         $obj->customer = $customer;
-        $obj->disputeID = $disputeID;
-        $obj['disputeStage'] = $disputeStage;
-        $obj['disputeStatus'] = $disputeStatus;
-        $obj->paymentID = $paymentID;
-        $obj['payloadType'] = $payloadType;
+        $obj->dispute_id = $dispute_id;
+        $obj['dispute_stage'] = $dispute_stage;
+        $obj['dispute_status'] = $dispute_status;
+        $obj->payment_id = $payment_id;
+        $obj['payload_type'] = $payload_type;
 
         null !== $reason && $obj->reason = $reason;
         null !== $remarks && $obj->remarks = $remarks;
@@ -195,7 +195,7 @@ final class Dispute implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -206,7 +206,7 @@ final class Dispute implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -236,7 +236,7 @@ final class Dispute implements BaseModel
     public function withDisputeID(string $disputeID): self
     {
         $obj = clone $this;
-        $obj->disputeID = $disputeID;
+        $obj->dispute_id = $disputeID;
 
         return $obj;
     }
@@ -247,7 +247,7 @@ final class Dispute implements BaseModel
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
         $obj = clone $this;
-        $obj['disputeStage'] = $disputeStage;
+        $obj['dispute_stage'] = $disputeStage;
 
         return $obj;
     }
@@ -258,7 +258,7 @@ final class Dispute implements BaseModel
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
         $obj = clone $this;
-        $obj['disputeStatus'] = $disputeStatus;
+        $obj['dispute_status'] = $disputeStatus;
 
         return $obj;
     }
@@ -269,7 +269,7 @@ final class Dispute implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -302,7 +302,7 @@ final class Dispute implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj['payloadType'] = $payloadType;
+        $obj['payload_type'] = $payloadType;
 
         return $obj;
     }

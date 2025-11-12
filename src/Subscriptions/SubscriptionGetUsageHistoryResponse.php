@@ -13,9 +13,9 @@ use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
 
 /**
  * @phpstan-type SubscriptionGetUsageHistoryResponseShape = array{
- *   endDate: \DateTimeInterface,
+ *   end_date: \DateTimeInterface,
  *   meters: list<Meter>,
- *   startDate: \DateTimeInterface,
+ *   start_date: \DateTimeInterface,
  * }
  */
 final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseConverter
@@ -28,8 +28,8 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     /**
      * End date of the billing period.
      */
-    #[Api('end_date')]
-    public \DateTimeInterface $endDate;
+    #[Api]
+    public \DateTimeInterface $end_date;
 
     /**
      * List of meters and their usage for this billing period.
@@ -42,8 +42,8 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     /**
      * Start date of the billing period.
      */
-    #[Api('start_date')]
-    public \DateTimeInterface $startDate;
+    #[Api]
+    public \DateTimeInterface $start_date;
 
     /**
      * `new SubscriptionGetUsageHistoryResponse()` is missing required properties by the API.
@@ -51,7 +51,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
      * To enforce required parameters use
      * ```
      * SubscriptionGetUsageHistoryResponse::with(
-     *   endDate: ..., meters: ..., startDate: ...
+     *   end_date: ..., meters: ..., start_date: ...
      * )
      * ```
      *
@@ -77,15 +77,15 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
      * @param list<Meter> $meters
      */
     public static function with(
-        \DateTimeInterface $endDate,
+        \DateTimeInterface $end_date,
         array $meters,
-        \DateTimeInterface $startDate
+        \DateTimeInterface $start_date
     ): self {
         $obj = new self;
 
-        $obj->endDate = $endDate;
+        $obj->end_date = $end_date;
         $obj->meters = $meters;
-        $obj->startDate = $startDate;
+        $obj->start_date = $start_date;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     public function withEndDate(\DateTimeInterface $endDate): self
     {
         $obj = clone $this;
-        $obj->endDate = $endDate;
+        $obj->end_date = $endDate;
 
         return $obj;
     }
@@ -120,7 +120,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     public function withStartDate(\DateTimeInterface $startDate): self
     {
         $obj = clone $this;
-        $obj->startDate = $startDate;
+        $obj->start_date = $startDate;
 
         return $obj;
     }

@@ -20,37 +20,37 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
 /**
  * @phpstan-type PaymentShape = array{
  *   billing: BillingAddress,
- *   brandID: string,
- *   businessID: string,
- *   createdAt: \DateTimeInterface,
+ *   brand_id: string,
+ *   business_id: string,
+ *   created_at: \DateTimeInterface,
  *   currency: value-of<Currency>,
  *   customer: CustomerLimitedDetails,
- *   digitalProductsDelivered: bool,
+ *   digital_products_delivered: bool,
  *   disputes: list<Dispute>,
- *   metadata: array<string, string>,
- *   paymentID: string,
+ *   metadata: array<string,string>,
+ *   payment_id: string,
  *   refunds: list<Refund>,
- *   settlementAmount: int,
- *   settlementCurrency: value-of<Currency>,
- *   totalAmount: int,
- *   cardIssuingCountry?: value-of<CountryCode>,
- *   cardLastFour?: string|null,
- *   cardNetwork?: string|null,
- *   cardType?: string|null,
- *   checkoutSessionID?: string|null,
- *   discountID?: string|null,
- *   errorCode?: string|null,
- *   errorMessage?: string|null,
- *   paymentLink?: string|null,
- *   paymentMethod?: string|null,
- *   paymentMethodType?: string|null,
- *   productCart?: list<ProductCart>|null,
- *   settlementTax?: int|null,
- *   status?: value-of<IntentStatus>,
- *   subscriptionID?: string|null,
+ *   settlement_amount: int,
+ *   settlement_currency: value-of<Currency>,
+ *   total_amount: int,
+ *   card_issuing_country?: value-of<CountryCode>|null,
+ *   card_last_four?: string|null,
+ *   card_network?: string|null,
+ *   card_type?: string|null,
+ *   checkout_session_id?: string|null,
+ *   discount_id?: string|null,
+ *   error_code?: string|null,
+ *   error_message?: string|null,
+ *   payment_link?: string|null,
+ *   payment_method?: string|null,
+ *   payment_method_type?: string|null,
+ *   product_cart?: list<ProductCart>|null,
+ *   settlement_tax?: int|null,
+ *   status?: value-of<IntentStatus>|null,
+ *   subscription_id?: string|null,
  *   tax?: int|null,
- *   updatedAt?: \DateTimeInterface|null,
- *   payloadType: value-of<PayloadType>,
+ *   updated_at?: \DateTimeInterface|null,
+ *   payload_type: value-of<PayloadType>,
  * }
  */
 final class Payment implements BaseModel
@@ -64,20 +64,20 @@ final class Payment implements BaseModel
     /**
      * brand id this payment belongs to.
      */
-    #[Api('brand_id')]
-    public string $brandID;
+    #[Api]
+    public string $brand_id;
 
     /**
      * Identifier of the business associated with the payment.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * Timestamp when the payment was created.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
@@ -89,8 +89,8 @@ final class Payment implements BaseModel
     /**
      * brand id this payment belongs to.
      */
-    #[Api('digital_products_delivered')]
-    public bool $digitalProductsDelivered;
+    #[Api]
+    public bool $digital_products_delivered;
 
     /**
      * List of disputes associated with this payment.
@@ -103,7 +103,7 @@ final class Payment implements BaseModel
     /**
      * Additional custom data associated with the payment.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -111,8 +111,8 @@ final class Payment implements BaseModel
     /**
      * Unique identifier for the payment.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * List of refunds issued for this payment.
@@ -126,108 +126,103 @@ final class Payment implements BaseModel
      * The amount that will be credited to your Dodo balance after currency conversion and processing.
      * Especially relevant for adaptive pricing where the customer's payment currency differs from your settlement currency.
      */
-    #[Api('settlement_amount')]
-    public int $settlementAmount;
+    #[Api]
+    public int $settlement_amount;
 
-    /** @var value-of<Currency> $settlementCurrency */
-    #[Api('settlement_currency', enum: Currency::class)]
-    public string $settlementCurrency;
+    /** @var value-of<Currency> $settlement_currency */
+    #[Api(enum: Currency::class)]
+    public string $settlement_currency;
 
     /**
      * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
      */
-    #[Api('total_amount')]
-    public int $totalAmount;
+    #[Api]
+    public int $total_amount;
 
     /**
      * ISO country code alpha2 variant.
      *
-     * @var value-of<CountryCode>|null $cardIssuingCountry
+     * @var value-of<CountryCode>|null $card_issuing_country
      */
-    #[Api('card_issuing_country', enum: CountryCode::class, optional: true)]
-    public ?string $cardIssuingCountry;
+    #[Api(enum: CountryCode::class, optional: true)]
+    public ?string $card_issuing_country;
 
     /**
      * The last four digits of the card.
      */
-    #[Api('card_last_four', nullable: true, optional: true)]
-    public ?string $cardLastFour;
+    #[Api(nullable: true, optional: true)]
+    public ?string $card_last_four;
 
     /**
      * Card network like VISA, MASTERCARD etc.
      */
-    #[Api('card_network', nullable: true, optional: true)]
-    public ?string $cardNetwork;
+    #[Api(nullable: true, optional: true)]
+    public ?string $card_network;
 
     /**
      * The type of card DEBIT or CREDIT.
      */
-    #[Api('card_type', nullable: true, optional: true)]
-    public ?string $cardType;
+    #[Api(nullable: true, optional: true)]
+    public ?string $card_type;
 
     /**
      * If payment is made using a checkout session,
      * this field is set to the id of the session.
      */
-    #[Api('checkout_session_id', nullable: true, optional: true)]
-    public ?string $checkoutSessionID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $checkout_session_id;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', nullable: true, optional: true)]
-    public ?string $discountID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $discount_id;
 
     /**
      * An error code if the payment failed.
      */
-    #[Api('error_code', nullable: true, optional: true)]
-    public ?string $errorCode;
+    #[Api(nullable: true, optional: true)]
+    public ?string $error_code;
 
     /**
      * An error message if the payment failed.
      */
-    #[Api('error_message', nullable: true, optional: true)]
-    public ?string $errorMessage;
+    #[Api(nullable: true, optional: true)]
+    public ?string $error_message;
 
     /**
      * Checkout URL.
      */
-    #[Api('payment_link', nullable: true, optional: true)]
-    public ?string $paymentLink;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_link;
 
     /**
      * Payment method used by customer (e.g. "card", "bank_transfer").
      */
-    #[Api('payment_method', nullable: true, optional: true)]
-    public ?string $paymentMethod;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_method;
 
     /**
      * Specific type of payment method (e.g. "visa", "mastercard").
      */
-    #[Api('payment_method_type', nullable: true, optional: true)]
-    public ?string $paymentMethodType;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_method_type;
 
     /**
      * List of products purchased in a one-time payment.
      *
-     * @var list<ProductCart>|null $productCart
+     * @var list<ProductCart>|null $product_cart
      */
-    #[Api(
-        'product_cart',
-        list: ProductCart::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?array $productCart;
+    #[Api(list: ProductCart::class, nullable: true, optional: true)]
+    public ?array $product_cart;
 
     /**
      * This represents the portion of settlement_amount that corresponds to taxes collected.
      * Especially relevant for adaptive pricing where the tax component must be tracked separately
      * in your Dodo balance.
      */
-    #[Api('settlement_tax', nullable: true, optional: true)]
-    public ?int $settlementTax;
+    #[Api(nullable: true, optional: true)]
+    public ?int $settlement_tax;
 
     /** @var value-of<IntentStatus>|null $status */
     #[Api(enum: IntentStatus::class, optional: true)]
@@ -236,8 +231,8 @@ final class Payment implements BaseModel
     /**
      * Identifier of the subscription if payment is part of a subscription.
      */
-    #[Api('subscription_id', nullable: true, optional: true)]
-    public ?string $subscriptionID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $subscription_id;
 
     /**
      * Amount of tax collected in smallest currency unit (e.g. cents).
@@ -248,12 +243,12 @@ final class Payment implements BaseModel
     /**
      * Timestamp when the payment was last updated.
      */
-    #[Api('updated_at', nullable: true, optional: true)]
-    public ?\DateTimeInterface $updatedAt;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $updated_at;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Api('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
+    /** @var value-of<PayloadType> $payload_type */
+    #[Api(enum: PayloadType::class)]
+    public string $payload_type;
 
     /**
      * `new Payment()` is missing required properties by the API.
@@ -262,20 +257,20 @@ final class Payment implements BaseModel
      * ```
      * Payment::with(
      *   billing: ...,
-     *   brandID: ...,
-     *   businessID: ...,
-     *   createdAt: ...,
+     *   brand_id: ...,
+     *   business_id: ...,
+     *   created_at: ...,
      *   currency: ...,
      *   customer: ...,
-     *   digitalProductsDelivered: ...,
+     *   digital_products_delivered: ...,
      *   disputes: ...,
      *   metadata: ...,
-     *   paymentID: ...,
+     *   payment_id: ...,
      *   refunds: ...,
-     *   settlementAmount: ...,
-     *   settlementCurrency: ...,
-     *   totalAmount: ...,
-     *   payloadType: ...,
+     *   settlement_amount: ...,
+     *   settlement_currency: ...,
+     *   total_amount: ...,
+     *   payload_type: ...,
      * )
      * ```
      *
@@ -312,83 +307,83 @@ final class Payment implements BaseModel
      *
      * @param Currency|value-of<Currency> $currency
      * @param list<Dispute> $disputes
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      * @param list<Refund> $refunds
-     * @param Currency|value-of<Currency> $settlementCurrency
-     * @param PayloadType|value-of<PayloadType> $payloadType
-     * @param CountryCode|value-of<CountryCode> $cardIssuingCountry
-     * @param list<ProductCart>|null $productCart
+     * @param Currency|value-of<Currency> $settlement_currency
+     * @param PayloadType|value-of<PayloadType> $payload_type
+     * @param CountryCode|value-of<CountryCode> $card_issuing_country
+     * @param list<ProductCart>|null $product_cart
      * @param IntentStatus|value-of<IntentStatus> $status
      */
     public static function with(
         BillingAddress $billing,
-        string $brandID,
-        string $businessID,
-        \DateTimeInterface $createdAt,
+        string $brand_id,
+        string $business_id,
+        \DateTimeInterface $created_at,
         Currency|string $currency,
         CustomerLimitedDetails $customer,
-        bool $digitalProductsDelivered,
+        bool $digital_products_delivered,
         array $disputes,
         array $metadata,
-        string $paymentID,
+        string $payment_id,
         array $refunds,
-        int $settlementAmount,
-        Currency|string $settlementCurrency,
-        int $totalAmount,
-        PayloadType|string $payloadType,
-        CountryCode|string|null $cardIssuingCountry = null,
-        ?string $cardLastFour = null,
-        ?string $cardNetwork = null,
-        ?string $cardType = null,
-        ?string $checkoutSessionID = null,
-        ?string $discountID = null,
-        ?string $errorCode = null,
-        ?string $errorMessage = null,
-        ?string $paymentLink = null,
-        ?string $paymentMethod = null,
-        ?string $paymentMethodType = null,
-        ?array $productCart = null,
-        ?int $settlementTax = null,
+        int $settlement_amount,
+        Currency|string $settlement_currency,
+        int $total_amount,
+        PayloadType|string $payload_type,
+        CountryCode|string|null $card_issuing_country = null,
+        ?string $card_last_four = null,
+        ?string $card_network = null,
+        ?string $card_type = null,
+        ?string $checkout_session_id = null,
+        ?string $discount_id = null,
+        ?string $error_code = null,
+        ?string $error_message = null,
+        ?string $payment_link = null,
+        ?string $payment_method = null,
+        ?string $payment_method_type = null,
+        ?array $product_cart = null,
+        ?int $settlement_tax = null,
         IntentStatus|string|null $status = null,
-        ?string $subscriptionID = null,
+        ?string $subscription_id = null,
         ?int $tax = null,
-        ?\DateTimeInterface $updatedAt = null,
+        ?\DateTimeInterface $updated_at = null,
     ): self {
         $obj = new self;
 
         $obj->billing = $billing;
-        $obj->brandID = $brandID;
-        $obj->businessID = $businessID;
-        $obj->createdAt = $createdAt;
+        $obj->brand_id = $brand_id;
+        $obj->business_id = $business_id;
+        $obj->created_at = $created_at;
         $obj['currency'] = $currency;
         $obj->customer = $customer;
-        $obj->digitalProductsDelivered = $digitalProductsDelivered;
+        $obj->digital_products_delivered = $digital_products_delivered;
         $obj->disputes = $disputes;
         $obj->metadata = $metadata;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $payment_id;
         $obj->refunds = $refunds;
-        $obj->settlementAmount = $settlementAmount;
-        $obj['settlementCurrency'] = $settlementCurrency;
-        $obj->totalAmount = $totalAmount;
-        $obj['payloadType'] = $payloadType;
+        $obj->settlement_amount = $settlement_amount;
+        $obj['settlement_currency'] = $settlement_currency;
+        $obj->total_amount = $total_amount;
+        $obj['payload_type'] = $payload_type;
 
-        null !== $cardIssuingCountry && $obj['cardIssuingCountry'] = $cardIssuingCountry;
-        null !== $cardLastFour && $obj->cardLastFour = $cardLastFour;
-        null !== $cardNetwork && $obj->cardNetwork = $cardNetwork;
-        null !== $cardType && $obj->cardType = $cardType;
-        null !== $checkoutSessionID && $obj->checkoutSessionID = $checkoutSessionID;
-        null !== $discountID && $obj->discountID = $discountID;
-        null !== $errorCode && $obj->errorCode = $errorCode;
-        null !== $errorMessage && $obj->errorMessage = $errorMessage;
-        null !== $paymentLink && $obj->paymentLink = $paymentLink;
-        null !== $paymentMethod && $obj->paymentMethod = $paymentMethod;
-        null !== $paymentMethodType && $obj->paymentMethodType = $paymentMethodType;
-        null !== $productCart && $obj->productCart = $productCart;
-        null !== $settlementTax && $obj->settlementTax = $settlementTax;
+        null !== $card_issuing_country && $obj['card_issuing_country'] = $card_issuing_country;
+        null !== $card_last_four && $obj->card_last_four = $card_last_four;
+        null !== $card_network && $obj->card_network = $card_network;
+        null !== $card_type && $obj->card_type = $card_type;
+        null !== $checkout_session_id && $obj->checkout_session_id = $checkout_session_id;
+        null !== $discount_id && $obj->discount_id = $discount_id;
+        null !== $error_code && $obj->error_code = $error_code;
+        null !== $error_message && $obj->error_message = $error_message;
+        null !== $payment_link && $obj->payment_link = $payment_link;
+        null !== $payment_method && $obj->payment_method = $payment_method;
+        null !== $payment_method_type && $obj->payment_method_type = $payment_method_type;
+        null !== $product_cart && $obj->product_cart = $product_cart;
+        null !== $settlement_tax && $obj->settlement_tax = $settlement_tax;
         null !== $status && $obj['status'] = $status;
-        null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
+        null !== $subscription_id && $obj->subscription_id = $subscription_id;
         null !== $tax && $obj->tax = $tax;
-        null !== $updatedAt && $obj->updatedAt = $updatedAt;
+        null !== $updated_at && $obj->updated_at = $updated_at;
 
         return $obj;
     }
@@ -407,7 +402,7 @@ final class Payment implements BaseModel
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brandID = $brandID;
+        $obj->brand_id = $brandID;
 
         return $obj;
     }
@@ -418,7 +413,7 @@ final class Payment implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -429,7 +424,7 @@ final class Payment implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -460,7 +455,7 @@ final class Payment implements BaseModel
         bool $digitalProductsDelivered
     ): self {
         $obj = clone $this;
-        $obj->digitalProductsDelivered = $digitalProductsDelivered;
+        $obj->digital_products_delivered = $digitalProductsDelivered;
 
         return $obj;
     }
@@ -481,7 +476,7 @@ final class Payment implements BaseModel
     /**
      * Additional custom data associated with the payment.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -497,7 +492,7 @@ final class Payment implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -522,7 +517,7 @@ final class Payment implements BaseModel
     public function withSettlementAmount(int $settlementAmount): self
     {
         $obj = clone $this;
-        $obj->settlementAmount = $settlementAmount;
+        $obj->settlement_amount = $settlementAmount;
 
         return $obj;
     }
@@ -534,7 +529,7 @@ final class Payment implements BaseModel
         Currency|string $settlementCurrency
     ): self {
         $obj = clone $this;
-        $obj['settlementCurrency'] = $settlementCurrency;
+        $obj['settlement_currency'] = $settlementCurrency;
 
         return $obj;
     }
@@ -545,7 +540,7 @@ final class Payment implements BaseModel
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj->totalAmount = $totalAmount;
+        $obj->total_amount = $totalAmount;
 
         return $obj;
     }
@@ -559,7 +554,7 @@ final class Payment implements BaseModel
         CountryCode|string $cardIssuingCountry
     ): self {
         $obj = clone $this;
-        $obj['cardIssuingCountry'] = $cardIssuingCountry;
+        $obj['card_issuing_country'] = $cardIssuingCountry;
 
         return $obj;
     }
@@ -570,7 +565,7 @@ final class Payment implements BaseModel
     public function withCardLastFour(?string $cardLastFour): self
     {
         $obj = clone $this;
-        $obj->cardLastFour = $cardLastFour;
+        $obj->card_last_four = $cardLastFour;
 
         return $obj;
     }
@@ -581,7 +576,7 @@ final class Payment implements BaseModel
     public function withCardNetwork(?string $cardNetwork): self
     {
         $obj = clone $this;
-        $obj->cardNetwork = $cardNetwork;
+        $obj->card_network = $cardNetwork;
 
         return $obj;
     }
@@ -592,7 +587,7 @@ final class Payment implements BaseModel
     public function withCardType(?string $cardType): self
     {
         $obj = clone $this;
-        $obj->cardType = $cardType;
+        $obj->card_type = $cardType;
 
         return $obj;
     }
@@ -604,7 +599,7 @@ final class Payment implements BaseModel
     public function withCheckoutSessionID(?string $checkoutSessionID): self
     {
         $obj = clone $this;
-        $obj->checkoutSessionID = $checkoutSessionID;
+        $obj->checkout_session_id = $checkoutSessionID;
 
         return $obj;
     }
@@ -615,7 +610,7 @@ final class Payment implements BaseModel
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discountID = $discountID;
+        $obj->discount_id = $discountID;
 
         return $obj;
     }
@@ -626,7 +621,7 @@ final class Payment implements BaseModel
     public function withErrorCode(?string $errorCode): self
     {
         $obj = clone $this;
-        $obj->errorCode = $errorCode;
+        $obj->error_code = $errorCode;
 
         return $obj;
     }
@@ -637,7 +632,7 @@ final class Payment implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->errorMessage = $errorMessage;
+        $obj->error_message = $errorMessage;
 
         return $obj;
     }
@@ -648,7 +643,7 @@ final class Payment implements BaseModel
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj->paymentLink = $paymentLink;
+        $obj->payment_link = $paymentLink;
 
         return $obj;
     }
@@ -659,7 +654,7 @@ final class Payment implements BaseModel
     public function withPaymentMethod(?string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj->paymentMethod = $paymentMethod;
+        $obj->payment_method = $paymentMethod;
 
         return $obj;
     }
@@ -670,7 +665,7 @@ final class Payment implements BaseModel
     public function withPaymentMethodType(?string $paymentMethodType): self
     {
         $obj = clone $this;
-        $obj->paymentMethodType = $paymentMethodType;
+        $obj->payment_method_type = $paymentMethodType;
 
         return $obj;
     }
@@ -683,7 +678,7 @@ final class Payment implements BaseModel
     public function withProductCart(?array $productCart): self
     {
         $obj = clone $this;
-        $obj->productCart = $productCart;
+        $obj->product_cart = $productCart;
 
         return $obj;
     }
@@ -696,7 +691,7 @@ final class Payment implements BaseModel
     public function withSettlementTax(?int $settlementTax): self
     {
         $obj = clone $this;
-        $obj->settlementTax = $settlementTax;
+        $obj->settlement_tax = $settlementTax;
 
         return $obj;
     }
@@ -718,7 +713,7 @@ final class Payment implements BaseModel
     public function withSubscriptionID(?string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscriptionID = $subscriptionID;
+        $obj->subscription_id = $subscriptionID;
 
         return $obj;
     }
@@ -740,7 +735,7 @@ final class Payment implements BaseModel
     public function withUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }
@@ -751,7 +746,7 @@ final class Payment implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj['payloadType'] = $payloadType;
+        $obj['payload_type'] = $payloadType;
 
         return $obj;
     }

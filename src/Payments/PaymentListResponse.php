@@ -13,18 +13,18 @@ use Dodopayments\Misc\Currency;
 
 /**
  * @phpstan-type PaymentListResponseShape = array{
- *   brandID: string,
- *   createdAt: \DateTimeInterface,
+ *   brand_id: string,
+ *   created_at: \DateTimeInterface,
  *   currency: value-of<Currency>,
  *   customer: CustomerLimitedDetails,
- *   digitalProductsDelivered: bool,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   totalAmount: int,
- *   paymentMethod?: string|null,
- *   paymentMethodType?: string|null,
+ *   digital_products_delivered: bool,
+ *   metadata: array<string,string>,
+ *   payment_id: string,
+ *   total_amount: int,
+ *   payment_method?: string|null,
+ *   payment_method_type?: string|null,
  *   status?: value-of<IntentStatus>|null,
- *   subscriptionID?: string|null,
+ *   subscription_id?: string|null,
  * }
  */
 final class PaymentListResponse implements BaseModel, ResponseConverter
@@ -34,11 +34,11 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
 
     use SdkResponse;
 
-    #[Api('brand_id')]
-    public string $brandID;
+    #[Api]
+    public string $brand_id;
 
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]
@@ -47,31 +47,31 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     #[Api]
     public CustomerLimitedDetails $customer;
 
-    #[Api('digital_products_delivered')]
-    public bool $digitalProductsDelivered;
+    #[Api]
+    public bool $digital_products_delivered;
 
-    /** @var array<string, string> $metadata */
+    /** @var array<string,string> $metadata */
     #[Api(map: 'string')]
     public array $metadata;
 
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
-    #[Api('total_amount')]
-    public int $totalAmount;
+    #[Api]
+    public int $total_amount;
 
-    #[Api('payment_method', nullable: true, optional: true)]
-    public ?string $paymentMethod;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_method;
 
-    #[Api('payment_method_type', nullable: true, optional: true)]
-    public ?string $paymentMethodType;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_method_type;
 
     /** @var value-of<IntentStatus>|null $status */
     #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
     public ?string $status;
 
-    #[Api('subscription_id', nullable: true, optional: true)]
-    public ?string $subscriptionID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $subscription_id;
 
     /**
      * `new PaymentListResponse()` is missing required properties by the API.
@@ -79,14 +79,14 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * PaymentListResponse::with(
-     *   brandID: ...,
-     *   createdAt: ...,
+     *   brand_id: ...,
+     *   created_at: ...,
      *   currency: ...,
      *   customer: ...,
-     *   digitalProductsDelivered: ...,
+     *   digital_products_delivered: ...,
      *   metadata: ...,
-     *   paymentID: ...,
-     *   totalAmount: ...,
+     *   payment_id: ...,
+     *   total_amount: ...,
      * )
      * ```
      *
@@ -115,38 +115,38 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
-        string $brandID,
-        \DateTimeInterface $createdAt,
+        string $brand_id,
+        \DateTimeInterface $created_at,
         Currency|string $currency,
         CustomerLimitedDetails $customer,
-        bool $digitalProductsDelivered,
+        bool $digital_products_delivered,
         array $metadata,
-        string $paymentID,
-        int $totalAmount,
-        ?string $paymentMethod = null,
-        ?string $paymentMethodType = null,
+        string $payment_id,
+        int $total_amount,
+        ?string $payment_method = null,
+        ?string $payment_method_type = null,
         IntentStatus|string|null $status = null,
-        ?string $subscriptionID = null,
+        ?string $subscription_id = null,
     ): self {
         $obj = new self;
 
-        $obj->brandID = $brandID;
-        $obj->createdAt = $createdAt;
+        $obj->brand_id = $brand_id;
+        $obj->created_at = $created_at;
         $obj['currency'] = $currency;
         $obj->customer = $customer;
-        $obj->digitalProductsDelivered = $digitalProductsDelivered;
+        $obj->digital_products_delivered = $digital_products_delivered;
         $obj->metadata = $metadata;
-        $obj->paymentID = $paymentID;
-        $obj->totalAmount = $totalAmount;
+        $obj->payment_id = $payment_id;
+        $obj->total_amount = $total_amount;
 
-        null !== $paymentMethod && $obj->paymentMethod = $paymentMethod;
-        null !== $paymentMethodType && $obj->paymentMethodType = $paymentMethodType;
+        null !== $payment_method && $obj->payment_method = $payment_method;
+        null !== $payment_method_type && $obj->payment_method_type = $payment_method_type;
         null !== $status && $obj['status'] = $status;
-        null !== $subscriptionID && $obj->subscriptionID = $subscriptionID;
+        null !== $subscription_id && $obj->subscription_id = $subscription_id;
 
         return $obj;
     }
@@ -154,7 +154,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brandID = $brandID;
+        $obj->brand_id = $brandID;
 
         return $obj;
     }
@@ -162,7 +162,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -190,13 +190,13 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
         bool $digitalProductsDelivered
     ): self {
         $obj = clone $this;
-        $obj->digitalProductsDelivered = $digitalProductsDelivered;
+        $obj->digital_products_delivered = $digitalProductsDelivered;
 
         return $obj;
     }
 
     /**
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -209,7 +209,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -217,7 +217,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj->totalAmount = $totalAmount;
+        $obj->total_amount = $totalAmount;
 
         return $obj;
     }
@@ -225,7 +225,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withPaymentMethod(?string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj->paymentMethod = $paymentMethod;
+        $obj->payment_method = $paymentMethod;
 
         return $obj;
     }
@@ -233,7 +233,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withPaymentMethodType(?string $paymentMethodType): self
     {
         $obj = clone $this;
-        $obj->paymentMethodType = $paymentMethodType;
+        $obj->payment_method_type = $paymentMethodType;
 
         return $obj;
     }
@@ -252,7 +252,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withSubscriptionID(?string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscriptionID = $subscriptionID;
+        $obj->subscription_id = $subscriptionID;
 
         return $obj;
     }

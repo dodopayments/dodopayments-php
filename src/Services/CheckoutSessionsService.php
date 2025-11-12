@@ -5,23 +5,14 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\AttachExistingCustomer;
-use Dodopayments\Payments\NewCustomer;
-use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CheckoutSessionsContract;
-
-use const Dodopayments\Core\OMIT as omit;
 
 final class CheckoutSessionsService implements CheckoutSessionsContract
 {
@@ -33,80 +24,63 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
     /**
      * @api
      *
-     * @param list<ProductCart> $productCart
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes Customers will never see payment methods that are not in this list.
-     * However, adding a method here does not guarantee customers will see it.
-     * Availability still depends on other factors (e.g., customer location, merchant settings).
-     *
-     * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
-     * If all payment methods are unavailable, checkout session will fail.
-     * @param BillingAddress|null $billingAddress Billing address information for the session
-     * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
-     * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
-     * @param AttachExistingCustomer|NewCustomer|null $customer Customer details for the session
-     * @param Customization $customization Customization for the checkout session page
-     * @param string|null $discountCode
-     * @param FeatureFlags $featureFlags
-     * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
-     * @param array<string,
-     * string,>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
-     * @param string|null $returnURL the url to redirect after payment failure or success
-     * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
-     * @param SubscriptionData|null $subscriptionData
+     * @param array{
+     *   product_cart: list<array{
+     *     product_id: string,
+     *     quantity: int,
+     *     addons?: list<array<mixed>>|null,
+     *     amount?: int|null,
+     *   }>,
+     *   allowed_payment_method_types?: list<"credit"|"debit"|"upi_collect"|"upi_intent"|"apple_pay"|"cashapp"|"google_pay"|"multibanco"|"bancontact_card"|"eps"|"ideal"|"przelewy24"|"paypal"|"affirm"|"klarna"|"sepa"|"ach"|"amazon_pay"|"afterpay_clearpay">|null,
+     *   billing_address?: array{
+     *     country: "AF"|"AX"|"AL"|"DZ"|"AS"|"AD"|"AO"|"AI"|"AQ"|"AG"|"AR"|"AM"|"AW"|"AU"|"AT"|"AZ"|"BS"|"BH"|"BD"|"BB"|"BY"|"BE"|"BZ"|"BJ"|"BM"|"BT"|"BO"|"BQ"|"BA"|"BW"|"BV"|"BR"|"IO"|"BN"|"BG"|"BF"|"BI"|"KH"|"CM"|"CA"|"CV"|"KY"|"CF"|"TD"|"CL"|"CN"|"CX"|"CC"|"CO"|"KM"|"CG"|"CD"|"CK"|"CR"|"CI"|"HR"|"CU"|"CW"|"CY"|"CZ"|"DK"|"DJ"|"DM"|"DO"|"EC"|"EG"|"SV"|"GQ"|"ER"|"EE"|"ET"|"FK"|"FO"|"FJ"|"FI"|"FR"|"GF"|"PF"|"TF"|"GA"|"GM"|"GE"|"DE"|"GH"|"GI"|"GR"|"GL"|"GD"|"GP"|"GU"|"GT"|"GG"|"GN"|"GW"|"GY"|"HT"|"HM"|"VA"|"HN"|"HK"|"HU"|"IS"|"IN"|"ID"|"IR"|"IQ"|"IE"|"IM"|"IL"|"IT"|"JM"|"JP"|"JE"|"JO"|"KZ"|"KE"|"KI"|"KP"|"KR"|"KW"|"KG"|"LA"|"LV"|"LB"|"LS"|"LR"|"LY"|"LI"|"LT"|"LU"|"MO"|"MK"|"MG"|"MW"|"MY"|"MV"|"ML"|"MT"|"MH"|"MQ"|"MR"|"MU"|"YT"|"MX"|"FM"|"MD"|"MC"|"MN"|"ME"|"MS"|"MA"|"MZ"|"MM"|"NA"|"NR"|"NP"|"NL"|"NC"|"NZ"|"NI"|"NE"|"NG"|"NU"|"NF"|"MP"|"NO"|"OM"|"PK"|"PW"|"PS"|"PA"|"PG"|"PY"|"PE"|"PH"|"PN"|"PL"|"PT"|"PR"|"QA"|"RE"|"RO"|"RU"|"RW"|"BL"|"SH"|"KN"|"LC"|"MF"|"PM"|"VC"|"WS"|"SM"|"ST"|"SA"|"SN"|"RS"|"SC"|"SL"|"SG"|"SX"|"SK"|"SI"|"SB"|"SO"|"ZA"|"GS"|"SS"|"ES"|"LK"|"SD"|"SR"|"SJ"|"SZ"|"SE"|"CH"|"SY"|"TW"|"TJ"|"TZ"|"TH"|"TL"|"TG"|"TK"|"TO"|"TT"|"TN"|"TR"|"TM"|"TC"|"TV"|"UG"|"UA"|"AE"|"GB"|"UM"|"US"|"UY"|"UZ"|"VU"|"VE"|"VN"|"VG"|"VI"|"WF"|"EH"|"YE"|"ZM"|"ZW"|CountryCode,
+     *     city?: string|null,
+     *     state?: string|null,
+     *     street?: string|null,
+     *     zipcode?: string|null,
+     *   }|null,
+     *   billing_currency?: value-of<Currency>,
+     *   confirm?: bool,
+     *   customer?: array<string,mixed>|null,
+     *   customization?: array{
+     *     force_language?: string|null,
+     *     show_on_demand_tag?: bool,
+     *     show_order_details?: bool,
+     *     theme?: "dark"|"light"|"system",
+     *   },
+     *   discount_code?: string|null,
+     *   feature_flags?: array{
+     *     allow_currency_selection?: bool,
+     *     allow_discount_code?: bool,
+     *     allow_phone_number_collection?: bool,
+     *     allow_tax_id?: bool,
+     *     always_create_new_customer?: bool,
+     *   },
+     *   force_3ds?: bool|null,
+     *   metadata?: array<string,string>|null,
+     *   return_url?: string|null,
+     *   show_saved_payment_methods?: bool,
+     *   subscription_data?: array{
+     *     on_demand?: array{
+     *       mandate_only: bool,
+     *       adaptive_currency_fees_inclusive?: bool|null,
+     *       product_currency?: "AED"|"ALL"|"AMD"|"ANG"|"AOA"|"ARS"|"AUD"|"AWG"|"AZN"|"BAM"|"BBD"|"BDT"|"BGN"|"BHD"|"BIF"|"BMD"|"BND"|"BOB"|"BRL"|"BSD"|"BWP"|"BYN"|"BZD"|"CAD"|"CHF"|"CLP"|"CNY"|"COP"|"CRC"|"CUP"|"CVE"|"CZK"|"DJF"|"DKK"|"DOP"|"DZD"|"EGP"|"ETB"|"EUR"|"FJD"|"FKP"|"GBP"|"GEL"|"GHS"|"GIP"|"GMD"|"GNF"|"GTQ"|"GYD"|"HKD"|"HNL"|"HRK"|"HTG"|"HUF"|"IDR"|"ILS"|"INR"|"IQD"|"JMD"|"JOD"|"JPY"|"KES"|"KGS"|"KHR"|"KMF"|"KRW"|"KWD"|"KYD"|"KZT"|"LAK"|"LBP"|"LKR"|"LRD"|"LSL"|"LYD"|"MAD"|"MDL"|"MGA"|"MKD"|"MMK"|"MNT"|"MOP"|"MRU"|"MUR"|"MVR"|"MWK"|"MXN"|"MYR"|"MZN"|"NAD"|"NGN"|"NIO"|"NOK"|"NPR"|"NZD"|"OMR"|"PAB"|"PEN"|"PGK"|"PHP"|"PKR"|"PLN"|"PYG"|"QAR"|"RON"|"RSD"|"RUB"|"RWF"|"SAR"|"SBD"|"SCR"|"SEK"|"SGD"|"SHP"|"SLE"|"SLL"|"SOS"|"SRD"|"SSP"|"STN"|"SVC"|"SZL"|"THB"|"TND"|"TOP"|"TRY"|"TTD"|"TWD"|"TZS"|"UAH"|"UGX"|"USD"|"UYU"|"UZS"|"VES"|"VND"|"VUV"|"WST"|"XAF"|"XCD"|"XOF"|"XPF"|"YER"|"ZAR"|"ZMW"|Currency|null,
+     *       product_description?: string|null,
+     *       product_price?: int|null,
+     *     }|null,
+     *     trial_period_days?: int|null,
+     *   }|null,
+     * }|CheckoutSessionCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $productCart,
-        $allowedPaymentMethodTypes = omit,
-        $billingAddress = omit,
-        $billingCurrency = omit,
-        $confirm = omit,
-        $customer = omit,
-        $customization = omit,
-        $discountCode = omit,
-        $featureFlags = omit,
-        $force3DS = omit,
-        $metadata = omit,
-        $returnURL = omit,
-        $showSavedPaymentMethods = omit,
-        $subscriptionData = omit,
+        array|CheckoutSessionCreateParams $params,
         ?RequestOptions $requestOptions = null,
-    ): CheckoutSessionResponse {
-        $params = [
-            'productCart' => $productCart,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingAddress' => $billingAddress,
-            'billingCurrency' => $billingCurrency,
-            'confirm' => $confirm,
-            'customer' => $customer,
-            'customization' => $customization,
-            'discountCode' => $discountCode,
-            'featureFlags' => $featureFlags,
-            'force3DS' => $force3DS,
-            'metadata' => $metadata,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'subscriptionData' => $subscriptionData,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
-        ?RequestOptions $requestOptions = null
     ): CheckoutSessionResponse {
         [$parsed, $options] = CheckoutSessionCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

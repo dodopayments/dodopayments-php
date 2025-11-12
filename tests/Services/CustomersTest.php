@@ -29,7 +29,9 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->customers->create(email: 'email', name: 'name');
+        $result = $this->client->customers->create([
+            'email' => 'email', 'name' => 'name',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -37,7 +39,9 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->customers->create(email: 'email', name: 'name');
+        $result = $this->client->customers->create([
+            'email' => 'email', 'name' => 'name',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -53,7 +57,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->customers->update('customer_id');
+        $result = $this->client->customers->update('customer_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -65,7 +69,7 @@ final class CustomersTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->customers->list();
+        $result = $this->client->customers->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

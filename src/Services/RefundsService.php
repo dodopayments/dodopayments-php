@@ -9,14 +9,10 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
-use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams;
-use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\RefundsContract;
-
-use const Dodopayments\Core\OMIT as omit;
 
 final class RefundsService implements RefundsContract
 {
@@ -28,45 +24,24 @@ final class RefundsService implements RefundsContract
     /**
      * @api
      *
-     * @param string $paymentID the unique identifier of the payment to be refunded
-     * @param list<Item>|null $items Partially Refund an Individual Item
-     * @param array<string,
-     * string,> $metadata Additional metadata associated with the refund
-     * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
+     * @param array{
+     *   payment_id: string,
+     *   items?: list<array{
+     *     item_id: string, amount?: int|null, tax_inclusive?: bool
+     *   }>|null,
+     *   metadata?: array<string,string>,
+     *   reason?: string|null,
+     * }|RefundCreateParams $params
      *
      * @throws APIException
      */
     public function create(
-        $paymentID,
-        $items = omit,
-        $metadata = omit,
-        $reason = omit,
-        ?RequestOptions $requestOptions = null,
-    ): Refund {
-        $params = [
-            'paymentID' => $paymentID,
-            'items' => $items,
-            'metadata' => $metadata,
-            'reason' => $reason,
-        ];
-
-        return $this->createRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @throws APIException
-     */
-    public function createRaw(
-        array $params,
+        array|RefundCreateParams $params,
         ?RequestOptions $requestOptions = null
     ): Refund {
         [$parsed, $options] = RefundCreateParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;
@@ -100,54 +75,26 @@ final class RefundsService implements RefundsContract
     /**
      * @api
      *
-     * @param \DateTimeInterface $createdAtGte Get events after this created time
-     * @param \DateTimeInterface $createdAtLte Get events created before this time
-     * @param string $customerID Filter by customer_id
-     * @param int $pageNumber Page number default is 0
-     * @param int $pageSize Page size default is 10 max is 100
-     * @param Status|value-of<Status> $status Filter by status
+     * @param array{
+     *   created_at_gte?: string|\DateTimeInterface,
+     *   created_at_lte?: string|\DateTimeInterface,
+     *   customer_id?: string,
+     *   page_number?: int,
+     *   page_size?: int,
+     *   status?: "succeeded"|"failed"|"pending"|"review",
+     * }|RefundListParams $params
      *
      * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */
     public function list(
-        $createdAtGte = omit,
-        $createdAtLte = omit,
-        $customerID = omit,
-        $pageNumber = omit,
-        $pageSize = omit,
-        $status = omit,
-        ?RequestOptions $requestOptions = null,
-    ): DefaultPageNumberPagination {
-        $params = [
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-        ];
-
-        return $this->listRaw($params, $requestOptions);
-    }
-
-    /**
-     * @api
-     *
-     * @param array<string, mixed> $params
-     *
-     * @return DefaultPageNumberPagination<RefundListResponse>
-     *
-     * @throws APIException
-     */
-    public function listRaw(
-        array $params,
+        array|RefundListParams $params,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination {
         [$parsed, $options] = RefundListParams::parseRequest(
             $params,
-            $requestOptions
+            $requestOptions,
         );
 
         // @phpstan-ignore-next-line;

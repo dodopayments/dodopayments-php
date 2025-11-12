@@ -3,7 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Discounts\DiscountType;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -30,10 +29,9 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->discounts->create(
-            amount: 0,
-            type: DiscountType::PERCENTAGE
-        );
+        $result = $this->client->discounts->create([
+            'amount' => 0, 'type' => 'percentage',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -41,10 +39,9 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->discounts->create(
-            amount: 0,
-            type: DiscountType::PERCENTAGE
-        );
+        $result = $this->client->discounts->create([
+            'amount' => 0, 'type' => 'percentage',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -60,7 +57,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->discounts->update('discount_id');
+        $result = $this->client->discounts->update('discount_id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -72,7 +69,7 @@ final class DiscountsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->discounts->list();
+        $result = $this->client->discounts->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

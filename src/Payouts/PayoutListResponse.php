@@ -15,19 +15,19 @@ use Dodopayments\Payouts\PayoutListResponse\Status;
 /**
  * @phpstan-type PayoutListResponseShape = array{
  *   amount: int,
- *   businessID: string,
+ *   business_id: string,
  *   chargebacks: int,
- *   createdAt: \DateTimeInterface,
+ *   created_at: \DateTimeInterface,
  *   currency: value-of<Currency>,
  *   fee: int,
- *   paymentMethod: string,
- *   payoutID: string,
+ *   payment_method: string,
+ *   payout_id: string,
  *   refunds: int,
  *   status: value-of<Status>,
  *   tax: int,
- *   updatedAt: \DateTimeInterface,
+ *   updated_at: \DateTimeInterface,
  *   name?: string|null,
- *   payoutDocumentURL?: string|null,
+ *   payout_document_url?: string|null,
  *   remarks?: string|null,
  * }
  */
@@ -47,8 +47,8 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     /**
      * The unique identifier of the business associated with the payout.
      */
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * @deprecated
@@ -61,8 +61,8 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     /**
      * The timestamp when the payout was created, in UTC.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * The currency of the payout, represented as an ISO 4217 currency code.
@@ -81,14 +81,14 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     /**
      * The payment method used for the payout (e.g., bank transfer, card, etc.).
      */
-    #[Api('payment_method')]
-    public string $paymentMethod;
+    #[Api]
+    public string $payment_method;
 
     /**
      * The unique identifier of the payout.
      */
-    #[Api('payout_id')]
-    public string $payoutID;
+    #[Api]
+    public string $payout_id;
 
     /**
      * @deprecated
@@ -117,8 +117,8 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     /**
      * The timestamp when the payout was last updated, in UTC.
      */
-    #[Api('updated_at')]
-    public \DateTimeInterface $updatedAt;
+    #[Api]
+    public \DateTimeInterface $updated_at;
 
     /**
      * The name of the payout recipient or purpose.
@@ -129,8 +129,8 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     /**
      * The URL of the document associated with the payout.
      */
-    #[Api('payout_document_url', nullable: true, optional: true)]
-    public ?string $payoutDocumentURL;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payout_document_url;
 
     /**
      * Any additional remarks or notes associated with the payout.
@@ -145,17 +145,17 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
      * ```
      * PayoutListResponse::with(
      *   amount: ...,
-     *   businessID: ...,
+     *   business_id: ...,
      *   chargebacks: ...,
-     *   createdAt: ...,
+     *   created_at: ...,
      *   currency: ...,
      *   fee: ...,
-     *   paymentMethod: ...,
-     *   payoutID: ...,
+     *   payment_method: ...,
+     *   payout_id: ...,
      *   refunds: ...,
      *   status: ...,
      *   tax: ...,
-     *   updatedAt: ...,
+     *   updated_at: ...,
      * )
      * ```
      *
@@ -192,38 +192,38 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
      */
     public static function with(
         int $amount,
-        string $businessID,
+        string $business_id,
         int $chargebacks,
-        \DateTimeInterface $createdAt,
+        \DateTimeInterface $created_at,
         Currency|string $currency,
         int $fee,
-        string $paymentMethod,
-        string $payoutID,
+        string $payment_method,
+        string $payout_id,
         int $refunds,
         Status|string $status,
         int $tax,
-        \DateTimeInterface $updatedAt,
+        \DateTimeInterface $updated_at,
         ?string $name = null,
-        ?string $payoutDocumentURL = null,
+        ?string $payout_document_url = null,
         ?string $remarks = null,
     ): self {
         $obj = new self;
 
         $obj->amount = $amount;
-        $obj->businessID = $businessID;
+        $obj->business_id = $business_id;
         $obj->chargebacks = $chargebacks;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $created_at;
         $obj['currency'] = $currency;
         $obj->fee = $fee;
-        $obj->paymentMethod = $paymentMethod;
-        $obj->payoutID = $payoutID;
+        $obj->payment_method = $payment_method;
+        $obj->payout_id = $payout_id;
         $obj->refunds = $refunds;
         $obj['status'] = $status;
         $obj->tax = $tax;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updated_at;
 
         null !== $name && $obj->name = $name;
-        null !== $payoutDocumentURL && $obj->payoutDocumentURL = $payoutDocumentURL;
+        null !== $payout_document_url && $obj->payout_document_url = $payout_document_url;
         null !== $remarks && $obj->remarks = $remarks;
 
         return $obj;
@@ -246,7 +246,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -303,7 +303,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withPaymentMethod(string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj->paymentMethod = $paymentMethod;
+        $obj->payment_method = $paymentMethod;
 
         return $obj;
     }
@@ -314,7 +314,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withPayoutID(string $payoutID): self
     {
         $obj = clone $this;
-        $obj->payoutID = $payoutID;
+        $obj->payout_id = $payoutID;
 
         return $obj;
     }
@@ -360,7 +360,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updatedAt = $updatedAt;
+        $obj->updated_at = $updatedAt;
 
         return $obj;
     }
@@ -382,7 +382,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withPayoutDocumentURL(?string $payoutDocumentURL): self
     {
         $obj = clone $this;
-        $obj->payoutDocumentURL = $payoutDocumentURL;
+        $obj->payout_document_url = $payoutDocumentURL;
 
         return $obj;
     }

@@ -14,7 +14,7 @@ use Dodopayments\Services\Customers\Wallets\LedgerEntriesService;
 final class WalletsService implements WalletsContract
 {
     /**
-     * @@api
+     * @api
      */
     public LedgerEntriesService $ledgerEntries;
 

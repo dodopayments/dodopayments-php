@@ -14,11 +14,11 @@ use Dodopayments\Payments\IntentStatus;
 /**
  * @phpstan-type CheckoutSessionStatusShape = array{
  *   id: string,
- *   createdAt: \DateTimeInterface,
- *   customerEmail?: string|null,
- *   customerName?: string|null,
- *   paymentID?: string|null,
- *   paymentStatus?: value-of<IntentStatus>|null,
+ *   created_at: \DateTimeInterface,
+ *   customer_email?: string|null,
+ *   customer_name?: string|null,
+ *   payment_id?: string|null,
+ *   payment_status?: value-of<IntentStatus>|null,
  * }
  */
 final class CheckoutSessionStatus implements BaseModel, ResponseConverter
@@ -37,50 +37,45 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     /**
      * Created at timestamp.
      */
-    #[Api('created_at')]
-    public \DateTimeInterface $createdAt;
+    #[Api]
+    public \DateTimeInterface $created_at;
 
     /**
      * Customer email: prefers payment's customer, falls back to session.
      */
-    #[Api('customer_email', nullable: true, optional: true)]
-    public ?string $customerEmail;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_email;
 
     /**
      * Customer name: prefers payment's customer, falls back to session.
      */
-    #[Api('customer_name', nullable: true, optional: true)]
-    public ?string $customerName;
+    #[Api(nullable: true, optional: true)]
+    public ?string $customer_name;
 
     /**
      * Id of the payment created by the checkout sessions.
      *
      * Null if checkout sessions is still at the details collection stage.
      */
-    #[Api('payment_id', nullable: true, optional: true)]
-    public ?string $paymentID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_id;
 
     /**
      * status of the payment.
      *
      * Null if checkout sessions is still at the details collection stage.
      *
-     * @var value-of<IntentStatus>|null $paymentStatus
+     * @var value-of<IntentStatus>|null $payment_status
      */
-    #[Api(
-        'payment_status',
-        enum: IntentStatus::class,
-        nullable: true,
-        optional: true
-    )]
-    public ?string $paymentStatus;
+    #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
+    public ?string $payment_status;
 
     /**
      * `new CheckoutSessionStatus()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CheckoutSessionStatus::with(id: ..., createdAt: ...)
+     * CheckoutSessionStatus::with(id: ..., created_at: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -99,25 +94,25 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param IntentStatus|value-of<IntentStatus>|null $paymentStatus
+     * @param IntentStatus|value-of<IntentStatus>|null $payment_status
      */
     public static function with(
         string $id,
-        \DateTimeInterface $createdAt,
-        ?string $customerEmail = null,
-        ?string $customerName = null,
-        ?string $paymentID = null,
-        IntentStatus|string|null $paymentStatus = null,
+        \DateTimeInterface $created_at,
+        ?string $customer_email = null,
+        ?string $customer_name = null,
+        ?string $payment_id = null,
+        IntentStatus|string|null $payment_status = null,
     ): self {
         $obj = new self;
 
         $obj->id = $id;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $created_at;
 
-        null !== $customerEmail && $obj->customerEmail = $customerEmail;
-        null !== $customerName && $obj->customerName = $customerName;
-        null !== $paymentID && $obj->paymentID = $paymentID;
-        null !== $paymentStatus && $obj['paymentStatus'] = $paymentStatus;
+        null !== $customer_email && $obj->customer_email = $customer_email;
+        null !== $customer_name && $obj->customer_name = $customer_name;
+        null !== $payment_id && $obj->payment_id = $payment_id;
+        null !== $payment_status && $obj['payment_status'] = $payment_status;
 
         return $obj;
     }
@@ -139,7 +134,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->createdAt = $createdAt;
+        $obj->created_at = $createdAt;
 
         return $obj;
     }
@@ -150,7 +145,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withCustomerEmail(?string $customerEmail): self
     {
         $obj = clone $this;
-        $obj->customerEmail = $customerEmail;
+        $obj->customer_email = $customerEmail;
 
         return $obj;
     }
@@ -161,7 +156,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withCustomerName(?string $customerName): self
     {
         $obj = clone $this;
-        $obj->customerName = $customerName;
+        $obj->customer_name = $customerName;
 
         return $obj;
     }
@@ -174,7 +169,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withPaymentID(?string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -190,7 +185,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
         IntentStatus|string|null $paymentStatus
     ): self {
         $obj = clone $this;
-        $obj['paymentStatus'] = $paymentStatus;
+        $obj['payment_status'] = $paymentStatus;
 
         return $obj;
     }

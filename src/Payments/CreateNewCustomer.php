@@ -12,8 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type CreateNewCustomerShape = array{
  *   email: string,
  *   name: string,
- *   createNewCustomer?: bool,
- *   phoneNumber?: string|null,
+ *   create_new_customer?: bool|null,
+ *   phone_number?: string|null,
  * }
  */
 final class CreateNewCustomer implements BaseModel
@@ -32,11 +32,11 @@ final class CreateNewCustomer implements BaseModel
      * When true, a new customer object is always created
      * False by default.
      */
-    #[Api('create_new_customer', optional: true)]
-    public ?bool $createNewCustomer;
+    #[Api(optional: true)]
+    public ?bool $create_new_customer;
 
-    #[Api('phone_number', nullable: true, optional: true)]
-    public ?string $phoneNumber;
+    #[Api(nullable: true, optional: true)]
+    public ?string $phone_number;
 
     /**
      * `new CreateNewCustomer()` is missing required properties by the API.
@@ -65,16 +65,16 @@ final class CreateNewCustomer implements BaseModel
     public static function with(
         string $email,
         string $name,
-        ?bool $createNewCustomer = null,
-        ?string $phoneNumber = null,
+        ?bool $create_new_customer = null,
+        ?string $phone_number = null,
     ): self {
         $obj = new self;
 
         $obj->email = $email;
         $obj->name = $name;
 
-        null !== $createNewCustomer && $obj->createNewCustomer = $createNewCustomer;
-        null !== $phoneNumber && $obj->phoneNumber = $phoneNumber;
+        null !== $create_new_customer && $obj->create_new_customer = $create_new_customer;
+        null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class CreateNewCustomer implements BaseModel
     public function withCreateNewCustomer(bool $createNewCustomer): self
     {
         $obj = clone $this;
-        $obj->createNewCustomer = $createNewCustomer;
+        $obj->create_new_customer = $createNewCustomer;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class CreateNewCustomer implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phoneNumber = $phoneNumber;
+        $obj->phone_number = $phoneNumber;
 
         return $obj;
     }

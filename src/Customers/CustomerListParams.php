@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Customers->list
  *
  * @phpstan-type CustomerListParamsShape = array{
- *   email?: string, pageNumber?: int, pageSize?: int
+ *   email?: string, page_number?: int, page_size?: int
  * }
  */
 final class CustomerListParams implements BaseModel
@@ -32,13 +32,13 @@ final class CustomerListParams implements BaseModel
      * Page number default is 0.
      */
     #[Api(optional: true)]
-    public ?int $pageNumber;
+    public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Api(optional: true)]
-    public ?int $pageSize;
+    public ?int $page_size;
 
     public function __construct()
     {
@@ -52,14 +52,14 @@ final class CustomerListParams implements BaseModel
      */
     public static function with(
         ?string $email = null,
-        ?int $pageNumber = null,
-        ?int $pageSize = null
+        ?int $page_number = null,
+        ?int $page_size = null
     ): self {
         $obj = new self;
 
         null !== $email && $obj->email = $email;
-        null !== $pageNumber && $obj->pageNumber = $pageNumber;
-        null !== $pageSize && $obj->pageSize = $pageSize;
+        null !== $page_number && $obj->page_number = $page_number;
+        null !== $page_size && $obj->page_size = $page_size;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class CustomerListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->pageNumber = $pageNumber;
+        $obj->page_number = $pageNumber;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class CustomerListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->pageSize = $pageSize;
+        $obj->page_size = $pageSize;
 
         return $obj;
     }

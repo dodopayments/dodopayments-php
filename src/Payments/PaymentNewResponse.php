@@ -12,15 +12,15 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type PaymentNewResponseShape = array{
- *   clientSecret: string,
+ *   client_secret: string,
  *   customer: CustomerLimitedDetails,
- *   metadata: array<string, string>,
- *   paymentID: string,
- *   totalAmount: int,
- *   discountID?: string|null,
- *   expiresOn?: \DateTimeInterface|null,
- *   paymentLink?: string|null,
- *   productCart?: list<OneTimeProductCartItem>|null,
+ *   metadata: array<string,string>,
+ *   payment_id: string,
+ *   total_amount: int,
+ *   discount_id?: string|null,
+ *   expires_on?: \DateTimeInterface|null,
+ *   payment_link?: string|null,
+ *   product_cart?: list<OneTimeProductCartItem>|null,
  * }
  */
 final class PaymentNewResponse implements BaseModel, ResponseConverter
@@ -34,8 +34,8 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    #[Api('client_secret')]
-    public string $clientSecret;
+    #[Api]
+    public string $client_secret;
 
     /**
      * Limited details about the customer making the payment.
@@ -46,7 +46,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     /**
      * Additional metadata associated with the payment.
      *
-     * @var array<string, string> $metadata
+     * @var array<string,string> $metadata
      */
     #[Api(map: 'string')]
     public array $metadata;
@@ -54,45 +54,40 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     /**
      * Unique identifier for the payment.
      */
-    #[Api('payment_id')]
-    public string $paymentID;
+    #[Api]
+    public string $payment_id;
 
     /**
      * Total amount of the payment in smallest currency unit (e.g. cents).
      */
-    #[Api('total_amount')]
-    public int $totalAmount;
+    #[Api]
+    public int $total_amount;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api('discount_id', nullable: true, optional: true)]
-    public ?string $discountID;
+    #[Api(nullable: true, optional: true)]
+    public ?string $discount_id;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Api('expires_on', nullable: true, optional: true)]
-    public ?\DateTimeInterface $expiresOn;
+    #[Api(nullable: true, optional: true)]
+    public ?\DateTimeInterface $expires_on;
 
     /**
      * Optional URL to a hosted payment page.
      */
-    #[Api('payment_link', nullable: true, optional: true)]
-    public ?string $paymentLink;
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_link;
 
     /**
      * Optional list of products included in the payment.
      *
-     * @var list<OneTimeProductCartItem>|null $productCart
+     * @var list<OneTimeProductCartItem>|null $product_cart
      */
-    #[Api(
-        'product_cart',
-        list: OneTimeProductCartItem::class,
-        nullable: true,
-        optional: true,
-    )]
-    public ?array $productCart;
+    #[Api(list: OneTimeProductCartItem::class, nullable: true, optional: true)]
+    public ?array $product_cart;
 
     /**
      * `new PaymentNewResponse()` is missing required properties by the API.
@@ -100,11 +95,11 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
      * To enforce required parameters use
      * ```
      * PaymentNewResponse::with(
-     *   clientSecret: ...,
+     *   client_secret: ...,
      *   customer: ...,
      *   metadata: ...,
-     *   paymentID: ...,
-     *   totalAmount: ...,
+     *   payment_id: ...,
+     *   total_amount: ...,
      * )
      * ```
      *
@@ -129,32 +124,32 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string, string> $metadata
-     * @param list<OneTimeProductCartItem>|null $productCart
+     * @param array<string,string> $metadata
+     * @param list<OneTimeProductCartItem>|null $product_cart
      */
     public static function with(
-        string $clientSecret,
+        string $client_secret,
         CustomerLimitedDetails $customer,
         array $metadata,
-        string $paymentID,
-        int $totalAmount,
-        ?string $discountID = null,
-        ?\DateTimeInterface $expiresOn = null,
-        ?string $paymentLink = null,
-        ?array $productCart = null,
+        string $payment_id,
+        int $total_amount,
+        ?string $discount_id = null,
+        ?\DateTimeInterface $expires_on = null,
+        ?string $payment_link = null,
+        ?array $product_cart = null,
     ): self {
         $obj = new self;
 
-        $obj->clientSecret = $clientSecret;
+        $obj->client_secret = $client_secret;
         $obj->customer = $customer;
         $obj->metadata = $metadata;
-        $obj->paymentID = $paymentID;
-        $obj->totalAmount = $totalAmount;
+        $obj->payment_id = $payment_id;
+        $obj->total_amount = $total_amount;
 
-        null !== $discountID && $obj->discountID = $discountID;
-        null !== $expiresOn && $obj->expiresOn = $expiresOn;
-        null !== $paymentLink && $obj->paymentLink = $paymentLink;
-        null !== $productCart && $obj->productCart = $productCart;
+        null !== $discount_id && $obj->discount_id = $discount_id;
+        null !== $expires_on && $obj->expires_on = $expires_on;
+        null !== $payment_link && $obj->payment_link = $payment_link;
+        null !== $product_cart && $obj->product_cart = $product_cart;
 
         return $obj;
     }
@@ -166,7 +161,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withClientSecret(string $clientSecret): self
     {
         $obj = clone $this;
-        $obj->clientSecret = $clientSecret;
+        $obj->client_secret = $clientSecret;
 
         return $obj;
     }
@@ -185,7 +180,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     /**
      * Additional metadata associated with the payment.
      *
-     * @param array<string, string> $metadata
+     * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -201,7 +196,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->paymentID = $paymentID;
+        $obj->payment_id = $paymentID;
 
         return $obj;
     }
@@ -212,7 +207,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj->totalAmount = $totalAmount;
+        $obj->total_amount = $totalAmount;
 
         return $obj;
     }
@@ -223,7 +218,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discountID = $discountID;
+        $obj->discount_id = $discountID;
 
         return $obj;
     }
@@ -234,7 +229,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj->expiresOn = $expiresOn;
+        $obj->expires_on = $expiresOn;
 
         return $obj;
     }
@@ -245,7 +240,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj->paymentLink = $paymentLink;
+        $obj->payment_link = $paymentLink;
 
         return $obj;
     }
@@ -258,7 +253,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withProductCart(?array $productCart): self
     {
         $obj = clone $this;
-        $obj->productCart = $productCart;
+        $obj->product_cart = $productCart;
 
         return $obj;
     }

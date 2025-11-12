@@ -3,9 +3,6 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Misc\TaxCategory;
-use Dodopayments\Products\Price\OneTimePrice;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,16 +29,16 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->products->create(
-            price: OneTimePrice::with(
-                currency: Currency::AED,
-                discount: 0,
-                price: 0,
-                purchasingPowerParity: true,
-                type: 'one_time_price',
-            ),
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
-        );
+        $result = $this->client->products->create([
+            'price' => [
+                'currency' => 'AED',
+                'discount' => 0,
+                'price' => 0,
+                'purchasing_power_parity' => true,
+                'type' => 'one_time_price',
+            ],
+            'tax_category' => 'digital_products',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -49,19 +46,19 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->products->create(
-            price: OneTimePrice::with(
-                currency: Currency::AED,
-                discount: 0,
-                price: 0,
-                purchasingPowerParity: true,
-                type: 'one_time_price',
-            )
-                ->withPayWhatYouWant(true)
-                ->withSuggestedPrice(0)
-                ->withTaxInclusive(true),
-            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
-        );
+        $result = $this->client->products->create([
+            'price' => [
+                'currency' => 'AED',
+                'discount' => 0,
+                'price' => 0,
+                'purchasing_power_parity' => true,
+                'type' => 'one_time_price',
+                'pay_what_you_want' => true,
+                'suggested_price' => 0,
+                'tax_inclusive' => true,
+            ],
+            'tax_category' => 'digital_products',
+        ]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -77,7 +74,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->products->update('id');
+        $result = $this->client->products->update('id', []);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -89,7 +86,7 @@ final class ProductsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->products->list();
+        $result = $this->client->products->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -113,7 +110,10 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFiles(): void
     {
-        $result = $this->client->products->updateFiles('id', 'file_name');
+        $result = $this->client->products->updateFiles(
+            'id',
+            ['file_name' => 'file_name']
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
@@ -121,7 +121,10 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFilesWithOptionalParams(): void
     {
-        $result = $this->client->products->updateFiles('id', 'file_name');
+        $result = $this->client->products->updateFiles(
+            'id',
+            ['file_name' => 'file_name']
+        );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

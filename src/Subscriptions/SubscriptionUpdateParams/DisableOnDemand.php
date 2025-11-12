@@ -9,22 +9,24 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type DisableOnDemandShape = array{nextBillingDate: \DateTimeInterface}
+ * @phpstan-type DisableOnDemandShape = array{
+ *   next_billing_date: \DateTimeInterface
+ * }
  */
 final class DisableOnDemand implements BaseModel
 {
     /** @use SdkModel<DisableOnDemandShape> */
     use SdkModel;
 
-    #[Api('next_billing_date')]
-    public \DateTimeInterface $nextBillingDate;
+    #[Api]
+    public \DateTimeInterface $next_billing_date;
 
     /**
      * `new DisableOnDemand()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DisableOnDemand::with(nextBillingDate: ...)
+     * DisableOnDemand::with(next_billing_date: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -43,11 +45,11 @@ final class DisableOnDemand implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(\DateTimeInterface $nextBillingDate): self
+    public static function with(\DateTimeInterface $next_billing_date): self
     {
         $obj = new self;
 
-        $obj->nextBillingDate = $nextBillingDate;
+        $obj->next_billing_date = $next_billing_date;
 
         return $obj;
     }
@@ -56,7 +58,7 @@ final class DisableOnDemand implements BaseModel
         \DateTimeInterface $nextBillingDate
     ): self {
         $obj = clone $this;
-        $obj->nextBillingDate = $nextBillingDate;
+        $obj->next_billing_date = $nextBillingDate;
 
         return $obj;
     }

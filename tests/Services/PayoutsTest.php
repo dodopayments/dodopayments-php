@@ -33,7 +33,7 @@ final class PayoutsTest extends TestCase
             $this->markTestSkipped('skipped: currently unsupported');
         }
 
-        $result = $this->client->payouts->list();
+        $result = $this->client->payouts->list([]);
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }

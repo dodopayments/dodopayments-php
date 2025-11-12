@@ -18,9 +18,9 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  * @phpstan-type WebhookUpdateParamsShape = array{
  *   description?: string|null,
  *   disabled?: bool|null,
- *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>|null,
- *   metadata?: array<string, string>|null,
- *   rateLimit?: int|null,
+ *   filter_types?: list<WebhookEventType|value-of<WebhookEventType>>|null,
+ *   metadata?: array<string,string>|null,
+ *   rate_limit?: int|null,
  *   url?: string|null,
  * }
  */
@@ -47,20 +47,15 @@ final class WebhookUpdateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var list<value-of<WebhookEventType>>|null $filterTypes
+     * @var list<value-of<WebhookEventType>>|null $filter_types
      */
-    #[Api(
-        'filter_types',
-        list: WebhookEventType::class,
-        nullable: true,
-        optional: true,
-    )]
-    public ?array $filterTypes;
+    #[Api(list: WebhookEventType::class, nullable: true, optional: true)]
+    public ?array $filter_types;
 
     /**
      * Metadata.
      *
-     * @var array<string, string>|null $metadata
+     * @var array<string,string>|null $metadata
      */
     #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
@@ -68,8 +63,8 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Rate limit.
      */
-    #[Api('rate_limit', nullable: true, optional: true)]
-    public ?int $rateLimit;
+    #[Api(nullable: true, optional: true)]
+    public ?int $rate_limit;
 
     /**
      * Url endpoint.
@@ -87,24 +82,24 @@ final class WebhookUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes
-     * @param array<string, string>|null $metadata
+     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filter_types
+     * @param array<string,string>|null $metadata
      */
     public static function with(
         ?string $description = null,
         ?bool $disabled = null,
-        ?array $filterTypes = null,
+        ?array $filter_types = null,
         ?array $metadata = null,
-        ?int $rateLimit = null,
+        ?int $rate_limit = null,
         ?string $url = null,
     ): self {
         $obj = new self;
 
         null !== $description && $obj->description = $description;
         null !== $disabled && $obj->disabled = $disabled;
-        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
+        null !== $filter_types && $obj['filter_types'] = $filter_types;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $rateLimit && $obj->rateLimit = $rateLimit;
+        null !== $rate_limit && $obj->rate_limit = $rate_limit;
         null !== $url && $obj->url = $url;
 
         return $obj;
@@ -142,7 +137,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withFilterTypes(?array $filterTypes): self
     {
         $obj = clone $this;
-        $obj['filterTypes'] = $filterTypes;
+        $obj['filter_types'] = $filterTypes;
 
         return $obj;
     }
@@ -150,7 +145,7 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Metadata.
      *
-     * @param array<string, string>|null $metadata
+     * @param array<string,string>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {
@@ -166,7 +161,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj->rateLimit = $rateLimit;
+        $obj->rate_limit = $rateLimit;
 
         return $obj;
     }

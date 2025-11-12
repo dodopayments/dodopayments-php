@@ -3,7 +3,6 @@
 namespace Tests\Services\Customers\Wallets;
 
 use Dodopayments\Client;
-use Dodopayments\Misc\Currency;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,9 +31,7 @@ final class LedgerEntriesTest extends TestCase
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
-            amount: 0,
-            currency: Currency::AED,
-            entryType: 'credit'
+            ['amount' => 0, 'currency' => 'AED', 'entry_type' => 'credit'],
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -45,9 +42,7 @@ final class LedgerEntriesTest extends TestCase
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
-            amount: 0,
-            currency: Currency::AED,
-            entryType: 'credit'
+            ['amount' => 0, 'currency' => 'AED', 'entry_type' => 'credit'],
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
@@ -61,7 +56,8 @@ final class LedgerEntriesTest extends TestCase
         }
 
         $result = $this->client->customers->wallets->ledgerEntries->list(
-            'customer_id'
+            'customer_id',
+            []
         );
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType

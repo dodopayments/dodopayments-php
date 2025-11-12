@@ -12,7 +12,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type CheckoutSessionResponseShape = array{
- *   checkoutURL: string, sessionID: string
+ *   checkout_url: string, session_id: string
  * }
  */
 final class CheckoutSessionResponse implements BaseModel, ResponseConverter
@@ -25,21 +25,21 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
     /**
      * Checkout url.
      */
-    #[Api('checkout_url')]
-    public string $checkoutURL;
+    #[Api]
+    public string $checkout_url;
 
     /**
      * The ID of the created checkout session.
      */
-    #[Api('session_id')]
-    public string $sessionID;
+    #[Api]
+    public string $session_id;
 
     /**
      * `new CheckoutSessionResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CheckoutSessionResponse::with(checkoutURL: ..., sessionID: ...)
+     * CheckoutSessionResponse::with(checkout_url: ..., session_id: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,12 +58,12 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $checkoutURL, string $sessionID): self
+    public static function with(string $checkout_url, string $session_id): self
     {
         $obj = new self;
 
-        $obj->checkoutURL = $checkoutURL;
-        $obj->sessionID = $sessionID;
+        $obj->checkout_url = $checkout_url;
+        $obj->session_id = $session_id;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
     public function withCheckoutURL(string $checkoutURL): self
     {
         $obj = clone $this;
-        $obj->checkoutURL = $checkoutURL;
+        $obj->checkout_url = $checkoutURL;
 
         return $obj;
     }
@@ -85,7 +85,7 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
     public function withSessionID(string $sessionID): self
     {
         $obj = clone $this;
-        $obj->sessionID = $sessionID;
+        $obj->session_id = $sessionID;
 
         return $obj;
     }

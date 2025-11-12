@@ -15,7 +15,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
 /**
  * @phpstan-type WebhookPayloadShape = array{
- *   businessID: string,
+ *   business_id: string,
  *   data: Payment|Subscription|Refund|Dispute|LicenseKey,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<WebhookEventType>,
@@ -26,8 +26,8 @@ final class WebhookPayload implements BaseModel
     /** @use SdkModel<WebhookPayloadShape> */
     use SdkModel;
 
-    #[Api('business_id')]
-    public string $businessID;
+    #[Api]
+    public string $business_id;
 
     /**
      * The latest data at the time of delivery attempt.
@@ -54,7 +54,7 @@ final class WebhookPayload implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * WebhookPayload::with(businessID: ..., data: ..., timestamp: ..., type: ...)
+     * WebhookPayload::with(business_id: ..., data: ..., timestamp: ..., type: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -80,14 +80,14 @@ final class WebhookPayload implements BaseModel
      * @param WebhookEventType|value-of<WebhookEventType> $type
      */
     public static function with(
-        string $businessID,
+        string $business_id,
         Payment|Subscription|Refund|Dispute|LicenseKey $data,
         \DateTimeInterface $timestamp,
         WebhookEventType|string $type,
     ): self {
         $obj = new self;
 
-        $obj->businessID = $businessID;
+        $obj->business_id = $business_id;
         $obj->data = $data;
         $obj->timestamp = $timestamp;
         $obj['type'] = $type;
@@ -98,7 +98,7 @@ final class WebhookPayload implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->businessID = $businessID;
+        $obj->business_id = $businessID;
 
         return $obj;
     }

@@ -11,7 +11,7 @@ use Dodopayments\Subscriptions\AttachAddon;
 
 /**
  * @phpstan-type ProductCartShape = array{
- *   productID: string,
+ *   product_id: string,
  *   quantity: int,
  *   addons?: list<AttachAddon>|null,
  *   amount?: int|null,
@@ -25,8 +25,8 @@ final class ProductCart implements BaseModel
     /**
      * unique id of the product.
      */
-    #[Api('product_id')]
-    public string $productID;
+    #[Api]
+    public string $product_id;
 
     #[Api]
     public int $quantity;
@@ -56,7 +56,7 @@ final class ProductCart implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ProductCart::with(productID: ..., quantity: ...)
+     * ProductCart::with(product_id: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -78,14 +78,14 @@ final class ProductCart implements BaseModel
      * @param list<AttachAddon>|null $addons
      */
     public static function with(
-        string $productID,
+        string $product_id,
         int $quantity,
         ?array $addons = null,
-        ?int $amount = null
+        ?int $amount = null,
     ): self {
         $obj = new self;
 
-        $obj->productID = $productID;
+        $obj->product_id = $product_id;
         $obj->quantity = $quantity;
 
         null !== $addons && $obj->addons = $addons;
@@ -100,7 +100,7 @@ final class ProductCart implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->productID = $productID;
+        $obj->product_id = $productID;
 
         return $obj;
     }
