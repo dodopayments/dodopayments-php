@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0 (2025-11-12)
+
+Full Changelog: [v2.1.2...v3.0.0](https://github.com/dodopayments/dodopayments-php/compare/v2.1.2...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** redesign methods
+
+### Features
+
+* **client:** redesign methods ([e3450b3](https://github.com/dodopayments/dodopayments-php/commit/e3450b3ca12521f45432fe07a86497d9d2018ac1))
+
 ## 2.1.2 (2025-11-05)
 
 Full Changelog: [v2.1.1...v2.1.2](https://github.com/dodopayments/dodopayments-php/compare/v2.1.1...v2.1.2)
