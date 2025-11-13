@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Payouts->list
+ * @see Dodopayments\Services\PayoutsService::list()
  *
  * @phpstan-type PayoutListParamsShape = array{
  *   created_at_gte?: \DateTimeInterface,

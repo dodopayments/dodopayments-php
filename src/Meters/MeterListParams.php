@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Meters->list
+ * @see Dodopayments\Services\MetersService::list()
  *
  * @phpstan-type MeterListParamsShape = array{
  *   archived?: bool, page_number?: int, page_size?: int

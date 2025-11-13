@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Patch a webhook by id.
  *
- * @see Dodopayments\Webhooks\Headers->update
+ * @see Dodopayments\Services\Webhooks\HeadersService::update()
  *
  * @phpstan-type HeaderUpdateParamsShape = array{headers: array<string,string>}
  */

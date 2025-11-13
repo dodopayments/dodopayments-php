@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\LicenseKeyInstances->list
+ * @see Dodopayments\Services\LicenseKeyInstancesService::list()
  *
  * @phpstan-type LicenseKeyInstanceListParamsShape = array{
  *   license_key_id?: string|null, page_number?: int|null, page_size?: int|null

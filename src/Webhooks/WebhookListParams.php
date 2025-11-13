@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * List all webhooks.
  *
- * @see Dodopayments\Webhooks->list
+ * @see Dodopayments\Services\WebhooksService::list()
  *
  * @phpstan-type WebhookListParamsShape = array{
  *   iterator?: string|null, limit?: int|null

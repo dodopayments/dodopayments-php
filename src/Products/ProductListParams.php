@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Products->list
+ * @see Dodopayments\Services\ProductsService::list()
  *
  * @phpstan-type ProductListParamsShape = array{
  *   archived?: bool,

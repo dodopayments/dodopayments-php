@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\PaymentListParams\Status;
 
 /**
- * @see Dodopayments\Payments->list
+ * @see Dodopayments\Services\PaymentsService::list()
  *
  * @phpstan-type PaymentListParamsShape = array{
  *   brand_id?: string,

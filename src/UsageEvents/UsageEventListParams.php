@@ -36,7 +36,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * - Get events with meter filtering: `?meter_id=mtr_xyz789`
  * - Paginate results: `?page_size=50&page_number=2`
  *
- * @see Dodopayments\UsageEvents->list
+ * @see Dodopayments\Services\UsageEventsService::list()
  *
  * @phpstan-type UsageEventListParamsShape = array{
  *   customer_id?: string,

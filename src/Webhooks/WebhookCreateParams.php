@@ -13,7 +13,7 @@ use Dodopayments\WebhookEvents\WebhookEventType;
 /**
  * Create a new webhook.
  *
- * @see Dodopayments\Webhooks->create
+ * @see Dodopayments\Services\WebhooksService::create()
  *
  * @phpstan-type WebhookCreateParamsShape = array{
  *   url: string,

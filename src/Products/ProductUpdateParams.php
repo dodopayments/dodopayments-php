@@ -15,7 +15,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 
 /**
- * @see Dodopayments\Products->update
+ * @see Dodopayments\Services\ProductsService::update()
  *
  * @phpstan-type ProductUpdateParamsShape = array{
  *   addons?: list<string>|null,

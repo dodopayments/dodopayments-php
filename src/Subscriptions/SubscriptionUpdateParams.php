@@ -12,7 +12,7 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
- * @see Dodopayments\Subscriptions->update
+ * @see Dodopayments\Services\SubscriptionsService::update()
  *
  * @phpstan-type SubscriptionUpdateParamsShape = array{
  *   billing?: BillingAddress|null,

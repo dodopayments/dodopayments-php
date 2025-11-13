@@ -42,7 +42,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * - Paginate results: `?page_size=20&page_number=1`
  * - Recent usage: `?start_date=2024-03-01T00:00:00Z` (from March 1st to now)
  *
- * @see Dodopayments\Subscriptions->retrieveUsageHistory
+ * @see Dodopayments\Services\SubscriptionsService::retrieveUsageHistory()
  *
  * @phpstan-type SubscriptionRetrieveUsageHistoryParamsShape = array{
  *   end_date?: \DateTimeInterface|null,

@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * GET /discounts.
  *
- * @see Dodopayments\Discounts->list
+ * @see Dodopayments\Services\DiscountsService::list()
  *
  * @phpstan-type DiscountListParamsShape = array{
  *   page_number?: int, page_size?: int
