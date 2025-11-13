@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Products->updateFiles
+ * @see Dodopayments\Services\ProductsService::updateFiles()
  *
  * @phpstan-type ProductUpdateFilesParamsShape = array{file_name: string}
  */

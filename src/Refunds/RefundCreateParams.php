@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
 /**
- * @see Dodopayments\Refunds->create
+ * @see Dodopayments\Services\RefundsService::create()
  *
  * @phpstan-type RefundCreateParamsShape = array{
  *   payment_id: string,

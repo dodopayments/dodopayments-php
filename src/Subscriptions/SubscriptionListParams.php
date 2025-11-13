@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 
 /**
- * @see Dodopayments\Subscriptions->list
+ * @see Dodopayments\Services\SubscriptionsService::list()
  *
  * @phpstan-type SubscriptionListParamsShape = array{
  *   brand_id?: string,

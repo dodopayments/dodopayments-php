@@ -42,7 +42,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * }
  * ```
  *
- * @see Dodopayments\UsageEvents->ingest
+ * @see Dodopayments\Services\UsageEventsService::ingest()
  *
  * @phpstan-type UsageEventIngestParamsShape = array{events: list<EventInput>}
  */

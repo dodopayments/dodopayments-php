@@ -12,7 +12,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 
 /**
- * @see Dodopayments\Subscriptions->charge
+ * @see Dodopayments\Services\SubscriptionsService::charge()
  *
  * @phpstan-type SubscriptionChargeParamsShape = array{
  *   product_price: int,

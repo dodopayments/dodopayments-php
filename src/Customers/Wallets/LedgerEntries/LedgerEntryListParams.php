@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * @see Dodopayments\Customers\Wallets\LedgerEntries->list
+ * @see Dodopayments\Services\Customers\Wallets\LedgerEntriesService::list()
  *
  * @phpstan-type LedgerEntryListParamsShape = array{
  *   currency?: Currency|value-of<Currency>, page_number?: int, page_size?: int

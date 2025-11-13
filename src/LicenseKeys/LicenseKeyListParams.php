@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 
 /**
- * @see Dodopayments\LicenseKeys->list
+ * @see Dodopayments\Services\LicenseKeysService::list()
  *
  * @phpstan-type LicenseKeyListParamsShape = array{
  *   customer_id?: string,

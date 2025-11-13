@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Meters->create
+ * @see Dodopayments\Services\MetersService::create()
  *
  * @phpstan-type MeterCreateParamsShape = array{
  *   aggregation: MeterAggregation,

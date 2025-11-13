@@ -12,7 +12,7 @@ use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryCreateParams\EntryTy
 use Dodopayments\Misc\Currency;
 
 /**
- * @see Dodopayments\Customers\Wallets\LedgerEntries->create
+ * @see Dodopayments\Services\Customers\Wallets\LedgerEntriesService::create()
  *
  * @phpstan-type LedgerEntryCreateParamsShape = array{
  *   amount: int,

@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
- * @see Dodopayments\Payments->create
+ * @see Dodopayments\Services\PaymentsService::create()
  *
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress,
