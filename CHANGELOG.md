@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.0.1 (2025-11-13)
+
+Full Changelog: [v3.0.0...v3.0.1](https://github.com/dodopayments/dodopayments-php/compare/v3.0.0...v3.0.1)
+
+### Bug Fixes
+
+* rename invalid types ([6c02e49](https://github.com/dodopayments/dodopayments-php/commit/6c02e49ee358a927491005323e70ea32bf1d2097))
+
+
+### Chores
+
+* **internal:** codegen related update ([afc0132](https://github.com/dodopayments/dodopayments-php/commit/afc013212ccd07e313347a25f23dc4743f1affba))
+
 ## 3.0.0 (2025-11-12)
 
 Full Changelog: [v2.1.2...v3.0.0](https://github.com/dodopayments/dodopayments-php/compare/v2.1.2...v3.0.0)
