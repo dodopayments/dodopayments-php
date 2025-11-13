@@ -12,7 +12,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
 /**
- * @see Dodopayments\Addons->create
+ * @see Dodopayments\Services\AddonsService::create()
  *
  * @phpstan-type AddonCreateParamsShape = array{
  *   currency: Currency|value-of<Currency>,

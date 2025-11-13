@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Products\Images->update
+ * @see Dodopayments\Services\Products\ImagesService::update()
  *
  * @phpstan-type ImageUpdateParamsShape = array{force_update?: bool}
  */

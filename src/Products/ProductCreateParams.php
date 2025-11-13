@@ -15,7 +15,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 
 /**
- * @see Dodopayments\Products->create
+ * @see Dodopayments\Services\ProductsService::create()
  *
  * @phpstan-type ProductCreateParamsShape = array{
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,

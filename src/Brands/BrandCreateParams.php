@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @see Dodopayments\Brands->create
+ * @see Dodopayments\Services\BrandsService::create()
  *
  * @phpstan-type BrandCreateParamsShape = array{
  *   description?: string|null,

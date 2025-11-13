@@ -19,7 +19,7 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
- * @see Dodopayments\CheckoutSessions->create
+ * @see Dodopayments\Services\CheckoutSessionsService::create()
  *
  * @phpstan-type CheckoutSessionCreateParamsShape = array{
  *   product_cart: list<ProductCart>,

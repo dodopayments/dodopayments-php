@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * POST /discounts
  * If `code` is omitted or empty, a random 16-char uppercase code is generated.
  *
- * @see Dodopayments\Discounts->create
+ * @see Dodopayments\Services\DiscountsService::create()
  *
  * @phpstan-type DiscountCreateParamsShape = array{
  *   amount: int,

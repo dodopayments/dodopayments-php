@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * PATCH /discounts/{discount_id}.
  *
- * @see Dodopayments\Discounts->update
+ * @see Dodopayments\Services\DiscountsService::update()
  *
  * @phpstan-type DiscountUpdateParamsShape = array{
  *   amount?: int|null,

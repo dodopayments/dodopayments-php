@@ -13,7 +13,7 @@ use Dodopayments\WebhookEvents\WebhookEventType;
 /**
  * Patch a webhook by id.
  *
- * @see Dodopayments\Webhooks->update
+ * @see Dodopayments\Services\WebhooksService::update()
  *
  * @phpstan-type WebhookUpdateParamsShape = array{
  *   description?: string|null,
