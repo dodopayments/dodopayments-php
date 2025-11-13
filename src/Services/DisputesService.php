@@ -8,6 +8,7 @@ use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams;
+use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 use Dodopayments\Disputes\DisputeListResponse;
 use Dodopayments\Disputes\GetDispute;
 use Dodopayments\RequestOptions;
@@ -41,14 +42,12 @@ final class DisputesService implements DisputesContract
     /**
      * @api
      *
-     * @phpstan-type DisputeStatus = "dispute_opened"|"dispute_expired"|"dispute_accepted"|"dispute_cancelled"|"dispute_challenged"|"dispute_won"|"dispute_lost"
-     *
      * @param array{
      *   created_at_gte?: string|\DateTimeInterface,
      *   created_at_lte?: string|\DateTimeInterface,
      *   customer_id?: string,
      *   dispute_stage?: "pre_dispute"|"dispute"|"pre_arbitration",
-     *   dispute_status?: DisputeStatus,
+     *   dispute_status?: value-of<DisputeStatus>,
      *   page_number?: int,
      *   page_size?: int,
      * }|DisputeListParams $params
