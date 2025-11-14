@@ -158,4 +158,26 @@ final class SubscriptionsTest extends TestCase
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
+
+    #[Test]
+    public function testUpdatePaymentMethod(): void
+    {
+        $result = $this->client->subscriptions->updatePaymentMethod(
+            'subscription_id',
+            ['type' => 'existing', 'payment_method_id' => 'payment_method_id'],
+        );
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
+
+    #[Test]
+    public function testUpdatePaymentMethodWithOptionalParams(): void
+    {
+        $result = $this->client->subscriptions->updatePaymentMethod(
+            'subscription_id',
+            ['type' => 'existing', 'payment_method_id' => 'payment_method_id'],
+        );
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
 }

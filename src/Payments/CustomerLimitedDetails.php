@@ -10,7 +10,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CustomerLimitedDetailsShape = array{
- *   customer_id: string, email: string, name: string, phone_number?: string|null
+ *   customer_id: string,
+ *   email: string,
+ *   name: string,
+ *   metadata?: array<string,string>|null,
+ *   phone_number?: string|null,
  * }
  */
 final class CustomerLimitedDetails implements BaseModel
@@ -35,6 +39,14 @@ final class CustomerLimitedDetails implements BaseModel
      */
     #[Api]
     public string $name;
+
+    /**
+     * Additional metadata associated with the customer.
+     *
+     * @var array<string,string>|null $metadata
+     */
+    #[Api(map: 'string', optional: true)]
+    public ?array $metadata;
 
     /**
      * Phone number of the customer.
@@ -65,11 +77,14 @@ final class CustomerLimitedDetails implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string,string> $metadata
      */
     public static function with(
         string $customer_id,
         string $email,
         string $name,
+        ?array $metadata = null,
         ?string $phone_number = null,
     ): self {
         $obj = new self;
@@ -78,6 +93,7 @@ final class CustomerLimitedDetails implements BaseModel
         $obj->email = $email;
         $obj->name = $name;
 
+        null !== $metadata && $obj->metadata = $metadata;
         null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
@@ -112,6 +128,19 @@ final class CustomerLimitedDetails implements BaseModel
     {
         $obj = clone $this;
         $obj->name = $name;
+
+        return $obj;
+    }
+
+    /**
+     * Additional metadata associated with the customer.
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
         return $obj;
     }
