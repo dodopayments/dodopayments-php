@@ -46,6 +46,7 @@ use Dodopayments\Webhooks\SubscriptionActiveWebhookEvent\Data\PayloadType;
  *   discount_cycles_remaining?: int|null,
  *   discount_id?: string|null,
  *   expires_at?: \DateTimeInterface|null,
+ *   payment_method_id?: string|null,
  *   tax_id?: string|null,
  *   payload_type?: value-of<PayloadType>|null,
  * }
@@ -204,6 +205,12 @@ final class Data implements BaseModel
     public ?\DateTimeInterface $expires_at;
 
     /**
+     * Saved payment method id used for recurring charges.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_method_id;
+
+    /**
      * Tax identifier provided for this subscription (if applicable).
      */
     #[Api(nullable: true, optional: true)]
@@ -322,6 +329,7 @@ final class Data implements BaseModel
         ?int $discount_cycles_remaining = null,
         ?string $discount_id = null,
         ?\DateTimeInterface $expires_at = null,
+        ?string $payment_method_id = null,
         ?string $tax_id = null,
         PayloadType|string|null $payload_type = null,
     ): self {
@@ -354,6 +362,7 @@ final class Data implements BaseModel
         null !== $discount_cycles_remaining && $obj->discount_cycles_remaining = $discount_cycles_remaining;
         null !== $discount_id && $obj->discount_id = $discount_id;
         null !== $expires_at && $obj->expires_at = $expires_at;
+        null !== $payment_method_id && $obj->payment_method_id = $payment_method_id;
         null !== $tax_id && $obj->tax_id = $tax_id;
         null !== $payload_type && $obj['payload_type'] = $payload_type;
 
@@ -649,6 +658,17 @@ final class Data implements BaseModel
     {
         $obj = clone $this;
         $obj->expires_at = $expiresAt;
+
+        return $obj;
+    }
+
+    /**
+     * Saved payment method id used for recurring charges.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $obj = clone $this;
+        $obj->payment_method_id = $paymentMethodID;
 
         return $obj;
     }

@@ -40,6 +40,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   cancelled_at?: \DateTimeInterface|null,
  *   discount_cycles_remaining?: int|null,
  *   discount_id?: string|null,
+ *   payment_method_id?: string|null,
  *   tax_id?: string|null,
  * }
  */
@@ -199,6 +200,12 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
     public ?string $discount_id;
 
     /**
+     * Saved payment method id used for recurring charges.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?string $payment_method_id;
+
+    /**
      * Tax identifier provided for this subscription (if applicable).
      */
     #[Api(nullable: true, optional: true)]
@@ -299,6 +306,7 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
         ?\DateTimeInterface $cancelled_at = null,
         ?int $discount_cycles_remaining = null,
         ?string $discount_id = null,
+        ?string $payment_method_id = null,
         ?string $tax_id = null,
     ): self {
         $obj = new self;
@@ -327,6 +335,7 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
         null !== $cancelled_at && $obj->cancelled_at = $cancelled_at;
         null !== $discount_cycles_remaining && $obj->discount_cycles_remaining = $discount_cycles_remaining;
         null !== $discount_id && $obj->discount_id = $discount_id;
+        null !== $payment_method_id && $obj->payment_method_id = $payment_method_id;
         null !== $tax_id && $obj->tax_id = $tax_id;
 
         return $obj;
@@ -598,6 +607,17 @@ final class SubscriptionListResponse implements BaseModel, ResponseConverter
     {
         $obj = clone $this;
         $obj->discount_id = $discountID;
+
+        return $obj;
+    }
+
+    /**
+     * Saved payment method id used for recurring charges.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $obj = clone $this;
+        $obj->payment_method_id = $paymentMethodID;
 
         return $obj;
     }

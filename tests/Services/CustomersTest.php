@@ -73,4 +73,12 @@ final class CustomersTest extends TestCase
 
         $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
     }
+
+    #[Test]
+    public function testRetrievePaymentMethods(): void
+    {
+        $result = $this->client->customers->retrievePaymentMethods('customer_id');
+
+        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+    }
 }

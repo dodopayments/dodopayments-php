@@ -30,6 +30,7 @@ final class ProductsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->products->create([
+            'name' => 'name',
             'price' => [
                 'currency' => 'AED',
                 'discount' => 0,
@@ -47,6 +48,7 @@ final class ProductsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->products->create([
+            'name' => 'name',
             'price' => [
                 'currency' => 'AED',
                 'discount' => 0,

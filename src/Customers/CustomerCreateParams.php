@@ -13,7 +13,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\CustomersService::create()
  *
  * @phpstan-type CustomerCreateParamsShape = array{
- *   email: string, name: string, phone_number?: string|null
+ *   email: string,
+ *   name: string,
+ *   metadata?: array<string,string>,
+ *   phone_number?: string|null,
  * }
  */
 final class CustomerCreateParams implements BaseModel
@@ -27,6 +30,14 @@ final class CustomerCreateParams implements BaseModel
 
     #[Api]
     public string $name;
+
+    /**
+     * Additional metadata for the customer.
+     *
+     * @var array<string,string>|null $metadata
+     */
+    #[Api(map: 'string', optional: true)]
+    public ?array $metadata;
 
     #[Api(nullable: true, optional: true)]
     public ?string $phone_number;
@@ -54,17 +65,21 @@ final class CustomerCreateParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string,string> $metadata
      */
     public static function with(
         string $email,
         string $name,
-        ?string $phone_number = null
+        ?array $metadata = null,
+        ?string $phone_number = null,
     ): self {
         $obj = new self;
 
         $obj->email = $email;
         $obj->name = $name;
 
+        null !== $metadata && $obj->metadata = $metadata;
         null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
@@ -82,6 +97,19 @@ final class CustomerCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->name = $name;
+
+        return $obj;
+    }
+
+    /**
+     * Additional metadata for the customer.
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
         return $obj;
     }

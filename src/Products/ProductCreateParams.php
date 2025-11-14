@@ -18,6 +18,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  * @see Dodopayments\Services\ProductsService::create()
  *
  * @phpstan-type ProductCreateParamsShape = array{
+ *   name: string,
  *   price: OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   tax_category: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
@@ -29,7 +30,6 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   license_key_duration?: LicenseKeyDuration|null,
  *   license_key_enabled?: bool|null,
  *   metadata?: array<string,string>,
- *   name?: string|null,
  * }
  */
 final class ProductCreateParams implements BaseModel
@@ -37,6 +37,12 @@ final class ProductCreateParams implements BaseModel
     /** @use SdkModel<ProductCreateParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Name of the product.
+     */
+    #[Api]
+    public string $name;
 
     /**
      * Price configuration for the product.
@@ -115,23 +121,17 @@ final class ProductCreateParams implements BaseModel
     public ?array $metadata;
 
     /**
-     * Optional name of the product.
-     */
-    #[Api(nullable: true, optional: true)]
-    public ?string $name;
-
-    /**
      * `new ProductCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * ProductCreateParams::with(price: ..., tax_category: ...)
+     * ProductCreateParams::with(name: ..., price: ..., tax_category: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ProductCreateParams)->withPrice(...)->withTaxCategory(...)
+     * (new ProductCreateParams)->withName(...)->withPrice(...)->withTaxCategory(...)
      * ```
      */
     public function __construct()
@@ -149,6 +149,7 @@ final class ProductCreateParams implements BaseModel
      * @param array<string,string> $metadata
      */
     public static function with(
+        string $name,
         OneTimePrice|RecurringPrice|UsageBasedPrice $price,
         TaxCategory|string $tax_category,
         ?array $addons = null,
@@ -160,10 +161,10 @@ final class ProductCreateParams implements BaseModel
         ?LicenseKeyDuration $license_key_duration = null,
         ?bool $license_key_enabled = null,
         ?array $metadata = null,
-        ?string $name = null,
     ): self {
         $obj = new self;
 
+        $obj->name = $name;
         $obj->price = $price;
         $obj['tax_category'] = $tax_category;
 
@@ -176,7 +177,17 @@ final class ProductCreateParams implements BaseModel
         null !== $license_key_duration && $obj->license_key_duration = $license_key_duration;
         null !== $license_key_enabled && $obj->license_key_enabled = $license_key_enabled;
         null !== $metadata && $obj->metadata = $metadata;
-        null !== $name && $obj->name = $name;
+
+        return $obj;
+    }
+
+    /**
+     * Name of the product.
+     */
+    public function withName(string $name): self
+    {
+        $obj = clone $this;
+        $obj->name = $name;
 
         return $obj;
     }
@@ -313,17 +324,6 @@ final class ProductCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj->metadata = $metadata;
-
-        return $obj;
-    }
-
-    /**
-     * Optional name of the product.
-     */
-    public function withName(?string $name): self
-    {
-        $obj = clone $this;
-        $obj->name = $name;
 
         return $obj;
     }
