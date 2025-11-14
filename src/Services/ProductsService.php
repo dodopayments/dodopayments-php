@@ -41,6 +41,7 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param array{
+     *   name: string,
      *   price: Price|array<string,mixed>,
      *   tax_category: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory,
      *   addons?: list<string>|null,
@@ -56,7 +57,6 @@ final class ProductsService implements ProductsContract
      *   }|LicenseKeyDuration|null,
      *   license_key_enabled?: bool|null,
      *   metadata?: array<string,string>,
-     *   name?: string|null,
      * }|ProductCreateParams $params
      *
      * @throws APIException

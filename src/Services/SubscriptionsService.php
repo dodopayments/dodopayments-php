@@ -10,6 +10,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsContract;
 use Dodopayments\Subscriptions\Subscription;
@@ -24,6 +25,8 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 final class SubscriptionsService implements SubscriptionsContract
 {
@@ -47,7 +50,7 @@ final class SubscriptionsService implements SubscriptionsContract
      *   product_id: string,
      *   quantity: int,
      *   addons?: list<array{addon_id: string, quantity: int}>|null,
-     *   allowed_payment_method_types?: list<"credit"|"debit"|"upi_collect"|"upi_intent"|"apple_pay"|"cashapp"|"google_pay"|"multibanco"|"bancontact_card"|"eps"|"ideal"|"przelewy24"|"paypal"|"affirm"|"klarna"|"sepa"|"ach"|"amazon_pay"|"afterpay_clearpay">|null,
+     *   allowed_payment_method_types?: list<"credit"|"debit"|"upi_collect"|"upi_intent"|"apple_pay"|"cashapp"|"google_pay"|"multibanco"|"bancontact_card"|"eps"|"ideal"|"przelewy24"|"paypal"|"affirm"|"klarna"|"sepa"|"ach"|"amazon_pay"|"afterpay_clearpay"|PaymentMethodTypes>|null,
      *   billing_currency?: value-of<Currency>,
      *   discount_code?: string|null,
      *   force_3ds?: bool|null,
@@ -318,6 +321,31 @@ final class SubscriptionsService implements SubscriptionsContract
             options: $options,
             convert: SubscriptionGetUsageHistoryResponse::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function updatePaymentMethod(
+        string $subscriptionID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): SubscriptionUpdatePaymentMethodResponse {
+        [$parsed, $options] = SubscriptionUpdatePaymentMethodParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'post',
+            path: ['subscriptions/%1$s/update-payment-method', $subscriptionID],
+            body: (object) $parsed,
+            options: $options,
+            convert: SubscriptionUpdatePaymentMethodResponse::class,
         );
     }
 }

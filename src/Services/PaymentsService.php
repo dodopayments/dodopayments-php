@@ -17,6 +17,7 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListParams\Status;
 use Dodopayments\Payments\PaymentListResponse;
+use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Payments\PaymentNewResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\PaymentsContract;
@@ -43,7 +44,7 @@ final class PaymentsService implements PaymentsContract
      *   product_cart: list<array{
      *     product_id: string, quantity: int, amount?: int|null
      *   }|OneTimeProductCartItem>,
-     *   allowed_payment_method_types?: list<"credit"|"debit"|"upi_collect"|"upi_intent"|"apple_pay"|"cashapp"|"google_pay"|"multibanco"|"bancontact_card"|"eps"|"ideal"|"przelewy24"|"paypal"|"affirm"|"klarna"|"sepa"|"ach"|"amazon_pay"|"afterpay_clearpay">|null,
+     *   allowed_payment_method_types?: list<"credit"|"debit"|"upi_collect"|"upi_intent"|"apple_pay"|"cashapp"|"google_pay"|"multibanco"|"bancontact_card"|"eps"|"ideal"|"przelewy24"|"paypal"|"affirm"|"klarna"|"sepa"|"ach"|"amazon_pay"|"afterpay_clearpay"|PaymentMethodTypes>|null,
      *   billing_currency?: value-of<Currency>,
      *   discount_code?: string|null,
      *   force_3ds?: bool|null,

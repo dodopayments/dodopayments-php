@@ -7,6 +7,7 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
+use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
@@ -62,4 +63,14 @@ interface CustomersContract
         array|CustomerListParams $params,
         ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function retrievePaymentMethods(
+        string $customerID,
+        ?RequestOptions $requestOptions = null
+    ): CustomerGetPaymentMethodsResponse;
 }

@@ -18,6 +18,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 interface SubscriptionsContract
 {
@@ -110,4 +111,15 @@ interface SubscriptionsContract
         array|SubscriptionRetrieveUsageHistoryParams $params,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function updatePaymentMethod(
+        string $subscriptionID,
+        mixed $params,
+        ?RequestOptions $requestOptions = null,
+    ): SubscriptionUpdatePaymentMethodResponse;
 }

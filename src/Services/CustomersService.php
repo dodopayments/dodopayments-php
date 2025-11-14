@@ -8,6 +8,7 @@ use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
+use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
@@ -41,7 +42,10 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array{
-     *   email: string, name: string, phone_number?: string|null
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>,
+     *   phone_number?: string|null,
      * }|CustomerCreateParams $params
      *
      * @throws APIException
@@ -87,7 +91,9 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array{
-     *   name?: string|null, phone_number?: string|null
+     *   metadata?: array<string,string>|null,
+     *   name?: string|null,
+     *   phone_number?: string|null,
      * }|CustomerUpdateParams $params
      *
      * @throws APIException
@@ -140,6 +146,24 @@ final class CustomersService implements CustomersContract
             options: $options,
             convert: Customer::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @throws APIException
+     */
+    public function retrievePaymentMethods(
+        string $customerID,
+        ?RequestOptions $requestOptions = null
+    ): CustomerGetPaymentMethodsResponse {
+        // @phpstan-ignore-next-line;
+        return $this->client->request(
+            method: 'get',
+            path: ['customers/%1$s/payment-methods', $customerID],
+            options: $requestOptions,
+            convert: CustomerGetPaymentMethodsResponse::class,
         );
     }
 }

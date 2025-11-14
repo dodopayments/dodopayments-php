@@ -17,6 +17,7 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   customer_id: string,
  *   email: string,
  *   name: string,
+ *   metadata?: array<string,string>|null,
  *   phone_number?: string|null,
  * }
  */
@@ -41,6 +42,14 @@ final class Customer implements BaseModel, ResponseConverter
 
     #[Api]
     public string $name;
+
+    /**
+     * Additional metadata for the customer.
+     *
+     * @var array<string,string>|null $metadata
+     */
+    #[Api(map: 'string', optional: true)]
+    public ?array $metadata;
 
     #[Api(nullable: true, optional: true)]
     public ?string $phone_number;
@@ -75,6 +84,8 @@ final class Customer implements BaseModel, ResponseConverter
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param array<string,string> $metadata
      */
     public static function with(
         string $business_id,
@@ -82,6 +93,7 @@ final class Customer implements BaseModel, ResponseConverter
         string $customer_id,
         string $email,
         string $name,
+        ?array $metadata = null,
         ?string $phone_number = null,
     ): self {
         $obj = new self;
@@ -92,6 +104,7 @@ final class Customer implements BaseModel, ResponseConverter
         $obj->email = $email;
         $obj->name = $name;
 
+        null !== $metadata && $obj->metadata = $metadata;
         null !== $phone_number && $obj->phone_number = $phone_number;
 
         return $obj;
@@ -133,6 +146,19 @@ final class Customer implements BaseModel, ResponseConverter
     {
         $obj = clone $this;
         $obj->name = $name;
+
+        return $obj;
+    }
+
+    /**
+     * Additional metadata for the customer.
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $obj = clone $this;
+        $obj->metadata = $metadata;
 
         return $obj;
     }
