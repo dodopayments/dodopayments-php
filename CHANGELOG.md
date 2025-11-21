@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.1 (2025-11-21)
+
+Full Changelog: [v3.2.0...v3.2.1](https://github.com/dodopayments/dodopayments-php/compare/v3.2.0...v3.2.1)
+
+### Chores
+
+* **client:** refactor error type constructors ([ac0806a](https://github.com/dodopayments/dodopayments-php/commit/ac0806a8c57cd58b9b7ebaaa784542d6718ace60))
+
 ## 3.2.0 (2025-11-17)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/dodopayments/dodopayments-php/compare/v3.1.0...v3.2.0)
