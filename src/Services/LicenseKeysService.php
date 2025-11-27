@@ -77,7 +77,7 @@ final class LicenseKeysService implements LicenseKeysContract
      *   page_number?: int,
      *   page_size?: int,
      *   product_id?: string,
-     *   status?: "active"|"expired"|"disabled",
+     *   status?: 'active'|'expired'|'disabled',
      * }|LicenseKeyListParams $params
      *
      * @return DefaultPageNumberPagination<LicenseKey>

@@ -36,12 +36,12 @@ Parameters with a default value must be set by name.
 use Dodopayments\Client;
 
 $client = new Client(
-  bearerToken: getenv("DODO_PAYMENTS_API_KEY") ?: "My Bearer Token",
-  environment: "test_mode",
+  bearerToken: getenv('DODO_PAYMENTS_API_KEY') ?: 'My Bearer Token',
+  environment: 'test_mode',
 );
 
 $checkoutSessionResponse = $client->checkoutSessions->create([
-  "product_cart" => [["product_id" => "product_id", "quantity" => 0]]
+  'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]
 ]);
 
 var_dump($checkoutSessionResponse->session_id);
@@ -49,10 +49,10 @@ var_dump($checkoutSessionResponse->session_id);
 
 ### Value Objects
 
-It is recommended to use the static `with` constructor `AttachExistingCustomer::with(customerID: "customer_id", ...)`
+It is recommended to use the static `with` constructor `AttachExistingCustomer::with(customerID: 'customer_id', ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new AttachExistingCustomer)->withCustomerID("customer_id")`.
+However, builders are also provided `(new AttachExistingCustomer)->withCustomerID('customer_id')`.
 
 ### Pagination
 
@@ -66,8 +66,8 @@ This library provides auto-paginating iterators with each list response, so you 
 use Dodopayments\Client;
 
 $client = new Client(
-  bearerToken: getenv("DODO_PAYMENTS_API_KEY") ?: "My Bearer Token",
-  environment: "test_mode",
+  bearerToken: getenv('DODO_PAYMENTS_API_KEY') ?: 'My Bearer Token',
+  environment: 'test_mode',
 );
 
 $page = $client->payments->list([]);
@@ -95,7 +95,7 @@ use Dodopayments\Core\Exceptions\APIConnectionException;
 
 try {
   $checkoutSessionResponse = $client->checkoutSessions->create([
-    "product_cart" => [["product_id" => "product_id", "quantity" => 0]]
+    'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]
   ]);
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
@@ -143,7 +143,7 @@ $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
 $result = $client->checkoutSessions->create(
-  ["product_cart" => [["product_id" => "product_id", "quantity" => 0]]],
+  ['product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]],
   RequestOptions::with(maxRetries: 5),
 );
 ```
@@ -164,11 +164,11 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 use Dodopayments\RequestOptions;
 
 $checkoutSessionResponse = $client->checkoutSessions->create(
-  ["product_cart" => [["product_id" => "product_id", "quantity" => 0]]],
+  ['product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]],
   RequestOptions::with(
-    extraQueryParams: ["my_query_parameter" => "value"],
-    extraBodyParams: ["my_body_parameter" => "value"],
-    extraHeaders: ["my-header" => "value"],
+    extraQueryParams: ['my_query_parameter' => 'value'],
+    extraBodyParams: ['my_body_parameter' => 'value'],
+    extraHeaders: ['my-header' => 'value'],
   ),
 );
 ```
