@@ -7,7 +7,6 @@ use Dodopayments\DefaultPageNumberPagination;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -30,10 +29,6 @@ final class PayoutsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->payouts->list([]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
