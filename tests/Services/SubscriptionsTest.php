@@ -11,7 +11,6 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -110,10 +109,6 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->subscriptions->list([]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -190,10 +185,6 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testRetrieveUsageHistory(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->subscriptions->retrieveUsageHistory(
             'subscription_id',
             []
