@@ -46,7 +46,7 @@ final class DisputesService implements DisputesContract
      *   created_at_gte?: string|\DateTimeInterface,
      *   created_at_lte?: string|\DateTimeInterface,
      *   customer_id?: string,
-     *   dispute_stage?: "pre_dispute"|"dispute"|"pre_arbitration",
+     *   dispute_stage?: 'pre_dispute'|'dispute'|'pre_arbitration',
      *   dispute_status?: value-of<DisputeStatus>,
      *   page_number?: int,
      *   page_size?: int,
