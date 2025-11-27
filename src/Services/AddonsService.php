@@ -31,7 +31,7 @@ final class AddonsService implements AddonsContract
      *   currency: value-of<Currency>,
      *   name: string,
      *   price: int,
-     *   tax_category: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory,
+     *   tax_category: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
      *   description?: string|null,
      * }|AddonCreateParams $params
      *
@@ -83,7 +83,7 @@ final class AddonsService implements AddonsContract
      *   image_id?: string|null,
      *   name?: string|null,
      *   price?: int|null,
-     *   tax_category?: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory|null,
+     *   tax_category?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
      * }|AddonUpdateParams $params
      *
      * @throws APIException

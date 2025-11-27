@@ -3,10 +3,12 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\CursorPagePagination;
+use Dodopayments\Webhooks\WebhookDetails;
+use Dodopayments\Webhooks\WebhookGetSecretResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -31,15 +33,26 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->create(['url' => 'url']);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookDetails::class, $result);
     }
 
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->webhooks->create(['url' => 'url']);
+        $result = $this->client->webhooks->create([
+            'url' => 'url',
+            'description' => 'description',
+            'disabled' => true,
+            'filter_types' => ['payment.succeeded'],
+            'headers' => ['foo' => 'string'],
+            'idempotency_key' => 'idempotency_key',
+            'metadata' => ['foo' => 'string'],
+            'rate_limit' => 0,
+        ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookDetails::class, $result);
     }
 
     #[Test]
@@ -47,7 +60,8 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->retrieve('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookDetails::class, $result);
     }
 
     #[Test]
@@ -55,19 +69,17 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->update('webhook_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookDetails::class, $result);
     }
 
     #[Test]
     public function testList(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('skipped: currently unsupported');
-        }
-
         $result = $this->client->webhooks->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CursorPagePagination::class, $result);
     }
 
     #[Test]
@@ -75,7 +87,8 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->delete('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -83,6 +96,7 @@ final class WebhooksTest extends TestCase
     {
         $result = $this->client->webhooks->retrieveSecret('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WebhookGetSecretResponse::class, $result);
     }
 }

@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.3.0 (2025-11-27)
+
+Full Changelog: [v3.2.0...v3.3.0](https://github.com/dodopayments/dodopayments-php/compare/v3.2.0...v3.3.0)
+
+### Features
+
+* better support for pagination mechanisms ([cc2ae7e](https://github.com/dodopayments/dodopayments-php/commit/cc2ae7ea64a5459a738734344ee0fa2ab0d97d4c))
+
+
+### Bug Fixes
+
+* phpStan linter errors ([4c8b203](https://github.com/dodopayments/dodopayments-php/commit/4c8b203b54d1332d1c29f27676bb71fded0e5751))
+
+
+### Chores
+
+* **client:** refactor error type constructors ([ac0806a](https://github.com/dodopayments/dodopayments-php/commit/ac0806a8c57cd58b9b7ebaaa784542d6718ace60))
+* use non-trivial test assertions ([1c5eecc](https://github.com/dodopayments/dodopayments-php/commit/1c5eecc43574be284431f33dc375b68ae55e1a65))
+* use single quote strings ([0aa11fa](https://github.com/dodopayments/dodopayments-php/commit/0aa11fa6b4dfe44b1742a3cea151ea5f2c17fb14))
+
 ## 3.2.0 (2025-11-17)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/dodopayments/dodopayments-php/compare/v3.1.0...v3.2.0)

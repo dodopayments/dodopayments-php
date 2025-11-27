@@ -70,7 +70,7 @@ final class CursorPagePagination implements BaseModel, BasePage
         // @phpstan-ignore-next-line
         self::__unserialize($data);
 
-        if ($this->offsetExists('data')) {
+        if ($this->offsetGet('data')) {
             $acc = Conversion::coerce(
                 new ListOf($convert),
                 value: $this->offsetGet('data')
@@ -83,7 +83,7 @@ final class CursorPagePagination implements BaseModel, BasePage
     /** @return list<TItem> */
     public function getItems(): array
     {
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return $this->offsetGet('data') ?? [];
     }
 
@@ -103,8 +103,11 @@ final class CursorPagePagination implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        $next = $this->iterator ?? null;
-        if (!$next) {
+        if (!($this->done ?? null) || !count($this->getItems())) {
+            return null;
+        }
+
+        if (!($next = $this->iterator ?? null)) {
             return null;
         }
 
@@ -113,7 +116,7 @@ final class CursorPagePagination implements BaseModel, BasePage
             ['query' => ['iterator' => $next]]
         );
 
-        // @phpstan-ignore-next-line
+        // @phpstan-ignore-next-line return.type
         return [$nextRequest, $this->options];
     }
 }

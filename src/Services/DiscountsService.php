@@ -30,7 +30,7 @@ final class DiscountsService implements DiscountsContract
      *
      * @param array{
      *   amount: int,
-     *   type: "percentage"|DiscountType,
+     *   type: 'percentage'|DiscountType,
      *   code?: string|null,
      *   expires_at?: string|\DateTimeInterface|null,
      *   name?: string|null,
@@ -92,7 +92,7 @@ final class DiscountsService implements DiscountsContract
      *   name?: string|null,
      *   restricted_to?: list<string>|null,
      *   subscription_cycles?: int|null,
-     *   type?: "percentage"|DiscountType|null,
+     *   type?: 'percentage'|DiscountType|null,
      *   usage_limit?: int|null,
      * }|DiscountUpdateParams $params
      *

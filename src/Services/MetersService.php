@@ -27,14 +27,14 @@ final class MetersService implements MetersContract
      *
      * @param array{
      *   aggregation: array{
-     *     type: "count"|"sum"|"max"|"last", key?: string|null
+     *     type: 'count'|'sum'|'max'|'last', key?: string|null
      *   }|MeterAggregation,
      *   event_name: string,
      *   measurement_unit: string,
      *   name: string,
      *   description?: string|null,
      *   filter?: array{
-     *     clauses: list<array<mixed>>|list<array<mixed>>, conjunction: "and"|"or"
+     *     clauses: list<array<mixed>>|list<array<mixed>>, conjunction: 'and'|'or'
      *   }|MeterFilter|null,
      * }|MeterCreateParams $params
      *

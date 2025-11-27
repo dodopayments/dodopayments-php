@@ -3,6 +3,7 @@
 namespace Tests\Services\Webhooks;
 
 use Dodopayments\Client;
+use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +31,8 @@ final class HeadersTest extends TestCase
     {
         $result = $this->client->webhooks->headers->retrieve('webhook_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(HeaderGetResponse::class, $result);
     }
 
     #[Test]
@@ -41,7 +43,8 @@ final class HeadersTest extends TestCase
             ['headers' => ['foo' => 'string']]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -52,6 +55,7 @@ final class HeadersTest extends TestCase
             ['headers' => ['foo' => 'string']]
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 }

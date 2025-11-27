@@ -28,7 +28,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
      * @param array{
      *   amount: int,
      *   currency: value-of<Currency>,
-     *   entry_type: "credit"|"debit",
+     *   entry_type: 'credit'|'debit',
      *   idempotency_key?: string|null,
      *   reason?: string|null,
      * }|LedgerEntryCreateParams $params
