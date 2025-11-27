@@ -3,6 +3,9 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Products\Product;
+use Dodopayments\Products\ProductUpdateFilesResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -41,7 +44,8 @@ final class ProductsTest extends TestCase
             'tax_category' => 'digital_products',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Product::class, $result);
     }
 
     #[Test]
@@ -60,9 +64,21 @@ final class ProductsTest extends TestCase
                 'tax_inclusive' => true,
             ],
             'tax_category' => 'digital_products',
+            'addons' => ['string'],
+            'brand_id' => 'brand_id',
+            'description' => 'description',
+            'digital_product_delivery' => [
+                'external_url' => 'external_url', 'instructions' => 'instructions',
+            ],
+            'license_key_activation_message' => 'license_key_activation_message',
+            'license_key_activations_limit' => 0,
+            'license_key_duration' => ['count' => 0, 'interval' => 'Day'],
+            'license_key_enabled' => true,
+            'metadata' => ['foo' => 'string'],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Product::class, $result);
     }
 
     #[Test]
@@ -70,7 +86,8 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Product::class, $result);
     }
 
     #[Test]
@@ -78,7 +95,8 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->update('id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -90,7 +108,8 @@ final class ProductsTest extends TestCase
 
         $result = $this->client->products->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 
     #[Test]
@@ -98,7 +117,8 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->archive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -106,7 +126,8 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->unarchive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -117,7 +138,8 @@ final class ProductsTest extends TestCase
             ['file_name' => 'file_name']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ProductUpdateFilesResponse::class, $result);
     }
 
     #[Test]
@@ -128,6 +150,7 @@ final class ProductsTest extends TestCase
             ['file_name' => 'file_name']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ProductUpdateFilesResponse::class, $result);
     }
 }

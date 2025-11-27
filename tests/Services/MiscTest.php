@@ -30,6 +30,7 @@ final class MiscTest extends TestCase
     {
         $result = $this->client->misc->listSupportedCountries();
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsList($result);
     }
 }
