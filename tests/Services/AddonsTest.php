@@ -2,7 +2,10 @@
 
 namespace Tests\Services;
 
+use Dodopayments\Addons\AddonResponse;
+use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Client;
+use Dodopayments\DefaultPageNumberPagination;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +39,8 @@ final class AddonsTest extends TestCase
             'tax_category' => 'digital_products',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AddonResponse::class, $result);
     }
 
     #[Test]
@@ -47,9 +51,11 @@ final class AddonsTest extends TestCase
             'name' => 'name',
             'price' => 0,
             'tax_category' => 'digital_products',
+            'description' => 'description',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AddonResponse::class, $result);
     }
 
     #[Test]
@@ -57,7 +63,8 @@ final class AddonsTest extends TestCase
     {
         $result = $this->client->addons->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AddonResponse::class, $result);
     }
 
     #[Test]
@@ -65,7 +72,8 @@ final class AddonsTest extends TestCase
     {
         $result = $this->client->addons->update('id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AddonResponse::class, $result);
     }
 
     #[Test]
@@ -77,7 +85,8 @@ final class AddonsTest extends TestCase
 
         $result = $this->client->addons->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 
     #[Test]
@@ -85,6 +94,7 @@ final class AddonsTest extends TestCase
     {
         $result = $this->client->addons->updateImages('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(AddonUpdateImagesResponse::class, $result);
     }
 }

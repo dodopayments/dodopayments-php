@@ -3,6 +3,8 @@
 namespace Tests\Services\Customers\Wallets;
 
 use Dodopayments\Client;
+use Dodopayments\Customers\Wallets\CustomerWallet;
+use Dodopayments\DefaultPageNumberPagination;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +36,8 @@ final class LedgerEntriesTest extends TestCase
             ['amount' => 0, 'currency' => 'AED', 'entry_type' => 'credit'],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CustomerWallet::class, $result);
     }
 
     #[Test]
@@ -42,10 +45,17 @@ final class LedgerEntriesTest extends TestCase
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
-            ['amount' => 0, 'currency' => 'AED', 'entry_type' => 'credit'],
+            [
+                'amount' => 0,
+                'currency' => 'AED',
+                'entry_type' => 'credit',
+                'idempotency_key' => 'idempotency_key',
+                'reason' => 'reason',
+            ],
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CustomerWallet::class, $result);
     }
 
     #[Test]
@@ -60,6 +70,7 @@ final class LedgerEntriesTest extends TestCase
             []
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 }

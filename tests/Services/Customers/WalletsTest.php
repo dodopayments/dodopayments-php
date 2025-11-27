@@ -3,6 +3,7 @@
 namespace Tests\Services\Customers;
 
 use Dodopayments\Client;
+use Dodopayments\Customers\Wallets\WalletListResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -30,6 +31,7 @@ final class WalletsTest extends TestCase
     {
         $result = $this->client->customers->wallets->list('customer_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(WalletListResponse::class, $result);
     }
 }

@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Refunds\Refund;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -31,15 +33,24 @@ final class RefundsTest extends TestCase
     {
         $result = $this->client->refunds->create(['payment_id' => 'payment_id']);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Refund::class, $result);
     }
 
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->refunds->create(['payment_id' => 'payment_id']);
+        $result = $this->client->refunds->create([
+            'payment_id' => 'payment_id',
+            'items' => [
+                ['item_id' => 'item_id', 'amount' => 0, 'tax_inclusive' => true],
+            ],
+            'metadata' => ['foo' => 'string'],
+            'reason' => 'reason',
+        ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Refund::class, $result);
     }
 
     #[Test]
@@ -47,7 +58,8 @@ final class RefundsTest extends TestCase
     {
         $result = $this->client->refunds->retrieve('refund_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Refund::class, $result);
     }
 
     #[Test]
@@ -59,6 +71,7 @@ final class RefundsTest extends TestCase
 
         $result = $this->client->refunds->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 }

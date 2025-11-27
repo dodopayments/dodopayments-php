@@ -3,6 +3,9 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Customers\Customer;
+use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
+use Dodopayments\DefaultPageNumberPagination;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,17 +36,22 @@ final class CustomersTest extends TestCase
             'email' => 'email', 'name' => 'name',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Customer::class, $result);
     }
 
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->customers->create([
-            'email' => 'email', 'name' => 'name',
+            'email' => 'email',
+            'name' => 'name',
+            'metadata' => ['foo' => 'string'],
+            'phone_number' => 'phone_number',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Customer::class, $result);
     }
 
     #[Test]
@@ -51,7 +59,8 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->retrieve('customer_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Customer::class, $result);
     }
 
     #[Test]
@@ -59,7 +68,8 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->update('customer_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Customer::class, $result);
     }
 
     #[Test]
@@ -71,7 +81,8 @@ final class CustomersTest extends TestCase
 
         $result = $this->client->customers->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 
     #[Test]
@@ -79,6 +90,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->retrievePaymentMethods('customer_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CustomerGetPaymentMethodsResponse::class, $result);
     }
 }
