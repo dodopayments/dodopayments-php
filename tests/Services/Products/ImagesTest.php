@@ -3,6 +3,7 @@
 namespace Tests\Services\Products;
 
 use Dodopayments\Client;
+use Dodopayments\Products\Images\ImageUpdateResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -30,6 +31,7 @@ final class ImagesTest extends TestCase
     {
         $result = $this->client->products->images->update('id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ImageUpdateResponse::class, $result);
     }
 }

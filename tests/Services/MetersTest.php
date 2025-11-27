@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Meters\Meter;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +38,8 @@ final class MetersTest extends TestCase
             'name' => 'name',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Meter::class, $result);
     }
 
     #[Test]
@@ -47,9 +50,18 @@ final class MetersTest extends TestCase
             'event_name' => 'event_name',
             'measurement_unit' => 'measurement_unit',
             'name' => 'name',
+            'description' => 'description',
+            'filter' => [
+                'clauses' => [
+                    ['key' => 'user_id', 'operator' => 'equals', 'value' => 'user123'],
+                    ['key' => 'amount', 'operator' => 'greater_than', 'value' => 100],
+                ],
+                'conjunction' => 'and',
+            ],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Meter::class, $result);
     }
 
     #[Test]
@@ -57,7 +69,8 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Meter::class, $result);
     }
 
     #[Test]
@@ -69,7 +82,8 @@ final class MetersTest extends TestCase
 
         $result = $this->client->meters->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 
     #[Test]
@@ -77,7 +91,8 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->archive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -85,6 +100,7 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->unarchive('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 }

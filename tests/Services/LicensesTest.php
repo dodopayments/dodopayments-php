@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Licenses\LicenseActivateResponse;
+use Dodopayments\Licenses\LicenseValidateResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +34,8 @@ final class LicensesTest extends TestCase
             'license_key' => 'license_key', 'name' => 'name',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseActivateResponse::class, $result);
     }
 
     #[Test]
@@ -42,7 +45,8 @@ final class LicensesTest extends TestCase
             'license_key' => 'license_key', 'name' => 'name',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseActivateResponse::class, $result);
     }
 
     #[Test]
@@ -53,7 +57,8 @@ final class LicensesTest extends TestCase
             'license_key_instance_id' => 'license_key_instance_id',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -64,7 +69,8 @@ final class LicensesTest extends TestCase
             'license_key_instance_id' => 'license_key_instance_id',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 
     #[Test]
@@ -74,7 +80,8 @@ final class LicensesTest extends TestCase
             'license_key' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseValidateResponse::class, $result);
     }
 
     #[Test]
@@ -82,8 +89,10 @@ final class LicensesTest extends TestCase
     {
         $result = $this->client->licenses->validate([
             'license_key' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
+            'license_key_instance_id' => 'lki_123',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseValidateResponse::class, $result);
     }
 }

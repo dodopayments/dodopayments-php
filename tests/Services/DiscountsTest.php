@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Discounts\Discount;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -33,17 +35,26 @@ final class DiscountsTest extends TestCase
             'amount' => 0, 'type' => 'percentage',
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Discount::class, $result);
     }
 
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->discounts->create([
-            'amount' => 0, 'type' => 'percentage',
+            'amount' => 0,
+            'type' => 'percentage',
+            'code' => 'code',
+            'expires_at' => '2019-12-27T18:11:19.117Z',
+            'name' => 'name',
+            'restricted_to' => ['string'],
+            'subscription_cycles' => 0,
+            'usage_limit' => 0,
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Discount::class, $result);
     }
 
     #[Test]
@@ -51,7 +62,8 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->retrieve('discount_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Discount::class, $result);
     }
 
     #[Test]
@@ -59,7 +71,8 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->update('discount_id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Discount::class, $result);
     }
 
     #[Test]
@@ -71,7 +84,8 @@ final class DiscountsTest extends TestCase
 
         $result = $this->client->discounts->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 
     #[Test]
@@ -79,6 +93,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->delete('discount_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
     }
 }

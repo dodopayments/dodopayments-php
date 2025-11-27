@@ -3,6 +3,8 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +33,8 @@ final class LicenseKeyInstancesTest extends TestCase
     {
         $result = $this->client->licenseKeyInstances->retrieve('lki_123');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseKeyInstance::class, $result);
     }
 
     #[Test]
@@ -42,7 +45,8 @@ final class LicenseKeyInstancesTest extends TestCase
             ['name' => 'name']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseKeyInstance::class, $result);
     }
 
     #[Test]
@@ -53,7 +57,8 @@ final class LicenseKeyInstancesTest extends TestCase
             ['name' => 'name']
         );
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseKeyInstance::class, $result);
     }
 
     #[Test]
@@ -65,6 +70,7 @@ final class LicenseKeyInstancesTest extends TestCase
 
         $result = $this->client->licenseKeyInstances->list([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
     }
 }

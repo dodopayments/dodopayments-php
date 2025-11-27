@@ -35,7 +35,8 @@ final class PaymentsTest extends TestCase
 
         $result = $this->client->invoices->payments->retrieve('payment_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
     }
 
     #[Test]
@@ -47,6 +48,7 @@ final class PaymentsTest extends TestCase
 
         $result = $this->client->invoices->payments->retrieveRefund('refund_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
     }
 }

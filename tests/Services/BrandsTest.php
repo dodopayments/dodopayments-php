@@ -2,6 +2,9 @@
 
 namespace Tests\Services;
 
+use Dodopayments\Brands\Brand;
+use Dodopayments\Brands\BrandListResponse;
+use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -30,7 +33,8 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->create([]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Brand::class, $result);
     }
 
     #[Test]
@@ -38,7 +42,8 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Brand::class, $result);
     }
 
     #[Test]
@@ -46,7 +51,8 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->update('id', []);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Brand::class, $result);
     }
 
     #[Test]
@@ -54,7 +60,8 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->list();
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BrandListResponse::class, $result);
     }
 
     #[Test]
@@ -62,6 +69,7 @@ final class BrandsTest extends TestCase
     {
         $result = $this->client->brands->updateImages('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BrandUpdateImagesResponse::class, $result);
     }
 }
