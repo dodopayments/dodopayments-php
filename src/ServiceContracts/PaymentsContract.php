@@ -25,7 +25,7 @@ interface PaymentsContract
      */
     public function create(
         array|PaymentCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): PaymentNewResponse;
 
     /**
