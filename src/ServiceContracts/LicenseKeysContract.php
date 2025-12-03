@@ -47,6 +47,6 @@ interface LicenseKeysContract
      */
     public function list(
         array|LicenseKeyListParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 }

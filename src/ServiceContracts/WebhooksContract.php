@@ -24,7 +24,7 @@ interface WebhooksContract
      */
     public function create(
         array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): WebhookDetails;
 
     /**
