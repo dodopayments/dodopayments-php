@@ -199,7 +199,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            ['STAINLESS_FIXME_type' => 'new']
+            ['type' => 'new']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -214,10 +214,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            [
-                'STAINLESS_FIXME_type' => 'new',
-                'STAINLESS_FIXME_return_url' => 'return_url',
-            ],
+            ['type' => 'new', 'return_url' => 'return_url']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
