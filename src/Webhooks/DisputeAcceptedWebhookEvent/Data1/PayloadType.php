@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks\PaymentSucceededWebhookEvent\Data;
+namespace Dodopayments\Webhooks\DisputeAcceptedWebhookEvent\Data1;
 
 /**
  * The type of payload in the data field.
  */
 enum PayloadType: string
 {
-    case PAYMENT = 'Payment';
+    case DISPUTE = 'Dispute';
 }

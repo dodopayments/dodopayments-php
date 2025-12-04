@@ -59,7 +59,7 @@ final class CustomersService implements CustomersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'customers',
@@ -78,7 +78,7 @@ final class CustomersService implements CustomersContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): Customer {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['customers/%1$s', $customerID],
@@ -108,7 +108,7 @@ final class CustomersService implements CustomersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['customers/%1$s', $customerID],
@@ -138,7 +138,7 @@ final class CustomersService implements CustomersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'customers',
@@ -158,7 +158,7 @@ final class CustomersService implements CustomersContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): CustomerGetPaymentMethodsResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['customers/%1$s/payment-methods', $customerID],

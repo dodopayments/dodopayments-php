@@ -35,7 +35,7 @@ final class ImagesService implements ImagesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'put',
             path: ['products/%1$s/images', $id],

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks\RefundFailedWebhookEvent\Data;
+namespace Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent\Data1;
 
 /**
  * The type of payload in the data field.
  */
 enum PayloadType: string
 {
-    case REFUND = 'Refund';
+    case SUBSCRIPTION = 'Subscription';
 }

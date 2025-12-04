@@ -18,8 +18,8 @@ use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
  *   created_at_gte?: \DateTimeInterface,
  *   created_at_lte?: \DateTimeInterface,
  *   customer_id?: string,
- *   dispute_stage?: DisputeStage|value-of<DisputeStage>,
- *   dispute_status?: DisputeStatus|value-of<DisputeStatus>,
+ *   dispute_stage?: \Dodopayments\Disputes\DisputeListParams\DisputeStage|value-of<\Dodopayments\Disputes\DisputeListParams\DisputeStage>,
+ *   dispute_status?: \Dodopayments\Disputes\DisputeListParams\DisputeStatus|value-of<\Dodopayments\Disputes\DisputeListParams\DisputeStatus>,
  *   page_number?: int,
  *   page_size?: int,
  * }
@@ -53,7 +53,10 @@ final class DisputeListParams implements BaseModel
      *
      * @var value-of<DisputeStage>|null $dispute_stage
      */
-    #[Api(enum: DisputeStage::class, optional: true)]
+    #[Api(
+        enum: DisputeStage::class,
+        optional: true,
+    )]
     public ?string $dispute_stage;
 
     /**
@@ -61,7 +64,10 @@ final class DisputeListParams implements BaseModel
      *
      * @var value-of<DisputeStatus>|null $dispute_status
      */
-    #[Api(enum: DisputeStatus::class, optional: true)]
+    #[Api(
+        enum: DisputeStatus::class,
+        optional: true,
+    )]
     public ?string $dispute_status;
 
     /**
@@ -149,8 +155,9 @@ final class DisputeListParams implements BaseModel
      *
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      */
-    public function withDisputeStage(DisputeStage|string $disputeStage): self
-    {
+    public function withDisputeStage(
+        DisputeStage|string $disputeStage
+    ): self {
         $obj = clone $this;
         $obj['dispute_stage'] = $disputeStage;
 
@@ -162,8 +169,9 @@ final class DisputeListParams implements BaseModel
      *
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
-    public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
-    {
+    public function withDisputeStatus(
+        DisputeStatus|string $disputeStatus
+    ): self {
         $obj = clone $this;
         $obj['dispute_status'] = $disputeStatus;
 

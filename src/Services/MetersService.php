@@ -49,7 +49,7 @@ final class MetersService implements MetersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'meters',
@@ -68,7 +68,7 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Meter {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['meters/%1$s', $id],
@@ -97,7 +97,7 @@ final class MetersService implements MetersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'meters',
@@ -117,7 +117,7 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['meters/%1$s', $id],
@@ -135,7 +135,7 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['meters/%1$s/unarchive', $id],

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks\DisputeChallengedWebhookEvent\Data;
+namespace Dodopayments\Webhooks\DisputeCancelledWebhookEvent\Data1;
 
 /**
  * The type of payload in the data field.

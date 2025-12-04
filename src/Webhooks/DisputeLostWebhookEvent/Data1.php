@@ -9,12 +9,12 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeStage;
 use Dodopayments\Disputes\DisputeStatus;
-use Dodopayments\Webhooks\DisputeLostWebhookEvent\Data\PayloadType;
+use Dodopayments\Webhooks\DisputeLostWebhookEvent\Data1\PayloadType;
 
 /**
  * Event-specific data.
  *
- * @phpstan-type DataShape = array{
+ * @phpstan-type Data1Shape = array{
  *   amount: string,
  *   business_id: string,
  *   created_at: \DateTimeInterface,
@@ -27,9 +27,9 @@ use Dodopayments\Webhooks\DisputeLostWebhookEvent\Data\PayloadType;
  *   payload_type?: value-of<PayloadType>|null,
  * }
  */
-final class Data implements BaseModel
+final class Data1 implements BaseModel
 {
-    /** @use SdkModel<DataShape> */
+    /** @use SdkModel<Data1Shape> */
     use SdkModel;
 
     /**
@@ -91,11 +91,11 @@ final class Data implements BaseModel
     public ?string $payload_type;
 
     /**
-     * `new Data()` is missing required properties by the API.
+     * `new Data1()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Data::with(
+     * Data1::with(
      *   amount: ...,
      *   business_id: ...,
      *   created_at: ...,
@@ -110,7 +110,7 @@ final class Data implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Data)
+     * (new Data1)
      *   ->withAmount(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)

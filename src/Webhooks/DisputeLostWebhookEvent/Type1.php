@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\DisputeLostWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case DISPUTE_LOST = 'dispute.lost';
 }

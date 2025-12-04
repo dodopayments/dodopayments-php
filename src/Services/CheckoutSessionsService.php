@@ -91,7 +91,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'checkouts',
@@ -110,7 +110,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): CheckoutSessionStatus {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['checkouts/%1$s', $id],

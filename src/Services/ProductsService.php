@@ -70,7 +70,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'products',
@@ -89,7 +89,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Product {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['products/%1$s', $id],
@@ -135,7 +135,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['products/%1$s', $id],
@@ -169,7 +169,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'products',
@@ -189,7 +189,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['products/%1$s', $id],
@@ -207,7 +207,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['products/%1$s/unarchive', $id],
@@ -233,7 +233,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'put',
             path: ['products/%1$s/files', $id],

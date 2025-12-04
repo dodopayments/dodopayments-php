@@ -58,7 +58,7 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'webhooks',
@@ -79,7 +79,7 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s', $webhookID],
@@ -114,7 +114,7 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s', $webhookID],
@@ -144,7 +144,7 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'webhooks',
@@ -166,7 +166,7 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['webhooks/%1$s', $webhookID],
@@ -186,7 +186,7 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/secret', $webhookID],

@@ -15,12 +15,12 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\IntentStatus;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\Payment\Refund;
-use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data\PayloadType;
+use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data1\PayloadType;
 
 /**
  * Event-specific data.
  *
- * @phpstan-type DataShape = array{
+ * @phpstan-type Data1Shape = array{
  *   billing: BillingAddress,
  *   brand_id: string,
  *   business_id: string,
@@ -55,9 +55,9 @@ use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data\PayloadType;
  *   payload_type?: value-of<PayloadType>|null,
  * }
  */
-final class Data implements BaseModel
+final class Data1 implements BaseModel
 {
-    /** @use SdkModel<DataShape> */
+    /** @use SdkModel<Data1Shape> */
     use SdkModel;
 
     #[Api]
@@ -257,11 +257,11 @@ final class Data implements BaseModel
     public ?string $payload_type;
 
     /**
-     * `new Data()` is missing required properties by the API.
+     * `new Data1()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Data::with(
+     * Data1::with(
      *   billing: ...,
      *   brand_id: ...,
      *   business_id: ...,
@@ -282,7 +282,7 @@ final class Data implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Data)
+     * (new Data1)
      *   ->withBilling(...)
      *   ->withBrandID(...)
      *   ->withBusinessID(...)

@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\SubscriptionFailedWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case SUBSCRIPTION_FAILED = 'subscription.failed';
 }

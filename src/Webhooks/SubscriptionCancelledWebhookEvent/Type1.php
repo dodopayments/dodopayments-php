@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case SUBSCRIPTION_CANCELLED = 'subscription.cancelled';
 }
