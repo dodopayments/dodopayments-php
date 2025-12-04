@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\PaymentSucceededWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case PAYMENT_SUCCEEDED = 'payment.succeeded';
 }

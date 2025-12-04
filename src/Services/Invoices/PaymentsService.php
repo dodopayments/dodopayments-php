@@ -25,7 +25,7 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): string {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['invoices/payments/%1$s', $paymentID],
@@ -44,7 +44,7 @@ final class PaymentsService implements PaymentsContract
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): string {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['invoices/refunds/%1$s', $refundID],

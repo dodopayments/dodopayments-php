@@ -14,12 +14,12 @@ use Dodopayments\Subscriptions\AddonCartResponseItem;
 use Dodopayments\Subscriptions\Subscription\Meter;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
-use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Data\PayloadType;
+use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Data1\PayloadType;
 
 /**
  * Event-specific data.
  *
- * @phpstan-type DataShape = array{
+ * @phpstan-type Data1Shape = array{
  *   addons: list<AddonCartResponseItem>,
  *   billing: BillingAddress,
  *   cancel_at_next_billing_date: bool,
@@ -51,9 +51,9 @@ use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent\Data\PayloadType;
  *   payload_type?: value-of<PayloadType>|null,
  * }
  */
-final class Data implements BaseModel
+final class Data1 implements BaseModel
 {
-    /** @use SdkModel<DataShape> */
+    /** @use SdkModel<Data1Shape> */
     use SdkModel;
 
     /**
@@ -225,11 +225,11 @@ final class Data implements BaseModel
     public ?string $payload_type;
 
     /**
-     * `new Data()` is missing required properties by the API.
+     * `new Data1()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Data::with(
+     * Data1::with(
      *   addons: ...,
      *   billing: ...,
      *   cancel_at_next_billing_date: ...,
@@ -258,7 +258,7 @@ final class Data implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Data)
+     * (new Data1)
      *   ->withAddons(...)
      *   ->withBilling(...)
      *   ->withCancelAtNextBillingDate(...)

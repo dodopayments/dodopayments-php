@@ -37,7 +37,7 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'licenses/activate',
@@ -65,7 +65,7 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'licenses/deactivate',
@@ -93,7 +93,7 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'licenses/validate',

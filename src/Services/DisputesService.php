@@ -30,7 +30,7 @@ final class DisputesService implements DisputesContract
         string $disputeID,
         ?RequestOptions $requestOptions = null
     ): GetDispute {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['disputes/%1$s', $disputeID],
@@ -65,7 +65,7 @@ final class DisputesService implements DisputesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'disputes',

@@ -10,12 +10,12 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Refunds\RefundStatus;
-use Dodopayments\Webhooks\RefundFailedWebhookEvent\Data\PayloadType;
+use Dodopayments\Webhooks\RefundFailedWebhookEvent\Data1\PayloadType;
 
 /**
  * Event-specific data.
  *
- * @phpstan-type DataShape = array{
+ * @phpstan-type Data1Shape = array{
  *   business_id: string,
  *   created_at: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
@@ -30,9 +30,9 @@ use Dodopayments\Webhooks\RefundFailedWebhookEvent\Data\PayloadType;
  *   payload_type?: value-of<PayloadType>|null,
  * }
  */
-final class Data implements BaseModel
+final class Data1 implements BaseModel
 {
-    /** @use SdkModel<DataShape> */
+    /** @use SdkModel<Data1Shape> */
     use SdkModel;
 
     /**
@@ -105,11 +105,11 @@ final class Data implements BaseModel
     public ?string $payload_type;
 
     /**
-     * `new Data()` is missing required properties by the API.
+     * `new Data1()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Data::with(
+     * Data1::with(
      *   business_id: ...,
      *   created_at: ...,
      *   customer: ...,
@@ -124,7 +124,7 @@ final class Data implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Data)
+     * (new Data1)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCustomer(...)
