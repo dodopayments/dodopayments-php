@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case LICENSE_KEY_CREATED = 'license_key.created';
 }

@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\SubscriptionExpiredWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case SUBSCRIPTION_EXPIRED = 'subscription.expired';
 }

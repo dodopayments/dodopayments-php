@@ -50,7 +50,7 @@ final class DiscountsService implements DiscountsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'discounts',
@@ -71,7 +71,7 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): Discount {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['discounts/%1$s', $discountID],
@@ -108,7 +108,7 @@ final class DiscountsService implements DiscountsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['discounts/%1$s', $discountID],
@@ -138,7 +138,7 @@ final class DiscountsService implements DiscountsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'discounts',
@@ -160,7 +160,7 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['discounts/%1$s', $discountID],

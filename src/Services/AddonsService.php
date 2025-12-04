@@ -46,7 +46,7 @@ final class AddonsService implements AddonsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'addons',
@@ -65,7 +65,7 @@ final class AddonsService implements AddonsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['addons/%1$s', $id],
@@ -98,7 +98,7 @@ final class AddonsService implements AddonsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['addons/%1$s', $id],
@@ -126,7 +126,7 @@ final class AddonsService implements AddonsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'addons',
@@ -146,7 +146,7 @@ final class AddonsService implements AddonsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'put',
             path: ['addons/%1$s/images', $id],

@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\RefundSucceededWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case REFUND_SUCCEEDED = 'refund.succeeded';
 }

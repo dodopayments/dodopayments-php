@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks\SubscriptionActiveWebhookEvent\Data;
+namespace Dodopayments\Webhooks\SubscriptionOnHoldWebhookEvent\Data1;
 
 /**
  * The type of payload in the data field.

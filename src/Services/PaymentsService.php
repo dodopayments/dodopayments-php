@@ -66,7 +66,7 @@ final class PaymentsService implements PaymentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'payments',
@@ -85,7 +85,7 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): Payment {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['payments/%1$s', $paymentID],
@@ -121,7 +121,7 @@ final class PaymentsService implements PaymentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'payments',
@@ -141,7 +141,7 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): PaymentGetLineItemsResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['payments/%1$s/line-items', $paymentID],
