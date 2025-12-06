@@ -56,8 +56,8 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->file_id = $file_id;
-        $obj->url = $url;
+        $obj['file_id'] = $file_id;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj->file_id = $fileID;
+        $obj['file_id'] = $fileID;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

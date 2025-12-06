@@ -8,15 +8,26 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 
 /**
  * @see Dodopayments\Services\PaymentsService::create()
  *
  * @phpstan-type PaymentCreateParamsShape = array{
- *   billing: BillingAddress,
- *   customer: AttachExistingCustomer|NewCustomer,
- *   product_cart: list<OneTimeProductCartItem>,
+ *   billing: BillingAddress|array{
+ *     city: string,
+ *     country: value-of<CountryCode>,
+ *     state: string,
+ *     street: string,
+ *     zipcode: string,
+ *   },
+ *   customer: AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+ *     email: string, name?: string|null, phone_number?: string|null
+ *   },
+ *   product_cart: list<OneTimeProductCartItem|array{
+ *     product_id: string, quantity: int, amount?: int|null
+ *   }>,
  *   allowed_payment_method_types?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billing_currency?: null|Currency|value-of<Currency>,
  *   discount_code?: string|null,
@@ -149,14 +160,26 @@ final class PaymentCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<OneTimeProductCartItem> $product_cart
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
+     * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+     *   email: string, name?: string|null, phone_number?: string|null
+     * } $customer
+     * @param list<OneTimeProductCartItem|array{
+     *   product_id: string, quantity: int, amount?: int|null
+     * }> $product_cart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      * @param Currency|value-of<Currency>|null $billing_currency
      * @param array<string,string> $metadata
      */
     public static function with(
-        BillingAddress $billing,
-        AttachExistingCustomer|NewCustomer $customer,
+        BillingAddress|array $billing,
+        AttachExistingCustomer|array|NewCustomer $customer,
         array $product_cart,
         ?array $allowed_payment_method_types = null,
         Currency|string|null $billing_currency = null,
@@ -170,42 +193,54 @@ final class PaymentCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->billing = $billing;
-        $obj->customer = $customer;
-        $obj->product_cart = $product_cart;
+        $obj['billing'] = $billing;
+        $obj['customer'] = $customer;
+        $obj['product_cart'] = $product_cart;
 
         null !== $allowed_payment_method_types && $obj['allowed_payment_method_types'] = $allowed_payment_method_types;
         null !== $billing_currency && $obj['billing_currency'] = $billing_currency;
-        null !== $discount_code && $obj->discount_code = $discount_code;
-        null !== $force_3ds && $obj->force_3ds = $force_3ds;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $payment_link && $obj->payment_link = $payment_link;
-        null !== $return_url && $obj->return_url = $return_url;
-        null !== $show_saved_payment_methods && $obj->show_saved_payment_methods = $show_saved_payment_methods;
-        null !== $tax_id && $obj->tax_id = $tax_id;
+        null !== $discount_code && $obj['discount_code'] = $discount_code;
+        null !== $force_3ds && $obj['force_3ds'] = $force_3ds;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $payment_link && $obj['payment_link'] = $payment_link;
+        null !== $return_url && $obj['return_url'] = $return_url;
+        null !== $show_saved_payment_methods && $obj['show_saved_payment_methods'] = $show_saved_payment_methods;
+        null !== $tax_id && $obj['tax_id'] = $tax_id;
 
         return $obj;
     }
 
     /**
      * Billing address details for the payment.
+     *
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
      */
-    public function withBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress|array $billing): self
     {
         $obj = clone $this;
-        $obj->billing = $billing;
+        $obj['billing'] = $billing;
 
         return $obj;
     }
 
     /**
      * Customer information for the payment.
+     *
+     * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+     *   email: string, name?: string|null, phone_number?: string|null
+     * } $customer
      */
     public function withCustomer(
-        AttachExistingCustomer|NewCustomer $customer
+        AttachExistingCustomer|array|NewCustomer $customer
     ): self {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -213,12 +248,14 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @param list<OneTimeProductCartItem> $productCart
+     * @param list<OneTimeProductCartItem|array{
+     *   product_id: string, quantity: int, amount?: int|null
+     * }> $productCart
      */
     public function withProductCart(array $productCart): self
     {
         $obj = clone $this;
-        $obj->product_cart = $productCart;
+        $obj['product_cart'] = $productCart;
 
         return $obj;
     }
@@ -262,7 +299,7 @@ final class PaymentCreateParams implements BaseModel
     public function withDiscountCode(?string $discountCode): self
     {
         $obj = clone $this;
-        $obj->discount_code = $discountCode;
+        $obj['discount_code'] = $discountCode;
 
         return $obj;
     }
@@ -273,7 +310,7 @@ final class PaymentCreateParams implements BaseModel
     public function withForce3DS(?bool $force3DS): self
     {
         $obj = clone $this;
-        $obj->force_3ds = $force3DS;
+        $obj['force_3ds'] = $force3DS;
 
         return $obj;
     }
@@ -287,7 +324,7 @@ final class PaymentCreateParams implements BaseModel
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -298,7 +335,7 @@ final class PaymentCreateParams implements BaseModel
     public function withPaymentLink(?bool $paymentLink): self
     {
         $obj = clone $this;
-        $obj->payment_link = $paymentLink;
+        $obj['payment_link'] = $paymentLink;
 
         return $obj;
     }
@@ -310,7 +347,7 @@ final class PaymentCreateParams implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj->return_url = $returnURL;
+        $obj['return_url'] = $returnURL;
 
         return $obj;
     }
@@ -323,7 +360,7 @@ final class PaymentCreateParams implements BaseModel
         bool $showSavedPaymentMethods
     ): self {
         $obj = clone $this;
-        $obj->show_saved_payment_methods = $showSavedPaymentMethods;
+        $obj['show_saved_payment_methods'] = $showSavedPaymentMethods;
 
         return $obj;
     }
@@ -334,7 +371,7 @@ final class PaymentCreateParams implements BaseModel
     public function withTaxID(?string $taxID): self
     {
         $obj = clone $this;
-        $obj->tax_id = $taxID;
+        $obj['tax_id'] = $taxID;
 
         return $obj;
     }

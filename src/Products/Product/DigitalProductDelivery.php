@@ -51,7 +51,9 @@ final class DigitalProductDelivery implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<File>|null $files
+     * @param list<File|array{
+     *   file_id: string, file_name: string, url: string
+     * }>|null $files
      */
     public static function with(
         ?string $external_url = null,
@@ -60,9 +62,9 @@ final class DigitalProductDelivery implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $external_url && $obj->external_url = $external_url;
-        null !== $files && $obj->files = $files;
-        null !== $instructions && $obj->instructions = $instructions;
+        null !== $external_url && $obj['external_url'] = $external_url;
+        null !== $files && $obj['files'] = $files;
+        null !== $instructions && $obj['instructions'] = $instructions;
 
         return $obj;
     }
@@ -73,7 +75,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withExternalURL(?string $externalURL): self
     {
         $obj = clone $this;
-        $obj->external_url = $externalURL;
+        $obj['external_url'] = $externalURL;
 
         return $obj;
     }
@@ -81,12 +83,14 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * Uploaded files ids of digital product.
      *
-     * @param list<File>|null $files
+     * @param list<File|array{
+     *   file_id: string, file_name: string, url: string
+     * }>|null $files
      */
     public function withFiles(?array $files): self
     {
         $obj = clone $this;
-        $obj->files = $files;
+        $obj['files'] = $files;
 
         return $obj;
     }
@@ -97,7 +101,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withInstructions(?string $instructions): self
     {
         $obj = clone $this;
-        $obj->instructions = $instructions;
+        $obj['instructions'] = $instructions;
 
         return $obj;
     }

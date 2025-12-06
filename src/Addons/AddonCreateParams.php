@@ -103,11 +103,11 @@ final class AddonCreateParams implements BaseModel
         $obj = new self;
 
         $obj['currency'] = $currency;
-        $obj->name = $name;
-        $obj->price = $price;
+        $obj['name'] = $name;
+        $obj['price'] = $price;
         $obj['tax_category'] = $tax_category;
 
-        null !== $description && $obj->description = $description;
+        null !== $description && $obj['description'] = $description;
 
         return $obj;
     }
@@ -131,7 +131,7 @@ final class AddonCreateParams implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class AddonCreateParams implements BaseModel
     public function withPrice(int $price): self
     {
         $obj = clone $this;
-        $obj->price = $price;
+        $obj['price'] = $price;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class AddonCreateParams implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }

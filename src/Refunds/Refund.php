@@ -147,6 +147,13 @@ final class Refund implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency>|null $currency
@@ -154,7 +161,7 @@ final class Refund implements BaseModel, ResponseConverter
     public static function with(
         string $business_id,
         \DateTimeInterface $created_at,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         bool $is_partial,
         array $metadata,
         string $payment_id,
@@ -166,18 +173,18 @@ final class Refund implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->customer = $customer;
-        $obj->is_partial = $is_partial;
-        $obj->metadata = $metadata;
-        $obj->payment_id = $payment_id;
-        $obj->refund_id = $refund_id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['customer'] = $customer;
+        $obj['is_partial'] = $is_partial;
+        $obj['metadata'] = $metadata;
+        $obj['payment_id'] = $payment_id;
+        $obj['refund_id'] = $refund_id;
         $obj['status'] = $status;
 
-        null !== $amount && $obj->amount = $amount;
+        null !== $amount && $obj['amount'] = $amount;
         null !== $currency && $obj['currency'] = $currency;
-        null !== $reason && $obj->reason = $reason;
+        null !== $reason && $obj['reason'] = $reason;
 
         return $obj;
     }
@@ -188,7 +195,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -199,18 +206,26 @@ final class Refund implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
 
     /**
      * Details about the customer for this refund (from the associated payment).
+     *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      */
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -221,7 +236,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withIsPartial(bool $isPartial): self
     {
         $obj = clone $this;
-        $obj->is_partial = $isPartial;
+        $obj['is_partial'] = $isPartial;
 
         return $obj;
     }
@@ -234,7 +249,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -245,7 +260,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -256,7 +271,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withRefundID(string $refundID): self
     {
         $obj = clone $this;
-        $obj->refund_id = $refundID;
+        $obj['refund_id'] = $refundID;
 
         return $obj;
     }
@@ -280,7 +295,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withAmount(?int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -304,7 +319,7 @@ final class Refund implements BaseModel, ResponseConverter
     public function withReason(?string $reason): self
     {
         $obj = clone $this;
-        $obj->reason = $reason;
+        $obj['reason'] = $reason;
 
         return $obj;
     }

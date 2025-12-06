@@ -47,7 +47,7 @@ final class CustomerPortalSession implements BaseModel
     {
         $obj = new self;
 
-        $obj->link = $link;
+        $obj['link'] = $link;
 
         return $obj;
     }
@@ -55,7 +55,7 @@ final class CustomerPortalSession implements BaseModel
     public function withLink(string $link): self
     {
         $obj = clone $this;
-        $obj->link = $link;
+        $obj['link'] = $link;
 
         return $obj;
     }

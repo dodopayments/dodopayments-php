@@ -49,8 +49,8 @@ final class CustomerBalanceConfig implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $allow_customer_credits_purchase && $obj->allow_customer_credits_purchase = $allow_customer_credits_purchase;
-        null !== $allow_customer_credits_usage && $obj->allow_customer_credits_usage = $allow_customer_credits_usage;
+        null !== $allow_customer_credits_purchase && $obj['allow_customer_credits_purchase'] = $allow_customer_credits_purchase;
+        null !== $allow_customer_credits_usage && $obj['allow_customer_credits_usage'] = $allow_customer_credits_usage;
 
         return $obj;
     }
@@ -62,7 +62,7 @@ final class CustomerBalanceConfig implements BaseModel
         ?bool $allowCustomerCreditsPurchase
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_credits_purchase = $allowCustomerCreditsPurchase;
+        $obj['allow_customer_credits_purchase'] = $allowCustomerCreditsPurchase;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class CustomerBalanceConfig implements BaseModel
         ?bool $allowCustomerCreditsUsage
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_credits_usage = $allowCustomerCreditsUsage;
+        $obj['allow_customer_credits_usage'] = $allowCustomerCreditsUsage;
 
         return $obj;
     }

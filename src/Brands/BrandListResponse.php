@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Brands;
 
+use Dodopayments\Brands\Brand\VerificationStatus;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkResponse;
@@ -52,13 +53,26 @@ final class BrandListResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Brand> $items
+     * @param list<Brand|array{
+     *   brand_id: string,
+     *   business_id: string,
+     *   enabled: bool,
+     *   statement_descriptor: string,
+     *   verification_enabled: bool,
+     *   verification_status: value-of<VerificationStatus>,
+     *   description?: string|null,
+     *   image?: string|null,
+     *   name?: string|null,
+     *   reason_for_hold?: string|null,
+     *   support_email?: string|null,
+     *   url?: string|null,
+     * }> $items
      */
     public static function with(array $items): self
     {
         $obj = new self;
 
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }
@@ -66,12 +80,25 @@ final class BrandListResponse implements BaseModel, ResponseConverter
     /**
      * List of brands for this business.
      *
-     * @param list<Brand> $items
+     * @param list<Brand|array{
+     *   brand_id: string,
+     *   business_id: string,
+     *   enabled: bool,
+     *   statement_descriptor: string,
+     *   verification_enabled: bool,
+     *   verification_status: value-of<VerificationStatus>,
+     *   description?: string|null,
+     *   image?: string|null,
+     *   name?: string|null,
+     *   reason_for_hold?: string|null,
+     *   support_email?: string|null,
+     *   url?: string|null,
+     * }> $items
      */
     public function withItems(array $items): self
     {
         $obj = clone $this;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }

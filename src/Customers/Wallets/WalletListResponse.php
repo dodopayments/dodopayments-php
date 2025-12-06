@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
+use Dodopayments\Misc\Currency;
 
 /**
  * @phpstan-type WalletListResponseShape = array{
@@ -56,25 +57,37 @@ final class WalletListResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<CustomerWallet> $items
+     * @param list<CustomerWallet|array{
+     *   balance: int,
+     *   created_at: \DateTimeInterface,
+     *   currency: value-of<Currency>,
+     *   customer_id: string,
+     *   updated_at: \DateTimeInterface,
+     * }> $items
      */
     public static function with(array $items, int $total_balance_usd): self
     {
         $obj = new self;
 
-        $obj->items = $items;
-        $obj->total_balance_usd = $total_balance_usd;
+        $obj['items'] = $items;
+        $obj['total_balance_usd'] = $total_balance_usd;
 
         return $obj;
     }
 
     /**
-     * @param list<CustomerWallet> $items
+     * @param list<CustomerWallet|array{
+     *   balance: int,
+     *   created_at: \DateTimeInterface,
+     *   currency: value-of<Currency>,
+     *   customer_id: string,
+     *   updated_at: \DateTimeInterface,
+     * }> $items
      */
     public function withItems(array $items): self
     {
         $obj = clone $this;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }
@@ -85,7 +98,7 @@ final class WalletListResponse implements BaseModel, ResponseConverter
     public function withTotalBalanceUsd(int $totalBalanceUsd): self
     {
         $obj = clone $this;
-        $obj->total_balance_usd = $totalBalanceUsd;
+        $obj['total_balance_usd'] = $totalBalanceUsd;
 
         return $obj;
     }

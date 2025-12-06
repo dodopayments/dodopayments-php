@@ -91,12 +91,12 @@ final class EventInput implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->customer_id = $customer_id;
-        $obj->event_id = $event_id;
-        $obj->event_name = $event_name;
+        $obj['customer_id'] = $customer_id;
+        $obj['event_id'] = $event_id;
+        $obj['event_name'] = $event_name;
 
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $timestamp && $obj->timestamp = $timestamp;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $timestamp && $obj['timestamp'] = $timestamp;
 
         return $obj;
     }
@@ -107,7 +107,7 @@ final class EventInput implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -118,7 +118,7 @@ final class EventInput implements BaseModel
     public function withEventID(string $eventID): self
     {
         $obj = clone $this;
-        $obj->event_id = $eventID;
+        $obj['event_id'] = $eventID;
 
         return $obj;
     }
@@ -129,7 +129,7 @@ final class EventInput implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->event_name = $eventName;
+        $obj['event_name'] = $eventName;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class EventInput implements BaseModel
     public function withMetadata(?array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -154,7 +154,7 @@ final class EventInput implements BaseModel
     public function withTimestamp(?\DateTimeInterface $timestamp): self
     {
         $obj = clone $this;
-        $obj->timestamp = $timestamp;
+        $obj['timestamp'] = $timestamp;
 
         return $obj;
     }

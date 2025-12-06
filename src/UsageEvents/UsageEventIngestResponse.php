@@ -51,7 +51,7 @@ final class UsageEventIngestResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->ingested_count = $ingested_count;
+        $obj['ingested_count'] = $ingested_count;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class UsageEventIngestResponse implements BaseModel, ResponseConverter
     public function withIngestedCount(int $ingestedCount): self
     {
         $obj = clone $this;
-        $obj->ingested_count = $ingestedCount;
+        $obj['ingested_count'] = $ingestedCount;
 
         return $obj;
     }

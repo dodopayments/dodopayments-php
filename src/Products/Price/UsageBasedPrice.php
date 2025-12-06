@@ -153,7 +153,14 @@ final class UsageBasedPrice implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $payment_frequency_interval
      * @param TimeInterval|value-of<TimeInterval> $subscription_period_interval
      * @param Type|value-of<Type> $type
-     * @param list<AddMeterToPrice>|null $meters
+     * @param list<AddMeterToPrice|array{
+     *   meter_id: string,
+     *   price_per_unit: string,
+     *   description?: string|null,
+     *   free_threshold?: int|null,
+     *   measurement_unit?: string|null,
+     *   name?: string|null,
+     * }>|null $meters
      */
     public static function with(
         Currency|string $currency,
@@ -171,17 +178,17 @@ final class UsageBasedPrice implements BaseModel
         $obj = new self;
 
         $obj['currency'] = $currency;
-        $obj->discount = $discount;
-        $obj->fixed_price = $fixed_price;
-        $obj->payment_frequency_count = $payment_frequency_count;
+        $obj['discount'] = $discount;
+        $obj['fixed_price'] = $fixed_price;
+        $obj['payment_frequency_count'] = $payment_frequency_count;
         $obj['payment_frequency_interval'] = $payment_frequency_interval;
-        $obj->purchasing_power_parity = $purchasing_power_parity;
-        $obj->subscription_period_count = $subscription_period_count;
+        $obj['purchasing_power_parity'] = $purchasing_power_parity;
+        $obj['subscription_period_count'] = $subscription_period_count;
         $obj['subscription_period_interval'] = $subscription_period_interval;
         $obj['type'] = $type;
 
-        null !== $meters && $obj->meters = $meters;
-        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
+        null !== $meters && $obj['meters'] = $meters;
+        null !== $tax_inclusive && $obj['tax_inclusive'] = $tax_inclusive;
 
         return $obj;
     }
@@ -205,7 +212,7 @@ final class UsageBasedPrice implements BaseModel
     public function withDiscount(int $discount): self
     {
         $obj = clone $this;
-        $obj->discount = $discount;
+        $obj['discount'] = $discount;
 
         return $obj;
     }
@@ -217,7 +224,7 @@ final class UsageBasedPrice implements BaseModel
     public function withFixedPrice(int $fixedPrice): self
     {
         $obj = clone $this;
-        $obj->fixed_price = $fixedPrice;
+        $obj['fixed_price'] = $fixedPrice;
 
         return $obj;
     }
@@ -229,7 +236,7 @@ final class UsageBasedPrice implements BaseModel
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
         $obj = clone $this;
-        $obj->payment_frequency_count = $paymentFrequencyCount;
+        $obj['payment_frequency_count'] = $paymentFrequencyCount;
 
         return $obj;
     }
@@ -255,7 +262,7 @@ final class UsageBasedPrice implements BaseModel
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
         $obj = clone $this;
-        $obj->purchasing_power_parity = $purchasingPowerParity;
+        $obj['purchasing_power_parity'] = $purchasingPowerParity;
 
         return $obj;
     }
@@ -268,7 +275,7 @@ final class UsageBasedPrice implements BaseModel
         int $subscriptionPeriodCount
     ): self {
         $obj = clone $this;
-        $obj->subscription_period_count = $subscriptionPeriodCount;
+        $obj['subscription_period_count'] = $subscriptionPeriodCount;
 
         return $obj;
     }
@@ -299,12 +306,19 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * @param list<AddMeterToPrice>|null $meters
+     * @param list<AddMeterToPrice|array{
+     *   meter_id: string,
+     *   price_per_unit: string,
+     *   description?: string|null,
+     *   free_threshold?: int|null,
+     *   measurement_unit?: string|null,
+     *   name?: string|null,
+     * }>|null $meters
      */
     public function withMeters(?array $meters): self
     {
         $obj = clone $this;
-        $obj->meters = $meters;
+        $obj['meters'] = $meters;
 
         return $obj;
     }
@@ -315,7 +329,7 @@ final class UsageBasedPrice implements BaseModel
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->tax_inclusive = $taxInclusive;
+        $obj['tax_inclusive'] = $taxInclusive;
 
         return $obj;
     }

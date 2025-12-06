@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -18,17 +19,31 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @see Dodopayments\Services\SubscriptionsService::create()
  *
  * @phpstan-type SubscriptionCreateParamsShape = array{
- *   billing: BillingAddress,
- *   customer: AttachExistingCustomer|NewCustomer,
+ *   billing: BillingAddress|array{
+ *     city: string,
+ *     country: value-of<CountryCode>,
+ *     state: string,
+ *     street: string,
+ *     zipcode: string,
+ *   },
+ *   customer: AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+ *     email: string, name?: string|null, phone_number?: string|null
+ *   },
  *   product_id: string,
  *   quantity: int,
- *   addons?: list<AttachAddon>|null,
+ *   addons?: list<AttachAddon|array{addon_id: string, quantity: int}>|null,
  *   allowed_payment_method_types?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billing_currency?: null|Currency|value-of<Currency>,
  *   discount_code?: string|null,
  *   force_3ds?: bool|null,
  *   metadata?: array<string,string>,
- *   on_demand?: OnDemandSubscription|null,
+ *   on_demand?: null|OnDemandSubscription|array{
+ *     mandate_only: bool,
+ *     adaptive_currency_fees_inclusive?: bool|null,
+ *     product_currency?: value-of<Currency>|null,
+ *     product_description?: string|null,
+ *     product_price?: int|null,
+ *   },
  *   payment_link?: bool|null,
  *   return_url?: string|null,
  *   show_saved_payment_methods?: bool,
@@ -183,14 +198,31 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AttachAddon>|null $addons
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
+     * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+     *   email: string, name?: string|null, phone_number?: string|null
+     * } $customer
+     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      * @param Currency|value-of<Currency>|null $billing_currency
      * @param array<string,string> $metadata
+     * @param OnDemandSubscription|array{
+     *   mandate_only: bool,
+     *   adaptive_currency_fees_inclusive?: bool|null,
+     *   product_currency?: value-of<Currency>|null,
+     *   product_description?: string|null,
+     *   product_price?: int|null,
+     * }|null $on_demand
      */
     public static function with(
-        BillingAddress $billing,
-        AttachExistingCustomer|NewCustomer $customer,
+        BillingAddress|array $billing,
+        AttachExistingCustomer|array|NewCustomer $customer,
         string $product_id,
         int $quantity,
         ?array $addons = null,
@@ -199,7 +231,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?string $discount_code = null,
         ?bool $force_3ds = null,
         ?array $metadata = null,
-        ?OnDemandSubscription $on_demand = null,
+        OnDemandSubscription|array|null $on_demand = null,
         ?bool $payment_link = null,
         ?string $return_url = null,
         ?bool $show_saved_payment_methods = null,
@@ -208,46 +240,58 @@ final class SubscriptionCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->billing = $billing;
-        $obj->customer = $customer;
-        $obj->product_id = $product_id;
-        $obj->quantity = $quantity;
+        $obj['billing'] = $billing;
+        $obj['customer'] = $customer;
+        $obj['product_id'] = $product_id;
+        $obj['quantity'] = $quantity;
 
-        null !== $addons && $obj->addons = $addons;
+        null !== $addons && $obj['addons'] = $addons;
         null !== $allowed_payment_method_types && $obj['allowed_payment_method_types'] = $allowed_payment_method_types;
         null !== $billing_currency && $obj['billing_currency'] = $billing_currency;
-        null !== $discount_code && $obj->discount_code = $discount_code;
-        null !== $force_3ds && $obj->force_3ds = $force_3ds;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $on_demand && $obj->on_demand = $on_demand;
-        null !== $payment_link && $obj->payment_link = $payment_link;
-        null !== $return_url && $obj->return_url = $return_url;
-        null !== $show_saved_payment_methods && $obj->show_saved_payment_methods = $show_saved_payment_methods;
-        null !== $tax_id && $obj->tax_id = $tax_id;
-        null !== $trial_period_days && $obj->trial_period_days = $trial_period_days;
+        null !== $discount_code && $obj['discount_code'] = $discount_code;
+        null !== $force_3ds && $obj['force_3ds'] = $force_3ds;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $on_demand && $obj['on_demand'] = $on_demand;
+        null !== $payment_link && $obj['payment_link'] = $payment_link;
+        null !== $return_url && $obj['return_url'] = $return_url;
+        null !== $show_saved_payment_methods && $obj['show_saved_payment_methods'] = $show_saved_payment_methods;
+        null !== $tax_id && $obj['tax_id'] = $tax_id;
+        null !== $trial_period_days && $obj['trial_period_days'] = $trial_period_days;
 
         return $obj;
     }
 
     /**
      * Billing address information for the subscription.
+     *
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
      */
-    public function withBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress|array $billing): self
     {
         $obj = clone $this;
-        $obj->billing = $billing;
+        $obj['billing'] = $billing;
 
         return $obj;
     }
 
     /**
      * Customer details for the subscription.
+     *
+     * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+     *   email: string, name?: string|null, phone_number?: string|null
+     * } $customer
      */
     public function withCustomer(
-        AttachExistingCustomer|NewCustomer $customer
+        AttachExistingCustomer|array|NewCustomer $customer
     ): self {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -258,7 +302,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }
@@ -269,7 +313,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withQuantity(int $quantity): self
     {
         $obj = clone $this;
-        $obj->quantity = $quantity;
+        $obj['quantity'] = $quantity;
 
         return $obj;
     }
@@ -277,12 +321,12 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Attach addons to this subscription.
      *
-     * @param list<AttachAddon>|null $addons
+     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
      */
     public function withAddons(?array $addons): self
     {
         $obj = clone $this;
-        $obj->addons = $addons;
+        $obj['addons'] = $addons;
 
         return $obj;
     }
@@ -326,7 +370,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withDiscountCode(?string $discountCode): self
     {
         $obj = clone $this;
-        $obj->discount_code = $discountCode;
+        $obj['discount_code'] = $discountCode;
 
         return $obj;
     }
@@ -337,7 +381,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withForce3DS(?bool $force3DS): self
     {
         $obj = clone $this;
-        $obj->force_3ds = $force3DS;
+        $obj['force_3ds'] = $force3DS;
 
         return $obj;
     }
@@ -351,15 +395,25 @@ final class SubscriptionCreateParams implements BaseModel
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
 
-    public function withOnDemand(?OnDemandSubscription $onDemand): self
-    {
+    /**
+     * @param OnDemandSubscription|array{
+     *   mandate_only: bool,
+     *   adaptive_currency_fees_inclusive?: bool|null,
+     *   product_currency?: value-of<Currency>|null,
+     *   product_description?: string|null,
+     *   product_price?: int|null,
+     * }|null $onDemand
+     */
+    public function withOnDemand(
+        OnDemandSubscription|array|null $onDemand
+    ): self {
         $obj = clone $this;
-        $obj->on_demand = $onDemand;
+        $obj['on_demand'] = $onDemand;
 
         return $obj;
     }
@@ -371,7 +425,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withPaymentLink(?bool $paymentLink): self
     {
         $obj = clone $this;
-        $obj->payment_link = $paymentLink;
+        $obj['payment_link'] = $paymentLink;
 
         return $obj;
     }
@@ -382,7 +436,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj->return_url = $returnURL;
+        $obj['return_url'] = $returnURL;
 
         return $obj;
     }
@@ -395,7 +449,7 @@ final class SubscriptionCreateParams implements BaseModel
         bool $showSavedPaymentMethods
     ): self {
         $obj = clone $this;
-        $obj->show_saved_payment_methods = $showSavedPaymentMethods;
+        $obj['show_saved_payment_methods'] = $showSavedPaymentMethods;
 
         return $obj;
     }
@@ -406,7 +460,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withTaxID(?string $taxID): self
     {
         $obj = clone $this;
-        $obj->tax_id = $taxID;
+        $obj['tax_id'] = $taxID;
 
         return $obj;
     }
@@ -419,7 +473,7 @@ final class SubscriptionCreateParams implements BaseModel
     public function withTrialPeriodDays(?int $trialPeriodDays): self
     {
         $obj = clone $this;
-        $obj->trial_period_days = $trialPeriodDays;
+        $obj['trial_period_days'] = $trialPeriodDays;
 
         return $obj;
     }
