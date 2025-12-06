@@ -10,6 +10,9 @@ use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item;
+use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card;
+use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\PaymentMethod;
+use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
  * @phpstan-type CustomerGetPaymentMethodsResponseShape = array{items: list<Item>}
@@ -49,24 +52,38 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel, ResponseConv
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Item> $items
+     * @param list<Item|array{
+     *   payment_method: value-of<PaymentMethod>,
+     *   payment_method_id: string,
+     *   card?: Card|null,
+     *   last_used_at?: \DateTimeInterface|null,
+     *   payment_method_type?: value-of<PaymentMethodTypes>|null,
+     *   recurring_enabled?: bool|null,
+     * }> $items
      */
     public static function with(array $items): self
     {
         $obj = new self;
 
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }
 
     /**
-     * @param list<Item> $items
+     * @param list<Item|array{
+     *   payment_method: value-of<PaymentMethod>,
+     *   payment_method_id: string,
+     *   card?: Card|null,
+     *   last_used_at?: \DateTimeInterface|null,
+     *   payment_method_type?: value-of<PaymentMethodTypes>|null,
+     *   recurring_enabled?: bool|null,
+     * }> $items
      */
     public function withItems(array $items): self
     {
         $obj = clone $this;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }

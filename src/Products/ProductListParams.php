@@ -78,11 +78,11 @@ final class ProductListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $archived && $obj->archived = $archived;
-        null !== $brand_id && $obj->brand_id = $brand_id;
-        null !== $page_number && $obj->page_number = $page_number;
-        null !== $page_size && $obj->page_size = $page_size;
-        null !== $recurring && $obj->recurring = $recurring;
+        null !== $archived && $obj['archived'] = $archived;
+        null !== $brand_id && $obj['brand_id'] = $brand_id;
+        null !== $page_number && $obj['page_number'] = $page_number;
+        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $recurring && $obj['recurring'] = $recurring;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class ProductListParams implements BaseModel
     public function withArchived(bool $archived): self
     {
         $obj = clone $this;
-        $obj->archived = $archived;
+        $obj['archived'] = $archived;
 
         return $obj;
     }
@@ -104,7 +104,7 @@ final class ProductListParams implements BaseModel
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brand_id = $brandID;
+        $obj['brand_id'] = $brandID;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class ProductListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->page_number = $pageNumber;
+        $obj['page_number'] = $pageNumber;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class ProductListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }
@@ -140,7 +140,7 @@ final class ProductListParams implements BaseModel
     public function withRecurring(bool $recurring): self
     {
         $obj = clone $this;
-        $obj->recurring = $recurring;
+        $obj['recurring'] = $recurring;
 
         return $obj;
     }

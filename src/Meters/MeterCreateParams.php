@@ -8,17 +8,24 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Meters\MeterAggregation\Type;
+use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
+use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
+use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
  * @see Dodopayments\Services\MetersService::create()
  *
  * @phpstan-type MeterCreateParamsShape = array{
- *   aggregation: MeterAggregation,
+ *   aggregation: MeterAggregation|array{type: value-of<Type>, key?: string|null},
  *   event_name: string,
  *   measurement_unit: string,
  *   name: string,
  *   description?: string|null,
- *   filter?: MeterFilter|null,
+ *   filter?: null|MeterFilter|array{
+ *     clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
+ *     conjunction: value-of<Conjunction>,
+ *   },
  * }
  */
 final class MeterCreateParams implements BaseModel
@@ -92,35 +99,47 @@ final class MeterCreateParams implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param MeterAggregation|array{
+     *   type: value-of<Type>, key?: string|null
+     * } $aggregation
+     * @param MeterFilter|array{
+     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
+     *   conjunction: value-of<Conjunction>,
+     * }|null $filter
      */
     public static function with(
-        MeterAggregation $aggregation,
+        MeterAggregation|array $aggregation,
         string $event_name,
         string $measurement_unit,
         string $name,
         ?string $description = null,
-        ?MeterFilter $filter = null,
+        MeterFilter|array|null $filter = null,
     ): self {
         $obj = new self;
 
-        $obj->aggregation = $aggregation;
-        $obj->event_name = $event_name;
-        $obj->measurement_unit = $measurement_unit;
-        $obj->name = $name;
+        $obj['aggregation'] = $aggregation;
+        $obj['event_name'] = $event_name;
+        $obj['measurement_unit'] = $measurement_unit;
+        $obj['name'] = $name;
 
-        null !== $description && $obj->description = $description;
-        null !== $filter && $obj->filter = $filter;
+        null !== $description && $obj['description'] = $description;
+        null !== $filter && $obj['filter'] = $filter;
 
         return $obj;
     }
 
     /**
      * Aggregation configuration for the meter.
+     *
+     * @param MeterAggregation|array{
+     *   type: value-of<Type>, key?: string|null
+     * } $aggregation
      */
-    public function withAggregation(MeterAggregation $aggregation): self
+    public function withAggregation(MeterAggregation|array $aggregation): self
     {
         $obj = clone $this;
-        $obj->aggregation = $aggregation;
+        $obj['aggregation'] = $aggregation;
 
         return $obj;
     }
@@ -131,7 +150,7 @@ final class MeterCreateParams implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->event_name = $eventName;
+        $obj['event_name'] = $eventName;
 
         return $obj;
     }
@@ -142,7 +161,7 @@ final class MeterCreateParams implements BaseModel
     public function withMeasurementUnit(string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj->measurement_unit = $measurementUnit;
+        $obj['measurement_unit'] = $measurementUnit;
 
         return $obj;
     }
@@ -153,7 +172,7 @@ final class MeterCreateParams implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -164,18 +183,23 @@ final class MeterCreateParams implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
 
     /**
      * Optional filter to apply to the meter.
+     *
+     * @param MeterFilter|array{
+     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
+     *   conjunction: value-of<Conjunction>,
+     * }|null $filter
      */
-    public function withFilter(?MeterFilter $filter): self
+    public function withFilter(MeterFilter|array|null $filter): self
     {
         $obj = clone $this;
-        $obj->filter = $filter;
+        $obj['filter'] = $filter;
 
         return $obj;
     }

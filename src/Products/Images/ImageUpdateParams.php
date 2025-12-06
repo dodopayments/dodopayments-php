@@ -37,7 +37,7 @@ final class ImageUpdateParams implements BaseModel
     {
         $obj = new self;
 
-        null !== $force_update && $obj->force_update = $force_update;
+        null !== $force_update && $obj['force_update'] = $force_update;
 
         return $obj;
     }
@@ -45,7 +45,7 @@ final class ImageUpdateParams implements BaseModel
     public function withForceUpdate(bool $forceUpdate): self
     {
         $obj = clone $this;
-        $obj->force_update = $forceUpdate;
+        $obj['force_update'] = $forceUpdate;
 
         return $obj;
     }

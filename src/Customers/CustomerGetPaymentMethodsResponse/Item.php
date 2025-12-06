@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\PaymentMethod;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
@@ -77,12 +78,20 @@ final class Item implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param PaymentMethod|value-of<PaymentMethod> $payment_method
+     * @param Card|array{
+     *   card_issuing_country?: value-of<CountryCode>|null,
+     *   card_network?: string|null,
+     *   card_type?: string|null,
+     *   expiry_month?: string|null,
+     *   expiry_year?: string|null,
+     *   last4_digits?: string|null,
+     * }|null $card
      * @param PaymentMethodTypes|value-of<PaymentMethodTypes>|null $payment_method_type
      */
     public static function with(
         PaymentMethod|string $payment_method,
         string $payment_method_id,
-        ?Card $card = null,
+        Card|array|null $card = null,
         ?\DateTimeInterface $last_used_at = null,
         PaymentMethodTypes|string|null $payment_method_type = null,
         ?bool $recurring_enabled = null,
@@ -90,12 +99,12 @@ final class Item implements BaseModel
         $obj = new self;
 
         $obj['payment_method'] = $payment_method;
-        $obj->payment_method_id = $payment_method_id;
+        $obj['payment_method_id'] = $payment_method_id;
 
-        null !== $card && $obj->card = $card;
-        null !== $last_used_at && $obj->last_used_at = $last_used_at;
+        null !== $card && $obj['card'] = $card;
+        null !== $last_used_at && $obj['last_used_at'] = $last_used_at;
         null !== $payment_method_type && $obj['payment_method_type'] = $payment_method_type;
-        null !== $recurring_enabled && $obj->recurring_enabled = $recurring_enabled;
+        null !== $recurring_enabled && $obj['recurring_enabled'] = $recurring_enabled;
 
         return $obj;
     }
@@ -118,15 +127,25 @@ final class Item implements BaseModel
     public function withPaymentMethodID(string $paymentMethodID): self
     {
         $obj = clone $this;
-        $obj->payment_method_id = $paymentMethodID;
+        $obj['payment_method_id'] = $paymentMethodID;
 
         return $obj;
     }
 
-    public function withCard(?Card $card): self
+    /**
+     * @param Card|array{
+     *   card_issuing_country?: value-of<CountryCode>|null,
+     *   card_network?: string|null,
+     *   card_type?: string|null,
+     *   expiry_month?: string|null,
+     *   expiry_year?: string|null,
+     *   last4_digits?: string|null,
+     * }|null $card
+     */
+    public function withCard(Card|array|null $card): self
     {
         $obj = clone $this;
-        $obj->card = $card;
+        $obj['card'] = $card;
 
         return $obj;
     }
@@ -134,7 +153,7 @@ final class Item implements BaseModel
     public function withLastUsedAt(?\DateTimeInterface $lastUsedAt): self
     {
         $obj = clone $this;
-        $obj->last_used_at = $lastUsedAt;
+        $obj['last_used_at'] = $lastUsedAt;
 
         return $obj;
     }
@@ -154,7 +173,7 @@ final class Item implements BaseModel
     public function withRecurringEnabled(?bool $recurringEnabled): self
     {
         $obj = clone $this;
-        $obj->recurring_enabled = $recurringEnabled;
+        $obj['recurring_enabled'] = $recurringEnabled;
 
         return $obj;
     }

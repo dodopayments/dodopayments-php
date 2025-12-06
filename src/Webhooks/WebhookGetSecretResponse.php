@@ -51,7 +51,7 @@ final class WebhookGetSecretResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->secret = $secret;
+        $obj['secret'] = $secret;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class WebhookGetSecretResponse implements BaseModel, ResponseConverter
     public function withSecret(string $secret): self
     {
         $obj = clone $this;
-        $obj->secret = $secret;
+        $obj['secret'] = $secret;
 
         return $obj;
     }

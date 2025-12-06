@@ -65,7 +65,7 @@ final class MeterAggregation implements BaseModel
 
         $obj['type'] = $type;
 
-        null !== $key && $obj->key = $key;
+        null !== $key && $obj['key'] = $key;
 
         return $obj;
     }
@@ -89,7 +89,7 @@ final class MeterAggregation implements BaseModel
     public function withKey(?string $key): self
     {
         $obj = clone $this;
-        $obj->key = $key;
+        $obj['key'] = $key;
 
         return $obj;
     }

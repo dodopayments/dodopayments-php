@@ -40,7 +40,7 @@ final class CustomerPortalCreateParams implements BaseModel
     {
         $obj = new self;
 
-        null !== $send_email && $obj->send_email = $send_email;
+        null !== $send_email && $obj['send_email'] = $send_email;
 
         return $obj;
     }
@@ -51,7 +51,7 @@ final class CustomerPortalCreateParams implements BaseModel
     public function withSendEmail(bool $sendEmail): self
     {
         $obj = clone $this;
-        $obj->send_email = $sendEmail;
+        $obj['send_email'] = $sendEmail;
 
         return $obj;
     }

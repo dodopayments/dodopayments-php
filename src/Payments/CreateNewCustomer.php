@@ -70,11 +70,11 @@ final class CreateNewCustomer implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->email = $email;
-        $obj->name = $name;
+        $obj['email'] = $email;
+        $obj['name'] = $name;
 
-        null !== $create_new_customer && $obj->create_new_customer = $create_new_customer;
-        null !== $phone_number && $obj->phone_number = $phone_number;
+        null !== $create_new_customer && $obj['create_new_customer'] = $create_new_customer;
+        null !== $phone_number && $obj['phone_number'] = $phone_number;
 
         return $obj;
     }
@@ -82,7 +82,7 @@ final class CreateNewCustomer implements BaseModel
     public function withEmail(string $email): self
     {
         $obj = clone $this;
-        $obj->email = $email;
+        $obj['email'] = $email;
 
         return $obj;
     }
@@ -90,7 +90,7 @@ final class CreateNewCustomer implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class CreateNewCustomer implements BaseModel
     public function withCreateNewCustomer(bool $createNewCustomer): self
     {
         $obj = clone $this;
-        $obj->create_new_customer = $createNewCustomer;
+        $obj['create_new_customer'] = $createNewCustomer;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class CreateNewCustomer implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phone_number = $phoneNumber;
+        $obj['phone_number'] = $phoneNumber;
 
         return $obj;
     }

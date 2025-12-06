@@ -57,9 +57,9 @@ final class CustomerListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $email && $obj->email = $email;
-        null !== $page_number && $obj->page_number = $page_number;
-        null !== $page_size && $obj->page_size = $page_size;
+        null !== $email && $obj['email'] = $email;
+        null !== $page_number && $obj['page_number'] = $page_number;
+        null !== $page_size && $obj['page_size'] = $page_size;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class CustomerListParams implements BaseModel
     public function withEmail(string $email): self
     {
         $obj = clone $this;
-        $obj->email = $email;
+        $obj['email'] = $email;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class CustomerListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->page_number = $pageNumber;
+        $obj['page_number'] = $pageNumber;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class CustomerListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }

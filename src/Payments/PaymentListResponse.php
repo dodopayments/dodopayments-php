@@ -115,6 +115,13 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      * @param array<string,string> $metadata
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
@@ -122,7 +129,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
         string $brand_id,
         \DateTimeInterface $created_at,
         Currency|string $currency,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         bool $digital_products_delivered,
         array $metadata,
         string $payment_id,
@@ -134,19 +141,19 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->brand_id = $brand_id;
-        $obj->created_at = $created_at;
+        $obj['brand_id'] = $brand_id;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->customer = $customer;
-        $obj->digital_products_delivered = $digital_products_delivered;
-        $obj->metadata = $metadata;
-        $obj->payment_id = $payment_id;
-        $obj->total_amount = $total_amount;
+        $obj['customer'] = $customer;
+        $obj['digital_products_delivered'] = $digital_products_delivered;
+        $obj['metadata'] = $metadata;
+        $obj['payment_id'] = $payment_id;
+        $obj['total_amount'] = $total_amount;
 
-        null !== $payment_method && $obj->payment_method = $payment_method;
-        null !== $payment_method_type && $obj->payment_method_type = $payment_method_type;
+        null !== $payment_method && $obj['payment_method'] = $payment_method;
+        null !== $payment_method_type && $obj['payment_method_type'] = $payment_method_type;
         null !== $status && $obj['status'] = $status;
-        null !== $subscription_id && $obj->subscription_id = $subscription_id;
+        null !== $subscription_id && $obj['subscription_id'] = $subscription_id;
 
         return $obj;
     }
@@ -154,7 +161,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brand_id = $brandID;
+        $obj['brand_id'] = $brandID;
 
         return $obj;
     }
@@ -162,7 +169,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -178,10 +185,19 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
         return $obj;
     }
 
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    /**
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
+     */
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -190,7 +206,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
         bool $digitalProductsDelivered
     ): self {
         $obj = clone $this;
-        $obj->digital_products_delivered = $digitalProductsDelivered;
+        $obj['digital_products_delivered'] = $digitalProductsDelivered;
 
         return $obj;
     }
@@ -201,7 +217,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -209,7 +225,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -217,7 +233,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj->total_amount = $totalAmount;
+        $obj['total_amount'] = $totalAmount;
 
         return $obj;
     }
@@ -225,7 +241,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withPaymentMethod(?string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj->payment_method = $paymentMethod;
+        $obj['payment_method'] = $paymentMethod;
 
         return $obj;
     }
@@ -233,7 +249,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withPaymentMethodType(?string $paymentMethodType): self
     {
         $obj = clone $this;
-        $obj->payment_method_type = $paymentMethodType;
+        $obj['payment_method_type'] = $paymentMethodType;
 
         return $obj;
     }
@@ -252,7 +268,7 @@ final class PaymentListResponse implements BaseModel, ResponseConverter
     public function withSubscriptionID(?string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscription_id = $subscriptionID;
+        $obj['subscription_id'] = $subscriptionID;
 
         return $obj;
     }

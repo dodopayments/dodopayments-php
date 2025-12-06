@@ -21,7 +21,7 @@ final class MiscService implements MiscContract
     /**
      * @api
      *
-     * @return list<CountryCode|value-of<CountryCode>>
+     * @return list<value-of<CountryCode>>
      *
      * @throws APIException
      */

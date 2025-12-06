@@ -56,8 +56,8 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->image_id = $image_id;
-        $obj->url = $url;
+        $obj['image_id'] = $image_id;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
     public function withImageID(string $imageID): self
     {
         $obj = clone $this;
-        $obj->image_id = $imageID;
+        $obj['image_id'] = $imageID;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class AddonUpdateImagesResponse implements BaseModel, ResponseConverter
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

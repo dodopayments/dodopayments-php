@@ -44,7 +44,15 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Services\UsageEventsService::ingest()
  *
- * @phpstan-type UsageEventIngestParamsShape = array{events: list<EventInput>}
+ * @phpstan-type UsageEventIngestParamsShape = array{
+ *   events: list<EventInput|array{
+ *     customer_id: string,
+ *     event_id: string,
+ *     event_name: string,
+ *     metadata?: array<string,string|float|bool>|null,
+ *     timestamp?: \DateTimeInterface|null,
+ *   }>,
+ * }
  */
 final class UsageEventIngestParams implements BaseModel
 {
@@ -84,13 +92,19 @@ final class UsageEventIngestParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<EventInput> $events
+     * @param list<EventInput|array{
+     *   customer_id: string,
+     *   event_id: string,
+     *   event_name: string,
+     *   metadata?: array<string,string|float|bool>|null,
+     *   timestamp?: \DateTimeInterface|null,
+     * }> $events
      */
     public static function with(array $events): self
     {
         $obj = new self;
 
-        $obj->events = $events;
+        $obj['events'] = $events;
 
         return $obj;
     }
@@ -98,12 +112,18 @@ final class UsageEventIngestParams implements BaseModel
     /**
      * List of events to be pushed.
      *
-     * @param list<EventInput> $events
+     * @param list<EventInput|array{
+     *   customer_id: string,
+     *   event_id: string,
+     *   event_name: string,
+     *   metadata?: array<string,string|float|bool>|null,
+     *   timestamp?: \DateTimeInterface|null,
+     * }> $events
      */
     public function withEvents(array $events): self
     {
         $obj = clone $this;
-        $obj->events = $events;
+        $obj['events'] = $events;
 
         return $obj;
     }

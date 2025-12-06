@@ -98,13 +98,13 @@ final class Event implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->business_id = $business_id;
-        $obj->customer_id = $customer_id;
-        $obj->event_id = $event_id;
-        $obj->event_name = $event_name;
-        $obj->timestamp = $timestamp;
+        $obj['business_id'] = $business_id;
+        $obj['customer_id'] = $customer_id;
+        $obj['event_id'] = $event_id;
+        $obj['event_name'] = $event_name;
+        $obj['timestamp'] = $timestamp;
 
-        null !== $metadata && $obj->metadata = $metadata;
+        null !== $metadata && $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -120,7 +120,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -128,7 +128,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withEventID(string $eventID): self
     {
         $obj = clone $this;
-        $obj->event_id = $eventID;
+        $obj['event_id'] = $eventID;
 
         return $obj;
     }
@@ -136,7 +136,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->event_name = $eventName;
+        $obj['event_name'] = $eventName;
 
         return $obj;
     }
@@ -144,7 +144,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withTimestamp(\DateTimeInterface $timestamp): self
     {
         $obj = clone $this;
-        $obj->timestamp = $timestamp;
+        $obj['timestamp'] = $timestamp;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class Event implements BaseModel, ResponseConverter
     public function withMetadata(?array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }

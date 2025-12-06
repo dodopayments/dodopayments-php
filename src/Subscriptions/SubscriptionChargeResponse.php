@@ -51,7 +51,7 @@ final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->payment_id = $payment_id;
+        $obj['payment_id'] = $payment_id;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
