@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Clause;
+use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Clause\Operator;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Conjunction;
 
 /**
@@ -58,7 +59,9 @@ final class Level2NestedFilter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Clause> $clauses
+     * @param list<Clause|array{
+     *   key: string, operator: value-of<Operator>, value: string|float|bool
+     * }> $clauses
      * @param Conjunction|value-of<Conjunction> $conjunction
      */
     public static function with(
@@ -67,7 +70,7 @@ final class Level2NestedFilter implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->clauses = $clauses;
+        $obj['clauses'] = $clauses;
         $obj['conjunction'] = $conjunction;
 
         return $obj;
@@ -76,12 +79,14 @@ final class Level2NestedFilter implements BaseModel
     /**
      * Level 3: Filter conditions only (max depth reached).
      *
-     * @param list<Clause> $clauses
+     * @param list<Clause|array{
+     *   key: string, operator: value-of<Operator>, value: string|float|bool
+     * }> $clauses
      */
     public function withClauses(array $clauses): self
     {
         $obj = clone $this;
-        $obj->clauses = $clauses;
+        $obj['clauses'] = $clauses;
 
         return $obj;
     }

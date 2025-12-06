@@ -28,7 +28,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
      * @param array{
      *   amount: int,
      *   currency: value-of<Currency>,
-     *   entry_type: "credit"|"debit",
+     *   entry_type: 'credit'|'debit',
      *   idempotency_key?: string|null,
      *   reason?: string|null,
      * }|LedgerEntryCreateParams $params
@@ -45,7 +45,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['customers/%1$s/wallets/ledger-entries', $customerID],
@@ -76,7 +76,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['customers/%1$s/wallets/ledger-entries', $customerID],

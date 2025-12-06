@@ -57,9 +57,9 @@ final class CustomerUpdateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $name && $obj->name = $name;
-        null !== $phone_number && $obj->phone_number = $phone_number;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $name && $obj['name'] = $name;
+        null !== $phone_number && $obj['phone_number'] = $phone_number;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class CustomerUpdateParams implements BaseModel
     public function withMetadata(?array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -80,7 +80,7 @@ final class CustomerUpdateParams implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class CustomerUpdateParams implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phone_number = $phoneNumber;
+        $obj['phone_number'] = $phoneNumber;
 
         return $obj;
     }

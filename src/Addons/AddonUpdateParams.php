@@ -93,10 +93,10 @@ final class AddonUpdateParams implements BaseModel
         $obj = new self;
 
         null !== $currency && $obj['currency'] = $currency;
-        null !== $description && $obj->description = $description;
-        null !== $image_id && $obj->image_id = $image_id;
-        null !== $name && $obj->name = $name;
-        null !== $price && $obj->price = $price;
+        null !== $description && $obj['description'] = $description;
+        null !== $image_id && $obj['image_id'] = $image_id;
+        null !== $name && $obj['name'] = $name;
+        null !== $price && $obj['price'] = $price;
         null !== $tax_category && $obj['tax_category'] = $tax_category;
 
         return $obj;
@@ -121,7 +121,7 @@ final class AddonUpdateParams implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class AddonUpdateParams implements BaseModel
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->image_id = $imageID;
+        $obj['image_id'] = $imageID;
 
         return $obj;
     }
@@ -143,7 +143,7 @@ final class AddonUpdateParams implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -154,7 +154,7 @@ final class AddonUpdateParams implements BaseModel
     public function withPrice(?int $price): self
     {
         $obj = clone $this;
-        $obj->price = $price;
+        $obj['price'] = $price;
 
         return $obj;
     }

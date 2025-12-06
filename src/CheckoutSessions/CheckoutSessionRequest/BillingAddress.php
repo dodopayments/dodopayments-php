@@ -94,10 +94,10 @@ final class BillingAddress implements BaseModel
 
         $obj['country'] = $country;
 
-        null !== $city && $obj->city = $city;
-        null !== $state && $obj->state = $state;
-        null !== $street && $obj->street = $street;
-        null !== $zipcode && $obj->zipcode = $zipcode;
+        null !== $city && $obj['city'] = $city;
+        null !== $state && $obj['state'] = $state;
+        null !== $street && $obj['street'] = $street;
+        null !== $zipcode && $obj['zipcode'] = $zipcode;
 
         return $obj;
     }
@@ -121,7 +121,7 @@ final class BillingAddress implements BaseModel
     public function withCity(?string $city): self
     {
         $obj = clone $this;
-        $obj->city = $city;
+        $obj['city'] = $city;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class BillingAddress implements BaseModel
     public function withState(?string $state): self
     {
         $obj = clone $this;
-        $obj->state = $state;
+        $obj['state'] = $state;
 
         return $obj;
     }
@@ -143,7 +143,7 @@ final class BillingAddress implements BaseModel
     public function withStreet(?string $street): self
     {
         $obj = clone $this;
-        $obj->street = $street;
+        $obj['street'] = $street;
 
         return $obj;
     }
@@ -154,7 +154,7 @@ final class BillingAddress implements BaseModel
     public function withZipcode(?string $zipcode): self
     {
         $obj = clone $this;
-        $obj->zipcode = $zipcode;
+        $obj['zipcode'] = $zipcode;
 
         return $obj;
     }

@@ -51,7 +51,7 @@ final class LicenseValidateResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->valid = $valid;
+        $obj['valid'] = $valid;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class LicenseValidateResponse implements BaseModel, ResponseConverter
     public function withValid(bool $valid): self
     {
         $obj = clone $this;
-        $obj->valid = $valid;
+        $obj['valid'] = $valid;
 
         return $obj;
     }

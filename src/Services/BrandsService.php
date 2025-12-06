@@ -43,7 +43,7 @@ final class BrandsService implements BrandsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'brands',
@@ -64,7 +64,7 @@ final class BrandsService implements BrandsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Brand {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['brands/%1$s', $id],
@@ -95,7 +95,7 @@ final class BrandsService implements BrandsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['brands/%1$s', $id],
@@ -113,7 +113,7 @@ final class BrandsService implements BrandsContract
     public function list(
         ?RequestOptions $requestOptions = null
     ): BrandListResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'brands',
@@ -131,7 +131,7 @@ final class BrandsService implements BrandsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): BrandUpdateImagesResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'put',
             path: ['brands/%1$s/images', $id],

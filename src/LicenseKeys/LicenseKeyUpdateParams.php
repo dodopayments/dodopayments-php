@@ -62,9 +62,9 @@ final class LicenseKeyUpdateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $activations_limit && $obj->activations_limit = $activations_limit;
-        null !== $disabled && $obj->disabled = $disabled;
-        null !== $expires_at && $obj->expires_at = $expires_at;
+        null !== $activations_limit && $obj['activations_limit'] = $activations_limit;
+        null !== $disabled && $obj['disabled'] = $disabled;
+        null !== $expires_at && $obj['expires_at'] = $expires_at;
 
         return $obj;
     }
@@ -76,7 +76,7 @@ final class LicenseKeyUpdateParams implements BaseModel
     public function withActivationsLimit(?int $activationsLimit): self
     {
         $obj = clone $this;
-        $obj->activations_limit = $activationsLimit;
+        $obj['activations_limit'] = $activationsLimit;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class LicenseKeyUpdateParams implements BaseModel
     public function withDisabled(?bool $disabled): self
     {
         $obj = clone $this;
-        $obj->disabled = $disabled;
+        $obj['disabled'] = $disabled;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class LicenseKeyUpdateParams implements BaseModel
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expires_at = $expiresAt;
+        $obj['expires_at'] = $expiresAt;
 
         return $obj;
     }

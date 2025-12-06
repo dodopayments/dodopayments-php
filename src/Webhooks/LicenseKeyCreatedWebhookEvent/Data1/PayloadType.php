@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data;
+namespace Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data1;
 
 /**
  * The type of payload in the data field.
  */
 enum PayloadType: string
 {
-    case PAYMENT = 'Payment';
+    case LICENSE_KEY = 'LicenseKey';
 }

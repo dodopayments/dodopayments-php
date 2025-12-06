@@ -35,7 +35,7 @@ final class CustomerPortalService implements CustomerPortalContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['customers/%1$s/customer-portal/session', $customerID],

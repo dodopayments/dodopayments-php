@@ -9,12 +9,12 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeStage;
 use Dodopayments\Disputes\DisputeStatus;
-use Dodopayments\Webhooks\DisputeExpiredWebhookEvent\Data\PayloadType;
+use Dodopayments\Webhooks\DisputeExpiredWebhookEvent\Data1\PayloadType;
 
 /**
  * Event-specific data.
  *
- * @phpstan-type DataShape = array{
+ * @phpstan-type Data1Shape = array{
  *   amount: string,
  *   business_id: string,
  *   created_at: \DateTimeInterface,
@@ -27,9 +27,9 @@ use Dodopayments\Webhooks\DisputeExpiredWebhookEvent\Data\PayloadType;
  *   payload_type?: value-of<PayloadType>|null,
  * }
  */
-final class Data implements BaseModel
+final class Data1 implements BaseModel
 {
-    /** @use SdkModel<DataShape> */
+    /** @use SdkModel<Data1Shape> */
     use SdkModel;
 
     /**
@@ -91,11 +91,11 @@ final class Data implements BaseModel
     public ?string $payload_type;
 
     /**
-     * `new Data()` is missing required properties by the API.
+     * `new Data1()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Data::with(
+     * Data1::with(
      *   amount: ...,
      *   business_id: ...,
      *   created_at: ...,
@@ -110,7 +110,7 @@ final class Data implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Data)
+     * (new Data1)
      *   ->withAmount(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
@@ -149,16 +149,16 @@ final class Data implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->amount = $amount;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->currency = $currency;
-        $obj->dispute_id = $dispute_id;
+        $obj['amount'] = $amount;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['currency'] = $currency;
+        $obj['dispute_id'] = $dispute_id;
         $obj['dispute_stage'] = $dispute_stage;
         $obj['dispute_status'] = $dispute_status;
-        $obj->payment_id = $payment_id;
+        $obj['payment_id'] = $payment_id;
 
-        null !== $remarks && $obj->remarks = $remarks;
+        null !== $remarks && $obj['remarks'] = $remarks;
         null !== $payload_type && $obj['payload_type'] = $payload_type;
 
         return $obj;
@@ -170,7 +170,7 @@ final class Data implements BaseModel
     public function withAmount(string $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class Data implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -192,7 +192,7 @@ final class Data implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -203,7 +203,7 @@ final class Data implements BaseModel
     public function withCurrency(string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -214,7 +214,7 @@ final class Data implements BaseModel
     public function withDisputeID(string $disputeID): self
     {
         $obj = clone $this;
-        $obj->dispute_id = $disputeID;
+        $obj['dispute_id'] = $disputeID;
 
         return $obj;
     }
@@ -247,7 +247,7 @@ final class Data implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -258,7 +258,7 @@ final class Data implements BaseModel
     public function withRemarks(?string $remarks): self
     {
         $obj = clone $this;
-        $obj->remarks = $remarks;
+        $obj['remarks'] = $remarks;
 
         return $obj;
     }

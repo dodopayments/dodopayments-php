@@ -95,12 +95,12 @@ final class OnDemandSubscription implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->mandate_only = $mandate_only;
+        $obj['mandate_only'] = $mandate_only;
 
-        null !== $adaptive_currency_fees_inclusive && $obj->adaptive_currency_fees_inclusive = $adaptive_currency_fees_inclusive;
+        null !== $adaptive_currency_fees_inclusive && $obj['adaptive_currency_fees_inclusive'] = $adaptive_currency_fees_inclusive;
         null !== $product_currency && $obj['product_currency'] = $product_currency;
-        null !== $product_description && $obj->product_description = $product_description;
-        null !== $product_price && $obj->product_price = $product_price;
+        null !== $product_description && $obj['product_description'] = $product_description;
+        null !== $product_price && $obj['product_price'] = $product_price;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class OnDemandSubscription implements BaseModel
     public function withMandateOnly(bool $mandateOnly): self
     {
         $obj = clone $this;
-        $obj->mandate_only = $mandateOnly;
+        $obj['mandate_only'] = $mandateOnly;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class OnDemandSubscription implements BaseModel
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
         $obj = clone $this;
-        $obj->adaptive_currency_fees_inclusive = $adaptiveCurrencyFeesInclusive;
+        $obj['adaptive_currency_fees_inclusive'] = $adaptiveCurrencyFeesInclusive;
 
         return $obj;
     }
@@ -150,7 +150,7 @@ final class OnDemandSubscription implements BaseModel
     public function withProductDescription(?string $productDescription): self
     {
         $obj = clone $this;
-        $obj->product_description = $productDescription;
+        $obj['product_description'] = $productDescription;
 
         return $obj;
     }
@@ -164,7 +164,7 @@ final class OnDemandSubscription implements BaseModel
     public function withProductPrice(?int $productPrice): self
     {
         $obj = clone $this;
-        $obj->product_price = $productPrice;
+        $obj['product_price'] = $productPrice;
 
         return $obj;
     }

@@ -70,11 +70,11 @@ final class Card implements BaseModel
         $obj = new self;
 
         null !== $card_issuing_country && $obj['card_issuing_country'] = $card_issuing_country;
-        null !== $card_network && $obj->card_network = $card_network;
-        null !== $card_type && $obj->card_type = $card_type;
-        null !== $expiry_month && $obj->expiry_month = $expiry_month;
-        null !== $expiry_year && $obj->expiry_year = $expiry_year;
-        null !== $last4_digits && $obj->last4_digits = $last4_digits;
+        null !== $card_network && $obj['card_network'] = $card_network;
+        null !== $card_type && $obj['card_type'] = $card_type;
+        null !== $expiry_month && $obj['expiry_month'] = $expiry_month;
+        null !== $expiry_year && $obj['expiry_year'] = $expiry_year;
+        null !== $last4_digits && $obj['last4_digits'] = $last4_digits;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class Card implements BaseModel
     public function withCardNetwork(?string $cardNetwork): self
     {
         $obj = clone $this;
-        $obj->card_network = $cardNetwork;
+        $obj['card_network'] = $cardNetwork;
 
         return $obj;
     }
@@ -104,7 +104,7 @@ final class Card implements BaseModel
     public function withCardType(?string $cardType): self
     {
         $obj = clone $this;
-        $obj->card_type = $cardType;
+        $obj['card_type'] = $cardType;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class Card implements BaseModel
     public function withExpiryMonth(?string $expiryMonth): self
     {
         $obj = clone $this;
-        $obj->expiry_month = $expiryMonth;
+        $obj['expiry_month'] = $expiryMonth;
 
         return $obj;
     }
@@ -120,7 +120,7 @@ final class Card implements BaseModel
     public function withExpiryYear(?string $expiryYear): self
     {
         $obj = clone $this;
-        $obj->expiry_year = $expiryYear;
+        $obj['expiry_year'] = $expiryYear;
 
         return $obj;
     }
@@ -128,7 +128,7 @@ final class Card implements BaseModel
     public function withLast4Digits(?string $last4Digits): self
     {
         $obj = clone $this;
-        $obj->last4_digits = $last4Digits;
+        $obj['last4_digits'] = $last4Digits;
 
         return $obj;
     }

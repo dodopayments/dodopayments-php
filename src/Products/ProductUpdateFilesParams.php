@@ -51,7 +51,7 @@ final class ProductUpdateFilesParams implements BaseModel
     {
         $obj = new self;
 
-        $obj->file_name = $file_name;
+        $obj['file_name'] = $file_name;
 
         return $obj;
     }
@@ -59,7 +59,7 @@ final class ProductUpdateFilesParams implements BaseModel
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj->file_name = $fileName;
+        $obj['file_name'] = $fileName;
 
         return $obj;
     }

@@ -31,7 +31,7 @@ final class AddonsService implements AddonsContract
      *   currency: value-of<Currency>,
      *   name: string,
      *   price: int,
-     *   tax_category: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory,
+     *   tax_category: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
      *   description?: string|null,
      * }|AddonCreateParams $params
      *
@@ -46,7 +46,7 @@ final class AddonsService implements AddonsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'addons',
@@ -65,7 +65,7 @@ final class AddonsService implements AddonsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['addons/%1$s', $id],
@@ -83,7 +83,7 @@ final class AddonsService implements AddonsContract
      *   image_id?: string|null,
      *   name?: string|null,
      *   price?: int|null,
-     *   tax_category?: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory|null,
+     *   tax_category?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
      * }|AddonUpdateParams $params
      *
      * @throws APIException
@@ -98,7 +98,7 @@ final class AddonsService implements AddonsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['addons/%1$s', $id],
@@ -126,7 +126,7 @@ final class AddonsService implements AddonsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'addons',
@@ -146,7 +146,7 @@ final class AddonsService implements AddonsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'put',
             path: ['addons/%1$s/images', $id],

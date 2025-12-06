@@ -8,6 +8,8 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
+use Dodopayments\Disputes\DisputeStage;
+use Dodopayments\Disputes\DisputeStatus;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
@@ -15,6 +17,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\IntentStatus;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\Payment\Refund;
+use Dodopayments\Refunds\RefundStatus;
 use Dodopayments\Webhooks\PaymentSucceededWebhookEvent\Data\PayloadType;
 
 /**
@@ -309,23 +312,59 @@ final class Data implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
      * @param Currency|value-of<Currency> $currency
-     * @param list<Dispute> $disputes
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
+     * @param list<Dispute|array{
+     *   amount: string,
+     *   business_id: string,
+     *   created_at: \DateTimeInterface,
+     *   currency: string,
+     *   dispute_id: string,
+     *   dispute_stage: value-of<DisputeStage>,
+     *   dispute_status: value-of<DisputeStatus>,
+     *   payment_id: string,
+     *   remarks?: string|null,
+     * }> $disputes
      * @param array<string,string> $metadata
-     * @param list<Refund> $refunds
+     * @param list<Refund|array{
+     *   business_id: string,
+     *   created_at: \DateTimeInterface,
+     *   is_partial: bool,
+     *   payment_id: string,
+     *   refund_id: string,
+     *   status: value-of<RefundStatus>,
+     *   amount?: int|null,
+     *   currency?: value-of<Currency>|null,
+     *   reason?: string|null,
+     * }> $refunds
      * @param Currency|value-of<Currency> $settlement_currency
      * @param CountryCode|value-of<CountryCode> $card_issuing_country
-     * @param list<ProductCart>|null $product_cart
+     * @param list<ProductCart|array{
+     *   product_id: string, quantity: int
+     * }>|null $product_cart
      * @param IntentStatus|value-of<IntentStatus> $status
      * @param PayloadType|value-of<PayloadType> $payload_type
      */
     public static function with(
-        BillingAddress $billing,
+        BillingAddress|array $billing,
         string $brand_id,
         string $business_id,
         \DateTimeInterface $created_at,
         Currency|string $currency,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         bool $digital_products_delivered,
         array $disputes,
         array $metadata,
@@ -355,47 +394,56 @@ final class Data implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->billing = $billing;
-        $obj->brand_id = $brand_id;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
+        $obj['billing'] = $billing;
+        $obj['brand_id'] = $brand_id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->customer = $customer;
-        $obj->digital_products_delivered = $digital_products_delivered;
-        $obj->disputes = $disputes;
-        $obj->metadata = $metadata;
-        $obj->payment_id = $payment_id;
-        $obj->refunds = $refunds;
-        $obj->settlement_amount = $settlement_amount;
+        $obj['customer'] = $customer;
+        $obj['digital_products_delivered'] = $digital_products_delivered;
+        $obj['disputes'] = $disputes;
+        $obj['metadata'] = $metadata;
+        $obj['payment_id'] = $payment_id;
+        $obj['refunds'] = $refunds;
+        $obj['settlement_amount'] = $settlement_amount;
         $obj['settlement_currency'] = $settlement_currency;
-        $obj->total_amount = $total_amount;
+        $obj['total_amount'] = $total_amount;
 
         null !== $card_issuing_country && $obj['card_issuing_country'] = $card_issuing_country;
-        null !== $card_last_four && $obj->card_last_four = $card_last_four;
-        null !== $card_network && $obj->card_network = $card_network;
-        null !== $card_type && $obj->card_type = $card_type;
-        null !== $checkout_session_id && $obj->checkout_session_id = $checkout_session_id;
-        null !== $discount_id && $obj->discount_id = $discount_id;
-        null !== $error_code && $obj->error_code = $error_code;
-        null !== $error_message && $obj->error_message = $error_message;
-        null !== $payment_link && $obj->payment_link = $payment_link;
-        null !== $payment_method && $obj->payment_method = $payment_method;
-        null !== $payment_method_type && $obj->payment_method_type = $payment_method_type;
-        null !== $product_cart && $obj->product_cart = $product_cart;
-        null !== $settlement_tax && $obj->settlement_tax = $settlement_tax;
+        null !== $card_last_four && $obj['card_last_four'] = $card_last_four;
+        null !== $card_network && $obj['card_network'] = $card_network;
+        null !== $card_type && $obj['card_type'] = $card_type;
+        null !== $checkout_session_id && $obj['checkout_session_id'] = $checkout_session_id;
+        null !== $discount_id && $obj['discount_id'] = $discount_id;
+        null !== $error_code && $obj['error_code'] = $error_code;
+        null !== $error_message && $obj['error_message'] = $error_message;
+        null !== $payment_link && $obj['payment_link'] = $payment_link;
+        null !== $payment_method && $obj['payment_method'] = $payment_method;
+        null !== $payment_method_type && $obj['payment_method_type'] = $payment_method_type;
+        null !== $product_cart && $obj['product_cart'] = $product_cart;
+        null !== $settlement_tax && $obj['settlement_tax'] = $settlement_tax;
         null !== $status && $obj['status'] = $status;
-        null !== $subscription_id && $obj->subscription_id = $subscription_id;
-        null !== $tax && $obj->tax = $tax;
-        null !== $updated_at && $obj->updated_at = $updated_at;
+        null !== $subscription_id && $obj['subscription_id'] = $subscription_id;
+        null !== $tax && $obj['tax'] = $tax;
+        null !== $updated_at && $obj['updated_at'] = $updated_at;
         null !== $payload_type && $obj['payload_type'] = $payload_type;
 
         return $obj;
     }
 
-    public function withBilling(BillingAddress $billing): self
+    /**
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
+     */
+    public function withBilling(BillingAddress|array $billing): self
     {
         $obj = clone $this;
-        $obj->billing = $billing;
+        $obj['billing'] = $billing;
 
         return $obj;
     }
@@ -406,7 +454,7 @@ final class Data implements BaseModel
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brand_id = $brandID;
+        $obj['brand_id'] = $brandID;
 
         return $obj;
     }
@@ -417,7 +465,7 @@ final class Data implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -428,7 +476,7 @@ final class Data implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -444,10 +492,19 @@ final class Data implements BaseModel
         return $obj;
     }
 
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    /**
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
+     */
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -459,7 +516,7 @@ final class Data implements BaseModel
         bool $digitalProductsDelivered
     ): self {
         $obj = clone $this;
-        $obj->digital_products_delivered = $digitalProductsDelivered;
+        $obj['digital_products_delivered'] = $digitalProductsDelivered;
 
         return $obj;
     }
@@ -467,12 +524,22 @@ final class Data implements BaseModel
     /**
      * List of disputes associated with this payment.
      *
-     * @param list<Dispute> $disputes
+     * @param list<Dispute|array{
+     *   amount: string,
+     *   business_id: string,
+     *   created_at: \DateTimeInterface,
+     *   currency: string,
+     *   dispute_id: string,
+     *   dispute_stage: value-of<DisputeStage>,
+     *   dispute_status: value-of<DisputeStatus>,
+     *   payment_id: string,
+     *   remarks?: string|null,
+     * }> $disputes
      */
     public function withDisputes(array $disputes): self
     {
         $obj = clone $this;
-        $obj->disputes = $disputes;
+        $obj['disputes'] = $disputes;
 
         return $obj;
     }
@@ -485,7 +552,7 @@ final class Data implements BaseModel
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -496,7 +563,7 @@ final class Data implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -504,12 +571,22 @@ final class Data implements BaseModel
     /**
      * List of refunds issued for this payment.
      *
-     * @param list<Refund> $refunds
+     * @param list<Refund|array{
+     *   business_id: string,
+     *   created_at: \DateTimeInterface,
+     *   is_partial: bool,
+     *   payment_id: string,
+     *   refund_id: string,
+     *   status: value-of<RefundStatus>,
+     *   amount?: int|null,
+     *   currency?: value-of<Currency>|null,
+     *   reason?: string|null,
+     * }> $refunds
      */
     public function withRefunds(array $refunds): self
     {
         $obj = clone $this;
-        $obj->refunds = $refunds;
+        $obj['refunds'] = $refunds;
 
         return $obj;
     }
@@ -521,7 +598,7 @@ final class Data implements BaseModel
     public function withSettlementAmount(int $settlementAmount): self
     {
         $obj = clone $this;
-        $obj->settlement_amount = $settlementAmount;
+        $obj['settlement_amount'] = $settlementAmount;
 
         return $obj;
     }
@@ -544,7 +621,7 @@ final class Data implements BaseModel
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj->total_amount = $totalAmount;
+        $obj['total_amount'] = $totalAmount;
 
         return $obj;
     }
@@ -569,7 +646,7 @@ final class Data implements BaseModel
     public function withCardLastFour(?string $cardLastFour): self
     {
         $obj = clone $this;
-        $obj->card_last_four = $cardLastFour;
+        $obj['card_last_four'] = $cardLastFour;
 
         return $obj;
     }
@@ -580,7 +657,7 @@ final class Data implements BaseModel
     public function withCardNetwork(?string $cardNetwork): self
     {
         $obj = clone $this;
-        $obj->card_network = $cardNetwork;
+        $obj['card_network'] = $cardNetwork;
 
         return $obj;
     }
@@ -591,7 +668,7 @@ final class Data implements BaseModel
     public function withCardType(?string $cardType): self
     {
         $obj = clone $this;
-        $obj->card_type = $cardType;
+        $obj['card_type'] = $cardType;
 
         return $obj;
     }
@@ -603,7 +680,7 @@ final class Data implements BaseModel
     public function withCheckoutSessionID(?string $checkoutSessionID): self
     {
         $obj = clone $this;
-        $obj->checkout_session_id = $checkoutSessionID;
+        $obj['checkout_session_id'] = $checkoutSessionID;
 
         return $obj;
     }
@@ -614,7 +691,7 @@ final class Data implements BaseModel
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discount_id = $discountID;
+        $obj['discount_id'] = $discountID;
 
         return $obj;
     }
@@ -625,7 +702,7 @@ final class Data implements BaseModel
     public function withErrorCode(?string $errorCode): self
     {
         $obj = clone $this;
-        $obj->error_code = $errorCode;
+        $obj['error_code'] = $errorCode;
 
         return $obj;
     }
@@ -636,7 +713,7 @@ final class Data implements BaseModel
     public function withErrorMessage(?string $errorMessage): self
     {
         $obj = clone $this;
-        $obj->error_message = $errorMessage;
+        $obj['error_message'] = $errorMessage;
 
         return $obj;
     }
@@ -647,7 +724,7 @@ final class Data implements BaseModel
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj->payment_link = $paymentLink;
+        $obj['payment_link'] = $paymentLink;
 
         return $obj;
     }
@@ -658,7 +735,7 @@ final class Data implements BaseModel
     public function withPaymentMethod(?string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj->payment_method = $paymentMethod;
+        $obj['payment_method'] = $paymentMethod;
 
         return $obj;
     }
@@ -669,7 +746,7 @@ final class Data implements BaseModel
     public function withPaymentMethodType(?string $paymentMethodType): self
     {
         $obj = clone $this;
-        $obj->payment_method_type = $paymentMethodType;
+        $obj['payment_method_type'] = $paymentMethodType;
 
         return $obj;
     }
@@ -677,12 +754,14 @@ final class Data implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @param list<ProductCart>|null $productCart
+     * @param list<ProductCart|array{
+     *   product_id: string, quantity: int
+     * }>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {
         $obj = clone $this;
-        $obj->product_cart = $productCart;
+        $obj['product_cart'] = $productCart;
 
         return $obj;
     }
@@ -695,7 +774,7 @@ final class Data implements BaseModel
     public function withSettlementTax(?int $settlementTax): self
     {
         $obj = clone $this;
-        $obj->settlement_tax = $settlementTax;
+        $obj['settlement_tax'] = $settlementTax;
 
         return $obj;
     }
@@ -717,7 +796,7 @@ final class Data implements BaseModel
     public function withSubscriptionID(?string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscription_id = $subscriptionID;
+        $obj['subscription_id'] = $subscriptionID;
 
         return $obj;
     }
@@ -728,7 +807,7 @@ final class Data implements BaseModel
     public function withTax(?int $tax): self
     {
         $obj = clone $this;
-        $obj->tax = $tax;
+        $obj['tax'] = $tax;
 
         return $obj;
     }
@@ -739,7 +818,7 @@ final class Data implements BaseModel
     public function withUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }

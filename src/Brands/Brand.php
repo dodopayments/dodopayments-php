@@ -129,19 +129,19 @@ final class Brand implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->brand_id = $brand_id;
-        $obj->business_id = $business_id;
-        $obj->enabled = $enabled;
-        $obj->statement_descriptor = $statement_descriptor;
-        $obj->verification_enabled = $verification_enabled;
+        $obj['brand_id'] = $brand_id;
+        $obj['business_id'] = $business_id;
+        $obj['enabled'] = $enabled;
+        $obj['statement_descriptor'] = $statement_descriptor;
+        $obj['verification_enabled'] = $verification_enabled;
         $obj['verification_status'] = $verification_status;
 
-        null !== $description && $obj->description = $description;
-        null !== $image && $obj->image = $image;
-        null !== $name && $obj->name = $name;
-        null !== $reason_for_hold && $obj->reason_for_hold = $reason_for_hold;
-        null !== $support_email && $obj->support_email = $support_email;
-        null !== $url && $obj->url = $url;
+        null !== $description && $obj['description'] = $description;
+        null !== $image && $obj['image'] = $image;
+        null !== $name && $obj['name'] = $name;
+        null !== $reason_for_hold && $obj['reason_for_hold'] = $reason_for_hold;
+        null !== $support_email && $obj['support_email'] = $support_email;
+        null !== $url && $obj['url'] = $url;
 
         return $obj;
     }
@@ -149,7 +149,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj->brand_id = $brandID;
+        $obj['brand_id'] = $brandID;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -165,7 +165,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withEnabled(bool $enabled): self
     {
         $obj = clone $this;
-        $obj->enabled = $enabled;
+        $obj['enabled'] = $enabled;
 
         return $obj;
     }
@@ -173,7 +173,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withStatementDescriptor(string $statementDescriptor): self
     {
         $obj = clone $this;
-        $obj->statement_descriptor = $statementDescriptor;
+        $obj['statement_descriptor'] = $statementDescriptor;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withVerificationEnabled(bool $verificationEnabled): self
     {
         $obj = clone $this;
-        $obj->verification_enabled = $verificationEnabled;
+        $obj['verification_enabled'] = $verificationEnabled;
 
         return $obj;
     }
@@ -201,7 +201,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -209,7 +209,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withImage(?string $image): self
     {
         $obj = clone $this;
-        $obj->image = $image;
+        $obj['image'] = $image;
 
         return $obj;
     }
@@ -217,7 +217,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -228,7 +228,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withReasonForHold(?string $reasonForHold): self
     {
         $obj = clone $this;
-        $obj->reason_for_hold = $reasonForHold;
+        $obj['reason_for_hold'] = $reasonForHold;
 
         return $obj;
     }
@@ -236,7 +236,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withSupportEmail(?string $supportEmail): self
     {
         $obj = clone $this;
-        $obj->support_email = $supportEmail;
+        $obj['support_email'] = $supportEmail;
 
         return $obj;
     }
@@ -244,7 +244,7 @@ final class Brand implements BaseModel, ResponseConverter
     public function withURL(?string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

@@ -76,9 +76,9 @@ final class Customization implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $force_language && $obj->force_language = $force_language;
-        null !== $show_on_demand_tag && $obj->show_on_demand_tag = $show_on_demand_tag;
-        null !== $show_order_details && $obj->show_order_details = $show_order_details;
+        null !== $force_language && $obj['force_language'] = $force_language;
+        null !== $show_on_demand_tag && $obj['show_on_demand_tag'] = $show_on_demand_tag;
+        null !== $show_order_details && $obj['show_order_details'] = $show_order_details;
         null !== $theme && $obj['theme'] = $theme;
 
         return $obj;
@@ -90,7 +90,7 @@ final class Customization implements BaseModel
     public function withForceLanguage(?string $forceLanguage): self
     {
         $obj = clone $this;
-        $obj->force_language = $forceLanguage;
+        $obj['force_language'] = $forceLanguage;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class Customization implements BaseModel
     public function withShowOnDemandTag(bool $showOnDemandTag): self
     {
         $obj = clone $this;
-        $obj->show_on_demand_tag = $showOnDemandTag;
+        $obj['show_on_demand_tag'] = $showOnDemandTag;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class Customization implements BaseModel
     public function withShowOrderDetails(bool $showOrderDetails): self
     {
         $obj = clone $this;
-        $obj->show_order_details = $showOrderDetails;
+        $obj['show_order_details'] = $showOrderDetails;
 
         return $obj;
     }

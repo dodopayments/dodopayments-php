@@ -58,9 +58,9 @@ final class LicenseValidateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->license_key = $license_key;
+        $obj['license_key'] = $license_key;
 
-        null !== $license_key_instance_id && $obj->license_key_instance_id = $license_key_instance_id;
+        null !== $license_key_instance_id && $obj['license_key_instance_id'] = $license_key_instance_id;
 
         return $obj;
     }
@@ -68,7 +68,7 @@ final class LicenseValidateParams implements BaseModel
     public function withLicenseKey(string $licenseKey): self
     {
         $obj = clone $this;
-        $obj->license_key = $licenseKey;
+        $obj['license_key'] = $licenseKey;
 
         return $obj;
     }
@@ -77,7 +77,7 @@ final class LicenseValidateParams implements BaseModel
         ?string $licenseKeyInstanceID
     ): self {
         $obj = clone $this;
-        $obj->license_key_instance_id = $licenseKeyInstanceID;
+        $obj['license_key_instance_id'] = $licenseKeyInstanceID;
 
         return $obj;
     }

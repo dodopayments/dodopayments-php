@@ -29,7 +29,7 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['license_key_instances/%1$s', $id],
@@ -55,7 +55,7 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['license_key_instances/%1$s', $id],
@@ -85,7 +85,7 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'license_key_instances',

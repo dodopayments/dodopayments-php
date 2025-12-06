@@ -106,12 +106,12 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
+        $obj['id'] = $id;
+        $obj['created_at'] = $created_at;
 
-        null !== $customer_email && $obj->customer_email = $customer_email;
-        null !== $customer_name && $obj->customer_name = $customer_name;
-        null !== $payment_id && $obj->payment_id = $payment_id;
+        null !== $customer_email && $obj['customer_email'] = $customer_email;
+        null !== $customer_name && $obj['customer_name'] = $customer_name;
+        null !== $payment_id && $obj['payment_id'] = $payment_id;
         null !== $payment_status && $obj['payment_status'] = $payment_status;
 
         return $obj;
@@ -123,7 +123,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -134,7 +134,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -145,7 +145,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withCustomerEmail(?string $customerEmail): self
     {
         $obj = clone $this;
-        $obj->customer_email = $customerEmail;
+        $obj['customer_email'] = $customerEmail;
 
         return $obj;
     }
@@ -156,7 +156,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withCustomerName(?string $customerName): self
     {
         $obj = clone $this;
-        $obj->customer_name = $customerName;
+        $obj['customer_name'] = $customerName;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class CheckoutSessionStatus implements BaseModel, ResponseConverter
     public function withPaymentID(?string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }

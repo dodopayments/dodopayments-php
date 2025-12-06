@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\PaymentProcessingWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case PAYMENT_PROCESSING = 'payment.processing';
 }

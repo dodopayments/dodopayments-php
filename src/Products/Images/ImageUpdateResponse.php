@@ -56,9 +56,9 @@ final class ImageUpdateResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->url = $url;
+        $obj['url'] = $url;
 
-        null !== $image_id && $obj->image_id = $image_id;
+        null !== $image_id && $obj['image_id'] = $image_id;
 
         return $obj;
     }
@@ -66,7 +66,7 @@ final class ImageUpdateResponse implements BaseModel, ResponseConverter
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class ImageUpdateResponse implements BaseModel, ResponseConverter
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->image_id = $imageID;
+        $obj['image_id'] = $imageID;
 
         return $obj;
     }

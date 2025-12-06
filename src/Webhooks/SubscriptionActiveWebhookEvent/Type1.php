@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\SubscriptionActiveWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case SUBSCRIPTION_ACTIVE = 'subscription.active';
 }

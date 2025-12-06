@@ -21,14 +21,14 @@ final class MiscService implements MiscContract
     /**
      * @api
      *
-     * @return list<CountryCode|value-of<CountryCode>>
+     * @return list<value-of<CountryCode>>
      *
      * @throws APIException
      */
     public function listSupportedCountries(
         ?RequestOptions $requestOptions = null
     ): array {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'checkout/supported_countries',

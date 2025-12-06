@@ -209,22 +209,22 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->amount = $amount;
-        $obj->business_id = $business_id;
-        $obj->chargebacks = $chargebacks;
-        $obj->created_at = $created_at;
+        $obj['amount'] = $amount;
+        $obj['business_id'] = $business_id;
+        $obj['chargebacks'] = $chargebacks;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->fee = $fee;
-        $obj->payment_method = $payment_method;
-        $obj->payout_id = $payout_id;
-        $obj->refunds = $refunds;
+        $obj['fee'] = $fee;
+        $obj['payment_method'] = $payment_method;
+        $obj['payout_id'] = $payout_id;
+        $obj['refunds'] = $refunds;
         $obj['status'] = $status;
-        $obj->tax = $tax;
-        $obj->updated_at = $updated_at;
+        $obj['tax'] = $tax;
+        $obj['updated_at'] = $updated_at;
 
-        null !== $name && $obj->name = $name;
-        null !== $payout_document_url && $obj->payout_document_url = $payout_document_url;
-        null !== $remarks && $obj->remarks = $remarks;
+        null !== $name && $obj['name'] = $name;
+        null !== $payout_document_url && $obj['payout_document_url'] = $payout_document_url;
+        null !== $remarks && $obj['remarks'] = $remarks;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withAmount(int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -246,7 +246,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -257,7 +257,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withChargebacks(int $chargebacks): self
     {
         $obj = clone $this;
-        $obj->chargebacks = $chargebacks;
+        $obj['chargebacks'] = $chargebacks;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -292,7 +292,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withFee(int $fee): self
     {
         $obj = clone $this;
-        $obj->fee = $fee;
+        $obj['fee'] = $fee;
 
         return $obj;
     }
@@ -303,7 +303,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withPaymentMethod(string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj->payment_method = $paymentMethod;
+        $obj['payment_method'] = $paymentMethod;
 
         return $obj;
     }
@@ -314,7 +314,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withPayoutID(string $payoutID): self
     {
         $obj = clone $this;
-        $obj->payout_id = $payoutID;
+        $obj['payout_id'] = $payoutID;
 
         return $obj;
     }
@@ -325,7 +325,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withRefunds(int $refunds): self
     {
         $obj = clone $this;
-        $obj->refunds = $refunds;
+        $obj['refunds'] = $refunds;
 
         return $obj;
     }
@@ -349,7 +349,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withTax(int $tax): self
     {
         $obj = clone $this;
-        $obj->tax = $tax;
+        $obj['tax'] = $tax;
 
         return $obj;
     }
@@ -360,7 +360,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }
@@ -371,7 +371,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -382,7 +382,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withPayoutDocumentURL(?string $payoutDocumentURL): self
     {
         $obj = clone $this;
-        $obj->payout_document_url = $payoutDocumentURL;
+        $obj['payout_document_url'] = $payoutDocumentURL;
 
         return $obj;
     }
@@ -393,7 +393,7 @@ final class PayoutListResponse implements BaseModel, ResponseConverter
     public function withRemarks(?string $remarks): self
     {
         $obj = clone $this;
-        $obj->remarks = $remarks;
+        $obj['remarks'] = $remarks;
 
         return $obj;
     }

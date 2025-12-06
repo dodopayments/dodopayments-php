@@ -56,7 +56,7 @@ final class LicenseKeyDuration implements BaseModel
     {
         $obj = new self;
 
-        $obj->count = $count;
+        $obj['count'] = $count;
         $obj['interval'] = $interval;
 
         return $obj;
@@ -65,7 +65,7 @@ final class LicenseKeyDuration implements BaseModel
     public function withCount(int $count): self
     {
         $obj = clone $this;
-        $obj->count = $count;
+        $obj['count'] = $count;
 
         return $obj;
     }

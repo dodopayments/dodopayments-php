@@ -56,8 +56,8 @@ final class LicenseActivateParams implements BaseModel
     {
         $obj = new self;
 
-        $obj->license_key = $license_key;
-        $obj->name = $name;
+        $obj['license_key'] = $license_key;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -65,7 +65,7 @@ final class LicenseActivateParams implements BaseModel
     public function withLicenseKey(string $licenseKey): self
     {
         $obj = clone $this;
-        $obj->license_key = $licenseKey;
+        $obj['license_key'] = $licenseKey;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class LicenseActivateParams implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

@@ -9,6 +9,10 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
+use Dodopayments\Meters\MeterAggregation\Type;
+use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
+use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
+use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
  * @phpstan-type MeterShape = array{
@@ -107,10 +111,18 @@ final class Meter implements BaseModel, ResponseConverter
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param MeterAggregation|array{
+     *   type: value-of<Type>, key?: string|null
+     * } $aggregation
+     * @param MeterFilter|array{
+     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
+     *   conjunction: value-of<Conjunction>,
+     * }|null $filter
      */
     public static function with(
         string $id,
-        MeterAggregation $aggregation,
+        MeterAggregation|array $aggregation,
         string $business_id,
         \DateTimeInterface $created_at,
         string $event_name,
@@ -118,21 +130,21 @@ final class Meter implements BaseModel, ResponseConverter
         string $name,
         \DateTimeInterface $updated_at,
         ?string $description = null,
-        ?MeterFilter $filter = null,
+        MeterFilter|array|null $filter = null,
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->aggregation = $aggregation;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->event_name = $event_name;
-        $obj->measurement_unit = $measurement_unit;
-        $obj->name = $name;
-        $obj->updated_at = $updated_at;
+        $obj['id'] = $id;
+        $obj['aggregation'] = $aggregation;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['event_name'] = $event_name;
+        $obj['measurement_unit'] = $measurement_unit;
+        $obj['name'] = $name;
+        $obj['updated_at'] = $updated_at;
 
-        null !== $description && $obj->description = $description;
-        null !== $filter && $obj->filter = $filter;
+        null !== $description && $obj['description'] = $description;
+        null !== $filter && $obj['filter'] = $filter;
 
         return $obj;
     }
@@ -140,15 +152,20 @@ final class Meter implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
 
-    public function withAggregation(MeterAggregation $aggregation): self
+    /**
+     * @param MeterAggregation|array{
+     *   type: value-of<Type>, key?: string|null
+     * } $aggregation
+     */
+    public function withAggregation(MeterAggregation|array $aggregation): self
     {
         $obj = clone $this;
-        $obj->aggregation = $aggregation;
+        $obj['aggregation'] = $aggregation;
 
         return $obj;
     }
@@ -156,7 +173,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -164,7 +181,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -172,7 +189,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj->event_name = $eventName;
+        $obj['event_name'] = $eventName;
 
         return $obj;
     }
@@ -180,7 +197,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withMeasurementUnit(string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj->measurement_unit = $measurementUnit;
+        $obj['measurement_unit'] = $measurementUnit;
 
         return $obj;
     }
@@ -188,7 +205,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -196,7 +213,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }
@@ -204,7 +221,7 @@ final class Meter implements BaseModel, ResponseConverter
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -214,11 +231,16 @@ final class Meter implements BaseModel, ResponseConverter
      *
      * Supports up to 3 levels of nesting to create complex filter expressions.
      * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
+     *
+     * @param MeterFilter|array{
+     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
+     *   conjunction: value-of<Conjunction>,
+     * }|null $filter
      */
-    public function withFilter(?MeterFilter $filter): self
+    public function withFilter(MeterFilter|array|null $filter): self
     {
         $obj = clone $this;
-        $obj->filter = $filter;
+        $obj['filter'] = $filter;
 
         return $obj;
     }

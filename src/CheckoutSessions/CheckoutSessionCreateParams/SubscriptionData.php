@@ -7,6 +7,7 @@ namespace Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 
 /**
@@ -37,23 +38,41 @@ final class SubscriptionData implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param OnDemandSubscription|array{
+     *   mandate_only: bool,
+     *   adaptive_currency_fees_inclusive?: bool|null,
+     *   product_currency?: value-of<Currency>|null,
+     *   product_description?: string|null,
+     *   product_price?: int|null,
+     * }|null $on_demand
      */
     public static function with(
-        ?OnDemandSubscription $on_demand = null,
-        ?int $trial_period_days = null
+        OnDemandSubscription|array|null $on_demand = null,
+        ?int $trial_period_days = null,
     ): self {
         $obj = new self;
 
-        null !== $on_demand && $obj->on_demand = $on_demand;
-        null !== $trial_period_days && $obj->trial_period_days = $trial_period_days;
+        null !== $on_demand && $obj['on_demand'] = $on_demand;
+        null !== $trial_period_days && $obj['trial_period_days'] = $trial_period_days;
 
         return $obj;
     }
 
-    public function withOnDemand(?OnDemandSubscription $onDemand): self
-    {
+    /**
+     * @param OnDemandSubscription|array{
+     *   mandate_only: bool,
+     *   adaptive_currency_fees_inclusive?: bool|null,
+     *   product_currency?: value-of<Currency>|null,
+     *   product_description?: string|null,
+     *   product_price?: int|null,
+     * }|null $onDemand
+     */
+    public function withOnDemand(
+        OnDemandSubscription|array|null $onDemand
+    ): self {
         $obj = clone $this;
-        $obj->on_demand = $onDemand;
+        $obj['on_demand'] = $onDemand;
 
         return $obj;
     }
@@ -64,7 +83,7 @@ final class SubscriptionData implements BaseModel
     public function withTrialPeriodDays(?int $trialPeriodDays): self
     {
         $obj = clone $this;
-        $obj->trial_period_days = $trialPeriodDays;
+        $obj['trial_period_days'] = $trialPeriodDays;
 
         return $obj;
     }

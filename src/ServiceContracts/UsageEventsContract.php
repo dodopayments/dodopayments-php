@@ -35,7 +35,7 @@ interface UsageEventsContract
      */
     public function list(
         array|UsageEventListParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): DefaultPageNumberPagination;
 
     /**

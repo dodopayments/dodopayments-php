@@ -12,8 +12,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
+use Dodopayments\Products\Price\OneTimePrice\Type;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-type ProductListResponseShape = array{
@@ -180,6 +182,40 @@ final class ProductListResponse implements BaseModel, ResponseConverter
      * @param array<string,string> $metadata
      * @param TaxCategory|value-of<TaxCategory> $tax_category
      * @param Currency|value-of<Currency>|null $currency
+     * @param OneTimePrice|array{
+     *   currency: value-of<Currency>,
+     *   discount: int,
+     *   price: int,
+     *   purchasing_power_parity: bool,
+     *   type: value-of<Type>,
+     *   pay_what_you_want?: bool|null,
+     *   suggested_price?: int|null,
+     *   tax_inclusive?: bool|null,
+     * }|RecurringPrice|array{
+     *   currency: value-of<Currency>,
+     *   discount: int,
+     *   payment_frequency_count: int,
+     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   price: int,
+     *   purchasing_power_parity: bool,
+     *   subscription_period_count: int,
+     *   subscription_period_interval: value-of<TimeInterval>,
+     *   type: value-of<RecurringPrice\Type>,
+     *   tax_inclusive?: bool|null,
+     *   trial_period_days?: int|null,
+     * }|UsageBasedPrice|array{
+     *   currency: value-of<Currency>,
+     *   discount: int,
+     *   fixed_price: int,
+     *   payment_frequency_count: int,
+     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   purchasing_power_parity: bool,
+     *   subscription_period_count: int,
+     *   subscription_period_interval: value-of<TimeInterval>,
+     *   type: value-of<UsageBasedPrice\Type>,
+     *   meters?: list<AddMeterToPrice>|null,
+     *   tax_inclusive?: bool|null,
+     * }|null $price_detail
      */
     public static function with(
         string $business_id,
@@ -194,26 +230,26 @@ final class ProductListResponse implements BaseModel, ResponseConverter
         ?string $image = null,
         ?string $name = null,
         ?int $price = null,
-        OneTimePrice|RecurringPrice|UsageBasedPrice|null $price_detail = null,
+        OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price_detail = null,
         ?bool $tax_inclusive = null,
     ): self {
         $obj = new self;
 
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->is_recurring = $is_recurring;
-        $obj->metadata = $metadata;
-        $obj->product_id = $product_id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['is_recurring'] = $is_recurring;
+        $obj['metadata'] = $metadata;
+        $obj['product_id'] = $product_id;
         $obj['tax_category'] = $tax_category;
-        $obj->updated_at = $updated_at;
+        $obj['updated_at'] = $updated_at;
 
         null !== $currency && $obj['currency'] = $currency;
-        null !== $description && $obj->description = $description;
-        null !== $image && $obj->image = $image;
-        null !== $name && $obj->name = $name;
-        null !== $price && $obj->price = $price;
-        null !== $price_detail && $obj->price_detail = $price_detail;
-        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
+        null !== $description && $obj['description'] = $description;
+        null !== $image && $obj['image'] = $image;
+        null !== $name && $obj['name'] = $name;
+        null !== $price && $obj['price'] = $price;
+        null !== $price_detail && $obj['price_detail'] = $price_detail;
+        null !== $tax_inclusive && $obj['tax_inclusive'] = $tax_inclusive;
 
         return $obj;
     }
@@ -224,7 +260,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -235,7 +271,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -246,7 +282,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withIsRecurring(bool $isRecurring): self
     {
         $obj = clone $this;
-        $obj->is_recurring = $isRecurring;
+        $obj['is_recurring'] = $isRecurring;
 
         return $obj;
     }
@@ -259,7 +295,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -270,7 +306,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }
@@ -294,7 +330,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }
@@ -318,7 +354,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -329,7 +365,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withImage(?string $image): self
     {
         $obj = clone $this;
-        $obj->image = $image;
+        $obj['image'] = $image;
 
         return $obj;
     }
@@ -340,7 +376,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -359,19 +395,54 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withPrice(?int $price): self
     {
         $obj = clone $this;
-        $obj->price = $price;
+        $obj['price'] = $price;
 
         return $obj;
     }
 
     /**
      * Details of the price.
+     *
+     * @param OneTimePrice|array{
+     *   currency: value-of<Currency>,
+     *   discount: int,
+     *   price: int,
+     *   purchasing_power_parity: bool,
+     *   type: value-of<Type>,
+     *   pay_what_you_want?: bool|null,
+     *   suggested_price?: int|null,
+     *   tax_inclusive?: bool|null,
+     * }|RecurringPrice|array{
+     *   currency: value-of<Currency>,
+     *   discount: int,
+     *   payment_frequency_count: int,
+     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   price: int,
+     *   purchasing_power_parity: bool,
+     *   subscription_period_count: int,
+     *   subscription_period_interval: value-of<TimeInterval>,
+     *   type: value-of<RecurringPrice\Type>,
+     *   tax_inclusive?: bool|null,
+     *   trial_period_days?: int|null,
+     * }|UsageBasedPrice|array{
+     *   currency: value-of<Currency>,
+     *   discount: int,
+     *   fixed_price: int,
+     *   payment_frequency_count: int,
+     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   purchasing_power_parity: bool,
+     *   subscription_period_count: int,
+     *   subscription_period_interval: value-of<TimeInterval>,
+     *   type: value-of<UsageBasedPrice\Type>,
+     *   meters?: list<AddMeterToPrice>|null,
+     *   tax_inclusive?: bool|null,
+     * }|null $priceDetail
      */
     public function withPriceDetail(
-        OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail
+        OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail
     ): self {
         $obj = clone $this;
-        $obj->price_detail = $priceDetail;
+        $obj['price_detail'] = $priceDetail;
 
         return $obj;
     }
@@ -382,7 +453,7 @@ final class ProductListResponse implements BaseModel, ResponseConverter
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->tax_inclusive = $taxInclusive;
+        $obj['tax_inclusive'] = $taxInclusive;
 
         return $obj;
     }

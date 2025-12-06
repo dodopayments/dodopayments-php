@@ -44,7 +44,7 @@ final class RefundsService implements RefundsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'refunds',
@@ -63,7 +63,7 @@ final class RefundsService implements RefundsContract
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): Refund {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['refunds/%1$s', $refundID],
@@ -81,7 +81,7 @@ final class RefundsService implements RefundsContract
      *   customer_id?: string,
      *   page_number?: int,
      *   page_size?: int,
-     *   status?: "succeeded"|"failed"|"pending"|"review",
+     *   status?: 'succeeded'|'failed'|'pending'|'review',
      * }|RefundListParams $params
      *
      * @return DefaultPageNumberPagination<RefundListResponse>
@@ -97,7 +97,7 @@ final class RefundsService implements RefundsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'refunds',

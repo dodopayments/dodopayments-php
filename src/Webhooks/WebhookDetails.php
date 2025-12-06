@@ -145,16 +145,16 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->created_at = $created_at;
-        $obj->description = $description;
-        $obj->metadata = $metadata;
-        $obj->updated_at = $updated_at;
-        $obj->url = $url;
+        $obj['id'] = $id;
+        $obj['created_at'] = $created_at;
+        $obj['description'] = $description;
+        $obj['metadata'] = $metadata;
+        $obj['updated_at'] = $updated_at;
+        $obj['url'] = $url;
 
-        null !== $disabled && $obj->disabled = $disabled;
-        null !== $filter_types && $obj->filter_types = $filter_types;
-        null !== $rate_limit && $obj->rate_limit = $rate_limit;
+        null !== $disabled && $obj['disabled'] = $disabled;
+        null !== $filter_types && $obj['filter_types'] = $filter_types;
+        null !== $rate_limit && $obj['rate_limit'] = $rate_limit;
 
         return $obj;
     }
@@ -165,7 +165,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -176,7 +176,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -187,7 +187,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withDescription(string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -200,7 +200,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -211,7 +211,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withUpdatedAt(string $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }
@@ -222,7 +222,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withURL(string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withDisabled(?bool $disabled): self
     {
         $obj = clone $this;
-        $obj->disabled = $disabled;
+        $obj['disabled'] = $disabled;
 
         return $obj;
     }
@@ -250,7 +250,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withFilterTypes(?array $filterTypes): self
     {
         $obj = clone $this;
-        $obj->filter_types = $filterTypes;
+        $obj['filter_types'] = $filterTypes;
 
         return $obj;
     }
@@ -261,7 +261,7 @@ final class WebhookDetails implements BaseModel, ResponseConverter
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj->rate_limit = $rateLimit;
+        $obj['rate_limit'] = $rateLimit;
 
         return $obj;
     }

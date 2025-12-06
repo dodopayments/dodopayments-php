@@ -30,23 +30,25 @@ final class PaymentsTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped("Prism doesn't support application/pdf responses");
+            $this->markTestSkipped('Prism doesn\'t support application/pdf responses');
         }
 
         $result = $this->client->invoices->payments->retrieve('payment_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
     }
 
     #[Test]
     public function testRetrieveRefund(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped("Prism doesn't support application/pdf responses");
+            $this->markTestSkipped('Prism doesn\'t support application/pdf responses');
         }
 
         $result = $this->client->invoices->payments->retrieveRefund('refund_id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsString($result);
     }
 }

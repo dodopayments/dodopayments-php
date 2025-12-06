@@ -26,7 +26,7 @@ interface ProductsContract
      */
     public function create(
         array|ProductCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): Product;
 
     /**

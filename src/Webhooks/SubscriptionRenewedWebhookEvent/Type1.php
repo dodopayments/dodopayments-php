@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case SUBSCRIPTION_RENEWED = 'subscription.renewed';
 }

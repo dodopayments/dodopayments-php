@@ -17,7 +17,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  *   product_id: string,
  *   proration_billing_mode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
- *   addons?: list<AttachAddon>|null,
+ *   addons?: list<AttachAddon|array{addon_id: string, quantity: int}>|null,
  * }
  */
 final class SubscriptionChangePlanParams implements BaseModel
@@ -85,7 +85,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $proration_billing_mode
-     * @param list<AttachAddon>|null $addons
+     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
      */
     public static function with(
         string $product_id,
@@ -95,11 +95,11 @@ final class SubscriptionChangePlanParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->product_id = $product_id;
+        $obj['product_id'] = $product_id;
         $obj['proration_billing_mode'] = $proration_billing_mode;
-        $obj->quantity = $quantity;
+        $obj['quantity'] = $quantity;
 
-        null !== $addons && $obj->addons = $addons;
+        null !== $addons && $obj['addons'] = $addons;
 
         return $obj;
     }
@@ -110,7 +110,7 @@ final class SubscriptionChangePlanParams implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }
@@ -135,7 +135,7 @@ final class SubscriptionChangePlanParams implements BaseModel
     public function withQuantity(int $quantity): self
     {
         $obj = clone $this;
-        $obj->quantity = $quantity;
+        $obj['quantity'] = $quantity;
 
         return $obj;
     }
@@ -144,12 +144,12 @@ final class SubscriptionChangePlanParams implements BaseModel
      * Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons.
      *
-     * @param list<AttachAddon>|null $addons
+     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
      */
     public function withAddons(?array $addons): self
     {
         $obj = clone $this;
-        $obj->addons = $addons;
+        $obj['addons'] = $addons;
 
         return $obj;
     }

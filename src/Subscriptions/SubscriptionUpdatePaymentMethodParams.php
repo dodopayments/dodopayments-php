@@ -69,9 +69,9 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
         $obj = new self;
 
         $obj['type'] = $type;
-        $obj->payment_method_id = $payment_method_id;
+        $obj['payment_method_id'] = $payment_method_id;
 
-        null !== $return_url && $obj->return_url = $return_url;
+        null !== $return_url && $obj['return_url'] = $return_url;
 
         return $obj;
     }
@@ -90,7 +90,7 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj->return_url = $returnURL;
+        $obj['return_url'] = $returnURL;
 
         return $obj;
     }
@@ -98,7 +98,7 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
     public function withPaymentMethodID(string $paymentMethodID): self
     {
         $obj = clone $this;
-        $obj->payment_method_id = $paymentMethodID;
+        $obj['payment_method_id'] = $paymentMethodID;
 
         return $obj;
     }

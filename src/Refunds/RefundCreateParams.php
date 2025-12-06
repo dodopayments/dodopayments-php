@@ -15,7 +15,9 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
  *
  * @phpstan-type RefundCreateParamsShape = array{
  *   payment_id: string,
- *   items?: list<Item>|null,
+ *   items?: list<Item|array{
+ *     item_id: string, amount?: int|null, tax_inclusive?: bool|null
+ *   }>|null,
  *   metadata?: array<string,string>,
  *   reason?: string|null,
  * }
@@ -78,7 +80,9 @@ final class RefundCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Item>|null $items
+     * @param list<Item|array{
+     *   item_id: string, amount?: int|null, tax_inclusive?: bool|null
+     * }>|null $items
      * @param array<string,string> $metadata
      */
     public static function with(
@@ -89,11 +93,11 @@ final class RefundCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->payment_id = $payment_id;
+        $obj['payment_id'] = $payment_id;
 
-        null !== $items && $obj->items = $items;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $reason && $obj->reason = $reason;
+        null !== $items && $obj['items'] = $items;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $reason && $obj['reason'] = $reason;
 
         return $obj;
     }
@@ -104,7 +108,7 @@ final class RefundCreateParams implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -112,12 +116,14 @@ final class RefundCreateParams implements BaseModel
     /**
      * Partially Refund an Individual Item.
      *
-     * @param list<Item>|null $items
+     * @param list<Item|array{
+     *   item_id: string, amount?: int|null, tax_inclusive?: bool|null
+     * }>|null $items
      */
     public function withItems(?array $items): self
     {
         $obj = clone $this;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }
@@ -130,7 +136,7 @@ final class RefundCreateParams implements BaseModel
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -141,7 +147,7 @@ final class RefundCreateParams implements BaseModel
     public function withReason(?string $reason): self
     {
         $obj = clone $this;
-        $obj->reason = $reason;
+        $obj['reason'] = $reason;
 
         return $obj;
     }

@@ -74,8 +74,8 @@ final class HeaderGetResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->headers = $headers;
-        $obj->sensitive = $sensitive;
+        $obj['headers'] = $headers;
+        $obj['sensitive'] = $sensitive;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class HeaderGetResponse implements BaseModel, ResponseConverter
     public function withHeaders(array $headers): self
     {
         $obj = clone $this;
-        $obj->headers = $headers;
+        $obj['headers'] = $headers;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class HeaderGetResponse implements BaseModel, ResponseConverter
     public function withSensitive(array $sensitive): self
     {
         $obj = clone $this;
-        $obj->sensitive = $sensitive;
+        $obj['sensitive'] = $sensitive;
 
         return $obj;
     }

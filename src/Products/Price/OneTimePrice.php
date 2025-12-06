@@ -135,14 +135,14 @@ final class OneTimePrice implements BaseModel
         $obj = new self;
 
         $obj['currency'] = $currency;
-        $obj->discount = $discount;
-        $obj->price = $price;
-        $obj->purchasing_power_parity = $purchasing_power_parity;
+        $obj['discount'] = $discount;
+        $obj['price'] = $price;
+        $obj['purchasing_power_parity'] = $purchasing_power_parity;
         $obj['type'] = $type;
 
-        null !== $pay_what_you_want && $obj->pay_what_you_want = $pay_what_you_want;
-        null !== $suggested_price && $obj->suggested_price = $suggested_price;
-        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
+        null !== $pay_what_you_want && $obj['pay_what_you_want'] = $pay_what_you_want;
+        null !== $suggested_price && $obj['suggested_price'] = $suggested_price;
+        null !== $tax_inclusive && $obj['tax_inclusive'] = $tax_inclusive;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class OneTimePrice implements BaseModel
     public function withDiscount(int $discount): self
     {
         $obj = clone $this;
-        $obj->discount = $discount;
+        $obj['discount'] = $discount;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class OneTimePrice implements BaseModel
     public function withPrice(int $price): self
     {
         $obj = clone $this;
-        $obj->price = $price;
+        $obj['price'] = $price;
 
         return $obj;
     }
@@ -193,7 +193,7 @@ final class OneTimePrice implements BaseModel
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
         $obj = clone $this;
-        $obj->purchasing_power_parity = $purchasingPowerParity;
+        $obj['purchasing_power_parity'] = $purchasingPowerParity;
 
         return $obj;
     }
@@ -216,7 +216,7 @@ final class OneTimePrice implements BaseModel
     public function withPayWhatYouWant(bool $payWhatYouWant): self
     {
         $obj = clone $this;
-        $obj->pay_what_you_want = $payWhatYouWant;
+        $obj['pay_what_you_want'] = $payWhatYouWant;
 
         return $obj;
     }
@@ -228,7 +228,7 @@ final class OneTimePrice implements BaseModel
     public function withSuggestedPrice(?int $suggestedPrice): self
     {
         $obj = clone $this;
-        $obj->suggested_price = $suggestedPrice;
+        $obj['suggested_price'] = $suggestedPrice;
 
         return $obj;
     }
@@ -239,7 +239,7 @@ final class OneTimePrice implements BaseModel
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->tax_inclusive = $taxInclusive;
+        $obj['tax_inclusive'] = $taxInclusive;
 
         return $obj;
     }

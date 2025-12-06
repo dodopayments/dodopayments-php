@@ -57,14 +57,21 @@ final class PaymentGetLineItemsResponse implements BaseModel, ResponseConverter
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param list<Item> $items
+     * @param list<Item|array{
+     *   amount: int,
+     *   items_id: string,
+     *   refundable_amount: int,
+     *   tax: int,
+     *   description?: string|null,
+     *   name?: string|null,
+     * }> $items
      */
     public static function with(Currency|string $currency, array $items): self
     {
         $obj = new self;
 
         $obj['currency'] = $currency;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }
@@ -81,12 +88,19 @@ final class PaymentGetLineItemsResponse implements BaseModel, ResponseConverter
     }
 
     /**
-     * @param list<Item> $items
+     * @param list<Item|array{
+     *   amount: int,
+     *   items_id: string,
+     *   refundable_amount: int,
+     *   tax: int,
+     *   description?: string|null,
+     *   name?: string|null,
+     * }> $items
      */
     public function withItems(array $items): self
     {
         $obj = clone $this;
-        $obj->items = $items;
+        $obj['items'] = $items;
 
         return $obj;
     }

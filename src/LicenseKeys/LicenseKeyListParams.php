@@ -80,10 +80,10 @@ final class LicenseKeyListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $customer_id && $obj->customer_id = $customer_id;
-        null !== $page_number && $obj->page_number = $page_number;
-        null !== $page_size && $obj->page_size = $page_size;
-        null !== $product_id && $obj->product_id = $product_id;
+        null !== $customer_id && $obj['customer_id'] = $customer_id;
+        null !== $page_number && $obj['page_number'] = $page_number;
+        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $product_id && $obj['product_id'] = $product_id;
         null !== $status && $obj['status'] = $status;
 
         return $obj;
@@ -95,7 +95,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -106,7 +106,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->page_number = $pageNumber;
+        $obj['page_number'] = $pageNumber;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }
@@ -128,7 +128,7 @@ final class LicenseKeyListParams implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }

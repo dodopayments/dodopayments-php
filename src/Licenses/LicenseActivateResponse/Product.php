@@ -58,9 +58,9 @@ final class Product implements BaseModel
     {
         $obj = new self;
 
-        $obj->product_id = $product_id;
+        $obj['product_id'] = $product_id;
 
-        null !== $name && $obj->name = $name;
+        null !== $name && $obj['name'] = $name;
 
         return $obj;
     }
@@ -71,7 +71,7 @@ final class Product implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }
@@ -82,7 +82,7 @@ final class Product implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

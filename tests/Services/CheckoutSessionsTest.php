@@ -2,6 +2,8 @@
 
 namespace Tests\Services;
 
+use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
+use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -32,7 +34,8 @@ final class CheckoutSessionsTest extends TestCase
             'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CheckoutSessionResponse::class, $result);
     }
 
     #[Test]
@@ -47,9 +50,56 @@ final class CheckoutSessionsTest extends TestCase
                     'amount' => 0,
                 ],
             ],
+            'allowed_payment_method_types' => ['credit'],
+            'billing_address' => [
+                'country' => 'AF',
+                'city' => 'city',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
+            ],
+            'billing_currency' => 'AED',
+            'confirm' => true,
+            'customer' => ['customer_id' => 'customer_id'],
+            'customization' => [
+                'force_language' => 'force_language',
+                'show_on_demand_tag' => true,
+                'show_order_details' => true,
+                'theme' => 'dark',
+            ],
+            'discount_code' => 'discount_code',
+            'feature_flags' => [
+                'allow_currency_selection' => true,
+                'allow_customer_editing_city' => true,
+                'allow_customer_editing_country' => true,
+                'allow_customer_editing_email' => true,
+                'allow_customer_editing_name' => true,
+                'allow_customer_editing_state' => true,
+                'allow_customer_editing_street' => true,
+                'allow_customer_editing_zipcode' => true,
+                'allow_discount_code' => true,
+                'allow_phone_number_collection' => true,
+                'allow_tax_id' => true,
+                'always_create_new_customer' => true,
+            ],
+            'force_3ds' => true,
+            'metadata' => ['foo' => 'string'],
+            'return_url' => 'return_url',
+            'show_saved_payment_methods' => true,
+            'subscription_data' => [
+                'on_demand' => [
+                    'mandate_only' => true,
+                    'adaptive_currency_fees_inclusive' => true,
+                    'product_currency' => 'AED',
+                    'product_description' => 'product_description',
+                    'product_price' => 0,
+                ],
+                'trial_period_days' => 0,
+            ],
         ]);
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CheckoutSessionResponse::class, $result);
     }
 
     #[Test]
@@ -57,6 +107,7 @@ final class CheckoutSessionsTest extends TestCase
     {
         $result = $this->client->checkoutSessions->retrieve('id');
 
-        $this->assertTrue(true); // @phpstan-ignore method.alreadyNarrowedType
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CheckoutSessionStatus::class, $result);
     }
 }

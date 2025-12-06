@@ -95,12 +95,12 @@ final class WebhookUpdateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $description && $obj->description = $description;
-        null !== $disabled && $obj->disabled = $disabled;
+        null !== $description && $obj['description'] = $description;
+        null !== $disabled && $obj['disabled'] = $disabled;
         null !== $filter_types && $obj['filter_types'] = $filter_types;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $rate_limit && $obj->rate_limit = $rate_limit;
-        null !== $url && $obj->url = $url;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $rate_limit && $obj['rate_limit'] = $rate_limit;
+        null !== $url && $obj['url'] = $url;
 
         return $obj;
     }
@@ -111,7 +111,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withDisabled(?bool $disabled): self
     {
         $obj = clone $this;
-        $obj->disabled = $disabled;
+        $obj['disabled'] = $disabled;
 
         return $obj;
     }
@@ -150,7 +150,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withMetadata(?array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -161,7 +161,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj->rate_limit = $rateLimit;
+        $obj['rate_limit'] = $rateLimit;
 
         return $obj;
     }
@@ -172,7 +172,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withURL(?string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.3.0 (2025-12-06)
+
+Full Changelog: [v3.2.0...v3.3.0](https://github.com/dodopayments/dodopayments-php/compare/v3.2.0...v3.3.0)
+
+### Features
+
+* allow both model class instances and arrays in setters ([6724820](https://github.com/dodopayments/dodopayments-php/commit/672482081d2c9cc86fe781b68162ee984ae3efdf))
+* better support for pagination mechanisms ([cc2ae7e](https://github.com/dodopayments/dodopayments-php/commit/cc2ae7ea64a5459a738734344ee0fa2ab0d97d4c))
+
+
+### Bug Fixes
+
+* phpStan linter errors ([4c8b203](https://github.com/dodopayments/dodopayments-php/commit/4c8b203b54d1332d1c29f27676bb71fded0e5751))
+
+
+### Chores
+
+* be more targeted in suppressing superfluous linter warnings ([99360df](https://github.com/dodopayments/dodopayments-php/commit/99360df4b0e6ecb3b547681c47b8db91e7ace533))
+* **client:** refactor error type constructors ([ac0806a](https://github.com/dodopayments/dodopayments-php/commit/ac0806a8c57cd58b9b7ebaaa784542d6718ace60))
+* formatting ([3d08197](https://github.com/dodopayments/dodopayments-php/commit/3d0819747df6655a31f27f1d706fc09f498d1b2c))
+* **internal:** use single quote instead of double quote string ([7406d5c](https://github.com/dodopayments/dodopayments-php/commit/7406d5cb420b822253650cff4f886d870232a018))
+* use non-trivial test assertions ([1c5eecc](https://github.com/dodopayments/dodopayments-php/commit/1c5eecc43574be284431f33dc375b68ae55e1a65))
+* use single quote strings ([0aa11fa](https://github.com/dodopayments/dodopayments-php/commit/0aa11fa6b4dfe44b1742a3cea151ea5f2c17fb14))
+
 ## 3.2.0 (2025-11-17)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/dodopayments/dodopayments-php/compare/v3.1.0...v3.2.0)

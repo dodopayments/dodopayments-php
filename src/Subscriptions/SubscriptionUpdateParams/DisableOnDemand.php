@@ -49,7 +49,7 @@ final class DisableOnDemand implements BaseModel
     {
         $obj = new self;
 
-        $obj->next_billing_date = $next_billing_date;
+        $obj['next_billing_date'] = $next_billing_date;
 
         return $obj;
     }
@@ -58,7 +58,7 @@ final class DisableOnDemand implements BaseModel
         \DateTimeInterface $nextBillingDate
     ): self {
         $obj = clone $this;
-        $obj->next_billing_date = $nextBillingDate;
+        $obj['next_billing_date'] = $nextBillingDate;
 
         return $obj;
     }

@@ -110,25 +110,34 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
+     * @param Product|array{product_id: string, name?: string|null} $product
      */
     public static function with(
         string $id,
         string $business_id,
         \DateTimeInterface $created_at,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         string $license_key_id,
         string $name,
-        Product $product,
+        Product|array $product,
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->customer = $customer;
-        $obj->license_key_id = $license_key_id;
-        $obj->name = $name;
-        $obj->product = $product;
+        $obj['id'] = $id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['customer'] = $customer;
+        $obj['license_key_id'] = $license_key_id;
+        $obj['name'] = $name;
+        $obj['product'] = $product;
 
         return $obj;
     }
@@ -139,7 +148,7 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -150,7 +159,7 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -161,18 +170,26 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
 
     /**
      * Limited customer details associated with the license key.
+     *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      */
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -183,7 +200,7 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withLicenseKeyID(string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj->license_key_id = $licenseKeyID;
+        $obj['license_key_id'] = $licenseKeyID;
 
         return $obj;
     }
@@ -194,18 +211,20 @@ final class LicenseActivateResponse implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
 
     /**
      * Related product info. Present if the license key is tied to a product.
+     *
+     * @param Product|array{product_id: string, name?: string|null} $product
      */
-    public function withProduct(Product $product): self
+    public function withProduct(Product|array $product): self
     {
         $obj = clone $this;
-        $obj->product = $product;
+        $obj['product'] = $product;
 
         return $obj;
     }

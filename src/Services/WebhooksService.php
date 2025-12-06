@@ -40,7 +40,7 @@ final class WebhooksService implements WebhooksContract
      *   url: string,
      *   description?: string|null,
      *   disabled?: bool|null,
-     *   filter_types?: list<"payment.succeeded"|"payment.failed"|"payment.processing"|"payment.cancelled"|"refund.succeeded"|"refund.failed"|"dispute.opened"|"dispute.expired"|"dispute.accepted"|"dispute.cancelled"|"dispute.challenged"|"dispute.won"|"dispute.lost"|"subscription.active"|"subscription.renewed"|"subscription.on_hold"|"subscription.cancelled"|"subscription.failed"|"subscription.expired"|"subscription.plan_changed"|"license_key.created">,
+     *   filter_types?: list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'license_key.created'>,
      *   headers?: array<string,string>|null,
      *   idempotency_key?: string|null,
      *   metadata?: array<string,string>|null,
@@ -58,7 +58,7 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'webhooks',
@@ -79,7 +79,7 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s', $webhookID],
@@ -96,7 +96,7 @@ final class WebhooksService implements WebhooksContract
      * @param array{
      *   description?: string|null,
      *   disabled?: bool|null,
-     *   filter_types?: list<"payment.succeeded"|"payment.failed"|"payment.processing"|"payment.cancelled"|"refund.succeeded"|"refund.failed"|"dispute.opened"|"dispute.expired"|"dispute.accepted"|"dispute.cancelled"|"dispute.challenged"|"dispute.won"|"dispute.lost"|"subscription.active"|"subscription.renewed"|"subscription.on_hold"|"subscription.cancelled"|"subscription.failed"|"subscription.expired"|"subscription.plan_changed"|"license_key.created">|null,
+     *   filter_types?: list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'license_key.created'>|null,
      *   metadata?: array<string,string>|null,
      *   rate_limit?: int|null,
      *   url?: string|null,
@@ -114,7 +114,7 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s', $webhookID],
@@ -144,7 +144,7 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'webhooks',
@@ -166,7 +166,7 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['webhooks/%1$s', $webhookID],
@@ -186,7 +186,7 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/secret', $webhookID],

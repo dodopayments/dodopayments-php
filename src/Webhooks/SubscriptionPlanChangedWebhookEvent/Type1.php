@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\SubscriptionPlanChangedWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case SUBSCRIPTION_PLAN_CHANGED = 'subscription.plan_changed';
 }

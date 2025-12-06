@@ -175,19 +175,19 @@ final class Discount implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->amount = $amount;
-        $obj->business_id = $business_id;
-        $obj->code = $code;
-        $obj->created_at = $created_at;
-        $obj->discount_id = $discount_id;
-        $obj->restricted_to = $restricted_to;
-        $obj->times_used = $times_used;
+        $obj['amount'] = $amount;
+        $obj['business_id'] = $business_id;
+        $obj['code'] = $code;
+        $obj['created_at'] = $created_at;
+        $obj['discount_id'] = $discount_id;
+        $obj['restricted_to'] = $restricted_to;
+        $obj['times_used'] = $times_used;
         $obj['type'] = $type;
 
-        null !== $expires_at && $obj->expires_at = $expires_at;
-        null !== $name && $obj->name = $name;
-        null !== $subscription_cycles && $obj->subscription_cycles = $subscription_cycles;
-        null !== $usage_limit && $obj->usage_limit = $usage_limit;
+        null !== $expires_at && $obj['expires_at'] = $expires_at;
+        null !== $name && $obj['name'] = $name;
+        null !== $subscription_cycles && $obj['subscription_cycles'] = $subscription_cycles;
+        null !== $usage_limit && $obj['usage_limit'] = $usage_limit;
 
         return $obj;
     }
@@ -202,7 +202,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withAmount(int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -213,7 +213,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -224,7 +224,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withCode(string $code): self
     {
         $obj = clone $this;
-        $obj->code = $code;
+        $obj['code'] = $code;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -246,7 +246,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withDiscountID(string $discountID): self
     {
         $obj = clone $this;
-        $obj->discount_id = $discountID;
+        $obj['discount_id'] = $discountID;
 
         return $obj;
     }
@@ -259,7 +259,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withRestrictedTo(array $restrictedTo): self
     {
         $obj = clone $this;
-        $obj->restricted_to = $restrictedTo;
+        $obj['restricted_to'] = $restrictedTo;
 
         return $obj;
     }
@@ -270,7 +270,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withTimesUsed(int $timesUsed): self
     {
         $obj = clone $this;
-        $obj->times_used = $timesUsed;
+        $obj['times_used'] = $timesUsed;
 
         return $obj;
     }
@@ -294,7 +294,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expires_at = $expiresAt;
+        $obj['expires_at'] = $expiresAt;
 
         return $obj;
     }
@@ -305,7 +305,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -318,7 +318,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
         $obj = clone $this;
-        $obj->subscription_cycles = $subscriptionCycles;
+        $obj['subscription_cycles'] = $subscriptionCycles;
 
         return $obj;
     }
@@ -329,7 +329,7 @@ final class Discount implements BaseModel, ResponseConverter
     public function withUsageLimit(?int $usageLimit): self
     {
         $obj = clone $this;
-        $obj->usage_limit = $usageLimit;
+        $obj['usage_limit'] = $usageLimit;
 
         return $obj;
     }

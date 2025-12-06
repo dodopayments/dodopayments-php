@@ -141,16 +141,16 @@ final class Dispute implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->amount = $amount;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->currency = $currency;
-        $obj->dispute_id = $dispute_id;
+        $obj['amount'] = $amount;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['currency'] = $currency;
+        $obj['dispute_id'] = $dispute_id;
         $obj['dispute_stage'] = $dispute_stage;
         $obj['dispute_status'] = $dispute_status;
-        $obj->payment_id = $payment_id;
+        $obj['payment_id'] = $payment_id;
 
-        null !== $remarks && $obj->remarks = $remarks;
+        null !== $remarks && $obj['remarks'] = $remarks;
 
         return $obj;
     }
@@ -161,7 +161,7 @@ final class Dispute implements BaseModel
     public function withAmount(string $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -172,7 +172,7 @@ final class Dispute implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -183,7 +183,7 @@ final class Dispute implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -194,7 +194,7 @@ final class Dispute implements BaseModel
     public function withCurrency(string $currency): self
     {
         $obj = clone $this;
-        $obj->currency = $currency;
+        $obj['currency'] = $currency;
 
         return $obj;
     }
@@ -205,7 +205,7 @@ final class Dispute implements BaseModel
     public function withDisputeID(string $disputeID): self
     {
         $obj = clone $this;
-        $obj->dispute_id = $disputeID;
+        $obj['dispute_id'] = $disputeID;
 
         return $obj;
     }
@@ -242,7 +242,7 @@ final class Dispute implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -253,7 +253,7 @@ final class Dispute implements BaseModel
     public function withRemarks(?string $remarks): self
     {
         $obj = clone $this;
-        $obj->remarks = $remarks;
+        $obj['remarks'] = $remarks;
 
         return $obj;
     }

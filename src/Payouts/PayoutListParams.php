@@ -67,10 +67,10 @@ final class PayoutListParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $created_at_gte && $obj->created_at_gte = $created_at_gte;
-        null !== $created_at_lte && $obj->created_at_lte = $created_at_lte;
-        null !== $page_number && $obj->page_number = $page_number;
-        null !== $page_size && $obj->page_size = $page_size;
+        null !== $created_at_gte && $obj['created_at_gte'] = $created_at_gte;
+        null !== $created_at_lte && $obj['created_at_lte'] = $created_at_lte;
+        null !== $page_number && $obj['page_number'] = $page_number;
+        null !== $page_size && $obj['page_size'] = $page_size;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class PayoutListParams implements BaseModel
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
         $obj = clone $this;
-        $obj->created_at_gte = $createdAtGte;
+        $obj['created_at_gte'] = $createdAtGte;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class PayoutListParams implements BaseModel
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
         $obj = clone $this;
-        $obj->created_at_lte = $createdAtLte;
+        $obj['created_at_lte'] = $createdAtLte;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class PayoutListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->page_number = $pageNumber;
+        $obj['page_number'] = $pageNumber;
 
         return $obj;
     }
@@ -114,7 +114,7 @@ final class PayoutListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }

@@ -75,7 +75,7 @@ final class ProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AttachAddon>|null $addons
+     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
      */
     public static function with(
         string $product_id,
@@ -85,11 +85,11 @@ final class ProductCart implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->product_id = $product_id;
-        $obj->quantity = $quantity;
+        $obj['product_id'] = $product_id;
+        $obj['quantity'] = $quantity;
 
-        null !== $addons && $obj->addons = $addons;
-        null !== $amount && $obj->amount = $amount;
+        null !== $addons && $obj['addons'] = $addons;
+        null !== $amount && $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class ProductCart implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class ProductCart implements BaseModel
     public function withQuantity(int $quantity): self
     {
         $obj = clone $this;
-        $obj->quantity = $quantity;
+        $obj['quantity'] = $quantity;
 
         return $obj;
     }
@@ -116,12 +116,12 @@ final class ProductCart implements BaseModel
     /**
      * only valid if product is a subscription.
      *
-     * @param list<AttachAddon>|null $addons
+     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
      */
     public function withAddons(?array $addons): self
     {
         $obj = clone $this;
-        $obj->addons = $addons;
+        $obj['addons'] = $addons;
 
         return $obj;
     }
@@ -138,7 +138,7 @@ final class ProductCart implements BaseModel
     public function withAmount(?int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }

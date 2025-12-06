@@ -29,7 +29,7 @@ final class HeadersService implements HeadersContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/headers', $webhookID],
@@ -57,7 +57,7 @@ final class HeadersService implements HeadersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s/headers', $webhookID],

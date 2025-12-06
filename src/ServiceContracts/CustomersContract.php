@@ -24,7 +24,7 @@ interface CustomersContract
      */
     public function create(
         array|CustomerCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): Customer;
 
     /**

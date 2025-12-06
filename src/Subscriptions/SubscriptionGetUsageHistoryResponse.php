@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
 
 /**
@@ -74,7 +75,16 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Meter> $meters
+     * @param list<Meter|array{
+     *   id: string,
+     *   chargeable_units: string,
+     *   consumed_units: string,
+     *   currency: value-of<Currency>,
+     *   free_threshold: int,
+     *   name: string,
+     *   price_per_unit: string,
+     *   total_price: int,
+     * }> $meters
      */
     public static function with(
         \DateTimeInterface $end_date,
@@ -83,9 +93,9 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     ): self {
         $obj = new self;
 
-        $obj->end_date = $end_date;
-        $obj->meters = $meters;
-        $obj->start_date = $start_date;
+        $obj['end_date'] = $end_date;
+        $obj['meters'] = $meters;
+        $obj['start_date'] = $start_date;
 
         return $obj;
     }
@@ -96,7 +106,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     public function withEndDate(\DateTimeInterface $endDate): self
     {
         $obj = clone $this;
-        $obj->end_date = $endDate;
+        $obj['end_date'] = $endDate;
 
         return $obj;
     }
@@ -104,12 +114,21 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     /**
      * List of meters and their usage for this billing period.
      *
-     * @param list<Meter> $meters
+     * @param list<Meter|array{
+     *   id: string,
+     *   chargeable_units: string,
+     *   consumed_units: string,
+     *   currency: value-of<Currency>,
+     *   free_threshold: int,
+     *   name: string,
+     *   price_per_unit: string,
+     *   total_price: int,
+     * }> $meters
      */
     public function withMeters(array $meters): self
     {
         $obj = clone $this;
-        $obj->meters = $meters;
+        $obj['meters'] = $meters;
 
         return $obj;
     }
@@ -120,7 +139,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel, ResponseCo
     public function withStartDate(\DateTimeInterface $startDate): self
     {
         $obj = clone $this;
-        $obj->start_date = $startDate;
+        $obj['start_date'] = $startDate;
 
         return $obj;
     }

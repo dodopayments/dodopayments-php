@@ -60,11 +60,11 @@ final class BrandCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $description && $obj->description = $description;
-        null !== $name && $obj->name = $name;
-        null !== $statement_descriptor && $obj->statement_descriptor = $statement_descriptor;
-        null !== $support_email && $obj->support_email = $support_email;
-        null !== $url && $obj->url = $url;
+        null !== $description && $obj['description'] = $description;
+        null !== $name && $obj['name'] = $name;
+        null !== $statement_descriptor && $obj['statement_descriptor'] = $statement_descriptor;
+        null !== $support_email && $obj['support_email'] = $support_email;
+        null !== $url && $obj['url'] = $url;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class BrandCreateParams implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -80,7 +80,7 @@ final class BrandCreateParams implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class BrandCreateParams implements BaseModel
     public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $obj = clone $this;
-        $obj->statement_descriptor = $statementDescriptor;
+        $obj['statement_descriptor'] = $statementDescriptor;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class BrandCreateParams implements BaseModel
     public function withSupportEmail(?string $supportEmail): self
     {
         $obj = clone $this;
-        $obj->support_email = $supportEmail;
+        $obj['support_email'] = $supportEmail;
 
         return $obj;
     }
@@ -104,7 +104,7 @@ final class BrandCreateParams implements BaseModel
     public function withURL(?string $url): self
     {
         $obj = clone $this;
-        $obj->url = $url;
+        $obj['url'] = $url;
 
         return $obj;
     }

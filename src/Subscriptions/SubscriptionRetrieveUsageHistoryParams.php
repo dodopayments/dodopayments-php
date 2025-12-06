@@ -107,11 +107,11 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $end_date && $obj->end_date = $end_date;
-        null !== $meter_id && $obj->meter_id = $meter_id;
-        null !== $page_number && $obj->page_number = $page_number;
-        null !== $page_size && $obj->page_size = $page_size;
-        null !== $start_date && $obj->start_date = $start_date;
+        null !== $end_date && $obj['end_date'] = $end_date;
+        null !== $meter_id && $obj['meter_id'] = $meter_id;
+        null !== $page_number && $obj['page_number'] = $page_number;
+        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $start_date && $obj['start_date'] = $start_date;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withEndDate(?\DateTimeInterface $endDate): self
     {
         $obj = clone $this;
-        $obj->end_date = $endDate;
+        $obj['end_date'] = $endDate;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withMeterID(?string $meterID): self
     {
         $obj = clone $this;
-        $obj->meter_id = $meterID;
+        $obj['meter_id'] = $meterID;
 
         return $obj;
     }
@@ -144,7 +144,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withPageNumber(?int $pageNumber): self
     {
         $obj = clone $this;
-        $obj->page_number = $pageNumber;
+        $obj['page_number'] = $pageNumber;
 
         return $obj;
     }
@@ -155,7 +155,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withPageSize(?int $pageSize): self
     {
         $obj = clone $this;
-        $obj->page_size = $pageSize;
+        $obj['page_size'] = $pageSize;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withStartDate(?\DateTimeInterface $startDate): self
     {
         $obj = clone $this;
-        $obj->start_date = $startDate;
+        $obj['start_date'] = $startDate;
 
         return $obj;
     }

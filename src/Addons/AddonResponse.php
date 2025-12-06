@@ -155,17 +155,17 @@ final class AddonResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
+        $obj['id'] = $id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->name = $name;
-        $obj->price = $price;
+        $obj['name'] = $name;
+        $obj['price'] = $price;
         $obj['tax_category'] = $tax_category;
-        $obj->updated_at = $updated_at;
+        $obj['updated_at'] = $updated_at;
 
-        null !== $description && $obj->description = $description;
-        null !== $image && $obj->image = $image;
+        null !== $description && $obj['description'] = $description;
+        null !== $image && $obj['image'] = $image;
 
         return $obj;
     }
@@ -176,7 +176,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -187,7 +187,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -198,7 +198,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -222,7 +222,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -233,7 +233,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withPrice(int $price): self
     {
         $obj = clone $this;
-        $obj->price = $price;
+        $obj['price'] = $price;
 
         return $obj;
     }
@@ -257,7 +257,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -279,7 +279,7 @@ final class AddonResponse implements BaseModel, ResponseConverter
     public function withImage(?string $image): self
     {
         $obj = clone $this;
-        $obj->image = $image;
+        $obj['image'] = $image;
 
         return $obj;
     }

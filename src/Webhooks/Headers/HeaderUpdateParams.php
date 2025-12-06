@@ -60,7 +60,7 @@ final class HeaderUpdateParams implements BaseModel
     {
         $obj = new self;
 
-        $obj->headers = $headers;
+        $obj['headers'] = $headers;
 
         return $obj;
     }
@@ -73,7 +73,7 @@ final class HeaderUpdateParams implements BaseModel
     public function withHeaders(array $headers): self
     {
         $obj = clone $this;
-        $obj->headers = $headers;
+        $obj['headers'] = $headers;
 
         return $obj;
     }

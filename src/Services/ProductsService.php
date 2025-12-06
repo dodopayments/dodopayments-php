@@ -43,7 +43,7 @@ final class ProductsService implements ProductsContract
      * @param array{
      *   name: string,
      *   price: Price|array<string,mixed>,
-     *   tax_category: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory,
+     *   tax_category: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
      *   addons?: list<string>|null,
      *   brand_id?: string|null,
      *   description?: string|null,
@@ -53,7 +53,7 @@ final class ProductsService implements ProductsContract
      *   license_key_activation_message?: string|null,
      *   license_key_activations_limit?: int|null,
      *   license_key_duration?: array{
-     *     count: int, interval: "Day"|"Week"|"Month"|"Year"|TimeInterval
+     *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
      *   }|LicenseKeyDuration|null,
      *   license_key_enabled?: bool|null,
      *   metadata?: array<string,string>,
@@ -70,7 +70,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'products',
@@ -89,7 +89,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Product {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['products/%1$s', $id],
@@ -114,13 +114,13 @@ final class ProductsService implements ProductsContract
      *   license_key_activation_message?: string|null,
      *   license_key_activations_limit?: int|null,
      *   license_key_duration?: array{
-     *     count: int, interval: "Day"|"Week"|"Month"|"Year"|TimeInterval
+     *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
      *   }|LicenseKeyDuration|null,
      *   license_key_enabled?: bool|null,
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
      *   price?: Price|array<string,mixed>|null,
-     *   tax_category?: "digital_products"|"saas"|"e_book"|"edtech"|TaxCategory|null,
+     *   tax_category?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
      * }|ProductUpdateParams $params
      *
      * @throws APIException
@@ -135,7 +135,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'patch',
             path: ['products/%1$s', $id],
@@ -169,7 +169,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'products',
@@ -189,7 +189,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['products/%1$s', $id],
@@ -207,7 +207,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['products/%1$s/unarchive', $id],
@@ -233,7 +233,7 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'put',
             path: ['products/%1$s/files', $id],

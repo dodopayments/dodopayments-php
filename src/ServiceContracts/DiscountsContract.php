@@ -23,7 +23,7 @@ interface DiscountsContract
      */
     public function create(
         array|DiscountCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?RequestOptions $requestOptions = null
     ): Discount;
 
     /**

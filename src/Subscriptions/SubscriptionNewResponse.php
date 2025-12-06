@@ -134,12 +134,21 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItem> $addons
+     * @param list<AddonCartResponseItem|array{
+     *   addon_id: string, quantity: int
+     * }> $addons
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      * @param array<string,string> $metadata
      */
     public static function with(
         array $addons,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         array $metadata,
         string $payment_id,
         int $recurring_pre_tax_amount,
@@ -151,17 +160,17 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->addons = $addons;
-        $obj->customer = $customer;
-        $obj->metadata = $metadata;
-        $obj->payment_id = $payment_id;
-        $obj->recurring_pre_tax_amount = $recurring_pre_tax_amount;
-        $obj->subscription_id = $subscription_id;
+        $obj['addons'] = $addons;
+        $obj['customer'] = $customer;
+        $obj['metadata'] = $metadata;
+        $obj['payment_id'] = $payment_id;
+        $obj['recurring_pre_tax_amount'] = $recurring_pre_tax_amount;
+        $obj['subscription_id'] = $subscription_id;
 
-        null !== $client_secret && $obj->client_secret = $client_secret;
-        null !== $discount_id && $obj->discount_id = $discount_id;
-        null !== $expires_on && $obj->expires_on = $expires_on;
-        null !== $payment_link && $obj->payment_link = $payment_link;
+        null !== $client_secret && $obj['client_secret'] = $client_secret;
+        null !== $discount_id && $obj['discount_id'] = $discount_id;
+        null !== $expires_on && $obj['expires_on'] = $expires_on;
+        null !== $payment_link && $obj['payment_link'] = $payment_link;
 
         return $obj;
     }
@@ -169,23 +178,33 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItem> $addons
+     * @param list<AddonCartResponseItem|array{
+     *   addon_id: string, quantity: int
+     * }> $addons
      */
     public function withAddons(array $addons): self
     {
         $obj = clone $this;
-        $obj->addons = $addons;
+        $obj['addons'] = $addons;
 
         return $obj;
     }
 
     /**
      * Customer details associated with this subscription.
+     *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      */
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -198,7 +217,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -209,7 +228,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -220,7 +239,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
         $obj = clone $this;
-        $obj->recurring_pre_tax_amount = $recurringPreTaxAmount;
+        $obj['recurring_pre_tax_amount'] = $recurringPreTaxAmount;
 
         return $obj;
     }
@@ -231,7 +250,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withSubscriptionID(string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscription_id = $subscriptionID;
+        $obj['subscription_id'] = $subscriptionID;
 
         return $obj;
     }
@@ -243,7 +262,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withClientSecret(?string $clientSecret): self
     {
         $obj = clone $this;
-        $obj->client_secret = $clientSecret;
+        $obj['client_secret'] = $clientSecret;
 
         return $obj;
     }
@@ -254,7 +273,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discount_id = $discountID;
+        $obj['discount_id'] = $discountID;
 
         return $obj;
     }
@@ -265,7 +284,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj->expires_on = $expiresOn;
+        $obj['expires_on'] = $expiresOn;
 
         return $obj;
     }
@@ -276,7 +295,7 @@ final class SubscriptionNewResponse implements BaseModel, ResponseConverter
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj->payment_link = $paymentLink;
+        $obj['payment_link'] = $paymentLink;
 
         return $obj;
     }

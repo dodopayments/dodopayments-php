@@ -7,7 +7,7 @@ namespace Dodopayments\Webhooks\DisputeExpiredWebhookEvent;
 /**
  * The event type.
  */
-enum Type: string
+enum Type1: string
 {
     case DISPUTE_EXPIRED = 'dispute.expired';
 }

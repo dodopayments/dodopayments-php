@@ -27,14 +27,14 @@ final class MetersService implements MetersContract
      *
      * @param array{
      *   aggregation: array{
-     *     type: "count"|"sum"|"max"|"last", key?: string|null
+     *     type: 'count'|'sum'|'max'|'last', key?: string|null
      *   }|MeterAggregation,
      *   event_name: string,
      *   measurement_unit: string,
      *   name: string,
      *   description?: string|null,
      *   filter?: array{
-     *     clauses: list<array<mixed>>|list<array<mixed>>, conjunction: "and"|"or"
+     *     clauses: list<array<mixed>>|list<array<mixed>>, conjunction: 'and'|'or'
      *   }|MeterFilter|null,
      * }|MeterCreateParams $params
      *
@@ -49,7 +49,7 @@ final class MetersService implements MetersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'meters',
@@ -68,7 +68,7 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Meter {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['meters/%1$s', $id],
@@ -97,7 +97,7 @@ final class MetersService implements MetersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'meters',
@@ -117,7 +117,7 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'delete',
             path: ['meters/%1$s', $id],
@@ -135,7 +135,7 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line;
+        // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: ['meters/%1$s/unarchive', $id],

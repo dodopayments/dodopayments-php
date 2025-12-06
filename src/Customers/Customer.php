@@ -98,14 +98,14 @@ final class Customer implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->customer_id = $customer_id;
-        $obj->email = $email;
-        $obj->name = $name;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['customer_id'] = $customer_id;
+        $obj['email'] = $email;
+        $obj['name'] = $name;
 
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $phone_number && $obj->phone_number = $phone_number;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $phone_number && $obj['phone_number'] = $phone_number;
 
         return $obj;
     }
@@ -113,7 +113,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -121,7 +121,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -129,7 +129,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -137,7 +137,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withEmail(string $email): self
     {
         $obj = clone $this;
-        $obj->email = $email;
+        $obj['email'] = $email;
 
         return $obj;
     }
@@ -145,7 +145,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -158,7 +158,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class Customer implements BaseModel, ResponseConverter
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phone_number = $phoneNumber;
+        $obj['phone_number'] = $phoneNumber;
 
         return $obj;
     }

@@ -6,6 +6,7 @@ namespace Dodopayments\CheckoutSessions;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization\Theme;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
@@ -13,29 +14,67 @@ use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
+use Dodopayments\Subscriptions\AttachAddon;
+use Dodopayments\Subscriptions\OnDemandSubscription;
 
 /**
  * @see Dodopayments\Services\CheckoutSessionsService::create()
  *
  * @phpstan-type CheckoutSessionCreateParamsShape = array{
- *   product_cart: list<ProductCart>,
+ *   product_cart: list<ProductCart|array{
+ *     product_id: string,
+ *     quantity: int,
+ *     addons?: list<AttachAddon>|null,
+ *     amount?: int|null,
+ *   }>,
  *   allowed_payment_method_types?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
- *   billing_address?: BillingAddress|null,
+ *   billing_address?: null|BillingAddress|array{
+ *     country: value-of<CountryCode>,
+ *     city?: string|null,
+ *     state?: string|null,
+ *     street?: string|null,
+ *     zipcode?: string|null,
+ *   },
  *   billing_currency?: null|Currency|value-of<Currency>,
  *   confirm?: bool,
- *   customer?: null|AttachExistingCustomer|NewCustomer,
- *   customization?: Customization,
+ *   customer?: null|AttachExistingCustomer|array{
+ *     customer_id: string
+ *   }|NewCustomer|array{
+ *     email: string, name?: string|null, phone_number?: string|null
+ *   },
+ *   customization?: Customization|array{
+ *     force_language?: string|null,
+ *     show_on_demand_tag?: bool|null,
+ *     show_order_details?: bool|null,
+ *     theme?: value-of<Theme>|null,
+ *   },
  *   discount_code?: string|null,
- *   feature_flags?: FeatureFlags,
+ *   feature_flags?: FeatureFlags|array{
+ *     allow_currency_selection?: bool|null,
+ *     allow_customer_editing_city?: bool|null,
+ *     allow_customer_editing_country?: bool|null,
+ *     allow_customer_editing_email?: bool|null,
+ *     allow_customer_editing_name?: bool|null,
+ *     allow_customer_editing_state?: bool|null,
+ *     allow_customer_editing_street?: bool|null,
+ *     allow_customer_editing_zipcode?: bool|null,
+ *     allow_discount_code?: bool|null,
+ *     allow_phone_number_collection?: bool|null,
+ *     allow_tax_id?: bool|null,
+ *     always_create_new_customer?: bool|null,
+ *   },
  *   force_3ds?: bool|null,
  *   metadata?: array<string,string>|null,
  *   return_url?: string|null,
  *   show_saved_payment_methods?: bool,
- *   subscription_data?: SubscriptionData|null,
+ *   subscription_data?: null|SubscriptionData|array{
+ *     on_demand?: OnDemandSubscription|null, trial_period_days?: int|null
+ *   },
  * }
  */
 final class CheckoutSessionCreateParams implements BaseModel
@@ -152,55 +191,98 @@ final class CheckoutSessionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ProductCart> $product_cart
+     * @param list<ProductCart|array{
+     *   product_id: string,
+     *   quantity: int,
+     *   addons?: list<AttachAddon>|null,
+     *   amount?: int|null,
+     * }> $product_cart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
+     * @param BillingAddress|array{
+     *   country: value-of<CountryCode>,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
+     * }|null $billing_address
      * @param Currency|value-of<Currency>|null $billing_currency
+     * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+     *   email: string, name?: string|null, phone_number?: string|null
+     * }|null $customer
+     * @param Customization|array{
+     *   force_language?: string|null,
+     *   show_on_demand_tag?: bool|null,
+     *   show_order_details?: bool|null,
+     *   theme?: value-of<Theme>|null,
+     * } $customization
+     * @param FeatureFlags|array{
+     *   allow_currency_selection?: bool|null,
+     *   allow_customer_editing_city?: bool|null,
+     *   allow_customer_editing_country?: bool|null,
+     *   allow_customer_editing_email?: bool|null,
+     *   allow_customer_editing_name?: bool|null,
+     *   allow_customer_editing_state?: bool|null,
+     *   allow_customer_editing_street?: bool|null,
+     *   allow_customer_editing_zipcode?: bool|null,
+     *   allow_discount_code?: bool|null,
+     *   allow_phone_number_collection?: bool|null,
+     *   allow_tax_id?: bool|null,
+     *   always_create_new_customer?: bool|null,
+     * } $feature_flags
      * @param array<string,string>|null $metadata
+     * @param SubscriptionData|array{
+     *   on_demand?: OnDemandSubscription|null, trial_period_days?: int|null
+     * }|null $subscription_data
      */
     public static function with(
         array $product_cart,
         ?array $allowed_payment_method_types = null,
-        ?BillingAddress $billing_address = null,
+        BillingAddress|array|null $billing_address = null,
         Currency|string|null $billing_currency = null,
         ?bool $confirm = null,
-        AttachExistingCustomer|NewCustomer|null $customer = null,
-        ?Customization $customization = null,
+        AttachExistingCustomer|array|NewCustomer|null $customer = null,
+        Customization|array|null $customization = null,
         ?string $discount_code = null,
-        ?FeatureFlags $feature_flags = null,
+        FeatureFlags|array|null $feature_flags = null,
         ?bool $force_3ds = null,
         ?array $metadata = null,
         ?string $return_url = null,
         ?bool $show_saved_payment_methods = null,
-        ?SubscriptionData $subscription_data = null,
+        SubscriptionData|array|null $subscription_data = null,
     ): self {
         $obj = new self;
 
-        $obj->product_cart = $product_cart;
+        $obj['product_cart'] = $product_cart;
 
         null !== $allowed_payment_method_types && $obj['allowed_payment_method_types'] = $allowed_payment_method_types;
-        null !== $billing_address && $obj->billing_address = $billing_address;
+        null !== $billing_address && $obj['billing_address'] = $billing_address;
         null !== $billing_currency && $obj['billing_currency'] = $billing_currency;
-        null !== $confirm && $obj->confirm = $confirm;
-        null !== $customer && $obj->customer = $customer;
-        null !== $customization && $obj->customization = $customization;
-        null !== $discount_code && $obj->discount_code = $discount_code;
-        null !== $feature_flags && $obj->feature_flags = $feature_flags;
-        null !== $force_3ds && $obj->force_3ds = $force_3ds;
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $return_url && $obj->return_url = $return_url;
-        null !== $show_saved_payment_methods && $obj->show_saved_payment_methods = $show_saved_payment_methods;
-        null !== $subscription_data && $obj->subscription_data = $subscription_data;
+        null !== $confirm && $obj['confirm'] = $confirm;
+        null !== $customer && $obj['customer'] = $customer;
+        null !== $customization && $obj['customization'] = $customization;
+        null !== $discount_code && $obj['discount_code'] = $discount_code;
+        null !== $feature_flags && $obj['feature_flags'] = $feature_flags;
+        null !== $force_3ds && $obj['force_3ds'] = $force_3ds;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $return_url && $obj['return_url'] = $return_url;
+        null !== $show_saved_payment_methods && $obj['show_saved_payment_methods'] = $show_saved_payment_methods;
+        null !== $subscription_data && $obj['subscription_data'] = $subscription_data;
 
         return $obj;
     }
 
     /**
-     * @param list<ProductCart> $productCart
+     * @param list<ProductCart|array{
+     *   product_id: string,
+     *   quantity: int,
+     *   addons?: list<AttachAddon>|null,
+     *   amount?: int|null,
+     * }> $productCart
      */
     public function withProductCart(array $productCart): self
     {
         $obj = clone $this;
-        $obj->product_cart = $productCart;
+        $obj['product_cart'] = $productCart;
 
         return $obj;
     }
@@ -226,11 +308,20 @@ final class CheckoutSessionCreateParams implements BaseModel
 
     /**
      * Billing address information for the session.
+     *
+     * @param BillingAddress|array{
+     *   country: value-of<CountryCode>,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
+     * }|null $billingAddress
      */
-    public function withBillingAddress(?BillingAddress $billingAddress): self
-    {
+    public function withBillingAddress(
+        BillingAddress|array|null $billingAddress
+    ): self {
         $obj = clone $this;
-        $obj->billing_address = $billingAddress;
+        $obj['billing_address'] = $billingAddress;
 
         return $obj;
     }
@@ -255,30 +346,41 @@ final class CheckoutSessionCreateParams implements BaseModel
     public function withConfirm(bool $confirm): self
     {
         $obj = clone $this;
-        $obj->confirm = $confirm;
+        $obj['confirm'] = $confirm;
 
         return $obj;
     }
 
     /**
      * Customer details for the session.
+     *
+     * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
+     *   email: string, name?: string|null, phone_number?: string|null
+     * }|null $customer
      */
     public function withCustomer(
-        AttachExistingCustomer|NewCustomer|null $customer
+        AttachExistingCustomer|array|NewCustomer|null $customer
     ): self {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
 
     /**
      * Customization for the checkout session page.
+     *
+     * @param Customization|array{
+     *   force_language?: string|null,
+     *   show_on_demand_tag?: bool|null,
+     *   show_order_details?: bool|null,
+     *   theme?: value-of<Theme>|null,
+     * } $customization
      */
-    public function withCustomization(Customization $customization): self
+    public function withCustomization(Customization|array $customization): self
     {
         $obj = clone $this;
-        $obj->customization = $customization;
+        $obj['customization'] = $customization;
 
         return $obj;
     }
@@ -286,15 +388,31 @@ final class CheckoutSessionCreateParams implements BaseModel
     public function withDiscountCode(?string $discountCode): self
     {
         $obj = clone $this;
-        $obj->discount_code = $discountCode;
+        $obj['discount_code'] = $discountCode;
 
         return $obj;
     }
 
-    public function withFeatureFlags(FeatureFlags $featureFlags): self
+    /**
+     * @param FeatureFlags|array{
+     *   allow_currency_selection?: bool|null,
+     *   allow_customer_editing_city?: bool|null,
+     *   allow_customer_editing_country?: bool|null,
+     *   allow_customer_editing_email?: bool|null,
+     *   allow_customer_editing_name?: bool|null,
+     *   allow_customer_editing_state?: bool|null,
+     *   allow_customer_editing_street?: bool|null,
+     *   allow_customer_editing_zipcode?: bool|null,
+     *   allow_discount_code?: bool|null,
+     *   allow_phone_number_collection?: bool|null,
+     *   allow_tax_id?: bool|null,
+     *   always_create_new_customer?: bool|null,
+     * } $featureFlags
+     */
+    public function withFeatureFlags(FeatureFlags|array $featureFlags): self
     {
         $obj = clone $this;
-        $obj->feature_flags = $featureFlags;
+        $obj['feature_flags'] = $featureFlags;
 
         return $obj;
     }
@@ -305,7 +423,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     public function withForce3DS(?bool $force3DS): self
     {
         $obj = clone $this;
-        $obj->force_3ds = $force3DS;
+        $obj['force_3ds'] = $force3DS;
 
         return $obj;
     }
@@ -318,7 +436,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     public function withMetadata(?array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -329,7 +447,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj->return_url = $returnURL;
+        $obj['return_url'] = $returnURL;
 
         return $obj;
     }
@@ -341,16 +459,21 @@ final class CheckoutSessionCreateParams implements BaseModel
         bool $showSavedPaymentMethods
     ): self {
         $obj = clone $this;
-        $obj->show_saved_payment_methods = $showSavedPaymentMethods;
+        $obj['show_saved_payment_methods'] = $showSavedPaymentMethods;
 
         return $obj;
     }
 
+    /**
+     * @param SubscriptionData|array{
+     *   on_demand?: OnDemandSubscription|null, trial_period_days?: int|null
+     * }|null $subscriptionData
+     */
     public function withSubscriptionData(
-        ?SubscriptionData $subscriptionData
+        SubscriptionData|array|null $subscriptionData
     ): self {
         $obj = clone $this;
-        $obj->subscription_data = $subscriptionData;
+        $obj['subscription_data'] = $subscriptionData;
 
         return $obj;
     }
