@@ -55,10 +55,10 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel, Respon
     ): self {
         $obj = new self;
 
-        null !== $client_secret && $obj->client_secret = $client_secret;
-        null !== $expires_on && $obj->expires_on = $expires_on;
-        null !== $payment_id && $obj->payment_id = $payment_id;
-        null !== $payment_link && $obj->payment_link = $payment_link;
+        null !== $client_secret && $obj['client_secret'] = $client_secret;
+        null !== $expires_on && $obj['expires_on'] = $expires_on;
+        null !== $payment_id && $obj['payment_id'] = $payment_id;
+        null !== $payment_link && $obj['payment_link'] = $payment_link;
 
         return $obj;
     }
@@ -66,7 +66,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel, Respon
     public function withClientSecret(?string $clientSecret): self
     {
         $obj = clone $this;
-        $obj->client_secret = $clientSecret;
+        $obj['client_secret'] = $clientSecret;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel, Respon
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj->expires_on = $expiresOn;
+        $obj['expires_on'] = $expiresOn;
 
         return $obj;
     }
@@ -82,7 +82,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel, Respon
     public function withPaymentID(?string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -90,7 +90,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel, Respon
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj->payment_link = $paymentLink;
+        $obj['payment_link'] = $paymentLink;
 
         return $obj;
     }

@@ -17,7 +17,10 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
  * @phpstan-type SubscriptionChargeParamsShape = array{
  *   product_price: int,
  *   adaptive_currency_fees_inclusive?: bool|null,
- *   customer_balance_config?: CustomerBalanceConfig|null,
+ *   customer_balance_config?: null|CustomerBalanceConfig|array{
+ *     allow_customer_credits_purchase?: bool|null,
+ *     allow_customer_credits_usage?: bool|null,
+ *   },
  *   metadata?: array<string,string>|null,
  *   product_currency?: null|Currency|value-of<Currency>,
  *   product_description?: string|null,
@@ -96,26 +99,30 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param CustomerBalanceConfig|array{
+     *   allow_customer_credits_purchase?: bool|null,
+     *   allow_customer_credits_usage?: bool|null,
+     * }|null $customer_balance_config
      * @param array<string,string>|null $metadata
      * @param Currency|value-of<Currency>|null $product_currency
      */
     public static function with(
         int $product_price,
         ?bool $adaptive_currency_fees_inclusive = null,
-        ?CustomerBalanceConfig $customer_balance_config = null,
+        CustomerBalanceConfig|array|null $customer_balance_config = null,
         ?array $metadata = null,
         Currency|string|null $product_currency = null,
         ?string $product_description = null,
     ): self {
         $obj = new self;
 
-        $obj->product_price = $product_price;
+        $obj['product_price'] = $product_price;
 
-        null !== $adaptive_currency_fees_inclusive && $obj->adaptive_currency_fees_inclusive = $adaptive_currency_fees_inclusive;
-        null !== $customer_balance_config && $obj->customer_balance_config = $customer_balance_config;
-        null !== $metadata && $obj->metadata = $metadata;
+        null !== $adaptive_currency_fees_inclusive && $obj['adaptive_currency_fees_inclusive'] = $adaptive_currency_fees_inclusive;
+        null !== $customer_balance_config && $obj['customer_balance_config'] = $customer_balance_config;
+        null !== $metadata && $obj['metadata'] = $metadata;
         null !== $product_currency && $obj['product_currency'] = $product_currency;
-        null !== $product_description && $obj->product_description = $product_description;
+        null !== $product_description && $obj['product_description'] = $product_description;
 
         return $obj;
     }
@@ -127,7 +134,7 @@ final class SubscriptionChargeParams implements BaseModel
     public function withProductPrice(int $productPrice): self
     {
         $obj = clone $this;
-        $obj->product_price = $productPrice;
+        $obj['product_price'] = $productPrice;
 
         return $obj;
     }
@@ -140,19 +147,24 @@ final class SubscriptionChargeParams implements BaseModel
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
         $obj = clone $this;
-        $obj->adaptive_currency_fees_inclusive = $adaptiveCurrencyFeesInclusive;
+        $obj['adaptive_currency_fees_inclusive'] = $adaptiveCurrencyFeesInclusive;
 
         return $obj;
     }
 
     /**
      * Specify how customer balance is used for the payment.
+     *
+     * @param CustomerBalanceConfig|array{
+     *   allow_customer_credits_purchase?: bool|null,
+     *   allow_customer_credits_usage?: bool|null,
+     * }|null $customerBalanceConfig
      */
     public function withCustomerBalanceConfig(
-        ?CustomerBalanceConfig $customerBalanceConfig
+        CustomerBalanceConfig|array|null $customerBalanceConfig
     ): self {
         $obj = clone $this;
-        $obj->customer_balance_config = $customerBalanceConfig;
+        $obj['customer_balance_config'] = $customerBalanceConfig;
 
         return $obj;
     }
@@ -165,7 +177,7 @@ final class SubscriptionChargeParams implements BaseModel
     public function withMetadata(?array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -191,7 +203,7 @@ final class SubscriptionChargeParams implements BaseModel
     public function withProductDescription(?string $productDescription): self
     {
         $obj = clone $this;
-        $obj->product_description = $productDescription;
+        $obj['product_description'] = $productDescription;
 
         return $obj;
     }

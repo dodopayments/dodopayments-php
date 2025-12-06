@@ -9,7 +9,10 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses;
 use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
+use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Operator;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
+use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1FilterCondition;
+use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter;
 use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
@@ -68,7 +71,12 @@ final class MeterFilter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DirectFilterCondition>|list<NestedMeterFilter> $clauses
+     * @param list<DirectFilterCondition|array{
+     *   key: string, operator: value-of<Operator>, value: string|float|bool
+     * }>|list<NestedMeterFilter|array{
+     *   clauses: list<Level1FilterCondition>|list<Level1NestedFilter>,
+     *   conjunction: value-of<NestedMeterFilter\Conjunction>,
+     * }> $clauses
      * @param Conjunction|value-of<Conjunction> $conjunction
      */
     public static function with(
@@ -77,7 +85,7 @@ final class MeterFilter implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->clauses = $clauses;
+        $obj['clauses'] = $clauses;
         $obj['conjunction'] = $conjunction;
 
         return $obj;
@@ -86,12 +94,17 @@ final class MeterFilter implements BaseModel
     /**
      * Filter clauses - can be direct conditions or nested filters (up to 3 levels deep).
      *
-     * @param list<DirectFilterCondition>|list<NestedMeterFilter> $clauses
+     * @param list<DirectFilterCondition|array{
+     *   key: string, operator: value-of<Operator>, value: string|float|bool
+     * }>|list<NestedMeterFilter|array{
+     *   clauses: list<Level1FilterCondition>|list<Level1NestedFilter>,
+     *   conjunction: value-of<NestedMeterFilter\Conjunction>,
+     * }> $clauses
      */
     public function withClauses(array $clauses): self
     {
         $obj = clone $this;
-        $obj->clauses = $clauses;
+        $obj['clauses'] = $clauses;
 
         return $obj;
     }

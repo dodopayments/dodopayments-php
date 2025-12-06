@@ -62,8 +62,8 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
     {
         $obj = new self;
 
-        $obj->checkout_url = $checkout_url;
-        $obj->session_id = $session_id;
+        $obj['checkout_url'] = $checkout_url;
+        $obj['session_id'] = $session_id;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
     public function withCheckoutURL(string $checkoutURL): self
     {
         $obj = clone $this;
-        $obj->checkout_url = $checkoutURL;
+        $obj['checkout_url'] = $checkoutURL;
 
         return $obj;
     }
@@ -85,7 +85,7 @@ final class CheckoutSessionResponse implements BaseModel, ResponseConverter
     public function withSessionID(string $sessionID): self
     {
         $obj = clone $this;
-        $obj->session_id = $sessionID;
+        $obj['session_id'] = $sessionID;
 
         return $obj;
     }

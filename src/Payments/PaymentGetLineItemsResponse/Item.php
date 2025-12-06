@@ -79,13 +79,13 @@ final class Item implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->amount = $amount;
-        $obj->items_id = $items_id;
-        $obj->refundable_amount = $refundable_amount;
-        $obj->tax = $tax;
+        $obj['amount'] = $amount;
+        $obj['items_id'] = $items_id;
+        $obj['refundable_amount'] = $refundable_amount;
+        $obj['tax'] = $tax;
 
-        null !== $description && $obj->description = $description;
-        null !== $name && $obj->name = $name;
+        null !== $description && $obj['description'] = $description;
+        null !== $name && $obj['name'] = $name;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class Item implements BaseModel
     public function withAmount(int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class Item implements BaseModel
     public function withItemsID(string $itemsID): self
     {
         $obj = clone $this;
-        $obj->items_id = $itemsID;
+        $obj['items_id'] = $itemsID;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class Item implements BaseModel
     public function withRefundableAmount(int $refundableAmount): self
     {
         $obj = clone $this;
-        $obj->refundable_amount = $refundableAmount;
+        $obj['refundable_amount'] = $refundableAmount;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class Item implements BaseModel
     public function withTax(int $tax): self
     {
         $obj = clone $this;
-        $obj->tax = $tax;
+        $obj['tax'] = $tax;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class Item implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class Item implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

@@ -58,10 +58,10 @@ final class BrandUpdateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $image_id && $obj->image_id = $image_id;
-        null !== $name && $obj->name = $name;
-        null !== $statement_descriptor && $obj->statement_descriptor = $statement_descriptor;
-        null !== $support_email && $obj->support_email = $support_email;
+        null !== $image_id && $obj['image_id'] = $image_id;
+        null !== $name && $obj['name'] = $name;
+        null !== $statement_descriptor && $obj['statement_descriptor'] = $statement_descriptor;
+        null !== $support_email && $obj['support_email'] = $support_email;
 
         return $obj;
     }
@@ -72,7 +72,7 @@ final class BrandUpdateParams implements BaseModel
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj->image_id = $imageID;
+        $obj['image_id'] = $imageID;
 
         return $obj;
     }
@@ -80,7 +80,7 @@ final class BrandUpdateParams implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class BrandUpdateParams implements BaseModel
     public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $obj = clone $this;
-        $obj->statement_descriptor = $statementDescriptor;
+        $obj['statement_descriptor'] = $statementDescriptor;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class BrandUpdateParams implements BaseModel
     public function withSupportEmail(?string $supportEmail): self
     {
         $obj = clone $this;
-        $obj->support_email = $supportEmail;
+        $obj['support_email'] = $supportEmail;
 
         return $obj;
     }

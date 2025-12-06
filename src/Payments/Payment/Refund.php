@@ -139,16 +139,16 @@ final class Refund implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->is_partial = $is_partial;
-        $obj->payment_id = $payment_id;
-        $obj->refund_id = $refund_id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['is_partial'] = $is_partial;
+        $obj['payment_id'] = $payment_id;
+        $obj['refund_id'] = $refund_id;
         $obj['status'] = $status;
 
-        null !== $amount && $obj->amount = $amount;
+        null !== $amount && $obj['amount'] = $amount;
         null !== $currency && $obj['currency'] = $currency;
-        null !== $reason && $obj->reason = $reason;
+        null !== $reason && $obj['reason'] = $reason;
 
         return $obj;
     }
@@ -159,7 +159,7 @@ final class Refund implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -170,7 +170,7 @@ final class Refund implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class Refund implements BaseModel
     public function withIsPartial(bool $isPartial): self
     {
         $obj = clone $this;
-        $obj->is_partial = $isPartial;
+        $obj['is_partial'] = $isPartial;
 
         return $obj;
     }
@@ -192,7 +192,7 @@ final class Refund implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -203,7 +203,7 @@ final class Refund implements BaseModel
     public function withRefundID(string $refundID): self
     {
         $obj = clone $this;
-        $obj->refund_id = $refundID;
+        $obj['refund_id'] = $refundID;
 
         return $obj;
     }
@@ -227,7 +227,7 @@ final class Refund implements BaseModel
     public function withAmount(?int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -251,7 +251,7 @@ final class Refund implements BaseModel
     public function withReason(?string $reason): self
     {
         $obj = clone $this;
-        $obj->reason = $reason;
+        $obj['reason'] = $reason;
 
         return $obj;
     }

@@ -87,13 +87,13 @@ final class AddMeterToPrice implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->meter_id = $meter_id;
-        $obj->price_per_unit = $price_per_unit;
+        $obj['meter_id'] = $meter_id;
+        $obj['price_per_unit'] = $price_per_unit;
 
-        null !== $description && $obj->description = $description;
-        null !== $free_threshold && $obj->free_threshold = $free_threshold;
-        null !== $measurement_unit && $obj->measurement_unit = $measurement_unit;
-        null !== $name && $obj->name = $name;
+        null !== $description && $obj['description'] = $description;
+        null !== $free_threshold && $obj['free_threshold'] = $free_threshold;
+        null !== $measurement_unit && $obj['measurement_unit'] = $measurement_unit;
+        null !== $name && $obj['name'] = $name;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class AddMeterToPrice implements BaseModel
     public function withMeterID(string $meterID): self
     {
         $obj = clone $this;
-        $obj->meter_id = $meterID;
+        $obj['meter_id'] = $meterID;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class AddMeterToPrice implements BaseModel
     public function withPricePerUnit(string $pricePerUnit): self
     {
         $obj = clone $this;
-        $obj->price_per_unit = $pricePerUnit;
+        $obj['price_per_unit'] = $pricePerUnit;
 
         return $obj;
     }
@@ -123,7 +123,7 @@ final class AddMeterToPrice implements BaseModel
     public function withDescription(?string $description): self
     {
         $obj = clone $this;
-        $obj->description = $description;
+        $obj['description'] = $description;
 
         return $obj;
     }
@@ -131,7 +131,7 @@ final class AddMeterToPrice implements BaseModel
     public function withFreeThreshold(?int $freeThreshold): self
     {
         $obj = clone $this;
-        $obj->free_threshold = $freeThreshold;
+        $obj['free_threshold'] = $freeThreshold;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class AddMeterToPrice implements BaseModel
     public function withMeasurementUnit(?string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj->measurement_unit = $measurementUnit;
+        $obj['measurement_unit'] = $measurementUnit;
 
         return $obj;
     }
@@ -153,7 +153,7 @@ final class AddMeterToPrice implements BaseModel
     public function withName(?string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

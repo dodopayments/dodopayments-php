@@ -70,9 +70,9 @@ final class Level2FilterCondition implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->key = $key;
+        $obj['key'] = $key;
         $obj['operator'] = $operator;
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }
@@ -83,7 +83,7 @@ final class Level2FilterCondition implements BaseModel
     public function withKey(string $key): self
     {
         $obj = clone $this;
-        $obj->key = $key;
+        $obj['key'] = $key;
 
         return $obj;
     }
@@ -105,7 +105,7 @@ final class Level2FilterCondition implements BaseModel
     public function withValue(string|float|bool $value): self
     {
         $obj = clone $this;
-        $obj->value = $value;
+        $obj['value'] = $value;
 
         return $obj;
     }

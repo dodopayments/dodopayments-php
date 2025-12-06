@@ -85,11 +85,11 @@ final class CustomerWallet implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->balance = $balance;
-        $obj->created_at = $created_at;
+        $obj['balance'] = $balance;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->customer_id = $customer_id;
-        $obj->updated_at = $updated_at;
+        $obj['customer_id'] = $customer_id;
+        $obj['updated_at'] = $updated_at;
 
         return $obj;
     }
@@ -97,7 +97,7 @@ final class CustomerWallet implements BaseModel
     public function withBalance(int $balance): self
     {
         $obj = clone $this;
-        $obj->balance = $balance;
+        $obj['balance'] = $balance;
 
         return $obj;
     }
@@ -105,7 +105,7 @@ final class CustomerWallet implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -124,7 +124,7 @@ final class CustomerWallet implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class CustomerWallet implements BaseModel
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj->updated_at = $updatedAt;
+        $obj['updated_at'] = $updatedAt;
 
         return $obj;
     }

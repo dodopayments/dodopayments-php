@@ -117,18 +117,18 @@ final class FeatureFlags implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $allow_currency_selection && $obj->allow_currency_selection = $allow_currency_selection;
-        null !== $allow_customer_editing_city && $obj->allow_customer_editing_city = $allow_customer_editing_city;
-        null !== $allow_customer_editing_country && $obj->allow_customer_editing_country = $allow_customer_editing_country;
-        null !== $allow_customer_editing_email && $obj->allow_customer_editing_email = $allow_customer_editing_email;
-        null !== $allow_customer_editing_name && $obj->allow_customer_editing_name = $allow_customer_editing_name;
-        null !== $allow_customer_editing_state && $obj->allow_customer_editing_state = $allow_customer_editing_state;
-        null !== $allow_customer_editing_street && $obj->allow_customer_editing_street = $allow_customer_editing_street;
-        null !== $allow_customer_editing_zipcode && $obj->allow_customer_editing_zipcode = $allow_customer_editing_zipcode;
-        null !== $allow_discount_code && $obj->allow_discount_code = $allow_discount_code;
-        null !== $allow_phone_number_collection && $obj->allow_phone_number_collection = $allow_phone_number_collection;
-        null !== $allow_tax_id && $obj->allow_tax_id = $allow_tax_id;
-        null !== $always_create_new_customer && $obj->always_create_new_customer = $always_create_new_customer;
+        null !== $allow_currency_selection && $obj['allow_currency_selection'] = $allow_currency_selection;
+        null !== $allow_customer_editing_city && $obj['allow_customer_editing_city'] = $allow_customer_editing_city;
+        null !== $allow_customer_editing_country && $obj['allow_customer_editing_country'] = $allow_customer_editing_country;
+        null !== $allow_customer_editing_email && $obj['allow_customer_editing_email'] = $allow_customer_editing_email;
+        null !== $allow_customer_editing_name && $obj['allow_customer_editing_name'] = $allow_customer_editing_name;
+        null !== $allow_customer_editing_state && $obj['allow_customer_editing_state'] = $allow_customer_editing_state;
+        null !== $allow_customer_editing_street && $obj['allow_customer_editing_street'] = $allow_customer_editing_street;
+        null !== $allow_customer_editing_zipcode && $obj['allow_customer_editing_zipcode'] = $allow_customer_editing_zipcode;
+        null !== $allow_discount_code && $obj['allow_discount_code'] = $allow_discount_code;
+        null !== $allow_phone_number_collection && $obj['allow_phone_number_collection'] = $allow_phone_number_collection;
+        null !== $allow_tax_id && $obj['allow_tax_id'] = $allow_tax_id;
+        null !== $always_create_new_customer && $obj['always_create_new_customer'] = $always_create_new_customer;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCurrencySelection
     ): self {
         $obj = clone $this;
-        $obj->allow_currency_selection = $allowCurrencySelection;
+        $obj['allow_currency_selection'] = $allowCurrencySelection;
 
         return $obj;
     }
@@ -151,7 +151,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingCity
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_city = $allowCustomerEditingCity;
+        $obj['allow_customer_editing_city'] = $allowCustomerEditingCity;
 
         return $obj;
     }
@@ -160,7 +160,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingCountry
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_country = $allowCustomerEditingCountry;
+        $obj['allow_customer_editing_country'] = $allowCustomerEditingCountry;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingEmail
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_email = $allowCustomerEditingEmail;
+        $obj['allow_customer_editing_email'] = $allowCustomerEditingEmail;
 
         return $obj;
     }
@@ -178,7 +178,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingName
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_name = $allowCustomerEditingName;
+        $obj['allow_customer_editing_name'] = $allowCustomerEditingName;
 
         return $obj;
     }
@@ -187,7 +187,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingState
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_state = $allowCustomerEditingState;
+        $obj['allow_customer_editing_state'] = $allowCustomerEditingState;
 
         return $obj;
     }
@@ -196,7 +196,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingStreet
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_street = $allowCustomerEditingStreet;
+        $obj['allow_customer_editing_street'] = $allowCustomerEditingStreet;
 
         return $obj;
     }
@@ -205,7 +205,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingZipcode
     ): self {
         $obj = clone $this;
-        $obj->allow_customer_editing_zipcode = $allowCustomerEditingZipcode;
+        $obj['allow_customer_editing_zipcode'] = $allowCustomerEditingZipcode;
 
         return $obj;
     }
@@ -218,7 +218,7 @@ final class FeatureFlags implements BaseModel
     public function withAllowDiscountCode(bool $allowDiscountCode): self
     {
         $obj = clone $this;
-        $obj->allow_discount_code = $allowDiscountCode;
+        $obj['allow_discount_code'] = $allowDiscountCode;
 
         return $obj;
     }
@@ -232,7 +232,7 @@ final class FeatureFlags implements BaseModel
         bool $allowPhoneNumberCollection
     ): self {
         $obj = clone $this;
-        $obj->allow_phone_number_collection = $allowPhoneNumberCollection;
+        $obj['allow_phone_number_collection'] = $allowPhoneNumberCollection;
 
         return $obj;
     }
@@ -245,7 +245,7 @@ final class FeatureFlags implements BaseModel
     public function withAllowTaxID(bool $allowTaxID): self
     {
         $obj = clone $this;
-        $obj->allow_tax_id = $allowTaxID;
+        $obj['allow_tax_id'] = $allowTaxID;
 
         return $obj;
     }
@@ -260,7 +260,7 @@ final class FeatureFlags implements BaseModel
         bool $alwaysCreateNewCustomer
     ): self {
         $obj = clone $this;
-        $obj->always_create_new_customer = $alwaysCreateNewCustomer;
+        $obj['always_create_new_customer'] = $alwaysCreateNewCustomer;
 
         return $obj;
     }

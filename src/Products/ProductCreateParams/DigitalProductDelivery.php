@@ -48,8 +48,8 @@ final class DigitalProductDelivery implements BaseModel
     ): self {
         $obj = new self;
 
-        null !== $external_url && $obj->external_url = $external_url;
-        null !== $instructions && $obj->instructions = $instructions;
+        null !== $external_url && $obj['external_url'] = $external_url;
+        null !== $instructions && $obj['instructions'] = $instructions;
 
         return $obj;
     }
@@ -60,7 +60,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withExternalURL(?string $externalURL): self
     {
         $obj = clone $this;
-        $obj->external_url = $externalURL;
+        $obj['external_url'] = $externalURL;
 
         return $obj;
     }
@@ -71,7 +71,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withInstructions(?string $instructions): self
     {
         $obj = clone $this;
-        $obj->instructions = $instructions;
+        $obj['instructions'] = $instructions;
 
         return $obj;
     }

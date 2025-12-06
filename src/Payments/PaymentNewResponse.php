@@ -124,12 +124,21 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      * @param array<string,string> $metadata
-     * @param list<OneTimeProductCartItem>|null $product_cart
+     * @param list<OneTimeProductCartItem|array{
+     *   product_id: string, quantity: int, amount?: int|null
+     * }>|null $product_cart
      */
     public static function with(
         string $client_secret,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         array $metadata,
         string $payment_id,
         int $total_amount,
@@ -140,16 +149,16 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->client_secret = $client_secret;
-        $obj->customer = $customer;
-        $obj->metadata = $metadata;
-        $obj->payment_id = $payment_id;
-        $obj->total_amount = $total_amount;
+        $obj['client_secret'] = $client_secret;
+        $obj['customer'] = $customer;
+        $obj['metadata'] = $metadata;
+        $obj['payment_id'] = $payment_id;
+        $obj['total_amount'] = $total_amount;
 
-        null !== $discount_id && $obj->discount_id = $discount_id;
-        null !== $expires_on && $obj->expires_on = $expires_on;
-        null !== $payment_link && $obj->payment_link = $payment_link;
-        null !== $product_cart && $obj->product_cart = $product_cart;
+        null !== $discount_id && $obj['discount_id'] = $discount_id;
+        null !== $expires_on && $obj['expires_on'] = $expires_on;
+        null !== $payment_link && $obj['payment_link'] = $payment_link;
+        null !== $product_cart && $obj['product_cart'] = $product_cart;
 
         return $obj;
     }
@@ -161,18 +170,26 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withClientSecret(string $clientSecret): self
     {
         $obj = clone $this;
-        $obj->client_secret = $clientSecret;
+        $obj['client_secret'] = $clientSecret;
 
         return $obj;
     }
 
     /**
      * Limited details about the customer making the payment.
+     *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      */
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -185,7 +202,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -196,7 +213,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj->payment_id = $paymentID;
+        $obj['payment_id'] = $paymentID;
 
         return $obj;
     }
@@ -207,7 +224,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj->total_amount = $totalAmount;
+        $obj['total_amount'] = $totalAmount;
 
         return $obj;
     }
@@ -218,7 +235,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discount_id = $discountID;
+        $obj['discount_id'] = $discountID;
 
         return $obj;
     }
@@ -229,7 +246,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj->expires_on = $expiresOn;
+        $obj['expires_on'] = $expiresOn;
 
         return $obj;
     }
@@ -240,7 +257,7 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj->payment_link = $paymentLink;
+        $obj['payment_link'] = $paymentLink;
 
         return $obj;
     }
@@ -248,12 +265,14 @@ final class PaymentNewResponse implements BaseModel, ResponseConverter
     /**
      * Optional list of products included in the payment.
      *
-     * @param list<OneTimeProductCartItem>|null $productCart
+     * @param list<OneTimeProductCartItem|array{
+     *   product_id: string, quantity: int, amount?: int|null
+     * }>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {
         $obj = clone $this;
-        $obj->product_cart = $productCart;
+        $obj['product_cart'] = $productCart;
 
         return $obj;
     }

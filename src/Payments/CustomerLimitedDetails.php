@@ -89,12 +89,12 @@ final class CustomerLimitedDetails implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->customer_id = $customer_id;
-        $obj->email = $email;
-        $obj->name = $name;
+        $obj['customer_id'] = $customer_id;
+        $obj['email'] = $email;
+        $obj['name'] = $name;
 
-        null !== $metadata && $obj->metadata = $metadata;
-        null !== $phone_number && $obj->phone_number = $phone_number;
+        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $phone_number && $obj['phone_number'] = $phone_number;
 
         return $obj;
     }
@@ -105,7 +105,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withEmail(string $email): self
     {
         $obj = clone $this;
-        $obj->email = $email;
+        $obj['email'] = $email;
 
         return $obj;
     }
@@ -127,7 +127,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -140,7 +140,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -151,7 +151,7 @@ final class CustomerLimitedDetails implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj->phone_number = $phoneNumber;
+        $obj['phone_number'] = $phoneNumber;
 
         return $obj;
     }

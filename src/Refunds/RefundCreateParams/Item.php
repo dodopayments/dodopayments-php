@@ -67,10 +67,10 @@ final class Item implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->item_id = $item_id;
+        $obj['item_id'] = $item_id;
 
-        null !== $amount && $obj->amount = $amount;
-        null !== $tax_inclusive && $obj->tax_inclusive = $tax_inclusive;
+        null !== $amount && $obj['amount'] = $amount;
+        null !== $tax_inclusive && $obj['tax_inclusive'] = $tax_inclusive;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class Item implements BaseModel
     public function withItemID(string $itemID): self
     {
         $obj = clone $this;
-        $obj->item_id = $itemID;
+        $obj['item_id'] = $itemID;
 
         return $obj;
     }
@@ -92,7 +92,7 @@ final class Item implements BaseModel
     public function withAmount(?int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class Item implements BaseModel
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->tax_inclusive = $taxInclusive;
+        $obj['tax_inclusive'] = $taxInclusive;
 
         return $obj;
     }

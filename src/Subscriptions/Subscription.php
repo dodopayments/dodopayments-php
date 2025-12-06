@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
+use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -306,21 +307,45 @@ final class Subscription implements BaseModel, ResponseConverter
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItem> $addons
+     * @param list<AddonCartResponseItem|array{
+     *   addon_id: string, quantity: int
+     * }> $addons
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
      * @param Currency|value-of<Currency> $currency
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      * @param array<string,string> $metadata
-     * @param list<Meter> $meters
+     * @param list<Meter|array{
+     *   currency: value-of<Currency>,
+     *   free_threshold: int,
+     *   measurement_unit: string,
+     *   meter_id: string,
+     *   name: string,
+     *   price_per_unit: string,
+     *   description?: string|null,
+     * }> $meters
      * @param TimeInterval|value-of<TimeInterval> $payment_frequency_interval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscription_period_interval
      */
     public static function with(
         array $addons,
-        BillingAddress $billing,
+        BillingAddress|array $billing,
         bool $cancel_at_next_billing_date,
         \DateTimeInterface $created_at,
         Currency|string $currency,
-        CustomerLimitedDetails $customer,
+        CustomerLimitedDetails|array $customer,
         array $metadata,
         array $meters,
         \DateTimeInterface $next_billing_date,
@@ -346,35 +371,35 @@ final class Subscription implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->addons = $addons;
-        $obj->billing = $billing;
-        $obj->cancel_at_next_billing_date = $cancel_at_next_billing_date;
-        $obj->created_at = $created_at;
+        $obj['addons'] = $addons;
+        $obj['billing'] = $billing;
+        $obj['cancel_at_next_billing_date'] = $cancel_at_next_billing_date;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->customer = $customer;
-        $obj->metadata = $metadata;
-        $obj->meters = $meters;
-        $obj->next_billing_date = $next_billing_date;
-        $obj->on_demand = $on_demand;
-        $obj->payment_frequency_count = $payment_frequency_count;
+        $obj['customer'] = $customer;
+        $obj['metadata'] = $metadata;
+        $obj['meters'] = $meters;
+        $obj['next_billing_date'] = $next_billing_date;
+        $obj['on_demand'] = $on_demand;
+        $obj['payment_frequency_count'] = $payment_frequency_count;
         $obj['payment_frequency_interval'] = $payment_frequency_interval;
-        $obj->previous_billing_date = $previous_billing_date;
-        $obj->product_id = $product_id;
-        $obj->quantity = $quantity;
-        $obj->recurring_pre_tax_amount = $recurring_pre_tax_amount;
+        $obj['previous_billing_date'] = $previous_billing_date;
+        $obj['product_id'] = $product_id;
+        $obj['quantity'] = $quantity;
+        $obj['recurring_pre_tax_amount'] = $recurring_pre_tax_amount;
         $obj['status'] = $status;
-        $obj->subscription_id = $subscription_id;
-        $obj->subscription_period_count = $subscription_period_count;
+        $obj['subscription_id'] = $subscription_id;
+        $obj['subscription_period_count'] = $subscription_period_count;
         $obj['subscription_period_interval'] = $subscription_period_interval;
-        $obj->tax_inclusive = $tax_inclusive;
-        $obj->trial_period_days = $trial_period_days;
+        $obj['tax_inclusive'] = $tax_inclusive;
+        $obj['trial_period_days'] = $trial_period_days;
 
-        null !== $cancelled_at && $obj->cancelled_at = $cancelled_at;
-        null !== $discount_cycles_remaining && $obj->discount_cycles_remaining = $discount_cycles_remaining;
-        null !== $discount_id && $obj->discount_id = $discount_id;
-        null !== $expires_at && $obj->expires_at = $expires_at;
-        null !== $payment_method_id && $obj->payment_method_id = $payment_method_id;
-        null !== $tax_id && $obj->tax_id = $tax_id;
+        null !== $cancelled_at && $obj['cancelled_at'] = $cancelled_at;
+        null !== $discount_cycles_remaining && $obj['discount_cycles_remaining'] = $discount_cycles_remaining;
+        null !== $discount_id && $obj['discount_id'] = $discount_id;
+        null !== $expires_at && $obj['expires_at'] = $expires_at;
+        null !== $payment_method_id && $obj['payment_method_id'] = $payment_method_id;
+        null !== $tax_id && $obj['tax_id'] = $tax_id;
 
         return $obj;
     }
@@ -382,23 +407,33 @@ final class Subscription implements BaseModel, ResponseConverter
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItem> $addons
+     * @param list<AddonCartResponseItem|array{
+     *   addon_id: string, quantity: int
+     * }> $addons
      */
     public function withAddons(array $addons): self
     {
         $obj = clone $this;
-        $obj->addons = $addons;
+        $obj['addons'] = $addons;
 
         return $obj;
     }
 
     /**
      * Billing address details for payments.
+     *
+     * @param BillingAddress|array{
+     *   city: string,
+     *   country: value-of<CountryCode>,
+     *   state: string,
+     *   street: string,
+     *   zipcode: string,
+     * } $billing
      */
-    public function withBilling(BillingAddress $billing): self
+    public function withBilling(BillingAddress|array $billing): self
     {
         $obj = clone $this;
-        $obj->billing = $billing;
+        $obj['billing'] = $billing;
 
         return $obj;
     }
@@ -410,7 +445,7 @@ final class Subscription implements BaseModel, ResponseConverter
         bool $cancelAtNextBillingDate
     ): self {
         $obj = clone $this;
-        $obj->cancel_at_next_billing_date = $cancelAtNextBillingDate;
+        $obj['cancel_at_next_billing_date'] = $cancelAtNextBillingDate;
 
         return $obj;
     }
@@ -421,7 +456,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -441,11 +476,19 @@ final class Subscription implements BaseModel, ResponseConverter
 
     /**
      * Customer details associated with the subscription.
+     *
+     * @param CustomerLimitedDetails|array{
+     *   customer_id: string,
+     *   email: string,
+     *   name: string,
+     *   metadata?: array<string,string>|null,
+     *   phone_number?: string|null,
+     * } $customer
      */
-    public function withCustomer(CustomerLimitedDetails $customer): self
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
         $obj = clone $this;
-        $obj->customer = $customer;
+        $obj['customer'] = $customer;
 
         return $obj;
     }
@@ -458,7 +501,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withMetadata(array $metadata): self
     {
         $obj = clone $this;
-        $obj->metadata = $metadata;
+        $obj['metadata'] = $metadata;
 
         return $obj;
     }
@@ -466,12 +509,20 @@ final class Subscription implements BaseModel, ResponseConverter
     /**
      * Meters associated with this subscription (for usage-based billing).
      *
-     * @param list<Meter> $meters
+     * @param list<Meter|array{
+     *   currency: value-of<Currency>,
+     *   free_threshold: int,
+     *   measurement_unit: string,
+     *   meter_id: string,
+     *   name: string,
+     *   price_per_unit: string,
+     *   description?: string|null,
+     * }> $meters
      */
     public function withMeters(array $meters): self
     {
         $obj = clone $this;
-        $obj->meters = $meters;
+        $obj['meters'] = $meters;
 
         return $obj;
     }
@@ -483,7 +534,7 @@ final class Subscription implements BaseModel, ResponseConverter
         \DateTimeInterface $nextBillingDate
     ): self {
         $obj = clone $this;
-        $obj->next_billing_date = $nextBillingDate;
+        $obj['next_billing_date'] = $nextBillingDate;
 
         return $obj;
     }
@@ -494,7 +545,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withOnDemand(bool $onDemand): self
     {
         $obj = clone $this;
-        $obj->on_demand = $onDemand;
+        $obj['on_demand'] = $onDemand;
 
         return $obj;
     }
@@ -505,7 +556,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
         $obj = clone $this;
-        $obj->payment_frequency_count = $paymentFrequencyCount;
+        $obj['payment_frequency_count'] = $paymentFrequencyCount;
 
         return $obj;
     }
@@ -531,7 +582,7 @@ final class Subscription implements BaseModel, ResponseConverter
         \DateTimeInterface $previousBillingDate
     ): self {
         $obj = clone $this;
-        $obj->previous_billing_date = $previousBillingDate;
+        $obj['previous_billing_date'] = $previousBillingDate;
 
         return $obj;
     }
@@ -542,7 +593,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj->product_id = $productID;
+        $obj['product_id'] = $productID;
 
         return $obj;
     }
@@ -553,7 +604,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withQuantity(int $quantity): self
     {
         $obj = clone $this;
-        $obj->quantity = $quantity;
+        $obj['quantity'] = $quantity;
 
         return $obj;
     }
@@ -564,7 +615,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
         $obj = clone $this;
-        $obj->recurring_pre_tax_amount = $recurringPreTaxAmount;
+        $obj['recurring_pre_tax_amount'] = $recurringPreTaxAmount;
 
         return $obj;
     }
@@ -588,7 +639,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withSubscriptionID(string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj->subscription_id = $subscriptionID;
+        $obj['subscription_id'] = $subscriptionID;
 
         return $obj;
     }
@@ -600,7 +651,7 @@ final class Subscription implements BaseModel, ResponseConverter
         int $subscriptionPeriodCount
     ): self {
         $obj = clone $this;
-        $obj->subscription_period_count = $subscriptionPeriodCount;
+        $obj['subscription_period_count'] = $subscriptionPeriodCount;
 
         return $obj;
     }
@@ -625,7 +676,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj->tax_inclusive = $taxInclusive;
+        $obj['tax_inclusive'] = $taxInclusive;
 
         return $obj;
     }
@@ -636,7 +687,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withTrialPeriodDays(int $trialPeriodDays): self
     {
         $obj = clone $this;
-        $obj->trial_period_days = $trialPeriodDays;
+        $obj['trial_period_days'] = $trialPeriodDays;
 
         return $obj;
     }
@@ -647,7 +698,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withCancelledAt(?\DateTimeInterface $cancelledAt): self
     {
         $obj = clone $this;
-        $obj->cancelled_at = $cancelledAt;
+        $obj['cancelled_at'] = $cancelledAt;
 
         return $obj;
     }
@@ -659,7 +710,7 @@ final class Subscription implements BaseModel, ResponseConverter
         ?int $discountCyclesRemaining
     ): self {
         $obj = clone $this;
-        $obj->discount_cycles_remaining = $discountCyclesRemaining;
+        $obj['discount_cycles_remaining'] = $discountCyclesRemaining;
 
         return $obj;
     }
@@ -670,7 +721,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj->discount_id = $discountID;
+        $obj['discount_id'] = $discountID;
 
         return $obj;
     }
@@ -681,7 +732,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj->expires_at = $expiresAt;
+        $obj['expires_at'] = $expiresAt;
 
         return $obj;
     }
@@ -692,7 +743,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withPaymentMethodID(?string $paymentMethodID): self
     {
         $obj = clone $this;
-        $obj->payment_method_id = $paymentMethodID;
+        $obj['payment_method_id'] = $paymentMethodID;
 
         return $obj;
     }
@@ -703,7 +754,7 @@ final class Subscription implements BaseModel, ResponseConverter
     public function withTaxID(?string $taxID): self
     {
         $obj = clone $this;
-        $obj->tax_id = $taxID;
+        $obj['tax_id'] = $taxID;
 
         return $obj;
     }

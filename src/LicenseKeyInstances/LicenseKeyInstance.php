@@ -81,11 +81,11 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
-        $obj->license_key_id = $license_key_id;
-        $obj->name = $name;
+        $obj['id'] = $id;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
+        $obj['license_key_id'] = $license_key_id;
+        $obj['name'] = $name;
 
         return $obj;
     }
@@ -93,7 +93,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -101,7 +101,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -109,7 +109,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withLicenseKeyID(string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj->license_key_id = $licenseKeyID;
+        $obj['license_key_id'] = $licenseKeyID;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class LicenseKeyInstance implements BaseModel, ResponseConverter
     public function withName(string $name): self
     {
         $obj = clone $this;
-        $obj->name = $name;
+        $obj['name'] = $name;
 
         return $obj;
     }

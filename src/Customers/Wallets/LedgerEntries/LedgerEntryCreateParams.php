@@ -95,12 +95,12 @@ final class LedgerEntryCreateParams implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
         $obj['currency'] = $currency;
         $obj['entry_type'] = $entry_type;
 
-        null !== $idempotency_key && $obj->idempotency_key = $idempotency_key;
-        null !== $reason && $obj->reason = $reason;
+        null !== $idempotency_key && $obj['idempotency_key'] = $idempotency_key;
+        null !== $reason && $obj['reason'] = $reason;
 
         return $obj;
     }
@@ -108,7 +108,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withAmount(int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -145,7 +145,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withIdempotencyKey(?string $idempotencyKey): self
     {
         $obj = clone $this;
-        $obj->idempotency_key = $idempotencyKey;
+        $obj['idempotency_key'] = $idempotencyKey;
 
         return $obj;
     }
@@ -153,7 +153,7 @@ final class LedgerEntryCreateParams implements BaseModel
     public function withReason(?string $reason): self
     {
         $obj = clone $this;
-        $obj->reason = $reason;
+        $obj['reason'] = $reason;
 
         return $obj;
     }

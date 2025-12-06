@@ -137,19 +137,19 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     ): self {
         $obj = new self;
 
-        $obj->id = $id;
-        $obj->after_balance = $after_balance;
-        $obj->amount = $amount;
-        $obj->before_balance = $before_balance;
-        $obj->business_id = $business_id;
-        $obj->created_at = $created_at;
+        $obj['id'] = $id;
+        $obj['after_balance'] = $after_balance;
+        $obj['amount'] = $amount;
+        $obj['before_balance'] = $before_balance;
+        $obj['business_id'] = $business_id;
+        $obj['created_at'] = $created_at;
         $obj['currency'] = $currency;
-        $obj->customer_id = $customer_id;
+        $obj['customer_id'] = $customer_id;
         $obj['event_type'] = $event_type;
-        $obj->is_credit = $is_credit;
+        $obj['is_credit'] = $is_credit;
 
-        null !== $reason && $obj->reason = $reason;
-        null !== $reference_object_id && $obj->reference_object_id = $reference_object_id;
+        null !== $reason && $obj['reason'] = $reason;
+        null !== $reference_object_id && $obj['reference_object_id'] = $reference_object_id;
 
         return $obj;
     }
@@ -157,7 +157,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withID(string $id): self
     {
         $obj = clone $this;
-        $obj->id = $id;
+        $obj['id'] = $id;
 
         return $obj;
     }
@@ -165,7 +165,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withAfterBalance(int $afterBalance): self
     {
         $obj = clone $this;
-        $obj->after_balance = $afterBalance;
+        $obj['after_balance'] = $afterBalance;
 
         return $obj;
     }
@@ -173,7 +173,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withAmount(int $amount): self
     {
         $obj = clone $this;
-        $obj->amount = $amount;
+        $obj['amount'] = $amount;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withBeforeBalance(int $beforeBalance): self
     {
         $obj = clone $this;
-        $obj->before_balance = $beforeBalance;
+        $obj['before_balance'] = $beforeBalance;
 
         return $obj;
     }
@@ -189,7 +189,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj->business_id = $businessID;
+        $obj['business_id'] = $businessID;
 
         return $obj;
     }
@@ -197,7 +197,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj->created_at = $createdAt;
+        $obj['created_at'] = $createdAt;
 
         return $obj;
     }
@@ -216,7 +216,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj->customer_id = $customerID;
+        $obj['customer_id'] = $customerID;
 
         return $obj;
     }
@@ -235,7 +235,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withIsCredit(bool $isCredit): self
     {
         $obj = clone $this;
-        $obj->is_credit = $isCredit;
+        $obj['is_credit'] = $isCredit;
 
         return $obj;
     }
@@ -243,7 +243,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withReason(?string $reason): self
     {
         $obj = clone $this;
-        $obj->reason = $reason;
+        $obj['reason'] = $reason;
 
         return $obj;
     }
@@ -251,7 +251,7 @@ final class CustomerWalletTransaction implements BaseModel, ResponseConverter
     public function withReferenceObjectID(?string $referenceObjectID): self
     {
         $obj = clone $this;
-        $obj->reference_object_id = $referenceObjectID;
+        $obj['reference_object_id'] = $referenceObjectID;
 
         return $obj;
     }
