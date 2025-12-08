@@ -70,6 +70,7 @@ use Dodopayments\Subscriptions\OnDemandSubscription;
  *   },
  *   force_3ds?: bool|null,
  *   metadata?: array<string,string>|null,
+ *   minimal_address?: bool,
  *   return_url?: string|null,
  *   show_saved_payment_methods?: bool,
  *   subscription_data?: null|SubscriptionData|array{
@@ -151,6 +152,12 @@ final class CheckoutSessionCreateParams implements BaseModel
      */
     #[Api(map: 'string', nullable: true, optional: true)]
     public ?array $metadata;
+
+    /**
+     * If true, only zipcode is required when confirm is true; other address fields remain optional.
+     */
+    #[Api(optional: true)]
+    public ?bool $minimal_address;
 
     /**
      * The url to redirect after payment failure or success.
@@ -246,6 +253,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         FeatureFlags|array|null $feature_flags = null,
         ?bool $force_3ds = null,
         ?array $metadata = null,
+        ?bool $minimal_address = null,
         ?string $return_url = null,
         ?bool $show_saved_payment_methods = null,
         SubscriptionData|array|null $subscription_data = null,
@@ -264,6 +272,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         null !== $feature_flags && $obj['feature_flags'] = $feature_flags;
         null !== $force_3ds && $obj['force_3ds'] = $force_3ds;
         null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $minimal_address && $obj['minimal_address'] = $minimal_address;
         null !== $return_url && $obj['return_url'] = $return_url;
         null !== $show_saved_payment_methods && $obj['show_saved_payment_methods'] = $show_saved_payment_methods;
         null !== $subscription_data && $obj['subscription_data'] = $subscription_data;
@@ -437,6 +446,17 @@ final class CheckoutSessionCreateParams implements BaseModel
     {
         $obj = clone $this;
         $obj['metadata'] = $metadata;
+
+        return $obj;
+    }
+
+    /**
+     * If true, only zipcode is required when confirm is true; other address fields remain optional.
+     */
+    public function withMinimalAddress(bool $minimalAddress): self
+    {
+        $obj = clone $this;
+        $obj['minimal_address'] = $minimalAddress;
 
         return $obj;
     }

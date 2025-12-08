@@ -16,11 +16,11 @@ use Dodopayments\Misc\Currency;
  *
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress|array{
- *     city: string,
  *     country: value-of<CountryCode>,
- *     state: string,
- *     street: string,
- *     zipcode: string,
+ *     city?: string|null,
+ *     state?: string|null,
+ *     street?: string|null,
+ *     zipcode?: string|null,
  *   },
  *   customer: AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
  *     email: string, name?: string|null, phone_number?: string|null
@@ -161,11 +161,11 @@ final class PaymentCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * } $billing
      * @param AttachExistingCustomer|array{customer_id: string}|NewCustomer|array{
      *   email: string, name?: string|null, phone_number?: string|null
@@ -214,11 +214,11 @@ final class PaymentCreateParams implements BaseModel
      * Billing address details for the payment.
      *
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * } $billing
      */
     public function withBilling(BillingAddress|array $billing): self

@@ -296,11 +296,11 @@ final class Subscription implements BaseModel
      *   addon_id: string, quantity: int
      * }> $addons
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * } $billing
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|array{
@@ -409,11 +409,11 @@ final class Subscription implements BaseModel
 
     /**
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * } $billing
      */
     public function withBilling(BillingAddress|array $billing): self

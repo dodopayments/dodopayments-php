@@ -7,6 +7,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -34,13 +35,7 @@ final class SubscriptionsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->subscriptions->create([
-            'billing' => [
-                'city' => 'city',
-                'country' => 'AF',
-                'state' => 'state',
-                'street' => 'street',
-                'zipcode' => 'zipcode',
-            ],
+            'billing' => ['country' => 'AF'],
             'customer' => ['customer_id' => 'customer_id'],
             'product_id' => 'product_id',
             'quantity' => 0,
@@ -55,8 +50,8 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->create([
             'billing' => [
-                'city' => 'city',
                 'country' => 'AF',
+                'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',
@@ -180,6 +175,45 @@ final class SubscriptionsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SubscriptionChargeResponse::class, $result);
+    }
+
+    #[Test]
+    public function testPreviewChangePlan(): void
+    {
+        $result = $this->client->subscriptions->previewChangePlan(
+            'subscription_id',
+            [
+                'product_id' => 'product_id',
+                'proration_billing_mode' => 'prorated_immediately',
+                'quantity' => 0,
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(
+            SubscriptionPreviewChangePlanResponse::class,
+            $result
+        );
+    }
+
+    #[Test]
+    public function testPreviewChangePlanWithOptionalParams(): void
+    {
+        $result = $this->client->subscriptions->previewChangePlan(
+            'subscription_id',
+            [
+                'product_id' => 'product_id',
+                'proration_billing_mode' => 'prorated_immediately',
+                'quantity' => 0,
+                'addons' => [['addon_id' => 'addon_id', 'quantity' => 0]],
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(
+            SubscriptionPreviewChangePlanResponse::class,
+            $result
+        );
     }
 
     #[Test]

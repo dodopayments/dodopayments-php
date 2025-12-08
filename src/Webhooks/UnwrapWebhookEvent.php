@@ -39,6 +39,7 @@ final class UnwrapWebhookEvent implements ConverterSource
             SubscriptionOnHoldWebhookEvent::class,
             SubscriptionPlanChangedWebhookEvent::class,
             SubscriptionRenewedWebhookEvent::class,
+            SubscriptionUpdatedWebhookEvent::class,
         ];
     }
 }
