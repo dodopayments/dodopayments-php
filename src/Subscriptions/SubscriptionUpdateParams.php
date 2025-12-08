@@ -17,11 +17,11 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *
  * @phpstan-type SubscriptionUpdateParamsShape = array{
  *   billing?: null|BillingAddress|array{
- *     city: string,
  *     country: value-of<CountryCode>,
- *     state: string,
- *     street: string,
- *     zipcode: string,
+ *     city?: string|null,
+ *     state?: string|null,
+ *     street?: string|null,
+ *     zipcode?: string|null,
  *   },
  *   cancel_at_next_billing_date?: bool|null,
  *   customer_name?: string|null,
@@ -80,11 +80,11 @@ final class SubscriptionUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * }|null $billing
      * @param DisableOnDemand|array{
      *   next_billing_date: \DateTimeInterface
@@ -118,11 +118,11 @@ final class SubscriptionUpdateParams implements BaseModel
 
     /**
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * }|null $billing
      */
     public function withBilling(BillingAddress|array|null $billing): self

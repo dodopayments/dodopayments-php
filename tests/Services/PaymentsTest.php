@@ -33,13 +33,7 @@ final class PaymentsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->payments->create([
-            'billing' => [
-                'city' => 'city',
-                'country' => 'AF',
-                'state' => 'state',
-                'street' => 'street',
-                'zipcode' => 'zipcode',
-            ],
+            'billing' => ['country' => 'AF'],
             'customer' => ['customer_id' => 'customer_id'],
             'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
         ]);
@@ -53,8 +47,8 @@ final class PaymentsTest extends TestCase
     {
         $result = $this->client->payments->create([
             'billing' => [
-                'city' => 'city',
                 'country' => 'AF',
+                'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',

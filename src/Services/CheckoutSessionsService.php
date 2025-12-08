@@ -66,6 +66,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      *   },
      *   force_3ds?: bool|null,
      *   metadata?: array<string,string>|null,
+     *   minimal_address?: bool,
      *   return_url?: string|null,
      *   show_saved_payment_methods?: bool,
      *   subscription_data?: array{

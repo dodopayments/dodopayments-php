@@ -313,11 +313,11 @@ final class Data1 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * } $billing
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|array{
@@ -433,11 +433,11 @@ final class Data1 implements BaseModel
 
     /**
      * @param BillingAddress|array{
-     *   city: string,
      *   country: value-of<CountryCode>,
-     *   state: string,
-     *   street: string,
-     *   zipcode: string,
+     *   city?: string|null,
+     *   state?: string|null,
+     *   street?: string|null,
+     *   zipcode?: string|null,
      * } $billing
      */
     public function withBilling(BillingAddress|array $billing): self
