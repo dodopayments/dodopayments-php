@@ -11,23 +11,17 @@ use Dodopayments\Misc\CountryCode;
 
 /**
  * @phpstan-type BillingAddressShape = array{
- *   city: string,
  *   country: value-of<CountryCode>,
- *   state: string,
- *   street: string,
- *   zipcode: string,
+ *   city?: string|null,
+ *   state?: string|null,
+ *   street?: string|null,
+ *   zipcode?: string|null,
  * }
  */
 final class BillingAddress implements BaseModel
 {
     /** @use SdkModel<BillingAddressShape> */
     use SdkModel;
-
-    /**
-     * City name.
-     */
-    #[Api]
-    public string $city;
 
     /**
      * Two-letter ISO country code (ISO 3166-1 alpha-2).
@@ -38,42 +32,41 @@ final class BillingAddress implements BaseModel
     public string $country;
 
     /**
+     * City name.
+     */
+    #[Api(nullable: true, optional: true)]
+    public ?string $city;
+
+    /**
      * State or province name.
      */
-    #[Api]
-    public string $state;
+    #[Api(nullable: true, optional: true)]
+    public ?string $state;
 
     /**
      * Street address including house number and unit/apartment if applicable.
      */
-    #[Api]
-    public string $street;
+    #[Api(nullable: true, optional: true)]
+    public ?string $street;
 
     /**
      * Postal code or ZIP code.
      */
-    #[Api]
-    public string $zipcode;
+    #[Api(nullable: true, optional: true)]
+    public ?string $zipcode;
 
     /**
      * `new BillingAddress()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * BillingAddress::with(
-     *   city: ..., country: ..., state: ..., street: ..., zipcode: ...
-     * )
+     * BillingAddress::with(country: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new BillingAddress)
-     *   ->withCity(...)
-     *   ->withCountry(...)
-     *   ->withState(...)
-     *   ->withStreet(...)
-     *   ->withZipcode(...)
+     * (new BillingAddress)->withCountry(...)
      * ```
      */
     public function __construct()
@@ -89,30 +82,20 @@ final class BillingAddress implements BaseModel
      * @param CountryCode|value-of<CountryCode> $country
      */
     public static function with(
-        string $city,
         CountryCode|string $country,
-        string $state,
-        string $street,
-        string $zipcode,
+        ?string $city = null,
+        ?string $state = null,
+        ?string $street = null,
+        ?string $zipcode = null,
     ): self {
         $obj = new self;
 
-        $obj['city'] = $city;
         $obj['country'] = $country;
-        $obj['state'] = $state;
-        $obj['street'] = $street;
-        $obj['zipcode'] = $zipcode;
 
-        return $obj;
-    }
-
-    /**
-     * City name.
-     */
-    public function withCity(string $city): self
-    {
-        $obj = clone $this;
-        $obj['city'] = $city;
+        null !== $city && $obj['city'] = $city;
+        null !== $state && $obj['state'] = $state;
+        null !== $street && $obj['street'] = $street;
+        null !== $zipcode && $obj['zipcode'] = $zipcode;
 
         return $obj;
     }
@@ -131,9 +114,20 @@ final class BillingAddress implements BaseModel
     }
 
     /**
+     * City name.
+     */
+    public function withCity(?string $city): self
+    {
+        $obj = clone $this;
+        $obj['city'] = $city;
+
+        return $obj;
+    }
+
+    /**
      * State or province name.
      */
-    public function withState(string $state): self
+    public function withState(?string $state): self
     {
         $obj = clone $this;
         $obj['state'] = $state;
@@ -144,7 +138,7 @@ final class BillingAddress implements BaseModel
     /**
      * Street address including house number and unit/apartment if applicable.
      */
-    public function withStreet(string $street): self
+    public function withStreet(?string $street): self
     {
         $obj = clone $this;
         $obj['street'] = $street;
@@ -155,7 +149,7 @@ final class BillingAddress implements BaseModel
     /**
      * Postal code or ZIP code.
      */
-    public function withZipcode(string $zipcode): self
+    public function withZipcode(?string $zipcode): self
     {
         $obj = clone $this;
         $obj['zipcode'] = $zipcode;

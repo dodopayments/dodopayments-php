@@ -16,6 +16,8 @@ use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
@@ -96,6 +98,19 @@ interface SubscriptionsContract
         array|SubscriptionChargeParams $params,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse;
+
+    /**
+     * @api
+     *
+     * @param array<mixed>|SubscriptionPreviewChangePlanParams $params
+     *
+     * @throws APIException
+     */
+    public function previewChangePlan(
+        string $subscriptionID,
+        array|SubscriptionPreviewChangePlanParams $params,
+        ?RequestOptions $requestOptions = null,
+    ): SubscriptionPreviewChangePlanResponse;
 
     /**
      * @api

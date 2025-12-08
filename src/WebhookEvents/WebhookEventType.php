@@ -49,5 +49,7 @@ enum WebhookEventType: string
 
     case SUBSCRIPTION_PLAN_CHANGED = 'subscription.plan_changed';
 
+    case SUBSCRIPTION_UPDATED = 'subscription.updated';
+
     case LICENSE_KEY_CREATED = 'license_key.created';
 }
