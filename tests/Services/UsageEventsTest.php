@@ -73,7 +73,7 @@ final class UsageEventsTest extends TestCase
                     'event_id' => 'event_id',
                     'event_name' => 'event_name',
                     'metadata' => ['foo' => 'string'],
-                    'timestamp' => '2019-12-27T18:11:19.117Z',
+                    'timestamp' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 ],
             ],
         ]);

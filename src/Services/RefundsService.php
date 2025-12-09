@@ -11,6 +11,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
 use Dodopayments\Refunds\RefundListParams;
+use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\RefundsContract;
@@ -86,7 +87,7 @@ final class RefundsService implements RefundsContract
      *   customer_id?: string,
      *   page_number?: int,
      *   page_size?: int,
-     *   status?: 'succeeded'|'failed'|'pending'|'review',
+     *   status?: 'succeeded'|'failed'|'pending'|'review'|Status,
      * }|RefundListParams $params
      *
      * @return DefaultPageNumberPagination<RefundListResponse>

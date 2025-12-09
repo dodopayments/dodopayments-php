@@ -4,8 +4,11 @@ namespace Tests\Services;
 
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductUpdateFilesResponse;
+use Dodopayments\Subscriptions\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,13 +37,13 @@ final class ProductsTest extends TestCase
         $result = $this->client->products->create([
             'name' => 'name',
             'price' => [
-                'currency' => 'AED',
+                'currency' => Currency::AED,
                 'discount' => 0,
                 'price' => 0,
                 'purchasing_power_parity' => true,
                 'type' => 'one_time_price',
             ],
-            'tax_category' => 'digital_products',
+            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,7 +56,7 @@ final class ProductsTest extends TestCase
         $result = $this->client->products->create([
             'name' => 'name',
             'price' => [
-                'currency' => 'AED',
+                'currency' => Currency::AED,
                 'discount' => 0,
                 'price' => 0,
                 'purchasing_power_parity' => true,
@@ -62,7 +65,7 @@ final class ProductsTest extends TestCase
                 'suggested_price' => 0,
                 'tax_inclusive' => true,
             ],
-            'tax_category' => 'digital_products',
+            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
             'addons' => ['string'],
             'brand_id' => 'brand_id',
             'description' => 'description',
@@ -71,7 +74,7 @@ final class ProductsTest extends TestCase
             ],
             'license_key_activation_message' => 'license_key_activation_message',
             'license_key_activations_limit' => 0,
-            'license_key_duration' => ['count' => 0, 'interval' => 'Day'],
+            'license_key_duration' => ['count' => 0, 'interval' => TimeInterval::DAY],
             'license_key_enabled' => true,
             'metadata' => ['foo' => 'string'],
         ]);
