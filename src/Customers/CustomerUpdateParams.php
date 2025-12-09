@@ -15,7 +15,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type CustomerUpdateParamsShape = array{
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
- *   phone_number?: string|null,
+ *   phoneNumber?: string|null,
  * }
  */
 final class CustomerUpdateParams implements BaseModel
@@ -35,8 +35,8 @@ final class CustomerUpdateParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $name;
 
-    #[Optional(nullable: true)]
-    public ?string $phone_number;
+    #[Optional('phone_number', nullable: true)]
+    public ?string $phoneNumber;
 
     public function __construct()
     {
@@ -53,13 +53,13 @@ final class CustomerUpdateParams implements BaseModel
     public static function with(
         ?array $metadata = null,
         ?string $name = null,
-        ?string $phone_number = null
+        ?string $phoneNumber = null
     ): self {
         $obj = new self;
 
         null !== $metadata && $obj['metadata'] = $metadata;
         null !== $name && $obj['name'] = $name;
-        null !== $phone_number && $obj['phone_number'] = $phone_number;
+        null !== $phoneNumber && $obj['phoneNumber'] = $phoneNumber;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class CustomerUpdateParams implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj['phone_number'] = $phoneNumber;
+        $obj['phoneNumber'] = $phoneNumber;
 
         return $obj;
     }

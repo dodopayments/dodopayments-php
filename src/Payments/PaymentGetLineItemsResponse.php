@@ -55,8 +55,8 @@ final class PaymentGetLineItemsResponse implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param list<Item|array{
      *   amount: int,
-     *   items_id: string,
-     *   refundable_amount: int,
+     *   itemsID: string,
+     *   refundableAmount: int,
      *   tax: int,
      *   description?: string|null,
      *   name?: string|null,
@@ -86,8 +86,8 @@ final class PaymentGetLineItemsResponse implements BaseModel
     /**
      * @param list<Item|array{
      *   amount: int,
-     *   items_id: string,
-     *   refundable_amount: int,
+     *   itemsID: string,
+     *   refundableAmount: int,
      *   tax: int,
      *   description?: string|null,
      *   name?: string|null,

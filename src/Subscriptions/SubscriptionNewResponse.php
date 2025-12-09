@@ -15,13 +15,13 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   addons: list<AddonCartResponseItem>,
  *   customer: CustomerLimitedDetails,
  *   metadata: array<string,string>,
- *   payment_id: string,
- *   recurring_pre_tax_amount: int,
- *   subscription_id: string,
- *   client_secret?: string|null,
- *   discount_id?: string|null,
- *   expires_on?: \DateTimeInterface|null,
- *   payment_link?: string|null,
+ *   paymentID: string,
+ *   recurringPreTaxAmount: int,
+ *   subscriptionID: string,
+ *   clientSecret?: string|null,
+ *   discountID?: string|null,
+ *   expiresOn?: \DateTimeInterface|null,
+ *   paymentLink?: string|null,
  * }
  */
 final class SubscriptionNewResponse implements BaseModel
@@ -54,45 +54,45 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * First payment id for the subscription.
      */
-    #[Required]
-    public string $payment_id;
+    #[Required('payment_id')]
+    public string $paymentID;
 
     /**
      * Tax will be added to the amount and charged to the customer on each billing cycle.
      */
-    #[Required]
-    public int $recurring_pre_tax_amount;
+    #[Required('recurring_pre_tax_amount')]
+    public int $recurringPreTaxAmount;
 
     /**
      * Unique identifier for the subscription.
      */
-    #[Required]
-    public string $subscription_id;
+    #[Required('subscription_id')]
+    public string $subscriptionID;
 
     /**
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    #[Optional(nullable: true)]
-    public ?string $client_secret;
+    #[Optional('client_secret', nullable: true)]
+    public ?string $clientSecret;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Optional(nullable: true)]
-    public ?string $discount_id;
+    #[Optional('discount_id', nullable: true)]
+    public ?string $discountID;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_on;
+    #[Optional('expires_on', nullable: true)]
+    public ?\DateTimeInterface $expiresOn;
 
     /**
      * URL to checkout page.
      */
-    #[Optional(nullable: true)]
-    public ?string $payment_link;
+    #[Optional('payment_link', nullable: true)]
+    public ?string $paymentLink;
 
     /**
      * `new SubscriptionNewResponse()` is missing required properties by the API.
@@ -103,9 +103,9 @@ final class SubscriptionNewResponse implements BaseModel
      *   addons: ...,
      *   customer: ...,
      *   metadata: ...,
-     *   payment_id: ...,
-     *   recurring_pre_tax_amount: ...,
-     *   subscription_id: ...,
+     *   paymentID: ...,
+     *   recurringPreTaxAmount: ...,
+     *   subscriptionID: ...,
      * )
      * ```
      *
@@ -131,15 +131,13 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItem|array{
-     *   addon_id: string, quantity: int
-     * }> $addons
+     * @param list<AddonCartResponseItem|array{addonID: string, quantity: int}> $addons
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      * @param array<string,string> $metadata
      */
@@ -147,27 +145,27 @@ final class SubscriptionNewResponse implements BaseModel
         array $addons,
         CustomerLimitedDetails|array $customer,
         array $metadata,
-        string $payment_id,
-        int $recurring_pre_tax_amount,
-        string $subscription_id,
-        ?string $client_secret = null,
-        ?string $discount_id = null,
-        ?\DateTimeInterface $expires_on = null,
-        ?string $payment_link = null,
+        string $paymentID,
+        int $recurringPreTaxAmount,
+        string $subscriptionID,
+        ?string $clientSecret = null,
+        ?string $discountID = null,
+        ?\DateTimeInterface $expiresOn = null,
+        ?string $paymentLink = null,
     ): self {
         $obj = new self;
 
         $obj['addons'] = $addons;
         $obj['customer'] = $customer;
         $obj['metadata'] = $metadata;
-        $obj['payment_id'] = $payment_id;
-        $obj['recurring_pre_tax_amount'] = $recurring_pre_tax_amount;
-        $obj['subscription_id'] = $subscription_id;
+        $obj['paymentID'] = $paymentID;
+        $obj['recurringPreTaxAmount'] = $recurringPreTaxAmount;
+        $obj['subscriptionID'] = $subscriptionID;
 
-        null !== $client_secret && $obj['client_secret'] = $client_secret;
-        null !== $discount_id && $obj['discount_id'] = $discount_id;
-        null !== $expires_on && $obj['expires_on'] = $expires_on;
-        null !== $payment_link && $obj['payment_link'] = $payment_link;
+        null !== $clientSecret && $obj['clientSecret'] = $clientSecret;
+        null !== $discountID && $obj['discountID'] = $discountID;
+        null !== $expiresOn && $obj['expiresOn'] = $expiresOn;
+        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
 
         return $obj;
     }
@@ -175,9 +173,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItem|array{
-     *   addon_id: string, quantity: int
-     * }> $addons
+     * @param list<AddonCartResponseItem|array{addonID: string, quantity: int}> $addons
      */
     public function withAddons(array $addons): self
     {
@@ -191,11 +187,11 @@ final class SubscriptionNewResponse implements BaseModel
      * Customer details associated with this subscription.
      *
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
@@ -225,7 +221,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj['payment_id'] = $paymentID;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }
@@ -236,7 +232,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
         $obj = clone $this;
-        $obj['recurring_pre_tax_amount'] = $recurringPreTaxAmount;
+        $obj['recurringPreTaxAmount'] = $recurringPreTaxAmount;
 
         return $obj;
     }
@@ -247,7 +243,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withSubscriptionID(string $subscriptionID): self
     {
         $obj = clone $this;
-        $obj['subscription_id'] = $subscriptionID;
+        $obj['subscriptionID'] = $subscriptionID;
 
         return $obj;
     }
@@ -259,7 +255,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withClientSecret(?string $clientSecret): self
     {
         $obj = clone $this;
-        $obj['client_secret'] = $clientSecret;
+        $obj['clientSecret'] = $clientSecret;
 
         return $obj;
     }
@@ -270,7 +266,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj['discount_id'] = $discountID;
+        $obj['discountID'] = $discountID;
 
         return $obj;
     }
@@ -281,7 +277,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj['expires_on'] = $expiresOn;
+        $obj['expiresOn'] = $expiresOn;
 
         return $obj;
     }
@@ -292,7 +288,7 @@ final class SubscriptionNewResponse implements BaseModel
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj['payment_link'] = $paymentLink;
+        $obj['paymentLink'] = $paymentLink;
 
         return $obj;
     }

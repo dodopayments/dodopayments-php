@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
@@ -74,7 +75,7 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
      * @api
      *
      * @param array{
-     *   license_key_id?: string|null, page_number?: int|null, page_size?: int|null
+     *   licenseKeyID?: string|null, pageNumber?: int|null, pageSize?: int|null
      * }|LicenseKeyInstanceListParams $params
      *
      * @return DefaultPageNumberPagination<LicenseKeyInstance>
@@ -94,7 +95,14 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         $response = $this->client->request(
             method: 'get',
             path: 'license_key_instances',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'licenseKeyID' => 'license_key_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: LicenseKeyInstance::class,
             page: DefaultPageNumberPagination::class,

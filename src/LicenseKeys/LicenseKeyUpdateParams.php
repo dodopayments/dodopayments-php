@@ -13,9 +13,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\LicenseKeysService::update()
  *
  * @phpstan-type LicenseKeyUpdateParamsShape = array{
- *   activations_limit?: int|null,
+ *   activationsLimit?: int|null,
  *   disabled?: bool|null,
- *   expires_at?: \DateTimeInterface|null,
+ *   expiresAt?: \DateTimeInterface|null,
  * }
  */
 final class LicenseKeyUpdateParams implements BaseModel
@@ -28,8 +28,8 @@ final class LicenseKeyUpdateParams implements BaseModel
      * The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      */
-    #[Optional(nullable: true)]
-    public ?int $activations_limit;
+    #[Optional('activations_limit', nullable: true)]
+    public ?int $activationsLimit;
 
     /**
      * Indicates whether the license key should be disabled.
@@ -42,8 +42,8 @@ final class LicenseKeyUpdateParams implements BaseModel
      * The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      */
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_at;
+    #[Optional('expires_at', nullable: true)]
+    public ?\DateTimeInterface $expiresAt;
 
     public function __construct()
     {
@@ -56,15 +56,15 @@ final class LicenseKeyUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?int $activations_limit = null,
+        ?int $activationsLimit = null,
         ?bool $disabled = null,
-        ?\DateTimeInterface $expires_at = null,
+        ?\DateTimeInterface $expiresAt = null,
     ): self {
         $obj = new self;
 
-        null !== $activations_limit && $obj['activations_limit'] = $activations_limit;
+        null !== $activationsLimit && $obj['activationsLimit'] = $activationsLimit;
         null !== $disabled && $obj['disabled'] = $disabled;
-        null !== $expires_at && $obj['expires_at'] = $expires_at;
+        null !== $expiresAt && $obj['expiresAt'] = $expiresAt;
 
         return $obj;
     }
@@ -76,7 +76,7 @@ final class LicenseKeyUpdateParams implements BaseModel
     public function withActivationsLimit(?int $activationsLimit): self
     {
         $obj = clone $this;
-        $obj['activations_limit'] = $activationsLimit;
+        $obj['activationsLimit'] = $activationsLimit;
 
         return $obj;
     }
@@ -100,7 +100,7 @@ final class LicenseKeyUpdateParams implements BaseModel
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj['expires_at'] = $expiresAt;
+        $obj['expiresAt'] = $expiresAt;
 
         return $obj;
     }

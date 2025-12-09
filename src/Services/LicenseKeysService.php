@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
@@ -46,9 +47,9 @@ final class LicenseKeysService implements LicenseKeysContract
      * @api
      *
      * @param array{
-     *   activations_limit?: int|null,
+     *   activationsLimit?: int|null,
      *   disabled?: bool|null,
-     *   expires_at?: string|\DateTimeInterface|null,
+     *   expiresAt?: string|\DateTimeInterface|null,
      * }|LicenseKeyUpdateParams $params
      *
      * @throws APIException
@@ -79,10 +80,10 @@ final class LicenseKeysService implements LicenseKeysContract
      * @api
      *
      * @param array{
-     *   customer_id?: string,
-     *   page_number?: int,
-     *   page_size?: int,
-     *   product_id?: string,
+     *   customerID?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
+     *   productID?: string,
      *   status?: 'active'|'expired'|'disabled'|Status,
      * }|LicenseKeyListParams $params
      *
@@ -103,7 +104,15 @@ final class LicenseKeysService implements LicenseKeysContract
         $response = $this->client->request(
             method: 'get',
             path: 'license_keys',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'customerID' => 'customer_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                    'productID' => 'product_id',
+                ],
+            ),
             options: $options,
             convert: LicenseKey::class,
             page: DefaultPageNumberPagination::class,

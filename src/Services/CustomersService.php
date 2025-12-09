@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
@@ -46,7 +47,7 @@ final class CustomersService implements CustomersContract
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * }|CustomerCreateParams $params
      *
      * @throws APIException
@@ -98,7 +99,7 @@ final class CustomersService implements CustomersContract
      * @param array{
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * }|CustomerUpdateParams $params
      *
      * @throws APIException
@@ -129,7 +130,7 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array{
-     *   email?: string, page_number?: int, page_size?: int
+     *   email?: string, pageNumber?: int, pageSize?: int
      * }|CustomerListParams $params
      *
      * @return DefaultPageNumberPagination<Customer>
@@ -149,7 +150,10 @@ final class CustomersService implements CustomersContract
         $response = $this->client->request(
             method: 'get',
             path: 'customers',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: Customer::class,
             page: DefaultPageNumberPagination::class,

@@ -18,9 +18,9 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  * @phpstan-type WebhookUpdateParamsShape = array{
  *   description?: string|null,
  *   disabled?: bool|null,
- *   filter_types?: list<WebhookEventType|value-of<WebhookEventType>>|null,
+ *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>|null,
  *   metadata?: array<string,string>|null,
- *   rate_limit?: int|null,
+ *   rateLimit?: int|null,
  *   url?: string|null,
  * }
  */
@@ -47,10 +47,10 @@ final class WebhookUpdateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var list<value-of<WebhookEventType>>|null $filter_types
+     * @var list<value-of<WebhookEventType>>|null $filterTypes
      */
-    #[Optional(list: WebhookEventType::class, nullable: true)]
-    public ?array $filter_types;
+    #[Optional('filter_types', list: WebhookEventType::class, nullable: true)]
+    public ?array $filterTypes;
 
     /**
      * Metadata.
@@ -63,8 +63,8 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Rate limit.
      */
-    #[Optional(nullable: true)]
-    public ?int $rate_limit;
+    #[Optional('rate_limit', nullable: true)]
+    public ?int $rateLimit;
 
     /**
      * Url endpoint.
@@ -82,24 +82,24 @@ final class WebhookUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filter_types
+     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes
      * @param array<string,string>|null $metadata
      */
     public static function with(
         ?string $description = null,
         ?bool $disabled = null,
-        ?array $filter_types = null,
+        ?array $filterTypes = null,
         ?array $metadata = null,
-        ?int $rate_limit = null,
+        ?int $rateLimit = null,
         ?string $url = null,
     ): self {
         $obj = new self;
 
         null !== $description && $obj['description'] = $description;
         null !== $disabled && $obj['disabled'] = $disabled;
-        null !== $filter_types && $obj['filter_types'] = $filter_types;
+        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
         null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $rate_limit && $obj['rate_limit'] = $rate_limit;
+        null !== $rateLimit && $obj['rateLimit'] = $rateLimit;
         null !== $url && $obj['url'] = $url;
 
         return $obj;
@@ -137,7 +137,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withFilterTypes(?array $filterTypes): self
     {
         $obj = clone $this;
-        $obj['filter_types'] = $filterTypes;
+        $obj['filterTypes'] = $filterTypes;
 
         return $obj;
     }
@@ -161,7 +161,7 @@ final class WebhookUpdateParams implements BaseModel
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj['rate_limit'] = $rateLimit;
+        $obj['rateLimit'] = $rateLimit;
 
         return $obj;
     }

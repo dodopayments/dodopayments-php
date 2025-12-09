@@ -13,10 +13,10 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 /**
  * @phpstan-type LicenseActivateResponseShape = array{
  *   id: string,
- *   business_id: string,
- *   created_at: \DateTimeInterface,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
- *   license_key_id: string,
+ *   licenseKeyID: string,
  *   name: string,
  *   product: Product,
  * }
@@ -35,14 +35,14 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Business ID.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Creation timestamp.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * Limited customer details associated with the license key.
@@ -53,8 +53,8 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Associated license key ID.
      */
-    #[Required]
-    public string $license_key_id;
+    #[Required('license_key_id')]
+    public string $licenseKeyID;
 
     /**
      * Instance name.
@@ -75,10 +75,10 @@ final class LicenseActivateResponse implements BaseModel
      * ```
      * LicenseActivateResponse::with(
      *   id: ...,
-     *   business_id: ...,
-     *   created_at: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
      *   customer: ...,
-     *   license_key_id: ...,
+     *   licenseKeyID: ...,
      *   name: ...,
      *   product: ...,
      * )
@@ -108,30 +108,30 @@ final class LicenseActivateResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
-     * @param Product|array{product_id: string, name?: string|null} $product
+     * @param Product|array{productID: string, name?: string|null} $product
      */
     public static function with(
         string $id,
-        string $business_id,
-        \DateTimeInterface $created_at,
+        string $businessID,
+        \DateTimeInterface $createdAt,
         CustomerLimitedDetails|array $customer,
-        string $license_key_id,
+        string $licenseKeyID,
         string $name,
         Product|array $product,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
         $obj['customer'] = $customer;
-        $obj['license_key_id'] = $license_key_id;
+        $obj['licenseKeyID'] = $licenseKeyID;
         $obj['name'] = $name;
         $obj['product'] = $product;
 
@@ -155,7 +155,7 @@ final class LicenseActivateResponse implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class LicenseActivateResponse implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -175,11 +175,11 @@ final class LicenseActivateResponse implements BaseModel
      * Limited customer details associated with the license key.
      *
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
@@ -196,7 +196,7 @@ final class LicenseActivateResponse implements BaseModel
     public function withLicenseKeyID(string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj['license_key_id'] = $licenseKeyID;
+        $obj['licenseKeyID'] = $licenseKeyID;
 
         return $obj;
     }
@@ -215,7 +215,7 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Related product info. Present if the license key is tied to a product.
      *
-     * @param Product|array{product_id: string, name?: string|null} $product
+     * @param Product|array{productID: string, name?: string|null} $product
      */
     public function withProduct(Product|array $product): self
     {

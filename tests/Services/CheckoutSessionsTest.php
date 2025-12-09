@@ -34,7 +34,7 @@ final class CheckoutSessionsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->checkoutSessions->create([
-            'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
+            'productCart' => [['productID' => 'product_id', 'quantity' => 0]],
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -45,60 +45,60 @@ final class CheckoutSessionsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->checkoutSessions->create([
-            'product_cart' => [
+            'productCart' => [
                 [
-                    'product_id' => 'product_id',
+                    'productID' => 'product_id',
                     'quantity' => 0,
-                    'addons' => [['addon_id' => 'addon_id', 'quantity' => 0]],
+                    'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
                     'amount' => 0,
                 ],
             ],
-            'allowed_payment_method_types' => [PaymentMethodTypes::CREDIT],
-            'billing_address' => [
+            'allowedPaymentMethodTypes' => [PaymentMethodTypes::CREDIT],
+            'billingAddress' => [
                 'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',
             ],
-            'billing_currency' => Currency::AED,
+            'billingCurrency' => Currency::AED,
             'confirm' => true,
-            'customer' => ['customer_id' => 'customer_id'],
+            'customer' => ['customerID' => 'customer_id'],
             'customization' => [
-                'force_language' => 'force_language',
-                'show_on_demand_tag' => true,
-                'show_order_details' => true,
+                'forceLanguage' => 'force_language',
+                'showOnDemandTag' => true,
+                'showOrderDetails' => true,
                 'theme' => 'dark',
             ],
-            'discount_code' => 'discount_code',
-            'feature_flags' => [
-                'allow_currency_selection' => true,
-                'allow_customer_editing_city' => true,
-                'allow_customer_editing_country' => true,
-                'allow_customer_editing_email' => true,
-                'allow_customer_editing_name' => true,
-                'allow_customer_editing_state' => true,
-                'allow_customer_editing_street' => true,
-                'allow_customer_editing_zipcode' => true,
-                'allow_discount_code' => true,
-                'allow_phone_number_collection' => true,
-                'allow_tax_id' => true,
-                'always_create_new_customer' => true,
+            'discountCode' => 'discount_code',
+            'featureFlags' => [
+                'allowCurrencySelection' => true,
+                'allowCustomerEditingCity' => true,
+                'allowCustomerEditingCountry' => true,
+                'allowCustomerEditingEmail' => true,
+                'allowCustomerEditingName' => true,
+                'allowCustomerEditingState' => true,
+                'allowCustomerEditingStreet' => true,
+                'allowCustomerEditingZipcode' => true,
+                'allowDiscountCode' => true,
+                'allowPhoneNumberCollection' => true,
+                'allowTaxID' => true,
+                'alwaysCreateNewCustomer' => true,
             ],
-            'force_3ds' => true,
+            'force3DS' => true,
             'metadata' => ['foo' => 'string'],
-            'minimal_address' => true,
-            'return_url' => 'return_url',
-            'show_saved_payment_methods' => true,
-            'subscription_data' => [
-                'on_demand' => [
-                    'mandate_only' => true,
-                    'adaptive_currency_fees_inclusive' => true,
-                    'product_currency' => Currency::AED,
-                    'product_description' => 'product_description',
-                    'product_price' => 0,
+            'minimalAddress' => true,
+            'returnURL' => 'return_url',
+            'showSavedPaymentMethods' => true,
+            'subscriptionData' => [
+                'onDemand' => [
+                    'mandateOnly' => true,
+                    'adaptiveCurrencyFeesInclusive' => true,
+                    'productCurrency' => Currency::AED,
+                    'productDescription' => 'product_description',
+                    'productPrice' => 0,
                 ],
-                'trial_period_days' => 0,
+                'trialPeriodDays' => 0,
             ],
         ]);
 

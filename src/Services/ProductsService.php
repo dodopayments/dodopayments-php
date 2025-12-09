@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
@@ -44,19 +45,19 @@ final class ProductsService implements ProductsContract
      * @param array{
      *   name: string,
      *   price: Price|array<string,mixed>,
-     *   tax_category: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
+     *   taxCategory: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
      *   addons?: list<string>|null,
-     *   brand_id?: string|null,
+     *   brandID?: string|null,
      *   description?: string|null,
-     *   digital_product_delivery?: array{
-     *     external_url?: string|null, instructions?: string|null
+     *   digitalProductDelivery?: array{
+     *     externalURL?: string|null, instructions?: string|null
      *   }|null,
-     *   license_key_activation_message?: string|null,
-     *   license_key_activations_limit?: int|null,
-     *   license_key_duration?: array{
+     *   licenseKeyActivationMessage?: string|null,
+     *   licenseKeyActivationsLimit?: int|null,
+     *   licenseKeyDuration?: array{
      *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
      *   }|LicenseKeyDuration|null,
-     *   license_key_enabled?: bool|null,
+     *   licenseKeyEnabled?: bool|null,
      *   metadata?: array<string,string>,
      * }|ProductCreateParams $params
      *
@@ -108,24 +109,24 @@ final class ProductsService implements ProductsContract
      *
      * @param array{
      *   addons?: list<string>|null,
-     *   brand_id?: string|null,
+     *   brandID?: string|null,
      *   description?: string|null,
-     *   digital_product_delivery?: array{
-     *     external_url?: string|null,
+     *   digitalProductDelivery?: array{
+     *     externalURL?: string|null,
      *     files?: list<string>|null,
      *     instructions?: string|null,
      *   }|null,
-     *   image_id?: string|null,
-     *   license_key_activation_message?: string|null,
-     *   license_key_activations_limit?: int|null,
-     *   license_key_duration?: array{
+     *   imageID?: string|null,
+     *   licenseKeyActivationMessage?: string|null,
+     *   licenseKeyActivationsLimit?: int|null,
+     *   licenseKeyDuration?: array{
      *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
      *   }|LicenseKeyDuration|null,
-     *   license_key_enabled?: bool|null,
+     *   licenseKeyEnabled?: bool|null,
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
      *   price?: Price|array<string,mixed>|null,
-     *   tax_category?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
+     *   taxCategory?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
      * }|ProductUpdateParams $params
      *
      * @throws APIException
@@ -157,9 +158,9 @@ final class ProductsService implements ProductsContract
      *
      * @param array{
      *   archived?: bool,
-     *   brand_id?: string,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   brandID?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      *   recurring?: bool,
      * }|ProductListParams $params
      *
@@ -180,7 +181,14 @@ final class ProductsService implements ProductsContract
         $response = $this->client->request(
             method: 'get',
             path: 'products',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'brandID' => 'brand_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: ProductListResponse::class,
             page: DefaultPageNumberPagination::class,
@@ -232,7 +240,7 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
-     * @param array{file_name: string}|ProductUpdateFilesParams $params
+     * @param array{fileName: string}|ProductUpdateFilesParams $params
      *
      * @throws APIException
      */

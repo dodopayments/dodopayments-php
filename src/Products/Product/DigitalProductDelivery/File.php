@@ -9,18 +9,18 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type FileShape = array{file_id: string, file_name: string, url: string}
+ * @phpstan-type FileShape = array{fileID: string, fileName: string, url: string}
  */
 final class File implements BaseModel
 {
     /** @use SdkModel<FileShape> */
     use SdkModel;
 
-    #[Required]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
-    #[Required]
-    public string $file_name;
+    #[Required('file_name')]
+    public string $fileName;
 
     #[Required]
     public string $url;
@@ -30,7 +30,7 @@ final class File implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * File::with(file_id: ..., file_name: ..., url: ...)
+     * File::with(fileID: ..., fileName: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -50,14 +50,14 @@ final class File implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $file_id,
-        string $file_name,
+        string $fileID,
+        string $fileName,
         string $url
     ): self {
         $obj = new self;
 
-        $obj['file_id'] = $file_id;
-        $obj['file_name'] = $file_name;
+        $obj['fileID'] = $fileID;
+        $obj['fileName'] = $fileName;
         $obj['url'] = $url;
 
         return $obj;
@@ -66,7 +66,7 @@ final class File implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj['file_id'] = $fileID;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }
@@ -74,7 +74,7 @@ final class File implements BaseModel
     public function withFileName(string $fileName): self
     {
         $obj = clone $this;
-        $obj['file_name'] = $fileName;
+        $obj['fileName'] = $fileName;
 
         return $obj;
     }

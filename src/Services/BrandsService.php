@@ -28,8 +28,8 @@ final class BrandsService implements BrandsContract
      * @param array{
      *   description?: string|null,
      *   name?: string|null,
-     *   statement_descriptor?: string|null,
-     *   support_email?: string|null,
+     *   statementDescriptor?: string|null,
+     *   supportEmail?: string|null,
      *   url?: string|null,
      * }|BrandCreateParams $params
      *
@@ -82,10 +82,10 @@ final class BrandsService implements BrandsContract
      * @api
      *
      * @param array{
-     *   image_id?: string|null,
+     *   imageID?: string|null,
      *   name?: string|null,
-     *   statement_descriptor?: string|null,
-     *   support_email?: string|null,
+     *   statementDescriptor?: string|null,
+     *   supportEmail?: string|null,
      * }|BrandUpdateParams $params
      *
      * @throws APIException

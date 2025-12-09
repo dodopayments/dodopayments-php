@@ -9,15 +9,15 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type AttachAddonShape = array{addon_id: string, quantity: int}
+ * @phpstan-type AttachAddonShape = array{addonID: string, quantity: int}
  */
 final class AttachAddon implements BaseModel
 {
     /** @use SdkModel<AttachAddonShape> */
     use SdkModel;
 
-    #[Required]
-    public string $addon_id;
+    #[Required('addon_id')]
+    public string $addonID;
 
     #[Required]
     public int $quantity;
@@ -27,7 +27,7 @@ final class AttachAddon implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * AttachAddon::with(addon_id: ..., quantity: ...)
+     * AttachAddon::with(addonID: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -46,11 +46,11 @@ final class AttachAddon implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $addon_id, int $quantity): self
+    public static function with(string $addonID, int $quantity): self
     {
         $obj = new self;
 
-        $obj['addon_id'] = $addon_id;
+        $obj['addonID'] = $addonID;
         $obj['quantity'] = $quantity;
 
         return $obj;
@@ -59,7 +59,7 @@ final class AttachAddon implements BaseModel
     public function withAddonID(string $addonID): self
     {
         $obj = clone $this;
-        $obj['addon_id'] = $addonID;
+        $obj['addonID'] = $addonID;
 
         return $obj;
     }

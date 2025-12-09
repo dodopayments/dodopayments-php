@@ -23,15 +23,15 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *     street?: string|null,
  *     zipcode?: string|null,
  *   },
- *   cancel_at_next_billing_date?: bool|null,
- *   customer_name?: string|null,
- *   disable_on_demand?: null|DisableOnDemand|array{
- *     next_billing_date: \DateTimeInterface
+ *   cancelAtNextBillingDate?: bool|null,
+ *   customerName?: string|null,
+ *   disableOnDemand?: null|DisableOnDemand|array{
+ *     nextBillingDate: \DateTimeInterface
  *   },
  *   metadata?: array<string,string>|null,
- *   next_billing_date?: \DateTimeInterface|null,
+ *   nextBillingDate?: \DateTimeInterface|null,
  *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
- *   tax_id?: string|null,
+ *   taxID?: string|null,
  * }
  */
 final class SubscriptionUpdateParams implements BaseModel
@@ -46,28 +46,28 @@ final class SubscriptionUpdateParams implements BaseModel
     /**
      * When set, the subscription will remain active until the end of billing period.
      */
-    #[Optional(nullable: true)]
-    public ?bool $cancel_at_next_billing_date;
+    #[Optional('cancel_at_next_billing_date', nullable: true)]
+    public ?bool $cancelAtNextBillingDate;
 
-    #[Optional(nullable: true)]
-    public ?string $customer_name;
+    #[Optional('customer_name', nullable: true)]
+    public ?string $customerName;
 
-    #[Optional(nullable: true)]
-    public ?DisableOnDemand $disable_on_demand;
+    #[Optional('disable_on_demand', nullable: true)]
+    public ?DisableOnDemand $disableOnDemand;
 
     /** @var array<string,string>|null $metadata */
     #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $next_billing_date;
+    #[Optional('next_billing_date', nullable: true)]
+    public ?\DateTimeInterface $nextBillingDate;
 
     /** @var value-of<SubscriptionStatus>|null $status */
     #[Optional(enum: SubscriptionStatus::class, nullable: true)]
     public ?string $status;
 
-    #[Optional(nullable: true)]
-    public ?string $tax_id;
+    #[Optional('tax_id', nullable: true)]
+    public ?string $taxID;
 
     public function __construct()
     {
@@ -87,31 +87,31 @@ final class SubscriptionUpdateParams implements BaseModel
      *   zipcode?: string|null,
      * }|null $billing
      * @param DisableOnDemand|array{
-     *   next_billing_date: \DateTimeInterface
-     * }|null $disable_on_demand
+     *   nextBillingDate: \DateTimeInterface
+     * }|null $disableOnDemand
      * @param array<string,string>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
     public static function with(
         BillingAddress|array|null $billing = null,
-        ?bool $cancel_at_next_billing_date = null,
-        ?string $customer_name = null,
-        DisableOnDemand|array|null $disable_on_demand = null,
+        ?bool $cancelAtNextBillingDate = null,
+        ?string $customerName = null,
+        DisableOnDemand|array|null $disableOnDemand = null,
         ?array $metadata = null,
-        ?\DateTimeInterface $next_billing_date = null,
+        ?\DateTimeInterface $nextBillingDate = null,
         SubscriptionStatus|string|null $status = null,
-        ?string $tax_id = null,
+        ?string $taxID = null,
     ): self {
         $obj = new self;
 
         null !== $billing && $obj['billing'] = $billing;
-        null !== $cancel_at_next_billing_date && $obj['cancel_at_next_billing_date'] = $cancel_at_next_billing_date;
-        null !== $customer_name && $obj['customer_name'] = $customer_name;
-        null !== $disable_on_demand && $obj['disable_on_demand'] = $disable_on_demand;
+        null !== $cancelAtNextBillingDate && $obj['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+        null !== $customerName && $obj['customerName'] = $customerName;
+        null !== $disableOnDemand && $obj['disableOnDemand'] = $disableOnDemand;
         null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $next_billing_date && $obj['next_billing_date'] = $next_billing_date;
+        null !== $nextBillingDate && $obj['nextBillingDate'] = $nextBillingDate;
         null !== $status && $obj['status'] = $status;
-        null !== $tax_id && $obj['tax_id'] = $tax_id;
+        null !== $taxID && $obj['taxID'] = $taxID;
 
         return $obj;
     }
@@ -140,7 +140,7 @@ final class SubscriptionUpdateParams implements BaseModel
         ?bool $cancelAtNextBillingDate
     ): self {
         $obj = clone $this;
-        $obj['cancel_at_next_billing_date'] = $cancelAtNextBillingDate;
+        $obj['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
 
         return $obj;
     }
@@ -148,21 +148,21 @@ final class SubscriptionUpdateParams implements BaseModel
     public function withCustomerName(?string $customerName): self
     {
         $obj = clone $this;
-        $obj['customer_name'] = $customerName;
+        $obj['customerName'] = $customerName;
 
         return $obj;
     }
 
     /**
      * @param DisableOnDemand|array{
-     *   next_billing_date: \DateTimeInterface
+     *   nextBillingDate: \DateTimeInterface
      * }|null $disableOnDemand
      */
     public function withDisableOnDemand(
         DisableOnDemand|array|null $disableOnDemand
     ): self {
         $obj = clone $this;
-        $obj['disable_on_demand'] = $disableOnDemand;
+        $obj['disableOnDemand'] = $disableOnDemand;
 
         return $obj;
     }
@@ -182,7 +182,7 @@ final class SubscriptionUpdateParams implements BaseModel
         ?\DateTimeInterface $nextBillingDate
     ): self {
         $obj = clone $this;
-        $obj['next_billing_date'] = $nextBillingDate;
+        $obj['nextBillingDate'] = $nextBillingDate;
 
         return $obj;
     }
@@ -201,7 +201,7 @@ final class SubscriptionUpdateParams implements BaseModel
     public function withTaxID(?string $taxID): self
     {
         $obj = clone $this;
-        $obj['tax_id'] = $taxID;
+        $obj['taxID'] = $taxID;
 
         return $obj;
     }

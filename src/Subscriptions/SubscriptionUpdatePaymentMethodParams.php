@@ -15,7 +15,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
  * @see Dodopayments\Services\SubscriptionsService::updatePaymentMethod()
  *
  * @phpstan-type SubscriptionUpdatePaymentMethodParamsShape = array{
- *   type: Type|value-of<Type>, return_url?: string|null, payment_method_id: string
+ *   type: Type|value-of<Type>, returnURL?: string|null, paymentMethodID: string
  * }
  */
 final class SubscriptionUpdatePaymentMethodParams implements BaseModel
@@ -28,18 +28,18 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
     #[Required(enum: Type::class)]
     public string $type;
 
-    #[Optional(nullable: true)]
-    public ?string $return_url;
+    #[Optional('return_url', nullable: true)]
+    public ?string $returnURL;
 
-    #[Required]
-    public string $payment_method_id;
+    #[Required('payment_method_id')]
+    public string $paymentMethodID;
 
     /**
      * `new SubscriptionUpdatePaymentMethodParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * SubscriptionUpdatePaymentMethodParams::with(type: ..., payment_method_id: ...)
+     * SubscriptionUpdatePaymentMethodParams::with(type: ..., paymentMethodID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -64,15 +64,15 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
      */
     public static function with(
         Type|string $type,
-        string $payment_method_id,
-        ?string $return_url = null
+        string $paymentMethodID,
+        ?string $returnURL = null
     ): self {
         $obj = new self;
 
         $obj['type'] = $type;
-        $obj['payment_method_id'] = $payment_method_id;
+        $obj['paymentMethodID'] = $paymentMethodID;
 
-        null !== $return_url && $obj['return_url'] = $return_url;
+        null !== $returnURL && $obj['returnURL'] = $returnURL;
 
         return $obj;
     }
@@ -91,7 +91,7 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
     public function withReturnURL(?string $returnURL): self
     {
         $obj = clone $this;
-        $obj['return_url'] = $returnURL;
+        $obj['returnURL'] = $returnURL;
 
         return $obj;
     }
@@ -99,7 +99,7 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
     public function withPaymentMethodID(string $paymentMethodID): self
     {
         $obj = clone $this;
-        $obj['payment_method_id'] = $paymentMethodID;
+        $obj['paymentMethodID'] = $paymentMethodID;
 
         return $obj;
     }

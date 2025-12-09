@@ -12,8 +12,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type ItemShape = array{
  *   amount: int,
- *   items_id: string,
- *   refundable_amount: int,
+ *   itemsID: string,
+ *   refundableAmount: int,
  *   tax: int,
  *   description?: string|null,
  *   name?: string|null,
@@ -27,11 +27,11 @@ final class Item implements BaseModel
     #[Required]
     public int $amount;
 
-    #[Required]
-    public string $items_id;
+    #[Required('items_id')]
+    public string $itemsID;
 
-    #[Required]
-    public int $refundable_amount;
+    #[Required('refundable_amount')]
+    public int $refundableAmount;
 
     #[Required]
     public int $tax;
@@ -47,7 +47,7 @@ final class Item implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * Item::with(amount: ..., items_id: ..., refundable_amount: ..., tax: ...)
+     * Item::with(amount: ..., itemsID: ..., refundableAmount: ..., tax: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -72,8 +72,8 @@ final class Item implements BaseModel
      */
     public static function with(
         int $amount,
-        string $items_id,
-        int $refundable_amount,
+        string $itemsID,
+        int $refundableAmount,
         int $tax,
         ?string $description = null,
         ?string $name = null,
@@ -81,8 +81,8 @@ final class Item implements BaseModel
         $obj = new self;
 
         $obj['amount'] = $amount;
-        $obj['items_id'] = $items_id;
-        $obj['refundable_amount'] = $refundable_amount;
+        $obj['itemsID'] = $itemsID;
+        $obj['refundableAmount'] = $refundableAmount;
         $obj['tax'] = $tax;
 
         null !== $description && $obj['description'] = $description;
@@ -102,7 +102,7 @@ final class Item implements BaseModel
     public function withItemsID(string $itemsID): self
     {
         $obj = clone $this;
-        $obj['items_id'] = $itemsID;
+        $obj['itemsID'] = $itemsID;
 
         return $obj;
     }
@@ -110,7 +110,7 @@ final class Item implements BaseModel
     public function withRefundableAmount(int $refundableAmount): self
     {
         $obj = clone $this;
-        $obj['refundable_amount'] = $refundableAmount;
+        $obj['refundableAmount'] = $refundableAmount;
 
         return $obj;
     }

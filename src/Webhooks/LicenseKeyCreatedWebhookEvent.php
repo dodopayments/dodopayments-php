@@ -14,7 +14,7 @@ use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Type;
 
 /**
  * @phpstan-type LicenseKeyCreatedWebhookEventShape = array{
- *   business_id: string,
+ *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<Type>,
@@ -28,8 +28,8 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
     /**
      * The business identifier.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Event-specific data.
@@ -57,7 +57,7 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * LicenseKeyCreatedWebhookEvent::with(
-     *   business_id: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ..., type: ...
      * )
      * ```
      *
@@ -83,30 +83,30 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
      *
      * @param Data|array{
      *   id: string,
-     *   business_id: string,
-     *   created_at: \DateTimeInterface,
-     *   customer_id: string,
-     *   instances_count: int,
+     *   businessID: string,
+     *   createdAt: \DateTimeInterface,
+     *   customerID: string,
+     *   instancesCount: int,
      *   key: string,
-     *   payment_id: string,
-     *   product_id: string,
+     *   paymentID: string,
+     *   productID: string,
      *   status: value-of<LicenseKeyStatus>,
-     *   activations_limit?: int|null,
-     *   expires_at?: \DateTimeInterface|null,
-     *   subscription_id?: string|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   activationsLimit?: int|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     *   subscriptionID?: string|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $business_id,
+        string $businessID,
         Data|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
+        $obj['businessID'] = $businessID;
         $obj['data'] = $data;
         $obj['timestamp'] = $timestamp;
         $obj['type'] = $type;
@@ -120,7 +120,7 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -130,18 +130,18 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
      *
      * @param Data|array{
      *   id: string,
-     *   business_id: string,
-     *   created_at: \DateTimeInterface,
-     *   customer_id: string,
-     *   instances_count: int,
+     *   businessID: string,
+     *   createdAt: \DateTimeInterface,
+     *   customerID: string,
+     *   instancesCount: int,
      *   key: string,
-     *   payment_id: string,
-     *   product_id: string,
+     *   paymentID: string,
+     *   productID: string,
      *   status: value-of<LicenseKeyStatus>,
-     *   activations_limit?: int|null,
-     *   expires_at?: \DateTimeInterface|null,
-     *   subscription_id?: string|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   activationsLimit?: int|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     *   subscriptionID?: string|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      */
     public function withData(Data|array $data): self

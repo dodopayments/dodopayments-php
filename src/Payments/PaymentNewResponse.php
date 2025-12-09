@@ -11,15 +11,15 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type PaymentNewResponseShape = array{
- *   client_secret: string,
+ *   clientSecret: string,
  *   customer: CustomerLimitedDetails,
  *   metadata: array<string,string>,
- *   payment_id: string,
- *   total_amount: int,
- *   discount_id?: string|null,
- *   expires_on?: \DateTimeInterface|null,
- *   payment_link?: string|null,
- *   product_cart?: list<OneTimeProductCartItem>|null,
+ *   paymentID: string,
+ *   totalAmount: int,
+ *   discountID?: string|null,
+ *   expiresOn?: \DateTimeInterface|null,
+ *   paymentLink?: string|null,
+ *   productCart?: list<OneTimeProductCartItem>|null,
  * }
  */
 final class PaymentNewResponse implements BaseModel
@@ -31,8 +31,8 @@ final class PaymentNewResponse implements BaseModel
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    #[Required]
-    public string $client_secret;
+    #[Required('client_secret')]
+    public string $clientSecret;
 
     /**
      * Limited details about the customer making the payment.
@@ -51,40 +51,44 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Unique identifier for the payment.
      */
-    #[Required]
-    public string $payment_id;
+    #[Required('payment_id')]
+    public string $paymentID;
 
     /**
      * Total amount of the payment in smallest currency unit (e.g. cents).
      */
-    #[Required]
-    public int $total_amount;
+    #[Required('total_amount')]
+    public int $totalAmount;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Optional(nullable: true)]
-    public ?string $discount_id;
+    #[Optional('discount_id', nullable: true)]
+    public ?string $discountID;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_on;
+    #[Optional('expires_on', nullable: true)]
+    public ?\DateTimeInterface $expiresOn;
 
     /**
      * Optional URL to a hosted payment page.
      */
-    #[Optional(nullable: true)]
-    public ?string $payment_link;
+    #[Optional('payment_link', nullable: true)]
+    public ?string $paymentLink;
 
     /**
      * Optional list of products included in the payment.
      *
-     * @var list<OneTimeProductCartItem>|null $product_cart
+     * @var list<OneTimeProductCartItem>|null $productCart
      */
-    #[Optional(list: OneTimeProductCartItem::class, nullable: true)]
-    public ?array $product_cart;
+    #[Optional(
+        'product_cart',
+        list: OneTimeProductCartItem::class,
+        nullable: true
+    )]
+    public ?array $productCart;
 
     /**
      * `new PaymentNewResponse()` is missing required properties by the API.
@@ -92,11 +96,11 @@ final class PaymentNewResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * PaymentNewResponse::with(
-     *   client_secret: ...,
+     *   clientSecret: ...,
      *   customer: ...,
      *   metadata: ...,
-     *   payment_id: ...,
-     *   total_amount: ...,
+     *   paymentID: ...,
+     *   totalAmount: ...,
      * )
      * ```
      *
@@ -122,40 +126,40 @@ final class PaymentNewResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      * @param array<string,string> $metadata
      * @param list<OneTimeProductCartItem|array{
-     *   product_id: string, quantity: int, amount?: int|null
-     * }>|null $product_cart
+     *   productID: string, quantity: int, amount?: int|null
+     * }>|null $productCart
      */
     public static function with(
-        string $client_secret,
+        string $clientSecret,
         CustomerLimitedDetails|array $customer,
         array $metadata,
-        string $payment_id,
-        int $total_amount,
-        ?string $discount_id = null,
-        ?\DateTimeInterface $expires_on = null,
-        ?string $payment_link = null,
-        ?array $product_cart = null,
+        string $paymentID,
+        int $totalAmount,
+        ?string $discountID = null,
+        ?\DateTimeInterface $expiresOn = null,
+        ?string $paymentLink = null,
+        ?array $productCart = null,
     ): self {
         $obj = new self;
 
-        $obj['client_secret'] = $client_secret;
+        $obj['clientSecret'] = $clientSecret;
         $obj['customer'] = $customer;
         $obj['metadata'] = $metadata;
-        $obj['payment_id'] = $payment_id;
-        $obj['total_amount'] = $total_amount;
+        $obj['paymentID'] = $paymentID;
+        $obj['totalAmount'] = $totalAmount;
 
-        null !== $discount_id && $obj['discount_id'] = $discount_id;
-        null !== $expires_on && $obj['expires_on'] = $expires_on;
-        null !== $payment_link && $obj['payment_link'] = $payment_link;
-        null !== $product_cart && $obj['product_cart'] = $product_cart;
+        null !== $discountID && $obj['discountID'] = $discountID;
+        null !== $expiresOn && $obj['expiresOn'] = $expiresOn;
+        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
+        null !== $productCart && $obj['productCart'] = $productCart;
 
         return $obj;
     }
@@ -167,7 +171,7 @@ final class PaymentNewResponse implements BaseModel
     public function withClientSecret(string $clientSecret): self
     {
         $obj = clone $this;
-        $obj['client_secret'] = $clientSecret;
+        $obj['clientSecret'] = $clientSecret;
 
         return $obj;
     }
@@ -176,11 +180,11 @@ final class PaymentNewResponse implements BaseModel
      * Limited details about the customer making the payment.
      *
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
@@ -210,7 +214,7 @@ final class PaymentNewResponse implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj['payment_id'] = $paymentID;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }
@@ -221,7 +225,7 @@ final class PaymentNewResponse implements BaseModel
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj['total_amount'] = $totalAmount;
+        $obj['totalAmount'] = $totalAmount;
 
         return $obj;
     }
@@ -232,7 +236,7 @@ final class PaymentNewResponse implements BaseModel
     public function withDiscountID(?string $discountID): self
     {
         $obj = clone $this;
-        $obj['discount_id'] = $discountID;
+        $obj['discountID'] = $discountID;
 
         return $obj;
     }
@@ -243,7 +247,7 @@ final class PaymentNewResponse implements BaseModel
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj['expires_on'] = $expiresOn;
+        $obj['expiresOn'] = $expiresOn;
 
         return $obj;
     }
@@ -254,7 +258,7 @@ final class PaymentNewResponse implements BaseModel
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj['payment_link'] = $paymentLink;
+        $obj['paymentLink'] = $paymentLink;
 
         return $obj;
     }
@@ -263,13 +267,13 @@ final class PaymentNewResponse implements BaseModel
      * Optional list of products included in the payment.
      *
      * @param list<OneTimeProductCartItem|array{
-     *   product_id: string, quantity: int, amount?: int|null
+     *   productID: string, quantity: int, amount?: int|null
      * }>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {
         $obj = clone $this;
-        $obj['product_cart'] = $productCart;
+        $obj['productCart'] = $productCart;
 
         return $obj;
     }

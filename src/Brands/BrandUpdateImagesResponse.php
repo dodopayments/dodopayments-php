@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type BrandUpdateImagesResponseShape = array{
- *   image_id: string, url: string
+ *   imageID: string, url: string
  * }
  */
 final class BrandUpdateImagesResponse implements BaseModel
@@ -21,8 +21,8 @@ final class BrandUpdateImagesResponse implements BaseModel
     /**
      * UUID that will be used as the image identifier/key suffix.
      */
-    #[Required]
-    public string $image_id;
+    #[Required('image_id')]
+    public string $imageID;
 
     /**
      * Presigned URL to upload the image.
@@ -35,7 +35,7 @@ final class BrandUpdateImagesResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * BrandUpdateImagesResponse::with(image_id: ..., url: ...)
+     * BrandUpdateImagesResponse::with(imageID: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -54,11 +54,11 @@ final class BrandUpdateImagesResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $image_id, string $url): self
+    public static function with(string $imageID, string $url): self
     {
         $obj = new self;
 
-        $obj['image_id'] = $image_id;
+        $obj['imageID'] = $imageID;
         $obj['url'] = $url;
 
         return $obj;
@@ -70,7 +70,7 @@ final class BrandUpdateImagesResponse implements BaseModel
     public function withImageID(string $imageID): self
     {
         $obj = clone $this;
-        $obj['image_id'] = $imageID;
+        $obj['imageID'] = $imageID;
 
         return $obj;
     }

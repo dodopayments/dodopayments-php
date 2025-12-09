@@ -14,9 +14,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type ProductListParamsShape = array{
  *   archived?: bool,
- *   brand_id?: string,
- *   page_number?: int,
- *   page_size?: int,
+ *   brandID?: string,
+ *   pageNumber?: int,
+ *   pageSize?: int,
  *   recurring?: bool,
  * }
  */
@@ -36,19 +36,19 @@ final class ProductListParams implements BaseModel
      * filter by Brand id.
      */
     #[Optional]
-    public ?string $brand_id;
+    public ?string $brandID;
 
     /**
      * Page number default is 0.
      */
     #[Optional]
-    public ?int $page_number;
+    public ?int $pageNumber;
 
     /**
      * Page size default is 10 max is 100.
      */
     #[Optional]
-    public ?int $page_size;
+    public ?int $pageSize;
 
     /**
      * Filter products by pricing type:
@@ -71,17 +71,17 @@ final class ProductListParams implements BaseModel
      */
     public static function with(
         ?bool $archived = null,
-        ?string $brand_id = null,
-        ?int $page_number = null,
-        ?int $page_size = null,
+        ?string $brandID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
         ?bool $recurring = null,
     ): self {
         $obj = new self;
 
         null !== $archived && $obj['archived'] = $archived;
-        null !== $brand_id && $obj['brand_id'] = $brand_id;
-        null !== $page_number && $obj['page_number'] = $page_number;
-        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $brandID && $obj['brandID'] = $brandID;
+        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
+        null !== $pageSize && $obj['pageSize'] = $pageSize;
         null !== $recurring && $obj['recurring'] = $recurring;
 
         return $obj;
@@ -104,7 +104,7 @@ final class ProductListParams implements BaseModel
     public function withBrandID(string $brandID): self
     {
         $obj = clone $this;
-        $obj['brand_id'] = $brandID;
+        $obj['brandID'] = $brandID;
 
         return $obj;
     }
@@ -115,7 +115,7 @@ final class ProductListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj['page_number'] = $pageNumber;
+        $obj['pageNumber'] = $pageNumber;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class ProductListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj['page_size'] = $pageSize;
+        $obj['pageSize'] = $pageSize;
 
         return $obj;
     }

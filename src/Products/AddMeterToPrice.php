@@ -11,11 +11,11 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type AddMeterToPriceShape = array{
- *   meter_id: string,
- *   price_per_unit: string,
+ *   meterID: string,
+ *   pricePerUnit: string,
  *   description?: string|null,
- *   free_threshold?: int|null,
- *   measurement_unit?: string|null,
+ *   freeThreshold?: int|null,
+ *   measurementUnit?: string|null,
  *   name?: string|null,
  * }
  */
@@ -24,14 +24,14 @@ final class AddMeterToPrice implements BaseModel
     /** @use SdkModel<AddMeterToPriceShape> */
     use SdkModel;
 
-    #[Required]
-    public string $meter_id;
+    #[Required('meter_id')]
+    public string $meterID;
 
     /**
      * The price per unit in lowest denomination. Must be greater than zero. Supports up to 5 digits before decimal point and 12 decimal places.
      */
-    #[Required]
-    public string $price_per_unit;
+    #[Required('price_per_unit')]
+    public string $pricePerUnit;
 
     /**
      * Meter description. Will ignored on Request, but will be shown in response.
@@ -39,14 +39,14 @@ final class AddMeterToPrice implements BaseModel
     #[Optional(nullable: true)]
     public ?string $description;
 
-    #[Optional(nullable: true)]
-    public ?int $free_threshold;
+    #[Optional('free_threshold', nullable: true)]
+    public ?int $freeThreshold;
 
     /**
      * Meter measurement unit. Will ignored on Request, but will be shown in response.
      */
-    #[Optional(nullable: true)]
-    public ?string $measurement_unit;
+    #[Optional('measurement_unit', nullable: true)]
+    public ?string $measurementUnit;
 
     /**
      * Meter name. Will ignored on Request, but will be shown in response.
@@ -59,7 +59,7 @@ final class AddMeterToPrice implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * AddMeterToPrice::with(meter_id: ..., price_per_unit: ...)
+     * AddMeterToPrice::with(meterID: ..., pricePerUnit: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -79,21 +79,21 @@ final class AddMeterToPrice implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $meter_id,
-        string $price_per_unit,
+        string $meterID,
+        string $pricePerUnit,
         ?string $description = null,
-        ?int $free_threshold = null,
-        ?string $measurement_unit = null,
+        ?int $freeThreshold = null,
+        ?string $measurementUnit = null,
         ?string $name = null,
     ): self {
         $obj = new self;
 
-        $obj['meter_id'] = $meter_id;
-        $obj['price_per_unit'] = $price_per_unit;
+        $obj['meterID'] = $meterID;
+        $obj['pricePerUnit'] = $pricePerUnit;
 
         null !== $description && $obj['description'] = $description;
-        null !== $free_threshold && $obj['free_threshold'] = $free_threshold;
-        null !== $measurement_unit && $obj['measurement_unit'] = $measurement_unit;
+        null !== $freeThreshold && $obj['freeThreshold'] = $freeThreshold;
+        null !== $measurementUnit && $obj['measurementUnit'] = $measurementUnit;
         null !== $name && $obj['name'] = $name;
 
         return $obj;
@@ -102,7 +102,7 @@ final class AddMeterToPrice implements BaseModel
     public function withMeterID(string $meterID): self
     {
         $obj = clone $this;
-        $obj['meter_id'] = $meterID;
+        $obj['meterID'] = $meterID;
 
         return $obj;
     }
@@ -113,7 +113,7 @@ final class AddMeterToPrice implements BaseModel
     public function withPricePerUnit(string $pricePerUnit): self
     {
         $obj = clone $this;
-        $obj['price_per_unit'] = $pricePerUnit;
+        $obj['pricePerUnit'] = $pricePerUnit;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class AddMeterToPrice implements BaseModel
     public function withFreeThreshold(?int $freeThreshold): self
     {
         $obj = clone $this;
-        $obj['free_threshold'] = $freeThreshold;
+        $obj['freeThreshold'] = $freeThreshold;
 
         return $obj;
     }
@@ -143,7 +143,7 @@ final class AddMeterToPrice implements BaseModel
     public function withMeasurementUnit(?string $measurementUnit): self
     {
         $obj = clone $this;
-        $obj['measurement_unit'] = $measurementUnit;
+        $obj['measurementUnit'] = $measurementUnit;
 
         return $obj;
     }

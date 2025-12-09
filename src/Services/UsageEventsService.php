@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\UsageEventsContract;
@@ -94,12 +95,12 @@ final class UsageEventsService implements UsageEventsContract
      * - Paginate results: `?page_size=50&page_number=2`
      *
      * @param array{
-     *   customer_id?: string,
+     *   customerID?: string,
      *   end?: string|\DateTimeInterface,
-     *   event_name?: string,
-     *   meter_id?: string,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   eventName?: string,
+     *   meterID?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      *   start?: string|\DateTimeInterface,
      * }|UsageEventListParams $params
      *
@@ -120,7 +121,16 @@ final class UsageEventsService implements UsageEventsContract
         $response = $this->client->request(
             method: 'get',
             path: 'events',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'customerID' => 'customer_id',
+                    'eventName' => 'event_name',
+                    'meterID' => 'meter_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: Event::class,
             page: DefaultPageNumberPagination::class,
@@ -166,9 +176,9 @@ final class UsageEventsService implements UsageEventsContract
      *
      * @param array{
      *   events: list<array{
-     *     customer_id: string,
-     *     event_id: string,
-     *     event_name: string,
+     *     customerID: string,
+     *     eventID: string,
+     *     eventName: string,
      *     metadata?: array<string,string|float|bool>|null,
      *     timestamp?: string|\DateTimeInterface|null,
      *   }>,

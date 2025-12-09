@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\LicensesService::activate()
  *
  * @phpstan-type LicenseActivateParamsShape = array{
- *   license_key: string, name: string
+ *   licenseKey: string, name: string
  * }
  */
 final class LicenseActivateParams implements BaseModel
@@ -22,8 +22,8 @@ final class LicenseActivateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Required]
-    public string $license_key;
+    #[Required('license_key')]
+    public string $licenseKey;
 
     #[Required]
     public string $name;
@@ -33,7 +33,7 @@ final class LicenseActivateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * LicenseActivateParams::with(license_key: ..., name: ...)
+     * LicenseActivateParams::with(licenseKey: ..., name: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -52,11 +52,11 @@ final class LicenseActivateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $license_key, string $name): self
+    public static function with(string $licenseKey, string $name): self
     {
         $obj = new self;
 
-        $obj['license_key'] = $license_key;
+        $obj['licenseKey'] = $licenseKey;
         $obj['name'] = $name;
 
         return $obj;
@@ -65,7 +65,7 @@ final class LicenseActivateParams implements BaseModel
     public function withLicenseKey(string $licenseKey): self
     {
         $obj = clone $this;
-        $obj['license_key'] = $licenseKey;
+        $obj['licenseKey'] = $licenseKey;
 
         return $obj;
     }

@@ -19,7 +19,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
 
 /**
  * @phpstan-type SubscriptionPreviewChangePlanResponseShape = array{
- *   immediate_charge: ImmediateCharge, new_plan: Subscription
+ *   immediateCharge: ImmediateCharge, newPlan: Subscription
  * }
  */
 final class SubscriptionPreviewChangePlanResponse implements BaseModel
@@ -27,23 +27,21 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     /** @use SdkModel<SubscriptionPreviewChangePlanResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public ImmediateCharge $immediate_charge;
+    #[Required('immediate_charge')]
+    public ImmediateCharge $immediateCharge;
 
     /**
      * Response struct representing subscription details.
      */
-    #[Required]
-    public Subscription $new_plan;
+    #[Required('new_plan')]
+    public Subscription $newPlan;
 
     /**
      * `new SubscriptionPreviewChangePlanResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * SubscriptionPreviewChangePlanResponse::with(
-     *   immediate_charge: ..., new_plan: ...
-     * )
+     * SubscriptionPreviewChangePlanResponse::with(immediateCharge: ..., newPlan: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,61 +63,61 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ImmediateCharge|array{
-     *   line_items: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
-     * } $immediate_charge
+     *   lineItems: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
+     * } $immediateCharge
      * @param Subscription|array{
      *   addons: list<AddonCartResponseItem>,
      *   billing: BillingAddress,
-     *   cancel_at_next_billing_date: bool,
-     *   created_at: \DateTimeInterface,
+     *   cancelAtNextBillingDate: bool,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
      *   metadata: array<string,string>,
      *   meters: list<Meter>,
-     *   next_billing_date: \DateTimeInterface,
-     *   on_demand: bool,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   previous_billing_date: \DateTimeInterface,
-     *   product_id: string,
+     *   nextBillingDate: \DateTimeInterface,
+     *   onDemand: bool,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   previousBillingDate: \DateTimeInterface,
+     *   productID: string,
      *   quantity: int,
-     *   recurring_pre_tax_amount: int,
+     *   recurringPreTaxAmount: int,
      *   status: value-of<SubscriptionStatus>,
-     *   subscription_id: string,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
-     *   tax_inclusive: bool,
-     *   trial_period_days: int,
-     *   cancelled_at?: \DateTimeInterface|null,
-     *   discount_cycles_remaining?: int|null,
-     *   discount_id?: string|null,
-     *   expires_at?: \DateTimeInterface|null,
-     *   payment_method_id?: string|null,
-     *   tax_id?: string|null,
-     * } $new_plan
+     *   subscriptionID: string,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
+     *   taxInclusive: bool,
+     *   trialPeriodDays: int,
+     *   cancelledAt?: \DateTimeInterface|null,
+     *   discountCyclesRemaining?: int|null,
+     *   discountID?: string|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     *   paymentMethodID?: string|null,
+     *   taxID?: string|null,
+     * } $newPlan
      */
     public static function with(
-        ImmediateCharge|array $immediate_charge,
-        Subscription|array $new_plan
+        ImmediateCharge|array $immediateCharge,
+        Subscription|array $newPlan
     ): self {
         $obj = new self;
 
-        $obj['immediate_charge'] = $immediate_charge;
-        $obj['new_plan'] = $new_plan;
+        $obj['immediateCharge'] = $immediateCharge;
+        $obj['newPlan'] = $newPlan;
 
         return $obj;
     }
 
     /**
      * @param ImmediateCharge|array{
-     *   line_items: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
+     *   lineItems: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
      * } $immediateCharge
      */
     public function withImmediateCharge(
         ImmediateCharge|array $immediateCharge
     ): self {
         $obj = clone $this;
-        $obj['immediate_charge'] = $immediateCharge;
+        $obj['immediateCharge'] = $immediateCharge;
 
         return $obj;
     }
@@ -130,38 +128,38 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      * @param Subscription|array{
      *   addons: list<AddonCartResponseItem>,
      *   billing: BillingAddress,
-     *   cancel_at_next_billing_date: bool,
-     *   created_at: \DateTimeInterface,
+     *   cancelAtNextBillingDate: bool,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
      *   metadata: array<string,string>,
      *   meters: list<Meter>,
-     *   next_billing_date: \DateTimeInterface,
-     *   on_demand: bool,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   previous_billing_date: \DateTimeInterface,
-     *   product_id: string,
+     *   nextBillingDate: \DateTimeInterface,
+     *   onDemand: bool,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   previousBillingDate: \DateTimeInterface,
+     *   productID: string,
      *   quantity: int,
-     *   recurring_pre_tax_amount: int,
+     *   recurringPreTaxAmount: int,
      *   status: value-of<SubscriptionStatus>,
-     *   subscription_id: string,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
-     *   tax_inclusive: bool,
-     *   trial_period_days: int,
-     *   cancelled_at?: \DateTimeInterface|null,
-     *   discount_cycles_remaining?: int|null,
-     *   discount_id?: string|null,
-     *   expires_at?: \DateTimeInterface|null,
-     *   payment_method_id?: string|null,
-     *   tax_id?: string|null,
+     *   subscriptionID: string,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
+     *   taxInclusive: bool,
+     *   trialPeriodDays: int,
+     *   cancelledAt?: \DateTimeInterface|null,
+     *   discountCyclesRemaining?: int|null,
+     *   discountID?: string|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     *   paymentMethodID?: string|null,
+     *   taxID?: string|null,
      * } $newPlan
      */
     public function withNewPlan(Subscription|array $newPlan): self
     {
         $obj = clone $this;
-        $obj['new_plan'] = $newPlan;
+        $obj['newPlan'] = $newPlan;
 
         return $obj;
     }

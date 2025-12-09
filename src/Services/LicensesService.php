@@ -25,7 +25,7 @@ final class LicensesService implements LicensesContract
     /**
      * @api
      *
-     * @param array{license_key: string, name: string}|LicenseActivateParams $params
+     * @param array{licenseKey: string, name: string}|LicenseActivateParams $params
      *
      * @throws APIException
      */
@@ -54,7 +54,7 @@ final class LicensesService implements LicensesContract
      * @api
      *
      * @param array{
-     *   license_key: string, license_key_instance_id: string
+     *   licenseKey: string, licenseKeyInstanceID: string
      * }|LicenseDeactivateParams $params
      *
      * @throws APIException
@@ -84,7 +84,7 @@ final class LicensesService implements LicensesContract
      * @api
      *
      * @param array{
-     *   license_key: string, license_key_instance_id?: string|null
+     *   licenseKey: string, licenseKeyInstanceID?: string|null
      * }|LicenseValidateParams $params
      *
      * @throws APIException

@@ -20,7 +20,7 @@ use Dodopayments\Webhooks\SubscriptionPlanChangedWebhookEvent\Type;
 
 /**
  * @phpstan-type SubscriptionPlanChangedWebhookEventShape = array{
- *   business_id: string,
+ *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<Type>,
@@ -34,8 +34,8 @@ final class SubscriptionPlanChangedWebhookEvent implements BaseModel
     /**
      * The business identifier.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Event-specific data.
@@ -63,7 +63,7 @@ final class SubscriptionPlanChangedWebhookEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * SubscriptionPlanChangedWebhookEvent::with(
-     *   business_id: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ..., type: ...
      * )
      * ```
      *
@@ -90,45 +90,45 @@ final class SubscriptionPlanChangedWebhookEvent implements BaseModel
      * @param Data|array{
      *   addons: list<AddonCartResponseItem>,
      *   billing: BillingAddress,
-     *   cancel_at_next_billing_date: bool,
-     *   created_at: \DateTimeInterface,
+     *   cancelAtNextBillingDate: bool,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
      *   metadata: array<string,string>,
      *   meters: list<Meter>,
-     *   next_billing_date: \DateTimeInterface,
-     *   on_demand: bool,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   previous_billing_date: \DateTimeInterface,
-     *   product_id: string,
+     *   nextBillingDate: \DateTimeInterface,
+     *   onDemand: bool,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   previousBillingDate: \DateTimeInterface,
+     *   productID: string,
      *   quantity: int,
-     *   recurring_pre_tax_amount: int,
+     *   recurringPreTaxAmount: int,
      *   status: value-of<SubscriptionStatus>,
-     *   subscription_id: string,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
-     *   tax_inclusive: bool,
-     *   trial_period_days: int,
-     *   cancelled_at?: \DateTimeInterface|null,
-     *   discount_cycles_remaining?: int|null,
-     *   discount_id?: string|null,
-     *   expires_at?: \DateTimeInterface|null,
-     *   payment_method_id?: string|null,
-     *   tax_id?: string|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   subscriptionID: string,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
+     *   taxInclusive: bool,
+     *   trialPeriodDays: int,
+     *   cancelledAt?: \DateTimeInterface|null,
+     *   discountCyclesRemaining?: int|null,
+     *   discountID?: string|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     *   paymentMethodID?: string|null,
+     *   taxID?: string|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $business_id,
+        string $businessID,
         Data|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
+        $obj['businessID'] = $businessID;
         $obj['data'] = $data;
         $obj['timestamp'] = $timestamp;
         $obj['type'] = $type;
@@ -142,7 +142,7 @@ final class SubscriptionPlanChangedWebhookEvent implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -153,33 +153,33 @@ final class SubscriptionPlanChangedWebhookEvent implements BaseModel
      * @param Data|array{
      *   addons: list<AddonCartResponseItem>,
      *   billing: BillingAddress,
-     *   cancel_at_next_billing_date: bool,
-     *   created_at: \DateTimeInterface,
+     *   cancelAtNextBillingDate: bool,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
      *   metadata: array<string,string>,
      *   meters: list<Meter>,
-     *   next_billing_date: \DateTimeInterface,
-     *   on_demand: bool,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   previous_billing_date: \DateTimeInterface,
-     *   product_id: string,
+     *   nextBillingDate: \DateTimeInterface,
+     *   onDemand: bool,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   previousBillingDate: \DateTimeInterface,
+     *   productID: string,
      *   quantity: int,
-     *   recurring_pre_tax_amount: int,
+     *   recurringPreTaxAmount: int,
      *   status: value-of<SubscriptionStatus>,
-     *   subscription_id: string,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
-     *   tax_inclusive: bool,
-     *   trial_period_days: int,
-     *   cancelled_at?: \DateTimeInterface|null,
-     *   discount_cycles_remaining?: int|null,
-     *   discount_id?: string|null,
-     *   expires_at?: \DateTimeInterface|null,
-     *   payment_method_id?: string|null,
-     *   tax_id?: string|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   subscriptionID: string,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
+     *   taxInclusive: bool,
+     *   trialPeriodDays: int,
+     *   cancelledAt?: \DateTimeInterface|null,
+     *   discountCyclesRemaining?: int|null,
+     *   discountID?: string|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     *   paymentMethodID?: string|null,
+     *   taxID?: string|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      */
     public function withData(Data|array $data): self

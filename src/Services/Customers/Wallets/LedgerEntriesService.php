@@ -7,6 +7,7 @@ namespace Dodopayments\Services\Customers\Wallets;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Customers\Wallets\CustomerWallet;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction;
 use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryCreateParams;
@@ -30,8 +31,8 @@ final class LedgerEntriesService implements LedgerEntriesContract
      * @param array{
      *   amount: int,
      *   currency: value-of<Currency>,
-     *   entry_type: 'credit'|'debit'|EntryType,
-     *   idempotency_key?: string|null,
+     *   entryType: 'credit'|'debit'|EntryType,
+     *   idempotencyKey?: string|null,
      *   reason?: string|null,
      * }|LedgerEntryCreateParams $params
      *
@@ -63,7 +64,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
      * @api
      *
      * @param array{
-     *   currency?: value-of<Currency>, page_number?: int, page_size?: int
+     *   currency?: value-of<Currency>, pageNumber?: int, pageSize?: int
      * }|LedgerEntryListParams $params
      *
      * @return DefaultPageNumberPagination<CustomerWalletTransaction>
@@ -84,7 +85,10 @@ final class LedgerEntriesService implements LedgerEntriesContract
         $response = $this->client->request(
             method: 'get',
             path: ['customers/%1$s/wallets/ledger-entries', $customerID],
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: CustomerWalletTransaction::class,
             page: DefaultPageNumberPagination::class,

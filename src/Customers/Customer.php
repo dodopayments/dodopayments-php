@@ -11,13 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CustomerShape = array{
- *   business_id: string,
- *   created_at: \DateTimeInterface,
- *   customer_id: string,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   customerID: string,
  *   email: string,
  *   name: string,
  *   metadata?: array<string,string>|null,
- *   phone_number?: string|null,
+ *   phoneNumber?: string|null,
  * }
  */
 final class Customer implements BaseModel
@@ -25,14 +25,14 @@ final class Customer implements BaseModel
     /** @use SdkModel<CustomerShape> */
     use SdkModel;
 
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
-    #[Required]
-    public string $customer_id;
+    #[Required('customer_id')]
+    public string $customerID;
 
     #[Required]
     public string $email;
@@ -48,8 +48,8 @@ final class Customer implements BaseModel
     #[Optional(map: 'string')]
     public ?array $metadata;
 
-    #[Optional(nullable: true)]
-    public ?string $phone_number;
+    #[Optional('phone_number', nullable: true)]
+    public ?string $phoneNumber;
 
     /**
      * `new Customer()` is missing required properties by the API.
@@ -57,7 +57,7 @@ final class Customer implements BaseModel
      * To enforce required parameters use
      * ```
      * Customer::with(
-     *   business_id: ..., created_at: ..., customer_id: ..., email: ..., name: ...
+     *   businessID: ..., createdAt: ..., customerID: ..., email: ..., name: ...
      * )
      * ```
      *
@@ -85,24 +85,24 @@ final class Customer implements BaseModel
      * @param array<string,string> $metadata
      */
     public static function with(
-        string $business_id,
-        \DateTimeInterface $created_at,
-        string $customer_id,
+        string $businessID,
+        \DateTimeInterface $createdAt,
+        string $customerID,
         string $email,
         string $name,
         ?array $metadata = null,
-        ?string $phone_number = null,
+        ?string $phoneNumber = null,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
-        $obj['customer_id'] = $customer_id;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
+        $obj['customerID'] = $customerID;
         $obj['email'] = $email;
         $obj['name'] = $name;
 
         null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $phone_number && $obj['phone_number'] = $phone_number;
+        null !== $phoneNumber && $obj['phoneNumber'] = $phoneNumber;
 
         return $obj;
     }
@@ -110,7 +110,7 @@ final class Customer implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -118,7 +118,7 @@ final class Customer implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -126,7 +126,7 @@ final class Customer implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -163,7 +163,7 @@ final class Customer implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj['phone_number'] = $phoneNumber;
+        $obj['phoneNumber'] = $phoneNumber;
 
         return $obj;
     }

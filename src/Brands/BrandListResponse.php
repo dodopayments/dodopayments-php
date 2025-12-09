@@ -50,17 +50,17 @@ final class BrandListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Brand|array{
-     *   brand_id: string,
-     *   business_id: string,
+     *   brandID: string,
+     *   businessID: string,
      *   enabled: bool,
-     *   statement_descriptor: string,
-     *   verification_enabled: bool,
-     *   verification_status: value-of<VerificationStatus>,
+     *   statementDescriptor: string,
+     *   verificationEnabled: bool,
+     *   verificationStatus: value-of<VerificationStatus>,
      *   description?: string|null,
      *   image?: string|null,
      *   name?: string|null,
-     *   reason_for_hold?: string|null,
-     *   support_email?: string|null,
+     *   reasonForHold?: string|null,
+     *   supportEmail?: string|null,
      *   url?: string|null,
      * }> $items
      */
@@ -77,17 +77,17 @@ final class BrandListResponse implements BaseModel
      * List of brands for this business.
      *
      * @param list<Brand|array{
-     *   brand_id: string,
-     *   business_id: string,
+     *   brandID: string,
+     *   businessID: string,
      *   enabled: bool,
-     *   statement_descriptor: string,
-     *   verification_enabled: bool,
-     *   verification_status: value-of<VerificationStatus>,
+     *   statementDescriptor: string,
+     *   verificationEnabled: bool,
+     *   verificationStatus: value-of<VerificationStatus>,
      *   description?: string|null,
      *   image?: string|null,
      *   name?: string|null,
-     *   reason_for_hold?: string|null,
-     *   support_email?: string|null,
+     *   reasonForHold?: string|null,
+     *   supportEmail?: string|null,
      *   url?: string|null,
      * }> $items
      */

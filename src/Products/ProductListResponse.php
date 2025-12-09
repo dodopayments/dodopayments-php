@@ -18,20 +18,20 @@ use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-type ProductListResponseShape = array{
- *   business_id: string,
- *   created_at: \DateTimeInterface,
- *   is_recurring: bool,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   isRecurring: bool,
  *   metadata: array<string,string>,
- *   product_id: string,
- *   tax_category: value-of<TaxCategory>,
- *   updated_at: \DateTimeInterface,
+ *   productID: string,
+ *   taxCategory: value-of<TaxCategory>,
+ *   updatedAt: \DateTimeInterface,
  *   currency?: value-of<Currency>|null,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   price_detail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
- *   tax_inclusive?: bool|null,
+ *   priceDetail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
+ *   taxInclusive?: bool|null,
  * }
  */
 final class ProductListResponse implements BaseModel
@@ -42,20 +42,20 @@ final class ProductListResponse implements BaseModel
     /**
      * Unique identifier for the business to which the product belongs.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Timestamp when the product was created.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
-    #[Required]
-    public bool $is_recurring;
+    #[Required('is_recurring')]
+    public bool $isRecurring;
 
     /**
      * Additional custom data associated with the product.
@@ -68,22 +68,22 @@ final class ProductListResponse implements BaseModel
     /**
      * Unique identifier for the product.
      */
-    #[Required]
-    public string $product_id;
+    #[Required('product_id')]
+    public string $productID;
 
     /**
      * Tax category associated with the product.
      *
-     * @var value-of<TaxCategory> $tax_category
+     * @var value-of<TaxCategory> $taxCategory
      */
-    #[Required(enum: TaxCategory::class)]
-    public string $tax_category;
+    #[Required('tax_category', enum: TaxCategory::class)]
+    public string $taxCategory;
 
     /**
      * Timestamp when the product was last updated.
      */
-    #[Required]
-    public \DateTimeInterface $updated_at;
+    #[Required('updated_at')]
+    public \DateTimeInterface $updatedAt;
 
     /**
      * Currency of the price.
@@ -128,14 +128,14 @@ final class ProductListResponse implements BaseModel
     /**
      * Details of the price.
      */
-    #[Optional(nullable: true)]
-    public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price_detail;
+    #[Optional('price_detail', nullable: true)]
+    public OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Optional(nullable: true)]
-    public ?bool $tax_inclusive;
+    #[Optional('tax_inclusive', nullable: true)]
+    public ?bool $taxInclusive;
 
     /**
      * `new ProductListResponse()` is missing required properties by the API.
@@ -143,13 +143,13 @@ final class ProductListResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * ProductListResponse::with(
-     *   business_id: ...,
-     *   created_at: ...,
-     *   is_recurring: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   isRecurring: ...,
      *   metadata: ...,
-     *   product_id: ...,
-     *   tax_category: ...,
-     *   updated_at: ...,
+     *   productID: ...,
+     *   taxCategory: ...,
+     *   updatedAt: ...,
      * )
      * ```
      *
@@ -177,76 +177,76 @@ final class ProductListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,string> $metadata
-     * @param TaxCategory|value-of<TaxCategory> $tax_category
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Currency|value-of<Currency>|null $currency
      * @param OneTimePrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
      *   price: int,
-     *   purchasing_power_parity: bool,
+     *   purchasingPowerParity: bool,
      *   type: value-of<Type>,
-     *   pay_what_you_want?: bool|null,
-     *   suggested_price?: int|null,
-     *   tax_inclusive?: bool|null,
+     *   payWhatYouWant?: bool|null,
+     *   suggestedPrice?: int|null,
+     *   taxInclusive?: bool|null,
      * }|RecurringPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
      *   price: int,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<RecurringPrice\Type>,
-     *   tax_inclusive?: bool|null,
-     *   trial_period_days?: int|null,
+     *   taxInclusive?: bool|null,
+     *   trialPeriodDays?: int|null,
      * }|UsageBasedPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   fixed_price: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   fixedPrice: int,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<UsageBasedPrice\Type>,
      *   meters?: list<AddMeterToPrice>|null,
-     *   tax_inclusive?: bool|null,
-     * }|null $price_detail
+     *   taxInclusive?: bool|null,
+     * }|null $priceDetail
      */
     public static function with(
-        string $business_id,
-        \DateTimeInterface $created_at,
-        bool $is_recurring,
+        string $businessID,
+        \DateTimeInterface $createdAt,
+        bool $isRecurring,
         array $metadata,
-        string $product_id,
-        TaxCategory|string $tax_category,
-        \DateTimeInterface $updated_at,
+        string $productID,
+        TaxCategory|string $taxCategory,
+        \DateTimeInterface $updatedAt,
         Currency|string|null $currency = null,
         ?string $description = null,
         ?string $image = null,
         ?string $name = null,
         ?int $price = null,
-        OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price_detail = null,
-        ?bool $tax_inclusive = null,
+        OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail = null,
+        ?bool $taxInclusive = null,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
-        $obj['is_recurring'] = $is_recurring;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
+        $obj['isRecurring'] = $isRecurring;
         $obj['metadata'] = $metadata;
-        $obj['product_id'] = $product_id;
-        $obj['tax_category'] = $tax_category;
-        $obj['updated_at'] = $updated_at;
+        $obj['productID'] = $productID;
+        $obj['taxCategory'] = $taxCategory;
+        $obj['updatedAt'] = $updatedAt;
 
         null !== $currency && $obj['currency'] = $currency;
         null !== $description && $obj['description'] = $description;
         null !== $image && $obj['image'] = $image;
         null !== $name && $obj['name'] = $name;
         null !== $price && $obj['price'] = $price;
-        null !== $price_detail && $obj['price_detail'] = $price_detail;
-        null !== $tax_inclusive && $obj['tax_inclusive'] = $tax_inclusive;
+        null !== $priceDetail && $obj['priceDetail'] = $priceDetail;
+        null !== $taxInclusive && $obj['taxInclusive'] = $taxInclusive;
 
         return $obj;
     }
@@ -257,7 +257,7 @@ final class ProductListResponse implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -268,7 +268,7 @@ final class ProductListResponse implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -279,7 +279,7 @@ final class ProductListResponse implements BaseModel
     public function withIsRecurring(bool $isRecurring): self
     {
         $obj = clone $this;
-        $obj['is_recurring'] = $isRecurring;
+        $obj['isRecurring'] = $isRecurring;
 
         return $obj;
     }
@@ -303,7 +303,7 @@ final class ProductListResponse implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj['product_id'] = $productID;
+        $obj['productID'] = $productID;
 
         return $obj;
     }
@@ -316,7 +316,7 @@ final class ProductListResponse implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['tax_category'] = $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -327,7 +327,7 @@ final class ProductListResponse implements BaseModel
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj['updated_at'] = $updatedAt;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }
@@ -404,42 +404,42 @@ final class ProductListResponse implements BaseModel
      *   currency: value-of<Currency>,
      *   discount: int,
      *   price: int,
-     *   purchasing_power_parity: bool,
+     *   purchasingPowerParity: bool,
      *   type: value-of<Type>,
-     *   pay_what_you_want?: bool|null,
-     *   suggested_price?: int|null,
-     *   tax_inclusive?: bool|null,
+     *   payWhatYouWant?: bool|null,
+     *   suggestedPrice?: int|null,
+     *   taxInclusive?: bool|null,
      * }|RecurringPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
      *   price: int,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<RecurringPrice\Type>,
-     *   tax_inclusive?: bool|null,
-     *   trial_period_days?: int|null,
+     *   taxInclusive?: bool|null,
+     *   trialPeriodDays?: int|null,
      * }|UsageBasedPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   fixed_price: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   fixedPrice: int,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<UsageBasedPrice\Type>,
      *   meters?: list<AddMeterToPrice>|null,
-     *   tax_inclusive?: bool|null,
+     *   taxInclusive?: bool|null,
      * }|null $priceDetail
      */
     public function withPriceDetail(
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail
     ): self {
         $obj = clone $this;
-        $obj['price_detail'] = $priceDetail;
+        $obj['priceDetail'] = $priceDetail;
 
         return $obj;
     }
@@ -450,7 +450,7 @@ final class ProductListResponse implements BaseModel
     public function withTaxInclusive(?bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj['tax_inclusive'] = $taxInclusive;
+        $obj['taxInclusive'] = $taxInclusive;
 
         return $obj;
     }

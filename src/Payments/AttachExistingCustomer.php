@@ -9,22 +9,22 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type AttachExistingCustomerShape = array{customer_id: string}
+ * @phpstan-type AttachExistingCustomerShape = array{customerID: string}
  */
 final class AttachExistingCustomer implements BaseModel
 {
     /** @use SdkModel<AttachExistingCustomerShape> */
     use SdkModel;
 
-    #[Required]
-    public string $customer_id;
+    #[Required('customer_id')]
+    public string $customerID;
 
     /**
      * `new AttachExistingCustomer()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * AttachExistingCustomer::with(customer_id: ...)
+     * AttachExistingCustomer::with(customerID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -43,11 +43,11 @@ final class AttachExistingCustomer implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $customer_id): self
+    public static function with(string $customerID): self
     {
         $obj = new self;
 
-        $obj['customer_id'] = $customer_id;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -55,7 +55,7 @@ final class AttachExistingCustomer implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }

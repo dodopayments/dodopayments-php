@@ -15,16 +15,16 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  * @phpstan-type UnionMember0Shape = array{
  *   id: string,
  *   currency: value-of<Currency>,
- *   product_id: string,
- *   proration_factor: float,
+ *   productID: string,
+ *   prorationFactor: float,
  *   quantity: int,
- *   tax_inclusive: bool,
+ *   taxInclusive: bool,
  *   type: value-of<Type>,
- *   unit_price: int,
+ *   unitPrice: int,
  *   description?: string|null,
  *   name?: string|null,
  *   tax?: int|null,
- *   tax_rate?: float|null,
+ *   taxRate?: float|null,
  * }
  */
 final class UnionMember0 implements BaseModel
@@ -39,24 +39,24 @@ final class UnionMember0 implements BaseModel
     #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Required]
-    public string $product_id;
+    #[Required('product_id')]
+    public string $productID;
 
-    #[Required]
-    public float $proration_factor;
+    #[Required('proration_factor')]
+    public float $prorationFactor;
 
     #[Required]
     public int $quantity;
 
-    #[Required]
-    public bool $tax_inclusive;
+    #[Required('tax_inclusive')]
+    public bool $taxInclusive;
 
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
     public string $type;
 
-    #[Required]
-    public int $unit_price;
+    #[Required('unit_price')]
+    public int $unitPrice;
 
     #[Optional(nullable: true)]
     public ?string $description;
@@ -67,8 +67,8 @@ final class UnionMember0 implements BaseModel
     #[Optional(nullable: true)]
     public ?int $tax;
 
-    #[Optional(nullable: true)]
-    public ?float $tax_rate;
+    #[Optional('tax_rate', nullable: true)]
+    public ?float $taxRate;
 
     /**
      * `new UnionMember0()` is missing required properties by the API.
@@ -78,12 +78,12 @@ final class UnionMember0 implements BaseModel
      * UnionMember0::with(
      *   id: ...,
      *   currency: ...,
-     *   product_id: ...,
-     *   proration_factor: ...,
+     *   productID: ...,
+     *   prorationFactor: ...,
      *   quantity: ...,
-     *   tax_inclusive: ...,
+     *   taxInclusive: ...,
      *   type: ...,
-     *   unit_price: ...,
+     *   unitPrice: ...,
      * )
      * ```
      *
@@ -117,32 +117,32 @@ final class UnionMember0 implements BaseModel
     public static function with(
         string $id,
         Currency|string $currency,
-        string $product_id,
-        float $proration_factor,
+        string $productID,
+        float $prorationFactor,
         int $quantity,
-        bool $tax_inclusive,
+        bool $taxInclusive,
         Type|string $type,
-        int $unit_price,
+        int $unitPrice,
         ?string $description = null,
         ?string $name = null,
         ?int $tax = null,
-        ?float $tax_rate = null,
+        ?float $taxRate = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
         $obj['currency'] = $currency;
-        $obj['product_id'] = $product_id;
-        $obj['proration_factor'] = $proration_factor;
+        $obj['productID'] = $productID;
+        $obj['prorationFactor'] = $prorationFactor;
         $obj['quantity'] = $quantity;
-        $obj['tax_inclusive'] = $tax_inclusive;
+        $obj['taxInclusive'] = $taxInclusive;
         $obj['type'] = $type;
-        $obj['unit_price'] = $unit_price;
+        $obj['unitPrice'] = $unitPrice;
 
         null !== $description && $obj['description'] = $description;
         null !== $name && $obj['name'] = $name;
         null !== $tax && $obj['tax'] = $tax;
-        null !== $tax_rate && $obj['tax_rate'] = $tax_rate;
+        null !== $taxRate && $obj['taxRate'] = $taxRate;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class UnionMember0 implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj['product_id'] = $productID;
+        $obj['productID'] = $productID;
 
         return $obj;
     }
@@ -177,7 +177,7 @@ final class UnionMember0 implements BaseModel
     public function withProrationFactor(float $prorationFactor): self
     {
         $obj = clone $this;
-        $obj['proration_factor'] = $prorationFactor;
+        $obj['prorationFactor'] = $prorationFactor;
 
         return $obj;
     }
@@ -193,7 +193,7 @@ final class UnionMember0 implements BaseModel
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj['tax_inclusive'] = $taxInclusive;
+        $obj['taxInclusive'] = $taxInclusive;
 
         return $obj;
     }
@@ -212,7 +212,7 @@ final class UnionMember0 implements BaseModel
     public function withUnitPrice(int $unitPrice): self
     {
         $obj = clone $this;
-        $obj['unit_price'] = $unitPrice;
+        $obj['unitPrice'] = $unitPrice;
 
         return $obj;
     }
@@ -244,7 +244,7 @@ final class UnionMember0 implements BaseModel
     public function withTaxRate(?float $taxRate): self
     {
         $obj = clone $this;
-        $obj['tax_rate'] = $taxRate;
+        $obj['taxRate'] = $taxRate;
 
         return $obj;
     }

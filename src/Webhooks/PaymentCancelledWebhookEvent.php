@@ -21,7 +21,7 @@ use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Type;
 
 /**
  * @phpstan-type PaymentCancelledWebhookEventShape = array{
- *   business_id: string,
+ *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<Type>,
@@ -35,8 +35,8 @@ final class PaymentCancelledWebhookEvent implements BaseModel
     /**
      * The business identifier.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Event-specific data.
@@ -64,7 +64,7 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * PaymentCancelledWebhookEvent::with(
-     *   business_id: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ..., type: ...
      * )
      * ```
      *
@@ -90,49 +90,49 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      *
      * @param Data|array{
      *   billing: BillingAddress,
-     *   brand_id: string,
-     *   business_id: string,
-     *   created_at: \DateTimeInterface,
+     *   brandID: string,
+     *   businessID: string,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
-     *   digital_products_delivered: bool,
+     *   digitalProductsDelivered: bool,
      *   disputes: list<Dispute>,
      *   metadata: array<string,string>,
-     *   payment_id: string,
+     *   paymentID: string,
      *   refunds: list<Refund>,
-     *   settlement_amount: int,
-     *   settlement_currency: value-of<Currency>,
-     *   total_amount: int,
-     *   card_issuing_country?: value-of<CountryCode>|null,
-     *   card_last_four?: string|null,
-     *   card_network?: string|null,
-     *   card_type?: string|null,
-     *   checkout_session_id?: string|null,
-     *   discount_id?: string|null,
-     *   error_code?: string|null,
-     *   error_message?: string|null,
-     *   payment_link?: string|null,
-     *   payment_method?: string|null,
-     *   payment_method_type?: string|null,
-     *   product_cart?: list<ProductCart>|null,
-     *   settlement_tax?: int|null,
+     *   settlementAmount: int,
+     *   settlementCurrency: value-of<Currency>,
+     *   totalAmount: int,
+     *   cardIssuingCountry?: value-of<CountryCode>|null,
+     *   cardLastFour?: string|null,
+     *   cardNetwork?: string|null,
+     *   cardType?: string|null,
+     *   checkoutSessionID?: string|null,
+     *   discountID?: string|null,
+     *   errorCode?: string|null,
+     *   errorMessage?: string|null,
+     *   paymentLink?: string|null,
+     *   paymentMethod?: string|null,
+     *   paymentMethodType?: string|null,
+     *   productCart?: list<ProductCart>|null,
+     *   settlementTax?: int|null,
      *   status?: value-of<IntentStatus>|null,
-     *   subscription_id?: string|null,
+     *   subscriptionID?: string|null,
      *   tax?: int|null,
-     *   updated_at?: \DateTimeInterface|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   updatedAt?: \DateTimeInterface|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $business_id,
+        string $businessID,
         Data|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
+        $obj['businessID'] = $businessID;
         $obj['data'] = $data;
         $obj['timestamp'] = $timestamp;
         $obj['type'] = $type;
@@ -146,7 +146,7 @@ final class PaymentCancelledWebhookEvent implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -156,37 +156,37 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      *
      * @param Data|array{
      *   billing: BillingAddress,
-     *   brand_id: string,
-     *   business_id: string,
-     *   created_at: \DateTimeInterface,
+     *   brandID: string,
+     *   businessID: string,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
-     *   digital_products_delivered: bool,
+     *   digitalProductsDelivered: bool,
      *   disputes: list<Dispute>,
      *   metadata: array<string,string>,
-     *   payment_id: string,
+     *   paymentID: string,
      *   refunds: list<Refund>,
-     *   settlement_amount: int,
-     *   settlement_currency: value-of<Currency>,
-     *   total_amount: int,
-     *   card_issuing_country?: value-of<CountryCode>|null,
-     *   card_last_four?: string|null,
-     *   card_network?: string|null,
-     *   card_type?: string|null,
-     *   checkout_session_id?: string|null,
-     *   discount_id?: string|null,
-     *   error_code?: string|null,
-     *   error_message?: string|null,
-     *   payment_link?: string|null,
-     *   payment_method?: string|null,
-     *   payment_method_type?: string|null,
-     *   product_cart?: list<ProductCart>|null,
-     *   settlement_tax?: int|null,
+     *   settlementAmount: int,
+     *   settlementCurrency: value-of<Currency>,
+     *   totalAmount: int,
+     *   cardIssuingCountry?: value-of<CountryCode>|null,
+     *   cardLastFour?: string|null,
+     *   cardNetwork?: string|null,
+     *   cardType?: string|null,
+     *   checkoutSessionID?: string|null,
+     *   discountID?: string|null,
+     *   errorCode?: string|null,
+     *   errorMessage?: string|null,
+     *   paymentLink?: string|null,
+     *   paymentMethod?: string|null,
+     *   paymentMethodType?: string|null,
+     *   productCart?: list<ProductCart>|null,
+     *   settlementTax?: int|null,
      *   status?: value-of<IntentStatus>|null,
-     *   subscription_id?: string|null,
+     *   subscriptionID?: string|null,
      *   tax?: int|null,
-     *   updated_at?: \DateTimeInterface|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   updatedAt?: \DateTimeInterface|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      */
     public function withData(Data|array $data): self

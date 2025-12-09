@@ -9,22 +9,22 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type UsageEventIngestResponseShape = array{ingested_count: int}
+ * @phpstan-type UsageEventIngestResponseShape = array{ingestedCount: int}
  */
 final class UsageEventIngestResponse implements BaseModel
 {
     /** @use SdkModel<UsageEventIngestResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public int $ingested_count;
+    #[Required('ingested_count')]
+    public int $ingestedCount;
 
     /**
      * `new UsageEventIngestResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UsageEventIngestResponse::with(ingested_count: ...)
+     * UsageEventIngestResponse::with(ingestedCount: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -43,11 +43,11 @@ final class UsageEventIngestResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(int $ingested_count): self
+    public static function with(int $ingestedCount): self
     {
         $obj = new self;
 
-        $obj['ingested_count'] = $ingested_count;
+        $obj['ingestedCount'] = $ingestedCount;
 
         return $obj;
     }
@@ -55,7 +55,7 @@ final class UsageEventIngestResponse implements BaseModel
     public function withIngestedCount(int $ingestedCount): self
     {
         $obj = clone $this;
-        $obj['ingested_count'] = $ingestedCount;
+        $obj['ingestedCount'] = $ingestedCount;
 
         return $obj;
     }

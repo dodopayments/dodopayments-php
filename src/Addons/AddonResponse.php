@@ -14,13 +14,13 @@ use Dodopayments\Misc\TaxCategory;
 /**
  * @phpstan-type AddonResponseShape = array{
  *   id: string,
- *   business_id: string,
- *   created_at: \DateTimeInterface,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
  *   currency: value-of<Currency>,
  *   name: string,
  *   price: int,
- *   tax_category: value-of<TaxCategory>,
- *   updated_at: \DateTimeInterface,
+ *   taxCategory: value-of<TaxCategory>,
+ *   updatedAt: \DateTimeInterface,
  *   description?: string|null,
  *   image?: string|null,
  * }
@@ -39,14 +39,14 @@ final class AddonResponse implements BaseModel
     /**
      * Unique identifier for the business to which the addon belongs.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Created time.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * Currency of the Addon.
@@ -71,16 +71,16 @@ final class AddonResponse implements BaseModel
     /**
      * Tax category applied to this Addon.
      *
-     * @var value-of<TaxCategory> $tax_category
+     * @var value-of<TaxCategory> $taxCategory
      */
-    #[Required(enum: TaxCategory::class)]
-    public string $tax_category;
+    #[Required('tax_category', enum: TaxCategory::class)]
+    public string $taxCategory;
 
     /**
      * Updated time.
      */
-    #[Required]
-    public \DateTimeInterface $updated_at;
+    #[Required('updated_at')]
+    public \DateTimeInterface $updatedAt;
 
     /**
      * Optional description of the Addon.
@@ -101,13 +101,13 @@ final class AddonResponse implements BaseModel
      * ```
      * AddonResponse::with(
      *   id: ...,
-     *   business_id: ...,
-     *   created_at: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
      *   currency: ...,
      *   name: ...,
      *   price: ...,
-     *   tax_category: ...,
-     *   updated_at: ...,
+     *   taxCategory: ...,
+     *   updatedAt: ...,
      * )
      * ```
      *
@@ -136,30 +136,30 @@ final class AddonResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param TaxCategory|value-of<TaxCategory> $tax_category
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      */
     public static function with(
         string $id,
-        string $business_id,
-        \DateTimeInterface $created_at,
+        string $businessID,
+        \DateTimeInterface $createdAt,
         Currency|string $currency,
         string $name,
         int $price,
-        TaxCategory|string $tax_category,
-        \DateTimeInterface $updated_at,
+        TaxCategory|string $taxCategory,
+        \DateTimeInterface $updatedAt,
         ?string $description = null,
         ?string $image = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
         $obj['currency'] = $currency;
         $obj['name'] = $name;
         $obj['price'] = $price;
-        $obj['tax_category'] = $tax_category;
-        $obj['updated_at'] = $updated_at;
+        $obj['taxCategory'] = $taxCategory;
+        $obj['updatedAt'] = $updatedAt;
 
         null !== $description && $obj['description'] = $description;
         null !== $image && $obj['image'] = $image;
@@ -184,7 +184,7 @@ final class AddonResponse implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -195,7 +195,7 @@ final class AddonResponse implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -243,7 +243,7 @@ final class AddonResponse implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['tax_category'] = $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -254,7 +254,7 @@ final class AddonResponse implements BaseModel
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj['updated_at'] = $updatedAt;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }

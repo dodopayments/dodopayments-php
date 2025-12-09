@@ -20,11 +20,11 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   amount: int,
  *   type: DiscountType|value-of<DiscountType>,
  *   code?: string|null,
- *   expires_at?: \DateTimeInterface|null,
+ *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
- *   restricted_to?: list<string>|null,
- *   subscription_cycles?: int|null,
- *   usage_limit?: int|null,
+ *   restrictedTo?: list<string>|null,
+ *   subscriptionCycles?: int|null,
+ *   usageLimit?: int|null,
  * }
  */
 final class DiscountCreateParams implements BaseModel
@@ -64,8 +64,8 @@ final class DiscountCreateParams implements BaseModel
     /**
      * When the discount expires, if ever.
      */
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_at;
+    #[Optional('expires_at', nullable: true)]
+    public ?\DateTimeInterface $expiresAt;
 
     #[Optional(nullable: true)]
     public ?string $name;
@@ -73,25 +73,25 @@ final class DiscountCreateParams implements BaseModel
     /**
      * List of product IDs to restrict usage (if any).
      *
-     * @var list<string>|null $restricted_to
+     * @var list<string>|null $restrictedTo
      */
-    #[Optional(list: 'string', nullable: true)]
-    public ?array $restricted_to;
+    #[Optional('restricted_to', list: 'string', nullable: true)]
+    public ?array $restrictedTo;
 
     /**
      * Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Optional(nullable: true)]
-    public ?int $subscription_cycles;
+    #[Optional('subscription_cycles', nullable: true)]
+    public ?int $subscriptionCycles;
 
     /**
      * How many times this discount can be used (if any).
      * Must be >= 1 if provided.
      */
-    #[Optional(nullable: true)]
-    public ?int $usage_limit;
+    #[Optional('usage_limit', nullable: true)]
+    public ?int $usageLimit;
 
     /**
      * `new DiscountCreateParams()` is missing required properties by the API.
@@ -118,17 +118,17 @@ final class DiscountCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DiscountType|value-of<DiscountType> $type
-     * @param list<string>|null $restricted_to
+     * @param list<string>|null $restrictedTo
      */
     public static function with(
         int $amount,
         DiscountType|string $type,
         ?string $code = null,
-        ?\DateTimeInterface $expires_at = null,
+        ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
-        ?array $restricted_to = null,
-        ?int $subscription_cycles = null,
-        ?int $usage_limit = null,
+        ?array $restrictedTo = null,
+        ?int $subscriptionCycles = null,
+        ?int $usageLimit = null,
     ): self {
         $obj = new self;
 
@@ -136,11 +136,11 @@ final class DiscountCreateParams implements BaseModel
         $obj['type'] = $type;
 
         null !== $code && $obj['code'] = $code;
-        null !== $expires_at && $obj['expires_at'] = $expires_at;
+        null !== $expiresAt && $obj['expiresAt'] = $expiresAt;
         null !== $name && $obj['name'] = $name;
-        null !== $restricted_to && $obj['restricted_to'] = $restricted_to;
-        null !== $subscription_cycles && $obj['subscription_cycles'] = $subscription_cycles;
-        null !== $usage_limit && $obj['usage_limit'] = $usage_limit;
+        null !== $restrictedTo && $obj['restrictedTo'] = $restrictedTo;
+        null !== $subscriptionCycles && $obj['subscriptionCycles'] = $subscriptionCycles;
+        null !== $usageLimit && $obj['usageLimit'] = $usageLimit;
 
         return $obj;
     }
@@ -194,7 +194,7 @@ final class DiscountCreateParams implements BaseModel
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj['expires_at'] = $expiresAt;
+        $obj['expiresAt'] = $expiresAt;
 
         return $obj;
     }
@@ -215,7 +215,7 @@ final class DiscountCreateParams implements BaseModel
     public function withRestrictedTo(?array $restrictedTo): self
     {
         $obj = clone $this;
-        $obj['restricted_to'] = $restrictedTo;
+        $obj['restrictedTo'] = $restrictedTo;
 
         return $obj;
     }
@@ -228,7 +228,7 @@ final class DiscountCreateParams implements BaseModel
     public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
         $obj = clone $this;
-        $obj['subscription_cycles'] = $subscriptionCycles;
+        $obj['subscriptionCycles'] = $subscriptionCycles;
 
         return $obj;
     }
@@ -240,7 +240,7 @@ final class DiscountCreateParams implements BaseModel
     public function withUsageLimit(?int $usageLimit): self
     {
         $obj = clone $this;
-        $obj['usage_limit'] = $usageLimit;
+        $obj['usageLimit'] = $usageLimit;
 
         return $obj;
     }
