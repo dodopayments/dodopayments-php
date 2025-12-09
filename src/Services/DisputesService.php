@@ -9,6 +9,7 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams;
+use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 use Dodopayments\Disputes\DisputeListResponse;
 use Dodopayments\Disputes\GetDispute;
@@ -49,7 +50,7 @@ final class DisputesService implements DisputesContract
      *   created_at_gte?: string|\DateTimeInterface,
      *   created_at_lte?: string|\DateTimeInterface,
      *   customer_id?: string,
-     *   dispute_stage?: 'pre_dispute'|'dispute'|'pre_arbitration',
+     *   dispute_stage?: 'pre_dispute'|'dispute'|'pre_arbitration'|DisputeStage,
      *   dispute_status?: value-of<DisputeStatus>,
      *   page_number?: int,
      *   page_size?: int,

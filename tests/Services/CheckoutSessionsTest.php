@@ -5,6 +5,9 @@ namespace Tests\Services;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\PaymentMethodTypes;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -50,15 +53,15 @@ final class CheckoutSessionsTest extends TestCase
                     'amount' => 0,
                 ],
             ],
-            'allowed_payment_method_types' => ['credit'],
+            'allowed_payment_method_types' => [PaymentMethodTypes::CREDIT],
             'billing_address' => [
-                'country' => 'AF',
+                'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',
             ],
-            'billing_currency' => 'AED',
+            'billing_currency' => Currency::AED,
             'confirm' => true,
             'customer' => ['customer_id' => 'customer_id'],
             'customization' => [
@@ -91,7 +94,7 @@ final class CheckoutSessionsTest extends TestCase
                 'on_demand' => [
                     'mandate_only' => true,
                     'adaptive_currency_fees_inclusive' => true,
-                    'product_currency' => 'AED',
+                    'product_currency' => Currency::AED,
                     'product_description' => 'product_description',
                     'product_price' => 0,
                 ],

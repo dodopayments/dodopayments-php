@@ -4,6 +4,9 @@ namespace Tests\Services;
 
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
@@ -35,7 +38,7 @@ final class SubscriptionsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->subscriptions->create([
-            'billing' => ['country' => 'AF'],
+            'billing' => ['country' => CountryCode::AF],
             'customer' => ['customer_id' => 'customer_id'],
             'product_id' => 'product_id',
             'quantity' => 0,
@@ -50,7 +53,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->create([
             'billing' => [
-                'country' => 'AF',
+                'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
@@ -60,15 +63,15 @@ final class SubscriptionsTest extends TestCase
             'product_id' => 'product_id',
             'quantity' => 0,
             'addons' => [['addon_id' => 'addon_id', 'quantity' => 0]],
-            'allowed_payment_method_types' => ['credit'],
-            'billing_currency' => 'AED',
+            'allowed_payment_method_types' => [PaymentMethodTypes::CREDIT],
+            'billing_currency' => Currency::AED,
             'discount_code' => 'discount_code',
             'force_3ds' => true,
             'metadata' => ['foo' => 'string'],
             'on_demand' => [
                 'mandate_only' => true,
                 'adaptive_currency_fees_inclusive' => true,
-                'product_currency' => 'AED',
+                'product_currency' => Currency::AED,
                 'product_description' => 'product_description',
                 'product_price' => 0,
             ],
@@ -168,7 +171,7 @@ final class SubscriptionsTest extends TestCase
                     'allow_customer_credits_usage' => true,
                 ],
                 'metadata' => ['foo' => 'string'],
-                'product_currency' => 'AED',
+                'product_currency' => Currency::AED,
                 'product_description' => 'product_description',
             ],
         );

@@ -5,6 +5,7 @@ namespace Tests\Services;
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
+use Dodopayments\Discounts\DiscountType;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +32,7 @@ final class DiscountsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->discounts->create([
-            'amount' => 0, 'type' => 'percentage',
+            'amount' => 0, 'type' => DiscountType::PERCENTAGE,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -43,9 +44,9 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->create([
             'amount' => 0,
-            'type' => 'percentage',
+            'type' => DiscountType::PERCENTAGE,
             'code' => 'code',
-            'expires_at' => '2019-12-27T18:11:19.117Z',
+            'expires_at' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             'name' => 'name',
             'restricted_to' => ['string'],
             'subscription_cycles' => 0,

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization\Theme;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
@@ -48,7 +49,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      *     force_language?: string|null,
      *     show_on_demand_tag?: bool,
      *     show_order_details?: bool,
-     *     theme?: 'dark'|'light'|'system',
+     *     theme?: 'dark'|'light'|'system'|Theme,
      *   },
      *   discount_code?: string|null,
      *   feature_flags?: array{

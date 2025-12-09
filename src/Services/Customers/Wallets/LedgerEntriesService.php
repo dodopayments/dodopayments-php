@@ -10,6 +10,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Wallets\CustomerWallet;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction;
 use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryCreateParams;
+use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryCreateParams\EntryType;
 use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryListParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -29,7 +30,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
      * @param array{
      *   amount: int,
      *   currency: value-of<Currency>,
-     *   entry_type: 'credit'|'debit',
+     *   entry_type: 'credit'|'debit'|EntryType,
      *   idempotency_key?: string|null,
      *   reason?: string|null,
      * }|LedgerEntryCreateParams $params
