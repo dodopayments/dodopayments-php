@@ -6,9 +6,7 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
 
@@ -17,12 +15,10 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
  *   currency: value-of<Currency>, items: list<Item>
  * }
  */
-final class PaymentGetLineItemsResponse implements BaseModel, ResponseConverter
+final class PaymentGetLineItemsResponse implements BaseModel
 {
     /** @use SdkModel<PaymentGetLineItemsResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /** @var value-of<Currency> $currency */
     #[Api(enum: Currency::class)]

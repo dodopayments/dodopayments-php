@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Customers\Wallets;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Wallets\CustomerWallet;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction;
@@ -45,14 +46,16 @@ final class LedgerEntriesService implements LedgerEntriesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<CustomerWallet> */
+        $response = $this->client->request(
             method: 'post',
             path: ['customers/%1$s/wallets/ledger-entries', $customerID],
             body: (object) $parsed,
             options: $options,
             convert: CustomerWallet::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -76,8 +79,8 @@ final class LedgerEntriesService implements LedgerEntriesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<CustomerWalletTransaction,>,> */
+        $response = $this->client->request(
             method: 'get',
             path: ['customers/%1$s/wallets/ledger-entries', $customerID],
             query: $parsed,
@@ -85,5 +88,7 @@ final class LedgerEntriesService implements LedgerEntriesContract
             convert: CustomerWalletTransaction::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 }

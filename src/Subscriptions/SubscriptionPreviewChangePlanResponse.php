@@ -6,9 +6,7 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -24,12 +22,10 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  *   immediate_charge: ImmediateCharge, new_plan: Subscription
  * }
  */
-final class SubscriptionPreviewChangePlanResponse implements BaseModel, ResponseConverter
+final class SubscriptionPreviewChangePlanResponse implements BaseModel
 {
     /** @use SdkModel<SubscriptionPreviewChangePlanResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public ImmediateCharge $immediate_charge;

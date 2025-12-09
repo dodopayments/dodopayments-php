@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams;
@@ -30,13 +31,15 @@ final class DisputesService implements DisputesContract
         string $disputeID,
         ?RequestOptions $requestOptions = null
     ): GetDispute {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<GetDispute> */
+        $response = $this->client->request(
             method: 'get',
             path: ['disputes/%1$s', $disputeID],
             options: $requestOptions,
             convert: GetDispute::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -65,8 +68,8 @@ final class DisputesService implements DisputesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<DisputeListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'disputes',
             query: $parsed,
@@ -74,5 +77,7 @@ final class DisputesService implements DisputesContract
             convert: DisputeListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 }

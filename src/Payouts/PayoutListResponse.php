@@ -6,9 +6,7 @@ namespace Dodopayments\Payouts;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payouts\PayoutListResponse\Status;
 
@@ -31,12 +29,10 @@ use Dodopayments\Payouts\PayoutListResponse\Status;
  *   remarks?: string|null,
  * }
  */
-final class PayoutListResponse implements BaseModel, ResponseConverter
+final class PayoutListResponse implements BaseModel
 {
     /** @use SdkModel<PayoutListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The total amount of the payout.

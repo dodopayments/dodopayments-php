@@ -6,9 +6,7 @@ namespace Dodopayments\Meters;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Meters\MeterAggregation\Type;
 use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
@@ -28,12 +26,10 @@ use Dodopayments\Meters\MeterFilter\Conjunction;
  *   filter?: MeterFilter|null,
  * }
  */
-final class Meter implements BaseModel, ResponseConverter
+final class Meter implements BaseModel
 {
     /** @use SdkModel<MeterShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

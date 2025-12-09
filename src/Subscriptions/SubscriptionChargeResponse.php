@@ -6,19 +6,15 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type SubscriptionChargeResponseShape = array{payment_id: string}
  */
-final class SubscriptionChargeResponse implements BaseModel, ResponseConverter
+final class SubscriptionChargeResponse implements BaseModel
 {
     /** @use SdkModel<SubscriptionChargeResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $payment_id;

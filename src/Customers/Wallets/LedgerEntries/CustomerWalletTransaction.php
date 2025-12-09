@@ -6,9 +6,7 @@ namespace Dodopayments\Customers\Wallets\LedgerEntries;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction\EventType;
 use Dodopayments\Misc\Currency;
 
@@ -28,12 +26,10 @@ use Dodopayments\Misc\Currency;
  *   reference_object_id?: string|null,
  * }
  */
-final class CustomerWalletTransaction implements BaseModel, ResponseConverter
+final class CustomerWalletTransaction implements BaseModel
 {
     /** @use SdkModel<CustomerWalletTransactionShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

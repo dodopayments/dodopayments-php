@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
@@ -44,14 +45,16 @@ final class RefundsService implements RefundsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Refund> */
+        $response = $this->client->request(
             method: 'post',
             path: 'refunds',
             body: (object) $parsed,
             options: $options,
             convert: Refund::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -63,13 +66,15 @@ final class RefundsService implements RefundsContract
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): Refund {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Refund> */
+        $response = $this->client->request(
             method: 'get',
             path: ['refunds/%1$s', $refundID],
             options: $requestOptions,
             convert: Refund::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -97,8 +102,8 @@ final class RefundsService implements RefundsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<RefundListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'refunds',
             query: $parsed,
@@ -106,5 +111,7 @@ final class RefundsService implements RefundsContract
             convert: RefundListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 }

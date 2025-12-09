@@ -6,9 +6,7 @@ namespace Dodopayments\CheckoutSessions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\IntentStatus;
 
 /**
@@ -21,12 +19,10 @@ use Dodopayments\Payments\IntentStatus;
  *   payment_status?: value-of<IntentStatus>|null,
  * }
  */
-final class CheckoutSessionStatus implements BaseModel, ResponseConverter
+final class CheckoutSessionStatus implements BaseModel
 {
     /** @use SdkModel<CheckoutSessionStatusShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Id of the checkout session.

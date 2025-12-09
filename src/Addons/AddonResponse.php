@@ -6,9 +6,7 @@ namespace Dodopayments\Addons;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
@@ -26,12 +24,10 @@ use Dodopayments\Misc\TaxCategory;
  *   image?: string|null,
  * }
  */
-final class AddonResponse implements BaseModel, ResponseConverter
+final class AddonResponse implements BaseModel
 {
     /** @use SdkModel<AddonResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * id of the Addon.

@@ -6,9 +6,7 @@ namespace Dodopayments\Customers;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\PaymentMethod;
@@ -17,12 +15,10 @@ use Dodopayments\Payments\PaymentMethodTypes;
 /**
  * @phpstan-type CustomerGetPaymentMethodsResponseShape = array{items: list<Item>}
  */
-final class CustomerGetPaymentMethodsResponse implements BaseModel, ResponseConverter
+final class CustomerGetPaymentMethodsResponse implements BaseModel
 {
     /** @use SdkModel<CustomerGetPaymentMethodsResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /** @var list<Item> $items */
     #[Api(list: Item::class)]

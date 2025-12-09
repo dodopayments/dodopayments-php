@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Webhooks;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Webhooks\HeadersContract;
@@ -29,13 +30,15 @@ final class HeadersService implements HeadersContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<HeaderGetResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/headers', $webhookID],
             options: $requestOptions,
             convert: HeaderGetResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -57,13 +60,15 @@ final class HeadersService implements HeadersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s/headers', $webhookID],
             body: (object) $parsed,
             options: $options,
             convert: null,
         );
+
+        return $response->parse();
     }
 }

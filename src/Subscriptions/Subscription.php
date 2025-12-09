@@ -6,9 +6,7 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
@@ -49,12 +47,10 @@ use Dodopayments\Subscriptions\Subscription\Meter;
  *   tax_id?: string|null,
  * }
  */
-final class Subscription implements BaseModel, ResponseConverter
+final class Subscription implements BaseModel
 {
     /** @use SdkModel<SubscriptionShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Addons associated with this subscription.

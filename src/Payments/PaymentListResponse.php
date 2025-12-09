@@ -6,9 +6,7 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
@@ -27,12 +25,10 @@ use Dodopayments\Misc\Currency;
  *   subscription_id?: string|null,
  * }
  */
-final class PaymentListResponse implements BaseModel, ResponseConverter
+final class PaymentListResponse implements BaseModel
 {
     /** @use SdkModel<PaymentListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $brand_id;

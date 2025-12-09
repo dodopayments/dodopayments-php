@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
@@ -82,14 +83,16 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SubscriptionNewResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'subscriptions',
             body: (object) $parsed,
             options: $options,
             convert: SubscriptionNewResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -101,13 +104,15 @@ final class SubscriptionsService implements SubscriptionsContract
         string $subscriptionID,
         ?RequestOptions $requestOptions = null
     ): Subscription {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Subscription> */
+        $response = $this->client->request(
             method: 'get',
             path: ['subscriptions/%1$s', $subscriptionID],
             options: $requestOptions,
             convert: Subscription::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -142,14 +147,16 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Subscription> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['subscriptions/%1$s', $subscriptionID],
             body: (object) $parsed,
             options: $options,
             convert: Subscription::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -178,8 +185,8 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<SubscriptionListResponse,>,> */
+        $response = $this->client->request(
             method: 'get',
             path: 'subscriptions',
             query: $parsed,
@@ -187,6 +194,8 @@ final class SubscriptionsService implements SubscriptionsContract
             convert: SubscriptionListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -211,14 +220,16 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'post',
             path: ['subscriptions/%1$s/change-plan', $subscriptionID],
             body: (object) $parsed,
             options: $options,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -248,14 +259,16 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SubscriptionChargeResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: ['subscriptions/%1$s/charge', $subscriptionID],
             body: (object) $parsed,
             options: $options,
             convert: SubscriptionChargeResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -280,14 +293,16 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SubscriptionPreviewChangePlanResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: ['subscriptions/%1$s/change-plan/preview', $subscriptionID],
             body: (object) $parsed,
             options: $options,
             convert: SubscriptionPreviewChangePlanResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -347,8 +362,8 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse,>,> */
+        $response = $this->client->request(
             method: 'get',
             path: ['subscriptions/%1$s/usage-history', $subscriptionID],
             query: $parsed,
@@ -356,6 +371,8 @@ final class SubscriptionsService implements SubscriptionsContract
             convert: SubscriptionGetUsageHistoryResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -373,13 +390,15 @@ final class SubscriptionsService implements SubscriptionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<SubscriptionUpdatePaymentMethodResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: ['subscriptions/%1$s/update-payment-method', $subscriptionID],
             body: (object) $parsed,
             options: $options,
             convert: SubscriptionUpdatePaymentMethodResponse::class,
         );
+
+        return $response->parse();
     }
 }

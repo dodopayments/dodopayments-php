@@ -6,19 +6,15 @@ namespace Dodopayments\Licenses;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type LicenseValidateResponseShape = array{valid: bool}
  */
-final class LicenseValidateResponse implements BaseModel, ResponseConverter
+final class LicenseValidateResponse implements BaseModel
 {
     /** @use SdkModel<LicenseValidateResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public bool $valid;

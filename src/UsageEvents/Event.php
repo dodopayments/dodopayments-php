@@ -6,9 +6,7 @@ namespace Dodopayments\UsageEvents;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
@@ -21,12 +19,10 @@ use Dodopayments\UsageEvents\Event\Metadata;
  *   metadata?: array<string,string|float|bool>|null,
  * }
  */
-final class Event implements BaseModel, ResponseConverter
+final class Event implements BaseModel
 {
     /** @use SdkModel<EventShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $business_id;

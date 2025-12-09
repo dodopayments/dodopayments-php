@@ -6,9 +6,7 @@ namespace Dodopayments\LicenseKeys;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type LicenseKeyShape = array{
@@ -26,12 +24,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   subscription_id?: string|null,
  * }
  */
-final class LicenseKey implements BaseModel, ResponseConverter
+final class LicenseKey implements BaseModel
 {
     /** @use SdkModel<LicenseKeyShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The unique identifier of the license key.
