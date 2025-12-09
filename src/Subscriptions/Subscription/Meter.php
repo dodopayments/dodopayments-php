@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\Subscription;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -28,25 +29,25 @@ final class Meter implements BaseModel
     use SdkModel;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public int $free_threshold;
 
-    #[Api]
+    #[Required]
     public string $measurement_unit;
 
-    #[Api]
+    #[Required]
     public string $meter_id;
 
-    #[Api]
+    #[Required]
     public string $name;
 
-    #[Api]
+    #[Required]
     public string $price_per_unit;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**

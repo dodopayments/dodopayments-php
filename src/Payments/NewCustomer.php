@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -21,7 +22,7 @@ final class NewCustomer implements BaseModel
     /**
      * Email is required for creating a new customer.
      */
-    #[Api]
+    #[Required]
     public string $email;
 
     /**
@@ -29,10 +30,10 @@ final class NewCustomer implements BaseModel
      * it is persisted and becomes immutable for the session. If omitted here,
      * it can be provided later via the confirm API.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $phone_number;
 
     /**

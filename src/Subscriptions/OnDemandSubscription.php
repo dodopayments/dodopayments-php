@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -26,14 +27,14 @@ final class OnDemandSubscription implements BaseModel
     /**
      * If set as True, does not perform any charge and only authorizes payment method details for future use.
      */
-    #[Api]
+    #[Required]
     public bool $mandate_only;
 
     /**
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $adaptive_currency_fees_inclusive;
 
     /**
@@ -41,14 +42,14 @@ final class OnDemandSubscription implements BaseModel
      *
      * @var value-of<Currency>|null $product_currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $product_currency;
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $product_description;
 
     /**
@@ -57,7 +58,7 @@ final class OnDemandSubscription implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $product_price;
 
     /**

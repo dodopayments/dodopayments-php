@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Brands;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class BrandUpdateImagesResponse implements BaseModel
     /**
      * UUID that will be used as the image identifier/key suffix.
      */
-    #[Api]
+    #[Required]
     public string $image_id;
 
     /**
      * Presigned URL to upload the image.
      */
-    #[Api]
+    #[Required]
     public string $url;
 
     /**

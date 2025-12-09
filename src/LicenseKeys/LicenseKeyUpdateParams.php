@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\LicenseKeys;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -28,21 +28,21 @@ final class LicenseKeyUpdateParams implements BaseModel
      * The updated activation limit for the license key.
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $activations_limit;
 
     /**
      * Indicates whether the license key should be disabled.
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $disabled;
 
     /**
      * The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_at;
 
     public function __construct()

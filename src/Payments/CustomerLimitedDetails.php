@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -25,19 +26,19 @@ final class CustomerLimitedDetails implements BaseModel
     /**
      * Unique identifier for the customer.
      */
-    #[Api]
+    #[Required]
     public string $customer_id;
 
     /**
      * Email address of the customer.
      */
-    #[Api]
+    #[Required]
     public string $email;
 
     /**
      * Full name of the customer.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
@@ -45,13 +46,13 @@ final class CustomerLimitedDetails implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', optional: true)]
+    #[Optional(map: 'string')]
     public ?array $metadata;
 
     /**
      * Phone number of the customer.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $phone_number;
 
     /**

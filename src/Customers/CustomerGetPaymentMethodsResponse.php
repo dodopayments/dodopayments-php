@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item;
@@ -21,7 +21,7 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
     use SdkModel;
 
     /** @var list<Item> $items */
-    #[Api(list: Item::class)]
+    #[Required(list: Item::class)]
     public array $items;
 
     /**

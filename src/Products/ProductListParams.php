@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -29,25 +29,25 @@ final class ProductListParams implements BaseModel
     /**
      * List archived products.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $archived;
 
     /**
      * filter by Brand id.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $brand_id;
 
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     /**
@@ -56,7 +56,7 @@ final class ProductListParams implements BaseModel
      * - `false`: Show only one-time price products
      * - `null` or absent: Show both types of products
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $recurring;
 
     public function __construct()

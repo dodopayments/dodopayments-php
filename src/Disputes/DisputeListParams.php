@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Disputes;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -33,19 +33,19 @@ final class DisputeListParams implements BaseModel
     /**
      * Get events after this created time.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $created_at_gte;
 
     /**
      * Get events created before this time.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $created_at_lte;
 
     /**
      * Filter by customer_id.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $customer_id;
 
     /**
@@ -53,9 +53,8 @@ final class DisputeListParams implements BaseModel
      *
      * @var value-of<DisputeStage>|null $dispute_stage
      */
-    #[Api(
-        enum: DisputeStage::class,
-        optional: true,
+    #[Optional(
+        enum: DisputeStage::class
     )]
     public ?string $dispute_stage;
 
@@ -64,22 +63,21 @@ final class DisputeListParams implements BaseModel
      *
      * @var value-of<DisputeStatus>|null $dispute_status
      */
-    #[Api(
-        enum: DisputeStatus::class,
-        optional: true,
+    #[Optional(
+        enum: DisputeStatus::class
     )]
     public ?string $dispute_status;
 
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     public function __construct()

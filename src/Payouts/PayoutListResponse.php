@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payouts;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -37,13 +38,13 @@ final class PayoutListResponse implements BaseModel
     /**
      * The total amount of the payout.
      */
-    #[Api]
+    #[Required]
     public int $amount;
 
     /**
      * The unique identifier of the business associated with the payout.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
@@ -51,13 +52,13 @@ final class PayoutListResponse implements BaseModel
      *
      * The total value of chargebacks associated with the payout
      */
-    #[Api]
+    #[Required]
     public int $chargebacks;
 
     /**
      * The timestamp when the payout was created, in UTC.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
@@ -65,25 +66,25 @@ final class PayoutListResponse implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
      * The fee charged for processing the payout.
      */
-    #[Api]
+    #[Required]
     public int $fee;
 
     /**
      * The payment method used for the payout (e.g., bank transfer, card, etc.).
      */
-    #[Api]
+    #[Required]
     public string $payment_method;
 
     /**
      * The unique identifier of the payout.
      */
-    #[Api]
+    #[Required]
     public string $payout_id;
 
     /**
@@ -91,7 +92,7 @@ final class PayoutListResponse implements BaseModel
      *
      * The total value of refunds associated with the payout
      */
-    #[Api]
+    #[Required]
     public int $refunds;
 
     /**
@@ -99,7 +100,7 @@ final class PayoutListResponse implements BaseModel
      *
      * @var value-of<Status> $status
      */
-    #[Api(enum: Status::class)]
+    #[Required(enum: Status::class)]
     public string $status;
 
     /**
@@ -107,31 +108,31 @@ final class PayoutListResponse implements BaseModel
      *
      * The tax applied to the payout
      */
-    #[Api]
+    #[Required]
     public int $tax;
 
     /**
      * The timestamp when the payout was last updated, in UTC.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $updated_at;
 
     /**
      * The name of the payout recipient or purpose.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * The URL of the document associated with the payout.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payout_document_url;
 
     /**
      * Any additional remarks or notes associated with the payout.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $remarks;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Discounts;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -41,7 +42,7 @@ final class DiscountCreateParams implements BaseModel
      *
      * Must be at least 1.
      */
-    #[Api]
+    #[Required]
     public int $amount;
 
     /**
@@ -49,7 +50,7 @@ final class DiscountCreateParams implements BaseModel
      *
      * @var value-of<DiscountType> $type
      */
-    #[Api(enum: DiscountType::class)]
+    #[Required(enum: DiscountType::class)]
     public string $type;
 
     /**
@@ -57,16 +58,16 @@ final class DiscountCreateParams implements BaseModel
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $code;
 
     /**
      * When the discount expires, if ever.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_at;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
@@ -74,7 +75,7 @@ final class DiscountCreateParams implements BaseModel
      *
      * @var list<string>|null $restricted_to
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $restricted_to;
 
     /**
@@ -82,14 +83,14 @@ final class DiscountCreateParams implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $subscription_cycles;
 
     /**
      * How many times this discount can be used (if any).
      * Must be >= 1 if provided.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $usage_limit;
 
     /**

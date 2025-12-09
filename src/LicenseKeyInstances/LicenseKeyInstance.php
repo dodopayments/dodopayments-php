@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\LicenseKeyInstances;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -22,19 +22,19 @@ final class LicenseKeyInstance implements BaseModel
     /** @use SdkModel<LicenseKeyInstanceShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
+    #[Required]
     public string $business_id;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
-    #[Api]
+    #[Required]
     public string $license_key_id;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**

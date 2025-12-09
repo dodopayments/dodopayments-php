@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionUpdateParams;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -18,7 +18,7 @@ final class DisableOnDemand implements BaseModel
     /** @use SdkModel<DisableOnDemandShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $next_billing_date;
 
     /**

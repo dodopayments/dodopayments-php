@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks\Headers;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -28,7 +28,7 @@ final class HeaderGetResponse implements BaseModel
      *
      * @var array<string,string> $headers
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $headers;
 
     /**
@@ -36,7 +36,7 @@ final class HeaderGetResponse implements BaseModel
      *
      * @var list<string> $sensitive
      */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public array $sensitive;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\Wallets\LedgerEntries;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -28,7 +29,7 @@ final class LedgerEntryCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api]
+    #[Required]
     public int $amount;
 
     /**
@@ -36,7 +37,7 @@ final class LedgerEntryCreateParams implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
@@ -44,16 +45,16 @@ final class LedgerEntryCreateParams implements BaseModel
      *
      * @var value-of<EntryType> $entry_type
      */
-    #[Api(enum: EntryType::class)]
+    #[Required(enum: EntryType::class)]
     public string $entry_type;
 
     /**
      * Optional idempotency key to prevent duplicate entries.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $idempotency_key;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**

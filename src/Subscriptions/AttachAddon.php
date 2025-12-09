@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,10 +16,10 @@ final class AttachAddon implements BaseModel
     /** @use SdkModel<AttachAddonShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $addon_id;
 
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**

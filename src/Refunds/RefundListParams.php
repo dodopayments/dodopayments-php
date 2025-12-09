@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Refunds;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -31,31 +31,31 @@ final class RefundListParams implements BaseModel
     /**
      * Get events after this created time.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $created_at_gte;
 
     /**
      * Get events created before this time.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $created_at_lte;
 
     /**
      * Filter by customer_id.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $customer_id;
 
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     /**
@@ -63,7 +63,7 @@ final class RefundListParams implements BaseModel
      *
      * @var value-of<Status>|null $status
      */
-    #[Api(enum: Status::class, optional: true)]
+    #[Optional(enum: Status::class)]
     public ?string $status;
 
     public function __construct()

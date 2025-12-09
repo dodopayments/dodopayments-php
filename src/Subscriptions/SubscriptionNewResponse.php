@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -33,13 +34,13 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @var list<AddonCartResponseItem> $addons
      */
-    #[Api(list: AddonCartResponseItem::class)]
+    #[Required(list: AddonCartResponseItem::class)]
     public array $addons;
 
     /**
      * Customer details associated with this subscription.
      */
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
     /**
@@ -47,50 +48,50 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * First payment id for the subscription.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
      * Tax will be added to the amount and charged to the customer on each billing cycle.
      */
-    #[Api]
+    #[Required]
     public int $recurring_pre_tax_amount;
 
     /**
      * Unique identifier for the subscription.
      */
-    #[Api]
+    #[Required]
     public string $subscription_id;
 
     /**
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $client_secret;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_id;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_on;
 
     /**
      * URL to checkout page.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_link;
 
     /**

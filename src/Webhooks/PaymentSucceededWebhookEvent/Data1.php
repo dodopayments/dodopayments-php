@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks\PaymentSucceededWebhookEvent;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
@@ -63,38 +64,38 @@ final class Data1 implements BaseModel
     /** @use SdkModel<Data1Shape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public BillingAddress $billing;
 
     /**
      * brand id this payment belongs to.
      */
-    #[Api]
+    #[Required]
     public string $brand_id;
 
     /**
      * Identifier of the business associated with the payment.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * Timestamp when the payment was created.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
     /**
      * brand id this payment belongs to.
      */
-    #[Api]
+    #[Required]
     public bool $digital_products_delivered;
 
     /**
@@ -102,7 +103,7 @@ final class Data1 implements BaseModel
      *
      * @var list<Dispute> $disputes
      */
-    #[Api(list: Dispute::class)]
+    #[Required(list: Dispute::class)]
     public array $disputes;
 
     /**
@@ -110,13 +111,13 @@ final class Data1 implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * Unique identifier for the payment.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
@@ -124,24 +125,24 @@ final class Data1 implements BaseModel
      *
      * @var list<Refund> $refunds
      */
-    #[Api(list: Refund::class)]
+    #[Required(list: Refund::class)]
     public array $refunds;
 
     /**
      * The amount that will be credited to your Dodo balance after currency conversion and processing.
      * Especially relevant for adaptive pricing where the customer's payment currency differs from your settlement currency.
      */
-    #[Api]
+    #[Required]
     public int $settlement_amount;
 
     /** @var value-of<Currency> $settlement_currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $settlement_currency;
 
     /**
      * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
      */
-    #[Api]
+    #[Required]
     public int $total_amount;
 
     /**
@@ -149,68 +150,68 @@ final class Data1 implements BaseModel
      *
      * @var value-of<CountryCode>|null $card_issuing_country
      */
-    #[Api(enum: CountryCode::class, optional: true)]
+    #[Optional(enum: CountryCode::class)]
     public ?string $card_issuing_country;
 
     /**
      * The last four digits of the card.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $card_last_four;
 
     /**
      * Card network like VISA, MASTERCARD etc.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $card_network;
 
     /**
      * The type of card DEBIT or CREDIT.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $card_type;
 
     /**
      * If payment is made using a checkout session,
      * this field is set to the id of the session.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $checkout_session_id;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_id;
 
     /**
      * An error code if the payment failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error_code;
 
     /**
      * An error message if the payment failed.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $error_message;
 
     /**
      * Checkout URL.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_link;
 
     /**
      * Payment method used by customer (e.g. "card", "bank_transfer").
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_method;
 
     /**
      * Specific type of payment method (e.g. "visa", "mastercard").
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_method_type;
 
     /**
@@ -218,7 +219,7 @@ final class Data1 implements BaseModel
      *
      * @var list<ProductCart>|null $product_cart
      */
-    #[Api(list: ProductCart::class, nullable: true, optional: true)]
+    #[Optional(list: ProductCart::class, nullable: true)]
     public ?array $product_cart;
 
     /**
@@ -226,29 +227,29 @@ final class Data1 implements BaseModel
      * Especially relevant for adaptive pricing where the tax component must be tracked separately
      * in your Dodo balance.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $settlement_tax;
 
     /** @var value-of<IntentStatus>|null $status */
-    #[Api(enum: IntentStatus::class, optional: true)]
+    #[Optional(enum: IntentStatus::class)]
     public ?string $status;
 
     /**
      * Identifier of the subscription if payment is part of a subscription.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $subscription_id;
 
     /**
      * Amount of tax collected in smallest currency unit (e.g. cents).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $tax;
 
     /**
      * Timestamp when the payment was last updated.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $updated_at;
 
     /**
@@ -256,7 +257,7 @@ final class Data1 implements BaseModel
      *
      * @var value-of<PayloadType>|null $payload_type
      */
-    #[Api(enum: PayloadType::class, optional: true)]
+    #[Optional(enum: PayloadType::class)]
     public ?string $payload_type;
 
     /**

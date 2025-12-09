@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters\MeterFilter\Clauses;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Operator;
@@ -24,17 +24,17 @@ final class DirectFilterCondition implements BaseModel
     /**
      * Filter key to apply.
      */
-    #[Api]
+    #[Required]
     public string $key;
 
     /** @var value-of<Operator> $operator */
-    #[Api(enum: Operator::class)]
+    #[Required(enum: Operator::class)]
     public string $operator;
 
     /**
      * Filter value - can be string, number, or boolean.
      */
-    #[Api]
+    #[Required]
     public string|float|bool $value;
 
     /**

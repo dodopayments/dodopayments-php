@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class WebhookGetSecretResponse implements BaseModel
     /** @use SdkModel<WebhookGetSecretResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $secret;
 
     /**

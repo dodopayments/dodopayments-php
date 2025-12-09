@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -30,43 +31,43 @@ final class PaymentListResponse implements BaseModel
     /** @use SdkModel<PaymentListResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $brand_id;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
-    #[Api]
+    #[Required]
     public bool $digital_products_delivered;
 
     /** @var array<string,string> $metadata */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
-    #[Api]
+    #[Required]
     public string $payment_id;
 
-    #[Api]
+    #[Required]
     public int $total_amount;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_method;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_method_type;
 
     /** @var value-of<IntentStatus>|null $status */
-    #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
+    #[Optional(enum: IntentStatus::class, nullable: true)]
     public ?string $status;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $subscription_id;
 
     /**

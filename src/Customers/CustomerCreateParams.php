@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -25,10 +26,10 @@ final class CustomerCreateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api]
+    #[Required]
     public string $email;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
@@ -36,10 +37,10 @@ final class CustomerCreateParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', optional: true)]
+    #[Optional(map: 'string')]
     public ?array $metadata;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $phone_number;
 
     /**

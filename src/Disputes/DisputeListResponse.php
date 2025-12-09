@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Disputes;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -28,31 +28,31 @@ final class DisputeListResponse implements BaseModel
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.
      */
-    #[Api]
+    #[Required]
     public string $amount;
 
     /**
      * The unique identifier of the business involved in the dispute.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * The timestamp of when the dispute was created, in UTC.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * The currency of the disputed amount, represented as an ISO 4217 currency code.
      */
-    #[Api]
+    #[Required]
     public string $currency;
 
     /**
      * The unique identifier of the dispute.
      */
-    #[Api]
+    #[Required]
     public string $dispute_id;
 
     /**
@@ -60,7 +60,7 @@ final class DisputeListResponse implements BaseModel
      *
      * @var value-of<DisputeStage> $dispute_stage
      */
-    #[Api(enum: DisputeStage::class)]
+    #[Required(enum: DisputeStage::class)]
     public string $dispute_stage;
 
     /**
@@ -68,13 +68,13 @@ final class DisputeListResponse implements BaseModel
      *
      * @var value-of<DisputeStatus> $dispute_status
      */
-    #[Api(enum: DisputeStatus::class)]
+    #[Required(enum: DisputeStatus::class)]
     public string $dispute_status;
 
     /**
      * The unique identifier of the payment associated with the dispute.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**

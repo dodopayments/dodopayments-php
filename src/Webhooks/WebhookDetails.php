@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -29,19 +30,19 @@ final class WebhookDetails implements BaseModel
     /**
      * The webhook's ID.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Created at timestamp.
      */
-    #[Api]
+    #[Required]
     public string $created_at;
 
     /**
      * An example webhook name.
      */
-    #[Api]
+    #[Required]
     public string $description;
 
     /**
@@ -49,19 +50,19 @@ final class WebhookDetails implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * Updated at timestamp.
      */
-    #[Api]
+    #[Required]
     public string $updated_at;
 
     /**
      * Url endpoint of the webhook.
      */
-    #[Api]
+    #[Required]
     public string $url;
 
     /**
@@ -69,7 +70,7 @@ final class WebhookDetails implements BaseModel
      *
      * If true, events are not sent
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $disabled;
 
     /**
@@ -79,13 +80,13 @@ final class WebhookDetails implements BaseModel
      *
      * @var list<string>|null $filter_types
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $filter_types;
 
     /**
      * Configured rate limit.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $rate_limit;
 
     /**

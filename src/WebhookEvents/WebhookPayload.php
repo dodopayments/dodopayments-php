@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\WebhookEvents;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeStage;
@@ -41,19 +41,19 @@ final class WebhookPayload implements BaseModel
     /** @use SdkModel<WebhookPayloadShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * The latest data at the time of delivery attempt.
      */
-    #[Api]
+    #[Required]
     public Payment|Subscription|Refund|Dispute|LicenseKey $data;
 
     /**
      * The timestamp of when the event occurred (not necessarily the same of when it was delivered).
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $timestamp;
 
     /**
@@ -61,7 +61,7 @@ final class WebhookPayload implements BaseModel
      *
      * @var value-of<WebhookEventType> $type
      */
-    #[Api(enum: WebhookEventType::class)]
+    #[Required(enum: WebhookEventType::class)]
     public string $type;
 
     /**

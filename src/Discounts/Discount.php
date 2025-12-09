@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Discounts;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -36,31 +37,31 @@ final class Discount implements BaseModel
      *   (e.g., 540 => 5.4%).
      * - Otherwise, this is **USD cents** (e.g., 100 => `$1.00`).
      */
-    #[Api]
+    #[Required]
     public int $amount;
 
     /**
      * The business this discount belongs to.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * The discount code (up to 16 chars).
      */
-    #[Api]
+    #[Required]
     public string $code;
 
     /**
      * Timestamp when the discount is created.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * The unique discount ID.
      */
-    #[Api]
+    #[Required]
     public string $discount_id;
 
     /**
@@ -68,13 +69,13 @@ final class Discount implements BaseModel
      *
      * @var list<string> $restricted_to
      */
-    #[Api(list: 'string')]
+    #[Required(list: 'string')]
     public array $restricted_to;
 
     /**
      * How many times this discount has been used.
      */
-    #[Api]
+    #[Required]
     public int $times_used;
 
     /**
@@ -82,19 +83,19 @@ final class Discount implements BaseModel
      *
      * @var value-of<DiscountType> $type
      */
-    #[Api(enum: DiscountType::class)]
+    #[Required(enum: DiscountType::class)]
     public string $type;
 
     /**
      * Optional date/time after which discount is expired.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_at;
 
     /**
      * Name for the Discount.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
@@ -102,13 +103,13 @@ final class Discount implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $subscription_cycles;
 
     /**
      * Usage limit for this discount, if any.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $usage_limit;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -26,26 +27,26 @@ final class Summary implements BaseModel
     use SdkModel;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public int $customer_credits;
 
-    #[Api]
+    #[Required]
     public int $settlement_amount;
 
     /** @var value-of<Currency> $settlement_currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $settlement_currency;
 
-    #[Api]
+    #[Required]
     public int $total_amount;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $settlement_tax;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $tax;
 
     /**

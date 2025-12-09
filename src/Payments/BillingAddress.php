@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\CountryCode;
@@ -28,31 +29,31 @@ final class BillingAddress implements BaseModel
      *
      * @var value-of<CountryCode> $country
      */
-    #[Api(enum: CountryCode::class)]
+    #[Required(enum: CountryCode::class)]
     public string $country;
 
     /**
      * City name.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $city;
 
     /**
      * State or province name.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $state;
 
     /**
      * Street address including house number and unit/apartment if applicable.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $street;
 
     /**
      * Postal code or ZIP code.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $zipcode;
 
     /**

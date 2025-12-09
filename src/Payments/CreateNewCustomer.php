@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -21,10 +22,10 @@ final class CreateNewCustomer implements BaseModel
     /** @use SdkModel<CreateNewCustomerShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $email;
 
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
@@ -32,10 +33,10 @@ final class CreateNewCustomer implements BaseModel
      * When true, a new customer object is always created
      * False by default.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $create_new_customer;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $phone_number;
 
     /**

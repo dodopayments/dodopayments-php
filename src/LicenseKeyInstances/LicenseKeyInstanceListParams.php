@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\LicenseKeyInstances;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -25,19 +25,19 @@ final class LicenseKeyInstanceListParams implements BaseModel
     /**
      * Filter by license key ID.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $license_key_id;
 
     /**
      * Page number default is 0.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $page_size;
 
     public function __construct()

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -29,7 +30,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     /**
      * Unique identifier of the product to subscribe to.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
     /**
@@ -37,13 +38,13 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      *
      * @var value-of<ProrationBillingMode> $proration_billing_mode
      */
-    #[Api(enum: ProrationBillingMode::class)]
+    #[Required(enum: ProrationBillingMode::class)]
     public string $proration_billing_mode;
 
     /**
      * Number of units to subscribe for. Must be at least 1.
      */
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**
@@ -52,7 +53,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      *
      * @var list<AttachAddon>|null $addons
      */
-    #[Api(list: AttachAddon::class, nullable: true, optional: true)]
+    #[Optional(list: AttachAddon::class, nullable: true)]
     public ?array $addons;
 
     /**

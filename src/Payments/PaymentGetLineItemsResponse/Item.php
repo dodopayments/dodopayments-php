@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments\PaymentGetLineItemsResponse;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -23,22 +24,22 @@ final class Item implements BaseModel
     /** @use SdkModel<ItemShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public int $amount;
 
-    #[Api]
+    #[Required]
     public string $items_id;
 
-    #[Api]
+    #[Required]
     public int $refundable_amount;
 
-    #[Api]
+    #[Required]
     public int $tax;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**

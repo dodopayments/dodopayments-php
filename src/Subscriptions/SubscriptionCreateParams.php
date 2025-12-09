@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -60,25 +61,25 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Billing address information for the subscription.
      */
-    #[Api]
+    #[Required]
     public BillingAddress $billing;
 
     /**
      * Customer details for the subscription.
      */
-    #[Api]
+    #[Required]
     public AttachExistingCustomer|NewCustomer $customer;
 
     /**
      * Unique identifier of the product to subscribe to.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
     /**
      * Number of units to subscribe for. Must be at least 1.
      */
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**
@@ -86,7 +87,7 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var list<AttachAddon>|null $addons
      */
-    #[Api(list: AttachAddon::class, nullable: true, optional: true)]
+    #[Optional(list: AttachAddon::class, nullable: true)]
     public ?array $addons;
 
     /**
@@ -98,7 +99,7 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var list<value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      */
-    #[Api(list: PaymentMethodTypes::class, nullable: true, optional: true)]
+    #[Optional(list: PaymentMethodTypes::class, nullable: true)]
     public ?array $allowed_payment_method_types;
 
     /**
@@ -107,19 +108,19 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var value-of<Currency>|null $billing_currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $billing_currency;
 
     /**
      * Discount Code to apply to the subscription.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_code;
 
     /**
      * Override merchant default 3DS behaviour for this subscription.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $force_3ds;
 
     /**
@@ -128,36 +129,36 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', optional: true)]
+    #[Optional(map: 'string')]
     public ?array $metadata;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?OnDemandSubscription $on_demand;
 
     /**
      * If true, generates a payment link.
      * Defaults to false if not specified.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $payment_link;
 
     /**
      * Optional URL to redirect after successful subscription creation.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $return_url;
 
     /**
      * Display saved payment methods of a returning customer
      * False by default.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $show_saved_payment_methods;
 
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $tax_id;
 
     /**
@@ -165,7 +166,7 @@ final class SubscriptionCreateParams implements BaseModel
      * If specified, this value overrides the trial period set in the product's price
      * Must be between 0 and 10000 days.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $trial_period_days;
 
     /**

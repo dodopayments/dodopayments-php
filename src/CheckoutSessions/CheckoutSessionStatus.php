@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\IntentStatus;
@@ -27,25 +28,25 @@ final class CheckoutSessionStatus implements BaseModel
     /**
      * Id of the checkout session.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Created at timestamp.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * Customer email: prefers payment's customer, falls back to session.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_email;
 
     /**
      * Customer name: prefers payment's customer, falls back to session.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_name;
 
     /**
@@ -53,7 +54,7 @@ final class CheckoutSessionStatus implements BaseModel
      *
      * Null if checkout sessions is still at the details collection stage.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_id;
 
     /**
@@ -63,7 +64,7 @@ final class CheckoutSessionStatus implements BaseModel
      *
      * @var value-of<IntentStatus>|null $payment_status
      */
-    #[Api(enum: IntentStatus::class, nullable: true, optional: true)]
+    #[Optional(enum: IntentStatus::class, nullable: true)]
     public ?string $payment_status;
 
     /**

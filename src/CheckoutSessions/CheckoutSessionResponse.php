@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -21,13 +21,13 @@ final class CheckoutSessionResponse implements BaseModel
     /**
      * Checkout url.
      */
-    #[Api]
+    #[Required]
     public string $checkout_url;
 
     /**
      * The ID of the created checkout session.
      */
-    #[Api]
+    #[Required]
     public string $session_id;
 
     /**

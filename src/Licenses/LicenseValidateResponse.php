@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Licenses;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class LicenseValidateResponse implements BaseModel
     /** @use SdkModel<LicenseValidateResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public bool $valid;
 
     /**

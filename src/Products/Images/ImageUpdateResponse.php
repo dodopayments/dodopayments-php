@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products\Images;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -18,10 +19,10 @@ final class ImageUpdateResponse implements BaseModel
     /** @use SdkModel<ImageUpdateResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $url;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $image_id;
 
     /**

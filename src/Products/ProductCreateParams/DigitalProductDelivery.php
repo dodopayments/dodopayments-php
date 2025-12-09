@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products\ProductCreateParams;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -23,13 +23,13 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $external_url;
 
     /**
      * Instructions to download and use the digital product.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $instructions;
 
     public function __construct()

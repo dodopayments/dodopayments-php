@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Discounts;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -27,13 +27,13 @@ final class DiscountListParams implements BaseModel
     /**
      * Page number (default = 0).
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size (default = 10, max = 100).
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     public function __construct()

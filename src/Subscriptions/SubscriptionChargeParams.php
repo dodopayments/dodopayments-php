@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -36,20 +37,20 @@ final class SubscriptionChargeParams implements BaseModel
      * The product price. Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api]
+    #[Required]
     public int $product_price;
 
     /**
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $adaptive_currency_fees_inclusive;
 
     /**
      * Specify how customer balance is used for the payment.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?CustomerBalanceConfig $customer_balance_config;
 
     /**
@@ -57,7 +58,7 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', nullable: true, optional: true)]
+    #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
     /**
@@ -65,14 +66,14 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * @var value-of<Currency>|null $product_currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $product_currency;
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $product_description;
 
     /**
