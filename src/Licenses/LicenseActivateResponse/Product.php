@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Licenses\LicenseActivateResponse;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -21,13 +22,13 @@ final class Product implements BaseModel
     /**
      * Unique identifier for the product.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
     /**
      * Name of the product, if set by the merchant.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**

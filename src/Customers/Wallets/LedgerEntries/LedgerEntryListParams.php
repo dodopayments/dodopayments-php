@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\Wallets\LedgerEntries;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -28,13 +28,13 @@ final class LedgerEntryListParams implements BaseModel
      *
      * @var value-of<Currency>|null $currency
      */
-    #[Api(enum: Currency::class, optional: true)]
+    #[Optional(enum: Currency::class)]
     public ?string $currency;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     public function __construct()

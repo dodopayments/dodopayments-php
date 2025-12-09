@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\CustomerPortal;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -23,7 +23,7 @@ final class CustomerPortalCreateParams implements BaseModel
     /**
      * If true, will send link to user.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $send_email;
 
     public function __construct()

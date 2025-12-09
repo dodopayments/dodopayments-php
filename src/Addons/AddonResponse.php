@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Addons;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -32,19 +33,19 @@ final class AddonResponse implements BaseModel
     /**
      * id of the Addon.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Unique identifier for the business to which the addon belongs.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * Created time.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
@@ -52,19 +53,19 @@ final class AddonResponse implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
      * Name of the Addon.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Amount of the addon.
      */
-    #[Api]
+    #[Required]
     public int $price;
 
     /**
@@ -72,25 +73,25 @@ final class AddonResponse implements BaseModel
      *
      * @var value-of<TaxCategory> $tax_category
      */
-    #[Api(enum: TaxCategory::class)]
+    #[Required(enum: TaxCategory::class)]
     public string $tax_category;
 
     /**
      * Updated time.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $updated_at;
 
     /**
      * Optional description of the Addon.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * Image of the Addon.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $image;
 
     /**

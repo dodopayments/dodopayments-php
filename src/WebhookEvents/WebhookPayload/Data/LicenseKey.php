@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\WebhookEvents\WebhookPayload\Data;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\LicenseKeys\LicenseKeyStatus;
@@ -35,75 +36,75 @@ final class LicenseKey implements BaseModel
     /**
      * The unique identifier of the license key.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * The unique identifier of the business associated with the license key.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * The timestamp indicating when the license key was created, in UTC.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * The unique identifier of the customer associated with the license key.
      */
-    #[Api]
+    #[Required]
     public string $customer_id;
 
     /**
      * The current number of instances activated for this license key.
      */
-    #[Api]
+    #[Required]
     public int $instances_count;
 
     /**
      * The license key string.
      */
-    #[Api]
+    #[Required]
     public string $key;
 
     /**
      * The unique identifier of the payment associated with the license key.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
      * The unique identifier of the product associated with the license key.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
     /** @var value-of<LicenseKeyStatus> $status */
-    #[Api(enum: LicenseKeyStatus::class)]
+    #[Required(enum: LicenseKeyStatus::class)]
     public string $status;
 
     /**
      * The maximum number of activations allowed for this license key.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $activations_limit;
 
     /**
      * The timestamp indicating when the license key expires, in UTC.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_at;
 
     /**
      * The unique identifier of the subscription associated with the license key, if any.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $subscription_id;
 
     /** @var value-of<PayloadType> $payload_type */
-    #[Api(enum: PayloadType::class)]
+    #[Required(enum: PayloadType::class)]
     public string $payload_type;
 
     /**

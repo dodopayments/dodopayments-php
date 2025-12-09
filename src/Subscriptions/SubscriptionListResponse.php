@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\CountryCode;
@@ -51,19 +52,19 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Billing address details for payments.
      */
-    #[Api]
+    #[Required]
     public BillingAddress $billing;
 
     /**
      * Indicates if the subscription will cancel at the next billing date.
      */
-    #[Api]
+    #[Required]
     public bool $cancel_at_next_billing_date;
 
     /**
      * Timestamp when the subscription was created.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
@@ -71,13 +72,13 @@ final class SubscriptionListResponse implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
      * Customer details associated with the subscription.
      */
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
     /**
@@ -85,25 +86,25 @@ final class SubscriptionListResponse implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * Timestamp of the next scheduled billing. Indicates the end of current billing period.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $next_billing_date;
 
     /**
      * Wether the subscription is on-demand or not.
      */
-    #[Api]
+    #[Required]
     public bool $on_demand;
 
     /**
      * Number of payment frequency intervals.
      */
-    #[Api]
+    #[Required]
     public int $payment_frequency_count;
 
     /**
@@ -111,31 +112,31 @@ final class SubscriptionListResponse implements BaseModel
      *
      * @var value-of<TimeInterval> $payment_frequency_interval
      */
-    #[Api(enum: TimeInterval::class)]
+    #[Required(enum: TimeInterval::class)]
     public string $payment_frequency_interval;
 
     /**
      * Timestamp of the last payment. Indicates the start of current billing period.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $previous_billing_date;
 
     /**
      * Identifier of the product associated with this subscription.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
     /**
      * Number of units/items included in the subscription.
      */
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**
      * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
      */
-    #[Api]
+    #[Required]
     public int $recurring_pre_tax_amount;
 
     /**
@@ -143,19 +144,19 @@ final class SubscriptionListResponse implements BaseModel
      *
      * @var value-of<SubscriptionStatus> $status
      */
-    #[Api(enum: SubscriptionStatus::class)]
+    #[Required(enum: SubscriptionStatus::class)]
     public string $status;
 
     /**
      * Unique identifier for the subscription.
      */
-    #[Api]
+    #[Required]
     public string $subscription_id;
 
     /**
      * Number of subscription period intervals.
      */
-    #[Api]
+    #[Required]
     public int $subscription_period_count;
 
     /**
@@ -163,49 +164,49 @@ final class SubscriptionListResponse implements BaseModel
      *
      * @var value-of<TimeInterval> $subscription_period_interval
      */
-    #[Api(enum: TimeInterval::class)]
+    #[Required(enum: TimeInterval::class)]
     public string $subscription_period_interval;
 
     /**
      * Indicates if the recurring_pre_tax_amount is tax inclusive.
      */
-    #[Api]
+    #[Required]
     public bool $tax_inclusive;
 
     /**
      * Number of days in the trial period (0 if no trial).
      */
-    #[Api]
+    #[Required]
     public int $trial_period_days;
 
     /**
      * Cancelled timestamp if the subscription is cancelled.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $cancelled_at;
 
     /**
      * Number of remaining discount cycles if discount is applied.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $discount_cycles_remaining;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_id;
 
     /**
      * Saved payment method id used for recurring charges.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_method_id;
 
     /**
      * Tax identifier provided for this subscription (if applicable).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $tax_id;
 
     /**

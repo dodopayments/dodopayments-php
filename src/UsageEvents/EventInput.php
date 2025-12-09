@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\UsageEvents;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\UsageEvents\EventInput\Metadata;
@@ -26,19 +27,19 @@ final class EventInput implements BaseModel
     /**
      * customer_id of the customer whose usage needs to be tracked.
      */
-    #[Api]
+    #[Required]
     public string $customer_id;
 
     /**
      * Event Id acts as an idempotency key. Any subsequent requests with the same event_id will be ignored.
      */
-    #[Api]
+    #[Required]
     public string $event_id;
 
     /**
      * Name of the event.
      */
-    #[Api]
+    #[Required]
     public string $event_name;
 
     /**
@@ -46,14 +47,14 @@ final class EventInput implements BaseModel
      *
      * @var array<string,string|float|bool>|null $metadata
      */
-    #[Api(map: Metadata::class, nullable: true, optional: true)]
+    #[Optional(map: Metadata::class, nullable: true)]
     public ?array $metadata;
 
     /**
      * Custom Timestamp. Defaults to current timestamp in UTC.
      * Timestamps that are older that 1 hour or after 5 mins, from current timestamp, will be rejected.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $timestamp;
 
     /**

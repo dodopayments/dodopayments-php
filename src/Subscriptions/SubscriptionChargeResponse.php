@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class SubscriptionChargeResponse implements BaseModel
     /** @use SdkModel<SubscriptionChargeResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**

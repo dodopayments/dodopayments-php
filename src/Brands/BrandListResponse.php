@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Brands;
 
 use Dodopayments\Brands\Brand\VerificationStatus;
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -22,7 +22,7 @@ final class BrandListResponse implements BaseModel
      *
      * @var list<Brand> $items
      */
-    #[Api(list: Brand::class)]
+    #[Required(list: Brand::class)]
     public array $items;
 
     /**

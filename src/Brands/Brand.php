@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Brands;
 
 use Dodopayments\Brands\Brand\VerificationStatus;
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -30,44 +31,44 @@ final class Brand implements BaseModel
     /** @use SdkModel<BrandShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $brand_id;
 
-    #[Api]
+    #[Required]
     public string $business_id;
 
-    #[Api]
+    #[Required]
     public bool $enabled;
 
-    #[Api]
+    #[Required]
     public string $statement_descriptor;
 
-    #[Api]
+    #[Required]
     public bool $verification_enabled;
 
     /** @var value-of<VerificationStatus> $verification_status */
-    #[Api(enum: VerificationStatus::class)]
+    #[Required(enum: VerificationStatus::class)]
     public string $verification_status;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $image;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * Incase the brand verification fails or is put on hold.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason_for_hold;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $support_email;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $url;
 
     /**

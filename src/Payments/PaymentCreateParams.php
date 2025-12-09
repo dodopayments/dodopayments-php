@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -48,13 +49,13 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Billing address details for the payment.
      */
-    #[Api]
+    #[Required]
     public BillingAddress $billing;
 
     /**
      * Customer information for the payment.
      */
-    #[Api]
+    #[Required]
     public AttachExistingCustomer|NewCustomer $customer;
 
     /**
@@ -62,7 +63,7 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var list<OneTimeProductCartItem> $product_cart
      */
-    #[Api(list: OneTimeProductCartItem::class)]
+    #[Required(list: OneTimeProductCartItem::class)]
     public array $product_cart;
 
     /**
@@ -74,7 +75,7 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var list<value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      */
-    #[Api(list: PaymentMethodTypes::class, nullable: true, optional: true)]
+    #[Optional(list: PaymentMethodTypes::class, nullable: true)]
     public ?array $allowed_payment_method_types;
 
     /**
@@ -83,19 +84,19 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var value-of<Currency>|null $billing_currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $billing_currency;
 
     /**
      * Discount Code to apply to the transaction.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_code;
 
     /**
      * Override merchant default 3DS behaviour for this payment.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $force_3ds;
 
     /**
@@ -104,33 +105,33 @@ final class PaymentCreateParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', optional: true)]
+    #[Optional(map: 'string')]
     public ?array $metadata;
 
     /**
      * Whether to generate a payment link. Defaults to false if not specified.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $payment_link;
 
     /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $return_url;
 
     /**
      * Display saved payment methods of a returning customer
      * False by default.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $show_saved_payment_methods;
 
     /**
      * Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $tax_id;
 
     /**

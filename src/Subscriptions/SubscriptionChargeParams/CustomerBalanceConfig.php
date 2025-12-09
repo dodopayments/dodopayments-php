@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionChargeParams;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -24,13 +24,13 @@ final class CustomerBalanceConfig implements BaseModel
     /**
      * Allows Customer Credit to be purchased to settle payments.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $allow_customer_credits_purchase;
 
     /**
      * Allows Customer Credit Balance to be used to settle payments.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $allow_customer_credits_usage;
 
     public function __construct()

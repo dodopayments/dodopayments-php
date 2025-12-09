@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\Wallets\LedgerEntries;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction\EventType;
@@ -31,42 +32,42 @@ final class CustomerWalletTransaction implements BaseModel
     /** @use SdkModel<CustomerWalletTransactionShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
+    #[Required]
     public int $after_balance;
 
-    #[Api]
+    #[Required]
     public int $amount;
 
-    #[Api]
+    #[Required]
     public int $before_balance;
 
-    #[Api]
+    #[Required]
     public string $business_id;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public string $customer_id;
 
     /** @var value-of<EventType> $event_type */
-    #[Api(enum: EventType::class)]
+    #[Required(enum: EventType::class)]
     public string $event_type;
 
-    #[Api]
+    #[Required]
     public bool $is_credit;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reference_object_id;
 
     /**

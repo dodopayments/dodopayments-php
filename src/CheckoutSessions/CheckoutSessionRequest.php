@@ -10,7 +10,8 @@ use Dodopayments\CheckoutSessions\CheckoutSessionRequest\Customization\Theme;
 use Dodopayments\CheckoutSessions\CheckoutSessionRequest\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionRequest\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionRequest\SubscriptionData;
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\CountryCode;
@@ -46,7 +47,7 @@ final class CheckoutSessionRequest implements BaseModel
     use SdkModel;
 
     /** @var list<ProductCart> $product_cart */
-    #[Api(list: ProductCart::class)]
+    #[Required(list: ProductCart::class)]
     public array $product_cart;
 
     /**
@@ -59,13 +60,13 @@ final class CheckoutSessionRequest implements BaseModel
      *
      * @var list<value-of<PaymentMethodTypes>>|null $allowed_payment_method_types
      */
-    #[Api(list: PaymentMethodTypes::class, nullable: true, optional: true)]
+    #[Optional(list: PaymentMethodTypes::class, nullable: true)]
     public ?array $allowed_payment_method_types;
 
     /**
      * Billing address information for the session.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BillingAddress $billing_address;
 
     /**
@@ -73,37 +74,37 @@ final class CheckoutSessionRequest implements BaseModel
      *
      * @var value-of<Currency>|null $billing_currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $billing_currency;
 
     /**
      * If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $confirm;
 
     /**
      * Customer details for the session.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public AttachExistingCustomer|NewCustomer|null $customer;
 
     /**
      * Customization for the checkout session page.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?Customization $customization;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_code;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?FeatureFlags $feature_flags;
 
     /**
      * Override merchant default 3DS behaviour for this session.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $force_3ds;
 
     /**
@@ -111,28 +112,28 @@ final class CheckoutSessionRequest implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', nullable: true, optional: true)]
+    #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
     /**
      * If true, only zipcode is required when confirm is true; other address fields remain optional.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $minimal_address;
 
     /**
      * The url to redirect after payment failure or success.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $return_url;
 
     /**
      * Display saved payment methods of a returning customer False by default.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $show_saved_payment_methods;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?SubscriptionData $subscription_data;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Refunds\RefundCreateParams;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -21,19 +22,19 @@ final class Item implements BaseModel
     /**
      * The id of the item (i.e. `product_id` or `addon_id`).
      */
-    #[Api]
+    #[Required]
     public string $item_id;
 
     /**
      * The amount to refund. if None the whole item is refunded.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $amount;
 
     /**
      * Specify if tax is inclusive of the refund. Default true.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $tax_inclusive;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Discounts;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -38,19 +38,19 @@ final class DiscountUpdateParams implements BaseModel
      *
      * Must be at least 1 if provided.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $amount;
 
     /**
      * If present, update the discount code (uppercase).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $code;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_at;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
@@ -59,7 +59,7 @@ final class DiscountUpdateParams implements BaseModel
      *
      * @var list<string>|null $restricted_to
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $restricted_to;
 
     /**
@@ -67,7 +67,7 @@ final class DiscountUpdateParams implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $subscription_cycles;
 
     /**
@@ -75,10 +75,10 @@ final class DiscountUpdateParams implements BaseModel
      *
      * @var value-of<DiscountType>|null $type
      */
-    #[Api(enum: DiscountType::class, nullable: true, optional: true)]
+    #[Optional(enum: DiscountType::class, nullable: true)]
     public ?string $type;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $usage_limit;
 
     public function __construct()

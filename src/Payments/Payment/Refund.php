@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments\Payment;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -31,31 +32,31 @@ final class Refund implements BaseModel
     /**
      * The unique identifier of the business issuing the refund.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * If true the refund is a partial refund.
      */
-    #[Api]
+    #[Required]
     public bool $is_partial;
 
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
      * The unique identifier of the refund.
      */
-    #[Api]
+    #[Required]
     public string $refund_id;
 
     /**
@@ -63,13 +64,13 @@ final class Refund implements BaseModel
      *
      * @var value-of<RefundStatus> $status
      */
-    #[Api(enum: RefundStatus::class)]
+    #[Required(enum: RefundStatus::class)]
     public string $status;
 
     /**
      * The refunded amount.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $amount;
 
     /**
@@ -77,13 +78,13 @@ final class Refund implements BaseModel
      *
      * @var value-of<Currency>|null $currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $currency;
 
     /**
      * The reason provided for the refund, if any. Optional.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**

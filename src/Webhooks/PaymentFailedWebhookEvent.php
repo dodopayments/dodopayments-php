@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
@@ -35,19 +35,19 @@ final class PaymentFailedWebhookEvent implements BaseModel
     /**
      * The business identifier.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * Event-specific data.
      */
-    #[Api]
+    #[Required]
     public Data $data;
 
     /**
      * The timestamp of when the event occurred.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $timestamp;
 
     /**
@@ -55,7 +55,7 @@ final class PaymentFailedWebhookEvent implements BaseModel
      *
      * @var value-of<Type> $type
      */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\UsageEvents;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\UsageEvents\Event\Metadata;
@@ -24,19 +25,19 @@ final class Event implements BaseModel
     /** @use SdkModel<EventShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $business_id;
 
-    #[Api]
+    #[Required]
     public string $customer_id;
 
-    #[Api]
+    #[Required]
     public string $event_id;
 
-    #[Api]
+    #[Required]
     public string $event_name;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $timestamp;
 
     /**
@@ -44,7 +45,7 @@ final class Event implements BaseModel
      *
      * @var array<string,string|float|bool>|null $metadata
      */
-    #[Api(map: Metadata::class, nullable: true, optional: true)]
+    #[Optional(map: Metadata::class, nullable: true)]
     public ?array $metadata;
 
     /**

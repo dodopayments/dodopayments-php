@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization\Theme;
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -27,7 +27,7 @@ final class Customization implements BaseModel
     /**
      * Force the checkout interface to render in a specific language (e.g. `en`, `es`).
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $force_language;
 
     /**
@@ -35,7 +35,7 @@ final class Customization implements BaseModel
      *
      * Default is true
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $show_on_demand_tag;
 
     /**
@@ -43,7 +43,7 @@ final class Customization implements BaseModel
      *
      * Default is true
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $show_order_details;
 
     /**
@@ -53,7 +53,7 @@ final class Customization implements BaseModel
      *
      * @var value-of<Theme>|null $theme
      */
-    #[Api(enum: Theme::class, optional: true)]
+    #[Optional(enum: Theme::class)]
     public ?string $theme;
 
     public function __construct()

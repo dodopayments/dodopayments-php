@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -27,13 +27,13 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     /** @use SdkModel<SubscriptionPreviewChangePlanResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public ImmediateCharge $immediate_charge;
 
     /**
      * Response struct representing subscription details.
      */
-    #[Api]
+    #[Required]
     public Subscription $new_plan;
 
     /**

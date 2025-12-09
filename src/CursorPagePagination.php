@@ -2,7 +2,7 @@
 
 namespace Dodopayments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkPage;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -31,13 +31,13 @@ final class CursorPagePagination implements BaseModel, BasePage
     use SdkPage;
 
     /** @var list<TItem>|null $data */
-    #[Api(list: 'mixed', optional: true)]
+    #[Optional(list: 'mixed')]
     public ?array $data;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $iterator;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $done;
 
     /**

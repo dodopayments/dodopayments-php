@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products\Product\DigitalProductDelivery;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,13 +16,13 @@ final class File implements BaseModel
     /** @use SdkModel<FileShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $file_id;
 
-    #[Api]
+    #[Required]
     public string $file_name;
 
-    #[Api]
+    #[Required]
     public string $url;
 
     /**

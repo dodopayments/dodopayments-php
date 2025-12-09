@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -86,28 +86,28 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var list<string>|null $addons
      */
-    #[Api(list: 'string', nullable: true, optional: true)]
+    #[Optional(list: 'string', nullable: true)]
     public ?array $addons;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $brand_id;
 
     /**
      * Description of the product, optional and must be at most 1000 characters.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * Choose how you would like you digital product delivered.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?DigitalProductDelivery $digital_product_delivery;
 
     /**
      * Product image id after its uploaded to S3.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $image_id;
 
     /**
@@ -116,7 +116,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
      * activating the license key.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $license_key_activation_message;
 
     /**
@@ -125,7 +125,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $license_key_activations_limit;
 
     /**
@@ -134,7 +134,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?LicenseKeyDuration $license_key_duration;
 
     /**
@@ -143,7 +143,7 @@ final class ProductUpdateParams implements BaseModel
      * If `true`, additional fields related to license key (duration, activations limit, activation message)
      * become applicable.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $license_key_enabled;
 
     /**
@@ -151,19 +151,19 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', nullable: true, optional: true)]
+    #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
     /**
      * Name of the product, optional and must be at most 100 characters.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * Price details of the product.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price;
 
     /**
@@ -171,7 +171,7 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var value-of<TaxCategory>|null $tax_category
      */
-    #[Api(enum: TaxCategory::class, nullable: true, optional: true)]
+    #[Optional(enum: TaxCategory::class, nullable: true)]
     public ?string $tax_category;
 
     public function __construct()

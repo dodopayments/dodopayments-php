@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\UsageEvents;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class UsageEventIngestResponse implements BaseModel
     /** @use SdkModel<UsageEventIngestResponseShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public int $ingested_count;
 
     /**

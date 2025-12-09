@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\UsageEvents;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -57,43 +57,43 @@ final class UsageEventListParams implements BaseModel
     /**
      * Filter events by customer ID.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $customer_id;
 
     /**
      * Filter events created before this timestamp.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $end;
 
     /**
      * Filter events by event name. If both event_name and meter_id are provided, they must match the meter's configured event_name.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $event_name;
 
     /**
      * Filter events by meter ID. When provided, only events that match the meter's event_name and filter criteria will be returned.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $meter_id;
 
     /**
      * Page number (0-based, default: 0).
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Number of events to return per page (default: 10).
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     /**
      * Filter events created after this timestamp.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $start;
 
     public function __construct()

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -20,13 +20,13 @@ final class SubscriptionData implements BaseModel
     /** @use SdkModel<SubscriptionDataShape> */
     use SdkModel;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?OnDemandSubscription $on_demand;
 
     /**
      * Optional trial period in days If specified, this value overrides the trial period set in the product's price Must be between 0 and 10000 days.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $trial_period_days;
 
     public function __construct()

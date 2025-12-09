@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -33,13 +33,13 @@ final class WebhookUpdateParams implements BaseModel
     /**
      * Description of the webhook.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * To Disable the endpoint, set it to true.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $disabled;
 
     /**
@@ -49,7 +49,7 @@ final class WebhookUpdateParams implements BaseModel
      *
      * @var list<value-of<WebhookEventType>>|null $filter_types
      */
-    #[Api(list: WebhookEventType::class, nullable: true, optional: true)]
+    #[Optional(list: WebhookEventType::class, nullable: true)]
     public ?array $filter_types;
 
     /**
@@ -57,19 +57,19 @@ final class WebhookUpdateParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', nullable: true, optional: true)]
+    #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
     /**
      * Rate limit.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $rate_limit;
 
     /**
      * Url endpoint.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $url;
 
     public function __construct()

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Licenses;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Licenses\LicenseActivateResponse\Product;
@@ -29,43 +29,43 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * License key instance ID.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Business ID.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * Creation timestamp.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * Limited customer details associated with the license key.
      */
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
     /**
      * Associated license key ID.
      */
-    #[Api]
+    #[Required]
     public string $license_key_id;
 
     /**
      * Instance name.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Related product info. Present if the license key is tied to a product.
      */
-    #[Api]
+    #[Required]
     public Product $product;
 
     /**

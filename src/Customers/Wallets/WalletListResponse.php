@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\Wallets;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -20,13 +20,13 @@ final class WalletListResponse implements BaseModel
     use SdkModel;
 
     /** @var list<CustomerWallet> $items */
-    #[Api(list: CustomerWallet::class)]
+    #[Required(list: CustomerWallet::class)]
     public array $items;
 
     /**
      * Sum of all wallet balances converted to USD (in smallest unit).
      */
-    #[Api]
+    #[Required]
     public int $total_balance_usd;
 
     /**
