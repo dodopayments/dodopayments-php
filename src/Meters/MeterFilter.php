@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses;
@@ -36,7 +36,7 @@ final class MeterFilter implements BaseModel
      *
      * @var list<DirectFilterCondition>|list<NestedMeterFilter> $clauses
      */
-    #[Api(union: Clauses::class)]
+    #[Required(union: Clauses::class)]
     public array $clauses;
 
     /**
@@ -44,7 +44,7 @@ final class MeterFilter implements BaseModel
      *
      * @var value-of<Conjunction> $conjunction
      */
-    #[Api(enum: Conjunction::class)]
+    #[Required(enum: Conjunction::class)]
     public string $conjunction;
 
     /**

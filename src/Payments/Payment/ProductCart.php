@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments\Payment;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,10 +16,10 @@ final class ProductCart implements BaseModel
     /** @use SdkModel<ProductCartShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $product_id;
 
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**

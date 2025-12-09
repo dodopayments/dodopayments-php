@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\CountryCode;
@@ -29,22 +29,22 @@ final class Card implements BaseModel
      *
      * @var value-of<CountryCode>|null $card_issuing_country
      */
-    #[Api(enum: CountryCode::class, nullable: true, optional: true)]
+    #[Optional(enum: CountryCode::class, nullable: true)]
     public ?string $card_issuing_country;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $card_network;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $card_type;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $expiry_month;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $expiry_year;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $last4_digits;
 
     public function __construct()

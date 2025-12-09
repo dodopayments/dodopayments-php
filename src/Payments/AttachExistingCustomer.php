@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class AttachExistingCustomer implements BaseModel
     /** @use SdkModel<AttachExistingCustomerShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $customer_id;
 
     /**

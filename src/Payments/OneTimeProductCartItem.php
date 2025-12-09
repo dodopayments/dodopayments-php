@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -18,10 +19,10 @@ final class OneTimeProductCartItem implements BaseModel
     /** @use SdkModel<OneTimeProductCartItemShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $product_id;
 
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**
@@ -29,7 +30,7 @@ final class OneTimeProductCartItem implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $amount;
 
     /**

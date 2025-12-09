@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Refunds;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -31,7 +32,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * The unique identifier of the payment to be refunded.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
@@ -39,7 +40,7 @@ final class RefundCreateParams implements BaseModel
      *
      * @var list<Item>|null $items
      */
-    #[Api(list: Item::class, nullable: true, optional: true)]
+    #[Optional(list: Item::class, nullable: true)]
     public ?array $items;
 
     /**
@@ -47,13 +48,13 @@ final class RefundCreateParams implements BaseModel
      *
      * @var array<string,string>|null $metadata
      */
-    #[Api(map: 'string', optional: true)]
+    #[Optional(map: 'string')]
     public ?array $metadata;
 
     /**
      * The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterAggregation\Type;
@@ -31,31 +32,31 @@ final class Meter implements BaseModel
     /** @use SdkModel<MeterShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
-    #[Api]
+    #[Required]
     public MeterAggregation $aggregation;
 
-    #[Api]
+    #[Required]
     public string $business_id;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
-    #[Api]
+    #[Required]
     public string $event_name;
 
-    #[Api]
+    #[Required]
     public string $measurement_unit;
 
-    #[Api]
+    #[Required]
     public string $name;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $updated_at;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
@@ -64,7 +65,7 @@ final class Meter implements BaseModel
      * Supports up to 3 levels of nesting to create complex filter expressions.
      * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?MeterFilter $filter;
 
     /**

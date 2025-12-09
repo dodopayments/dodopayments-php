@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -16,7 +16,7 @@ final class CustomerPortalSession implements BaseModel
     /** @use SdkModel<CustomerPortalSessionShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $link;
 
     /**

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card;
@@ -34,23 +35,23 @@ final class Item implements BaseModel
      *
      * @var value-of<PaymentMethod> $payment_method
      */
-    #[Api(enum: PaymentMethod::class)]
+    #[Required(enum: PaymentMethod::class)]
     public string $payment_method;
 
-    #[Api]
+    #[Required]
     public string $payment_method_id;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?Card $card;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $last_used_at;
 
     /** @var value-of<PaymentMethodTypes>|null $payment_method_type */
-    #[Api(enum: PaymentMethodTypes::class, nullable: true, optional: true)]
+    #[Optional(enum: PaymentMethodTypes::class, nullable: true)]
     public ?string $payment_method_type;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $recurring_enabled;
 
     /**

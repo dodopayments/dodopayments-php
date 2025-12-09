@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -37,37 +38,37 @@ final class MeterCreateParams implements BaseModel
     /**
      * Aggregation configuration for the meter.
      */
-    #[Api]
+    #[Required]
     public MeterAggregation $aggregation;
 
     /**
      * Event name to track.
      */
-    #[Api]
+    #[Required]
     public string $event_name;
 
     /**
      * measurement unit.
      */
-    #[Api]
+    #[Required]
     public string $measurement_unit;
 
     /**
      * Name of the meter.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Optional description of the meter.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * Optional filter to apply to the meter.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?MeterFilter $filter;
 
     /**

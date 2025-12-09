@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -30,13 +31,13 @@ final class PaymentNewResponse implements BaseModel
      * Client secret used to load Dodo checkout SDK
      * NOTE : Dodo checkout SDK will be coming soon.
      */
-    #[Api]
+    #[Required]
     public string $client_secret;
 
     /**
      * Limited details about the customer making the payment.
      */
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
     /**
@@ -44,37 +45,37 @@ final class PaymentNewResponse implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * Unique identifier for the payment.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
      * Total amount of the payment in smallest currency unit (e.g. cents).
      */
-    #[Api]
+    #[Required]
     public int $total_amount;
 
     /**
      * The discount id if discount is applied.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $discount_id;
 
     /**
      * Expiry timestamp of the payment link.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $expires_on;
 
     /**
      * Optional URL to a hosted payment page.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $payment_link;
 
     /**
@@ -82,7 +83,7 @@ final class PaymentNewResponse implements BaseModel
      *
      * @var list<OneTimeProductCartItem>|null $product_cart
      */
-    #[Api(list: OneTimeProductCartItem::class, nullable: true, optional: true)]
+    #[Optional(list: OneTimeProductCartItem::class, nullable: true)]
     public ?array $product_cart;
 
     /**

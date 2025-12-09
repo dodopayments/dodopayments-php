@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions\CheckoutSessionRequest;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\AttachAddon;
@@ -25,10 +26,10 @@ final class ProductCart implements BaseModel
     /**
      * unique id of the product.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**
@@ -36,7 +37,7 @@ final class ProductCart implements BaseModel
      *
      * @var list<AttachAddon>|null $addons
      */
-    #[Api(list: AttachAddon::class, nullable: true, optional: true)]
+    #[Optional(list: AttachAddon::class, nullable: true)]
     public ?array $addons;
 
     /**
@@ -48,7 +49,7 @@ final class ProductCart implements BaseModel
      * If amount is not set for pay_what_you_want product,
      * customer is allowed to select the amount.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $amount;
 
     /**

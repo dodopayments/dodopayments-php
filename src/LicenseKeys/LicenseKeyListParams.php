@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\LicenseKeys;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -30,25 +30,25 @@ final class LicenseKeyListParams implements BaseModel
     /**
      * Filter by customer ID.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $customer_id;
 
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     /**
      * Filter by product ID.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?string $product_id;
 
     /**
@@ -56,7 +56,7 @@ final class LicenseKeyListParams implements BaseModel
      *
      * @var value-of<Status>|null $status
      */
-    #[Api(enum: Status::class, optional: true)]
+    #[Optional(enum: Status::class)]
     public ?string $status;
 
     public function __construct()

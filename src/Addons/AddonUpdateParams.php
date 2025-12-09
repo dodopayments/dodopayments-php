@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Addons;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -34,31 +34,31 @@ final class AddonUpdateParams implements BaseModel
      *
      * @var value-of<Currency>|null $currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $currency;
 
     /**
      * Description of the Addon, optional and must be at most 1000 characters.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * Addon image id after its uploaded to S3.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $image_id;
 
     /**
      * Name of the Addon, optional and must be at most 100 characters.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
      * Amount of the addon.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $price;
 
     /**
@@ -66,7 +66,7 @@ final class AddonUpdateParams implements BaseModel
      *
      * @var value-of<TaxCategory>|null $tax_category
      */
-    #[Api(enum: TaxCategory::class, nullable: true, optional: true)]
+    #[Optional(enum: TaxCategory::class, nullable: true)]
     public ?string $tax_category;
 
     public function __construct()

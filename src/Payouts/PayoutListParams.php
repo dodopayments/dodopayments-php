@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payouts;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -28,25 +28,25 @@ final class PayoutListParams implements BaseModel
     /**
      * Get payouts created after this time (inclusive).
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $created_at_gte;
 
     /**
      * Get payouts created before this time (inclusive).
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?\DateTimeInterface $created_at_lte;
 
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     public function __construct()

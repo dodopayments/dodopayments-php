@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -32,20 +33,20 @@ final class UnionMember1 implements BaseModel
     /** @use SdkModel<UnionMember1Shape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $id;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public string $name;
 
-    #[Api]
+    #[Required]
     public float $proration_factor;
 
-    #[Api]
+    #[Required]
     public int $quantity;
 
     /**
@@ -53,26 +54,26 @@ final class UnionMember1 implements BaseModel
      *
      * @var value-of<TaxCategory> $tax_category
      */
-    #[Api(enum: TaxCategory::class)]
+    #[Required(enum: TaxCategory::class)]
     public string $tax_category;
 
-    #[Api]
+    #[Required]
     public bool $tax_inclusive;
 
-    #[Api]
+    #[Required]
     public float $tax_rate;
 
     /** @var value-of<Type> $type */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
-    #[Api]
+    #[Required]
     public int $unit_price;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $tax;
 
     /**

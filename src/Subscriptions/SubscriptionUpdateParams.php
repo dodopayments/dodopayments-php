@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -40,33 +40,33 @@ final class SubscriptionUpdateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?BillingAddress $billing;
 
     /**
      * When set, the subscription will remain active until the end of billing period.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $cancel_at_next_billing_date;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $customer_name;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?DisableOnDemand $disable_on_demand;
 
     /** @var array<string,string>|null $metadata */
-    #[Api(map: 'string', nullable: true, optional: true)]
+    #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?\DateTimeInterface $next_billing_date;
 
     /** @var value-of<SubscriptionStatus>|null $status */
-    #[Api(enum: SubscriptionStatus::class, nullable: true, optional: true)]
+    #[Optional(enum: SubscriptionStatus::class, nullable: true)]
     public ?string $status;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $tax_id;
 
     public function __construct()

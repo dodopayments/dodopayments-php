@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Core\Conversion;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
@@ -28,9 +29,10 @@ final class PropertyInfo
         $apiName = $property->getName();
         $type = $property->getType();
         $optional = false;
+        $attributes = [...$property->getAttributes(Required::class), ...$property->getAttributes(Optional::class)];
 
-        foreach ($property->getAttributes(Api::class) as $attr) {
-            /** @var Api $attribute */
+        foreach ($attributes as $attr) {
+            /** @var Required $attribute */
             $attribute = $attr->newInstance();
 
             $apiName = $attribute->apiName ?? $apiName;

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks\RefundFailedWebhookEvent;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -38,22 +39,22 @@ final class Data1 implements BaseModel
     /**
      * The unique identifier of the business issuing the refund.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
-    #[Api]
+    #[Required]
     public CustomerLimitedDetails $customer;
 
     /**
      * If true the refund is a partial refund.
      */
-    #[Api]
+    #[Required]
     public bool $is_partial;
 
     /**
@@ -61,39 +62,39 @@ final class Data1 implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    #[Api]
+    #[Required]
     public string $payment_id;
 
     /**
      * The unique identifier of the refund.
      */
-    #[Api]
+    #[Required]
     public string $refund_id;
 
     /** @var value-of<RefundStatus> $status */
-    #[Api(enum: RefundStatus::class)]
+    #[Required(enum: RefundStatus::class)]
     public string $status;
 
     /**
      * The refunded amount.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $amount;
 
     /** @var value-of<Currency>|null $currency */
-    #[Api(enum: Currency::class, optional: true)]
+    #[Optional(enum: Currency::class)]
     public ?string $currency;
 
     /**
      * The reason provided for the refund, if any. Optional.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $reason;
 
     /**
@@ -101,7 +102,7 @@ final class Data1 implements BaseModel
      *
      * @var value-of<PayloadType>|null $payload_type
      */
-    #[Api(enum: PayloadType::class, optional: true)]
+    #[Optional(enum: PayloadType::class)]
     public ?string $payload_type;
 
     /**

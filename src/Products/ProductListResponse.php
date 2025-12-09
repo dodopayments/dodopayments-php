@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -41,19 +42,19 @@ final class ProductListResponse implements BaseModel
     /**
      * Unique identifier for the business to which the product belongs.
      */
-    #[Api]
+    #[Required]
     public string $business_id;
 
     /**
      * Timestamp when the product was created.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
-    #[Api]
+    #[Required]
     public bool $is_recurring;
 
     /**
@@ -61,13 +62,13 @@ final class ProductListResponse implements BaseModel
      *
      * @var array<string,string> $metadata
      */
-    #[Api(map: 'string')]
+    #[Required(map: 'string')]
     public array $metadata;
 
     /**
      * Unique identifier for the product.
      */
-    #[Api]
+    #[Required]
     public string $product_id;
 
     /**
@@ -75,13 +76,13 @@ final class ProductListResponse implements BaseModel
      *
      * @var value-of<TaxCategory> $tax_category
      */
-    #[Api(enum: TaxCategory::class)]
+    #[Required(enum: TaxCategory::class)]
     public string $tax_category;
 
     /**
      * Timestamp when the product was last updated.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $updated_at;
 
     /**
@@ -89,25 +90,25 @@ final class ProductListResponse implements BaseModel
      *
      * @var value-of<Currency>|null $currency
      */
-    #[Api(enum: Currency::class, nullable: true, optional: true)]
+    #[Optional(enum: Currency::class, nullable: true)]
     public ?string $currency;
 
     /**
      * Description of the product, optional.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**
      * URL of the product image, optional.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $image;
 
     /**
      * Name of the product, optional.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**
@@ -121,19 +122,19 @@ final class ProductListResponse implements BaseModel
      *
      * This ensures precision and avoids floating-point rounding errors.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $price;
 
     /**
      * Details of the price.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price_detail;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $tax_inclusive;
 
     /**

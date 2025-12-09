@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses;
@@ -32,11 +32,11 @@ final class Level1NestedFilter implements BaseModel
      *
      * @var list<Level2FilterCondition>|list<Level2NestedFilter> $clauses
      */
-    #[Api(union: Clauses::class)]
+    #[Required(union: Clauses::class)]
     public array $clauses;
 
     /** @var value-of<Conjunction> $conjunction */
-    #[Api(enum: Conjunction::class)]
+    #[Required(enum: Conjunction::class)]
     public string $conjunction;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Addons;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -23,13 +23,13 @@ final class AddonListParams implements BaseModel
     /**
      * Page number default is 0.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_number;
 
     /**
      * Page size default is 10 max is 100.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?int $page_size;
 
     public function __construct()

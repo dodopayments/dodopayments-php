@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products\Price;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -34,13 +35,13 @@ final class OneTimePrice implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
      * Discount applied to the price, represented as a percentage (0 to 100).
      */
-    #[Api]
+    #[Required]
     public int $discount;
 
     /**
@@ -50,38 +51,38 @@ final class OneTimePrice implements BaseModel
      * If [`pay_what_you_want`](Self::pay_what_you_want) is set to `true`, this field represents
      * the **minimum** amount the customer must pay.
      */
-    #[Api]
+    #[Required]
     public int $price;
 
     /**
      * Indicates if purchasing power parity adjustments are applied to the price.
      * Purchasing power parity feature is not available as of now.
      */
-    #[Api]
+    #[Required]
     public bool $purchasing_power_parity;
 
     /** @var value-of<Type> $type */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
     /**
      * Indicates whether the customer can pay any amount they choose.
      * If set to `true`, the [`price`](Self::price) field is the minimum amount.
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $pay_what_you_want;
 
     /**
      * A suggested price for the user to pay. This value is only considered if
      * [`pay_what_you_want`](Self::pay_what_you_want) is `true`. Otherwise, it is ignored.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $suggested_price;
 
     /**
      * Indicates if the price is tax inclusive.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?bool $tax_inclusive;
 
     /**

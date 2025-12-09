@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Addons;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -33,19 +34,19 @@ final class AddonCreateParams implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
      * Name of the Addon.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Amount of the addon.
      */
-    #[Api]
+    #[Required]
     public int $price;
 
     /**
@@ -53,13 +54,13 @@ final class AddonCreateParams implements BaseModel
      *
      * @var value-of<TaxCategory> $tax_category
      */
-    #[Api(enum: TaxCategory::class)]
+    #[Required(enum: TaxCategory::class)]
     public string $tax_category;
 
     /**
      * Optional description of the Addon.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
     /**

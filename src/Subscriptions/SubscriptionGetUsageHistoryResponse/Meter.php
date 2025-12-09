@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -29,19 +29,19 @@ final class Meter implements BaseModel
     /**
      * Meter identifier.
      */
-    #[Api]
+    #[Required]
     public string $id;
 
     /**
      * Chargeable units (after free threshold) as string for precision.
      */
-    #[Api]
+    #[Required]
     public string $chargeable_units;
 
     /**
      * Total units consumed as string for precision.
      */
-    #[Api]
+    #[Required]
     public string $consumed_units;
 
     /**
@@ -49,31 +49,31 @@ final class Meter implements BaseModel
      *
      * @var value-of<Currency> $currency
      */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
     /**
      * Free threshold units for this meter.
      */
-    #[Api]
+    #[Required]
     public int $free_threshold;
 
     /**
      * Meter name.
      */
-    #[Api]
+    #[Required]
     public string $name;
 
     /**
      * Price per unit in string format for precision.
      */
-    #[Api]
+    #[Required]
     public string $price_per_unit;
 
     /**
      * Total price charged for this meter in smallest currency unit (cents).
      */
-    #[Api]
+    #[Required]
     public int $total_price;
 
     /**

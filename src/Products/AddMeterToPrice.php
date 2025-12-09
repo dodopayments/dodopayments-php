@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -23,34 +24,34 @@ final class AddMeterToPrice implements BaseModel
     /** @use SdkModel<AddMeterToPriceShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public string $meter_id;
 
     /**
      * The price per unit in lowest denomination. Must be greater than zero. Supports up to 5 digits before decimal point and 12 decimal places.
      */
-    #[Api]
+    #[Required]
     public string $price_per_unit;
 
     /**
      * Meter description. Will ignored on Request, but will be shown in response.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $description;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $free_threshold;
 
     /**
      * Meter measurement unit. Will ignored on Request, but will be shown in response.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $measurement_unit;
 
     /**
      * Meter name. Will ignored on Request, but will be shown in response.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $name;
 
     /**

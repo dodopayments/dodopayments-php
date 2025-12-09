@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Webhooks;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -27,13 +27,13 @@ final class WebhookListParams implements BaseModel
     /**
      * The iterator returned from a prior invocation.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $iterator;
 
     /**
      * Limit the number of returned items.
      */
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?int $limit;
 
     public function __construct()

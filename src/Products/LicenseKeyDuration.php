@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Products;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\TimeInterval;
@@ -19,11 +19,11 @@ final class LicenseKeyDuration implements BaseModel
     /** @use SdkModel<LicenseKeyDurationShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public int $count;
 
     /** @var value-of<TimeInterval> $interval */
-    #[Api(enum: TimeInterval::class)]
+    #[Required(enum: TimeInterval::class)]
     public string $interval;
 
     /**

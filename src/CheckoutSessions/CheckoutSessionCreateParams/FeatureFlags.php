@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
@@ -34,28 +34,28 @@ final class FeatureFlags implements BaseModel
      *
      * Default is true
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_currency_selection;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_city;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_country;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_email;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_name;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_state;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_street;
 
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_customer_editing_zipcode;
 
     /**
@@ -63,7 +63,7 @@ final class FeatureFlags implements BaseModel
      *
      * Default is true
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_discount_code;
 
     /**
@@ -71,7 +71,7 @@ final class FeatureFlags implements BaseModel
      *
      * Default is true
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_phone_number_collection;
 
     /**
@@ -79,7 +79,7 @@ final class FeatureFlags implements BaseModel
      *
      * Default is true
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $allow_tax_id;
 
     /**
@@ -88,7 +88,7 @@ final class FeatureFlags implements BaseModel
      *
      * Default is false
      */
-    #[Api(optional: true)]
+    #[Optional]
     public ?bool $always_create_new_customer;
 
     public function __construct()

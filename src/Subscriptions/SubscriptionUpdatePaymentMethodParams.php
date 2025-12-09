@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -24,13 +25,13 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
     use SdkParams;
 
     /** @var value-of<Type> $type */
-    #[Api(enum: Type::class)]
+    #[Required(enum: Type::class)]
     public string $type;
 
-    #[Api(nullable: true, optional: true)]
+    #[Optional(nullable: true)]
     public ?string $return_url;
 
-    #[Api]
+    #[Required]
     public string $payment_method_id;
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -27,10 +27,10 @@ final class ImmediateCharge implements BaseModel
     use SdkModel;
 
     /** @var list<UnionMember0|UnionMember1|UnionMember2> $line_items */
-    #[Api(list: LineItem::class)]
+    #[Required(list: LineItem::class)]
     public array $line_items;
 
-    #[Api]
+    #[Required]
     public Summary $summary;
 
     /**

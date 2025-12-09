@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Customers\Wallets;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -23,20 +23,20 @@ final class CustomerWallet implements BaseModel
     /** @use SdkModel<CustomerWalletShape> */
     use SdkModel;
 
-    #[Api]
+    #[Required]
     public int $balance;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $created_at;
 
     /** @var value-of<Currency> $currency */
-    #[Api(enum: Currency::class)]
+    #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Api]
+    #[Required]
     public string $customer_id;
 
-    #[Api]
+    #[Required]
     public \DateTimeInterface $updated_at;
 
     /**

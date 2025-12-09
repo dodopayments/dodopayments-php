@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Subscriptions;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
@@ -25,7 +25,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel
     /**
      * End date of the billing period.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $end_date;
 
     /**
@@ -33,13 +33,13 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel
      *
      * @var list<Meter> $meters
      */
-    #[Api(list: Meter::class)]
+    #[Required(list: Meter::class)]
     public array $meters;
 
     /**
      * Start date of the billing period.
      */
-    #[Api]
+    #[Required]
     public \DateTimeInterface $start_date;
 
     /**

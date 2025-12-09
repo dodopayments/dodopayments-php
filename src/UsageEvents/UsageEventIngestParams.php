@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\UsageEvents;
 
-use Dodopayments\Core\Attributes\Api;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -65,7 +65,7 @@ final class UsageEventIngestParams implements BaseModel
      *
      * @var list<EventInput> $events
      */
-    #[Api(list: EventInput::class)]
+    #[Required(list: EventInput::class)]
     public array $events;
 
     /**
