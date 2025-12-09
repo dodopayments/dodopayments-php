@@ -10,8 +10,10 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterAggregation;
+use Dodopayments\Meters\MeterAggregation\Type;
 use Dodopayments\Meters\MeterCreateParams;
 use Dodopayments\Meters\MeterFilter;
+use Dodopayments\Meters\MeterFilter\Conjunction;
 use Dodopayments\Meters\MeterListParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MetersContract;
@@ -28,14 +30,15 @@ final class MetersService implements MetersContract
      *
      * @param array{
      *   aggregation: array{
-     *     type: 'count'|'sum'|'max'|'last', key?: string|null
+     *     type: 'count'|'sum'|'max'|'last'|Type, key?: string|null
      *   }|MeterAggregation,
      *   event_name: string,
      *   measurement_unit: string,
      *   name: string,
      *   description?: string|null,
      *   filter?: array{
-     *     clauses: list<array<mixed>>|list<array<mixed>>, conjunction: 'and'|'or'
+     *     clauses: list<array<mixed>>|list<array<mixed>>,
+     *     conjunction: 'and'|'or'|Conjunction,
      *   }|MeterFilter|null,
      * }|MeterCreateParams $params
      *

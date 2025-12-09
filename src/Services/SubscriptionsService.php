@@ -16,11 +16,13 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsContract;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionCreateParams;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams;
+use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
@@ -169,7 +171,7 @@ final class SubscriptionsService implements SubscriptionsContract
      *   customer_id?: string,
      *   page_number?: int,
      *   page_size?: int,
-     *   status?: 'pending'|'active'|'on_hold'|'cancelled'|'failed'|'expired',
+     *   status?: 'pending'|'active'|'on_hold'|'cancelled'|'failed'|'expired'|Status,
      * }|SubscriptionListParams $params
      *
      * @return DefaultPageNumberPagination<SubscriptionListResponse>
@@ -203,7 +205,7 @@ final class SubscriptionsService implements SubscriptionsContract
      *
      * @param array{
      *   product_id: string,
-     *   proration_billing_mode: 'prorated_immediately'|'full_immediately'|'difference_immediately',
+     *   proration_billing_mode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|ProrationBillingMode,
      *   quantity: int,
      *   addons?: list<array{addon_id: string, quantity: int}>|null,
      * }|SubscriptionChangePlanParams $params
@@ -276,7 +278,7 @@ final class SubscriptionsService implements SubscriptionsContract
      *
      * @param array{
      *   product_id: string,
-     *   proration_billing_mode: 'prorated_immediately'|'full_immediately'|'difference_immediately',
+     *   proration_billing_mode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|SubscriptionPreviewChangePlanParams\ProrationBillingMode,
      *   quantity: int,
      *   addons?: list<array{addon_id: string, quantity: int}>|null,
      * }|SubscriptionPreviewChangePlanParams $params

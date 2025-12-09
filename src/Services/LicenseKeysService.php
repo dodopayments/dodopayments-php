@@ -10,6 +10,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
+use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeysContract;
@@ -82,7 +83,7 @@ final class LicenseKeysService implements LicenseKeysContract
      *   page_number?: int,
      *   page_size?: int,
      *   product_id?: string,
-     *   status?: 'active'|'expired'|'disabled',
+     *   status?: 'active'|'expired'|'disabled'|Status,
      * }|LicenseKeyListParams $params
      *
      * @return DefaultPageNumberPagination<LicenseKey>

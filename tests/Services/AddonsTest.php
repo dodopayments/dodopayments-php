@@ -6,6 +6,8 @@ use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\TaxCategory;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -32,10 +34,10 @@ final class AddonsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->addons->create([
-            'currency' => 'AED',
+            'currency' => Currency::AED,
             'name' => 'name',
             'price' => 0,
-            'tax_category' => 'digital_products',
+            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -46,10 +48,10 @@ final class AddonsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->addons->create([
-            'currency' => 'AED',
+            'currency' => Currency::AED,
             'name' => 'name',
             'price' => 0,
-            'tax_category' => 'digital_products',
+            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
             'description' => 'description',
         ]);
 

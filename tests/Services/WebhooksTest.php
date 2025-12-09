@@ -4,6 +4,7 @@ namespace Tests\Services;
 
 use Dodopayments\Client;
 use Dodopayments\CursorPagePagination;
+use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -44,7 +45,7 @@ final class WebhooksTest extends TestCase
             'url' => 'url',
             'description' => 'description',
             'disabled' => true,
-            'filter_types' => ['payment.succeeded'],
+            'filter_types' => [WebhookEventType::PAYMENT_SUCCEEDED],
             'headers' => ['foo' => 'string'],
             'idempotency_key' => 'idempotency_key',
             'metadata' => ['foo' => 'string'],

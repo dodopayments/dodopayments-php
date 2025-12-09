@@ -4,8 +4,11 @@ namespace Tests\Services;
 
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
+use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Payments\PaymentNewResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -33,7 +36,7 @@ final class PaymentsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->payments->create([
-            'billing' => ['country' => 'AF'],
+            'billing' => ['country' => CountryCode::AF],
             'customer' => ['customer_id' => 'customer_id'],
             'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
         ]);
@@ -47,7 +50,7 @@ final class PaymentsTest extends TestCase
     {
         $result = $this->client->payments->create([
             'billing' => [
-                'country' => 'AF',
+                'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
@@ -57,8 +60,8 @@ final class PaymentsTest extends TestCase
             'product_cart' => [
                 ['product_id' => 'product_id', 'quantity' => 0, 'amount' => 0],
             ],
-            'allowed_payment_method_types' => ['credit'],
-            'billing_currency' => 'AED',
+            'allowed_payment_method_types' => [PaymentMethodTypes::CREDIT],
+            'billing_currency' => Currency::AED,
             'discount_code' => 'discount_code',
             'force_3ds' => true,
             'metadata' => ['foo' => 'string'],
