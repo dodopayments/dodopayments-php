@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
@@ -49,14 +50,16 @@ final class MetersService implements MetersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Meter> */
+        $response = $this->client->request(
             method: 'post',
             path: 'meters',
             body: (object) $parsed,
             options: $options,
             convert: Meter::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -68,13 +71,15 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Meter {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Meter> */
+        $response = $this->client->request(
             method: 'get',
             path: ['meters/%1$s', $id],
             options: $requestOptions,
             convert: Meter::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -97,8 +102,8 @@ final class MetersService implements MetersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<Meter>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'meters',
             query: $parsed,
@@ -106,6 +111,8 @@ final class MetersService implements MetersContract
             convert: Meter::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -117,13 +124,15 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['meters/%1$s', $id],
             options: $requestOptions,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -135,12 +144,14 @@ final class MetersService implements MetersContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'post',
             path: ['meters/%1$s/unarchive', $id],
             options: $requestOptions,
             convert: null,
         );
+
+        return $response->parse();
     }
 }

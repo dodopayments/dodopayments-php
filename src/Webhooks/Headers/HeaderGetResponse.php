@@ -6,9 +6,7 @@ namespace Dodopayments\Webhooks\Headers;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * The value of the headers is returned in the `headers` field.
@@ -20,12 +18,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   headers: array<string,string>, sensitive: list<string>
  * }
  */
-final class HeaderGetResponse implements BaseModel, ResponseConverter
+final class HeaderGetResponse implements BaseModel
 {
     /** @use SdkModel<HeaderGetResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * List of headers configured.

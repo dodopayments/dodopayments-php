@@ -6,9 +6,7 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Disputes\DisputeStage;
 use Dodopayments\Disputes\DisputeStatus;
@@ -53,12 +51,10 @@ use Dodopayments\Refunds\RefundStatus;
  *   updated_at?: \DateTimeInterface|null,
  * }
  */
-final class Payment implements BaseModel, ResponseConverter
+final class Payment implements BaseModel
 {
     /** @use SdkModel<PaymentShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Billing address details for payments.

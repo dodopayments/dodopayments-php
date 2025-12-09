@@ -7,19 +7,15 @@ namespace Dodopayments\Brands;
 use Dodopayments\Brands\Brand\VerificationStatus;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BrandListResponseShape = array{items: list<Brand>}
  */
-final class BrandListResponse implements BaseModel, ResponseConverter
+final class BrandListResponse implements BaseModel
 {
     /** @use SdkModel<BrandListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * List of brands for this business.

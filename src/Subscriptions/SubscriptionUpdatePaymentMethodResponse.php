@@ -6,9 +6,7 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type SubscriptionUpdatePaymentMethodResponseShape = array{
@@ -18,12 +16,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   payment_link?: string|null,
  * }
  */
-final class SubscriptionUpdatePaymentMethodResponse implements BaseModel, ResponseConverter
+final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
 {
     /** @use SdkModel<SubscriptionUpdatePaymentMethodResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api(nullable: true, optional: true)]
     public ?string $client_secret;

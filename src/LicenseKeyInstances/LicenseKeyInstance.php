@@ -6,9 +6,7 @@ namespace Dodopayments\LicenseKeyInstances;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type LicenseKeyInstanceShape = array{
@@ -19,12 +17,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   name: string,
  * }
  */
-final class LicenseKeyInstance implements BaseModel, ResponseConverter
+final class LicenseKeyInstance implements BaseModel
 {
     /** @use SdkModel<LicenseKeyInstanceShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $id;

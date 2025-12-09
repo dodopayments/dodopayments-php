@@ -6,9 +6,7 @@ namespace Dodopayments\Customers;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type CustomerShape = array{
@@ -21,12 +19,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   phone_number?: string|null,
  * }
  */
-final class Customer implements BaseModel, ResponseConverter
+final class Customer implements BaseModel
 {
     /** @use SdkModel<CustomerShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $business_id;

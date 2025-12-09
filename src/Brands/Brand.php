@@ -7,9 +7,7 @@ namespace Dodopayments\Brands;
 use Dodopayments\Brands\Brand\VerificationStatus;
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BrandShape = array{
@@ -27,12 +25,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   url?: string|null,
  * }
  */
-final class Brand implements BaseModel, ResponseConverter
+final class Brand implements BaseModel
 {
     /** @use SdkModel<BrandShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $brand_id;

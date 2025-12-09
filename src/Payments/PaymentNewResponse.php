@@ -6,9 +6,7 @@ namespace Dodopayments\Payments;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type PaymentNewResponseShape = array{
@@ -23,12 +21,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   product_cart?: list<OneTimeProductCartItem>|null,
  * }
  */
-final class PaymentNewResponse implements BaseModel, ResponseConverter
+final class PaymentNewResponse implements BaseModel
 {
     /** @use SdkModel<PaymentNewResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Client secret used to load Dodo checkout SDK

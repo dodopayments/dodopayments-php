@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
@@ -58,14 +59,16 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookDetails> */
+        $response = $this->client->request(
             method: 'post',
             path: 'webhooks',
             body: (object) $parsed,
             options: $options,
             convert: WebhookDetails::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -79,13 +82,15 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookDetails> */
+        $response = $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s', $webhookID],
             options: $requestOptions,
             convert: WebhookDetails::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -114,14 +119,16 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookDetails> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['webhooks/%1$s', $webhookID],
             body: (object) $parsed,
             options: $options,
             convert: WebhookDetails::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -144,8 +151,8 @@ final class WebhooksService implements WebhooksContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<CursorPagePagination<WebhookDetails>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'webhooks',
             query: $parsed,
@@ -153,6 +160,8 @@ final class WebhooksService implements WebhooksContract
             convert: WebhookDetails::class,
             page: CursorPagePagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -166,13 +175,15 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['webhooks/%1$s', $webhookID],
             options: $requestOptions,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -186,12 +197,14 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WebhookGetSecretResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['webhooks/%1$s/secret', $webhookID],
             options: $requestOptions,
             convert: WebhookGetSecretResponse::class,
         );
+
+        return $response->parse();
     }
 }

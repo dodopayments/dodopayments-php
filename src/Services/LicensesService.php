@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Licenses\LicenseActivateParams;
 use Dodopayments\Licenses\LicenseActivateResponse;
@@ -37,14 +38,16 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LicenseActivateResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'licenses/activate',
             body: (object) $parsed,
             options: $options,
             convert: LicenseActivateResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -65,14 +68,16 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'post',
             path: 'licenses/deactivate',
             body: (object) $parsed,
             options: $options,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -93,13 +98,15 @@ final class LicensesService implements LicensesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LicenseValidateResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'licenses/validate',
             body: (object) $parsed,
             options: $options,
             convert: LicenseValidateResponse::class,
         );
+
+        return $response->parse();
     }
 }

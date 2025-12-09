@@ -42,25 +42,24 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
      *   query: array<string,mixed>,
      *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
-     * } $request
+     * } $requestInfo
      */
     public function __construct(
         private string|Converter|ConverterSource $convert,
         private Client $client,
-        private array $request,
+        private array $requestInfo,
         private RequestOptions $options,
-        ResponseInterface $response,
+        private ResponseInterface $response,
+        private mixed $parsedBody,
     ) {
         $this->initialize();
 
-        $data = Util::decodeContent($response);
-
-        if (!is_array($data)) {
+        if (!is_array($this->parsedBody)) {
             return;
         }
 
         // @phpstan-ignore-next-line argument.type
-        self::__unserialize($data);
+        self::__unserialize($this->parsedBody);
 
         if ($this->offsetGet('items')) {
             $acc = Conversion::coerce(
@@ -96,13 +95,13 @@ final class DefaultPageNumberPagination implements BaseModel, BasePage
     public function nextRequest(): ?array
     {
         /** @var int */
-        $curr = Util::dig($this->request, ['query', 'page_number']) ?? 1;
+        $curr = Util::dig($this->requestInfo, ['query', 'page_number']) ?? 1;
         if (!count($this->getItems())) {
             return null;
         }
 
         $nextRequest = array_merge_recursive(
-            $this->request,
+            $this->requestInfo,
             ['query' => $curr + 1]
         );
 

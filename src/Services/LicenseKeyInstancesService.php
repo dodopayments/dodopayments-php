@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
@@ -29,13 +30,15 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LicenseKeyInstance> */
+        $response = $this->client->request(
             method: 'get',
             path: ['license_key_instances/%1$s', $id],
             options: $requestOptions,
             convert: LicenseKeyInstance::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -55,14 +58,16 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LicenseKeyInstance> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['license_key_instances/%1$s', $id],
             body: (object) $parsed,
             options: $options,
             convert: LicenseKeyInstance::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -85,8 +90,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<LicenseKeyInstance>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'license_key_instances',
             query: $parsed,
@@ -94,5 +99,7 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
             convert: LicenseKeyInstance::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 }

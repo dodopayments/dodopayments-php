@@ -6,19 +6,15 @@ namespace Dodopayments\Webhooks;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type WebhookGetSecretResponseShape = array{secret: string}
  */
-final class WebhookGetSecretResponse implements BaseModel, ResponseConverter
+final class WebhookGetSecretResponse implements BaseModel
 {
     /** @use SdkModel<WebhookGetSecretResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $secret;

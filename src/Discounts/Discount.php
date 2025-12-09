@@ -6,9 +6,7 @@ namespace Dodopayments\Discounts;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DiscountShape = array{
@@ -26,12 +24,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   usage_limit?: int|null,
  * }
  */
-final class Discount implements BaseModel, ResponseConverter
+final class Discount implements BaseModel
 {
     /** @use SdkModel<DiscountShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The discount amount.

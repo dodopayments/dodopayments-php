@@ -6,9 +6,7 @@ namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -35,12 +33,10 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   tax_inclusive?: bool|null,
  * }
  */
-final class ProductListResponse implements BaseModel, ResponseConverter
+final class ProductListResponse implements BaseModel
 {
     /** @use SdkModel<ProductListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Unique identifier for the business to which the product belongs.

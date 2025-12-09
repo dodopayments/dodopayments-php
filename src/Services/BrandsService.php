@@ -10,6 +10,7 @@ use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsContract;
@@ -43,14 +44,16 @@ final class BrandsService implements BrandsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Brand> */
+        $response = $this->client->request(
             method: 'post',
             path: 'brands',
             body: (object) $parsed,
             options: $options,
             convert: Brand::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -64,13 +67,15 @@ final class BrandsService implements BrandsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Brand {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Brand> */
+        $response = $this->client->request(
             method: 'get',
             path: ['brands/%1$s', $id],
             options: $requestOptions,
             convert: Brand::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -95,14 +100,16 @@ final class BrandsService implements BrandsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Brand> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['brands/%1$s', $id],
             body: (object) $parsed,
             options: $options,
             convert: Brand::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -113,13 +120,15 @@ final class BrandsService implements BrandsContract
     public function list(
         ?RequestOptions $requestOptions = null
     ): BrandListResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BrandListResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: 'brands',
             options: $requestOptions,
             convert: BrandListResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -131,12 +140,14 @@ final class BrandsService implements BrandsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): BrandUpdateImagesResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<BrandUpdateImagesResponse> */
+        $response = $this->client->request(
             method: 'put',
             path: ['brands/%1$s/images', $id],
             options: $requestOptions,
             convert: BrandUpdateImagesResponse::class,
         );
+
+        return $response->parse();
     }
 }

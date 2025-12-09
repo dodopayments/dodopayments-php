@@ -6,9 +6,7 @@ namespace Dodopayments\Disputes;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type DisputeListResponseShape = array{
@@ -22,12 +20,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   payment_id: string,
  * }
  */
-final class DisputeListResponse implements BaseModel, ResponseConverter
+final class DisputeListResponse implements BaseModel
 {
     /** @use SdkModel<DisputeListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.

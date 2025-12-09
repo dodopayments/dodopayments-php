@@ -8,6 +8,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
@@ -92,14 +93,16 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<CheckoutSessionResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'checkouts',
             body: (object) $parsed,
             options: $options,
             convert: CheckoutSessionResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -111,12 +114,14 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): CheckoutSessionStatus {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<CheckoutSessionStatus> */
+        $response = $this->client->request(
             method: 'get',
             path: ['checkouts/%1$s', $id],
             options: $requestOptions,
             convert: CheckoutSessionStatus::class,
         );
+
+        return $response->parse();
     }
 }
