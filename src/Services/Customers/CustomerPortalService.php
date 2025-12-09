@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
@@ -35,13 +36,15 @@ final class CustomerPortalService implements CustomerPortalContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<CustomerPortalSession> */
+        $response = $this->client->request(
             method: 'post',
             path: ['customers/%1$s/customer-portal/session', $customerID],
             query: $parsed,
             options: $options,
             convert: CustomerPortalSession::class,
         );
+
+        return $response->parse();
     }
 }

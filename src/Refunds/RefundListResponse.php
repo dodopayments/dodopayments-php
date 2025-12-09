@@ -6,9 +6,7 @@ namespace Dodopayments\Refunds;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
@@ -24,12 +22,10 @@ use Dodopayments\Misc\Currency;
  *   reason?: string|null,
  * }
  */
-final class RefundListResponse implements BaseModel, ResponseConverter
+final class RefundListResponse implements BaseModel
 {
     /** @use SdkModel<RefundListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The unique identifier of the business issuing the refund.

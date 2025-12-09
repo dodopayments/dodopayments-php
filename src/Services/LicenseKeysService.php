@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
@@ -29,13 +30,15 @@ final class LicenseKeysService implements LicenseKeysContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKey {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LicenseKey> */
+        $response = $this->client->request(
             method: 'get',
             path: ['license_keys/%1$s', $id],
             options: $requestOptions,
             convert: LicenseKey::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -59,14 +62,16 @@ final class LicenseKeysService implements LicenseKeysContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<LicenseKey> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['license_keys/%1$s', $id],
             body: (object) $parsed,
             options: $options,
             convert: LicenseKey::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -93,8 +98,8 @@ final class LicenseKeysService implements LicenseKeysContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<LicenseKey>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'license_keys',
             query: $parsed,
@@ -102,5 +107,7 @@ final class LicenseKeysService implements LicenseKeysContract
             convert: LicenseKey::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 }

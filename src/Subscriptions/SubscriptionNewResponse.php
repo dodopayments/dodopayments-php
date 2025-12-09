@@ -6,9 +6,7 @@ namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
@@ -25,12 +23,10 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   payment_link?: string|null,
  * }
  */
-final class SubscriptionNewResponse implements BaseModel, ResponseConverter
+final class SubscriptionNewResponse implements BaseModel
 {
     /** @use SdkModel<SubscriptionNewResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Addons associated with this subscription.

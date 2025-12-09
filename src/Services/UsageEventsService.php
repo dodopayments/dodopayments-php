@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
@@ -52,13 +53,15 @@ final class UsageEventsService implements UsageEventsContract
         string $eventID,
         ?RequestOptions $requestOptions = null
     ): Event {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Event> */
+        $response = $this->client->request(
             method: 'get',
             path: ['events/%1$s', $eventID],
             options: $requestOptions,
             convert: Event::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -113,8 +116,8 @@ final class UsageEventsService implements UsageEventsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<Event>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'events',
             query: $parsed,
@@ -122,6 +125,8 @@ final class UsageEventsService implements UsageEventsContract
             convert: Event::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -180,13 +185,15 @@ final class UsageEventsService implements UsageEventsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<UsageEventIngestResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'events/ingest',
             body: (object) $parsed,
             options: $options,
             convert: UsageEventIngestResponse::class,
         );
+
+        return $response->parse();
     }
 }

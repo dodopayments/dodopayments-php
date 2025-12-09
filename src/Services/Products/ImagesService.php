@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Products;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
@@ -35,13 +36,15 @@ final class ImagesService implements ImagesContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<ImageUpdateResponse> */
+        $response = $this->client->request(
             method: 'put',
             path: ['products/%1$s/images', $id],
             query: $parsed,
             options: $options,
             convert: ImageUpdateResponse::class,
         );
+
+        return $response->parse();
     }
 }

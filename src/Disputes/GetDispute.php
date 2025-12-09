@@ -6,9 +6,7 @@ namespace Dodopayments\Disputes;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
@@ -26,12 +24,10 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   remarks?: string|null,
  * }
  */
-final class GetDispute implements BaseModel, ResponseConverter
+final class GetDispute implements BaseModel
 {
     /** @use SdkModel<GetDisputeShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.

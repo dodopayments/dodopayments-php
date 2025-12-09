@@ -6,21 +6,17 @@ namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ProductUpdateFilesResponseShape = array{
  *   file_id: string, url: string
  * }
  */
-final class ProductUpdateFilesResponse implements BaseModel, ResponseConverter
+final class ProductUpdateFilesResponse implements BaseModel
 {
     /** @use SdkModel<ProductUpdateFilesResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $file_id;

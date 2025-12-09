@@ -11,7 +11,6 @@ use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Core\Conversion\ListOf;
-use Dodopayments\Core\Util;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -50,25 +49,24 @@ final class CursorPagePagination implements BaseModel, BasePage
      *   query: array<string,mixed>,
      *   headers: array<string,string|list<string>|null>,
      *   body: mixed,
-     * } $request
+     * } $requestInfo
      */
     public function __construct(
         private string|Converter|ConverterSource $convert,
         private Client $client,
-        private array $request,
+        private array $requestInfo,
         private RequestOptions $options,
-        ResponseInterface $response,
+        private ResponseInterface $response,
+        private mixed $parsedBody,
     ) {
         $this->initialize();
 
-        $data = Util::decodeContent($response);
-
-        if (!is_array($data)) {
+        if (!is_array($this->parsedBody)) {
             return;
         }
 
         // @phpstan-ignore-next-line argument.type
-        self::__unserialize($data);
+        self::__unserialize($this->parsedBody);
 
         if ($this->offsetGet('data')) {
             $acc = Conversion::coerce(
@@ -112,7 +110,7 @@ final class CursorPagePagination implements BaseModel, BasePage
         }
 
         $nextRequest = array_merge_recursive(
-            $this->request,
+            $this->requestInfo,
             ['query' => ['iterator' => $next]]
         );
 

@@ -6,21 +6,17 @@ namespace Dodopayments\Brands;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type BrandUpdateImagesResponseShape = array{
  *   image_id: string, url: string
  * }
  */
-final class BrandUpdateImagesResponse implements BaseModel, ResponseConverter
+final class BrandUpdateImagesResponse implements BaseModel
 {
     /** @use SdkModel<BrandUpdateImagesResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * UUID that will be used as the image identifier/key suffix.

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
@@ -59,14 +60,16 @@ final class CustomersService implements CustomersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Customer> */
+        $response = $this->client->request(
             method: 'post',
             path: 'customers',
             body: (object) $parsed,
             options: $options,
             convert: Customer::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -78,13 +81,15 @@ final class CustomersService implements CustomersContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): Customer {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Customer> */
+        $response = $this->client->request(
             method: 'get',
             path: ['customers/%1$s', $customerID],
             options: $requestOptions,
             convert: Customer::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -108,14 +113,16 @@ final class CustomersService implements CustomersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Customer> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['customers/%1$s', $customerID],
             body: (object) $parsed,
             options: $options,
             convert: Customer::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -138,8 +145,8 @@ final class CustomersService implements CustomersContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<Customer>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'customers',
             query: $parsed,
@@ -147,6 +154,8 @@ final class CustomersService implements CustomersContract
             convert: Customer::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -158,12 +167,14 @@ final class CustomersService implements CustomersContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): CustomerGetPaymentMethodsResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<CustomerGetPaymentMethodsResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['customers/%1$s/payment-methods', $customerID],
             options: $requestOptions,
             convert: CustomerGetPaymentMethodsResponse::class,
         );
+
+        return $response->parse();
     }
 }

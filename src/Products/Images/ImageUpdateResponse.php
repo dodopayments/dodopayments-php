@@ -6,21 +6,17 @@ namespace Dodopayments\Products\Images;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type ImageUpdateResponseShape = array{
  *   url: string, image_id?: string|null
  * }
  */
-final class ImageUpdateResponse implements BaseModel, ResponseConverter
+final class ImageUpdateResponse implements BaseModel
 {
     /** @use SdkModel<ImageUpdateResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $url;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
@@ -66,14 +67,16 @@ final class PaymentsService implements PaymentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<PaymentNewResponse> */
+        $response = $this->client->request(
             method: 'post',
             path: 'payments',
             body: (object) $parsed,
             options: $options,
             convert: PaymentNewResponse::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -85,13 +88,15 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): Payment {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Payment> */
+        $response = $this->client->request(
             method: 'get',
             path: ['payments/%1$s', $paymentID],
             options: $requestOptions,
             convert: Payment::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -121,8 +126,8 @@ final class PaymentsService implements PaymentsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<PaymentListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'payments',
             query: $parsed,
@@ -130,6 +135,8 @@ final class PaymentsService implements PaymentsContract
             convert: PaymentListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -141,12 +148,14 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): PaymentGetLineItemsResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<PaymentGetLineItemsResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['payments/%1$s/line-items', $paymentID],
             options: $requestOptions,
             convert: PaymentGetLineItemsResponse::class,
         );
+
+        return $response->parse();
     }
 }

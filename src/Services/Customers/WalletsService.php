@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Wallets\WalletListResponse;
 use Dodopayments\RequestOptions;
@@ -35,12 +36,14 @@ final class WalletsService implements WalletsContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): WalletListResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<WalletListResponse> */
+        $response = $this->client->request(
             method: 'get',
             path: ['customers/%1$s/wallets', $customerID],
             options: $requestOptions,
             convert: WalletListResponse::class,
         );
+
+        return $response->parse();
     }
 }

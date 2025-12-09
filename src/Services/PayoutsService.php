@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Payouts\PayoutListParams;
@@ -42,8 +43,8 @@ final class PayoutsService implements PayoutsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<PayoutListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'payouts',
             query: $parsed,
@@ -51,5 +52,7 @@ final class PayoutsService implements PayoutsContract
             convert: PayoutListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 }

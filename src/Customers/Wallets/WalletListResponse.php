@@ -6,9 +6,7 @@ namespace Dodopayments\Customers\Wallets;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 
 /**
@@ -16,12 +14,10 @@ use Dodopayments\Misc\Currency;
  *   items: list<CustomerWallet>, total_balance_usd: int
  * }
  */
-final class WalletListResponse implements BaseModel, ResponseConverter
+final class WalletListResponse implements BaseModel
 {
     /** @use SdkModel<WalletListResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /** @var list<CustomerWallet> $items */
     #[Api(list: CustomerWallet::class)]

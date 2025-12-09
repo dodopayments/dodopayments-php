@@ -6,9 +6,7 @@ namespace Dodopayments\Webhooks;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type WebhookDetailsShape = array{
@@ -23,12 +21,10 @@ use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
  *   rate_limit?: int|null,
  * }
  */
-final class WebhookDetails implements BaseModel, ResponseConverter
+final class WebhookDetails implements BaseModel
 {
     /** @use SdkModel<WebhookDetailsShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * The webhook's ID.

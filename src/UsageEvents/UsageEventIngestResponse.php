@@ -6,19 +6,15 @@ namespace Dodopayments\UsageEvents;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type UsageEventIngestResponseShape = array{ingested_count: int}
  */
-final class UsageEventIngestResponse implements BaseModel, ResponseConverter
+final class UsageEventIngestResponse implements BaseModel
 {
     /** @use SdkModel<UsageEventIngestResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public int $ingested_count;

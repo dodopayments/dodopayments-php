@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
@@ -70,14 +71,16 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Product> */
+        $response = $this->client->request(
             method: 'post',
             path: 'products',
             body: (object) $parsed,
             options: $options,
             convert: Product::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -89,13 +92,15 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Product {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Product> */
+        $response = $this->client->request(
             method: 'get',
             path: ['products/%1$s', $id],
             options: $requestOptions,
             convert: Product::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -135,14 +140,16 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['products/%1$s', $id],
             body: (object) $parsed,
             options: $options,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -169,8 +176,8 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<ProductListResponse>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'products',
             query: $parsed,
@@ -178,6 +185,8 @@ final class ProductsService implements ProductsContract
             convert: ProductListResponse::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -189,13 +198,15 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['products/%1$s', $id],
             options: $requestOptions,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -207,13 +218,15 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'post',
             path: ['products/%1$s/unarchive', $id],
             options: $requestOptions,
             convert: null,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -233,13 +246,15 @@ final class ProductsService implements ProductsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<ProductUpdateFilesResponse> */
+        $response = $this->client->request(
             method: 'put',
             path: ['products/%1$s/files', $id],
             body: (object) $parsed,
             options: $options,
             convert: ProductUpdateFilesResponse::class,
         );
+
+        return $response->parse();
     }
 }

@@ -6,21 +6,17 @@ namespace Dodopayments\CheckoutSessions;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 
 /**
  * @phpstan-type CheckoutSessionResponseShape = array{
  *   checkout_url: string, session_id: string
  * }
  */
-final class CheckoutSessionResponse implements BaseModel, ResponseConverter
+final class CheckoutSessionResponse implements BaseModel
 {
     /** @use SdkModel<CheckoutSessionResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * Checkout url.

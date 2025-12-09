@@ -6,9 +6,7 @@ namespace Dodopayments\Licenses;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Licenses\LicenseActivateResponse\Product;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
@@ -23,12 +21,10 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   product: Product,
  * }
  */
-final class LicenseActivateResponse implements BaseModel, ResponseConverter
+final class LicenseActivateResponse implements BaseModel
 {
     /** @use SdkModel<LicenseActivateResponseShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     /**
      * License key instance ID.

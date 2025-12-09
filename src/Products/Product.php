@@ -6,9 +6,7 @@ namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Api;
 use Dodopayments\Core\Concerns\SdkModel;
-use Dodopayments\Core\Concerns\SdkResponse;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Core\Conversion\Contracts\ResponseConverter;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -41,12 +39,10 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   name?: string|null,
  * }
  */
-final class Product implements BaseModel, ResponseConverter
+final class Product implements BaseModel
 {
     /** @use SdkModel<ProductShape> */
     use SdkModel;
-
-    use SdkResponse;
 
     #[Api]
     public string $brand_id;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
@@ -50,14 +51,16 @@ final class DiscountsService implements DiscountsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Discount> */
+        $response = $this->client->request(
             method: 'post',
             path: 'discounts',
             body: (object) $parsed,
             options: $options,
             convert: Discount::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -71,13 +74,15 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): Discount {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Discount> */
+        $response = $this->client->request(
             method: 'get',
             path: ['discounts/%1$s', $discountID],
             options: $requestOptions,
             convert: Discount::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -108,14 +113,16 @@ final class DiscountsService implements DiscountsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<Discount> */
+        $response = $this->client->request(
             method: 'patch',
             path: ['discounts/%1$s', $discountID],
             body: (object) $parsed,
             options: $options,
             convert: Discount::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -138,8 +145,8 @@ final class DiscountsService implements DiscountsContract
             $requestOptions,
         );
 
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<DefaultPageNumberPagination<Discount>> */
+        $response = $this->client->request(
             method: 'get',
             path: 'discounts',
             query: $parsed,
@@ -147,6 +154,8 @@ final class DiscountsService implements DiscountsContract
             convert: Discount::class,
             page: DefaultPageNumberPagination::class,
         );
+
+        return $response->parse();
     }
 
     /**
@@ -160,12 +169,14 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
+        /** @var BaseResponse<mixed> */
+        $response = $this->client->request(
             method: 'delete',
             path: ['discounts/%1$s', $discountID],
             options: $requestOptions,
             convert: null,
         );
+
+        return $response->parse();
     }
 }
