@@ -45,11 +45,11 @@ final class WebhooksTest extends TestCase
             'url' => 'url',
             'description' => 'description',
             'disabled' => true,
-            'filter_types' => [WebhookEventType::PAYMENT_SUCCEEDED],
+            'filterTypes' => [WebhookEventType::PAYMENT_SUCCEEDED],
             'headers' => ['foo' => 'string'],
-            'idempotency_key' => 'idempotency_key',
+            'idempotencyKey' => 'idempotency_key',
             'metadata' => ['foo' => 'string'],
-            'rate_limit' => 0,
+            'rateLimit' => 0,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

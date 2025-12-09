@@ -46,7 +46,7 @@ final class CustomersTest extends TestCase
             'email' => 'email',
             'name' => 'name',
             'metadata' => ['foo' => 'string'],
-            'phone_number' => 'phone_number',
+            'phoneNumber' => 'phone_number',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

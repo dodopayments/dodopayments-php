@@ -18,7 +18,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
 
 /**
  * @phpstan-type ImmediateChargeShape = array{
- *   line_items: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
+ *   lineItems: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
  * }
  */
 final class ImmediateCharge implements BaseModel
@@ -26,9 +26,9 @@ final class ImmediateCharge implements BaseModel
     /** @use SdkModel<ImmediateChargeShape> */
     use SdkModel;
 
-    /** @var list<UnionMember0|UnionMember1|UnionMember2> $line_items */
-    #[Required(list: LineItem::class)]
-    public array $line_items;
+    /** @var list<UnionMember0|UnionMember1|UnionMember2> $lineItems */
+    #[Required('line_items', list: LineItem::class)]
+    public array $lineItems;
 
     #[Required]
     public Summary $summary;
@@ -38,7 +38,7 @@ final class ImmediateCharge implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ImmediateCharge::with(line_items: ..., summary: ...)
+     * ImmediateCharge::with(lineItems: ..., summary: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -60,59 +60,59 @@ final class ImmediateCharge implements BaseModel
      * @param list<UnionMember0|array{
      *   id: string,
      *   currency: value-of<Currency>,
-     *   product_id: string,
-     *   proration_factor: float,
+     *   productID: string,
+     *   prorationFactor: float,
      *   quantity: int,
-     *   tax_inclusive: bool,
+     *   taxInclusive: bool,
      *   type: value-of<Type>,
-     *   unit_price: int,
+     *   unitPrice: int,
      *   description?: string|null,
      *   name?: string|null,
      *   tax?: int|null,
-     *   tax_rate?: float|null,
+     *   taxRate?: float|null,
      * }|UnionMember1|array{
      *   id: string,
      *   currency: value-of<Currency>,
      *   name: string,
-     *   proration_factor: float,
+     *   prorationFactor: float,
      *   quantity: int,
-     *   tax_category: value-of<TaxCategory>,
-     *   tax_inclusive: bool,
-     *   tax_rate: float,
+     *   taxCategory: value-of<TaxCategory>,
+     *   taxInclusive: bool,
+     *   taxRate: float,
      *   type: value-of<UnionMember1\Type>,
-     *   unit_price: int,
+     *   unitPrice: int,
      *   description?: string|null,
      *   tax?: int|null,
      * }|UnionMember2|array{
      *   id: string,
-     *   chargeable_units: string,
+     *   chargeableUnits: string,
      *   currency: value-of<Currency>,
-     *   free_threshold: int,
+     *   freeThreshold: int,
      *   name: string,
-     *   price_per_unit: string,
+     *   pricePerUnit: string,
      *   subtotal: int,
-     *   tax_inclusive: bool,
-     *   tax_rate: float,
+     *   taxInclusive: bool,
+     *   taxRate: float,
      *   type: value-of<UnionMember2\Type>,
-     *   units_consumed: string,
+     *   unitsConsumed: string,
      *   description?: string|null,
      *   tax?: int|null,
-     * }> $line_items
+     * }> $lineItems
      * @param Summary|array{
      *   currency: value-of<Currency>,
-     *   customer_credits: int,
-     *   settlement_amount: int,
-     *   settlement_currency: value-of<Currency>,
-     *   total_amount: int,
-     *   settlement_tax?: int|null,
+     *   customerCredits: int,
+     *   settlementAmount: int,
+     *   settlementCurrency: value-of<Currency>,
+     *   totalAmount: int,
+     *   settlementTax?: int|null,
      *   tax?: int|null,
      * } $summary
      */
-    public static function with(array $line_items, Summary|array $summary): self
+    public static function with(array $lineItems, Summary|array $summary): self
     {
         $obj = new self;
 
-        $obj['line_items'] = $line_items;
+        $obj['lineItems'] = $lineItems;
         $obj['summary'] = $summary;
 
         return $obj;
@@ -122,41 +122,41 @@ final class ImmediateCharge implements BaseModel
      * @param list<UnionMember0|array{
      *   id: string,
      *   currency: value-of<Currency>,
-     *   product_id: string,
-     *   proration_factor: float,
+     *   productID: string,
+     *   prorationFactor: float,
      *   quantity: int,
-     *   tax_inclusive: bool,
+     *   taxInclusive: bool,
      *   type: value-of<Type>,
-     *   unit_price: int,
+     *   unitPrice: int,
      *   description?: string|null,
      *   name?: string|null,
      *   tax?: int|null,
-     *   tax_rate?: float|null,
+     *   taxRate?: float|null,
      * }|UnionMember1|array{
      *   id: string,
      *   currency: value-of<Currency>,
      *   name: string,
-     *   proration_factor: float,
+     *   prorationFactor: float,
      *   quantity: int,
-     *   tax_category: value-of<TaxCategory>,
-     *   tax_inclusive: bool,
-     *   tax_rate: float,
+     *   taxCategory: value-of<TaxCategory>,
+     *   taxInclusive: bool,
+     *   taxRate: float,
      *   type: value-of<UnionMember1\Type>,
-     *   unit_price: int,
+     *   unitPrice: int,
      *   description?: string|null,
      *   tax?: int|null,
      * }|UnionMember2|array{
      *   id: string,
-     *   chargeable_units: string,
+     *   chargeableUnits: string,
      *   currency: value-of<Currency>,
-     *   free_threshold: int,
+     *   freeThreshold: int,
      *   name: string,
-     *   price_per_unit: string,
+     *   pricePerUnit: string,
      *   subtotal: int,
-     *   tax_inclusive: bool,
-     *   tax_rate: float,
+     *   taxInclusive: bool,
+     *   taxRate: float,
      *   type: value-of<UnionMember2\Type>,
-     *   units_consumed: string,
+     *   unitsConsumed: string,
      *   description?: string|null,
      *   tax?: int|null,
      * }> $lineItems
@@ -164,7 +164,7 @@ final class ImmediateCharge implements BaseModel
     public function withLineItems(array $lineItems): self
     {
         $obj = clone $this;
-        $obj['line_items'] = $lineItems;
+        $obj['lineItems'] = $lineItems;
 
         return $obj;
     }
@@ -172,11 +172,11 @@ final class ImmediateCharge implements BaseModel
     /**
      * @param Summary|array{
      *   currency: value-of<Currency>,
-     *   customer_credits: int,
-     *   settlement_amount: int,
-     *   settlement_currency: value-of<Currency>,
-     *   total_amount: int,
-     *   settlement_tax?: int|null,
+     *   customerCredits: int,
+     *   settlementAmount: int,
+     *   settlementCurrency: value-of<Currency>,
+     *   totalAmount: int,
+     *   settlementTax?: int|null,
      *   tax?: int|null,
      * } $summary
      */

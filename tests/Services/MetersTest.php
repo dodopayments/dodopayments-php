@@ -32,8 +32,8 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->create([
             'aggregation' => ['type' => 'count'],
-            'event_name' => 'event_name',
-            'measurement_unit' => 'measurement_unit',
+            'eventName' => 'event_name',
+            'measurementUnit' => 'measurement_unit',
             'name' => 'name',
         ]);
 
@@ -46,8 +46,8 @@ final class MetersTest extends TestCase
     {
         $result = $this->client->meters->create([
             'aggregation' => ['type' => 'count', 'key' => 'key'],
-            'event_name' => 'event_name',
-            'measurement_unit' => 'measurement_unit',
+            'eventName' => 'event_name',
+            'measurementUnit' => 'measurement_unit',
             'name' => 'name',
             'description' => 'description',
             'filter' => [

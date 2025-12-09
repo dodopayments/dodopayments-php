@@ -14,7 +14,7 @@ use Dodopayments\Misc\Currency;
  * @see Dodopayments\Services\Customers\Wallets\LedgerEntriesService::list()
  *
  * @phpstan-type LedgerEntryListParamsShape = array{
- *   currency?: Currency|value-of<Currency>, page_number?: int, page_size?: int
+ *   currency?: Currency|value-of<Currency>, pageNumber?: int, pageSize?: int
  * }
  */
 final class LedgerEntryListParams implements BaseModel
@@ -32,10 +32,10 @@ final class LedgerEntryListParams implements BaseModel
     public ?string $currency;
 
     #[Optional]
-    public ?int $page_number;
+    public ?int $pageNumber;
 
     #[Optional]
-    public ?int $page_size;
+    public ?int $pageSize;
 
     public function __construct()
     {
@@ -51,14 +51,14 @@ final class LedgerEntryListParams implements BaseModel
      */
     public static function with(
         Currency|string|null $currency = null,
-        ?int $page_number = null,
-        ?int $page_size = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
     ): self {
         $obj = new self;
 
         null !== $currency && $obj['currency'] = $currency;
-        null !== $page_number && $obj['page_number'] = $page_number;
-        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
+        null !== $pageSize && $obj['pageSize'] = $pageSize;
 
         return $obj;
     }
@@ -79,7 +79,7 @@ final class LedgerEntryListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj['page_number'] = $pageNumber;
+        $obj['pageNumber'] = $pageNumber;
 
         return $obj;
     }
@@ -87,7 +87,7 @@ final class LedgerEntryListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj['page_size'] = $pageSize;
+        $obj['pageSize'] = $pageSize;
 
         return $obj;
     }

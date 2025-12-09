@@ -17,13 +17,13 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  *   id: string,
  *   currency: value-of<Currency>,
  *   name: string,
- *   proration_factor: float,
+ *   prorationFactor: float,
  *   quantity: int,
- *   tax_category: value-of<TaxCategory>,
- *   tax_inclusive: bool,
- *   tax_rate: float,
+ *   taxCategory: value-of<TaxCategory>,
+ *   taxInclusive: bool,
+ *   taxRate: float,
  *   type: value-of<Type>,
- *   unit_price: int,
+ *   unitPrice: int,
  *   description?: string|null,
  *   tax?: int|null,
  * }
@@ -43,8 +43,8 @@ final class UnionMember1 implements BaseModel
     #[Required]
     public string $name;
 
-    #[Required]
-    public float $proration_factor;
+    #[Required('proration_factor')]
+    public float $prorationFactor;
 
     #[Required]
     public int $quantity;
@@ -52,23 +52,23 @@ final class UnionMember1 implements BaseModel
     /**
      * Represents the different categories of taxation applicable to various products and services.
      *
-     * @var value-of<TaxCategory> $tax_category
+     * @var value-of<TaxCategory> $taxCategory
      */
-    #[Required(enum: TaxCategory::class)]
-    public string $tax_category;
+    #[Required('tax_category', enum: TaxCategory::class)]
+    public string $taxCategory;
 
-    #[Required]
-    public bool $tax_inclusive;
+    #[Required('tax_inclusive')]
+    public bool $taxInclusive;
 
-    #[Required]
-    public float $tax_rate;
+    #[Required('tax_rate')]
+    public float $taxRate;
 
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
     public string $type;
 
-    #[Required]
-    public int $unit_price;
+    #[Required('unit_price')]
+    public int $unitPrice;
 
     #[Optional(nullable: true)]
     public ?string $description;
@@ -85,13 +85,13 @@ final class UnionMember1 implements BaseModel
      *   id: ...,
      *   currency: ...,
      *   name: ...,
-     *   proration_factor: ...,
+     *   prorationFactor: ...,
      *   quantity: ...,
-     *   tax_category: ...,
-     *   tax_inclusive: ...,
-     *   tax_rate: ...,
+     *   taxCategory: ...,
+     *   taxInclusive: ...,
+     *   taxRate: ...,
      *   type: ...,
-     *   unit_price: ...,
+     *   unitPrice: ...,
      * )
      * ```
      *
@@ -122,20 +122,20 @@ final class UnionMember1 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param TaxCategory|value-of<TaxCategory> $tax_category
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
         Currency|string $currency,
         string $name,
-        float $proration_factor,
+        float $prorationFactor,
         int $quantity,
-        TaxCategory|string $tax_category,
-        bool $tax_inclusive,
-        float $tax_rate,
+        TaxCategory|string $taxCategory,
+        bool $taxInclusive,
+        float $taxRate,
         Type|string $type,
-        int $unit_price,
+        int $unitPrice,
         ?string $description = null,
         ?int $tax = null,
     ): self {
@@ -144,13 +144,13 @@ final class UnionMember1 implements BaseModel
         $obj['id'] = $id;
         $obj['currency'] = $currency;
         $obj['name'] = $name;
-        $obj['proration_factor'] = $proration_factor;
+        $obj['prorationFactor'] = $prorationFactor;
         $obj['quantity'] = $quantity;
-        $obj['tax_category'] = $tax_category;
-        $obj['tax_inclusive'] = $tax_inclusive;
-        $obj['tax_rate'] = $tax_rate;
+        $obj['taxCategory'] = $taxCategory;
+        $obj['taxInclusive'] = $taxInclusive;
+        $obj['taxRate'] = $taxRate;
         $obj['type'] = $type;
-        $obj['unit_price'] = $unit_price;
+        $obj['unitPrice'] = $unitPrice;
 
         null !== $description && $obj['description'] = $description;
         null !== $tax && $obj['tax'] = $tax;
@@ -188,7 +188,7 @@ final class UnionMember1 implements BaseModel
     public function withProrationFactor(float $prorationFactor): self
     {
         $obj = clone $this;
-        $obj['proration_factor'] = $prorationFactor;
+        $obj['prorationFactor'] = $prorationFactor;
 
         return $obj;
     }
@@ -209,7 +209,7 @@ final class UnionMember1 implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['tax_category'] = $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -217,7 +217,7 @@ final class UnionMember1 implements BaseModel
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj['tax_inclusive'] = $taxInclusive;
+        $obj['taxInclusive'] = $taxInclusive;
 
         return $obj;
     }
@@ -225,7 +225,7 @@ final class UnionMember1 implements BaseModel
     public function withTaxRate(float $taxRate): self
     {
         $obj = clone $this;
-        $obj['tax_rate'] = $taxRate;
+        $obj['taxRate'] = $taxRate;
 
         return $obj;
     }
@@ -244,7 +244,7 @@ final class UnionMember1 implements BaseModel
     public function withUnitPrice(int $unitPrice): self
     {
         $obj = clone $this;
-        $obj['unit_price'] = $unitPrice;
+        $obj['unitPrice'] = $unitPrice;
 
         return $obj;
     }

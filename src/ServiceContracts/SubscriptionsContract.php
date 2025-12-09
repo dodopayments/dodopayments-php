@@ -20,6 +20,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 interface SubscriptionsContract
@@ -130,11 +131,13 @@ interface SubscriptionsContract
     /**
      * @api
      *
+     * @param array<mixed>|SubscriptionUpdatePaymentMethodParams $params
+     *
      * @throws APIException
      */
     public function updatePaymentMethod(
         string $subscriptionID,
-        mixed $params,
+        array|SubscriptionUpdatePaymentMethodParams $params,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionUpdatePaymentMethodResponse;
 }

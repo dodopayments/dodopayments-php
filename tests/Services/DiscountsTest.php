@@ -46,11 +46,11 @@ final class DiscountsTest extends TestCase
             'amount' => 0,
             'type' => DiscountType::PERCENTAGE,
             'code' => 'code',
-            'expires_at' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            'expiresAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             'name' => 'name',
-            'restricted_to' => ['string'],
-            'subscription_cycles' => 0,
-            'usage_limit' => 0,
+            'restrictedTo' => ['string'],
+            'subscriptionCycles' => 0,
+            'usageLimit' => 0,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

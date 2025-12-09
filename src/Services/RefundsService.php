@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
@@ -27,9 +28,9 @@ final class RefundsService implements RefundsContract
      * @api
      *
      * @param array{
-     *   payment_id: string,
+     *   paymentID: string,
      *   items?: list<array{
-     *     item_id: string, amount?: int|null, tax_inclusive?: bool
+     *     itemID: string, amount?: int|null, taxInclusive?: bool
      *   }>|null,
      *   metadata?: array<string,string>,
      *   reason?: string|null,
@@ -82,11 +83,11 @@ final class RefundsService implements RefundsContract
      * @api
      *
      * @param array{
-     *   created_at_gte?: string|\DateTimeInterface,
-     *   created_at_lte?: string|\DateTimeInterface,
-     *   customer_id?: string,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   createdAtGte?: string|\DateTimeInterface,
+     *   createdAtLte?: string|\DateTimeInterface,
+     *   customerID?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      *   status?: 'succeeded'|'failed'|'pending'|'review'|Status,
      * }|RefundListParams $params
      *
@@ -107,7 +108,16 @@ final class RefundsService implements RefundsContract
         $response = $this->client->request(
             method: 'get',
             path: 'refunds',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
+                    'customerID' => 'customer_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: RefundListResponse::class,
             page: DefaultPageNumberPagination::class,

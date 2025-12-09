@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListParams;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
@@ -47,13 +48,13 @@ final class DisputesService implements DisputesContract
      * @api
      *
      * @param array{
-     *   created_at_gte?: string|\DateTimeInterface,
-     *   created_at_lte?: string|\DateTimeInterface,
-     *   customer_id?: string,
-     *   dispute_stage?: 'pre_dispute'|'dispute'|'pre_arbitration'|DisputeStage,
-     *   dispute_status?: value-of<DisputeStatus>,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   createdAtGte?: string|\DateTimeInterface,
+     *   createdAtLte?: string|\DateTimeInterface,
+     *   customerID?: string,
+     *   disputeStage?: 'pre_dispute'|'dispute'|'pre_arbitration'|DisputeStage,
+     *   disputeStatus?: value-of<DisputeStatus>,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      * }|DisputeListParams $params
      *
      * @return DefaultPageNumberPagination<DisputeListResponse>
@@ -73,7 +74,18 @@ final class DisputesService implements DisputesContract
         $response = $this->client->request(
             method: 'get',
             path: 'disputes',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
+                    'customerID' => 'customer_id',
+                    'disputeStage' => 'dispute_stage',
+                    'disputeStatus' => 'dispute_status',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: DisputeListResponse::class,
             page: DefaultPageNumberPagination::class,

@@ -12,10 +12,10 @@ use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
  * @phpstan-type EventShape = array{
- *   business_id: string,
- *   customer_id: string,
- *   event_id: string,
- *   event_name: string,
+ *   businessID: string,
+ *   customerID: string,
+ *   eventID: string,
+ *   eventName: string,
  *   timestamp: \DateTimeInterface,
  *   metadata?: array<string,string|float|bool>|null,
  * }
@@ -25,17 +25,17 @@ final class Event implements BaseModel
     /** @use SdkModel<EventShape> */
     use SdkModel;
 
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
-    #[Required]
-    public string $customer_id;
+    #[Required('customer_id')]
+    public string $customerID;
 
-    #[Required]
-    public string $event_id;
+    #[Required('event_id')]
+    public string $eventID;
 
-    #[Required]
-    public string $event_name;
+    #[Required('event_name')]
+    public string $eventName;
 
     #[Required]
     public \DateTimeInterface $timestamp;
@@ -54,11 +54,7 @@ final class Event implements BaseModel
      * To enforce required parameters use
      * ```
      * Event::with(
-     *   business_id: ...,
-     *   customer_id: ...,
-     *   event_id: ...,
-     *   event_name: ...,
-     *   timestamp: ...,
+     *   businessID: ..., customerID: ..., eventID: ..., eventName: ..., timestamp: ...
      * )
      * ```
      *
@@ -86,19 +82,19 @@ final class Event implements BaseModel
      * @param array<string,string|float|bool>|null $metadata
      */
     public static function with(
-        string $business_id,
-        string $customer_id,
-        string $event_id,
-        string $event_name,
+        string $businessID,
+        string $customerID,
+        string $eventID,
+        string $eventName,
         \DateTimeInterface $timestamp,
         ?array $metadata = null,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
-        $obj['customer_id'] = $customer_id;
-        $obj['event_id'] = $event_id;
-        $obj['event_name'] = $event_name;
+        $obj['businessID'] = $businessID;
+        $obj['customerID'] = $customerID;
+        $obj['eventID'] = $eventID;
+        $obj['eventName'] = $eventName;
         $obj['timestamp'] = $timestamp;
 
         null !== $metadata && $obj['metadata'] = $metadata;
@@ -109,7 +105,7 @@ final class Event implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -117,7 +113,7 @@ final class Event implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -125,7 +121,7 @@ final class Event implements BaseModel
     public function withEventID(string $eventID): self
     {
         $obj = clone $this;
-        $obj['event_id'] = $eventID;
+        $obj['eventID'] = $eventID;
 
         return $obj;
     }
@@ -133,7 +129,7 @@ final class Event implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj['event_name'] = $eventName;
+        $obj['eventName'] = $eventName;
 
         return $obj;
     }

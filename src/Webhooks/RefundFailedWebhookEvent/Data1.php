@@ -17,18 +17,18 @@ use Dodopayments\Webhooks\RefundFailedWebhookEvent\Data1\PayloadType;
  * Event-specific data.
  *
  * @phpstan-type Data1Shape = array{
- *   business_id: string,
- *   created_at: \DateTimeInterface,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails,
- *   is_partial: bool,
+ *   isPartial: bool,
  *   metadata: array<string,string>,
- *   payment_id: string,
- *   refund_id: string,
+ *   paymentID: string,
+ *   refundID: string,
  *   status: value-of<RefundStatus>,
  *   amount?: int|null,
  *   currency?: value-of<Currency>|null,
  *   reason?: string|null,
- *   payload_type?: value-of<PayloadType>|null,
+ *   payloadType?: value-of<PayloadType>|null,
  * }
  */
 final class Data1 implements BaseModel
@@ -39,14 +39,14 @@ final class Data1 implements BaseModel
     /**
      * The unique identifier of the business issuing the refund.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     #[Required]
     public CustomerLimitedDetails $customer;
@@ -54,8 +54,8 @@ final class Data1 implements BaseModel
     /**
      * If true the refund is a partial refund.
      */
-    #[Required]
-    public bool $is_partial;
+    #[Required('is_partial')]
+    public bool $isPartial;
 
     /**
      * Additional metadata stored with the refund.
@@ -68,14 +68,14 @@ final class Data1 implements BaseModel
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    #[Required]
-    public string $payment_id;
+    #[Required('payment_id')]
+    public string $paymentID;
 
     /**
      * The unique identifier of the refund.
      */
-    #[Required]
-    public string $refund_id;
+    #[Required('refund_id')]
+    public string $refundID;
 
     /** @var value-of<RefundStatus> $status */
     #[Required(enum: RefundStatus::class)]
@@ -100,10 +100,10 @@ final class Data1 implements BaseModel
     /**
      * The type of payload in the data field.
      *
-     * @var value-of<PayloadType>|null $payload_type
+     * @var value-of<PayloadType>|null $payloadType
      */
-    #[Optional(enum: PayloadType::class)]
-    public ?string $payload_type;
+    #[Optional('payload_type', enum: PayloadType::class)]
+    public ?string $payloadType;
 
     /**
      * `new Data1()` is missing required properties by the API.
@@ -111,13 +111,13 @@ final class Data1 implements BaseModel
      * To enforce required parameters use
      * ```
      * Data1::with(
-     *   business_id: ...,
-     *   created_at: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
      *   customer: ...,
-     *   is_partial: ...,
+     *   isPartial: ...,
      *   metadata: ...,
-     *   payment_id: ...,
-     *   refund_id: ...,
+     *   paymentID: ...,
+     *   refundID: ...,
      *   status: ...,
      * )
      * ```
@@ -147,46 +147,46 @@ final class Data1 implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency> $currency
-     * @param PayloadType|value-of<PayloadType> $payload_type
+     * @param PayloadType|value-of<PayloadType> $payloadType
      */
     public static function with(
-        string $business_id,
-        \DateTimeInterface $created_at,
+        string $businessID,
+        \DateTimeInterface $createdAt,
         CustomerLimitedDetails|array $customer,
-        bool $is_partial,
+        bool $isPartial,
         array $metadata,
-        string $payment_id,
-        string $refund_id,
+        string $paymentID,
+        string $refundID,
         RefundStatus|string $status,
         ?int $amount = null,
         Currency|string|null $currency = null,
         ?string $reason = null,
-        PayloadType|string|null $payload_type = null,
+        PayloadType|string|null $payloadType = null,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
         $obj['customer'] = $customer;
-        $obj['is_partial'] = $is_partial;
+        $obj['isPartial'] = $isPartial;
         $obj['metadata'] = $metadata;
-        $obj['payment_id'] = $payment_id;
-        $obj['refund_id'] = $refund_id;
+        $obj['paymentID'] = $paymentID;
+        $obj['refundID'] = $refundID;
         $obj['status'] = $status;
 
         null !== $amount && $obj['amount'] = $amount;
         null !== $currency && $obj['currency'] = $currency;
         null !== $reason && $obj['reason'] = $reason;
-        null !== $payload_type && $obj['payload_type'] = $payload_type;
+        null !== $payloadType && $obj['payloadType'] = $payloadType;
 
         return $obj;
     }
@@ -197,7 +197,7 @@ final class Data1 implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -208,18 +208,18 @@ final class Data1 implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
 
     /**
      * @param CustomerLimitedDetails|array{
-     *   customer_id: string,
+     *   customerID: string,
      *   email: string,
      *   name: string,
      *   metadata?: array<string,string>|null,
-     *   phone_number?: string|null,
+     *   phoneNumber?: string|null,
      * } $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
@@ -236,7 +236,7 @@ final class Data1 implements BaseModel
     public function withIsPartial(bool $isPartial): self
     {
         $obj = clone $this;
-        $obj['is_partial'] = $isPartial;
+        $obj['isPartial'] = $isPartial;
 
         return $obj;
     }
@@ -260,7 +260,7 @@ final class Data1 implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj['payment_id'] = $paymentID;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }
@@ -271,7 +271,7 @@ final class Data1 implements BaseModel
     public function withRefundID(string $refundID): self
     {
         $obj = clone $this;
-        $obj['refund_id'] = $refundID;
+        $obj['refundID'] = $refundID;
 
         return $obj;
     }
@@ -328,7 +328,7 @@ final class Data1 implements BaseModel
     public function withPayloadType(PayloadType|string $payloadType): self
     {
         $obj = clone $this;
-        $obj['payload_type'] = $payloadType;
+        $obj['payloadType'] = $payloadType;
 
         return $obj;
     }

@@ -41,7 +41,7 @@ $client = new Client(
 );
 
 $checkoutSessionResponse = $client->checkoutSessions->create([
-  'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]
+  'productCart' => [['productID' => 'product_id', 'quantity' => 0]]
 ]);
 
 var_dump($checkoutSessionResponse->session_id);
@@ -95,7 +95,7 @@ use Dodopayments\Core\Exceptions\APIConnectionException;
 
 try {
   $checkoutSessionResponse = $client->checkoutSessions->create([
-    'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]
+    'productCart' => [['productID' => 'product_id', 'quantity' => 0]]
   ]);
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
@@ -143,7 +143,7 @@ $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
 $result = $client->checkoutSessions->create(
-  ['product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]],
+  ['productCart' => [['productID' => 'product_id', 'quantity' => 0]]],
   RequestOptions::with(maxRetries: 5),
 );
 ```
@@ -164,7 +164,7 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 use Dodopayments\RequestOptions;
 
 $checkoutSessionResponse = $client->checkoutSessions->create(
-  ['product_cart' => [['product_id' => 'product_id', 'quantity' => 0]]],
+  ['productCart' => [['productID' => 'product_id', 'quantity' => 0]]],
   RequestOptions::with(
     extraQueryParams: ['my_query_parameter' => 'value'],
     extraBodyParams: ['my_body_parameter' => 'value'],

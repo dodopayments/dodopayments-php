@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\LicensesService::deactivate()
  *
  * @phpstan-type LicenseDeactivateParamsShape = array{
- *   license_key: string, license_key_instance_id: string
+ *   licenseKey: string, licenseKeyInstanceID: string
  * }
  */
 final class LicenseDeactivateParams implements BaseModel
@@ -22,18 +22,18 @@ final class LicenseDeactivateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Required]
-    public string $license_key;
+    #[Required('license_key')]
+    public string $licenseKey;
 
-    #[Required]
-    public string $license_key_instance_id;
+    #[Required('license_key_instance_id')]
+    public string $licenseKeyInstanceID;
 
     /**
      * `new LicenseDeactivateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * LicenseDeactivateParams::with(license_key: ..., license_key_instance_id: ...)
+     * LicenseDeactivateParams::with(licenseKey: ..., licenseKeyInstanceID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,13 +55,13 @@ final class LicenseDeactivateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $license_key,
-        string $license_key_instance_id
+        string $licenseKey,
+        string $licenseKeyInstanceID
     ): self {
         $obj = new self;
 
-        $obj['license_key'] = $license_key;
-        $obj['license_key_instance_id'] = $license_key_instance_id;
+        $obj['licenseKey'] = $licenseKey;
+        $obj['licenseKeyInstanceID'] = $licenseKeyInstanceID;
 
         return $obj;
     }
@@ -69,7 +69,7 @@ final class LicenseDeactivateParams implements BaseModel
     public function withLicenseKey(string $licenseKey): self
     {
         $obj = clone $this;
-        $obj['license_key'] = $licenseKey;
+        $obj['licenseKey'] = $licenseKey;
 
         return $obj;
     }
@@ -77,7 +77,7 @@ final class LicenseDeactivateParams implements BaseModel
     public function withLicenseKeyInstanceID(string $licenseKeyInstanceID): self
     {
         $obj = clone $this;
-        $obj['license_key_instance_id'] = $licenseKeyInstanceID;
+        $obj['licenseKeyInstanceID'] = $licenseKeyInstanceID;
 
         return $obj;
     }

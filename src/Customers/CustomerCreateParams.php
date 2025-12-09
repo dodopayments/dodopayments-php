@@ -17,7 +17,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   email: string,
  *   name: string,
  *   metadata?: array<string,string>,
- *   phone_number?: string|null,
+ *   phoneNumber?: string|null,
  * }
  */
 final class CustomerCreateParams implements BaseModel
@@ -40,8 +40,8 @@ final class CustomerCreateParams implements BaseModel
     #[Optional(map: 'string')]
     public ?array $metadata;
 
-    #[Optional(nullable: true)]
-    public ?string $phone_number;
+    #[Optional('phone_number', nullable: true)]
+    public ?string $phoneNumber;
 
     /**
      * `new CustomerCreateParams()` is missing required properties by the API.
@@ -73,7 +73,7 @@ final class CustomerCreateParams implements BaseModel
         string $email,
         string $name,
         ?array $metadata = null,
-        ?string $phone_number = null,
+        ?string $phoneNumber = null,
     ): self {
         $obj = new self;
 
@@ -81,7 +81,7 @@ final class CustomerCreateParams implements BaseModel
         $obj['name'] = $name;
 
         null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $phone_number && $obj['phone_number'] = $phone_number;
+        null !== $phoneNumber && $obj['phoneNumber'] = $phoneNumber;
 
         return $obj;
     }
@@ -118,7 +118,7 @@ final class CustomerCreateParams implements BaseModel
     public function withPhoneNumber(?string $phoneNumber): self
     {
         $obj = clone $this;
-        $obj['phone_number'] = $phoneNumber;
+        $obj['phoneNumber'] = $phoneNumber;
 
         return $obj;
     }

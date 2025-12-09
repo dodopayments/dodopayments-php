@@ -40,10 +40,10 @@ final class ProductsTest extends TestCase
                 'currency' => Currency::AED,
                 'discount' => 0,
                 'price' => 0,
-                'purchasing_power_parity' => true,
+                'purchasingPowerParity' => true,
                 'type' => 'one_time_price',
             ],
-            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
+            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -59,23 +59,23 @@ final class ProductsTest extends TestCase
                 'currency' => Currency::AED,
                 'discount' => 0,
                 'price' => 0,
-                'purchasing_power_parity' => true,
+                'purchasingPowerParity' => true,
                 'type' => 'one_time_price',
-                'pay_what_you_want' => true,
-                'suggested_price' => 0,
-                'tax_inclusive' => true,
+                'payWhatYouWant' => true,
+                'suggestedPrice' => 0,
+                'taxInclusive' => true,
             ],
-            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
+            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
             'addons' => ['string'],
-            'brand_id' => 'brand_id',
+            'brandID' => 'brand_id',
             'description' => 'description',
-            'digital_product_delivery' => [
-                'external_url' => 'external_url', 'instructions' => 'instructions',
+            'digitalProductDelivery' => [
+                'externalURL' => 'external_url', 'instructions' => 'instructions',
             ],
-            'license_key_activation_message' => 'license_key_activation_message',
-            'license_key_activations_limit' => 0,
-            'license_key_duration' => ['count' => 0, 'interval' => TimeInterval::DAY],
-            'license_key_enabled' => true,
+            'licenseKeyActivationMessage' => 'license_key_activation_message',
+            'licenseKeyActivationsLimit' => 0,
+            'licenseKeyDuration' => ['count' => 0, 'interval' => TimeInterval::DAY],
+            'licenseKeyEnabled' => true,
             'metadata' => ['foo' => 'string'],
         ]);
 
@@ -133,7 +133,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->updateFiles(
             'id',
-            ['file_name' => 'file_name']
+            ['fileName' => 'file_name']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -145,7 +145,7 @@ final class ProductsTest extends TestCase
     {
         $result = $this->client->products->updateFiles(
             'id',
-            ['file_name' => 'file_name']
+            ['fileName' => 'file_name']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

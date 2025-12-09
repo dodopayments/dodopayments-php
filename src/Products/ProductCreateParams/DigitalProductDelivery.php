@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * Choose how you would like you digital product delivered.
  *
  * @phpstan-type DigitalProductDeliveryShape = array{
- *   external_url?: string|null, instructions?: string|null
+ *   externalURL?: string|null, instructions?: string|null
  * }
  */
 final class DigitalProductDelivery implements BaseModel
@@ -23,8 +23,8 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    #[Optional(nullable: true)]
-    public ?string $external_url;
+    #[Optional('external_url', nullable: true)]
+    public ?string $externalURL;
 
     /**
      * Instructions to download and use the digital product.
@@ -43,12 +43,12 @@ final class DigitalProductDelivery implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $external_url = null,
+        ?string $externalURL = null,
         ?string $instructions = null
     ): self {
         $obj = new self;
 
-        null !== $external_url && $obj['external_url'] = $external_url;
+        null !== $externalURL && $obj['externalURL'] = $externalURL;
         null !== $instructions && $obj['instructions'] = $instructions;
 
         return $obj;
@@ -60,7 +60,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withExternalURL(?string $externalURL): self
     {
         $obj = clone $this;
-        $obj['external_url'] = $externalURL;
+        $obj['externalURL'] = $externalURL;
 
         return $obj;
     }

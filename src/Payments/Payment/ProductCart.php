@@ -9,15 +9,15 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type ProductCartShape = array{product_id: string, quantity: int}
+ * @phpstan-type ProductCartShape = array{productID: string, quantity: int}
  */
 final class ProductCart implements BaseModel
 {
     /** @use SdkModel<ProductCartShape> */
     use SdkModel;
 
-    #[Required]
-    public string $product_id;
+    #[Required('product_id')]
+    public string $productID;
 
     #[Required]
     public int $quantity;
@@ -27,7 +27,7 @@ final class ProductCart implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ProductCart::with(product_id: ..., quantity: ...)
+     * ProductCart::with(productID: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -46,11 +46,11 @@ final class ProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $product_id, int $quantity): self
+    public static function with(string $productID, int $quantity): self
     {
         $obj = new self;
 
-        $obj['product_id'] = $product_id;
+        $obj['productID'] = $productID;
         $obj['quantity'] = $quantity;
 
         return $obj;
@@ -59,7 +59,7 @@ final class ProductCart implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj['product_id'] = $productID;
+        $obj['productID'] = $productID;
 
         return $obj;
     }

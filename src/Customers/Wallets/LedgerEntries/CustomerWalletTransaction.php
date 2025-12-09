@@ -14,17 +14,17 @@ use Dodopayments\Misc\Currency;
 /**
  * @phpstan-type CustomerWalletTransactionShape = array{
  *   id: string,
- *   after_balance: int,
+ *   afterBalance: int,
  *   amount: int,
- *   before_balance: int,
- *   business_id: string,
- *   created_at: \DateTimeInterface,
+ *   beforeBalance: int,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
  *   currency: value-of<Currency>,
- *   customer_id: string,
- *   event_type: value-of<EventType>,
- *   is_credit: bool,
+ *   customerID: string,
+ *   eventType: value-of<EventType>,
+ *   isCredit: bool,
  *   reason?: string|null,
- *   reference_object_id?: string|null,
+ *   referenceObjectID?: string|null,
  * }
  */
 final class CustomerWalletTransaction implements BaseModel
@@ -35,40 +35,40 @@ final class CustomerWalletTransaction implements BaseModel
     #[Required]
     public string $id;
 
-    #[Required]
-    public int $after_balance;
+    #[Required('after_balance')]
+    public int $afterBalance;
 
     #[Required]
     public int $amount;
 
-    #[Required]
-    public int $before_balance;
+    #[Required('before_balance')]
+    public int $beforeBalance;
 
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /** @var value-of<Currency> $currency */
     #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Required]
-    public string $customer_id;
+    #[Required('customer_id')]
+    public string $customerID;
 
-    /** @var value-of<EventType> $event_type */
-    #[Required(enum: EventType::class)]
-    public string $event_type;
+    /** @var value-of<EventType> $eventType */
+    #[Required('event_type', enum: EventType::class)]
+    public string $eventType;
 
-    #[Required]
-    public bool $is_credit;
+    #[Required('is_credit')]
+    public bool $isCredit;
 
     #[Optional(nullable: true)]
     public ?string $reason;
 
-    #[Optional(nullable: true)]
-    public ?string $reference_object_id;
+    #[Optional('reference_object_id', nullable: true)]
+    public ?string $referenceObjectID;
 
     /**
      * `new CustomerWalletTransaction()` is missing required properties by the API.
@@ -77,15 +77,15 @@ final class CustomerWalletTransaction implements BaseModel
      * ```
      * CustomerWalletTransaction::with(
      *   id: ...,
-     *   after_balance: ...,
+     *   afterBalance: ...,
      *   amount: ...,
-     *   before_balance: ...,
-     *   business_id: ...,
-     *   created_at: ...,
+     *   beforeBalance: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
      *   currency: ...,
-     *   customer_id: ...,
-     *   event_type: ...,
-     *   is_credit: ...,
+     *   customerID: ...,
+     *   eventType: ...,
+     *   isCredit: ...,
      * )
      * ```
      *
@@ -116,37 +116,37 @@ final class CustomerWalletTransaction implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param EventType|value-of<EventType> $event_type
+     * @param EventType|value-of<EventType> $eventType
      */
     public static function with(
         string $id,
-        int $after_balance,
+        int $afterBalance,
         int $amount,
-        int $before_balance,
-        string $business_id,
-        \DateTimeInterface $created_at,
+        int $beforeBalance,
+        string $businessID,
+        \DateTimeInterface $createdAt,
         Currency|string $currency,
-        string $customer_id,
-        EventType|string $event_type,
-        bool $is_credit,
+        string $customerID,
+        EventType|string $eventType,
+        bool $isCredit,
         ?string $reason = null,
-        ?string $reference_object_id = null,
+        ?string $referenceObjectID = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['after_balance'] = $after_balance;
+        $obj['afterBalance'] = $afterBalance;
         $obj['amount'] = $amount;
-        $obj['before_balance'] = $before_balance;
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
+        $obj['beforeBalance'] = $beforeBalance;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
         $obj['currency'] = $currency;
-        $obj['customer_id'] = $customer_id;
-        $obj['event_type'] = $event_type;
-        $obj['is_credit'] = $is_credit;
+        $obj['customerID'] = $customerID;
+        $obj['eventType'] = $eventType;
+        $obj['isCredit'] = $isCredit;
 
         null !== $reason && $obj['reason'] = $reason;
-        null !== $reference_object_id && $obj['reference_object_id'] = $reference_object_id;
+        null !== $referenceObjectID && $obj['referenceObjectID'] = $referenceObjectID;
 
         return $obj;
     }
@@ -162,7 +162,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withAfterBalance(int $afterBalance): self
     {
         $obj = clone $this;
-        $obj['after_balance'] = $afterBalance;
+        $obj['afterBalance'] = $afterBalance;
 
         return $obj;
     }
@@ -178,7 +178,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withBeforeBalance(int $beforeBalance): self
     {
         $obj = clone $this;
-        $obj['before_balance'] = $beforeBalance;
+        $obj['beforeBalance'] = $beforeBalance;
 
         return $obj;
     }
@@ -186,7 +186,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -194,7 +194,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -213,7 +213,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -224,7 +224,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withEventType(EventType|string $eventType): self
     {
         $obj = clone $this;
-        $obj['event_type'] = $eventType;
+        $obj['eventType'] = $eventType;
 
         return $obj;
     }
@@ -232,7 +232,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withIsCredit(bool $isCredit): self
     {
         $obj = clone $this;
-        $obj['is_credit'] = $isCredit;
+        $obj['isCredit'] = $isCredit;
 
         return $obj;
     }
@@ -248,7 +248,7 @@ final class CustomerWalletTransaction implements BaseModel
     public function withReferenceObjectID(?string $referenceObjectID): self
     {
         $obj = clone $this;
-        $obj['reference_object_id'] = $referenceObjectID;
+        $obj['referenceObjectID'] = $referenceObjectID;
 
         return $obj;
     }

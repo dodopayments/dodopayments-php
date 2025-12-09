@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ImageUpdateResponseShape = array{
- *   url: string, image_id?: string|null
+ *   url: string, imageID?: string|null
  * }
  */
 final class ImageUpdateResponse implements BaseModel
@@ -22,8 +22,8 @@ final class ImageUpdateResponse implements BaseModel
     #[Required]
     public string $url;
 
-    #[Optional(nullable: true)]
-    public ?string $image_id;
+    #[Optional('image_id', nullable: true)]
+    public ?string $imageID;
 
     /**
      * `new ImageUpdateResponse()` is missing required properties by the API.
@@ -49,13 +49,13 @@ final class ImageUpdateResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $url, ?string $image_id = null): self
+    public static function with(string $url, ?string $imageID = null): self
     {
         $obj = new self;
 
         $obj['url'] = $url;
 
-        null !== $image_id && $obj['image_id'] = $image_id;
+        null !== $imageID && $obj['imageID'] = $imageID;
 
         return $obj;
     }
@@ -71,7 +71,7 @@ final class ImageUpdateResponse implements BaseModel
     public function withImageID(?string $imageID): self
     {
         $obj = clone $this;
-        $obj['image_id'] = $imageID;
+        $obj['imageID'] = $imageID;
 
         return $obj;
     }

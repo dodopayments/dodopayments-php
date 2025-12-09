@@ -13,9 +13,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  * Customization for the checkout session page.
  *
  * @phpstan-type CustomizationShape = array{
- *   force_language?: string|null,
- *   show_on_demand_tag?: bool|null,
- *   show_order_details?: bool|null,
+ *   forceLanguage?: string|null,
+ *   showOnDemandTag?: bool|null,
+ *   showOrderDetails?: bool|null,
  *   theme?: value-of<Theme>|null,
  * }
  */
@@ -27,24 +27,24 @@ final class Customization implements BaseModel
     /**
      * Force the checkout interface to render in a specific language (e.g. `en`, `es`).
      */
-    #[Optional(nullable: true)]
-    public ?string $force_language;
+    #[Optional('force_language', nullable: true)]
+    public ?string $forceLanguage;
 
     /**
      * Show on demand tag.
      *
      * Default is true
      */
-    #[Optional]
-    public ?bool $show_on_demand_tag;
+    #[Optional('show_on_demand_tag')]
+    public ?bool $showOnDemandTag;
 
     /**
      * Show order details by default.
      *
      * Default is true
      */
-    #[Optional]
-    public ?bool $show_order_details;
+    #[Optional('show_order_details')]
+    public ?bool $showOrderDetails;
 
     /**
      * Theme of the page.
@@ -69,16 +69,16 @@ final class Customization implements BaseModel
      * @param Theme|value-of<Theme> $theme
      */
     public static function with(
-        ?string $force_language = null,
-        ?bool $show_on_demand_tag = null,
-        ?bool $show_order_details = null,
+        ?string $forceLanguage = null,
+        ?bool $showOnDemandTag = null,
+        ?bool $showOrderDetails = null,
         Theme|string|null $theme = null,
     ): self {
         $obj = new self;
 
-        null !== $force_language && $obj['force_language'] = $force_language;
-        null !== $show_on_demand_tag && $obj['show_on_demand_tag'] = $show_on_demand_tag;
-        null !== $show_order_details && $obj['show_order_details'] = $show_order_details;
+        null !== $forceLanguage && $obj['forceLanguage'] = $forceLanguage;
+        null !== $showOnDemandTag && $obj['showOnDemandTag'] = $showOnDemandTag;
+        null !== $showOrderDetails && $obj['showOrderDetails'] = $showOrderDetails;
         null !== $theme && $obj['theme'] = $theme;
 
         return $obj;
@@ -90,7 +90,7 @@ final class Customization implements BaseModel
     public function withForceLanguage(?string $forceLanguage): self
     {
         $obj = clone $this;
-        $obj['force_language'] = $forceLanguage;
+        $obj['forceLanguage'] = $forceLanguage;
 
         return $obj;
     }
@@ -103,7 +103,7 @@ final class Customization implements BaseModel
     public function withShowOnDemandTag(bool $showOnDemandTag): self
     {
         $obj = clone $this;
-        $obj['show_on_demand_tag'] = $showOnDemandTag;
+        $obj['showOnDemandTag'] = $showOnDemandTag;
 
         return $obj;
     }
@@ -116,7 +116,7 @@ final class Customization implements BaseModel
     public function withShowOrderDetails(bool $showOrderDetails): self
     {
         $obj = clone $this;
-        $obj['show_order_details'] = $showOrderDetails;
+        $obj['showOrderDetails'] = $showOrderDetails;
 
         return $obj;
     }

@@ -15,7 +15,7 @@ use Dodopayments\Webhooks\DisputeChallengedWebhookEvent\Type;
 
 /**
  * @phpstan-type DisputeChallengedWebhookEventShape = array{
- *   business_id: string,
+ *   businessID: string,
  *   data: Data,
  *   timestamp: \DateTimeInterface,
  *   type: value-of<Type>,
@@ -29,8 +29,8 @@ final class DisputeChallengedWebhookEvent implements BaseModel
     /**
      * The business identifier.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * Event-specific data.
@@ -58,7 +58,7 @@ final class DisputeChallengedWebhookEvent implements BaseModel
      * To enforce required parameters use
      * ```
      * DisputeChallengedWebhookEvent::with(
-     *   business_id: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ..., type: ...
      * )
      * ```
      *
@@ -84,27 +84,27 @@ final class DisputeChallengedWebhookEvent implements BaseModel
      *
      * @param Data|array{
      *   amount: string,
-     *   business_id: string,
-     *   created_at: \DateTimeInterface,
+     *   businessID: string,
+     *   createdAt: \DateTimeInterface,
      *   currency: string,
-     *   dispute_id: string,
-     *   dispute_stage: value-of<DisputeStage>,
-     *   dispute_status: value-of<DisputeStatus>,
-     *   payment_id: string,
+     *   disputeID: string,
+     *   disputeStage: value-of<DisputeStage>,
+     *   disputeStatus: value-of<DisputeStatus>,
+     *   paymentID: string,
      *   remarks?: string|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
-        string $business_id,
+        string $businessID,
         Data|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
+        $obj['businessID'] = $businessID;
         $obj['data'] = $data;
         $obj['timestamp'] = $timestamp;
         $obj['type'] = $type;
@@ -118,7 +118,7 @@ final class DisputeChallengedWebhookEvent implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -128,15 +128,15 @@ final class DisputeChallengedWebhookEvent implements BaseModel
      *
      * @param Data|array{
      *   amount: string,
-     *   business_id: string,
-     *   created_at: \DateTimeInterface,
+     *   businessID: string,
+     *   createdAt: \DateTimeInterface,
      *   currency: string,
-     *   dispute_id: string,
-     *   dispute_stage: value-of<DisputeStage>,
-     *   dispute_status: value-of<DisputeStatus>,
-     *   payment_id: string,
+     *   disputeID: string,
+     *   disputeStage: value-of<DisputeStage>,
+     *   disputeStatus: value-of<DisputeStatus>,
+     *   paymentID: string,
      *   remarks?: string|null,
-     *   payload_type?: value-of<PayloadType>|null,
+     *   payloadType?: value-of<PayloadType>|null,
      * } $data
      */
     public function withData(Data|array $data): self

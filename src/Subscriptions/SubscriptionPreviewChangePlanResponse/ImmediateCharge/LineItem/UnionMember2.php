@@ -14,16 +14,16 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
 /**
  * @phpstan-type UnionMember2Shape = array{
  *   id: string,
- *   chargeable_units: string,
+ *   chargeableUnits: string,
  *   currency: value-of<Currency>,
- *   free_threshold: int,
+ *   freeThreshold: int,
  *   name: string,
- *   price_per_unit: string,
+ *   pricePerUnit: string,
  *   subtotal: int,
- *   tax_inclusive: bool,
- *   tax_rate: float,
+ *   taxInclusive: bool,
+ *   taxRate: float,
  *   type: value-of<Type>,
- *   units_consumed: string,
+ *   unitsConsumed: string,
  *   description?: string|null,
  *   tax?: int|null,
  * }
@@ -36,37 +36,37 @@ final class UnionMember2 implements BaseModel
     #[Required]
     public string $id;
 
-    #[Required]
-    public string $chargeable_units;
+    #[Required('chargeable_units')]
+    public string $chargeableUnits;
 
     /** @var value-of<Currency> $currency */
     #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Required]
-    public int $free_threshold;
+    #[Required('free_threshold')]
+    public int $freeThreshold;
 
     #[Required]
     public string $name;
 
-    #[Required]
-    public string $price_per_unit;
+    #[Required('price_per_unit')]
+    public string $pricePerUnit;
 
     #[Required]
     public int $subtotal;
 
-    #[Required]
-    public bool $tax_inclusive;
+    #[Required('tax_inclusive')]
+    public bool $taxInclusive;
 
-    #[Required]
-    public float $tax_rate;
+    #[Required('tax_rate')]
+    public float $taxRate;
 
     /** @var value-of<Type> $type */
     #[Required(enum: Type::class)]
     public string $type;
 
-    #[Required]
-    public string $units_consumed;
+    #[Required('units_consumed')]
+    public string $unitsConsumed;
 
     #[Optional(nullable: true)]
     public ?string $description;
@@ -81,16 +81,16 @@ final class UnionMember2 implements BaseModel
      * ```
      * UnionMember2::with(
      *   id: ...,
-     *   chargeable_units: ...,
+     *   chargeableUnits: ...,
      *   currency: ...,
-     *   free_threshold: ...,
+     *   freeThreshold: ...,
      *   name: ...,
-     *   price_per_unit: ...,
+     *   pricePerUnit: ...,
      *   subtotal: ...,
-     *   tax_inclusive: ...,
-     *   tax_rate: ...,
+     *   taxInclusive: ...,
+     *   taxRate: ...,
      *   type: ...,
-     *   units_consumed: ...,
+     *   unitsConsumed: ...,
      * )
      * ```
      *
@@ -126,32 +126,32 @@ final class UnionMember2 implements BaseModel
      */
     public static function with(
         string $id,
-        string $chargeable_units,
+        string $chargeableUnits,
         Currency|string $currency,
-        int $free_threshold,
+        int $freeThreshold,
         string $name,
-        string $price_per_unit,
+        string $pricePerUnit,
         int $subtotal,
-        bool $tax_inclusive,
-        float $tax_rate,
+        bool $taxInclusive,
+        float $taxRate,
         Type|string $type,
-        string $units_consumed,
+        string $unitsConsumed,
         ?string $description = null,
         ?int $tax = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['chargeable_units'] = $chargeable_units;
+        $obj['chargeableUnits'] = $chargeableUnits;
         $obj['currency'] = $currency;
-        $obj['free_threshold'] = $free_threshold;
+        $obj['freeThreshold'] = $freeThreshold;
         $obj['name'] = $name;
-        $obj['price_per_unit'] = $price_per_unit;
+        $obj['pricePerUnit'] = $pricePerUnit;
         $obj['subtotal'] = $subtotal;
-        $obj['tax_inclusive'] = $tax_inclusive;
-        $obj['tax_rate'] = $tax_rate;
+        $obj['taxInclusive'] = $taxInclusive;
+        $obj['taxRate'] = $taxRate;
         $obj['type'] = $type;
-        $obj['units_consumed'] = $units_consumed;
+        $obj['unitsConsumed'] = $unitsConsumed;
 
         null !== $description && $obj['description'] = $description;
         null !== $tax && $obj['tax'] = $tax;
@@ -170,7 +170,7 @@ final class UnionMember2 implements BaseModel
     public function withChargeableUnits(string $chargeableUnits): self
     {
         $obj = clone $this;
-        $obj['chargeable_units'] = $chargeableUnits;
+        $obj['chargeableUnits'] = $chargeableUnits;
 
         return $obj;
     }
@@ -189,7 +189,7 @@ final class UnionMember2 implements BaseModel
     public function withFreeThreshold(int $freeThreshold): self
     {
         $obj = clone $this;
-        $obj['free_threshold'] = $freeThreshold;
+        $obj['freeThreshold'] = $freeThreshold;
 
         return $obj;
     }
@@ -205,7 +205,7 @@ final class UnionMember2 implements BaseModel
     public function withPricePerUnit(string $pricePerUnit): self
     {
         $obj = clone $this;
-        $obj['price_per_unit'] = $pricePerUnit;
+        $obj['pricePerUnit'] = $pricePerUnit;
 
         return $obj;
     }
@@ -221,7 +221,7 @@ final class UnionMember2 implements BaseModel
     public function withTaxInclusive(bool $taxInclusive): self
     {
         $obj = clone $this;
-        $obj['tax_inclusive'] = $taxInclusive;
+        $obj['taxInclusive'] = $taxInclusive;
 
         return $obj;
     }
@@ -229,7 +229,7 @@ final class UnionMember2 implements BaseModel
     public function withTaxRate(float $taxRate): self
     {
         $obj = clone $this;
-        $obj['tax_rate'] = $taxRate;
+        $obj['taxRate'] = $taxRate;
 
         return $obj;
     }
@@ -248,7 +248,7 @@ final class UnionMember2 implements BaseModel
     public function withUnitsConsumed(string $unitsConsumed): self
     {
         $obj = clone $this;
-        $obj['units_consumed'] = $unitsConsumed;
+        $obj['unitsConsumed'] = $unitsConsumed;
 
         return $obj;
     }

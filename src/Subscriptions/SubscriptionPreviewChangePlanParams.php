@@ -15,10 +15,10 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
  * @see Dodopayments\Services\SubscriptionsService::previewChangePlan()
  *
  * @phpstan-type SubscriptionPreviewChangePlanParamsShape = array{
- *   product_id: string,
- *   proration_billing_mode: ProrationBillingMode|value-of<ProrationBillingMode>,
+ *   productID: string,
+ *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
- *   addons?: list<AttachAddon|array{addon_id: string, quantity: int}>|null,
+ *   addons?: list<AttachAddon|array{addonID: string, quantity: int}>|null,
  * }
  */
 final class SubscriptionPreviewChangePlanParams implements BaseModel
@@ -30,16 +30,16 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     /**
      * Unique identifier of the product to subscribe to.
      */
-    #[Required]
-    public string $product_id;
+    #[Required('product_id')]
+    public string $productID;
 
     /**
      * Proration Billing Mode.
      *
-     * @var value-of<ProrationBillingMode> $proration_billing_mode
+     * @var value-of<ProrationBillingMode> $prorationBillingMode
      */
-    #[Required(enum: ProrationBillingMode::class)]
-    public string $proration_billing_mode;
+    #[Required('proration_billing_mode', enum: ProrationBillingMode::class)]
+    public string $prorationBillingMode;
 
     /**
      * Number of units to subscribe for. Must be at least 1.
@@ -62,7 +62,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      * To enforce required parameters use
      * ```
      * SubscriptionPreviewChangePlanParams::with(
-     *   product_id: ..., proration_billing_mode: ..., quantity: ...
+     *   productID: ..., prorationBillingMode: ..., quantity: ...
      * )
      * ```
      *
@@ -85,19 +85,19 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ProrationBillingMode|value-of<ProrationBillingMode> $proration_billing_mode
-     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
+     * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
+     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
      */
     public static function with(
-        string $product_id,
-        ProrationBillingMode|string $proration_billing_mode,
+        string $productID,
+        ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
     ): self {
         $obj = new self;
 
-        $obj['product_id'] = $product_id;
-        $obj['proration_billing_mode'] = $proration_billing_mode;
+        $obj['productID'] = $productID;
+        $obj['prorationBillingMode'] = $prorationBillingMode;
         $obj['quantity'] = $quantity;
 
         null !== $addons && $obj['addons'] = $addons;
@@ -111,7 +111,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj['product_id'] = $productID;
+        $obj['productID'] = $productID;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         ProrationBillingMode|string $prorationBillingMode
     ): self {
         $obj = clone $this;
-        $obj['proration_billing_mode'] = $prorationBillingMode;
+        $obj['prorationBillingMode'] = $prorationBillingMode;
 
         return $obj;
     }
@@ -145,7 +145,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      * Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons.
      *
-     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
+     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
      */
     public function withAddons(?array $addons): self
     {

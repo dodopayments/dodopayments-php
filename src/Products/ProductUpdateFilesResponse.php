@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type ProductUpdateFilesResponseShape = array{
- *   file_id: string, url: string
+ *   fileID: string, url: string
  * }
  */
 final class ProductUpdateFilesResponse implements BaseModel
@@ -18,8 +18,8 @@ final class ProductUpdateFilesResponse implements BaseModel
     /** @use SdkModel<ProductUpdateFilesResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public string $file_id;
+    #[Required('file_id')]
+    public string $fileID;
 
     #[Required]
     public string $url;
@@ -29,7 +29,7 @@ final class ProductUpdateFilesResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ProductUpdateFilesResponse::with(file_id: ..., url: ...)
+     * ProductUpdateFilesResponse::with(fileID: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,11 +48,11 @@ final class ProductUpdateFilesResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $file_id, string $url): self
+    public static function with(string $fileID, string $url): self
     {
         $obj = new self;
 
-        $obj['file_id'] = $file_id;
+        $obj['fileID'] = $fileID;
         $obj['url'] = $url;
 
         return $obj;
@@ -61,7 +61,7 @@ final class ProductUpdateFilesResponse implements BaseModel
     public function withFileID(string $fileID): self
     {
         $obj = clone $this;
-        $obj['file_id'] = $fileID;
+        $obj['fileID'] = $fileID;
 
         return $obj;
     }

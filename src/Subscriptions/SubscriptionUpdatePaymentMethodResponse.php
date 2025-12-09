@@ -10,10 +10,10 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type SubscriptionUpdatePaymentMethodResponseShape = array{
- *   client_secret?: string|null,
- *   expires_on?: \DateTimeInterface|null,
- *   payment_id?: string|null,
- *   payment_link?: string|null,
+ *   clientSecret?: string|null,
+ *   expiresOn?: \DateTimeInterface|null,
+ *   paymentID?: string|null,
+ *   paymentLink?: string|null,
  * }
  */
 final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
@@ -21,17 +21,17 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
     /** @use SdkModel<SubscriptionUpdatePaymentMethodResponseShape> */
     use SdkModel;
 
-    #[Optional(nullable: true)]
-    public ?string $client_secret;
+    #[Optional('client_secret', nullable: true)]
+    public ?string $clientSecret;
 
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_on;
+    #[Optional('expires_on', nullable: true)]
+    public ?\DateTimeInterface $expiresOn;
 
-    #[Optional(nullable: true)]
-    public ?string $payment_id;
+    #[Optional('payment_id', nullable: true)]
+    public ?string $paymentID;
 
-    #[Optional(nullable: true)]
-    public ?string $payment_link;
+    #[Optional('payment_link', nullable: true)]
+    public ?string $paymentLink;
 
     public function __construct()
     {
@@ -44,17 +44,17 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $client_secret = null,
-        ?\DateTimeInterface $expires_on = null,
-        ?string $payment_id = null,
-        ?string $payment_link = null,
+        ?string $clientSecret = null,
+        ?\DateTimeInterface $expiresOn = null,
+        ?string $paymentID = null,
+        ?string $paymentLink = null,
     ): self {
         $obj = new self;
 
-        null !== $client_secret && $obj['client_secret'] = $client_secret;
-        null !== $expires_on && $obj['expires_on'] = $expires_on;
-        null !== $payment_id && $obj['payment_id'] = $payment_id;
-        null !== $payment_link && $obj['payment_link'] = $payment_link;
+        null !== $clientSecret && $obj['clientSecret'] = $clientSecret;
+        null !== $expiresOn && $obj['expiresOn'] = $expiresOn;
+        null !== $paymentID && $obj['paymentID'] = $paymentID;
+        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
 
         return $obj;
     }
@@ -62,7 +62,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
     public function withClientSecret(?string $clientSecret): self
     {
         $obj = clone $this;
-        $obj['client_secret'] = $clientSecret;
+        $obj['clientSecret'] = $clientSecret;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
         $obj = clone $this;
-        $obj['expires_on'] = $expiresOn;
+        $obj['expiresOn'] = $expiresOn;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
     public function withPaymentID(?string $paymentID): self
     {
         $obj = clone $this;
-        $obj['payment_id'] = $paymentID;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }
@@ -86,7 +86,7 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
     public function withPaymentLink(?string $paymentLink): self
     {
         $obj = clone $this;
-        $obj['payment_link'] = $paymentLink;
+        $obj['paymentLink'] = $paymentLink;
 
         return $obj;
     }

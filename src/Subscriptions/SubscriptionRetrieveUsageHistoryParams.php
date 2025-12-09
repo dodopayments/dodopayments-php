@@ -45,11 +45,11 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\SubscriptionsService::retrieveUsageHistory()
  *
  * @phpstan-type SubscriptionRetrieveUsageHistoryParamsShape = array{
- *   end_date?: \DateTimeInterface|null,
- *   meter_id?: string|null,
- *   page_number?: int|null,
- *   page_size?: int|null,
- *   start_date?: \DateTimeInterface|null,
+ *   endDate?: \DateTimeInterface|null,
+ *   meterID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   startDate?: \DateTimeInterface|null,
  * }
  */
 final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
@@ -62,31 +62,31 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      * Filter by end date (inclusive).
      */
     #[Optional(nullable: true)]
-    public ?\DateTimeInterface $end_date;
+    public ?\DateTimeInterface $endDate;
 
     /**
      * Filter by specific meter ID.
      */
     #[Optional(nullable: true)]
-    public ?string $meter_id;
+    public ?string $meterID;
 
     /**
      * Page number (default: 0).
      */
     #[Optional(nullable: true)]
-    public ?int $page_number;
+    public ?int $pageNumber;
 
     /**
      * Page size (default: 10, max: 100).
      */
     #[Optional(nullable: true)]
-    public ?int $page_size;
+    public ?int $pageSize;
 
     /**
      * Filter by start date (inclusive).
      */
     #[Optional(nullable: true)]
-    public ?\DateTimeInterface $start_date;
+    public ?\DateTimeInterface $startDate;
 
     public function __construct()
     {
@@ -99,19 +99,19 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?\DateTimeInterface $end_date = null,
-        ?string $meter_id = null,
-        ?int $page_number = null,
-        ?int $page_size = null,
-        ?\DateTimeInterface $start_date = null,
+        ?\DateTimeInterface $endDate = null,
+        ?string $meterID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?\DateTimeInterface $startDate = null,
     ): self {
         $obj = new self;
 
-        null !== $end_date && $obj['end_date'] = $end_date;
-        null !== $meter_id && $obj['meter_id'] = $meter_id;
-        null !== $page_number && $obj['page_number'] = $page_number;
-        null !== $page_size && $obj['page_size'] = $page_size;
-        null !== $start_date && $obj['start_date'] = $start_date;
+        null !== $endDate && $obj['endDate'] = $endDate;
+        null !== $meterID && $obj['meterID'] = $meterID;
+        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
+        null !== $pageSize && $obj['pageSize'] = $pageSize;
+        null !== $startDate && $obj['startDate'] = $startDate;
 
         return $obj;
     }
@@ -122,7 +122,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withEndDate(?\DateTimeInterface $endDate): self
     {
         $obj = clone $this;
-        $obj['end_date'] = $endDate;
+        $obj['endDate'] = $endDate;
 
         return $obj;
     }
@@ -133,7 +133,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withMeterID(?string $meterID): self
     {
         $obj = clone $this;
-        $obj['meter_id'] = $meterID;
+        $obj['meterID'] = $meterID;
 
         return $obj;
     }
@@ -144,7 +144,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withPageNumber(?int $pageNumber): self
     {
         $obj = clone $this;
-        $obj['page_number'] = $pageNumber;
+        $obj['pageNumber'] = $pageNumber;
 
         return $obj;
     }
@@ -155,7 +155,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withPageSize(?int $pageSize): self
     {
         $obj = clone $this;
-        $obj['page_size'] = $pageSize;
+        $obj['pageSize'] = $pageSize;
 
         return $obj;
     }
@@ -166,7 +166,7 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
     public function withStartDate(?\DateTimeInterface $startDate): self
     {
         $obj = clone $this;
-        $obj['start_date'] = $startDate;
+        $obj['startDate'] = $startDate;
 
         return $obj;
     }

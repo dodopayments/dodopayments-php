@@ -12,9 +12,9 @@ use Dodopayments\UsageEvents\EventInput\Metadata;
 
 /**
  * @phpstan-type EventInputShape = array{
- *   customer_id: string,
- *   event_id: string,
- *   event_name: string,
+ *   customerID: string,
+ *   eventID: string,
+ *   eventName: string,
  *   metadata?: array<string,string|float|bool>|null,
  *   timestamp?: \DateTimeInterface|null,
  * }
@@ -27,20 +27,20 @@ final class EventInput implements BaseModel
     /**
      * customer_id of the customer whose usage needs to be tracked.
      */
-    #[Required]
-    public string $customer_id;
+    #[Required('customer_id')]
+    public string $customerID;
 
     /**
      * Event Id acts as an idempotency key. Any subsequent requests with the same event_id will be ignored.
      */
-    #[Required]
-    public string $event_id;
+    #[Required('event_id')]
+    public string $eventID;
 
     /**
      * Name of the event.
      */
-    #[Required]
-    public string $event_name;
+    #[Required('event_name')]
+    public string $eventName;
 
     /**
      * Custom metadata. Only key value pairs are accepted, objects or arrays submitted will be rejected.
@@ -62,7 +62,7 @@ final class EventInput implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * EventInput::with(customer_id: ..., event_id: ..., event_name: ...)
+     * EventInput::with(customerID: ..., eventID: ..., eventName: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -84,17 +84,17 @@ final class EventInput implements BaseModel
      * @param array<string,string|float|bool>|null $metadata
      */
     public static function with(
-        string $customer_id,
-        string $event_id,
-        string $event_name,
+        string $customerID,
+        string $eventID,
+        string $eventName,
         ?array $metadata = null,
         ?\DateTimeInterface $timestamp = null,
     ): self {
         $obj = new self;
 
-        $obj['customer_id'] = $customer_id;
-        $obj['event_id'] = $event_id;
-        $obj['event_name'] = $event_name;
+        $obj['customerID'] = $customerID;
+        $obj['eventID'] = $eventID;
+        $obj['eventName'] = $eventName;
 
         null !== $metadata && $obj['metadata'] = $metadata;
         null !== $timestamp && $obj['timestamp'] = $timestamp;
@@ -108,7 +108,7 @@ final class EventInput implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -119,7 +119,7 @@ final class EventInput implements BaseModel
     public function withEventID(string $eventID): self
     {
         $obj = clone $this;
-        $obj['event_id'] = $eventID;
+        $obj['eventID'] = $eventID;
 
         return $obj;
     }
@@ -130,7 +130,7 @@ final class EventInput implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj['event_name'] = $eventName;
+        $obj['eventName'] = $eventName;
 
         return $obj;
     }

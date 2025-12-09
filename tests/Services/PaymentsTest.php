@@ -37,8 +37,8 @@ final class PaymentsTest extends TestCase
     {
         $result = $this->client->payments->create([
             'billing' => ['country' => CountryCode::AF],
-            'customer' => ['customer_id' => 'customer_id'],
-            'product_cart' => [['product_id' => 'product_id', 'quantity' => 0]],
+            'customer' => ['customerID' => 'customer_id'],
+            'productCart' => [['productID' => 'product_id', 'quantity' => 0]],
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -56,19 +56,19 @@ final class PaymentsTest extends TestCase
                 'street' => 'street',
                 'zipcode' => 'zipcode',
             ],
-            'customer' => ['customer_id' => 'customer_id'],
-            'product_cart' => [
-                ['product_id' => 'product_id', 'quantity' => 0, 'amount' => 0],
+            'customer' => ['customerID' => 'customer_id'],
+            'productCart' => [
+                ['productID' => 'product_id', 'quantity' => 0, 'amount' => 0],
             ],
-            'allowed_payment_method_types' => [PaymentMethodTypes::CREDIT],
-            'billing_currency' => Currency::AED,
-            'discount_code' => 'discount_code',
-            'force_3ds' => true,
+            'allowedPaymentMethodTypes' => [PaymentMethodTypes::CREDIT],
+            'billingCurrency' => Currency::AED,
+            'discountCode' => 'discount_code',
+            'force3DS' => true,
             'metadata' => ['foo' => 'string'],
-            'payment_link' => true,
-            'return_url' => 'return_url',
-            'show_saved_payment_methods' => true,
-            'tax_id' => 'tax_id',
+            'paymentLink' => true,
+            'returnURL' => 'return_url',
+            'showSavedPaymentMethods' => true,
+            'taxID' => 'tax_id',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

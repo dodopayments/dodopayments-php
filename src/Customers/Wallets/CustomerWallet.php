@@ -12,10 +12,10 @@ use Dodopayments\Misc\Currency;
 /**
  * @phpstan-type CustomerWalletShape = array{
  *   balance: int,
- *   created_at: \DateTimeInterface,
+ *   createdAt: \DateTimeInterface,
  *   currency: value-of<Currency>,
- *   customer_id: string,
- *   updated_at: \DateTimeInterface,
+ *   customerID: string,
+ *   updatedAt: \DateTimeInterface,
  * }
  */
 final class CustomerWallet implements BaseModel
@@ -26,18 +26,18 @@ final class CustomerWallet implements BaseModel
     #[Required]
     public int $balance;
 
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /** @var value-of<Currency> $currency */
     #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Required]
-    public string $customer_id;
+    #[Required('customer_id')]
+    public string $customerID;
 
-    #[Required]
-    public \DateTimeInterface $updated_at;
+    #[Required('updated_at')]
+    public \DateTimeInterface $updatedAt;
 
     /**
      * `new CustomerWallet()` is missing required properties by the API.
@@ -45,11 +45,7 @@ final class CustomerWallet implements BaseModel
      * To enforce required parameters use
      * ```
      * CustomerWallet::with(
-     *   balance: ...,
-     *   created_at: ...,
-     *   currency: ...,
-     *   customer_id: ...,
-     *   updated_at: ...,
+     *   balance: ..., createdAt: ..., currency: ..., customerID: ..., updatedAt: ...
      * )
      * ```
      *
@@ -78,18 +74,18 @@ final class CustomerWallet implements BaseModel
      */
     public static function with(
         int $balance,
-        \DateTimeInterface $created_at,
+        \DateTimeInterface $createdAt,
         Currency|string $currency,
-        string $customer_id,
-        \DateTimeInterface $updated_at,
+        string $customerID,
+        \DateTimeInterface $updatedAt,
     ): self {
         $obj = new self;
 
         $obj['balance'] = $balance;
-        $obj['created_at'] = $created_at;
+        $obj['createdAt'] = $createdAt;
         $obj['currency'] = $currency;
-        $obj['customer_id'] = $customer_id;
-        $obj['updated_at'] = $updated_at;
+        $obj['customerID'] = $customerID;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }
@@ -105,7 +101,7 @@ final class CustomerWallet implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -124,7 +120,7 @@ final class CustomerWallet implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -132,7 +128,7 @@ final class CustomerWallet implements BaseModel
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $obj = clone $this;
-        $obj['updated_at'] = $updatedAt;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }

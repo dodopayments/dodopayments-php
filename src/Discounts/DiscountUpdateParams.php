@@ -17,12 +17,12 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type DiscountUpdateParamsShape = array{
  *   amount?: int|null,
  *   code?: string|null,
- *   expires_at?: \DateTimeInterface|null,
+ *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
- *   restricted_to?: list<string>|null,
- *   subscription_cycles?: int|null,
+ *   restrictedTo?: list<string>|null,
+ *   subscriptionCycles?: int|null,
  *   type?: null|DiscountType|value-of<DiscountType>,
- *   usage_limit?: int|null,
+ *   usageLimit?: int|null,
  * }
  */
 final class DiscountUpdateParams implements BaseModel
@@ -47,8 +47,8 @@ final class DiscountUpdateParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $code;
 
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_at;
+    #[Optional('expires_at', nullable: true)]
+    public ?\DateTimeInterface $expiresAt;
 
     #[Optional(nullable: true)]
     public ?string $name;
@@ -57,18 +57,18 @@ final class DiscountUpdateParams implements BaseModel
      * If present, replaces all restricted product IDs with this new set.
      * To remove all restrictions, send empty array.
      *
-     * @var list<string>|null $restricted_to
+     * @var list<string>|null $restrictedTo
      */
-    #[Optional(list: 'string', nullable: true)]
-    public ?array $restricted_to;
+    #[Optional('restricted_to', list: 'string', nullable: true)]
+    public ?array $restrictedTo;
 
     /**
      * Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Optional(nullable: true)]
-    public ?int $subscription_cycles;
+    #[Optional('subscription_cycles', nullable: true)]
+    public ?int $subscriptionCycles;
 
     /**
      * If present, update the discount type.
@@ -78,8 +78,8 @@ final class DiscountUpdateParams implements BaseModel
     #[Optional(enum: DiscountType::class, nullable: true)]
     public ?string $type;
 
-    #[Optional(nullable: true)]
-    public ?int $usage_limit;
+    #[Optional('usage_limit', nullable: true)]
+    public ?int $usageLimit;
 
     public function __construct()
     {
@@ -91,29 +91,29 @@ final class DiscountUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string>|null $restricted_to
+     * @param list<string>|null $restrictedTo
      * @param DiscountType|value-of<DiscountType>|null $type
      */
     public static function with(
         ?int $amount = null,
         ?string $code = null,
-        ?\DateTimeInterface $expires_at = null,
+        ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
-        ?array $restricted_to = null,
-        ?int $subscription_cycles = null,
+        ?array $restrictedTo = null,
+        ?int $subscriptionCycles = null,
         DiscountType|string|null $type = null,
-        ?int $usage_limit = null,
+        ?int $usageLimit = null,
     ): self {
         $obj = new self;
 
         null !== $amount && $obj['amount'] = $amount;
         null !== $code && $obj['code'] = $code;
-        null !== $expires_at && $obj['expires_at'] = $expires_at;
+        null !== $expiresAt && $obj['expiresAt'] = $expiresAt;
         null !== $name && $obj['name'] = $name;
-        null !== $restricted_to && $obj['restricted_to'] = $restricted_to;
-        null !== $subscription_cycles && $obj['subscription_cycles'] = $subscription_cycles;
+        null !== $restrictedTo && $obj['restrictedTo'] = $restrictedTo;
+        null !== $subscriptionCycles && $obj['subscriptionCycles'] = $subscriptionCycles;
         null !== $type && $obj['type'] = $type;
-        null !== $usage_limit && $obj['usage_limit'] = $usage_limit;
+        null !== $usageLimit && $obj['usageLimit'] = $usageLimit;
 
         return $obj;
     }
@@ -147,7 +147,7 @@ final class DiscountUpdateParams implements BaseModel
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj['expires_at'] = $expiresAt;
+        $obj['expiresAt'] = $expiresAt;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class DiscountUpdateParams implements BaseModel
     public function withRestrictedTo(?array $restrictedTo): self
     {
         $obj = clone $this;
-        $obj['restricted_to'] = $restrictedTo;
+        $obj['restrictedTo'] = $restrictedTo;
 
         return $obj;
     }
@@ -182,7 +182,7 @@ final class DiscountUpdateParams implements BaseModel
     public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
         $obj = clone $this;
-        $obj['subscription_cycles'] = $subscriptionCycles;
+        $obj['subscriptionCycles'] = $subscriptionCycles;
 
         return $obj;
     }
@@ -203,7 +203,7 @@ final class DiscountUpdateParams implements BaseModel
     public function withUsageLimit(?int $usageLimit): self
     {
         $obj = clone $this;
-        $obj['usage_limit'] = $usageLimit;
+        $obj['usageLimit'] = $usageLimit;
 
         return $obj;
     }

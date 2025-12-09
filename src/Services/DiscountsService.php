@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountCreateParams;
@@ -33,11 +34,11 @@ final class DiscountsService implements DiscountsContract
      *   amount: int,
      *   type: 'percentage'|DiscountType,
      *   code?: string|null,
-     *   expires_at?: string|\DateTimeInterface|null,
+     *   expiresAt?: string|\DateTimeInterface|null,
      *   name?: string|null,
-     *   restricted_to?: list<string>|null,
-     *   subscription_cycles?: int|null,
-     *   usage_limit?: int|null,
+     *   restrictedTo?: list<string>|null,
+     *   subscriptionCycles?: int|null,
+     *   usageLimit?: int|null,
      * }|DiscountCreateParams $params
      *
      * @throws APIException
@@ -93,12 +94,12 @@ final class DiscountsService implements DiscountsContract
      * @param array{
      *   amount?: int|null,
      *   code?: string|null,
-     *   expires_at?: string|\DateTimeInterface|null,
+     *   expiresAt?: string|\DateTimeInterface|null,
      *   name?: string|null,
-     *   restricted_to?: list<string>|null,
-     *   subscription_cycles?: int|null,
+     *   restrictedTo?: list<string>|null,
+     *   subscriptionCycles?: int|null,
      *   type?: 'percentage'|DiscountType|null,
-     *   usage_limit?: int|null,
+     *   usageLimit?: int|null,
      * }|DiscountUpdateParams $params
      *
      * @throws APIException
@@ -130,7 +131,7 @@ final class DiscountsService implements DiscountsContract
      *
      * GET /discounts
      *
-     * @param array{page_number?: int, page_size?: int}|DiscountListParams $params
+     * @param array{pageNumber?: int, pageSize?: int}|DiscountListParams $params
      *
      * @return DefaultPageNumberPagination<Discount>
      *
@@ -149,7 +150,10 @@ final class DiscountsService implements DiscountsContract
         $response = $this->client->request(
             method: 'get',
             path: 'discounts',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: Discount::class,
             page: DefaultPageNumberPagination::class,

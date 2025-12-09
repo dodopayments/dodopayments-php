@@ -13,11 +13,11 @@ use Dodopayments\Misc\Currency;
 /**
  * @phpstan-type SummaryShape = array{
  *   currency: value-of<Currency>,
- *   customer_credits: int,
- *   settlement_amount: int,
- *   settlement_currency: value-of<Currency>,
- *   total_amount: int,
- *   settlement_tax?: int|null,
+ *   customerCredits: int,
+ *   settlementAmount: int,
+ *   settlementCurrency: value-of<Currency>,
+ *   totalAmount: int,
+ *   settlementTax?: int|null,
  *   tax?: int|null,
  * }
  */
@@ -30,21 +30,21 @@ final class Summary implements BaseModel
     #[Required(enum: Currency::class)]
     public string $currency;
 
-    #[Required]
-    public int $customer_credits;
+    #[Required('customer_credits')]
+    public int $customerCredits;
 
-    #[Required]
-    public int $settlement_amount;
+    #[Required('settlement_amount')]
+    public int $settlementAmount;
 
-    /** @var value-of<Currency> $settlement_currency */
-    #[Required(enum: Currency::class)]
-    public string $settlement_currency;
+    /** @var value-of<Currency> $settlementCurrency */
+    #[Required('settlement_currency', enum: Currency::class)]
+    public string $settlementCurrency;
 
-    #[Required]
-    public int $total_amount;
+    #[Required('total_amount')]
+    public int $totalAmount;
 
-    #[Optional(nullable: true)]
-    public ?int $settlement_tax;
+    #[Optional('settlement_tax', nullable: true)]
+    public ?int $settlementTax;
 
     #[Optional(nullable: true)]
     public ?int $tax;
@@ -56,10 +56,10 @@ final class Summary implements BaseModel
      * ```
      * Summary::with(
      *   currency: ...,
-     *   customer_credits: ...,
-     *   settlement_amount: ...,
-     *   settlement_currency: ...,
-     *   total_amount: ...,
+     *   customerCredits: ...,
+     *   settlementAmount: ...,
+     *   settlementCurrency: ...,
+     *   totalAmount: ...,
      * )
      * ```
      *
@@ -85,26 +85,26 @@ final class Summary implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param Currency|value-of<Currency> $settlement_currency
+     * @param Currency|value-of<Currency> $settlementCurrency
      */
     public static function with(
         Currency|string $currency,
-        int $customer_credits,
-        int $settlement_amount,
-        Currency|string $settlement_currency,
-        int $total_amount,
-        ?int $settlement_tax = null,
+        int $customerCredits,
+        int $settlementAmount,
+        Currency|string $settlementCurrency,
+        int $totalAmount,
+        ?int $settlementTax = null,
         ?int $tax = null,
     ): self {
         $obj = new self;
 
         $obj['currency'] = $currency;
-        $obj['customer_credits'] = $customer_credits;
-        $obj['settlement_amount'] = $settlement_amount;
-        $obj['settlement_currency'] = $settlement_currency;
-        $obj['total_amount'] = $total_amount;
+        $obj['customerCredits'] = $customerCredits;
+        $obj['settlementAmount'] = $settlementAmount;
+        $obj['settlementCurrency'] = $settlementCurrency;
+        $obj['totalAmount'] = $totalAmount;
 
-        null !== $settlement_tax && $obj['settlement_tax'] = $settlement_tax;
+        null !== $settlementTax && $obj['settlementTax'] = $settlementTax;
         null !== $tax && $obj['tax'] = $tax;
 
         return $obj;
@@ -124,7 +124,7 @@ final class Summary implements BaseModel
     public function withCustomerCredits(int $customerCredits): self
     {
         $obj = clone $this;
-        $obj['customer_credits'] = $customerCredits;
+        $obj['customerCredits'] = $customerCredits;
 
         return $obj;
     }
@@ -132,7 +132,7 @@ final class Summary implements BaseModel
     public function withSettlementAmount(int $settlementAmount): self
     {
         $obj = clone $this;
-        $obj['settlement_amount'] = $settlementAmount;
+        $obj['settlementAmount'] = $settlementAmount;
 
         return $obj;
     }
@@ -144,7 +144,7 @@ final class Summary implements BaseModel
         Currency|string $settlementCurrency
     ): self {
         $obj = clone $this;
-        $obj['settlement_currency'] = $settlementCurrency;
+        $obj['settlementCurrency'] = $settlementCurrency;
 
         return $obj;
     }
@@ -152,7 +152,7 @@ final class Summary implements BaseModel
     public function withTotalAmount(int $totalAmount): self
     {
         $obj = clone $this;
-        $obj['total_amount'] = $totalAmount;
+        $obj['totalAmount'] = $totalAmount;
 
         return $obj;
     }
@@ -160,7 +160,7 @@ final class Summary implements BaseModel
     public function withSettlementTax(?int $settlementTax): self
     {
         $obj = clone $this;
-        $obj['settlement_tax'] = $settlementTax;
+        $obj['settlementTax'] = $settlementTax;
 
         return $obj;
     }

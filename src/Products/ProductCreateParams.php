@@ -27,49 +27,49 @@ use Dodopayments\Subscriptions\TimeInterval;
  *     currency: value-of<Currency>,
  *     discount: int,
  *     price: int,
- *     purchasing_power_parity: bool,
+ *     purchasingPowerParity: bool,
  *     type: value-of<Type>,
- *     pay_what_you_want?: bool|null,
- *     suggested_price?: int|null,
- *     tax_inclusive?: bool|null,
+ *     payWhatYouWant?: bool|null,
+ *     suggestedPrice?: int|null,
+ *     taxInclusive?: bool|null,
  *   }|RecurringPrice|array{
  *     currency: value-of<Currency>,
  *     discount: int,
- *     payment_frequency_count: int,
- *     payment_frequency_interval: value-of<TimeInterval>,
+ *     paymentFrequencyCount: int,
+ *     paymentFrequencyInterval: value-of<TimeInterval>,
  *     price: int,
- *     purchasing_power_parity: bool,
- *     subscription_period_count: int,
- *     subscription_period_interval: value-of<TimeInterval>,
+ *     purchasingPowerParity: bool,
+ *     subscriptionPeriodCount: int,
+ *     subscriptionPeriodInterval: value-of<TimeInterval>,
  *     type: value-of<\Dodopayments\Products\Price\RecurringPrice\Type>,
- *     tax_inclusive?: bool|null,
- *     trial_period_days?: int|null,
+ *     taxInclusive?: bool|null,
+ *     trialPeriodDays?: int|null,
  *   }|UsageBasedPrice|array{
  *     currency: value-of<Currency>,
  *     discount: int,
- *     fixed_price: int,
- *     payment_frequency_count: int,
- *     payment_frequency_interval: value-of<TimeInterval>,
- *     purchasing_power_parity: bool,
- *     subscription_period_count: int,
- *     subscription_period_interval: value-of<TimeInterval>,
+ *     fixedPrice: int,
+ *     paymentFrequencyCount: int,
+ *     paymentFrequencyInterval: value-of<TimeInterval>,
+ *     purchasingPowerParity: bool,
+ *     subscriptionPeriodCount: int,
+ *     subscriptionPeriodInterval: value-of<TimeInterval>,
  *     type: value-of<\Dodopayments\Products\Price\UsageBasedPrice\Type>,
  *     meters?: list<AddMeterToPrice>|null,
- *     tax_inclusive?: bool|null,
+ *     taxInclusive?: bool|null,
  *   },
- *   tax_category: TaxCategory|value-of<TaxCategory>,
+ *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
- *   brand_id?: string|null,
+ *   brandID?: string|null,
  *   description?: string|null,
- *   digital_product_delivery?: null|DigitalProductDelivery|array{
- *     external_url?: string|null, instructions?: string|null
+ *   digitalProductDelivery?: null|DigitalProductDelivery|array{
+ *     externalURL?: string|null, instructions?: string|null
  *   },
- *   license_key_activation_message?: string|null,
- *   license_key_activations_limit?: int|null,
- *   license_key_duration?: null|LicenseKeyDuration|array{
+ *   licenseKeyActivationMessage?: string|null,
+ *   licenseKeyActivationsLimit?: int|null,
+ *   licenseKeyDuration?: null|LicenseKeyDuration|array{
  *     count: int, interval: value-of<TimeInterval>
  *   },
- *   license_key_enabled?: bool|null,
+ *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string,string>,
  * }
  */
@@ -94,10 +94,10 @@ final class ProductCreateParams implements BaseModel
     /**
      * Tax category applied to this product.
      *
-     * @var value-of<TaxCategory> $tax_category
+     * @var value-of<TaxCategory> $taxCategory
      */
-    #[Required(enum: TaxCategory::class)]
-    public string $tax_category;
+    #[Required('tax_category', enum: TaxCategory::class)]
+    public string $taxCategory;
 
     /**
      * Addons available for subscription product.
@@ -110,8 +110,8 @@ final class ProductCreateParams implements BaseModel
     /**
      * Brand id for the product, if not provided will default to primary brand.
      */
-    #[Optional(nullable: true)]
-    public ?string $brand_id;
+    #[Optional('brand_id', nullable: true)]
+    public ?string $brandID;
 
     /**
      * Optional description of the product.
@@ -122,36 +122,36 @@ final class ProductCreateParams implements BaseModel
     /**
      * Choose how you would like you digital product delivered.
      */
-    #[Optional(nullable: true)]
-    public ?DigitalProductDelivery $digital_product_delivery;
+    #[Optional('digital_product_delivery', nullable: true)]
+    public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
      * Optional message displayed during license key activation.
      */
-    #[Optional(nullable: true)]
-    public ?string $license_key_activation_message;
+    #[Optional('license_key_activation_message', nullable: true)]
+    public ?string $licenseKeyActivationMessage;
 
     /**
      * The number of times the license key can be activated.
      * Must be 0 or greater.
      */
-    #[Optional(nullable: true)]
-    public ?int $license_key_activations_limit;
+    #[Optional('license_key_activations_limit', nullable: true)]
+    public ?int $licenseKeyActivationsLimit;
 
     /**
      * Duration configuration for the license key.
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
      */
-    #[Optional(nullable: true)]
-    public ?LicenseKeyDuration $license_key_duration;
+    #[Optional('license_key_duration', nullable: true)]
+    public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
      * When true, generates and sends a license key to your customer.
      * Defaults to false.
      */
-    #[Optional(nullable: true)]
-    public ?bool $license_key_enabled;
+    #[Optional('license_key_enabled', nullable: true)]
+    public ?bool $licenseKeyEnabled;
 
     /**
      * Additional metadata for the product.
@@ -166,7 +166,7 @@ final class ProductCreateParams implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ProductCreateParams::with(name: ..., price: ..., tax_category: ...)
+     * ProductCreateParams::with(name: ..., price: ..., taxCategory: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -189,74 +189,74 @@ final class ProductCreateParams implements BaseModel
      *   currency: value-of<Currency>,
      *   discount: int,
      *   price: int,
-     *   purchasing_power_parity: bool,
+     *   purchasingPowerParity: bool,
      *   type: value-of<Type>,
-     *   pay_what_you_want?: bool|null,
-     *   suggested_price?: int|null,
-     *   tax_inclusive?: bool|null,
+     *   payWhatYouWant?: bool|null,
+     *   suggestedPrice?: int|null,
+     *   taxInclusive?: bool|null,
      * }|RecurringPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
      *   price: int,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<RecurringPrice\Type>,
-     *   tax_inclusive?: bool|null,
-     *   trial_period_days?: int|null,
+     *   taxInclusive?: bool|null,
+     *   trialPeriodDays?: int|null,
      * }|UsageBasedPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   fixed_price: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   fixedPrice: int,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<UsageBasedPrice\Type>,
      *   meters?: list<AddMeterToPrice>|null,
-     *   tax_inclusive?: bool|null,
+     *   taxInclusive?: bool|null,
      * } $price
-     * @param TaxCategory|value-of<TaxCategory> $tax_category
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
      * @param DigitalProductDelivery|array{
-     *   external_url?: string|null, instructions?: string|null
-     * }|null $digital_product_delivery
+     *   externalURL?: string|null, instructions?: string|null
+     * }|null $digitalProductDelivery
      * @param LicenseKeyDuration|array{
      *   count: int, interval: value-of<TimeInterval>
-     * }|null $license_key_duration
+     * }|null $licenseKeyDuration
      * @param array<string,string> $metadata
      */
     public static function with(
         string $name,
         OneTimePrice|array|RecurringPrice|UsageBasedPrice $price,
-        TaxCategory|string $tax_category,
+        TaxCategory|string $taxCategory,
         ?array $addons = null,
-        ?string $brand_id = null,
+        ?string $brandID = null,
         ?string $description = null,
-        DigitalProductDelivery|array|null $digital_product_delivery = null,
-        ?string $license_key_activation_message = null,
-        ?int $license_key_activations_limit = null,
-        LicenseKeyDuration|array|null $license_key_duration = null,
-        ?bool $license_key_enabled = null,
+        DigitalProductDelivery|array|null $digitalProductDelivery = null,
+        ?string $licenseKeyActivationMessage = null,
+        ?int $licenseKeyActivationsLimit = null,
+        LicenseKeyDuration|array|null $licenseKeyDuration = null,
+        ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
     ): self {
         $obj = new self;
 
         $obj['name'] = $name;
         $obj['price'] = $price;
-        $obj['tax_category'] = $tax_category;
+        $obj['taxCategory'] = $taxCategory;
 
         null !== $addons && $obj['addons'] = $addons;
-        null !== $brand_id && $obj['brand_id'] = $brand_id;
+        null !== $brandID && $obj['brandID'] = $brandID;
         null !== $description && $obj['description'] = $description;
-        null !== $digital_product_delivery && $obj['digital_product_delivery'] = $digital_product_delivery;
-        null !== $license_key_activation_message && $obj['license_key_activation_message'] = $license_key_activation_message;
-        null !== $license_key_activations_limit && $obj['license_key_activations_limit'] = $license_key_activations_limit;
-        null !== $license_key_duration && $obj['license_key_duration'] = $license_key_duration;
-        null !== $license_key_enabled && $obj['license_key_enabled'] = $license_key_enabled;
+        null !== $digitalProductDelivery && $obj['digitalProductDelivery'] = $digitalProductDelivery;
+        null !== $licenseKeyActivationMessage && $obj['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
+        null !== $licenseKeyActivationsLimit && $obj['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
+        null !== $licenseKeyDuration && $obj['licenseKeyDuration'] = $licenseKeyDuration;
+        null !== $licenseKeyEnabled && $obj['licenseKeyEnabled'] = $licenseKeyEnabled;
         null !== $metadata && $obj['metadata'] = $metadata;
 
         return $obj;
@@ -280,35 +280,35 @@ final class ProductCreateParams implements BaseModel
      *   currency: value-of<Currency>,
      *   discount: int,
      *   price: int,
-     *   purchasing_power_parity: bool,
+     *   purchasingPowerParity: bool,
      *   type: value-of<Type>,
-     *   pay_what_you_want?: bool|null,
-     *   suggested_price?: int|null,
-     *   tax_inclusive?: bool|null,
+     *   payWhatYouWant?: bool|null,
+     *   suggestedPrice?: int|null,
+     *   taxInclusive?: bool|null,
      * }|RecurringPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
      *   price: int,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<RecurringPrice\Type>,
-     *   tax_inclusive?: bool|null,
-     *   trial_period_days?: int|null,
+     *   taxInclusive?: bool|null,
+     *   trialPeriodDays?: int|null,
      * }|UsageBasedPrice|array{
      *   currency: value-of<Currency>,
      *   discount: int,
-     *   fixed_price: int,
-     *   payment_frequency_count: int,
-     *   payment_frequency_interval: value-of<TimeInterval>,
-     *   purchasing_power_parity: bool,
-     *   subscription_period_count: int,
-     *   subscription_period_interval: value-of<TimeInterval>,
+     *   fixedPrice: int,
+     *   paymentFrequencyCount: int,
+     *   paymentFrequencyInterval: value-of<TimeInterval>,
+     *   purchasingPowerParity: bool,
+     *   subscriptionPeriodCount: int,
+     *   subscriptionPeriodInterval: value-of<TimeInterval>,
      *   type: value-of<UsageBasedPrice\Type>,
      *   meters?: list<AddMeterToPrice>|null,
-     *   tax_inclusive?: bool|null,
+     *   taxInclusive?: bool|null,
      * } $price
      */
     public function withPrice(
@@ -328,7 +328,7 @@ final class ProductCreateParams implements BaseModel
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
         $obj = clone $this;
-        $obj['tax_category'] = $taxCategory;
+        $obj['taxCategory'] = $taxCategory;
 
         return $obj;
     }
@@ -352,7 +352,7 @@ final class ProductCreateParams implements BaseModel
     public function withBrandID(?string $brandID): self
     {
         $obj = clone $this;
-        $obj['brand_id'] = $brandID;
+        $obj['brandID'] = $brandID;
 
         return $obj;
     }
@@ -372,14 +372,14 @@ final class ProductCreateParams implements BaseModel
      * Choose how you would like you digital product delivered.
      *
      * @param DigitalProductDelivery|array{
-     *   external_url?: string|null, instructions?: string|null
+     *   externalURL?: string|null, instructions?: string|null
      * }|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
         DigitalProductDelivery|array|null $digitalProductDelivery
     ): self {
         $obj = clone $this;
-        $obj['digital_product_delivery'] = $digitalProductDelivery;
+        $obj['digitalProductDelivery'] = $digitalProductDelivery;
 
         return $obj;
     }
@@ -391,7 +391,7 @@ final class ProductCreateParams implements BaseModel
         ?string $licenseKeyActivationMessage
     ): self {
         $obj = clone $this;
-        $obj['license_key_activation_message'] = $licenseKeyActivationMessage;
+        $obj['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
 
         return $obj;
     }
@@ -404,7 +404,7 @@ final class ProductCreateParams implements BaseModel
         ?int $licenseKeyActivationsLimit
     ): self {
         $obj = clone $this;
-        $obj['license_key_activations_limit'] = $licenseKeyActivationsLimit;
+        $obj['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
 
         return $obj;
     }
@@ -422,7 +422,7 @@ final class ProductCreateParams implements BaseModel
         LicenseKeyDuration|array|null $licenseKeyDuration
     ): self {
         $obj = clone $this;
-        $obj['license_key_duration'] = $licenseKeyDuration;
+        $obj['licenseKeyDuration'] = $licenseKeyDuration;
 
         return $obj;
     }
@@ -434,7 +434,7 @@ final class ProductCreateParams implements BaseModel
     public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {
         $obj = clone $this;
-        $obj['license_key_enabled'] = $licenseKeyEnabled;
+        $obj['licenseKeyEnabled'] = $licenseKeyEnabled;
 
         return $obj;
     }

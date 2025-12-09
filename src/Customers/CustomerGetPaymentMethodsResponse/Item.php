@@ -15,12 +15,12 @@ use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
  * @phpstan-type ItemShape = array{
- *   payment_method: value-of<PaymentMethod>,
- *   payment_method_id: string,
+ *   paymentMethod: value-of<PaymentMethod>,
+ *   paymentMethodID: string,
  *   card?: Card|null,
- *   last_used_at?: \DateTimeInterface|null,
- *   payment_method_type?: value-of<PaymentMethodTypes>|null,
- *   recurring_enabled?: bool|null,
+ *   lastUsedAt?: \DateTimeInterface|null,
+ *   paymentMethodType?: value-of<PaymentMethodTypes>|null,
+ *   recurringEnabled?: bool|null,
  * }
  */
 final class Item implements BaseModel
@@ -33,33 +33,37 @@ final class Item implements BaseModel
      *
      * https://github.com/juspay/hyperswitch/blob/ecd05d53c99ae701ac94893ec632a3988afe3238/crates/common_enums/src/enums.rs#L2097
      *
-     * @var value-of<PaymentMethod> $payment_method
+     * @var value-of<PaymentMethod> $paymentMethod
      */
-    #[Required(enum: PaymentMethod::class)]
-    public string $payment_method;
+    #[Required('payment_method', enum: PaymentMethod::class)]
+    public string $paymentMethod;
 
-    #[Required]
-    public string $payment_method_id;
+    #[Required('payment_method_id')]
+    public string $paymentMethodID;
 
     #[Optional(nullable: true)]
     public ?Card $card;
 
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $last_used_at;
+    #[Optional('last_used_at', nullable: true)]
+    public ?\DateTimeInterface $lastUsedAt;
 
-    /** @var value-of<PaymentMethodTypes>|null $payment_method_type */
-    #[Optional(enum: PaymentMethodTypes::class, nullable: true)]
-    public ?string $payment_method_type;
+    /** @var value-of<PaymentMethodTypes>|null $paymentMethodType */
+    #[Optional(
+        'payment_method_type',
+        enum: PaymentMethodTypes::class,
+        nullable: true
+    )]
+    public ?string $paymentMethodType;
 
-    #[Optional(nullable: true)]
-    public ?bool $recurring_enabled;
+    #[Optional('recurring_enabled', nullable: true)]
+    public ?bool $recurringEnabled;
 
     /**
      * `new Item()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Item::with(payment_method: ..., payment_method_id: ...)
+     * Item::with(paymentMethod: ..., paymentMethodID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -78,34 +82,34 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param PaymentMethod|value-of<PaymentMethod> $payment_method
+     * @param PaymentMethod|value-of<PaymentMethod> $paymentMethod
      * @param Card|array{
-     *   card_issuing_country?: value-of<CountryCode>|null,
-     *   card_network?: string|null,
-     *   card_type?: string|null,
-     *   expiry_month?: string|null,
-     *   expiry_year?: string|null,
-     *   last4_digits?: string|null,
+     *   cardIssuingCountry?: value-of<CountryCode>|null,
+     *   cardNetwork?: string|null,
+     *   cardType?: string|null,
+     *   expiryMonth?: string|null,
+     *   expiryYear?: string|null,
+     *   last4Digits?: string|null,
      * }|null $card
-     * @param PaymentMethodTypes|value-of<PaymentMethodTypes>|null $payment_method_type
+     * @param PaymentMethodTypes|value-of<PaymentMethodTypes>|null $paymentMethodType
      */
     public static function with(
-        PaymentMethod|string $payment_method,
-        string $payment_method_id,
+        PaymentMethod|string $paymentMethod,
+        string $paymentMethodID,
         Card|array|null $card = null,
-        ?\DateTimeInterface $last_used_at = null,
-        PaymentMethodTypes|string|null $payment_method_type = null,
-        ?bool $recurring_enabled = null,
+        ?\DateTimeInterface $lastUsedAt = null,
+        PaymentMethodTypes|string|null $paymentMethodType = null,
+        ?bool $recurringEnabled = null,
     ): self {
         $obj = new self;
 
-        $obj['payment_method'] = $payment_method;
-        $obj['payment_method_id'] = $payment_method_id;
+        $obj['paymentMethod'] = $paymentMethod;
+        $obj['paymentMethodID'] = $paymentMethodID;
 
         null !== $card && $obj['card'] = $card;
-        null !== $last_used_at && $obj['last_used_at'] = $last_used_at;
-        null !== $payment_method_type && $obj['payment_method_type'] = $payment_method_type;
-        null !== $recurring_enabled && $obj['recurring_enabled'] = $recurring_enabled;
+        null !== $lastUsedAt && $obj['lastUsedAt'] = $lastUsedAt;
+        null !== $paymentMethodType && $obj['paymentMethodType'] = $paymentMethodType;
+        null !== $recurringEnabled && $obj['recurringEnabled'] = $recurringEnabled;
 
         return $obj;
     }
@@ -120,7 +124,7 @@ final class Item implements BaseModel
     public function withPaymentMethod(PaymentMethod|string $paymentMethod): self
     {
         $obj = clone $this;
-        $obj['payment_method'] = $paymentMethod;
+        $obj['paymentMethod'] = $paymentMethod;
 
         return $obj;
     }
@@ -128,19 +132,19 @@ final class Item implements BaseModel
     public function withPaymentMethodID(string $paymentMethodID): self
     {
         $obj = clone $this;
-        $obj['payment_method_id'] = $paymentMethodID;
+        $obj['paymentMethodID'] = $paymentMethodID;
 
         return $obj;
     }
 
     /**
      * @param Card|array{
-     *   card_issuing_country?: value-of<CountryCode>|null,
-     *   card_network?: string|null,
-     *   card_type?: string|null,
-     *   expiry_month?: string|null,
-     *   expiry_year?: string|null,
-     *   last4_digits?: string|null,
+     *   cardIssuingCountry?: value-of<CountryCode>|null,
+     *   cardNetwork?: string|null,
+     *   cardType?: string|null,
+     *   expiryMonth?: string|null,
+     *   expiryYear?: string|null,
+     *   last4Digits?: string|null,
      * }|null $card
      */
     public function withCard(Card|array|null $card): self
@@ -154,7 +158,7 @@ final class Item implements BaseModel
     public function withLastUsedAt(?\DateTimeInterface $lastUsedAt): self
     {
         $obj = clone $this;
-        $obj['last_used_at'] = $lastUsedAt;
+        $obj['lastUsedAt'] = $lastUsedAt;
 
         return $obj;
     }
@@ -166,7 +170,7 @@ final class Item implements BaseModel
         PaymentMethodTypes|string|null $paymentMethodType
     ): self {
         $obj = clone $this;
-        $obj['payment_method_type'] = $paymentMethodType;
+        $obj['paymentMethodType'] = $paymentMethodType;
 
         return $obj;
     }
@@ -174,7 +178,7 @@ final class Item implements BaseModel
     public function withRecurringEnabled(?bool $recurringEnabled): self
     {
         $obj = clone $this;
-        $obj['recurring_enabled'] = $recurringEnabled;
+        $obj['recurringEnabled'] = $recurringEnabled;
 
         return $obj;
     }

@@ -12,14 +12,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type WebhookDetailsShape = array{
  *   id: string,
- *   created_at: string,
+ *   createdAt: string,
  *   description: string,
  *   metadata: array<string,string>,
- *   updated_at: string,
+ *   updatedAt: string,
  *   url: string,
  *   disabled?: bool|null,
- *   filter_types?: list<string>|null,
- *   rate_limit?: int|null,
+ *   filterTypes?: list<string>|null,
+ *   rateLimit?: int|null,
  * }
  */
 final class WebhookDetails implements BaseModel
@@ -36,8 +36,8 @@ final class WebhookDetails implements BaseModel
     /**
      * Created at timestamp.
      */
-    #[Required]
-    public string $created_at;
+    #[Required('created_at')]
+    public string $createdAt;
 
     /**
      * An example webhook name.
@@ -56,8 +56,8 @@ final class WebhookDetails implements BaseModel
     /**
      * Updated at timestamp.
      */
-    #[Required]
-    public string $updated_at;
+    #[Required('updated_at')]
+    public string $updatedAt;
 
     /**
      * Url endpoint of the webhook.
@@ -78,16 +78,16 @@ final class WebhookDetails implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var list<string>|null $filter_types
+     * @var list<string>|null $filterTypes
      */
-    #[Optional(list: 'string', nullable: true)]
-    public ?array $filter_types;
+    #[Optional('filter_types', list: 'string', nullable: true)]
+    public ?array $filterTypes;
 
     /**
      * Configured rate limit.
      */
-    #[Optional(nullable: true)]
-    public ?int $rate_limit;
+    #[Optional('rate_limit', nullable: true)]
+    public ?int $rateLimit;
 
     /**
      * `new WebhookDetails()` is missing required properties by the API.
@@ -96,10 +96,10 @@ final class WebhookDetails implements BaseModel
      * ```
      * WebhookDetails::with(
      *   id: ...,
-     *   created_at: ...,
+     *   createdAt: ...,
      *   description: ...,
      *   metadata: ...,
-     *   updated_at: ...,
+     *   updatedAt: ...,
      *   url: ...,
      * )
      * ```
@@ -127,31 +127,31 @@ final class WebhookDetails implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,string> $metadata
-     * @param list<string>|null $filter_types
+     * @param list<string>|null $filterTypes
      */
     public static function with(
         string $id,
-        string $created_at,
+        string $createdAt,
         string $description,
         array $metadata,
-        string $updated_at,
+        string $updatedAt,
         string $url,
         ?bool $disabled = null,
-        ?array $filter_types = null,
-        ?int $rate_limit = null,
+        ?array $filterTypes = null,
+        ?int $rateLimit = null,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['created_at'] = $created_at;
+        $obj['createdAt'] = $createdAt;
         $obj['description'] = $description;
         $obj['metadata'] = $metadata;
-        $obj['updated_at'] = $updated_at;
+        $obj['updatedAt'] = $updatedAt;
         $obj['url'] = $url;
 
         null !== $disabled && $obj['disabled'] = $disabled;
-        null !== $filter_types && $obj['filter_types'] = $filter_types;
-        null !== $rate_limit && $obj['rate_limit'] = $rate_limit;
+        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
+        null !== $rateLimit && $obj['rateLimit'] = $rateLimit;
 
         return $obj;
     }
@@ -173,7 +173,7 @@ final class WebhookDetails implements BaseModel
     public function withCreatedAt(string $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -208,7 +208,7 @@ final class WebhookDetails implements BaseModel
     public function withUpdatedAt(string $updatedAt): self
     {
         $obj = clone $this;
-        $obj['updated_at'] = $updatedAt;
+        $obj['updatedAt'] = $updatedAt;
 
         return $obj;
     }
@@ -247,7 +247,7 @@ final class WebhookDetails implements BaseModel
     public function withFilterTypes(?array $filterTypes): self
     {
         $obj = clone $this;
-        $obj['filter_types'] = $filterTypes;
+        $obj['filterTypes'] = $filterTypes;
 
         return $obj;
     }
@@ -258,7 +258,7 @@ final class WebhookDetails implements BaseModel
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj['rate_limit'] = $rateLimit;
+        $obj['rateLimit'] = $rateLimit;
 
         return $obj;
     }

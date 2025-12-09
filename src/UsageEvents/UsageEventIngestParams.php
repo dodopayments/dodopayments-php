@@ -46,9 +46,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type UsageEventIngestParamsShape = array{
  *   events: list<EventInput|array{
- *     customer_id: string,
- *     event_id: string,
- *     event_name: string,
+ *     customerID: string,
+ *     eventID: string,
+ *     eventName: string,
  *     metadata?: array<string,string|float|bool>|null,
  *     timestamp?: \DateTimeInterface|null,
  *   }>,
@@ -93,9 +93,9 @@ final class UsageEventIngestParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<EventInput|array{
-     *   customer_id: string,
-     *   event_id: string,
-     *   event_name: string,
+     *   customerID: string,
+     *   eventID: string,
+     *   eventName: string,
      *   metadata?: array<string,string|float|bool>|null,
      *   timestamp?: \DateTimeInterface|null,
      * }> $events
@@ -113,9 +113,9 @@ final class UsageEventIngestParams implements BaseModel
      * List of events to be pushed.
      *
      * @param list<EventInput|array{
-     *   customer_id: string,
-     *   event_id: string,
-     *   event_name: string,
+     *   customerID: string,
+     *   eventID: string,
+     *   eventName: string,
      *   metadata?: array<string,string|float|bool>|null,
      *   timestamp?: \DateTimeInterface|null,
      * }> $events
