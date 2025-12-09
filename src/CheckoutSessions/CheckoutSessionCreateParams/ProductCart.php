@@ -12,7 +12,7 @@ use Dodopayments\Subscriptions\AttachAddon;
 
 /**
  * @phpstan-type ProductCartShape = array{
- *   product_id: string,
+ *   productID: string,
  *   quantity: int,
  *   addons?: list<AttachAddon>|null,
  *   amount?: int|null,
@@ -26,8 +26,8 @@ final class ProductCart implements BaseModel
     /**
      * unique id of the product.
      */
-    #[Required]
-    public string $product_id;
+    #[Required('product_id')]
+    public string $productID;
 
     #[Required]
     public int $quantity;
@@ -57,7 +57,7 @@ final class ProductCart implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ProductCart::with(product_id: ..., quantity: ...)
+     * ProductCart::with(productID: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -76,17 +76,17 @@ final class ProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
+     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
      */
     public static function with(
-        string $product_id,
+        string $productID,
         int $quantity,
         ?array $addons = null,
-        ?int $amount = null,
+        ?int $amount = null
     ): self {
         $obj = new self;
 
-        $obj['product_id'] = $product_id;
+        $obj['productID'] = $productID;
         $obj['quantity'] = $quantity;
 
         null !== $addons && $obj['addons'] = $addons;
@@ -101,7 +101,7 @@ final class ProductCart implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj['product_id'] = $productID;
+        $obj['productID'] = $productID;
 
         return $obj;
     }
@@ -117,7 +117,7 @@ final class ProductCart implements BaseModel
     /**
      * only valid if product is a subscription.
      *
-     * @param list<AttachAddon|array{addon_id: string, quantity: int}>|null $addons
+     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
      */
     public function withAddons(?array $addons): self
     {

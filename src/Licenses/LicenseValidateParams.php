@@ -14,7 +14,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\LicensesService::validate()
  *
  * @phpstan-type LicenseValidateParamsShape = array{
- *   license_key: string, license_key_instance_id?: string|null
+ *   licenseKey: string, licenseKeyInstanceID?: string|null
  * }
  */
 final class LicenseValidateParams implements BaseModel
@@ -23,18 +23,18 @@ final class LicenseValidateParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    #[Required]
-    public string $license_key;
+    #[Required('license_key')]
+    public string $licenseKey;
 
-    #[Optional(nullable: true)]
-    public ?string $license_key_instance_id;
+    #[Optional('license_key_instance_id', nullable: true)]
+    public ?string $licenseKeyInstanceID;
 
     /**
      * `new LicenseValidateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * LicenseValidateParams::with(license_key: ...)
+     * LicenseValidateParams::with(licenseKey: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -54,14 +54,14 @@ final class LicenseValidateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $license_key,
-        ?string $license_key_instance_id = null
+        string $licenseKey,
+        ?string $licenseKeyInstanceID = null
     ): self {
         $obj = new self;
 
-        $obj['license_key'] = $license_key;
+        $obj['licenseKey'] = $licenseKey;
 
-        null !== $license_key_instance_id && $obj['license_key_instance_id'] = $license_key_instance_id;
+        null !== $licenseKeyInstanceID && $obj['licenseKeyInstanceID'] = $licenseKeyInstanceID;
 
         return $obj;
     }
@@ -69,7 +69,7 @@ final class LicenseValidateParams implements BaseModel
     public function withLicenseKey(string $licenseKey): self
     {
         $obj = clone $this;
-        $obj['license_key'] = $licenseKey;
+        $obj['licenseKey'] = $licenseKey;
 
         return $obj;
     }
@@ -78,7 +78,7 @@ final class LicenseValidateParams implements BaseModel
         ?string $licenseKeyInstanceID
     ): self {
         $obj = clone $this;
-        $obj['license_key_instance_id'] = $licenseKeyInstanceID;
+        $obj['licenseKeyInstanceID'] = $licenseKeyInstanceID;
 
         return $obj;
     }

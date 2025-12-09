@@ -30,7 +30,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->refunds->create(['payment_id' => 'payment_id']);
+        $result = $this->client->refunds->create(['paymentID' => 'payment_id']);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Refund::class, $result);
@@ -40,9 +40,9 @@ final class RefundsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->refunds->create([
-            'payment_id' => 'payment_id',
+            'paymentID' => 'payment_id',
             'items' => [
-                ['item_id' => 'item_id', 'amount' => 0, 'tax_inclusive' => true],
+                ['itemID' => 'item_id', 'amount' => 0, 'taxInclusive' => true],
             ],
             'metadata' => ['foo' => 'string'],
             'reason' => 'reason',

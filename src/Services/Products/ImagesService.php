@@ -7,6 +7,7 @@ namespace Dodopayments\Services\Products;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
@@ -22,7 +23,7 @@ final class ImagesService implements ImagesContract
     /**
      * @api
      *
-     * @param array{force_update?: bool}|ImageUpdateParams $params
+     * @param array{forceUpdate?: bool}|ImageUpdateParams $params
      *
      * @throws APIException
      */
@@ -40,7 +41,10 @@ final class ImagesService implements ImagesContract
         $response = $this->client->request(
             method: 'put',
             path: ['products/%1$s/images', $id],
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['forceUpdate' => 'force_update']
+            ),
             options: $options,
             convert: ImageUpdateResponse::class,
         );

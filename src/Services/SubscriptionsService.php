@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
@@ -31,6 +32,7 @@ use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 final class SubscriptionsService implements SubscriptionsContract
@@ -52,26 +54,26 @@ final class SubscriptionsService implements SubscriptionsContract
      *     zipcode?: string|null,
      *   }|BillingAddress,
      *   customer: array<string,mixed>,
-     *   product_id: string,
+     *   productID: string,
      *   quantity: int,
-     *   addons?: list<array{addon_id: string, quantity: int}>|null,
-     *   allowed_payment_method_types?: list<'credit'|'debit'|'upi_collect'|'upi_intent'|'apple_pay'|'cashapp'|'google_pay'|'multibanco'|'bancontact_card'|'eps'|'ideal'|'przelewy24'|'paypal'|'affirm'|'klarna'|'sepa'|'ach'|'amazon_pay'|'afterpay_clearpay'|PaymentMethodTypes>|null,
-     *   billing_currency?: value-of<Currency>,
-     *   discount_code?: string|null,
-     *   force_3ds?: bool|null,
+     *   addons?: list<array{addonID: string, quantity: int}>|null,
+     *   allowedPaymentMethodTypes?: list<'credit'|'debit'|'upi_collect'|'upi_intent'|'apple_pay'|'cashapp'|'google_pay'|'multibanco'|'bancontact_card'|'eps'|'ideal'|'przelewy24'|'paypal'|'affirm'|'klarna'|'sepa'|'ach'|'amazon_pay'|'afterpay_clearpay'|PaymentMethodTypes>|null,
+     *   billingCurrency?: value-of<Currency>,
+     *   discountCode?: string|null,
+     *   force3DS?: bool|null,
      *   metadata?: array<string,string>,
-     *   on_demand?: array{
-     *     mandate_only: bool,
-     *     adaptive_currency_fees_inclusive?: bool|null,
-     *     product_currency?: 'AED'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BRL'|'BSD'|'BWP'|'BYN'|'BZD'|'CAD'|'CHF'|'CLP'|'CNY'|'COP'|'CRC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SEK'|'SGD'|'SHP'|'SLE'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SZL'|'THB'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'UYU'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|Currency|null,
-     *     product_description?: string|null,
-     *     product_price?: int|null,
+     *   onDemand?: array{
+     *     mandateOnly: bool,
+     *     adaptiveCurrencyFeesInclusive?: bool|null,
+     *     productCurrency?: 'AED'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BRL'|'BSD'|'BWP'|'BYN'|'BZD'|'CAD'|'CHF'|'CLP'|'CNY'|'COP'|'CRC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SEK'|'SGD'|'SHP'|'SLE'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SZL'|'THB'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'UYU'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|Currency|null,
+     *     productDescription?: string|null,
+     *     productPrice?: int|null,
      *   }|null,
-     *   payment_link?: bool|null,
-     *   return_url?: string|null,
-     *   show_saved_payment_methods?: bool,
-     *   tax_id?: string|null,
-     *   trial_period_days?: int|null,
+     *   paymentLink?: bool|null,
+     *   returnURL?: string|null,
+     *   showSavedPaymentMethods?: bool,
+     *   taxID?: string|null,
+     *   trialPeriodDays?: int|null,
      * }|SubscriptionCreateParams $params
      *
      * @throws APIException
@@ -128,13 +130,13 @@ final class SubscriptionsService implements SubscriptionsContract
      *     street?: string|null,
      *     zipcode?: string|null,
      *   }|BillingAddress|null,
-     *   cancel_at_next_billing_date?: bool|null,
-     *   customer_name?: string|null,
-     *   disable_on_demand?: array{next_billing_date: string|\DateTimeInterface}|null,
+     *   cancelAtNextBillingDate?: bool|null,
+     *   customerName?: string|null,
+     *   disableOnDemand?: array{nextBillingDate: string|\DateTimeInterface}|null,
      *   metadata?: array<string,string>|null,
-     *   next_billing_date?: string|\DateTimeInterface|null,
+     *   nextBillingDate?: string|\DateTimeInterface|null,
      *   status?: 'pending'|'active'|'on_hold'|'cancelled'|'failed'|'expired'|SubscriptionStatus|null,
-     *   tax_id?: string|null,
+     *   taxID?: string|null,
      * }|SubscriptionUpdateParams $params
      *
      * @throws APIException
@@ -165,12 +167,12 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param array{
-     *   brand_id?: string,
-     *   created_at_gte?: string|\DateTimeInterface,
-     *   created_at_lte?: string|\DateTimeInterface,
-     *   customer_id?: string,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   brandID?: string,
+     *   createdAtGte?: string|\DateTimeInterface,
+     *   createdAtLte?: string|\DateTimeInterface,
+     *   customerID?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      *   status?: 'pending'|'active'|'on_hold'|'cancelled'|'failed'|'expired'|Status,
      * }|SubscriptionListParams $params
      *
@@ -191,7 +193,17 @@ final class SubscriptionsService implements SubscriptionsContract
         $response = $this->client->request(
             method: 'get',
             path: 'subscriptions',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'brandID' => 'brand_id',
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
+                    'customerID' => 'customer_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: SubscriptionListResponse::class,
             page: DefaultPageNumberPagination::class,
@@ -204,10 +216,10 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param array{
-     *   product_id: string,
-     *   proration_billing_mode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|ProrationBillingMode,
+     *   productID: string,
+     *   prorationBillingMode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|ProrationBillingMode,
      *   quantity: int,
-     *   addons?: list<array{addon_id: string, quantity: int}>|null,
+     *   addons?: list<array{addonID: string, quantity: int}>|null,
      * }|SubscriptionChangePlanParams $params
      *
      * @throws APIException
@@ -238,15 +250,15 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param array{
-     *   product_price: int,
-     *   adaptive_currency_fees_inclusive?: bool|null,
-     *   customer_balance_config?: array{
-     *     allow_customer_credits_purchase?: bool|null,
-     *     allow_customer_credits_usage?: bool|null,
+     *   productPrice: int,
+     *   adaptiveCurrencyFeesInclusive?: bool|null,
+     *   customerBalanceConfig?: array{
+     *     allowCustomerCreditsPurchase?: bool|null,
+     *     allowCustomerCreditsUsage?: bool|null,
      *   }|null,
      *   metadata?: array<string,string>|null,
-     *   product_currency?: value-of<Currency>,
-     *   product_description?: string|null,
+     *   productCurrency?: value-of<Currency>,
+     *   productDescription?: string|null,
      * }|SubscriptionChargeParams $params
      *
      * @throws APIException
@@ -277,10 +289,10 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param array{
-     *   product_id: string,
-     *   proration_billing_mode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|SubscriptionPreviewChangePlanParams\ProrationBillingMode,
+     *   productID: string,
+     *   prorationBillingMode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|SubscriptionPreviewChangePlanParams\ProrationBillingMode,
      *   quantity: int,
-     *   addons?: list<array{addon_id: string, quantity: int}>|null,
+     *   addons?: list<array{addonID: string, quantity: int}>|null,
      * }|SubscriptionPreviewChangePlanParams $params
      *
      * @throws APIException
@@ -343,11 +355,11 @@ final class SubscriptionsService implements SubscriptionsContract
      * - Recent usage: `?start_date=2024-03-01T00:00:00Z` (from March 1st to now)
      *
      * @param array{
-     *   end_date?: string|\DateTimeInterface|null,
-     *   meter_id?: string|null,
-     *   page_number?: int|null,
-     *   page_size?: int|null,
-     *   start_date?: string|\DateTimeInterface|null,
+     *   endDate?: string|\DateTimeInterface|null,
+     *   meterID?: string|null,
+     *   pageNumber?: int|null,
+     *   pageSize?: int|null,
+     *   startDate?: string|\DateTimeInterface|null,
      * }|SubscriptionRetrieveUsageHistoryParams $params
      *
      * @return DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse>
@@ -368,7 +380,16 @@ final class SubscriptionsService implements SubscriptionsContract
         $response = $this->client->request(
             method: 'get',
             path: ['subscriptions/%1$s/usage-history', $subscriptionID],
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'endDate' => 'end_date',
+                    'meterID' => 'meter_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                    'startDate' => 'start_date',
+                ],
+            ),
             options: $options,
             convert: SubscriptionGetUsageHistoryResponse::class,
             page: DefaultPageNumberPagination::class,
@@ -380,11 +401,15 @@ final class SubscriptionsService implements SubscriptionsContract
     /**
      * @api
      *
+     * @param array{
+     *   type: 'existing'|Type, returnURL?: string|null, paymentMethodID: string
+     * }|SubscriptionUpdatePaymentMethodParams $params
+     *
      * @throws APIException
      */
     public function updatePaymentMethod(
         string $subscriptionID,
-        mixed $params,
+        array|SubscriptionUpdatePaymentMethodParams $params,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionUpdatePaymentMethodResponse {
         [$parsed, $options] = SubscriptionUpdatePaymentMethodParams::parseRequest(

@@ -11,9 +11,9 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type LicenseKeyInstanceShape = array{
  *   id: string,
- *   business_id: string,
- *   created_at: \DateTimeInterface,
- *   license_key_id: string,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   licenseKeyID: string,
  *   name: string,
  * }
  */
@@ -25,14 +25,14 @@ final class LicenseKeyInstance implements BaseModel
     #[Required]
     public string $id;
 
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
-    #[Required]
-    public string $license_key_id;
+    #[Required('license_key_id')]
+    public string $licenseKeyID;
 
     #[Required]
     public string $name;
@@ -43,7 +43,7 @@ final class LicenseKeyInstance implements BaseModel
      * To enforce required parameters use
      * ```
      * LicenseKeyInstance::with(
-     *   id: ..., business_id: ..., created_at: ..., license_key_id: ..., name: ...
+     *   id: ..., businessID: ..., createdAt: ..., licenseKeyID: ..., name: ...
      * )
      * ```
      *
@@ -70,17 +70,17 @@ final class LicenseKeyInstance implements BaseModel
      */
     public static function with(
         string $id,
-        string $business_id,
-        \DateTimeInterface $created_at,
-        string $license_key_id,
+        string $businessID,
+        \DateTimeInterface $createdAt,
+        string $licenseKeyID,
         string $name,
     ): self {
         $obj = new self;
 
         $obj['id'] = $id;
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
-        $obj['license_key_id'] = $license_key_id;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
+        $obj['licenseKeyID'] = $licenseKeyID;
         $obj['name'] = $name;
 
         return $obj;
@@ -97,7 +97,7 @@ final class LicenseKeyInstance implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -105,7 +105,7 @@ final class LicenseKeyInstance implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -113,7 +113,7 @@ final class LicenseKeyInstance implements BaseModel
     public function withLicenseKeyID(string $licenseKeyID): self
     {
         $obj = clone $this;
-        $obj['license_key_id'] = $licenseKeyID;
+        $obj['licenseKeyID'] = $licenseKeyID;
 
         return $obj;
     }

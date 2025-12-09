@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
@@ -24,10 +25,10 @@ final class PayoutsService implements PayoutsContract
      * @api
      *
      * @param array{
-     *   created_at_gte?: string|\DateTimeInterface,
-     *   created_at_lte?: string|\DateTimeInterface,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   createdAtGte?: string|\DateTimeInterface,
+     *   createdAtLte?: string|\DateTimeInterface,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      * }|PayoutListParams $params
      *
      * @return DefaultPageNumberPagination<PayoutListResponse>
@@ -47,7 +48,15 @@ final class PayoutsService implements PayoutsContract
         $response = $this->client->request(
             method: 'get',
             path: 'payouts',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
             options: $options,
             convert: PayoutListResponse::class,
             page: DefaultPageNumberPagination::class,

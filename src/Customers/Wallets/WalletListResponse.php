@@ -11,7 +11,7 @@ use Dodopayments\Misc\Currency;
 
 /**
  * @phpstan-type WalletListResponseShape = array{
- *   items: list<CustomerWallet>, total_balance_usd: int
+ *   items: list<CustomerWallet>, totalBalanceUsd: int
  * }
  */
 final class WalletListResponse implements BaseModel
@@ -26,15 +26,15 @@ final class WalletListResponse implements BaseModel
     /**
      * Sum of all wallet balances converted to USD (in smallest unit).
      */
-    #[Required]
-    public int $total_balance_usd;
+    #[Required('total_balance_usd')]
+    public int $totalBalanceUsd;
 
     /**
      * `new WalletListResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * WalletListResponse::with(items: ..., total_balance_usd: ...)
+     * WalletListResponse::with(items: ..., totalBalanceUsd: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,18 +55,18 @@ final class WalletListResponse implements BaseModel
      *
      * @param list<CustomerWallet|array{
      *   balance: int,
-     *   created_at: \DateTimeInterface,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
-     *   customer_id: string,
-     *   updated_at: \DateTimeInterface,
+     *   customerID: string,
+     *   updatedAt: \DateTimeInterface,
      * }> $items
      */
-    public static function with(array $items, int $total_balance_usd): self
+    public static function with(array $items, int $totalBalanceUsd): self
     {
         $obj = new self;
 
         $obj['items'] = $items;
-        $obj['total_balance_usd'] = $total_balance_usd;
+        $obj['totalBalanceUsd'] = $totalBalanceUsd;
 
         return $obj;
     }
@@ -74,10 +74,10 @@ final class WalletListResponse implements BaseModel
     /**
      * @param list<CustomerWallet|array{
      *   balance: int,
-     *   created_at: \DateTimeInterface,
+     *   createdAt: \DateTimeInterface,
      *   currency: value-of<Currency>,
-     *   customer_id: string,
-     *   updated_at: \DateTimeInterface,
+     *   customerID: string,
+     *   updatedAt: \DateTimeInterface,
      * }> $items
      */
     public function withItems(array $items): self
@@ -94,7 +94,7 @@ final class WalletListResponse implements BaseModel
     public function withTotalBalanceUsd(int $totalBalanceUsd): self
     {
         $obj = clone $this;
-        $obj['total_balance_usd'] = $totalBalanceUsd;
+        $obj['totalBalanceUsd'] = $totalBalanceUsd;
 
         return $obj;
     }

@@ -49,12 +49,12 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Item|array{
-     *   payment_method: value-of<PaymentMethod>,
-     *   payment_method_id: string,
+     *   paymentMethod: value-of<PaymentMethod>,
+     *   paymentMethodID: string,
      *   card?: Card|null,
-     *   last_used_at?: \DateTimeInterface|null,
-     *   payment_method_type?: value-of<PaymentMethodTypes>|null,
-     *   recurring_enabled?: bool|null,
+     *   lastUsedAt?: \DateTimeInterface|null,
+     *   paymentMethodType?: value-of<PaymentMethodTypes>|null,
+     *   recurringEnabled?: bool|null,
      * }> $items
      */
     public static function with(array $items): self
@@ -68,12 +68,12 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
 
     /**
      * @param list<Item|array{
-     *   payment_method: value-of<PaymentMethod>,
-     *   payment_method_id: string,
+     *   paymentMethod: value-of<PaymentMethod>,
+     *   paymentMethodID: string,
      *   card?: Card|null,
-     *   last_used_at?: \DateTimeInterface|null,
-     *   payment_method_type?: value-of<PaymentMethodTypes>|null,
-     *   recurring_enabled?: bool|null,
+     *   lastUsedAt?: \DateTimeInterface|null,
+     *   paymentMethodType?: value-of<PaymentMethodTypes>|null,
+     *   recurringEnabled?: bool|null,
      * }> $items
      */
     public function withItems(array $items): self

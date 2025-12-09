@@ -15,8 +15,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type BrandCreateParamsShape = array{
  *   description?: string|null,
  *   name?: string|null,
- *   statement_descriptor?: string|null,
- *   support_email?: string|null,
+ *   statementDescriptor?: string|null,
+ *   supportEmail?: string|null,
  *   url?: string|null,
  * }
  */
@@ -32,11 +32,11 @@ final class BrandCreateParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $name;
 
-    #[Optional(nullable: true)]
-    public ?string $statement_descriptor;
+    #[Optional('statement_descriptor', nullable: true)]
+    public ?string $statementDescriptor;
 
-    #[Optional(nullable: true)]
-    public ?string $support_email;
+    #[Optional('support_email', nullable: true)]
+    public ?string $supportEmail;
 
     #[Optional(nullable: true)]
     public ?string $url;
@@ -54,16 +54,16 @@ final class BrandCreateParams implements BaseModel
     public static function with(
         ?string $description = null,
         ?string $name = null,
-        ?string $statement_descriptor = null,
-        ?string $support_email = null,
+        ?string $statementDescriptor = null,
+        ?string $supportEmail = null,
         ?string $url = null,
     ): self {
         $obj = new self;
 
         null !== $description && $obj['description'] = $description;
         null !== $name && $obj['name'] = $name;
-        null !== $statement_descriptor && $obj['statement_descriptor'] = $statement_descriptor;
-        null !== $support_email && $obj['support_email'] = $support_email;
+        null !== $statementDescriptor && $obj['statementDescriptor'] = $statementDescriptor;
+        null !== $supportEmail && $obj['supportEmail'] = $supportEmail;
         null !== $url && $obj['url'] = $url;
 
         return $obj;
@@ -88,7 +88,7 @@ final class BrandCreateParams implements BaseModel
     public function withStatementDescriptor(?string $statementDescriptor): self
     {
         $obj = clone $this;
-        $obj['statement_descriptor'] = $statementDescriptor;
+        $obj['statementDescriptor'] = $statementDescriptor;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class BrandCreateParams implements BaseModel
     public function withSupportEmail(?string $supportEmail): self
     {
         $obj = clone $this;
-        $obj['support_email'] = $supportEmail;
+        $obj['supportEmail'] = $supportEmail;
 
         return $obj;
     }

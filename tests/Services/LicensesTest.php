@@ -31,7 +31,7 @@ final class LicensesTest extends TestCase
     public function testActivate(): void
     {
         $result = $this->client->licenses->activate([
-            'license_key' => 'license_key', 'name' => 'name',
+            'licenseKey' => 'license_key', 'name' => 'name',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -42,7 +42,7 @@ final class LicensesTest extends TestCase
     public function testActivateWithOptionalParams(): void
     {
         $result = $this->client->licenses->activate([
-            'license_key' => 'license_key', 'name' => 'name',
+            'licenseKey' => 'license_key', 'name' => 'name',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,8 +53,8 @@ final class LicensesTest extends TestCase
     public function testDeactivate(): void
     {
         $result = $this->client->licenses->deactivate([
-            'license_key' => 'license_key',
-            'license_key_instance_id' => 'license_key_instance_id',
+            'licenseKey' => 'license_key',
+            'licenseKeyInstanceID' => 'license_key_instance_id',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -65,8 +65,8 @@ final class LicensesTest extends TestCase
     public function testDeactivateWithOptionalParams(): void
     {
         $result = $this->client->licenses->deactivate([
-            'license_key' => 'license_key',
-            'license_key_instance_id' => 'license_key_instance_id',
+            'licenseKey' => 'license_key',
+            'licenseKeyInstanceID' => 'license_key_instance_id',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -77,7 +77,7 @@ final class LicensesTest extends TestCase
     public function testValidate(): void
     {
         $result = $this->client->licenses->validate([
-            'license_key' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
+            'licenseKey' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -88,8 +88,8 @@ final class LicensesTest extends TestCase
     public function testValidateWithOptionalParams(): void
     {
         $result = $this->client->licenses->validate([
-            'license_key' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
-            'license_key_instance_id' => 'lki_123',
+            'licenseKey' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
+            'licenseKeyInstanceID' => 'lki_123',
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

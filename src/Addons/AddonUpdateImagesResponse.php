@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type AddonUpdateImagesResponseShape = array{
- *   image_id: string, url: string
+ *   imageID: string, url: string
  * }
  */
 final class AddonUpdateImagesResponse implements BaseModel
@@ -18,8 +18,8 @@ final class AddonUpdateImagesResponse implements BaseModel
     /** @use SdkModel<AddonUpdateImagesResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public string $image_id;
+    #[Required('image_id')]
+    public string $imageID;
 
     #[Required]
     public string $url;
@@ -29,7 +29,7 @@ final class AddonUpdateImagesResponse implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * AddonUpdateImagesResponse::with(image_id: ..., url: ...)
+     * AddonUpdateImagesResponse::with(imageID: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -48,11 +48,11 @@ final class AddonUpdateImagesResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $image_id, string $url): self
+    public static function with(string $imageID, string $url): self
     {
         $obj = new self;
 
-        $obj['image_id'] = $image_id;
+        $obj['imageID'] = $imageID;
         $obj['url'] = $url;
 
         return $obj;
@@ -61,7 +61,7 @@ final class AddonUpdateImagesResponse implements BaseModel
     public function withImageID(string $imageID): self
     {
         $obj = clone $this;
-        $obj['image_id'] = $imageID;
+        $obj['imageID'] = $imageID;
 
         return $obj;
     }

@@ -11,9 +11,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery\File;
 
 /**
  * @phpstan-type DigitalProductDeliveryShape = array{
- *   external_url?: string|null,
- *   files?: list<File>|null,
- *   instructions?: string|null,
+ *   externalURL?: string|null, files?: list<File>|null, instructions?: string|null
  * }
  */
 final class DigitalProductDelivery implements BaseModel
@@ -24,8 +22,8 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * External URL to digital product.
      */
-    #[Optional(nullable: true)]
-    public ?string $external_url;
+    #[Optional('external_url', nullable: true)]
+    public ?string $externalURL;
 
     /**
      * Uploaded files ids of digital product.
@@ -52,17 +50,17 @@ final class DigitalProductDelivery implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<File|array{
-     *   file_id: string, file_name: string, url: string
+     *   fileID: string, fileName: string, url: string
      * }>|null $files
      */
     public static function with(
-        ?string $external_url = null,
+        ?string $externalURL = null,
         ?array $files = null,
         ?string $instructions = null,
     ): self {
         $obj = new self;
 
-        null !== $external_url && $obj['external_url'] = $external_url;
+        null !== $externalURL && $obj['externalURL'] = $externalURL;
         null !== $files && $obj['files'] = $files;
         null !== $instructions && $obj['instructions'] = $instructions;
 
@@ -75,7 +73,7 @@ final class DigitalProductDelivery implements BaseModel
     public function withExternalURL(?string $externalURL): self
     {
         $obj = clone $this;
-        $obj['external_url'] = $externalURL;
+        $obj['externalURL'] = $externalURL;
 
         return $obj;
     }
@@ -84,7 +82,7 @@ final class DigitalProductDelivery implements BaseModel
      * Uploaded files ids of digital product.
      *
      * @param list<File|array{
-     *   file_id: string, file_name: string, url: string
+     *   fileID: string, fileName: string, url: string
      * }>|null $files
      */
     public function withFiles(?array $files): self

@@ -9,22 +9,22 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type SubscriptionChargeResponseShape = array{payment_id: string}
+ * @phpstan-type SubscriptionChargeResponseShape = array{paymentID: string}
  */
 final class SubscriptionChargeResponse implements BaseModel
 {
     /** @use SdkModel<SubscriptionChargeResponseShape> */
     use SdkModel;
 
-    #[Required]
-    public string $payment_id;
+    #[Required('payment_id')]
+    public string $paymentID;
 
     /**
      * `new SubscriptionChargeResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * SubscriptionChargeResponse::with(payment_id: ...)
+     * SubscriptionChargeResponse::with(paymentID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -43,11 +43,11 @@ final class SubscriptionChargeResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $payment_id): self
+    public static function with(string $paymentID): self
     {
         $obj = new self;
 
-        $obj['payment_id'] = $payment_id;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }
@@ -55,7 +55,7 @@ final class SubscriptionChargeResponse implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj['payment_id'] = $paymentID;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }

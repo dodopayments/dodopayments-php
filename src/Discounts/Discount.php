@@ -12,17 +12,17 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type DiscountShape = array{
  *   amount: int,
- *   business_id: string,
+ *   businessID: string,
  *   code: string,
- *   created_at: \DateTimeInterface,
- *   discount_id: string,
- *   restricted_to: list<string>,
- *   times_used: int,
+ *   createdAt: \DateTimeInterface,
+ *   discountID: string,
+ *   restrictedTo: list<string>,
+ *   timesUsed: int,
  *   type: value-of<DiscountType>,
- *   expires_at?: \DateTimeInterface|null,
+ *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
- *   subscription_cycles?: int|null,
- *   usage_limit?: int|null,
+ *   subscriptionCycles?: int|null,
+ *   usageLimit?: int|null,
  * }
  */
 final class Discount implements BaseModel
@@ -43,8 +43,8 @@ final class Discount implements BaseModel
     /**
      * The business this discount belongs to.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * The discount code (up to 16 chars).
@@ -55,28 +55,28 @@ final class Discount implements BaseModel
     /**
      * Timestamp when the discount is created.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * The unique discount ID.
      */
-    #[Required]
-    public string $discount_id;
+    #[Required('discount_id')]
+    public string $discountID;
 
     /**
      * List of product IDs to which this discount is restricted.
      *
-     * @var list<string> $restricted_to
+     * @var list<string> $restrictedTo
      */
-    #[Required(list: 'string')]
-    public array $restricted_to;
+    #[Required('restricted_to', list: 'string')]
+    public array $restrictedTo;
 
     /**
      * How many times this discount has been used.
      */
-    #[Required]
-    public int $times_used;
+    #[Required('times_used')]
+    public int $timesUsed;
 
     /**
      * The type of discount, e.g. `percentage`, `flat`, or `flat_per_unit`.
@@ -89,8 +89,8 @@ final class Discount implements BaseModel
     /**
      * Optional date/time after which discount is expired.
      */
-    #[Optional(nullable: true)]
-    public ?\DateTimeInterface $expires_at;
+    #[Optional('expires_at', nullable: true)]
+    public ?\DateTimeInterface $expiresAt;
 
     /**
      * Name for the Discount.
@@ -103,14 +103,14 @@ final class Discount implements BaseModel
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      */
-    #[Optional(nullable: true)]
-    public ?int $subscription_cycles;
+    #[Optional('subscription_cycles', nullable: true)]
+    public ?int $subscriptionCycles;
 
     /**
      * Usage limit for this discount, if any.
      */
-    #[Optional(nullable: true)]
-    public ?int $usage_limit;
+    #[Optional('usage_limit', nullable: true)]
+    public ?int $usageLimit;
 
     /**
      * `new Discount()` is missing required properties by the API.
@@ -119,12 +119,12 @@ final class Discount implements BaseModel
      * ```
      * Discount::with(
      *   amount: ...,
-     *   business_id: ...,
+     *   businessID: ...,
      *   code: ...,
-     *   created_at: ...,
-     *   discount_id: ...,
-     *   restricted_to: ...,
-     *   times_used: ...,
+     *   createdAt: ...,
+     *   discountID: ...,
+     *   restrictedTo: ...,
+     *   timesUsed: ...,
      *   type: ...,
      * )
      * ```
@@ -153,38 +153,38 @@ final class Discount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<string> $restricted_to
+     * @param list<string> $restrictedTo
      * @param DiscountType|value-of<DiscountType> $type
      */
     public static function with(
         int $amount,
-        string $business_id,
+        string $businessID,
         string $code,
-        \DateTimeInterface $created_at,
-        string $discount_id,
-        array $restricted_to,
-        int $times_used,
+        \DateTimeInterface $createdAt,
+        string $discountID,
+        array $restrictedTo,
+        int $timesUsed,
         DiscountType|string $type,
-        ?\DateTimeInterface $expires_at = null,
+        ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
-        ?int $subscription_cycles = null,
-        ?int $usage_limit = null,
+        ?int $subscriptionCycles = null,
+        ?int $usageLimit = null,
     ): self {
         $obj = new self;
 
         $obj['amount'] = $amount;
-        $obj['business_id'] = $business_id;
+        $obj['businessID'] = $businessID;
         $obj['code'] = $code;
-        $obj['created_at'] = $created_at;
-        $obj['discount_id'] = $discount_id;
-        $obj['restricted_to'] = $restricted_to;
-        $obj['times_used'] = $times_used;
+        $obj['createdAt'] = $createdAt;
+        $obj['discountID'] = $discountID;
+        $obj['restrictedTo'] = $restrictedTo;
+        $obj['timesUsed'] = $timesUsed;
         $obj['type'] = $type;
 
-        null !== $expires_at && $obj['expires_at'] = $expires_at;
+        null !== $expiresAt && $obj['expiresAt'] = $expiresAt;
         null !== $name && $obj['name'] = $name;
-        null !== $subscription_cycles && $obj['subscription_cycles'] = $subscription_cycles;
-        null !== $usage_limit && $obj['usage_limit'] = $usage_limit;
+        null !== $subscriptionCycles && $obj['subscriptionCycles'] = $subscriptionCycles;
+        null !== $usageLimit && $obj['usageLimit'] = $usageLimit;
 
         return $obj;
     }
@@ -210,7 +210,7 @@ final class Discount implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -232,7 +232,7 @@ final class Discount implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -243,7 +243,7 @@ final class Discount implements BaseModel
     public function withDiscountID(string $discountID): self
     {
         $obj = clone $this;
-        $obj['discount_id'] = $discountID;
+        $obj['discountID'] = $discountID;
 
         return $obj;
     }
@@ -256,7 +256,7 @@ final class Discount implements BaseModel
     public function withRestrictedTo(array $restrictedTo): self
     {
         $obj = clone $this;
-        $obj['restricted_to'] = $restrictedTo;
+        $obj['restrictedTo'] = $restrictedTo;
 
         return $obj;
     }
@@ -267,7 +267,7 @@ final class Discount implements BaseModel
     public function withTimesUsed(int $timesUsed): self
     {
         $obj = clone $this;
-        $obj['times_used'] = $timesUsed;
+        $obj['timesUsed'] = $timesUsed;
 
         return $obj;
     }
@@ -291,7 +291,7 @@ final class Discount implements BaseModel
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $obj = clone $this;
-        $obj['expires_at'] = $expiresAt;
+        $obj['expiresAt'] = $expiresAt;
 
         return $obj;
     }
@@ -315,7 +315,7 @@ final class Discount implements BaseModel
     public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
         $obj = clone $this;
-        $obj['subscription_cycles'] = $subscriptionCycles;
+        $obj['subscriptionCycles'] = $subscriptionCycles;
 
         return $obj;
     }
@@ -326,7 +326,7 @@ final class Discount implements BaseModel
     public function withUsageLimit(?int $usageLimit): self
     {
         $obj = clone $this;
-        $obj['usage_limit'] = $usageLimit;
+        $obj['usageLimit'] = $usageLimit;
 
         return $obj;
     }

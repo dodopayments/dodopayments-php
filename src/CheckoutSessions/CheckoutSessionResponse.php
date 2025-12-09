@@ -10,7 +10,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CheckoutSessionResponseShape = array{
- *   checkout_url: string, session_id: string
+ *   checkoutURL: string, sessionID: string
  * }
  */
 final class CheckoutSessionResponse implements BaseModel
@@ -21,21 +21,21 @@ final class CheckoutSessionResponse implements BaseModel
     /**
      * Checkout url.
      */
-    #[Required]
-    public string $checkout_url;
+    #[Required('checkout_url')]
+    public string $checkoutURL;
 
     /**
      * The ID of the created checkout session.
      */
-    #[Required]
-    public string $session_id;
+    #[Required('session_id')]
+    public string $sessionID;
 
     /**
      * `new CheckoutSessionResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CheckoutSessionResponse::with(checkout_url: ..., session_id: ...)
+     * CheckoutSessionResponse::with(checkoutURL: ..., sessionID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -54,12 +54,12 @@ final class CheckoutSessionResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $checkout_url, string $session_id): self
+    public static function with(string $checkoutURL, string $sessionID): self
     {
         $obj = new self;
 
-        $obj['checkout_url'] = $checkout_url;
-        $obj['session_id'] = $session_id;
+        $obj['checkoutURL'] = $checkoutURL;
+        $obj['sessionID'] = $sessionID;
 
         return $obj;
     }
@@ -70,7 +70,7 @@ final class CheckoutSessionResponse implements BaseModel
     public function withCheckoutURL(string $checkoutURL): self
     {
         $obj = clone $this;
-        $obj['checkout_url'] = $checkoutURL;
+        $obj['checkoutURL'] = $checkoutURL;
 
         return $obj;
     }
@@ -81,7 +81,7 @@ final class CheckoutSessionResponse implements BaseModel
     public function withSessionID(string $sessionID): self
     {
         $obj = clone $this;
-        $obj['session_id'] = $sessionID;
+        $obj['sessionID'] = $sessionID;
 
         return $obj;
     }

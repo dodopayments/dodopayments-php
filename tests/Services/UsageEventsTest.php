@@ -52,9 +52,9 @@ final class UsageEventsTest extends TestCase
         $result = $this->client->usageEvents->ingest([
             'events' => [
                 [
-                    'customer_id' => 'customer_id',
-                    'event_id' => 'event_id',
-                    'event_name' => 'event_name',
+                    'customerID' => 'customer_id',
+                    'eventID' => 'event_id',
+                    'eventName' => 'event_name',
                 ],
             ],
         ]);
@@ -69,9 +69,9 @@ final class UsageEventsTest extends TestCase
         $result = $this->client->usageEvents->ingest([
             'events' => [
                 [
-                    'customer_id' => 'customer_id',
-                    'event_id' => 'event_id',
-                    'event_name' => 'event_name',
+                    'customerID' => 'customer_id',
+                    'eventID' => 'event_id',
+                    'eventName' => 'event_name',
                     'metadata' => ['foo' => 'string'],
                     'timestamp' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 ],

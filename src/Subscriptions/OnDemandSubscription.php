@@ -12,11 +12,11 @@ use Dodopayments\Misc\Currency;
 
 /**
  * @phpstan-type OnDemandSubscriptionShape = array{
- *   mandate_only: bool,
- *   adaptive_currency_fees_inclusive?: bool|null,
- *   product_currency?: value-of<Currency>|null,
- *   product_description?: string|null,
- *   product_price?: int|null,
+ *   mandateOnly: bool,
+ *   adaptiveCurrencyFeesInclusive?: bool|null,
+ *   productCurrency?: value-of<Currency>|null,
+ *   productDescription?: string|null,
+ *   productPrice?: int|null,
  * }
  */
 final class OnDemandSubscription implements BaseModel
@@ -27,30 +27,30 @@ final class OnDemandSubscription implements BaseModel
     /**
      * If set as True, does not perform any charge and only authorizes payment method details for future use.
      */
-    #[Required]
-    public bool $mandate_only;
+    #[Required('mandate_only')]
+    public bool $mandateOnly;
 
     /**
      * Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      */
-    #[Optional(nullable: true)]
-    public ?bool $adaptive_currency_fees_inclusive;
+    #[Optional('adaptive_currency_fees_inclusive', nullable: true)]
+    public ?bool $adaptiveCurrencyFeesInclusive;
 
     /**
      * Optional currency of the product price. If not specified, defaults to the currency of the product.
      *
-     * @var value-of<Currency>|null $product_currency
+     * @var value-of<Currency>|null $productCurrency
      */
-    #[Optional(enum: Currency::class, nullable: true)]
-    public ?string $product_currency;
+    #[Optional('product_currency', enum: Currency::class, nullable: true)]
+    public ?string $productCurrency;
 
     /**
      * Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
      */
-    #[Optional(nullable: true)]
-    public ?string $product_description;
+    #[Optional('product_description', nullable: true)]
+    public ?string $productDescription;
 
     /**
      * Product price for the initial charge to customer
@@ -58,15 +58,15 @@ final class OnDemandSubscription implements BaseModel
      * Represented in the lowest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      */
-    #[Optional(nullable: true)]
-    public ?int $product_price;
+    #[Optional('product_price', nullable: true)]
+    public ?int $productPrice;
 
     /**
      * `new OnDemandSubscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * OnDemandSubscription::with(mandate_only: ...)
+     * OnDemandSubscription::with(mandateOnly: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -85,23 +85,23 @@ final class OnDemandSubscription implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Currency|value-of<Currency>|null $product_currency
+     * @param Currency|value-of<Currency>|null $productCurrency
      */
     public static function with(
-        bool $mandate_only,
-        ?bool $adaptive_currency_fees_inclusive = null,
-        Currency|string|null $product_currency = null,
-        ?string $product_description = null,
-        ?int $product_price = null,
+        bool $mandateOnly,
+        ?bool $adaptiveCurrencyFeesInclusive = null,
+        Currency|string|null $productCurrency = null,
+        ?string $productDescription = null,
+        ?int $productPrice = null,
     ): self {
         $obj = new self;
 
-        $obj['mandate_only'] = $mandate_only;
+        $obj['mandateOnly'] = $mandateOnly;
 
-        null !== $adaptive_currency_fees_inclusive && $obj['adaptive_currency_fees_inclusive'] = $adaptive_currency_fees_inclusive;
-        null !== $product_currency && $obj['product_currency'] = $product_currency;
-        null !== $product_description && $obj['product_description'] = $product_description;
-        null !== $product_price && $obj['product_price'] = $product_price;
+        null !== $adaptiveCurrencyFeesInclusive && $obj['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
+        null !== $productCurrency && $obj['productCurrency'] = $productCurrency;
+        null !== $productDescription && $obj['productDescription'] = $productDescription;
+        null !== $productPrice && $obj['productPrice'] = $productPrice;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class OnDemandSubscription implements BaseModel
     public function withMandateOnly(bool $mandateOnly): self
     {
         $obj = clone $this;
-        $obj['mandate_only'] = $mandateOnly;
+        $obj['mandateOnly'] = $mandateOnly;
 
         return $obj;
     }
@@ -125,7 +125,7 @@ final class OnDemandSubscription implements BaseModel
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
         $obj = clone $this;
-        $obj['adaptive_currency_fees_inclusive'] = $adaptiveCurrencyFeesInclusive;
+        $obj['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
 
         return $obj;
     }
@@ -139,7 +139,7 @@ final class OnDemandSubscription implements BaseModel
         Currency|string|null $productCurrency
     ): self {
         $obj = clone $this;
-        $obj['product_currency'] = $productCurrency;
+        $obj['productCurrency'] = $productCurrency;
 
         return $obj;
     }
@@ -151,7 +151,7 @@ final class OnDemandSubscription implements BaseModel
     public function withProductDescription(?string $productDescription): self
     {
         $obj = clone $this;
-        $obj['product_description'] = $productDescription;
+        $obj['productDescription'] = $productDescription;
 
         return $obj;
     }
@@ -165,7 +165,7 @@ final class OnDemandSubscription implements BaseModel
     public function withProductPrice(?int $productPrice): self
     {
         $obj = clone $this;
-        $obj['product_price'] = $productPrice;
+        $obj['productPrice'] = $productPrice;
 
         return $obj;
     }

@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type OneTimeProductCartItemShape = array{
- *   product_id: string, quantity: int, amount?: int|null
+ *   productID: string, quantity: int, amount?: int|null
  * }
  */
 final class OneTimeProductCartItem implements BaseModel
@@ -19,8 +19,8 @@ final class OneTimeProductCartItem implements BaseModel
     /** @use SdkModel<OneTimeProductCartItemShape> */
     use SdkModel;
 
-    #[Required]
-    public string $product_id;
+    #[Required('product_id')]
+    public string $productID;
 
     #[Required]
     public int $quantity;
@@ -38,7 +38,7 @@ final class OneTimeProductCartItem implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * OneTimeProductCartItem::with(product_id: ..., quantity: ...)
+     * OneTimeProductCartItem::with(productID: ..., quantity: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -58,13 +58,13 @@ final class OneTimeProductCartItem implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        string $product_id,
+        string $productID,
         int $quantity,
         ?int $amount = null
     ): self {
         $obj = new self;
 
-        $obj['product_id'] = $product_id;
+        $obj['productID'] = $productID;
         $obj['quantity'] = $quantity;
 
         null !== $amount && $obj['amount'] = $amount;
@@ -75,7 +75,7 @@ final class OneTimeProductCartItem implements BaseModel
     public function withProductID(string $productID): self
     {
         $obj = clone $this;
-        $obj['product_id'] = $productID;
+        $obj['productID'] = $productID;
 
         return $obj;
     }

@@ -37,7 +37,7 @@ final class AddonsTest extends TestCase
             'currency' => Currency::AED,
             'name' => 'name',
             'price' => 0,
-            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
+            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
         ]);
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -51,7 +51,7 @@ final class AddonsTest extends TestCase
             'currency' => Currency::AED,
             'name' => 'name',
             'price' => 0,
-            'tax_category' => TaxCategory::DIGITAL_PRODUCTS,
+            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
             'description' => 'description',
         ]);
 

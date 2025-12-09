@@ -39,12 +39,12 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\UsageEventsService::list()
  *
  * @phpstan-type UsageEventListParamsShape = array{
- *   customer_id?: string,
+ *   customerID?: string,
  *   end?: \DateTimeInterface,
- *   event_name?: string,
- *   meter_id?: string,
- *   page_number?: int,
- *   page_size?: int,
+ *   eventName?: string,
+ *   meterID?: string,
+ *   pageNumber?: int,
+ *   pageSize?: int,
  *   start?: \DateTimeInterface,
  * }
  */
@@ -58,7 +58,7 @@ final class UsageEventListParams implements BaseModel
      * Filter events by customer ID.
      */
     #[Optional]
-    public ?string $customer_id;
+    public ?string $customerID;
 
     /**
      * Filter events created before this timestamp.
@@ -70,25 +70,25 @@ final class UsageEventListParams implements BaseModel
      * Filter events by event name. If both event_name and meter_id are provided, they must match the meter's configured event_name.
      */
     #[Optional]
-    public ?string $event_name;
+    public ?string $eventName;
 
     /**
      * Filter events by meter ID. When provided, only events that match the meter's event_name and filter criteria will be returned.
      */
     #[Optional]
-    public ?string $meter_id;
+    public ?string $meterID;
 
     /**
      * Page number (0-based, default: 0).
      */
     #[Optional]
-    public ?int $page_number;
+    public ?int $pageNumber;
 
     /**
      * Number of events to return per page (default: 10).
      */
     #[Optional]
-    public ?int $page_size;
+    public ?int $pageSize;
 
     /**
      * Filter events created after this timestamp.
@@ -107,22 +107,22 @@ final class UsageEventListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?string $customer_id = null,
+        ?string $customerID = null,
         ?\DateTimeInterface $end = null,
-        ?string $event_name = null,
-        ?string $meter_id = null,
-        ?int $page_number = null,
-        ?int $page_size = null,
+        ?string $eventName = null,
+        ?string $meterID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
         ?\DateTimeInterface $start = null,
     ): self {
         $obj = new self;
 
-        null !== $customer_id && $obj['customer_id'] = $customer_id;
+        null !== $customerID && $obj['customerID'] = $customerID;
         null !== $end && $obj['end'] = $end;
-        null !== $event_name && $obj['event_name'] = $event_name;
-        null !== $meter_id && $obj['meter_id'] = $meter_id;
-        null !== $page_number && $obj['page_number'] = $page_number;
-        null !== $page_size && $obj['page_size'] = $page_size;
+        null !== $eventName && $obj['eventName'] = $eventName;
+        null !== $meterID && $obj['meterID'] = $meterID;
+        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
+        null !== $pageSize && $obj['pageSize'] = $pageSize;
         null !== $start && $obj['start'] = $start;
 
         return $obj;
@@ -134,7 +134,7 @@ final class UsageEventListParams implements BaseModel
     public function withCustomerID(string $customerID): self
     {
         $obj = clone $this;
-        $obj['customer_id'] = $customerID;
+        $obj['customerID'] = $customerID;
 
         return $obj;
     }
@@ -156,7 +156,7 @@ final class UsageEventListParams implements BaseModel
     public function withEventName(string $eventName): self
     {
         $obj = clone $this;
-        $obj['event_name'] = $eventName;
+        $obj['eventName'] = $eventName;
 
         return $obj;
     }
@@ -167,7 +167,7 @@ final class UsageEventListParams implements BaseModel
     public function withMeterID(string $meterID): self
     {
         $obj = clone $this;
-        $obj['meter_id'] = $meterID;
+        $obj['meterID'] = $meterID;
 
         return $obj;
     }
@@ -178,7 +178,7 @@ final class UsageEventListParams implements BaseModel
     public function withPageNumber(int $pageNumber): self
     {
         $obj = clone $this;
-        $obj['page_number'] = $pageNumber;
+        $obj['pageNumber'] = $pageNumber;
 
         return $obj;
     }
@@ -189,7 +189,7 @@ final class UsageEventListParams implements BaseModel
     public function withPageSize(int $pageSize): self
     {
         $obj = clone $this;
-        $obj['page_size'] = $pageSize;
+        $obj['pageSize'] = $pageSize;
 
         return $obj;
     }

@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
@@ -42,18 +43,18 @@ final class PaymentsService implements PaymentsContract
      *     zipcode?: string|null,
      *   }|BillingAddress,
      *   customer: array<string,mixed>,
-     *   product_cart: list<array{
-     *     product_id: string, quantity: int, amount?: int|null
+     *   productCart: list<array{
+     *     productID: string, quantity: int, amount?: int|null
      *   }|OneTimeProductCartItem>,
-     *   allowed_payment_method_types?: list<'credit'|'debit'|'upi_collect'|'upi_intent'|'apple_pay'|'cashapp'|'google_pay'|'multibanco'|'bancontact_card'|'eps'|'ideal'|'przelewy24'|'paypal'|'affirm'|'klarna'|'sepa'|'ach'|'amazon_pay'|'afterpay_clearpay'|PaymentMethodTypes>|null,
-     *   billing_currency?: value-of<Currency>,
-     *   discount_code?: string|null,
-     *   force_3ds?: bool|null,
+     *   allowedPaymentMethodTypes?: list<'credit'|'debit'|'upi_collect'|'upi_intent'|'apple_pay'|'cashapp'|'google_pay'|'multibanco'|'bancontact_card'|'eps'|'ideal'|'przelewy24'|'paypal'|'affirm'|'klarna'|'sepa'|'ach'|'amazon_pay'|'afterpay_clearpay'|PaymentMethodTypes>|null,
+     *   billingCurrency?: value-of<Currency>,
+     *   discountCode?: string|null,
+     *   force3DS?: bool|null,
      *   metadata?: array<string,string>,
-     *   payment_link?: bool|null,
-     *   return_url?: string|null,
-     *   show_saved_payment_methods?: bool,
-     *   tax_id?: string|null,
+     *   paymentLink?: bool|null,
+     *   returnURL?: string|null,
+     *   showSavedPaymentMethods?: bool,
+     *   taxID?: string|null,
      * }|PaymentCreateParams $params
      *
      * @throws APIException
@@ -103,14 +104,14 @@ final class PaymentsService implements PaymentsContract
      * @api
      *
      * @param array{
-     *   brand_id?: string,
-     *   created_at_gte?: string|\DateTimeInterface,
-     *   created_at_lte?: string|\DateTimeInterface,
-     *   customer_id?: string,
-     *   page_number?: int,
-     *   page_size?: int,
+     *   brandID?: string,
+     *   createdAtGte?: string|\DateTimeInterface,
+     *   createdAtLte?: string|\DateTimeInterface,
+     *   customerID?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      *   status?: value-of<Status>,
-     *   subscription_id?: string,
+     *   subscriptionID?: string,
      * }|PaymentListParams $params
      *
      * @return DefaultPageNumberPagination<PaymentListResponse>
@@ -130,7 +131,18 @@ final class PaymentsService implements PaymentsContract
         $response = $this->client->request(
             method: 'get',
             path: 'payments',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'brandID' => 'brand_id',
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
+                    'customerID' => 'customer_id',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                    'subscriptionID' => 'subscription_id',
+                ],
+            ),
             options: $options,
             convert: PaymentListResponse::class,
             page: DefaultPageNumberPagination::class,

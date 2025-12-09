@@ -10,18 +10,18 @@ use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type FeatureFlagsShape = array{
- *   allow_currency_selection?: bool|null,
- *   allow_customer_editing_city?: bool|null,
- *   allow_customer_editing_country?: bool|null,
- *   allow_customer_editing_email?: bool|null,
- *   allow_customer_editing_name?: bool|null,
- *   allow_customer_editing_state?: bool|null,
- *   allow_customer_editing_street?: bool|null,
- *   allow_customer_editing_zipcode?: bool|null,
- *   allow_discount_code?: bool|null,
- *   allow_phone_number_collection?: bool|null,
- *   allow_tax_id?: bool|null,
- *   always_create_new_customer?: bool|null,
+ *   allowCurrencySelection?: bool|null,
+ *   allowCustomerEditingCity?: bool|null,
+ *   allowCustomerEditingCountry?: bool|null,
+ *   allowCustomerEditingEmail?: bool|null,
+ *   allowCustomerEditingName?: bool|null,
+ *   allowCustomerEditingState?: bool|null,
+ *   allowCustomerEditingStreet?: bool|null,
+ *   allowCustomerEditingZipcode?: bool|null,
+ *   allowDiscountCode?: bool|null,
+ *   allowPhoneNumberCollection?: bool|null,
+ *   allowTaxID?: bool|null,
+ *   alwaysCreateNewCustomer?: bool|null,
  * }
  */
 final class FeatureFlags implements BaseModel
@@ -34,53 +34,53 @@ final class FeatureFlags implements BaseModel
      *
      * Default is true
      */
-    #[Optional]
-    public ?bool $allow_currency_selection;
+    #[Optional('allow_currency_selection')]
+    public ?bool $allowCurrencySelection;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_city;
+    #[Optional('allow_customer_editing_city')]
+    public ?bool $allowCustomerEditingCity;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_country;
+    #[Optional('allow_customer_editing_country')]
+    public ?bool $allowCustomerEditingCountry;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_email;
+    #[Optional('allow_customer_editing_email')]
+    public ?bool $allowCustomerEditingEmail;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_name;
+    #[Optional('allow_customer_editing_name')]
+    public ?bool $allowCustomerEditingName;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_state;
+    #[Optional('allow_customer_editing_state')]
+    public ?bool $allowCustomerEditingState;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_street;
+    #[Optional('allow_customer_editing_street')]
+    public ?bool $allowCustomerEditingStreet;
 
-    #[Optional]
-    public ?bool $allow_customer_editing_zipcode;
+    #[Optional('allow_customer_editing_zipcode')]
+    public ?bool $allowCustomerEditingZipcode;
 
     /**
      * If the customer is allowed to apply discount code, set it to true.
      *
      * Default is true
      */
-    #[Optional]
-    public ?bool $allow_discount_code;
+    #[Optional('allow_discount_code')]
+    public ?bool $allowDiscountCode;
 
     /**
      * If phone number is collected from customer, set it to rue.
      *
      * Default is true
      */
-    #[Optional]
-    public ?bool $allow_phone_number_collection;
+    #[Optional('allow_phone_number_collection')]
+    public ?bool $allowPhoneNumberCollection;
 
     /**
      * If the customer is allowed to add tax id, set it to true.
      *
      * Default is true
      */
-    #[Optional]
-    public ?bool $allow_tax_id;
+    #[Optional('allow_tax_id')]
+    public ?bool $allowTaxID;
 
     /**
      * Set to true if a new customer object should be created.
@@ -88,8 +88,8 @@ final class FeatureFlags implements BaseModel
      *
      * Default is false
      */
-    #[Optional]
-    public ?bool $always_create_new_customer;
+    #[Optional('always_create_new_customer')]
+    public ?bool $alwaysCreateNewCustomer;
 
     public function __construct()
     {
@@ -102,33 +102,33 @@ final class FeatureFlags implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
-        ?bool $allow_currency_selection = null,
-        ?bool $allow_customer_editing_city = null,
-        ?bool $allow_customer_editing_country = null,
-        ?bool $allow_customer_editing_email = null,
-        ?bool $allow_customer_editing_name = null,
-        ?bool $allow_customer_editing_state = null,
-        ?bool $allow_customer_editing_street = null,
-        ?bool $allow_customer_editing_zipcode = null,
-        ?bool $allow_discount_code = null,
-        ?bool $allow_phone_number_collection = null,
-        ?bool $allow_tax_id = null,
-        ?bool $always_create_new_customer = null,
+        ?bool $allowCurrencySelection = null,
+        ?bool $allowCustomerEditingCity = null,
+        ?bool $allowCustomerEditingCountry = null,
+        ?bool $allowCustomerEditingEmail = null,
+        ?bool $allowCustomerEditingName = null,
+        ?bool $allowCustomerEditingState = null,
+        ?bool $allowCustomerEditingStreet = null,
+        ?bool $allowCustomerEditingZipcode = null,
+        ?bool $allowDiscountCode = null,
+        ?bool $allowPhoneNumberCollection = null,
+        ?bool $allowTaxID = null,
+        ?bool $alwaysCreateNewCustomer = null,
     ): self {
         $obj = new self;
 
-        null !== $allow_currency_selection && $obj['allow_currency_selection'] = $allow_currency_selection;
-        null !== $allow_customer_editing_city && $obj['allow_customer_editing_city'] = $allow_customer_editing_city;
-        null !== $allow_customer_editing_country && $obj['allow_customer_editing_country'] = $allow_customer_editing_country;
-        null !== $allow_customer_editing_email && $obj['allow_customer_editing_email'] = $allow_customer_editing_email;
-        null !== $allow_customer_editing_name && $obj['allow_customer_editing_name'] = $allow_customer_editing_name;
-        null !== $allow_customer_editing_state && $obj['allow_customer_editing_state'] = $allow_customer_editing_state;
-        null !== $allow_customer_editing_street && $obj['allow_customer_editing_street'] = $allow_customer_editing_street;
-        null !== $allow_customer_editing_zipcode && $obj['allow_customer_editing_zipcode'] = $allow_customer_editing_zipcode;
-        null !== $allow_discount_code && $obj['allow_discount_code'] = $allow_discount_code;
-        null !== $allow_phone_number_collection && $obj['allow_phone_number_collection'] = $allow_phone_number_collection;
-        null !== $allow_tax_id && $obj['allow_tax_id'] = $allow_tax_id;
-        null !== $always_create_new_customer && $obj['always_create_new_customer'] = $always_create_new_customer;
+        null !== $allowCurrencySelection && $obj['allowCurrencySelection'] = $allowCurrencySelection;
+        null !== $allowCustomerEditingCity && $obj['allowCustomerEditingCity'] = $allowCustomerEditingCity;
+        null !== $allowCustomerEditingCountry && $obj['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
+        null !== $allowCustomerEditingEmail && $obj['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
+        null !== $allowCustomerEditingName && $obj['allowCustomerEditingName'] = $allowCustomerEditingName;
+        null !== $allowCustomerEditingState && $obj['allowCustomerEditingState'] = $allowCustomerEditingState;
+        null !== $allowCustomerEditingStreet && $obj['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
+        null !== $allowCustomerEditingZipcode && $obj['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
+        null !== $allowDiscountCode && $obj['allowDiscountCode'] = $allowDiscountCode;
+        null !== $allowPhoneNumberCollection && $obj['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
+        null !== $allowTaxID && $obj['allowTaxID'] = $allowTaxID;
+        null !== $alwaysCreateNewCustomer && $obj['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
 
         return $obj;
     }
@@ -142,7 +142,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCurrencySelection
     ): self {
         $obj = clone $this;
-        $obj['allow_currency_selection'] = $allowCurrencySelection;
+        $obj['allowCurrencySelection'] = $allowCurrencySelection;
 
         return $obj;
     }
@@ -151,7 +151,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingCity
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_city'] = $allowCustomerEditingCity;
+        $obj['allowCustomerEditingCity'] = $allowCustomerEditingCity;
 
         return $obj;
     }
@@ -160,7 +160,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingCountry
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_country'] = $allowCustomerEditingCountry;
+        $obj['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
 
         return $obj;
     }
@@ -169,7 +169,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingEmail
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_email'] = $allowCustomerEditingEmail;
+        $obj['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
 
         return $obj;
     }
@@ -178,7 +178,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingName
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_name'] = $allowCustomerEditingName;
+        $obj['allowCustomerEditingName'] = $allowCustomerEditingName;
 
         return $obj;
     }
@@ -187,7 +187,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingState
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_state'] = $allowCustomerEditingState;
+        $obj['allowCustomerEditingState'] = $allowCustomerEditingState;
 
         return $obj;
     }
@@ -196,7 +196,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingStreet
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_street'] = $allowCustomerEditingStreet;
+        $obj['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
 
         return $obj;
     }
@@ -205,7 +205,7 @@ final class FeatureFlags implements BaseModel
         bool $allowCustomerEditingZipcode
     ): self {
         $obj = clone $this;
-        $obj['allow_customer_editing_zipcode'] = $allowCustomerEditingZipcode;
+        $obj['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
 
         return $obj;
     }
@@ -218,7 +218,7 @@ final class FeatureFlags implements BaseModel
     public function withAllowDiscountCode(bool $allowDiscountCode): self
     {
         $obj = clone $this;
-        $obj['allow_discount_code'] = $allowDiscountCode;
+        $obj['allowDiscountCode'] = $allowDiscountCode;
 
         return $obj;
     }
@@ -232,7 +232,7 @@ final class FeatureFlags implements BaseModel
         bool $allowPhoneNumberCollection
     ): self {
         $obj = clone $this;
-        $obj['allow_phone_number_collection'] = $allowPhoneNumberCollection;
+        $obj['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
 
         return $obj;
     }
@@ -245,7 +245,7 @@ final class FeatureFlags implements BaseModel
     public function withAllowTaxID(bool $allowTaxID): self
     {
         $obj = clone $this;
-        $obj['allow_tax_id'] = $allowTaxID;
+        $obj['allowTaxID'] = $allowTaxID;
 
         return $obj;
     }
@@ -260,7 +260,7 @@ final class FeatureFlags implements BaseModel
         bool $alwaysCreateNewCustomer
     ): self {
         $obj = clone $this;
-        $obj['always_create_new_customer'] = $alwaysCreateNewCustomer;
+        $obj['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
 
         return $obj;
     }

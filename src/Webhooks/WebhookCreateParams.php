@@ -20,11 +20,11 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  *   url: string,
  *   description?: string|null,
  *   disabled?: bool|null,
- *   filter_types?: list<WebhookEventType|value-of<WebhookEventType>>,
+ *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>,
  *   headers?: array<string,string>|null,
- *   idempotency_key?: string|null,
+ *   idempotencyKey?: string|null,
  *   metadata?: array<string,string>|null,
- *   rate_limit?: int|null,
+ *   rateLimit?: int|null,
  * }
  */
 final class WebhookCreateParams implements BaseModel
@@ -55,10 +55,10 @@ final class WebhookCreateParams implements BaseModel
      *
      * Webhook event will only be sent for events in the list.
      *
-     * @var list<value-of<WebhookEventType>>|null $filter_types
+     * @var list<value-of<WebhookEventType>>|null $filterTypes
      */
-    #[Optional(list: WebhookEventType::class)]
-    public ?array $filter_types;
+    #[Optional('filter_types', list: WebhookEventType::class)]
+    public ?array $filterTypes;
 
     /**
      * Custom headers to be passed.
@@ -71,8 +71,8 @@ final class WebhookCreateParams implements BaseModel
     /**
      * The request's idempotency key.
      */
-    #[Optional(nullable: true)]
-    public ?string $idempotency_key;
+    #[Optional('idempotency_key', nullable: true)]
+    public ?string $idempotencyKey;
 
     /**
      * Metadata to be passed to the webhook
@@ -83,8 +83,8 @@ final class WebhookCreateParams implements BaseModel
     #[Optional(map: 'string', nullable: true)]
     public ?array $metadata;
 
-    #[Optional(nullable: true)]
-    public ?int $rate_limit;
+    #[Optional('rate_limit', nullable: true)]
+    public ?int $rateLimit;
 
     /**
      * `new WebhookCreateParams()` is missing required properties by the API.
@@ -110,7 +110,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebhookEventType|value-of<WebhookEventType>> $filter_types
+     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes
      * @param array<string,string>|null $headers
      * @param array<string,string>|null $metadata
      */
@@ -118,11 +118,11 @@ final class WebhookCreateParams implements BaseModel
         string $url,
         ?string $description = null,
         ?bool $disabled = null,
-        ?array $filter_types = null,
+        ?array $filterTypes = null,
         ?array $headers = null,
-        ?string $idempotency_key = null,
+        ?string $idempotencyKey = null,
         ?array $metadata = null,
-        ?int $rate_limit = null,
+        ?int $rateLimit = null,
     ): self {
         $obj = new self;
 
@@ -130,11 +130,11 @@ final class WebhookCreateParams implements BaseModel
 
         null !== $description && $obj['description'] = $description;
         null !== $disabled && $obj['disabled'] = $disabled;
-        null !== $filter_types && $obj['filter_types'] = $filter_types;
+        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
         null !== $headers && $obj['headers'] = $headers;
-        null !== $idempotency_key && $obj['idempotency_key'] = $idempotency_key;
+        null !== $idempotencyKey && $obj['idempotencyKey'] = $idempotencyKey;
         null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $rate_limit && $obj['rate_limit'] = $rate_limit;
+        null !== $rateLimit && $obj['rateLimit'] = $rateLimit;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class WebhookCreateParams implements BaseModel
     public function withFilterTypes(array $filterTypes): self
     {
         $obj = clone $this;
-        $obj['filter_types'] = $filterTypes;
+        $obj['filterTypes'] = $filterTypes;
 
         return $obj;
     }
@@ -205,7 +205,7 @@ final class WebhookCreateParams implements BaseModel
     public function withIdempotencyKey(?string $idempotencyKey): self
     {
         $obj = clone $this;
-        $obj['idempotency_key'] = $idempotencyKey;
+        $obj['idempotencyKey'] = $idempotencyKey;
 
         return $obj;
     }
@@ -227,7 +227,7 @@ final class WebhookCreateParams implements BaseModel
     public function withRateLimit(?int $rateLimit): self
     {
         $obj = clone $this;
-        $obj['rate_limit'] = $rateLimit;
+        $obj['rateLimit'] = $rateLimit;
 
         return $obj;
     }

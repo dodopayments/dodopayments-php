@@ -12,6 +12,7 @@ use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -32,7 +33,7 @@ final class AddonsService implements AddonsContract
      *   currency: value-of<Currency>,
      *   name: string,
      *   price: int,
-     *   tax_category: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
+     *   taxCategory: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
      *   description?: string|null,
      * }|AddonCreateParams $params
      *
@@ -85,10 +86,10 @@ final class AddonsService implements AddonsContract
      * @param array{
      *   currency?: value-of<Currency>,
      *   description?: string|null,
-     *   image_id?: string|null,
+     *   imageID?: string|null,
      *   name?: string|null,
      *   price?: int|null,
-     *   tax_category?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
+     *   taxCategory?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
      * }|AddonUpdateParams $params
      *
      * @throws APIException
@@ -118,7 +119,7 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @param array{page_number?: int, page_size?: int}|AddonListParams $params
+     * @param array{pageNumber?: int, pageSize?: int}|AddonListParams $params
      *
      * @return DefaultPageNumberPagination<AddonResponse>
      *
@@ -137,7 +138,10 @@ final class AddonsService implements AddonsContract
         $response = $this->client->request(
             method: 'get',
             path: 'addons',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: AddonResponse::class,
             page: DefaultPageNumberPagination::class,

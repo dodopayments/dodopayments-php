@@ -11,12 +11,12 @@ use Dodopayments\Misc\CountryCode;
 
 /**
  * @phpstan-type CardShape = array{
- *   card_issuing_country?: value-of<CountryCode>|null,
- *   card_network?: string|null,
- *   card_type?: string|null,
- *   expiry_month?: string|null,
- *   expiry_year?: string|null,
- *   last4_digits?: string|null,
+ *   cardIssuingCountry?: value-of<CountryCode>|null,
+ *   cardNetwork?: string|null,
+ *   cardType?: string|null,
+ *   expiryMonth?: string|null,
+ *   expiryYear?: string|null,
+ *   last4Digits?: string|null,
  * }
  */
 final class Card implements BaseModel
@@ -27,25 +27,25 @@ final class Card implements BaseModel
     /**
      * ISO country code alpha2 variant.
      *
-     * @var value-of<CountryCode>|null $card_issuing_country
+     * @var value-of<CountryCode>|null $cardIssuingCountry
      */
-    #[Optional(enum: CountryCode::class, nullable: true)]
-    public ?string $card_issuing_country;
+    #[Optional('card_issuing_country', enum: CountryCode::class, nullable: true)]
+    public ?string $cardIssuingCountry;
 
-    #[Optional(nullable: true)]
-    public ?string $card_network;
+    #[Optional('card_network', nullable: true)]
+    public ?string $cardNetwork;
 
-    #[Optional(nullable: true)]
-    public ?string $card_type;
+    #[Optional('card_type', nullable: true)]
+    public ?string $cardType;
 
-    #[Optional(nullable: true)]
-    public ?string $expiry_month;
+    #[Optional('expiry_month', nullable: true)]
+    public ?string $expiryMonth;
 
-    #[Optional(nullable: true)]
-    public ?string $expiry_year;
+    #[Optional('expiry_year', nullable: true)]
+    public ?string $expiryYear;
 
-    #[Optional(nullable: true)]
-    public ?string $last4_digits;
+    #[Optional('last4_digits', nullable: true)]
+    public ?string $last4Digits;
 
     public function __construct()
     {
@@ -57,24 +57,24 @@ final class Card implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CountryCode|value-of<CountryCode>|null $card_issuing_country
+     * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      */
     public static function with(
-        CountryCode|string|null $card_issuing_country = null,
-        ?string $card_network = null,
-        ?string $card_type = null,
-        ?string $expiry_month = null,
-        ?string $expiry_year = null,
-        ?string $last4_digits = null,
+        CountryCode|string|null $cardIssuingCountry = null,
+        ?string $cardNetwork = null,
+        ?string $cardType = null,
+        ?string $expiryMonth = null,
+        ?string $expiryYear = null,
+        ?string $last4Digits = null,
     ): self {
         $obj = new self;
 
-        null !== $card_issuing_country && $obj['card_issuing_country'] = $card_issuing_country;
-        null !== $card_network && $obj['card_network'] = $card_network;
-        null !== $card_type && $obj['card_type'] = $card_type;
-        null !== $expiry_month && $obj['expiry_month'] = $expiry_month;
-        null !== $expiry_year && $obj['expiry_year'] = $expiry_year;
-        null !== $last4_digits && $obj['last4_digits'] = $last4_digits;
+        null !== $cardIssuingCountry && $obj['cardIssuingCountry'] = $cardIssuingCountry;
+        null !== $cardNetwork && $obj['cardNetwork'] = $cardNetwork;
+        null !== $cardType && $obj['cardType'] = $cardType;
+        null !== $expiryMonth && $obj['expiryMonth'] = $expiryMonth;
+        null !== $expiryYear && $obj['expiryYear'] = $expiryYear;
+        null !== $last4Digits && $obj['last4Digits'] = $last4Digits;
 
         return $obj;
     }
@@ -88,7 +88,7 @@ final class Card implements BaseModel
         CountryCode|string|null $cardIssuingCountry
     ): self {
         $obj = clone $this;
-        $obj['card_issuing_country'] = $cardIssuingCountry;
+        $obj['cardIssuingCountry'] = $cardIssuingCountry;
 
         return $obj;
     }
@@ -96,7 +96,7 @@ final class Card implements BaseModel
     public function withCardNetwork(?string $cardNetwork): self
     {
         $obj = clone $this;
-        $obj['card_network'] = $cardNetwork;
+        $obj['cardNetwork'] = $cardNetwork;
 
         return $obj;
     }
@@ -104,7 +104,7 @@ final class Card implements BaseModel
     public function withCardType(?string $cardType): self
     {
         $obj = clone $this;
-        $obj['card_type'] = $cardType;
+        $obj['cardType'] = $cardType;
 
         return $obj;
     }
@@ -112,7 +112,7 @@ final class Card implements BaseModel
     public function withExpiryMonth(?string $expiryMonth): self
     {
         $obj = clone $this;
-        $obj['expiry_month'] = $expiryMonth;
+        $obj['expiryMonth'] = $expiryMonth;
 
         return $obj;
     }
@@ -120,7 +120,7 @@ final class Card implements BaseModel
     public function withExpiryYear(?string $expiryYear): self
     {
         $obj = clone $this;
-        $obj['expiry_year'] = $expiryYear;
+        $obj['expiryYear'] = $expiryYear;
 
         return $obj;
     }
@@ -128,7 +128,7 @@ final class Card implements BaseModel
     public function withLast4Digits(?string $last4Digits): self
     {
         $obj = clone $this;
-        $obj['last4_digits'] = $last4Digits;
+        $obj['last4Digits'] = $last4Digits;
 
         return $obj;
     }

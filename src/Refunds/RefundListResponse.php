@@ -12,11 +12,11 @@ use Dodopayments\Misc\Currency;
 
 /**
  * @phpstan-type RefundListResponseShape = array{
- *   business_id: string,
- *   created_at: \DateTimeInterface,
- *   is_partial: bool,
- *   payment_id: string,
- *   refund_id: string,
+ *   businessID: string,
+ *   createdAt: \DateTimeInterface,
+ *   isPartial: bool,
+ *   paymentID: string,
+ *   refundID: string,
  *   status: value-of<RefundStatus>,
  *   amount?: int|null,
  *   currency?: value-of<Currency>|null,
@@ -31,32 +31,32 @@ final class RefundListResponse implements BaseModel
     /**
      * The unique identifier of the business issuing the refund.
      */
-    #[Required]
-    public string $business_id;
+    #[Required('business_id')]
+    public string $businessID;
 
     /**
      * The timestamp of when the refund was created in UTC.
      */
-    #[Required]
-    public \DateTimeInterface $created_at;
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
 
     /**
      * If true the refund is a partial refund.
      */
-    #[Required]
-    public bool $is_partial;
+    #[Required('is_partial')]
+    public bool $isPartial;
 
     /**
      * The unique identifier of the payment associated with the refund.
      */
-    #[Required]
-    public string $payment_id;
+    #[Required('payment_id')]
+    public string $paymentID;
 
     /**
      * The unique identifier of the refund.
      */
-    #[Required]
-    public string $refund_id;
+    #[Required('refund_id')]
+    public string $refundID;
 
     /**
      * The current status of the refund.
@@ -92,11 +92,11 @@ final class RefundListResponse implements BaseModel
      * To enforce required parameters use
      * ```
      * RefundListResponse::with(
-     *   business_id: ...,
-     *   created_at: ...,
-     *   is_partial: ...,
-     *   payment_id: ...,
-     *   refund_id: ...,
+     *   businessID: ...,
+     *   createdAt: ...,
+     *   isPartial: ...,
+     *   paymentID: ...,
+     *   refundID: ...,
      *   status: ...,
      * )
      * ```
@@ -127,11 +127,11 @@ final class RefundListResponse implements BaseModel
      * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
-        string $business_id,
-        \DateTimeInterface $created_at,
-        bool $is_partial,
-        string $payment_id,
-        string $refund_id,
+        string $businessID,
+        \DateTimeInterface $createdAt,
+        bool $isPartial,
+        string $paymentID,
+        string $refundID,
         RefundStatus|string $status,
         ?int $amount = null,
         Currency|string|null $currency = null,
@@ -139,11 +139,11 @@ final class RefundListResponse implements BaseModel
     ): self {
         $obj = new self;
 
-        $obj['business_id'] = $business_id;
-        $obj['created_at'] = $created_at;
-        $obj['is_partial'] = $is_partial;
-        $obj['payment_id'] = $payment_id;
-        $obj['refund_id'] = $refund_id;
+        $obj['businessID'] = $businessID;
+        $obj['createdAt'] = $createdAt;
+        $obj['isPartial'] = $isPartial;
+        $obj['paymentID'] = $paymentID;
+        $obj['refundID'] = $refundID;
         $obj['status'] = $status;
 
         null !== $amount && $obj['amount'] = $amount;
@@ -159,7 +159,7 @@ final class RefundListResponse implements BaseModel
     public function withBusinessID(string $businessID): self
     {
         $obj = clone $this;
-        $obj['business_id'] = $businessID;
+        $obj['businessID'] = $businessID;
 
         return $obj;
     }
@@ -170,7 +170,7 @@ final class RefundListResponse implements BaseModel
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $obj = clone $this;
-        $obj['created_at'] = $createdAt;
+        $obj['createdAt'] = $createdAt;
 
         return $obj;
     }
@@ -181,7 +181,7 @@ final class RefundListResponse implements BaseModel
     public function withIsPartial(bool $isPartial): self
     {
         $obj = clone $this;
-        $obj['is_partial'] = $isPartial;
+        $obj['isPartial'] = $isPartial;
 
         return $obj;
     }
@@ -192,7 +192,7 @@ final class RefundListResponse implements BaseModel
     public function withPaymentID(string $paymentID): self
     {
         $obj = clone $this;
-        $obj['payment_id'] = $paymentID;
+        $obj['paymentID'] = $paymentID;
 
         return $obj;
     }
@@ -203,7 +203,7 @@ final class RefundListResponse implements BaseModel
     public function withRefundID(string $refundID): self
     {
         $obj = clone $this;
-        $obj['refund_id'] = $refundID;
+        $obj['refundID'] = $refundID;
 
         return $obj;
     }

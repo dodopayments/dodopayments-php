@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterAggregation;
@@ -32,8 +33,8 @@ final class MetersService implements MetersContract
      *   aggregation: array{
      *     type: 'count'|'sum'|'max'|'last'|Type, key?: string|null
      *   }|MeterAggregation,
-     *   event_name: string,
-     *   measurement_unit: string,
+     *   eventName: string,
+     *   measurementUnit: string,
      *   name: string,
      *   description?: string|null,
      *   filter?: array{
@@ -89,7 +90,7 @@ final class MetersService implements MetersContract
      * @api
      *
      * @param array{
-     *   archived?: bool, page_number?: int, page_size?: int
+     *   archived?: bool, pageNumber?: int, pageSize?: int
      * }|MeterListParams $params
      *
      * @return DefaultPageNumberPagination<Meter>
@@ -109,7 +110,10 @@ final class MetersService implements MetersContract
         $response = $this->client->request(
             method: 'get',
             path: 'meters',
-            query: $parsed,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+            ),
             options: $options,
             convert: Meter::class,
             page: DefaultPageNumberPagination::class,

@@ -7,6 +7,7 @@ namespace Dodopayments\Services\Customers;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
@@ -22,7 +23,7 @@ final class CustomerPortalService implements CustomerPortalContract
     /**
      * @api
      *
-     * @param array{send_email?: bool}|CustomerPortalCreateParams $params
+     * @param array{sendEmail?: bool}|CustomerPortalCreateParams $params
      *
      * @throws APIException
      */
@@ -40,7 +41,7 @@ final class CustomerPortalService implements CustomerPortalContract
         $response = $this->client->request(
             method: 'post',
             path: ['customers/%1$s/customer-portal/session', $customerID],
-            query: $parsed,
+            query: Util::array_transform_keys($parsed, ['sendEmail' => 'send_email']),
             options: $options,
             convert: CustomerPortalSession::class,
         );
