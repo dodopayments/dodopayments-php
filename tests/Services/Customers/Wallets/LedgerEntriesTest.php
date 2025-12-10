@@ -4,6 +4,7 @@ namespace Tests\Services\Customers\Wallets;
 
 use Dodopayments\Client;
 use Dodopayments\Customers\Wallets\CustomerWallet;
+use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -61,11 +62,16 @@ final class LedgerEntriesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->customers->wallets->ledgerEntries->list(
+        $page = $this->client->customers->wallets->ledgerEntries->list(
             'customer_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(CustomerWalletTransaction::class, $item);
+        }
     }
 }

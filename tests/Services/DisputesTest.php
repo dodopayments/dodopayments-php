@@ -4,6 +4,7 @@ namespace Tests\Services;
 
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Disputes\DisputeListResponse;
 use Dodopayments\Disputes\GetDispute;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -39,9 +40,14 @@ final class DisputesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->disputes->list();
+        $page = $this->client->disputes->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(DisputeListResponse::class, $item);
+        }
     }
 }
