@@ -7,7 +7,6 @@ namespace Dodopayments\ServiceContracts\Webhooks;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
-use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 
 interface HeadersContract
 {
@@ -24,13 +23,13 @@ interface HeadersContract
     /**
      * @api
      *
-     * @param array<mixed>|HeaderUpdateParams $params
+     * @param array<string,string> $headers Object of header-value pair to update or add
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        array|HeaderUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        array $headers,
+        ?RequestOptions $requestOptions = null
     ): mixed;
 }

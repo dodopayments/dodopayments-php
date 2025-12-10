@@ -5,20 +5,14 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price;
 use Dodopayments\Products\Product;
-use Dodopayments\Products\ProductCreateParams;
-use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
-use Dodopayments\Products\ProductUpdateFilesParams;
 use Dodopayments\Products\ProductUpdateFilesResponse;
-use Dodopayments\Products\ProductUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\ProductsContract;
 use Dodopayments\Services\Products\ImagesService;
@@ -29,6 +23,11 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      */
+    public ProductsRawService $raw;
+
+    /**
+     * @api
+     */
     public ImagesService $images;
 
     /**
@@ -36,56 +35,78 @@ final class ProductsService implements ProductsContract
      */
     public function __construct(private Client $client)
     {
+        $this->raw = new ProductsRawService($client);
         $this->images = new ImagesService($client);
     }
 
     /**
      * @api
      *
+     * @param string $name Name of the product
+     * @param Price|array<string,mixed> $price Price configuration for the product
+     * @param 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory $taxCategory Tax category applied to this product
+     * @param list<string>|null $addons Addons available for subscription product
+     * @param string|null $brandID Brand id for the product, if not provided will default to primary brand
+     * @param string|null $description Optional description of the product
      * @param array{
-     *   name: string,
-     *   price: Price|array<string,mixed>,
-     *   taxCategory: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
-     *   addons?: list<string>|null,
-     *   brandID?: string|null,
-     *   description?: string|null,
-     *   digitalProductDelivery?: array{
-     *     externalURL?: string|null, instructions?: string|null
-     *   }|null,
-     *   licenseKeyActivationMessage?: string|null,
-     *   licenseKeyActivationsLimit?: int|null,
-     *   licenseKeyDuration?: array{
-     *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
-     *   }|LicenseKeyDuration|null,
-     *   licenseKeyEnabled?: bool|null,
-     *   metadata?: array<string,string>,
-     * }|ProductCreateParams $params
+     *   externalURL?: string|null, instructions?: string|null
+     * }|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
+     * @param int|null $licenseKeyActivationsLimit The number of times the license key can be activated.
+     * Must be 0 or greater
+     * @param array{
+     *   count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
+     * }|LicenseKeyDuration|null $licenseKeyDuration Duration configuration for the license key.
+     * Set to null if you don't want the license key to expire.
+     * For subscriptions, the lifetime of the license key is tied to the subscription period
+     * @param bool|null $licenseKeyEnabled When true, generates and sends a license key to your customer.
+     * Defaults to false
+     * @param array<string,string> $metadata Additional metadata for the product
      *
      * @throws APIException
      */
     public function create(
-        array|ProductCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        string $name,
+        Price|array $price,
+        string|TaxCategory $taxCategory,
+        ?array $addons = null,
+        ?string $brandID = null,
+        ?string $description = null,
+        ?array $digitalProductDelivery = null,
+        ?string $licenseKeyActivationMessage = null,
+        ?int $licenseKeyActivationsLimit = null,
+        array|LicenseKeyDuration|null $licenseKeyDuration = null,
+        ?bool $licenseKeyEnabled = null,
+        ?array $metadata = null,
+        ?RequestOptions $requestOptions = null,
     ): Product {
-        [$parsed, $options] = ProductCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+            'addons' => $addons,
+            'brandID' => $brandID,
+            'description' => $description,
+            'digitalProductDelivery' => $digitalProductDelivery,
+            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+            'licenseKeyDuration' => $licenseKeyDuration,
+            'licenseKeyEnabled' => $licenseKeyEnabled,
+            'metadata' => $metadata,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<Product> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'products',
-            body: (object) $parsed,
-            options: $options,
-            convert: Product::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
+     *
+     * @param string $id Product Id
      *
      * @throws APIException
      */
@@ -93,13 +114,8 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): Product {
-        /** @var BaseResponse<Product> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['products/%1$s', $id],
-            options: $requestOptions,
-            convert: Product::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -107,48 +123,76 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
+     * @param list<string>|null $addons Available Addons for subscription products
+     * @param string|null $description description of the product, optional and must be at most 1000 characters
      * @param array{
-     *   addons?: list<string>|null,
-     *   brandID?: string|null,
-     *   description?: string|null,
-     *   digitalProductDelivery?: array{
-     *     externalURL?: string|null,
-     *     files?: list<string>|null,
-     *     instructions?: string|null,
-     *   }|null,
-     *   imageID?: string|null,
-     *   licenseKeyActivationMessage?: string|null,
-     *   licenseKeyActivationsLimit?: int|null,
-     *   licenseKeyDuration?: array{
-     *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
-     *   }|LicenseKeyDuration|null,
-     *   licenseKeyEnabled?: bool|null,
-     *   metadata?: array<string,string>|null,
-     *   name?: string|null,
-     *   price?: Price|array<string,mixed>|null,
-     *   taxCategory?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
-     * }|ProductUpdateParams $params
+     *   externalURL?: string|null,
+     *   files?: list<string>|null,
+     *   instructions?: string|null,
+     * }|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param string|null $imageID Product image id after its uploaded to S3
+     * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.
+     *
+     * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
+     * activating the license key.
+     * @param int|null $licenseKeyActivationsLimit Limit for the number of activations for the license key.
+     *
+     * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
+     * the license key can be activated.
+     * @param array{
+     *   count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
+     * }|LicenseKeyDuration|null $licenseKeyDuration Duration of the license key if enabled.
+     *
+     * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
+     * the license key is valid.
+     * @param bool|null $licenseKeyEnabled Whether the product requires a license key.
+     *
+     * If `true`, additional fields related to license key (duration, activations limit, activation message)
+     * become applicable.
+     * @param array<string,string>|null $metadata Additional metadata for the product
+     * @param string|null $name name of the product, optional and must be at most 100 characters
+     * @param Price|array<string,mixed>|null $price price details of the product
+     * @param 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null $taxCategory tax category of the product
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|ProductUpdateParams $params,
+        ?array $addons = null,
+        ?string $brandID = null,
+        ?string $description = null,
+        ?array $digitalProductDelivery = null,
+        ?string $imageID = null,
+        ?string $licenseKeyActivationMessage = null,
+        ?int $licenseKeyActivationsLimit = null,
+        array|LicenseKeyDuration|null $licenseKeyDuration = null,
+        ?bool $licenseKeyEnabled = null,
+        ?array $metadata = null,
+        ?string $name = null,
+        Price|array|null $price = null,
+        string|TaxCategory|null $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        [$parsed, $options] = ProductUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'addons' => $addons,
+            'brandID' => $brandID,
+            'description' => $description,
+            'digitalProductDelivery' => $digitalProductDelivery,
+            'imageID' => $imageID,
+            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+            'licenseKeyDuration' => $licenseKeyDuration,
+            'licenseKeyEnabled' => $licenseKeyEnabled,
+            'metadata' => $metadata,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<mixed> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['products/%1$s', $id],
-            body: (object) $parsed,
-            options: $options,
-            convert: null,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -156,43 +200,39 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
-     * @param array{
-     *   archived?: bool,
-     *   brandID?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     *   recurring?: bool,
-     * }|ProductListParams $params
+     * @param bool $archived List archived products
+     * @param string $brandID filter by Brand id
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
+     * @param bool $recurring Filter products by pricing type:
+     * - `true`: Show only recurring pricing products (e.g. subscriptions)
+     * - `false`: Show only one-time price products
+     * - `null` or absent: Show both types of products
      *
      * @return DefaultPageNumberPagination<ProductListResponse>
      *
      * @throws APIException
      */
     public function list(
-        array|ProductListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?bool $archived = null,
+        ?string $brandID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?bool $recurring = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = ProductListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'archived' => $archived,
+            'brandID' => $brandID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'recurring' => $recurring,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<ProductListResponse>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'products',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'brandID' => 'brand_id',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                ],
-            ),
-            options: $options,
-            convert: ProductListResponse::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -206,13 +246,8 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        /** @var BaseResponse<mixed> */
-        $response = $this->client->request(
-            method: 'delete',
-            path: ['products/%1$s', $id],
-            options: $requestOptions,
-            convert: null,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->archive($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -226,13 +261,8 @@ final class ProductsService implements ProductsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        /** @var BaseResponse<mixed> */
-        $response = $this->client->request(
-            method: 'post',
-            path: ['products/%1$s/unarchive', $id],
-            options: $requestOptions,
-            convert: null,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->unarchive($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -240,28 +270,19 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
-     * @param array{fileName: string}|ProductUpdateFilesParams $params
+     * @param string $id Product Id
      *
      * @throws APIException
      */
     public function updateFiles(
         string $id,
-        array|ProductUpdateFilesParams $params,
-        ?RequestOptions $requestOptions = null,
+        string $fileName,
+        ?RequestOptions $requestOptions = null
     ): ProductUpdateFilesResponse {
-        [$parsed, $options] = ProductUpdateFilesParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['fileName' => $fileName];
 
-        /** @var BaseResponse<ProductUpdateFilesResponse> */
-        $response = $this->client->request(
-            method: 'put',
-            path: ['products/%1$s/files', $id],
-            body: (object) $parsed,
-            options: $options,
-            convert: ProductUpdateFilesResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->updateFiles($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

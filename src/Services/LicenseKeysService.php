@@ -5,26 +5,32 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
-use Dodopayments\LicenseKeys\LicenseKeyListParams;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
-use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeysContract;
 
 final class LicenseKeysService implements LicenseKeysContract
 {
     /**
+     * @api
+     */
+    public LicenseKeysRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new LicenseKeysRawService($client);
+    }
 
     /**
      * @api
+     *
+     * @param string $id License key ID
      *
      * @throws APIException
      */
@@ -32,13 +38,8 @@ final class LicenseKeysService implements LicenseKeysContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKey {
-        /** @var BaseResponse<LicenseKey> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['license_keys/%1$s', $id],
-            options: $requestOptions,
-            convert: LicenseKey::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -46,32 +47,33 @@ final class LicenseKeysService implements LicenseKeysContract
     /**
      * @api
      *
-     * @param array{
-     *   activationsLimit?: int|null,
-     *   disabled?: bool|null,
-     *   expiresAt?: string|\DateTimeInterface|null,
-     * }|LicenseKeyUpdateParams $params
+     * @param string $id License key ID
+     * @param int|null $activationsLimit The updated activation limit for the license key.
+     * Use `null` to remove the limit, or omit this field to leave it unchanged.
+     * @param bool|null $disabled Indicates whether the license key should be disabled.
+     * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
+     * @param string|\DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
+     * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|LicenseKeyUpdateParams $params,
+        ?int $activationsLimit = null,
+        ?bool $disabled = null,
+        string|\DateTimeInterface|null $expiresAt = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
-        [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'activationsLimit' => $activationsLimit,
+            'disabled' => $disabled,
+            'expiresAt' => $expiresAt,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<LicenseKey> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['license_keys/%1$s', $id],
-            body: (object) $parsed,
-            options: $options,
-            convert: LicenseKey::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -79,44 +81,36 @@ final class LicenseKeysService implements LicenseKeysContract
     /**
      * @api
      *
-     * @param array{
-     *   customerID?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     *   productID?: string,
-     *   status?: 'active'|'expired'|'disabled'|Status,
-     * }|LicenseKeyListParams $params
+     * @param string $customerID Filter by customer ID
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
+     * @param string $productID Filter by product ID
+     * @param 'active'|'expired'|'disabled'|Status $status Filter by license key status
      *
      * @return DefaultPageNumberPagination<LicenseKey>
      *
      * @throws APIException
      */
     public function list(
-        array|LicenseKeyListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?string $customerID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?string $productID = null,
+        string|Status|null $status = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = LicenseKeyListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'customerID' => $customerID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'productID' => $productID,
+            'status' => $status,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<LicenseKey>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'license_keys',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'customerID' => 'customer_id',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                    'productID' => 'product_id',
-                ],
-            ),
-            options: $options,
-            convert: LicenseKey::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

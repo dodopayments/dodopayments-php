@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\PayoutsContract;
@@ -17,50 +14,48 @@ use Dodopayments\ServiceContracts\PayoutsContract;
 final class PayoutsService implements PayoutsContract
 {
     /**
+     * @api
+     */
+    public PayoutsRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new PayoutsRawService($client);
+    }
 
     /**
      * @api
      *
-     * @param array{
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     * }|PayoutListParams $params
+     * @param string|\DateTimeInterface $createdAtGte Get payouts created after this time (inclusive)
+     * @param string|\DateTimeInterface $createdAtLte Get payouts created before this time (inclusive)
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<PayoutListResponse>
      *
      * @throws APIException
      */
     public function list(
-        array|PayoutListParams $params,
-        ?RequestOptions $requestOptions = null
+        string|\DateTimeInterface|null $createdAtGte = null,
+        string|\DateTimeInterface|null $createdAtLte = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = PayoutListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<PayoutListResponse>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'payouts',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'createdAtGte' => 'created_at_gte',
-                    'createdAtLte' => 'created_at_lte',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                ],
-            ),
-            options: $options,
-            convert: PayoutListResponse::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

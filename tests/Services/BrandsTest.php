@@ -31,7 +31,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->brands->create([]);
+        $result = $this->client->brands->create();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Brand::class, $result);
@@ -49,7 +49,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->brands->update('id', []);
+        $result = $this->client->brands->update('id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Brand::class, $result);

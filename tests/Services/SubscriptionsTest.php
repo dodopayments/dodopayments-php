@@ -37,12 +37,12 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->subscriptions->create([
-            'billing' => ['country' => CountryCode::AF],
-            'customer' => ['customerID' => 'customer_id'],
-            'productID' => 'product_id',
-            'quantity' => 0,
-        ]);
+        $result = $this->client->subscriptions->create(
+            billing: ['country' => CountryCode::AF],
+            customer: ['customerID' => 'customer_id'],
+            productID: 'product_id',
+            quantity: 0,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SubscriptionNewResponse::class, $result);
@@ -51,36 +51,36 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->subscriptions->create([
-            'billing' => [
+        $result = $this->client->subscriptions->create(
+            billing: [
                 'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',
             ],
-            'customer' => ['customerID' => 'customer_id'],
-            'productID' => 'product_id',
-            'quantity' => 0,
-            'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
-            'allowedPaymentMethodTypes' => [PaymentMethodTypes::CREDIT],
-            'billingCurrency' => Currency::AED,
-            'discountCode' => 'discount_code',
-            'force3DS' => true,
-            'metadata' => ['foo' => 'string'],
-            'onDemand' => [
+            customer: ['customerID' => 'customer_id'],
+            productID: 'product_id',
+            quantity: 0,
+            addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
+            billingCurrency: Currency::AED,
+            discountCode: 'discount_code',
+            force3DS: true,
+            metadata: ['foo' => 'string'],
+            onDemand: [
                 'mandateOnly' => true,
                 'adaptiveCurrencyFeesInclusive' => true,
                 'productCurrency' => Currency::AED,
                 'productDescription' => 'product_description',
                 'productPrice' => 0,
             ],
-            'paymentLink' => true,
-            'returnURL' => 'return_url',
-            'showSavedPaymentMethods' => true,
-            'taxID' => 'tax_id',
-            'trialPeriodDays' => 0,
-        ]);
+            paymentLink: true,
+            returnURL: 'return_url',
+            showSavedPaymentMethods: true,
+            taxID: 'tax_id',
+            trialPeriodDays: 0,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SubscriptionNewResponse::class, $result);
@@ -98,7 +98,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->subscriptions->update('subscription_id', []);
+        $result = $this->client->subscriptions->update('subscription_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Subscription::class, $result);
@@ -107,7 +107,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->subscriptions->list([]);
+        $result = $this->client->subscriptions->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
@@ -118,11 +118,9 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->changePlan(
             'subscription_id',
-            [
-                'productID' => 'product_id',
-                'prorationBillingMode' => 'prorated_immediately',
-                'quantity' => 0,
-            ],
+            productID: 'product_id',
+            prorationBillingMode: 'prorated_immediately',
+            quantity: 0,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -134,12 +132,10 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->changePlan(
             'subscription_id',
-            [
-                'productID' => 'product_id',
-                'prorationBillingMode' => 'prorated_immediately',
-                'quantity' => 0,
-                'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
-            ],
+            productID: 'product_id',
+            prorationBillingMode: 'prorated_immediately',
+            quantity: 0,
+            addons: [['addonID' => 'addon_id', 'quantity' => 0]],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -151,7 +147,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->charge(
             'subscription_id',
-            ['productPrice' => 0]
+            productPrice: 0
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -163,17 +159,15 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->charge(
             'subscription_id',
-            [
-                'productPrice' => 0,
-                'adaptiveCurrencyFeesInclusive' => true,
-                'customerBalanceConfig' => [
-                    'allowCustomerCreditsPurchase' => true,
-                    'allowCustomerCreditsUsage' => true,
-                ],
-                'metadata' => ['foo' => 'string'],
-                'productCurrency' => Currency::AED,
-                'productDescription' => 'product_description',
+            productPrice: 0,
+            adaptiveCurrencyFeesInclusive: true,
+            customerBalanceConfig: [
+                'allowCustomerCreditsPurchase' => true,
+                'allowCustomerCreditsUsage' => true,
             ],
+            metadata: ['foo' => 'string'],
+            productCurrency: Currency::AED,
+            productDescription: 'product_description',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -185,11 +179,9 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->previewChangePlan(
             'subscription_id',
-            [
-                'productID' => 'product_id',
-                'prorationBillingMode' => 'prorated_immediately',
-                'quantity' => 0,
-            ],
+            productID: 'product_id',
+            prorationBillingMode: 'prorated_immediately',
+            quantity: 0,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -204,12 +196,10 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->previewChangePlan(
             'subscription_id',
-            [
-                'productID' => 'product_id',
-                'prorationBillingMode' => 'prorated_immediately',
-                'quantity' => 0,
-                'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
-            ],
+            productID: 'product_id',
+            prorationBillingMode: 'prorated_immediately',
+            quantity: 0,
+            addons: [['addonID' => 'addon_id', 'quantity' => 0]],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -223,8 +213,7 @@ final class SubscriptionsTest extends TestCase
     public function testRetrieveUsageHistory(): void
     {
         $result = $this->client->subscriptions->retrieveUsageHistory(
-            'subscription_id',
-            []
+            'subscription_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -236,7 +225,8 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            ['type' => 'existing', 'paymentMethodID' => 'payment_method_id'],
+            type: 'existing',
+            paymentMethodID: 'payment_method_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -251,11 +241,9 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            [
-                'type' => 'existing',
-                'returnURL' => 'return_url',
-                'paymentMethodID' => 'payment_method_id',
-            ],
+            type: 'existing',
+            returnURL: 'return_url',
+            paymentMethodID: 'payment_method_id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

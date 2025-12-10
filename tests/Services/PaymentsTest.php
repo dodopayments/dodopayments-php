@@ -35,11 +35,11 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->payments->create([
-            'billing' => ['country' => CountryCode::AF],
-            'customer' => ['customerID' => 'customer_id'],
-            'productCart' => [['productID' => 'product_id', 'quantity' => 0]],
-        ]);
+        $result = $this->client->payments->create(
+            billing: ['country' => CountryCode::AF],
+            customer: ['customerID' => 'customer_id'],
+            productCart: [['productID' => 'product_id', 'quantity' => 0]],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PaymentNewResponse::class, $result);
@@ -48,28 +48,28 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->payments->create([
-            'billing' => [
+        $result = $this->client->payments->create(
+            billing: [
                 'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',
             ],
-            'customer' => ['customerID' => 'customer_id'],
-            'productCart' => [
+            customer: ['customerID' => 'customer_id'],
+            productCart: [
                 ['productID' => 'product_id', 'quantity' => 0, 'amount' => 0],
             ],
-            'allowedPaymentMethodTypes' => [PaymentMethodTypes::CREDIT],
-            'billingCurrency' => Currency::AED,
-            'discountCode' => 'discount_code',
-            'force3DS' => true,
-            'metadata' => ['foo' => 'string'],
-            'paymentLink' => true,
-            'returnURL' => 'return_url',
-            'showSavedPaymentMethods' => true,
-            'taxID' => 'tax_id',
-        ]);
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
+            billingCurrency: Currency::AED,
+            discountCode: 'discount_code',
+            force3DS: true,
+            metadata: ['foo' => 'string'],
+            paymentLink: true,
+            returnURL: 'return_url',
+            showSavedPaymentMethods: true,
+            taxID: 'tax_id',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PaymentNewResponse::class, $result);
@@ -87,7 +87,7 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->payments->list([]);
+        $result = $this->client->payments->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

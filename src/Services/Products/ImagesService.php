@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Products;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
-use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Products\ImagesContract;
@@ -16,38 +13,36 @@ use Dodopayments\ServiceContracts\Products\ImagesContract;
 final class ImagesService implements ImagesContract
 {
     /**
+     * @api
+     */
+    public ImagesRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new ImagesRawService($client);
+    }
 
     /**
      * @api
      *
-     * @param array{forceUpdate?: bool}|ImageUpdateParams $params
+     * @param string $id Product Id
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|ImageUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        ?bool $forceUpdate = null,
+        ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse {
-        [$parsed, $options] = ImageUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['forceUpdate' => $forceUpdate];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<ImageUpdateResponse> */
-        $response = $this->client->request(
-            method: 'put',
-            path: ['products/%1$s/images', $id],
-            query: Util::array_transform_keys(
-                $parsed,
-                ['forceUpdate' => 'force_update']
-            ),
-            options: $options,
-            convert: ImageUpdateResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

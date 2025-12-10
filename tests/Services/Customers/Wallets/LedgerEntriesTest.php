@@ -33,7 +33,9 @@ final class LedgerEntriesTest extends TestCase
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
-            ['amount' => 0, 'currency' => Currency::AED, 'entryType' => 'credit'],
+            amount: 0,
+            currency: Currency::AED,
+            entryType: 'credit'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -45,13 +47,11 @@ final class LedgerEntriesTest extends TestCase
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
             'customer_id',
-            [
-                'amount' => 0,
-                'currency' => Currency::AED,
-                'entryType' => 'credit',
-                'idempotencyKey' => 'idempotency_key',
-                'reason' => 'reason',
-            ],
+            amount: 0,
+            currency: Currency::AED,
+            entryType: 'credit',
+            idempotencyKey: 'idempotency_key',
+            reason: 'reason',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -62,8 +62,7 @@ final class LedgerEntriesTest extends TestCase
     public function testList(): void
     {
         $result = $this->client->customers->wallets->ledgerEntries->list(
-            'customer_id',
-            []
+            'customer_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

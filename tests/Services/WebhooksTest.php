@@ -32,7 +32,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->webhooks->create(['url' => 'url']);
+        $result = $this->client->webhooks->create(url: 'url');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookDetails::class, $result);
@@ -41,16 +41,16 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->webhooks->create([
-            'url' => 'url',
-            'description' => 'description',
-            'disabled' => true,
-            'filterTypes' => [WebhookEventType::PAYMENT_SUCCEEDED],
-            'headers' => ['foo' => 'string'],
-            'idempotencyKey' => 'idempotency_key',
-            'metadata' => ['foo' => 'string'],
-            'rateLimit' => 0,
-        ]);
+        $result = $this->client->webhooks->create(
+            url: 'url',
+            description: 'description',
+            disabled: true,
+            filterTypes: [WebhookEventType::PAYMENT_SUCCEEDED],
+            headers: ['foo' => 'string'],
+            idempotencyKey: 'idempotency_key',
+            metadata: ['foo' => 'string'],
+            rateLimit: 0,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookDetails::class, $result);
@@ -68,7 +68,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->webhooks->update('webhook_id', []);
+        $result = $this->client->webhooks->update('webhook_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookDetails::class, $result);
@@ -77,7 +77,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->webhooks->list([]);
+        $result = $this->client->webhooks->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CursorPagePagination::class, $result);

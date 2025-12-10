@@ -5,19 +5,25 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Webhooks;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Webhooks\HeadersContract;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
-use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 
 final class HeadersService implements HeadersContract
 {
     /**
+     * @api
+     */
+    public HeadersRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new HeadersRawService($client);
+    }
 
     /**
      * @api
@@ -30,13 +36,8 @@ final class HeadersService implements HeadersContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): HeaderGetResponse {
-        /** @var BaseResponse<HeaderGetResponse> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['webhooks/%1$s/headers', $webhookID],
-            options: $requestOptions,
-            convert: HeaderGetResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -46,28 +47,19 @@ final class HeadersService implements HeadersContract
      *
      * Patch a webhook by id
      *
-     * @param array{headers: array<string,string>}|HeaderUpdateParams $params
+     * @param array<string,string> $headers Object of header-value pair to update or add
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        array|HeaderUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        array $headers,
+        ?RequestOptions $requestOptions = null
     ): mixed {
-        [$parsed, $options] = HeaderUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['headers' => $headers];
 
-        /** @var BaseResponse<mixed> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['webhooks/%1$s/headers', $webhookID],
-            body: (object) $parsed,
-            options: $options,
-            convert: null,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

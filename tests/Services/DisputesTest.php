@@ -39,7 +39,7 @@ final class DisputesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->disputes->list([]);
+        $result = $this->client->disputes->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

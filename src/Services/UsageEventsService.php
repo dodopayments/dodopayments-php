@@ -5,23 +5,27 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\UsageEventsContract;
 use Dodopayments\UsageEvents\Event;
-use Dodopayments\UsageEvents\UsageEventIngestParams;
 use Dodopayments\UsageEvents\UsageEventIngestResponse;
-use Dodopayments\UsageEvents\UsageEventListParams;
 
 final class UsageEventsService implements UsageEventsContract
 {
     /**
+     * @api
+     */
+    public UsageEventsRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new UsageEventsRawService($client);
+    }
 
     /**
      * @api
@@ -48,19 +52,16 @@ final class UsageEventsService implements UsageEventsContract
      * GET /events/api_call_12345
      * ```
      *
+     * @param string $eventID Unique event identifier (case-sensitive, must match the ID used during ingestion)
+     *
      * @throws APIException
      */
     public function retrieve(
         string $eventID,
         ?RequestOptions $requestOptions = null
     ): Event {
-        /** @var BaseResponse<Event> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['events/%1$s', $eventID],
-            options: $requestOptions,
-            convert: Event::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($eventID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -94,47 +95,42 @@ final class UsageEventsService implements UsageEventsContract
      * - Get events with meter filtering: `?meter_id=mtr_xyz789`
      * - Paginate results: `?page_size=50&page_number=2`
      *
-     * @param array{
-     *   customerID?: string,
-     *   end?: string|\DateTimeInterface,
-     *   eventName?: string,
-     *   meterID?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     *   start?: string|\DateTimeInterface,
-     * }|UsageEventListParams $params
+     * @param string $customerID Filter events by customer ID
+     * @param string|\DateTimeInterface $end Filter events created before this timestamp
+     * @param string $eventName Filter events by event name. If both event_name and meter_id are provided, they must match the meter's configured event_name
+     * @param string $meterID Filter events by meter ID. When provided, only events that match the meter's event_name and filter criteria will be returned
+     * @param int $pageNumber Page number (0-based, default: 0)
+     * @param int $pageSize Number of events to return per page (default: 10)
+     * @param string|\DateTimeInterface $start Filter events created after this timestamp
      *
      * @return DefaultPageNumberPagination<Event>
      *
      * @throws APIException
      */
     public function list(
-        array|UsageEventListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?string $customerID = null,
+        string|\DateTimeInterface|null $end = null,
+        ?string $eventName = null,
+        ?string $meterID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        string|\DateTimeInterface|null $start = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = UsageEventListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'customerID' => $customerID,
+            'end' => $end,
+            'eventName' => $eventName,
+            'meterID' => $meterID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'start' => $start,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<Event>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'events',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'customerID' => 'customer_id',
-                    'eventName' => 'event_name',
-                    'meterID' => 'meter_id',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                ],
-            ),
-            options: $options,
-            convert: Event::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -174,35 +170,24 @@ final class UsageEventsService implements UsageEventsContract
      * }
      * ```
      *
-     * @param array{
-     *   events: list<array{
-     *     customerID: string,
-     *     eventID: string,
-     *     eventName: string,
-     *     metadata?: array<string,string|float|bool>|null,
-     *     timestamp?: string|\DateTimeInterface|null,
-     *   }>,
-     * }|UsageEventIngestParams $params
+     * @param list<array{
+     *   customerID: string,
+     *   eventID: string,
+     *   eventName: string,
+     *   metadata?: array<string,string|float|bool>|null,
+     *   timestamp?: string|\DateTimeInterface|null,
+     * }> $events List of events to be pushed
      *
      * @throws APIException
      */
     public function ingest(
-        array|UsageEventIngestParams $params,
+        array $events,
         ?RequestOptions $requestOptions = null
     ): UsageEventIngestResponse {
-        [$parsed, $options] = UsageEventIngestParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['events' => $events];
 
-        /** @var BaseResponse<UsageEventIngestResponse> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'events/ingest',
-            body: (object) $parsed,
-            options: $options,
-            convert: UsageEventIngestResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->ingest(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

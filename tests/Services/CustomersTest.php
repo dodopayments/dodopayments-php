@@ -31,9 +31,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->customers->create([
-            'email' => 'email', 'name' => 'name',
-        ]);
+        $result = $this->client->customers->create(email: 'email', name: 'name');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Customer::class, $result);
@@ -42,12 +40,12 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->customers->create([
-            'email' => 'email',
-            'name' => 'name',
-            'metadata' => ['foo' => 'string'],
-            'phoneNumber' => 'phone_number',
-        ]);
+        $result = $this->client->customers->create(
+            email: 'email',
+            name: 'name',
+            metadata: ['foo' => 'string'],
+            phoneNumber: 'phone_number',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Customer::class, $result);
@@ -65,7 +63,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->customers->update('customer_id', []);
+        $result = $this->client->customers->update('customer_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Customer::class, $result);
@@ -74,7 +72,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->customers->list([]);
+        $result = $this->client->customers->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

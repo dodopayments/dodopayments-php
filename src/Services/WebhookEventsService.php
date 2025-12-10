@@ -9,9 +9,17 @@ use Dodopayments\ServiceContracts\WebhookEventsContract;
 
 final class WebhookEventsService implements WebhookEventsContract
 {
+    /**
+     * @api
+     */
+    public WebhookEventsRawService $raw;
+
     // @phpstan-ignore-next-line
     /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new WebhookEventsRawService($client);
+    }
 }
