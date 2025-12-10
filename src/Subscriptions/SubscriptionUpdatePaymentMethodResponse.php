@@ -49,45 +49,45 @@ final class SubscriptionUpdatePaymentMethodResponse implements BaseModel
         ?string $paymentID = null,
         ?string $paymentLink = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $clientSecret && $obj['clientSecret'] = $clientSecret;
-        null !== $expiresOn && $obj['expiresOn'] = $expiresOn;
-        null !== $paymentID && $obj['paymentID'] = $paymentID;
-        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
+        null !== $clientSecret && $self['clientSecret'] = $clientSecret;
+        null !== $expiresOn && $self['expiresOn'] = $expiresOn;
+        null !== $paymentID && $self['paymentID'] = $paymentID;
+        null !== $paymentLink && $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 
     public function withClientSecret(?string $clientSecret): self
     {
-        $obj = clone $this;
-        $obj['clientSecret'] = $clientSecret;
+        $self = clone $this;
+        $self['clientSecret'] = $clientSecret;
 
-        return $obj;
+        return $self;
     }
 
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
-        $obj = clone $this;
-        $obj['expiresOn'] = $expiresOn;
+        $self = clone $this;
+        $self['expiresOn'] = $expiresOn;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentID(?string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentLink(?string $paymentLink): self
     {
-        $obj = clone $this;
-        $obj['paymentLink'] = $paymentLink;
+        $self = clone $this;
+        $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 }

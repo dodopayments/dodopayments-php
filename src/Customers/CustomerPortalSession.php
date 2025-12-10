@@ -45,18 +45,18 @@ final class CustomerPortalSession implements BaseModel
      */
     public static function with(string $link): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['link'] = $link;
+        $self['link'] = $link;
 
-        return $obj;
+        return $self;
     }
 
     public function withLink(string $link): self
     {
-        $obj = clone $this;
-        $obj['link'] = $link;
+        $self = clone $this;
+        $self['link'] = $link;
 
-        return $obj;
+        return $self;
     }
 }

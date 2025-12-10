@@ -148,20 +148,20 @@ final class PaymentNewResponse implements BaseModel
         ?string $paymentLink = null,
         ?array $productCart = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['clientSecret'] = $clientSecret;
-        $obj['customer'] = $customer;
-        $obj['metadata'] = $metadata;
-        $obj['paymentID'] = $paymentID;
-        $obj['totalAmount'] = $totalAmount;
+        $self['clientSecret'] = $clientSecret;
+        $self['customer'] = $customer;
+        $self['metadata'] = $metadata;
+        $self['paymentID'] = $paymentID;
+        $self['totalAmount'] = $totalAmount;
 
-        null !== $discountID && $obj['discountID'] = $discountID;
-        null !== $expiresOn && $obj['expiresOn'] = $expiresOn;
-        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
-        null !== $productCart && $obj['productCart'] = $productCart;
+        null !== $discountID && $self['discountID'] = $discountID;
+        null !== $expiresOn && $self['expiresOn'] = $expiresOn;
+        null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $productCart && $self['productCart'] = $productCart;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -170,10 +170,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withClientSecret(string $clientSecret): self
     {
-        $obj = clone $this;
-        $obj['clientSecret'] = $clientSecret;
+        $self = clone $this;
+        $self['clientSecret'] = $clientSecret;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -189,10 +189,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -202,10 +202,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -213,10 +213,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -224,10 +224,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withTotalAmount(int $totalAmount): self
     {
-        $obj = clone $this;
-        $obj['totalAmount'] = $totalAmount;
+        $self = clone $this;
+        $self['totalAmount'] = $totalAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -235,10 +235,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withDiscountID(?string $discountID): self
     {
-        $obj = clone $this;
-        $obj['discountID'] = $discountID;
+        $self = clone $this;
+        $self['discountID'] = $discountID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -246,10 +246,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
-        $obj = clone $this;
-        $obj['expiresOn'] = $expiresOn;
+        $self = clone $this;
+        $self['expiresOn'] = $expiresOn;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -257,10 +257,10 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withPaymentLink(?string $paymentLink): self
     {
-        $obj = clone $this;
-        $obj['paymentLink'] = $paymentLink;
+        $self = clone $this;
+        $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -272,9 +272,9 @@ final class PaymentNewResponse implements BaseModel
      */
     public function withProductCart(?array $productCart): self
     {
-        $obj = clone $this;
-        $obj['productCart'] = $productCart;
+        $self = clone $this;
+        $self['productCart'] = $productCart;
 
-        return $obj;
+        return $self;
     }
 }

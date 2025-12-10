@@ -133,19 +133,19 @@ final class OneTimePrice implements BaseModel
         ?int $suggestedPrice = null,
         ?bool $taxInclusive = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['currency'] = $currency;
-        $obj['discount'] = $discount;
-        $obj['price'] = $price;
-        $obj['purchasingPowerParity'] = $purchasingPowerParity;
-        $obj['type'] = $type;
+        $self['currency'] = $currency;
+        $self['discount'] = $discount;
+        $self['price'] = $price;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
+        $self['type'] = $type;
 
-        null !== $payWhatYouWant && $obj['payWhatYouWant'] = $payWhatYouWant;
-        null !== $suggestedPrice && $obj['suggestedPrice'] = $suggestedPrice;
-        null !== $taxInclusive && $obj['taxInclusive'] = $taxInclusive;
+        null !== $payWhatYouWant && $self['payWhatYouWant'] = $payWhatYouWant;
+        null !== $suggestedPrice && $self['suggestedPrice'] = $suggestedPrice;
+        null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -155,10 +155,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -166,10 +166,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withDiscount(int $discount): self
     {
-        $obj = clone $this;
-        $obj['discount'] = $discount;
+        $self = clone $this;
+        $self['discount'] = $discount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -181,10 +181,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withPrice(int $price): self
     {
-        $obj = clone $this;
-        $obj['price'] = $price;
+        $self = clone $this;
+        $self['price'] = $price;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -193,10 +193,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
-        $obj = clone $this;
-        $obj['purchasingPowerParity'] = $purchasingPowerParity;
+        $self = clone $this;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -204,10 +204,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -216,10 +216,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withPayWhatYouWant(bool $payWhatYouWant): self
     {
-        $obj = clone $this;
-        $obj['payWhatYouWant'] = $payWhatYouWant;
+        $self = clone $this;
+        $self['payWhatYouWant'] = $payWhatYouWant;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -228,10 +228,10 @@ final class OneTimePrice implements BaseModel
      */
     public function withSuggestedPrice(?int $suggestedPrice): self
     {
-        $obj = clone $this;
-        $obj['suggestedPrice'] = $suggestedPrice;
+        $self = clone $this;
+        $self['suggestedPrice'] = $suggestedPrice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -239,9 +239,9 @@ final class OneTimePrice implements BaseModel
      */
     public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $obj = clone $this;
-        $obj['taxInclusive'] = $taxInclusive;
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 }

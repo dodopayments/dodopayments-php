@@ -63,12 +63,12 @@ final class WalletListResponse implements BaseModel
      */
     public static function with(array $items, int $totalBalanceUsd): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['items'] = $items;
-        $obj['totalBalanceUsd'] = $totalBalanceUsd;
+        $self['items'] = $items;
+        $self['totalBalanceUsd'] = $totalBalanceUsd;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -82,10 +82,10 @@ final class WalletListResponse implements BaseModel
      */
     public function withItems(array $items): self
     {
-        $obj = clone $this;
-        $obj['items'] = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -93,9 +93,9 @@ final class WalletListResponse implements BaseModel
      */
     public function withTotalBalanceUsd(int $totalBalanceUsd): self
     {
-        $obj = clone $this;
-        $obj['totalBalanceUsd'] = $totalBalanceUsd;
+        $self = clone $this;
+        $self['totalBalanceUsd'] = $totalBalanceUsd;
 
-        return $obj;
+        return $self;
     }
 }

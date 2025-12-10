@@ -243,27 +243,27 @@ final class SubscriptionCreateParams implements BaseModel
         ?string $taxID = null,
         ?int $trialPeriodDays = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['billing'] = $billing;
-        $obj['customer'] = $customer;
-        $obj['productID'] = $productID;
-        $obj['quantity'] = $quantity;
+        $self['billing'] = $billing;
+        $self['customer'] = $customer;
+        $self['productID'] = $productID;
+        $self['quantity'] = $quantity;
 
-        null !== $addons && $obj['addons'] = $addons;
-        null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
-        null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
-        null !== $discountCode && $obj['discountCode'] = $discountCode;
-        null !== $force3DS && $obj['force3DS'] = $force3DS;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $onDemand && $obj['onDemand'] = $onDemand;
-        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
-        null !== $returnURL && $obj['returnURL'] = $returnURL;
-        null !== $showSavedPaymentMethods && $obj['showSavedPaymentMethods'] = $showSavedPaymentMethods;
-        null !== $taxID && $obj['taxID'] = $taxID;
-        null !== $trialPeriodDays && $obj['trialPeriodDays'] = $trialPeriodDays;
+        null !== $addons && $self['addons'] = $addons;
+        null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
+        null !== $discountCode && $self['discountCode'] = $discountCode;
+        null !== $force3DS && $self['force3DS'] = $force3DS;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $onDemand && $self['onDemand'] = $onDemand;
+        null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $returnURL && $self['returnURL'] = $returnURL;
+        null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
+        null !== $taxID && $self['taxID'] = $taxID;
+        null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -279,10 +279,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withBilling(BillingAddress|array $billing): self
     {
-        $obj = clone $this;
-        $obj['billing'] = $billing;
+        $self = clone $this;
+        $self['billing'] = $billing;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -295,10 +295,10 @@ final class SubscriptionCreateParams implements BaseModel
     public function withCustomer(
         AttachExistingCustomer|array|NewCustomer $customer
     ): self {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -306,10 +306,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withProductID(string $productID): self
     {
-        $obj = clone $this;
-        $obj['productID'] = $productID;
+        $self = clone $this;
+        $self['productID'] = $productID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -317,10 +317,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withQuantity(int $quantity): self
     {
-        $obj = clone $this;
-        $obj['quantity'] = $quantity;
+        $self = clone $this;
+        $self['quantity'] = $quantity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -330,10 +330,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withAddons(?array $addons): self
     {
-        $obj = clone $this;
-        $obj['addons'] = $addons;
+        $self = clone $this;
+        $self['addons'] = $addons;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -348,10 +348,10 @@ final class SubscriptionCreateParams implements BaseModel
     public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes
     ): self {
-        $obj = clone $this;
-        $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        $self = clone $this;
+        $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -363,10 +363,10 @@ final class SubscriptionCreateParams implements BaseModel
     public function withBillingCurrency(
         Currency|string|null $billingCurrency
     ): self {
-        $obj = clone $this;
-        $obj['billingCurrency'] = $billingCurrency;
+        $self = clone $this;
+        $self['billingCurrency'] = $billingCurrency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -374,10 +374,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withDiscountCode(?string $discountCode): self
     {
-        $obj = clone $this;
-        $obj['discountCode'] = $discountCode;
+        $self = clone $this;
+        $self['discountCode'] = $discountCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -385,10 +385,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withForce3Ds(?bool $force3DS): self
     {
-        $obj = clone $this;
-        $obj['force3DS'] = $force3DS;
+        $self = clone $this;
+        $self['force3DS'] = $force3DS;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -399,10 +399,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -417,10 +417,10 @@ final class SubscriptionCreateParams implements BaseModel
     public function withOnDemand(
         OnDemandSubscription|array|null $onDemand
     ): self {
-        $obj = clone $this;
-        $obj['onDemand'] = $onDemand;
+        $self = clone $this;
+        $self['onDemand'] = $onDemand;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -429,10 +429,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withPaymentLink(?bool $paymentLink): self
     {
-        $obj = clone $this;
-        $obj['paymentLink'] = $paymentLink;
+        $self = clone $this;
+        $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -440,10 +440,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withReturnURL(?string $returnURL): self
     {
-        $obj = clone $this;
-        $obj['returnURL'] = $returnURL;
+        $self = clone $this;
+        $self['returnURL'] = $returnURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -453,10 +453,10 @@ final class SubscriptionCreateParams implements BaseModel
     public function withShowSavedPaymentMethods(
         bool $showSavedPaymentMethods
     ): self {
-        $obj = clone $this;
-        $obj['showSavedPaymentMethods'] = $showSavedPaymentMethods;
+        $self = clone $this;
+        $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -464,10 +464,10 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withTaxID(?string $taxID): self
     {
-        $obj = clone $this;
-        $obj['taxID'] = $taxID;
+        $self = clone $this;
+        $self['taxID'] = $taxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -477,9 +477,9 @@ final class SubscriptionCreateParams implements BaseModel
      */
     public function withTrialPeriodDays(?int $trialPeriodDays): self
     {
-        $obj = clone $this;
-        $obj['trialPeriodDays'] = $trialPeriodDays;
+        $self = clone $this;
+        $self['trialPeriodDays'] = $trialPeriodDays;
 
-        return $obj;
+        return $self;
     }
 }

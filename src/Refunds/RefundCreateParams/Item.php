@@ -66,14 +66,14 @@ final class Item implements BaseModel
         ?int $amount = null,
         ?bool $taxInclusive = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['itemID'] = $itemID;
+        $self['itemID'] = $itemID;
 
-        null !== $amount && $obj['amount'] = $amount;
-        null !== $taxInclusive && $obj['taxInclusive'] = $taxInclusive;
+        null !== $amount && $self['amount'] = $amount;
+        null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -81,10 +81,10 @@ final class Item implements BaseModel
      */
     public function withItemID(string $itemID): self
     {
-        $obj = clone $this;
-        $obj['itemID'] = $itemID;
+        $self = clone $this;
+        $self['itemID'] = $itemID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -92,10 +92,10 @@ final class Item implements BaseModel
      */
     public function withAmount(?int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,9 +103,9 @@ final class Item implements BaseModel
      */
     public function withTaxInclusive(bool $taxInclusive): self
     {
-        $obj = clone $this;
-        $obj['taxInclusive'] = $taxInclusive;
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 }

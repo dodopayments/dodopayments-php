@@ -129,18 +129,18 @@ final class Meter implements BaseModel
         string $pricePerUnit,
         int $totalPrice,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['chargeableUnits'] = $chargeableUnits;
-        $obj['consumedUnits'] = $consumedUnits;
-        $obj['currency'] = $currency;
-        $obj['freeThreshold'] = $freeThreshold;
-        $obj['name'] = $name;
-        $obj['pricePerUnit'] = $pricePerUnit;
-        $obj['totalPrice'] = $totalPrice;
+        $self['id'] = $id;
+        $self['chargeableUnits'] = $chargeableUnits;
+        $self['consumedUnits'] = $consumedUnits;
+        $self['currency'] = $currency;
+        $self['freeThreshold'] = $freeThreshold;
+        $self['name'] = $name;
+        $self['pricePerUnit'] = $pricePerUnit;
+        $self['totalPrice'] = $totalPrice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -148,10 +148,10 @@ final class Meter implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -159,10 +159,10 @@ final class Meter implements BaseModel
      */
     public function withChargeableUnits(string $chargeableUnits): self
     {
-        $obj = clone $this;
-        $obj['chargeableUnits'] = $chargeableUnits;
+        $self = clone $this;
+        $self['chargeableUnits'] = $chargeableUnits;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -170,10 +170,10 @@ final class Meter implements BaseModel
      */
     public function withConsumedUnits(string $consumedUnits): self
     {
-        $obj = clone $this;
-        $obj['consumedUnits'] = $consumedUnits;
+        $self = clone $this;
+        $self['consumedUnits'] = $consumedUnits;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,10 +183,10 @@ final class Meter implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -194,10 +194,10 @@ final class Meter implements BaseModel
      */
     public function withFreeThreshold(int $freeThreshold): self
     {
-        $obj = clone $this;
-        $obj['freeThreshold'] = $freeThreshold;
+        $self = clone $this;
+        $self['freeThreshold'] = $freeThreshold;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -205,10 +205,10 @@ final class Meter implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -216,10 +216,10 @@ final class Meter implements BaseModel
      */
     public function withPricePerUnit(string $pricePerUnit): self
     {
-        $obj = clone $this;
-        $obj['pricePerUnit'] = $pricePerUnit;
+        $self = clone $this;
+        $self['pricePerUnit'] = $pricePerUnit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -227,9 +227,9 @@ final class Meter implements BaseModel
      */
     public function withTotalPrice(int $totalPrice): self
     {
-        $obj = clone $this;
-        $obj['totalPrice'] = $totalPrice;
+        $self = clone $this;
+        $self['totalPrice'] = $totalPrice;
 
-        return $obj;
+        return $self;
     }
 }

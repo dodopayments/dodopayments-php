@@ -68,12 +68,12 @@ final class HeaderGetResponse implements BaseModel
      */
     public static function with(array $headers, array $sensitive): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['headers'] = $headers;
-        $obj['sensitive'] = $sensitive;
+        $self['headers'] = $headers;
+        $self['sensitive'] = $sensitive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -83,10 +83,10 @@ final class HeaderGetResponse implements BaseModel
      */
     public function withHeaders(array $headers): self
     {
-        $obj = clone $this;
-        $obj['headers'] = $headers;
+        $self = clone $this;
+        $self['headers'] = $headers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,9 +96,9 @@ final class HeaderGetResponse implements BaseModel
      */
     public function withSensitive(array $sensitive): self
     {
-        $obj = clone $this;
-        $obj['sensitive'] = $sensitive;
+        $self = clone $this;
+        $self['sensitive'] = $sensitive;
 
-        return $obj;
+        return $self;
     }
 }

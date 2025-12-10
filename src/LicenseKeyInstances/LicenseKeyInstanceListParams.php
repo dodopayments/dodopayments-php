@@ -55,13 +55,13 @@ final class LicenseKeyInstanceListParams implements BaseModel
         ?int $pageNumber = null,
         ?int $pageSize = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $licenseKeyID && $obj['licenseKeyID'] = $licenseKeyID;
-        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
-        null !== $pageSize && $obj['pageSize'] = $pageSize;
+        null !== $licenseKeyID && $self['licenseKeyID'] = $licenseKeyID;
+        null !== $pageNumber && $self['pageNumber'] = $pageNumber;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -69,10 +69,10 @@ final class LicenseKeyInstanceListParams implements BaseModel
      */
     public function withLicenseKeyID(?string $licenseKeyID): self
     {
-        $obj = clone $this;
-        $obj['licenseKeyID'] = $licenseKeyID;
+        $self = clone $this;
+        $self['licenseKeyID'] = $licenseKeyID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,10 +80,10 @@ final class LicenseKeyInstanceListParams implements BaseModel
      */
     public function withPageNumber(?int $pageNumber): self
     {
-        $obj = clone $this;
-        $obj['pageNumber'] = $pageNumber;
+        $self = clone $this;
+        $self['pageNumber'] = $pageNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -91,9 +91,9 @@ final class LicenseKeyInstanceListParams implements BaseModel
      */
     public function withPageSize(?int $pageSize): self
     {
-        $obj = clone $this;
-        $obj['pageSize'] = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 }

@@ -102,18 +102,18 @@ final class SubscriptionUpdateParams implements BaseModel
         SubscriptionStatus|string|null $status = null,
         ?string $taxID = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $billing && $obj['billing'] = $billing;
-        null !== $cancelAtNextBillingDate && $obj['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
-        null !== $customerName && $obj['customerName'] = $customerName;
-        null !== $disableOnDemand && $obj['disableOnDemand'] = $disableOnDemand;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $nextBillingDate && $obj['nextBillingDate'] = $nextBillingDate;
-        null !== $status && $obj['status'] = $status;
-        null !== $taxID && $obj['taxID'] = $taxID;
+        null !== $billing && $self['billing'] = $billing;
+        null !== $cancelAtNextBillingDate && $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+        null !== $customerName && $self['customerName'] = $customerName;
+        null !== $disableOnDemand && $self['disableOnDemand'] = $disableOnDemand;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $nextBillingDate && $self['nextBillingDate'] = $nextBillingDate;
+        null !== $status && $self['status'] = $status;
+        null !== $taxID && $self['taxID'] = $taxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -127,10 +127,10 @@ final class SubscriptionUpdateParams implements BaseModel
      */
     public function withBilling(BillingAddress|array|null $billing): self
     {
-        $obj = clone $this;
-        $obj['billing'] = $billing;
+        $self = clone $this;
+        $self['billing'] = $billing;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -139,18 +139,18 @@ final class SubscriptionUpdateParams implements BaseModel
     public function withCancelAtNextBillingDate(
         ?bool $cancelAtNextBillingDate
     ): self {
-        $obj = clone $this;
-        $obj['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+        $self = clone $this;
+        $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerName(?string $customerName): self
     {
-        $obj = clone $this;
-        $obj['customerName'] = $customerName;
+        $self = clone $this;
+        $self['customerName'] = $customerName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -161,10 +161,10 @@ final class SubscriptionUpdateParams implements BaseModel
     public function withDisableOnDemand(
         DisableOnDemand|array|null $disableOnDemand
     ): self {
-        $obj = clone $this;
-        $obj['disableOnDemand'] = $disableOnDemand;
+        $self = clone $this;
+        $self['disableOnDemand'] = $disableOnDemand;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -172,19 +172,19 @@ final class SubscriptionUpdateParams implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     public function withNextBillingDate(
         ?\DateTimeInterface $nextBillingDate
     ): self {
-        $obj = clone $this;
-        $obj['nextBillingDate'] = $nextBillingDate;
+        $self = clone $this;
+        $self['nextBillingDate'] = $nextBillingDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -192,17 +192,17 @@ final class SubscriptionUpdateParams implements BaseModel
      */
     public function withStatus(SubscriptionStatus|string|null $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     public function withTaxID(?string $taxID): self
     {
-        $obj = clone $this;
-        $obj['taxID'] = $taxID;
+        $self = clone $this;
+        $self['taxID'] = $taxID;
 
-        return $obj;
+        return $self;
     }
 }

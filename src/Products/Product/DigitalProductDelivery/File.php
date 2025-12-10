@@ -54,36 +54,36 @@ final class File implements BaseModel
         string $fileName,
         string $url
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['fileID'] = $fileID;
-        $obj['fileName'] = $fileName;
-        $obj['url'] = $url;
+        $self['fileID'] = $fileID;
+        $self['fileName'] = $fileName;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileID(string $fileID): self
     {
-        $obj = clone $this;
-        $obj['fileID'] = $fileID;
+        $self = clone $this;
+        $self['fileID'] = $fileID;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(string $fileName): self
     {
-        $obj = clone $this;
-        $obj['fileName'] = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

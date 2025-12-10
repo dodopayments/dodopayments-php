@@ -58,54 +58,54 @@ final class BrandCreateParams implements BaseModel
         ?string $supportEmail = null,
         ?string $url = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $name && $obj['name'] = $name;
-        null !== $statementDescriptor && $obj['statementDescriptor'] = $statementDescriptor;
-        null !== $supportEmail && $obj['supportEmail'] = $supportEmail;
-        null !== $url && $obj['url'] = $url;
+        null !== $description && $self['description'] = $description;
+        null !== $name && $self['name'] = $name;
+        null !== $statementDescriptor && $self['statementDescriptor'] = $statementDescriptor;
+        null !== $supportEmail && $self['supportEmail'] = $supportEmail;
+        null !== $url && $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withStatementDescriptor(?string $statementDescriptor): self
     {
-        $obj = clone $this;
-        $obj['statementDescriptor'] = $statementDescriptor;
+        $self = clone $this;
+        $self['statementDescriptor'] = $statementDescriptor;
 
-        return $obj;
+        return $self;
     }
 
     public function withSupportEmail(?string $supportEmail): self
     {
-        $obj = clone $this;
-        $obj['supportEmail'] = $supportEmail;
+        $self = clone $this;
+        $self['supportEmail'] = $supportEmail;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(?string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

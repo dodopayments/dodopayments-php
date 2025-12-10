@@ -45,18 +45,18 @@ final class WebhookGetSecretResponse implements BaseModel
      */
     public static function with(string $secret): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['secret'] = $secret;
+        $self['secret'] = $secret;
 
-        return $obj;
+        return $self;
     }
 
     public function withSecret(string $secret): self
     {
-        $obj = clone $this;
-        $obj['secret'] = $secret;
+        $self = clone $this;
+        $self['secret'] = $secret;
 
-        return $obj;
+        return $self;
     }
 }

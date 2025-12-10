@@ -224,26 +224,26 @@ final class CheckoutSessionRequest implements BaseModel
         ?bool $showSavedPaymentMethods = null,
         SubscriptionData|array|null $subscriptionData = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['productCart'] = $productCart;
+        $self['productCart'] = $productCart;
 
-        null !== $allowedPaymentMethodTypes && $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
-        null !== $billingAddress && $obj['billingAddress'] = $billingAddress;
-        null !== $billingCurrency && $obj['billingCurrency'] = $billingCurrency;
-        null !== $confirm && $obj['confirm'] = $confirm;
-        null !== $customer && $obj['customer'] = $customer;
-        null !== $customization && $obj['customization'] = $customization;
-        null !== $discountCode && $obj['discountCode'] = $discountCode;
-        null !== $featureFlags && $obj['featureFlags'] = $featureFlags;
-        null !== $force3DS && $obj['force3DS'] = $force3DS;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $minimalAddress && $obj['minimalAddress'] = $minimalAddress;
-        null !== $returnURL && $obj['returnURL'] = $returnURL;
-        null !== $showSavedPaymentMethods && $obj['showSavedPaymentMethods'] = $showSavedPaymentMethods;
-        null !== $subscriptionData && $obj['subscriptionData'] = $subscriptionData;
+        null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        null !== $billingAddress && $self['billingAddress'] = $billingAddress;
+        null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
+        null !== $confirm && $self['confirm'] = $confirm;
+        null !== $customer && $self['customer'] = $customer;
+        null !== $customization && $self['customization'] = $customization;
+        null !== $discountCode && $self['discountCode'] = $discountCode;
+        null !== $featureFlags && $self['featureFlags'] = $featureFlags;
+        null !== $force3DS && $self['force3DS'] = $force3DS;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $minimalAddress && $self['minimalAddress'] = $minimalAddress;
+        null !== $returnURL && $self['returnURL'] = $returnURL;
+        null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
+        null !== $subscriptionData && $self['subscriptionData'] = $subscriptionData;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -256,10 +256,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withProductCart(array $productCart): self
     {
-        $obj = clone $this;
-        $obj['productCart'] = $productCart;
+        $self = clone $this;
+        $self['productCart'] = $productCart;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -275,10 +275,10 @@ final class CheckoutSessionRequest implements BaseModel
     public function withAllowedPaymentMethodTypes(
         ?array $allowedPaymentMethodTypes
     ): self {
-        $obj = clone $this;
-        $obj['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
+        $self = clone $this;
+        $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -295,10 +295,10 @@ final class CheckoutSessionRequest implements BaseModel
     public function withBillingAddress(
         BillingAddress|array|null $billingAddress
     ): self {
-        $obj = clone $this;
-        $obj['billingAddress'] = $billingAddress;
+        $self = clone $this;
+        $self['billingAddress'] = $billingAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -309,10 +309,10 @@ final class CheckoutSessionRequest implements BaseModel
     public function withBillingCurrency(
         Currency|string|null $billingCurrency
     ): self {
-        $obj = clone $this;
-        $obj['billingCurrency'] = $billingCurrency;
+        $self = clone $this;
+        $self['billingCurrency'] = $billingCurrency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -320,10 +320,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withConfirm(bool $confirm): self
     {
-        $obj = clone $this;
-        $obj['confirm'] = $confirm;
+        $self = clone $this;
+        $self['confirm'] = $confirm;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -336,10 +336,10 @@ final class CheckoutSessionRequest implements BaseModel
     public function withCustomer(
         AttachExistingCustomer|array|NewCustomer|null $customer
     ): self {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -354,18 +354,18 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withCustomization(Customization|array $customization): self
     {
-        $obj = clone $this;
-        $obj['customization'] = $customization;
+        $self = clone $this;
+        $self['customization'] = $customization;
 
-        return $obj;
+        return $self;
     }
 
     public function withDiscountCode(?string $discountCode): self
     {
-        $obj = clone $this;
-        $obj['discountCode'] = $discountCode;
+        $self = clone $this;
+        $self['discountCode'] = $discountCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -386,10 +386,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withFeatureFlags(FeatureFlags|array $featureFlags): self
     {
-        $obj = clone $this;
-        $obj['featureFlags'] = $featureFlags;
+        $self = clone $this;
+        $self['featureFlags'] = $featureFlags;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -397,10 +397,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withForce3Ds(?bool $force3DS): self
     {
-        $obj = clone $this;
-        $obj['force3DS'] = $force3DS;
+        $self = clone $this;
+        $self['force3DS'] = $force3DS;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -410,10 +410,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -421,10 +421,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withMinimalAddress(bool $minimalAddress): self
     {
-        $obj = clone $this;
-        $obj['minimalAddress'] = $minimalAddress;
+        $self = clone $this;
+        $self['minimalAddress'] = $minimalAddress;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -432,10 +432,10 @@ final class CheckoutSessionRequest implements BaseModel
      */
     public function withReturnURL(?string $returnURL): self
     {
-        $obj = clone $this;
-        $obj['returnURL'] = $returnURL;
+        $self = clone $this;
+        $self['returnURL'] = $returnURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -444,10 +444,10 @@ final class CheckoutSessionRequest implements BaseModel
     public function withShowSavedPaymentMethods(
         bool $showSavedPaymentMethods
     ): self {
-        $obj = clone $this;
-        $obj['showSavedPaymentMethods'] = $showSavedPaymentMethods;
+        $self = clone $this;
+        $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -458,9 +458,9 @@ final class CheckoutSessionRequest implements BaseModel
     public function withSubscriptionData(
         SubscriptionData|array|null $subscriptionData
     ): self {
-        $obj = clone $this;
-        $obj['subscriptionData'] = $subscriptionData;
+        $self = clone $this;
+        $self['subscriptionData'] = $subscriptionData;
 
-        return $obj;
+        return $self;
     }
 }

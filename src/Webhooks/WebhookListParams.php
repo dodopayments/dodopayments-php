@@ -50,12 +50,12 @@ final class WebhookListParams implements BaseModel
         ?string $iterator = null,
         ?int $limit = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $iterator && $obj['iterator'] = $iterator;
-        null !== $limit && $obj['limit'] = $limit;
+        null !== $iterator && $self['iterator'] = $iterator;
+        null !== $limit && $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -63,10 +63,10 @@ final class WebhookListParams implements BaseModel
      */
     public function withIterator(?string $iterator): self
     {
-        $obj = clone $this;
-        $obj['iterator'] = $iterator;
+        $self = clone $this;
+        $self['iterator'] = $iterator;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -74,9 +74,9 @@ final class WebhookListParams implements BaseModel
      */
     public function withLimit(?int $limit): self
     {
-        $obj = clone $this;
-        $obj['limit'] = $limit;
+        $self = clone $this;
+        $self['limit'] = $limit;
 
-        return $obj;
+        return $self;
     }
 }

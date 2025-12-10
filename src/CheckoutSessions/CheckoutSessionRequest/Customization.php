@@ -74,14 +74,14 @@ final class Customization implements BaseModel
         ?bool $showOrderDetails = null,
         Theme|string|null $theme = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $forceLanguage && $obj['forceLanguage'] = $forceLanguage;
-        null !== $showOnDemandTag && $obj['showOnDemandTag'] = $showOnDemandTag;
-        null !== $showOrderDetails && $obj['showOrderDetails'] = $showOrderDetails;
-        null !== $theme && $obj['theme'] = $theme;
+        null !== $forceLanguage && $self['forceLanguage'] = $forceLanguage;
+        null !== $showOnDemandTag && $self['showOnDemandTag'] = $showOnDemandTag;
+        null !== $showOrderDetails && $self['showOrderDetails'] = $showOrderDetails;
+        null !== $theme && $self['theme'] = $theme;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -89,10 +89,10 @@ final class Customization implements BaseModel
      */
     public function withForceLanguage(?string $forceLanguage): self
     {
-        $obj = clone $this;
-        $obj['forceLanguage'] = $forceLanguage;
+        $self = clone $this;
+        $self['forceLanguage'] = $forceLanguage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -102,10 +102,10 @@ final class Customization implements BaseModel
      */
     public function withShowOnDemandTag(bool $showOnDemandTag): self
     {
-        $obj = clone $this;
-        $obj['showOnDemandTag'] = $showOnDemandTag;
+        $self = clone $this;
+        $self['showOnDemandTag'] = $showOnDemandTag;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,10 +115,10 @@ final class Customization implements BaseModel
      */
     public function withShowOrderDetails(bool $showOrderDetails): self
     {
-        $obj = clone $this;
-        $obj['showOrderDetails'] = $showOrderDetails;
+        $self = clone $this;
+        $self['showOrderDetails'] = $showOrderDetails;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -130,9 +130,9 @@ final class Customization implements BaseModel
      */
     public function withTheme(Theme|string $theme): self
     {
-        $obj = clone $this;
-        $obj['theme'] = $theme;
+        $self = clone $this;
+        $self['theme'] = $theme;
 
-        return $obj;
+        return $self;
     }
 }

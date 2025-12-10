@@ -78,64 +78,64 @@ final class Item implements BaseModel
         ?string $description = null,
         ?string $name = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['amount'] = $amount;
-        $obj['itemsID'] = $itemsID;
-        $obj['refundableAmount'] = $refundableAmount;
-        $obj['tax'] = $tax;
+        $self['amount'] = $amount;
+        $self['itemsID'] = $itemsID;
+        $self['refundableAmount'] = $refundableAmount;
+        $self['tax'] = $tax;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $name && $obj['name'] = $name;
+        null !== $description && $self['description'] = $description;
+        null !== $name && $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withAmount(int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     public function withItemsID(string $itemsID): self
     {
-        $obj = clone $this;
-        $obj['itemsID'] = $itemsID;
+        $self = clone $this;
+        $self['itemsID'] = $itemsID;
 
-        return $obj;
+        return $self;
     }
 
     public function withRefundableAmount(int $refundableAmount): self
     {
-        $obj = clone $this;
-        $obj['refundableAmount'] = $refundableAmount;
+        $self = clone $this;
+        $self['refundableAmount'] = $refundableAmount;
 
-        return $obj;
+        return $self;
     }
 
     public function withTax(int $tax): self
     {
-        $obj = clone $this;
-        $obj['tax'] = $tax;
+        $self = clone $this;
+        $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 }

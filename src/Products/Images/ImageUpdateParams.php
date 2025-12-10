@@ -35,18 +35,18 @@ final class ImageUpdateParams implements BaseModel
      */
     public static function with(?bool $forceUpdate = null): self
     {
-        $obj = new self;
+        $self = new self;
 
-        null !== $forceUpdate && $obj['forceUpdate'] = $forceUpdate;
+        null !== $forceUpdate && $self['forceUpdate'] = $forceUpdate;
 
-        return $obj;
+        return $self;
     }
 
     public function withForceUpdate(bool $forceUpdate): self
     {
-        $obj = clone $this;
-        $obj['forceUpdate'] = $forceUpdate;
+        $self = clone $this;
+        $self['forceUpdate'] = $forceUpdate;
 
-        return $obj;
+        return $self;
     }
 }

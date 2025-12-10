@@ -59,13 +59,13 @@ final class DigitalProductDelivery implements BaseModel
         ?array $files = null,
         ?string $instructions = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $externalURL && $obj['externalURL'] = $externalURL;
-        null !== $files && $obj['files'] = $files;
-        null !== $instructions && $obj['instructions'] = $instructions;
+        null !== $externalURL && $self['externalURL'] = $externalURL;
+        null !== $files && $self['files'] = $files;
+        null !== $instructions && $self['instructions'] = $instructions;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -73,10 +73,10 @@ final class DigitalProductDelivery implements BaseModel
      */
     public function withExternalURL(?string $externalURL): self
     {
-        $obj = clone $this;
-        $obj['externalURL'] = $externalURL;
+        $self = clone $this;
+        $self['externalURL'] = $externalURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -86,10 +86,10 @@ final class DigitalProductDelivery implements BaseModel
      */
     public function withFiles(?array $files): self
     {
-        $obj = clone $this;
-        $obj['files'] = $files;
+        $self = clone $this;
+        $self['files'] = $files;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -97,9 +97,9 @@ final class DigitalProductDelivery implements BaseModel
      */
     public function withInstructions(?string $instructions): self
     {
-        $obj = clone $this;
-        $obj['instructions'] = $instructions;
+        $self = clone $this;
+        $self['instructions'] = $instructions;
 
-        return $obj;
+        return $self;
     }
 }

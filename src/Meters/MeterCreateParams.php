@@ -117,17 +117,17 @@ final class MeterCreateParams implements BaseModel
         ?string $description = null,
         MeterFilter|array|null $filter = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['aggregation'] = $aggregation;
-        $obj['eventName'] = $eventName;
-        $obj['measurementUnit'] = $measurementUnit;
-        $obj['name'] = $name;
+        $self['aggregation'] = $aggregation;
+        $self['eventName'] = $eventName;
+        $self['measurementUnit'] = $measurementUnit;
+        $self['name'] = $name;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $filter && $obj['filter'] = $filter;
+        null !== $description && $self['description'] = $description;
+        null !== $filter && $self['filter'] = $filter;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -139,10 +139,10 @@ final class MeterCreateParams implements BaseModel
      */
     public function withAggregation(MeterAggregation|array $aggregation): self
     {
-        $obj = clone $this;
-        $obj['aggregation'] = $aggregation;
+        $self = clone $this;
+        $self['aggregation'] = $aggregation;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -150,10 +150,10 @@ final class MeterCreateParams implements BaseModel
      */
     public function withEventName(string $eventName): self
     {
-        $obj = clone $this;
-        $obj['eventName'] = $eventName;
+        $self = clone $this;
+        $self['eventName'] = $eventName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -161,10 +161,10 @@ final class MeterCreateParams implements BaseModel
      */
     public function withMeasurementUnit(string $measurementUnit): self
     {
-        $obj = clone $this;
-        $obj['measurementUnit'] = $measurementUnit;
+        $self = clone $this;
+        $self['measurementUnit'] = $measurementUnit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -172,10 +172,10 @@ final class MeterCreateParams implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,10 +183,10 @@ final class MeterCreateParams implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -199,9 +199,9 @@ final class MeterCreateParams implements BaseModel
      */
     public function withFilter(MeterFilter|array|null $filter): self
     {
-        $obj = clone $this;
-        $obj['filter'] = $filter;
+        $self = clone $this;
+        $self['filter'] = $filter;
 
-        return $obj;
+        return $self;
     }
 }

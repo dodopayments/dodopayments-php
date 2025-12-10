@@ -89,57 +89,57 @@ final class Event implements BaseModel
         \DateTimeInterface $timestamp,
         ?array $metadata = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessID'] = $businessID;
-        $obj['customerID'] = $customerID;
-        $obj['eventID'] = $eventID;
-        $obj['eventName'] = $eventName;
-        $obj['timestamp'] = $timestamp;
+        $self['businessID'] = $businessID;
+        $self['customerID'] = $customerID;
+        $self['eventID'] = $eventID;
+        $self['eventName'] = $eventName;
+        $self['timestamp'] = $timestamp;
 
-        null !== $metadata && $obj['metadata'] = $metadata;
+        null !== $metadata && $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     public function withEventID(string $eventID): self
     {
-        $obj = clone $this;
-        $obj['eventID'] = $eventID;
+        $self = clone $this;
+        $self['eventID'] = $eventID;
 
-        return $obj;
+        return $self;
     }
 
     public function withEventName(string $eventName): self
     {
-        $obj = clone $this;
-        $obj['eventName'] = $eventName;
+        $self = clone $this;
+        $self['eventName'] = $eventName;
 
-        return $obj;
+        return $self;
     }
 
     public function withTimestamp(\DateTimeInterface $timestamp): self
     {
-        $obj = clone $this;
-        $obj['timestamp'] = $timestamp;
+        $self = clone $this;
+        $self['timestamp'] = $timestamp;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,9 +149,9 @@ final class Event implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 }

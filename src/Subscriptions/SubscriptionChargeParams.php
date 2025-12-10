@@ -115,17 +115,17 @@ final class SubscriptionChargeParams implements BaseModel
         Currency|string|null $productCurrency = null,
         ?string $productDescription = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['productPrice'] = $productPrice;
+        $self['productPrice'] = $productPrice;
 
-        null !== $adaptiveCurrencyFeesInclusive && $obj['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
-        null !== $customerBalanceConfig && $obj['customerBalanceConfig'] = $customerBalanceConfig;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $productCurrency && $obj['productCurrency'] = $productCurrency;
-        null !== $productDescription && $obj['productDescription'] = $productDescription;
+        null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
+        null !== $customerBalanceConfig && $self['customerBalanceConfig'] = $customerBalanceConfig;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $productCurrency && $self['productCurrency'] = $productCurrency;
+        null !== $productDescription && $self['productDescription'] = $productDescription;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -134,10 +134,10 @@ final class SubscriptionChargeParams implements BaseModel
      */
     public function withProductPrice(int $productPrice): self
     {
-        $obj = clone $this;
-        $obj['productPrice'] = $productPrice;
+        $self = clone $this;
+        $self['productPrice'] = $productPrice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -147,10 +147,10 @@ final class SubscriptionChargeParams implements BaseModel
     public function withAdaptiveCurrencyFeesInclusive(
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
-        $obj = clone $this;
-        $obj['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
+        $self = clone $this;
+        $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -164,10 +164,10 @@ final class SubscriptionChargeParams implements BaseModel
     public function withCustomerBalanceConfig(
         CustomerBalanceConfig|array|null $customerBalanceConfig
     ): self {
-        $obj = clone $this;
-        $obj['customerBalanceConfig'] = $customerBalanceConfig;
+        $self = clone $this;
+        $self['customerBalanceConfig'] = $customerBalanceConfig;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -177,10 +177,10 @@ final class SubscriptionChargeParams implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -191,10 +191,10 @@ final class SubscriptionChargeParams implements BaseModel
     public function withProductCurrency(
         Currency|string|null $productCurrency
     ): self {
-        $obj = clone $this;
-        $obj['productCurrency'] = $productCurrency;
+        $self = clone $this;
+        $self['productCurrency'] = $productCurrency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -203,9 +203,9 @@ final class SubscriptionChargeParams implements BaseModel
      */
     public function withProductDescription(?string $productDescription): self
     {
-        $obj = clone $this;
-        $obj['productDescription'] = $productDescription;
+        $self = clone $this;
+        $self['productDescription'] = $productDescription;
 
-        return $obj;
+        return $self;
     }
 }

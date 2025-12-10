@@ -67,16 +67,16 @@ final class Card implements BaseModel
         ?string $expiryYear = null,
         ?string $last4Digits = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $cardIssuingCountry && $obj['cardIssuingCountry'] = $cardIssuingCountry;
-        null !== $cardNetwork && $obj['cardNetwork'] = $cardNetwork;
-        null !== $cardType && $obj['cardType'] = $cardType;
-        null !== $expiryMonth && $obj['expiryMonth'] = $expiryMonth;
-        null !== $expiryYear && $obj['expiryYear'] = $expiryYear;
-        null !== $last4Digits && $obj['last4Digits'] = $last4Digits;
+        null !== $cardIssuingCountry && $self['cardIssuingCountry'] = $cardIssuingCountry;
+        null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
+        null !== $cardType && $self['cardType'] = $cardType;
+        null !== $expiryMonth && $self['expiryMonth'] = $expiryMonth;
+        null !== $expiryYear && $self['expiryYear'] = $expiryYear;
+        null !== $last4Digits && $self['last4Digits'] = $last4Digits;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -87,49 +87,49 @@ final class Card implements BaseModel
     public function withCardIssuingCountry(
         CountryCode|string|null $cardIssuingCountry
     ): self {
-        $obj = clone $this;
-        $obj['cardIssuingCountry'] = $cardIssuingCountry;
+        $self = clone $this;
+        $self['cardIssuingCountry'] = $cardIssuingCountry;
 
-        return $obj;
+        return $self;
     }
 
     public function withCardNetwork(?string $cardNetwork): self
     {
-        $obj = clone $this;
-        $obj['cardNetwork'] = $cardNetwork;
+        $self = clone $this;
+        $self['cardNetwork'] = $cardNetwork;
 
-        return $obj;
+        return $self;
     }
 
     public function withCardType(?string $cardType): self
     {
-        $obj = clone $this;
-        $obj['cardType'] = $cardType;
+        $self = clone $this;
+        $self['cardType'] = $cardType;
 
-        return $obj;
+        return $self;
     }
 
     public function withExpiryMonth(?string $expiryMonth): self
     {
-        $obj = clone $this;
-        $obj['expiryMonth'] = $expiryMonth;
+        $self = clone $this;
+        $self['expiryMonth'] = $expiryMonth;
 
-        return $obj;
+        return $self;
     }
 
     public function withExpiryYear(?string $expiryYear): self
     {
-        $obj = clone $this;
-        $obj['expiryYear'] = $expiryYear;
+        $self = clone $this;
+        $self['expiryYear'] = $expiryYear;
 
-        return $obj;
+        return $self;
     }
 
     public function withLast4Digits(?string $last4Digits): self
     {
-        $obj = clone $this;
-        $obj['last4Digits'] = $last4Digits;
+        $self = clone $this;
+        $self['last4Digits'] = $last4Digits;
 
-        return $obj;
+        return $self;
     }
 }
