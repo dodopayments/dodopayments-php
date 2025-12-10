@@ -110,12 +110,12 @@ final class ImmediateCharge implements BaseModel
      */
     public static function with(array $lineItems, Summary|array $summary): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['lineItems'] = $lineItems;
-        $obj['summary'] = $summary;
+        $self['lineItems'] = $lineItems;
+        $self['summary'] = $summary;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -163,10 +163,10 @@ final class ImmediateCharge implements BaseModel
      */
     public function withLineItems(array $lineItems): self
     {
-        $obj = clone $this;
-        $obj['lineItems'] = $lineItems;
+        $self = clone $this;
+        $self['lineItems'] = $lineItems;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -182,9 +182,9 @@ final class ImmediateCharge implements BaseModel
      */
     public function withSummary(Summary|array $summary): self
     {
-        $obj = clone $this;
-        $obj['summary'] = $summary;
+        $self = clone $this;
+        $self['summary'] = $summary;
 
-        return $obj;
+        return $self;
     }
 }

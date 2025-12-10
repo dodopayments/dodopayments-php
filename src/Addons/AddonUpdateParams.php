@@ -90,16 +90,16 @@ final class AddonUpdateParams implements BaseModel
         ?int $price = null,
         TaxCategory|string|null $taxCategory = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $currency && $obj['currency'] = $currency;
-        null !== $description && $obj['description'] = $description;
-        null !== $imageID && $obj['imageID'] = $imageID;
-        null !== $name && $obj['name'] = $name;
-        null !== $price && $obj['price'] = $price;
-        null !== $taxCategory && $obj['taxCategory'] = $taxCategory;
+        null !== $currency && $self['currency'] = $currency;
+        null !== $description && $self['description'] = $description;
+        null !== $imageID && $self['imageID'] = $imageID;
+        null !== $name && $self['name'] = $name;
+        null !== $price && $self['price'] = $price;
+        null !== $taxCategory && $self['taxCategory'] = $taxCategory;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -109,10 +109,10 @@ final class AddonUpdateParams implements BaseModel
      */
     public function withCurrency(Currency|string|null $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -120,10 +120,10 @@ final class AddonUpdateParams implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -131,10 +131,10 @@ final class AddonUpdateParams implements BaseModel
      */
     public function withImageID(?string $imageID): self
     {
-        $obj = clone $this;
-        $obj['imageID'] = $imageID;
+        $self = clone $this;
+        $self['imageID'] = $imageID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -142,10 +142,10 @@ final class AddonUpdateParams implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -153,10 +153,10 @@ final class AddonUpdateParams implements BaseModel
      */
     public function withPrice(?int $price): self
     {
-        $obj = clone $this;
-        $obj['price'] = $price;
+        $self = clone $this;
+        $self['price'] = $price;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -166,9 +166,9 @@ final class AddonUpdateParams implements BaseModel
      */
     public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
-        $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $self = clone $this;
+        $self['taxCategory'] = $taxCategory;
 
-        return $obj;
+        return $self;
     }
 }

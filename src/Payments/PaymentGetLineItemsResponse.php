@@ -64,12 +64,12 @@ final class PaymentGetLineItemsResponse implements BaseModel
      */
     public static function with(Currency|string $currency, array $items): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['currency'] = $currency;
-        $obj['items'] = $items;
+        $self['currency'] = $currency;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -77,10 +77,10 @@ final class PaymentGetLineItemsResponse implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -95,9 +95,9 @@ final class PaymentGetLineItemsResponse implements BaseModel
      */
     public function withItems(array $items): self
     {
-        $obj = clone $this;
-        $obj['items'] = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 }

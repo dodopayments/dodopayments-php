@@ -94,15 +94,15 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         int $quantity,
         ?array $addons = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['productID'] = $productID;
-        $obj['prorationBillingMode'] = $prorationBillingMode;
-        $obj['quantity'] = $quantity;
+        $self['productID'] = $productID;
+        $self['prorationBillingMode'] = $prorationBillingMode;
+        $self['quantity'] = $quantity;
 
-        null !== $addons && $obj['addons'] = $addons;
+        null !== $addons && $self['addons'] = $addons;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      */
     public function withProductID(string $productID): self
     {
-        $obj = clone $this;
-        $obj['productID'] = $productID;
+        $self = clone $this;
+        $self['productID'] = $productID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -124,10 +124,10 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     public function withProrationBillingMode(
         ProrationBillingMode|string $prorationBillingMode
     ): self {
-        $obj = clone $this;
-        $obj['prorationBillingMode'] = $prorationBillingMode;
+        $self = clone $this;
+        $self['prorationBillingMode'] = $prorationBillingMode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -135,10 +135,10 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      */
     public function withQuantity(int $quantity): self
     {
-        $obj = clone $this;
-        $obj['quantity'] = $quantity;
+        $self = clone $this;
+        $self['quantity'] = $quantity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,9 +149,9 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      */
     public function withAddons(?array $addons): self
     {
-        $obj = clone $this;
-        $obj['addons'] = $addons;
+        $self = clone $this;
+        $self['addons'] = $addons;
 
-        return $obj;
+        return $self;
     }
 }

@@ -115,22 +115,22 @@ final class FeatureFlags implements BaseModel
         ?bool $allowTaxID = null,
         ?bool $alwaysCreateNewCustomer = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowCurrencySelection && $obj['allowCurrencySelection'] = $allowCurrencySelection;
-        null !== $allowCustomerEditingCity && $obj['allowCustomerEditingCity'] = $allowCustomerEditingCity;
-        null !== $allowCustomerEditingCountry && $obj['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
-        null !== $allowCustomerEditingEmail && $obj['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
-        null !== $allowCustomerEditingName && $obj['allowCustomerEditingName'] = $allowCustomerEditingName;
-        null !== $allowCustomerEditingState && $obj['allowCustomerEditingState'] = $allowCustomerEditingState;
-        null !== $allowCustomerEditingStreet && $obj['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
-        null !== $allowCustomerEditingZipcode && $obj['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
-        null !== $allowDiscountCode && $obj['allowDiscountCode'] = $allowDiscountCode;
-        null !== $allowPhoneNumberCollection && $obj['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
-        null !== $allowTaxID && $obj['allowTaxID'] = $allowTaxID;
-        null !== $alwaysCreateNewCustomer && $obj['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
+        null !== $allowCurrencySelection && $self['allowCurrencySelection'] = $allowCurrencySelection;
+        null !== $allowCustomerEditingCity && $self['allowCustomerEditingCity'] = $allowCustomerEditingCity;
+        null !== $allowCustomerEditingCountry && $self['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
+        null !== $allowCustomerEditingEmail && $self['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
+        null !== $allowCustomerEditingName && $self['allowCustomerEditingName'] = $allowCustomerEditingName;
+        null !== $allowCustomerEditingState && $self['allowCustomerEditingState'] = $allowCustomerEditingState;
+        null !== $allowCustomerEditingStreet && $self['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
+        null !== $allowCustomerEditingZipcode && $self['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
+        null !== $allowDiscountCode && $self['allowDiscountCode'] = $allowDiscountCode;
+        null !== $allowPhoneNumberCollection && $self['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
+        null !== $allowTaxID && $self['allowTaxID'] = $allowTaxID;
+        null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -141,73 +141,73 @@ final class FeatureFlags implements BaseModel
     public function withAllowCurrencySelection(
         bool $allowCurrencySelection
     ): self {
-        $obj = clone $this;
-        $obj['allowCurrencySelection'] = $allowCurrencySelection;
+        $self = clone $this;
+        $self['allowCurrencySelection'] = $allowCurrencySelection;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingCity(
         bool $allowCustomerEditingCity
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingCity'] = $allowCustomerEditingCity;
+        $self = clone $this;
+        $self['allowCustomerEditingCity'] = $allowCustomerEditingCity;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingCountry(
         bool $allowCustomerEditingCountry
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
+        $self = clone $this;
+        $self['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingEmail(
         bool $allowCustomerEditingEmail
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
+        $self = clone $this;
+        $self['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingName(
         bool $allowCustomerEditingName
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingName'] = $allowCustomerEditingName;
+        $self = clone $this;
+        $self['allowCustomerEditingName'] = $allowCustomerEditingName;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingState(
         bool $allowCustomerEditingState
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingState'] = $allowCustomerEditingState;
+        $self = clone $this;
+        $self['allowCustomerEditingState'] = $allowCustomerEditingState;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingStreet(
         bool $allowCustomerEditingStreet
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
+        $self = clone $this;
+        $self['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
 
-        return $obj;
+        return $self;
     }
 
     public function withAllowCustomerEditingZipcode(
         bool $allowCustomerEditingZipcode
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
+        $self = clone $this;
+        $self['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -217,10 +217,10 @@ final class FeatureFlags implements BaseModel
      */
     public function withAllowDiscountCode(bool $allowDiscountCode): self
     {
-        $obj = clone $this;
-        $obj['allowDiscountCode'] = $allowDiscountCode;
+        $self = clone $this;
+        $self['allowDiscountCode'] = $allowDiscountCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,10 +231,10 @@ final class FeatureFlags implements BaseModel
     public function withAllowPhoneNumberCollection(
         bool $allowPhoneNumberCollection
     ): self {
-        $obj = clone $this;
-        $obj['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
+        $self = clone $this;
+        $self['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -244,10 +244,10 @@ final class FeatureFlags implements BaseModel
      */
     public function withAllowTaxID(bool $allowTaxID): self
     {
-        $obj = clone $this;
-        $obj['allowTaxID'] = $allowTaxID;
+        $self = clone $this;
+        $self['allowTaxID'] = $allowTaxID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -259,9 +259,9 @@ final class FeatureFlags implements BaseModel
     public function withAlwaysCreateNewCustomer(
         bool $alwaysCreateNewCustomer
     ): self {
-        $obj = clone $this;
-        $obj['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
+        $self = clone $this;
+        $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
 
-        return $obj;
+        return $self;
     }
 }

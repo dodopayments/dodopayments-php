@@ -66,11 +66,11 @@ final class BrandListResponse implements BaseModel
      */
     public static function with(array $items): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['items'] = $items;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -93,9 +93,9 @@ final class BrandListResponse implements BaseModel
      */
     public function withItems(array $items): self
     {
-        $obj = clone $this;
-        $obj['items'] = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 }

@@ -45,18 +45,18 @@ final class AttachExistingCustomer implements BaseModel
      */
     public static function with(string $customerID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['customerID'] = $customerID;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 }

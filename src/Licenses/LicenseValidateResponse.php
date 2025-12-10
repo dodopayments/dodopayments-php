@@ -45,18 +45,18 @@ final class LicenseValidateResponse implements BaseModel
      */
     public static function with(bool $valid): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['valid'] = $valid;
+        $self['valid'] = $valid;
 
-        return $obj;
+        return $self;
     }
 
     public function withValid(bool $valid): self
     {
-        $obj = clone $this;
-        $obj['valid'] = $valid;
+        $self = clone $this;
+        $self['valid'] = $valid;
 
-        return $obj;
+        return $self;
     }
 }

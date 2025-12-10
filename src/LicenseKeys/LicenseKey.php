@@ -163,23 +163,23 @@ final class LicenseKey implements BaseModel
         ?\DateTimeInterface $expiresAt = null,
         ?string $subscriptionID = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['customerID'] = $customerID;
-        $obj['instancesCount'] = $instancesCount;
-        $obj['key'] = $key;
-        $obj['paymentID'] = $paymentID;
-        $obj['productID'] = $productID;
-        $obj['status'] = $status;
+        $self['id'] = $id;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['customerID'] = $customerID;
+        $self['instancesCount'] = $instancesCount;
+        $self['key'] = $key;
+        $self['paymentID'] = $paymentID;
+        $self['productID'] = $productID;
+        $self['status'] = $status;
 
-        null !== $activationsLimit && $obj['activationsLimit'] = $activationsLimit;
-        null !== $expiresAt && $obj['expiresAt'] = $expiresAt;
-        null !== $subscriptionID && $obj['subscriptionID'] = $subscriptionID;
+        null !== $activationsLimit && $self['activationsLimit'] = $activationsLimit;
+        null !== $expiresAt && $self['expiresAt'] = $expiresAt;
+        null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -187,10 +187,10 @@ final class LicenseKey implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -198,10 +198,10 @@ final class LicenseKey implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -209,10 +209,10 @@ final class LicenseKey implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -220,10 +220,10 @@ final class LicenseKey implements BaseModel
      */
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,10 +231,10 @@ final class LicenseKey implements BaseModel
      */
     public function withInstancesCount(int $instancesCount): self
     {
-        $obj = clone $this;
-        $obj['instancesCount'] = $instancesCount;
+        $self = clone $this;
+        $self['instancesCount'] = $instancesCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -242,10 +242,10 @@ final class LicenseKey implements BaseModel
      */
     public function withKey(string $key): self
     {
-        $obj = clone $this;
-        $obj['key'] = $key;
+        $self = clone $this;
+        $self['key'] = $key;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -253,10 +253,10 @@ final class LicenseKey implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -264,10 +264,10 @@ final class LicenseKey implements BaseModel
      */
     public function withProductID(string $productID): self
     {
-        $obj = clone $this;
-        $obj['productID'] = $productID;
+        $self = clone $this;
+        $self['productID'] = $productID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -277,10 +277,10 @@ final class LicenseKey implements BaseModel
      */
     public function withStatus(LicenseKeyStatus|string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -288,10 +288,10 @@ final class LicenseKey implements BaseModel
      */
     public function withActivationsLimit(?int $activationsLimit): self
     {
-        $obj = clone $this;
-        $obj['activationsLimit'] = $activationsLimit;
+        $self = clone $this;
+        $self['activationsLimit'] = $activationsLimit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -299,10 +299,10 @@ final class LicenseKey implements BaseModel
      */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $obj = clone $this;
-        $obj['expiresAt'] = $expiresAt;
+        $self = clone $this;
+        $self['expiresAt'] = $expiresAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -310,9 +310,9 @@ final class LicenseKey implements BaseModel
      */
     public function withSubscriptionID(?string $subscriptionID): self
     {
-        $obj = clone $this;
-        $obj['subscriptionID'] = $subscriptionID;
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 }

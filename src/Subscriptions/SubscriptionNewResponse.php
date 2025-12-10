@@ -153,21 +153,21 @@ final class SubscriptionNewResponse implements BaseModel
         ?\DateTimeInterface $expiresOn = null,
         ?string $paymentLink = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['addons'] = $addons;
-        $obj['customer'] = $customer;
-        $obj['metadata'] = $metadata;
-        $obj['paymentID'] = $paymentID;
-        $obj['recurringPreTaxAmount'] = $recurringPreTaxAmount;
-        $obj['subscriptionID'] = $subscriptionID;
+        $self['addons'] = $addons;
+        $self['customer'] = $customer;
+        $self['metadata'] = $metadata;
+        $self['paymentID'] = $paymentID;
+        $self['recurringPreTaxAmount'] = $recurringPreTaxAmount;
+        $self['subscriptionID'] = $subscriptionID;
 
-        null !== $clientSecret && $obj['clientSecret'] = $clientSecret;
-        null !== $discountID && $obj['discountID'] = $discountID;
-        null !== $expiresOn && $obj['expiresOn'] = $expiresOn;
-        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
+        null !== $clientSecret && $self['clientSecret'] = $clientSecret;
+        null !== $discountID && $self['discountID'] = $discountID;
+        null !== $expiresOn && $self['expiresOn'] = $expiresOn;
+        null !== $paymentLink && $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -177,10 +177,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withAddons(array $addons): self
     {
-        $obj = clone $this;
-        $obj['addons'] = $addons;
+        $self = clone $this;
+        $self['addons'] = $addons;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -196,10 +196,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -209,10 +209,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -220,10 +220,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,10 +231,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {
-        $obj = clone $this;
-        $obj['recurringPreTaxAmount'] = $recurringPreTaxAmount;
+        $self = clone $this;
+        $self['recurringPreTaxAmount'] = $recurringPreTaxAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -242,10 +242,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withSubscriptionID(string $subscriptionID): self
     {
-        $obj = clone $this;
-        $obj['subscriptionID'] = $subscriptionID;
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -254,10 +254,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withClientSecret(?string $clientSecret): self
     {
-        $obj = clone $this;
-        $obj['clientSecret'] = $clientSecret;
+        $self = clone $this;
+        $self['clientSecret'] = $clientSecret;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -265,10 +265,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withDiscountID(?string $discountID): self
     {
-        $obj = clone $this;
-        $obj['discountID'] = $discountID;
+        $self = clone $this;
+        $self['discountID'] = $discountID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -276,10 +276,10 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withExpiresOn(?\DateTimeInterface $expiresOn): self
     {
-        $obj = clone $this;
-        $obj['expiresOn'] = $expiresOn;
+        $self = clone $this;
+        $self['expiresOn'] = $expiresOn;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -287,9 +287,9 @@ final class SubscriptionNewResponse implements BaseModel
      */
     public function withPaymentLink(?string $paymentLink): self
     {
-        $obj = clone $this;
-        $obj['paymentLink'] = $paymentLink;
+        $self = clone $this;
+        $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 }

@@ -76,12 +76,12 @@ final class NestedMeterFilter implements BaseModel
         array $clauses,
         Conjunction|string $conjunction
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['clauses'] = $clauses;
-        $obj['conjunction'] = $conjunction;
+        $self['clauses'] = $clauses;
+        $self['conjunction'] = $conjunction;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -96,10 +96,10 @@ final class NestedMeterFilter implements BaseModel
      */
     public function withClauses(array $clauses): self
     {
-        $obj = clone $this;
-        $obj['clauses'] = $clauses;
+        $self = clone $this;
+        $self['clauses'] = $clauses;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -107,9 +107,9 @@ final class NestedMeterFilter implements BaseModel
      */
     public function withConjunction(Conjunction|string $conjunction): self
     {
-        $obj = clone $this;
-        $obj['conjunction'] = $conjunction;
+        $self = clone $this;
+        $self['conjunction'] = $conjunction;
 
-        return $obj;
+        return $self;
     }
 }

@@ -48,27 +48,27 @@ final class AttachAddon implements BaseModel
      */
     public static function with(string $addonID, int $quantity): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['addonID'] = $addonID;
-        $obj['quantity'] = $quantity;
+        $self['addonID'] = $addonID;
+        $self['quantity'] = $quantity;
 
-        return $obj;
+        return $self;
     }
 
     public function withAddonID(string $addonID): self
     {
-        $obj = clone $this;
-        $obj['addonID'] = $addonID;
+        $self = clone $this;
+        $self['addonID'] = $addonID;
 
-        return $obj;
+        return $self;
     }
 
     public function withQuantity(int $quantity): self
     {
-        $obj = clone $this;
-        $obj['quantity'] = $quantity;
+        $self = clone $this;
+        $self['quantity'] = $quantity;
 
-        return $obj;
+        return $self;
     }
 }

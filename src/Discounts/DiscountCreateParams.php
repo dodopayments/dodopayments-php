@@ -130,19 +130,19 @@ final class DiscountCreateParams implements BaseModel
         ?int $subscriptionCycles = null,
         ?int $usageLimit = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['amount'] = $amount;
-        $obj['type'] = $type;
+        $self['amount'] = $amount;
+        $self['type'] = $type;
 
-        null !== $code && $obj['code'] = $code;
-        null !== $expiresAt && $obj['expiresAt'] = $expiresAt;
-        null !== $name && $obj['name'] = $name;
-        null !== $restrictedTo && $obj['restrictedTo'] = $restrictedTo;
-        null !== $subscriptionCycles && $obj['subscriptionCycles'] = $subscriptionCycles;
-        null !== $usageLimit && $obj['usageLimit'] = $usageLimit;
+        null !== $code && $self['code'] = $code;
+        null !== $expiresAt && $self['expiresAt'] = $expiresAt;
+        null !== $name && $self['name'] = $name;
+        null !== $restrictedTo && $self['restrictedTo'] = $restrictedTo;
+        null !== $subscriptionCycles && $self['subscriptionCycles'] = $subscriptionCycles;
+        null !== $usageLimit && $self['usageLimit'] = $usageLimit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -156,10 +156,10 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withAmount(int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -169,10 +169,10 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withType(DiscountType|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -182,10 +182,10 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withCode(?string $code): self
     {
-        $obj = clone $this;
-        $obj['code'] = $code;
+        $self = clone $this;
+        $self['code'] = $code;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -193,18 +193,18 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
-        $obj = clone $this;
-        $obj['expiresAt'] = $expiresAt;
+        $self = clone $this;
+        $self['expiresAt'] = $expiresAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -214,10 +214,10 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withRestrictedTo(?array $restrictedTo): self
     {
-        $obj = clone $this;
-        $obj['restrictedTo'] = $restrictedTo;
+        $self = clone $this;
+        $self['restrictedTo'] = $restrictedTo;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -227,10 +227,10 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withSubscriptionCycles(?int $subscriptionCycles): self
     {
-        $obj = clone $this;
-        $obj['subscriptionCycles'] = $subscriptionCycles;
+        $self = clone $this;
+        $self['subscriptionCycles'] = $subscriptionCycles;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -239,9 +239,9 @@ final class DiscountCreateParams implements BaseModel
      */
     public function withUsageLimit(?int $usageLimit): self
     {
-        $obj = clone $this;
-        $obj['usageLimit'] = $usageLimit;
+        $self = clone $this;
+        $self['usageLimit'] = $usageLimit;
 
-        return $obj;
+        return $self;
     }
 }

@@ -91,16 +91,16 @@ final class BillingAddress implements BaseModel
         ?string $street = null,
         ?string $zipcode = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['country'] = $country;
+        $self['country'] = $country;
 
-        null !== $city && $obj['city'] = $city;
-        null !== $state && $obj['state'] = $state;
-        null !== $street && $obj['street'] = $street;
-        null !== $zipcode && $obj['zipcode'] = $zipcode;
+        null !== $city && $self['city'] = $city;
+        null !== $state && $self['state'] = $state;
+        null !== $street && $self['street'] = $street;
+        null !== $zipcode && $self['zipcode'] = $zipcode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class BillingAddress implements BaseModel
      */
     public function withCountry(CountryCode|string $country): self
     {
-        $obj = clone $this;
-        $obj['country'] = $country;
+        $self = clone $this;
+        $self['country'] = $country;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class BillingAddress implements BaseModel
      */
     public function withCity(?string $city): self
     {
-        $obj = clone $this;
-        $obj['city'] = $city;
+        $self = clone $this;
+        $self['city'] = $city;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,10 +132,10 @@ final class BillingAddress implements BaseModel
      */
     public function withState(?string $state): self
     {
-        $obj = clone $this;
-        $obj['state'] = $state;
+        $self = clone $this;
+        $self['state'] = $state;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,10 +143,10 @@ final class BillingAddress implements BaseModel
      */
     public function withStreet(?string $street): self
     {
-        $obj = clone $this;
-        $obj['street'] = $street;
+        $self = clone $this;
+        $self['street'] = $street;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,9 +154,9 @@ final class BillingAddress implements BaseModel
      */
     public function withZipcode(?string $zipcode): self
     {
-        $obj = clone $this;
-        $obj['zipcode'] = $zipcode;
+        $self = clone $this;
+        $self['zipcode'] = $zipcode;
 
-        return $obj;
+        return $self;
     }
 }

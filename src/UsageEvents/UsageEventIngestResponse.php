@@ -45,18 +45,18 @@ final class UsageEventIngestResponse implements BaseModel
      */
     public static function with(int $ingestedCount): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['ingestedCount'] = $ingestedCount;
+        $self['ingestedCount'] = $ingestedCount;
 
-        return $obj;
+        return $self;
     }
 
     public function withIngestedCount(int $ingestedCount): self
     {
-        $obj = clone $this;
-        $obj['ingestedCount'] = $ingestedCount;
+        $self = clone $this;
+        $self['ingestedCount'] = $ingestedCount;
 
-        return $obj;
+        return $self;
     }
 }

@@ -69,31 +69,31 @@ final class CreateNewCustomer implements BaseModel
         ?bool $createNewCustomer = null,
         ?string $phoneNumber = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['email'] = $email;
-        $obj['name'] = $name;
+        $self['email'] = $email;
+        $self['name'] = $name;
 
-        null !== $createNewCustomer && $obj['createNewCustomer'] = $createNewCustomer;
-        null !== $phoneNumber && $obj['phoneNumber'] = $phoneNumber;
+        null !== $createNewCustomer && $self['createNewCustomer'] = $createNewCustomer;
+        null !== $phoneNumber && $self['phoneNumber'] = $phoneNumber;
 
-        return $obj;
+        return $self;
     }
 
     public function withEmail(string $email): self
     {
-        $obj = clone $this;
-        $obj['email'] = $email;
+        $self = clone $this;
+        $self['email'] = $email;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -103,17 +103,17 @@ final class CreateNewCustomer implements BaseModel
      */
     public function withCreateNewCustomer(bool $createNewCustomer): self
     {
-        $obj = clone $this;
-        $obj['createNewCustomer'] = $createNewCustomer;
+        $self = clone $this;
+        $self['createNewCustomer'] = $createNewCustomer;
 
-        return $obj;
+        return $self;
     }
 
     public function withPhoneNumber(?string $phoneNumber): self
     {
-        $obj = clone $this;
-        $obj['phoneNumber'] = $phoneNumber;
+        $self = clone $this;
+        $self['phoneNumber'] = $phoneNumber;
 
-        return $obj;
+        return $self;
     }
 }

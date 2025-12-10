@@ -130,14 +130,14 @@ final class PaymentCancelledWebhookEvent implements BaseModel
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessID'] = $businessID;
-        $obj['data'] = $data;
-        $obj['timestamp'] = $timestamp;
-        $obj['type'] = $type;
+        $self['businessID'] = $businessID;
+        $self['data'] = $data;
+        $self['timestamp'] = $timestamp;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,10 +145,10 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -191,10 +191,10 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      */
     public function withData(Data|array $data): self
     {
-        $obj = clone $this;
-        $obj['data'] = $data;
+        $self = clone $this;
+        $self['data'] = $data;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -202,10 +202,10 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      */
     public function withTimestamp(\DateTimeInterface $timestamp): self
     {
-        $obj = clone $this;
-        $obj['timestamp'] = $timestamp;
+        $self = clone $this;
+        $self['timestamp'] = $timestamp;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -215,9 +215,9 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 }

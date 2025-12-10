@@ -93,58 +93,58 @@ final class Customer implements BaseModel
         ?array $metadata = null,
         ?string $phoneNumber = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['customerID'] = $customerID;
-        $obj['email'] = $email;
-        $obj['name'] = $name;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['customerID'] = $customerID;
+        $self['email'] = $email;
+        $self['name'] = $name;
 
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $phoneNumber && $obj['phoneNumber'] = $phoneNumber;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $phoneNumber && $self['phoneNumber'] = $phoneNumber;
 
-        return $obj;
+        return $self;
     }
 
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     public function withEmail(string $email): self
     {
-        $obj = clone $this;
-        $obj['email'] = $email;
+        $self = clone $this;
+        $self['email'] = $email;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,17 +154,17 @@ final class Customer implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     public function withPhoneNumber(?string $phoneNumber): self
     {
-        $obj = clone $this;
-        $obj['phoneNumber'] = $phoneNumber;
+        $self = clone $this;
+        $self['phoneNumber'] = $phoneNumber;
 
-        return $obj;
+        return $self;
     }
 }

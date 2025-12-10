@@ -230,25 +230,25 @@ final class ProductListResponse implements BaseModel
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail = null,
         ?bool $taxInclusive = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['isRecurring'] = $isRecurring;
-        $obj['metadata'] = $metadata;
-        $obj['productID'] = $productID;
-        $obj['taxCategory'] = $taxCategory;
-        $obj['updatedAt'] = $updatedAt;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['isRecurring'] = $isRecurring;
+        $self['metadata'] = $metadata;
+        $self['productID'] = $productID;
+        $self['taxCategory'] = $taxCategory;
+        $self['updatedAt'] = $updatedAt;
 
-        null !== $currency && $obj['currency'] = $currency;
-        null !== $description && $obj['description'] = $description;
-        null !== $image && $obj['image'] = $image;
-        null !== $name && $obj['name'] = $name;
-        null !== $price && $obj['price'] = $price;
-        null !== $priceDetail && $obj['priceDetail'] = $priceDetail;
-        null !== $taxInclusive && $obj['taxInclusive'] = $taxInclusive;
+        null !== $currency && $self['currency'] = $currency;
+        null !== $description && $self['description'] = $description;
+        null !== $image && $self['image'] = $image;
+        null !== $name && $self['name'] = $name;
+        null !== $price && $self['price'] = $price;
+        null !== $priceDetail && $self['priceDetail'] = $priceDetail;
+        null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -256,10 +256,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -267,10 +267,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -278,10 +278,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withIsRecurring(bool $isRecurring): self
     {
-        $obj = clone $this;
-        $obj['isRecurring'] = $isRecurring;
+        $self = clone $this;
+        $self['isRecurring'] = $isRecurring;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -291,10 +291,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -302,10 +302,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withProductID(string $productID): self
     {
-        $obj = clone $this;
-        $obj['productID'] = $productID;
+        $self = clone $this;
+        $self['productID'] = $productID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -315,10 +315,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
-        $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $self = clone $this;
+        $self['taxCategory'] = $taxCategory;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -326,10 +326,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -339,10 +339,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withCurrency(Currency|string|null $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -350,10 +350,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -361,10 +361,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withImage(?string $image): self
     {
-        $obj = clone $this;
-        $obj['image'] = $image;
+        $self = clone $this;
+        $self['image'] = $image;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -372,10 +372,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -391,10 +391,10 @@ final class ProductListResponse implements BaseModel
      */
     public function withPrice(?int $price): self
     {
-        $obj = clone $this;
-        $obj['price'] = $price;
+        $self = clone $this;
+        $self['price'] = $price;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -438,10 +438,10 @@ final class ProductListResponse implements BaseModel
     public function withPriceDetail(
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail
     ): self {
-        $obj = clone $this;
-        $obj['priceDetail'] = $priceDetail;
+        $self = clone $this;
+        $self['priceDetail'] = $priceDetail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -449,9 +449,9 @@ final class ProductListResponse implements BaseModel
      */
     public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $obj = clone $this;
-        $obj['taxInclusive'] = $taxInclusive;
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 }

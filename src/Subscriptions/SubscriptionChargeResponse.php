@@ -45,18 +45,18 @@ final class SubscriptionChargeResponse implements BaseModel
      */
     public static function with(string $paymentID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['paymentID'] = $paymentID;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 }

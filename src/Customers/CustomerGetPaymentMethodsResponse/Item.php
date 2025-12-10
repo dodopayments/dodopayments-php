@@ -101,17 +101,17 @@ final class Item implements BaseModel
         PaymentMethodTypes|string|null $paymentMethodType = null,
         ?bool $recurringEnabled = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['paymentMethod'] = $paymentMethod;
-        $obj['paymentMethodID'] = $paymentMethodID;
+        $self['paymentMethod'] = $paymentMethod;
+        $self['paymentMethodID'] = $paymentMethodID;
 
-        null !== $card && $obj['card'] = $card;
-        null !== $lastUsedAt && $obj['lastUsedAt'] = $lastUsedAt;
-        null !== $paymentMethodType && $obj['paymentMethodType'] = $paymentMethodType;
-        null !== $recurringEnabled && $obj['recurringEnabled'] = $recurringEnabled;
+        null !== $card && $self['card'] = $card;
+        null !== $lastUsedAt && $self['lastUsedAt'] = $lastUsedAt;
+        null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
+        null !== $recurringEnabled && $self['recurringEnabled'] = $recurringEnabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,18 +123,18 @@ final class Item implements BaseModel
      */
     public function withPaymentMethod(PaymentMethod|string $paymentMethod): self
     {
-        $obj = clone $this;
-        $obj['paymentMethod'] = $paymentMethod;
+        $self = clone $this;
+        $self['paymentMethod'] = $paymentMethod;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentMethodID(string $paymentMethodID): self
     {
-        $obj = clone $this;
-        $obj['paymentMethodID'] = $paymentMethodID;
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,18 +149,18 @@ final class Item implements BaseModel
      */
     public function withCard(Card|array|null $card): self
     {
-        $obj = clone $this;
-        $obj['card'] = $card;
+        $self = clone $this;
+        $self['card'] = $card;
 
-        return $obj;
+        return $self;
     }
 
     public function withLastUsedAt(?\DateTimeInterface $lastUsedAt): self
     {
-        $obj = clone $this;
-        $obj['lastUsedAt'] = $lastUsedAt;
+        $self = clone $this;
+        $self['lastUsedAt'] = $lastUsedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -169,17 +169,17 @@ final class Item implements BaseModel
     public function withPaymentMethodType(
         PaymentMethodTypes|string|null $paymentMethodType
     ): self {
-        $obj = clone $this;
-        $obj['paymentMethodType'] = $paymentMethodType;
+        $self = clone $this;
+        $self['paymentMethodType'] = $paymentMethodType;
 
-        return $obj;
+        return $self;
     }
 
     public function withRecurringEnabled(?bool $recurringEnabled): self
     {
-        $obj = clone $this;
-        $obj['recurringEnabled'] = $recurringEnabled;
+        $self = clone $this;
+        $self['recurringEnabled'] = $recurringEnabled;
 
-        return $obj;
+        return $self;
     }
 }

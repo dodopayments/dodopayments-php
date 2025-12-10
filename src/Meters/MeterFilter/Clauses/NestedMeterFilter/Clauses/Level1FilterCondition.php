@@ -68,13 +68,13 @@ final class Level1FilterCondition implements BaseModel
         Operator|string $operator,
         string|float|bool $value
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['key'] = $key;
-        $obj['operator'] = $operator;
-        $obj['value'] = $value;
+        $self['key'] = $key;
+        $self['operator'] = $operator;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -82,10 +82,10 @@ final class Level1FilterCondition implements BaseModel
      */
     public function withKey(string $key): self
     {
-        $obj = clone $this;
-        $obj['key'] = $key;
+        $self = clone $this;
+        $self['key'] = $key;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -93,10 +93,10 @@ final class Level1FilterCondition implements BaseModel
      */
     public function withOperator(Operator|string $operator): self
     {
-        $obj = clone $this;
-        $obj['operator'] = $operator;
+        $self = clone $this;
+        $self['operator'] = $operator;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -104,9 +104,9 @@ final class Level1FilterCondition implements BaseModel
      */
     public function withValue(string|float|bool $value): self
     {
-        $obj = clone $this;
-        $obj['value'] = $value;
+        $self = clone $this;
+        $self['value'] = $value;
 
-        return $obj;
+        return $self;
     }
 }

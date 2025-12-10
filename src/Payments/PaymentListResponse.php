@@ -136,39 +136,39 @@ final class PaymentListResponse implements BaseModel
         IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['brandID'] = $brandID;
-        $obj['createdAt'] = $createdAt;
-        $obj['currency'] = $currency;
-        $obj['customer'] = $customer;
-        $obj['digitalProductsDelivered'] = $digitalProductsDelivered;
-        $obj['metadata'] = $metadata;
-        $obj['paymentID'] = $paymentID;
-        $obj['totalAmount'] = $totalAmount;
+        $self['brandID'] = $brandID;
+        $self['createdAt'] = $createdAt;
+        $self['currency'] = $currency;
+        $self['customer'] = $customer;
+        $self['digitalProductsDelivered'] = $digitalProductsDelivered;
+        $self['metadata'] = $metadata;
+        $self['paymentID'] = $paymentID;
+        $self['totalAmount'] = $totalAmount;
 
-        null !== $paymentMethod && $obj['paymentMethod'] = $paymentMethod;
-        null !== $paymentMethodType && $obj['paymentMethodType'] = $paymentMethodType;
-        null !== $status && $obj['status'] = $status;
-        null !== $subscriptionID && $obj['subscriptionID'] = $subscriptionID;
+        null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
+        null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
+        null !== $status && $self['status'] = $status;
+        null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 
     public function withBrandID(string $brandID): self
     {
-        $obj = clone $this;
-        $obj['brandID'] = $brandID;
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -176,10 +176,10 @@ final class PaymentListResponse implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -193,19 +193,19 @@ final class PaymentListResponse implements BaseModel
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     public function withDigitalProductsDelivered(
         bool $digitalProductsDelivered
     ): self {
-        $obj = clone $this;
-        $obj['digitalProductsDelivered'] = $digitalProductsDelivered;
+        $self = clone $this;
+        $self['digitalProductsDelivered'] = $digitalProductsDelivered;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -213,42 +213,42 @@ final class PaymentListResponse implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     public function withTotalAmount(int $totalAmount): self
     {
-        $obj = clone $this;
-        $obj['totalAmount'] = $totalAmount;
+        $self = clone $this;
+        $self['totalAmount'] = $totalAmount;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentMethod(?string $paymentMethod): self
     {
-        $obj = clone $this;
-        $obj['paymentMethod'] = $paymentMethod;
+        $self = clone $this;
+        $self['paymentMethod'] = $paymentMethod;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentMethodType(?string $paymentMethodType): self
     {
-        $obj = clone $this;
-        $obj['paymentMethodType'] = $paymentMethodType;
+        $self = clone $this;
+        $self['paymentMethodType'] = $paymentMethodType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -256,17 +256,17 @@ final class PaymentListResponse implements BaseModel
      */
     public function withStatus(IntentStatus|string|null $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     public function withSubscriptionID(?string $subscriptionID): self
     {
-        $obj = clone $this;
-        $obj['subscriptionID'] = $subscriptionID;
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 }

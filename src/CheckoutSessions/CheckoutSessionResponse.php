@@ -56,12 +56,12 @@ final class CheckoutSessionResponse implements BaseModel
      */
     public static function with(string $checkoutURL, string $sessionID): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['checkoutURL'] = $checkoutURL;
-        $obj['sessionID'] = $sessionID;
+        $self['checkoutURL'] = $checkoutURL;
+        $self['sessionID'] = $sessionID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -69,10 +69,10 @@ final class CheckoutSessionResponse implements BaseModel
      */
     public function withCheckoutURL(string $checkoutURL): self
     {
-        $obj = clone $this;
-        $obj['checkoutURL'] = $checkoutURL;
+        $self = clone $this;
+        $self['checkoutURL'] = $checkoutURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -80,9 +80,9 @@ final class CheckoutSessionResponse implements BaseModel
      */
     public function withSessionID(string $sessionID): self
     {
-        $obj = clone $this;
-        $obj['sessionID'] = $sessionID;
+        $self = clone $this;
+        $self['sessionID'] = $sessionID;
 
-        return $obj;
+        return $self;
     }
 }

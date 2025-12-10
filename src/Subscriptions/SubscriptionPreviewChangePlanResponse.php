@@ -100,12 +100,12 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
         ImmediateCharge|array $immediateCharge,
         Subscription|array $newPlan
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['immediateCharge'] = $immediateCharge;
-        $obj['newPlan'] = $newPlan;
+        $self['immediateCharge'] = $immediateCharge;
+        $self['newPlan'] = $newPlan;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -116,10 +116,10 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     public function withImmediateCharge(
         ImmediateCharge|array $immediateCharge
     ): self {
-        $obj = clone $this;
-        $obj['immediateCharge'] = $immediateCharge;
+        $self = clone $this;
+        $self['immediateCharge'] = $immediateCharge;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -158,9 +158,9 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      */
     public function withNewPlan(Subscription|array $newPlan): self
     {
-        $obj = clone $this;
-        $obj['newPlan'] = $newPlan;
+        $self = clone $this;
+        $self['newPlan'] = $newPlan;
 
-        return $obj;
+        return $self;
     }
 }

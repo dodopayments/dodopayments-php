@@ -49,18 +49,18 @@ final class ProductUpdateFilesParams implements BaseModel
      */
     public static function with(string $fileName): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['fileName'] = $fileName;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 
     public function withFileName(string $fileName): self
     {
-        $obj = clone $this;
-        $obj['fileName'] = $fileName;
+        $self = clone $this;
+        $self['fileName'] = $fileName;
 
-        return $obj;
+        return $self;
     }
 }

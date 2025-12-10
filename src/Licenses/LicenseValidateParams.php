@@ -57,29 +57,29 @@ final class LicenseValidateParams implements BaseModel
         string $licenseKey,
         ?string $licenseKeyInstanceID = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['licenseKey'] = $licenseKey;
+        $self['licenseKey'] = $licenseKey;
 
-        null !== $licenseKeyInstanceID && $obj['licenseKeyInstanceID'] = $licenseKeyInstanceID;
+        null !== $licenseKeyInstanceID && $self['licenseKeyInstanceID'] = $licenseKeyInstanceID;
 
-        return $obj;
+        return $self;
     }
 
     public function withLicenseKey(string $licenseKey): self
     {
-        $obj = clone $this;
-        $obj['licenseKey'] = $licenseKey;
+        $self = clone $this;
+        $self['licenseKey'] = $licenseKey;
 
-        return $obj;
+        return $self;
     }
 
     public function withLicenseKeyInstanceID(
         ?string $licenseKeyInstanceID
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyInstanceID'] = $licenseKeyInstanceID;
+        $self = clone $this;
+        $self['licenseKeyInstanceID'] = $licenseKeyInstanceID;
 
-        return $obj;
+        return $self;
     }
 }

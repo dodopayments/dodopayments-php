@@ -75,54 +75,54 @@ final class LicenseKeyInstance implements BaseModel
         string $licenseKeyID,
         string $name,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['licenseKeyID'] = $licenseKeyID;
-        $obj['name'] = $name;
+        $self['id'] = $id;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['licenseKeyID'] = $licenseKeyID;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withLicenseKeyID(string $licenseKeyID): self
     {
-        $obj = clone $this;
-        $obj['licenseKeyID'] = $licenseKeyID;
+        $self = clone $this;
+        $self['licenseKeyID'] = $licenseKeyID;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 }

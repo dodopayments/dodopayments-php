@@ -168,22 +168,22 @@ final class Refund implements BaseModel
         Currency|string|null $currency = null,
         ?string $reason = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['customer'] = $customer;
-        $obj['isPartial'] = $isPartial;
-        $obj['metadata'] = $metadata;
-        $obj['paymentID'] = $paymentID;
-        $obj['refundID'] = $refundID;
-        $obj['status'] = $status;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['customer'] = $customer;
+        $self['isPartial'] = $isPartial;
+        $self['metadata'] = $metadata;
+        $self['paymentID'] = $paymentID;
+        $self['refundID'] = $refundID;
+        $self['status'] = $status;
 
-        null !== $amount && $obj['amount'] = $amount;
-        null !== $currency && $obj['currency'] = $currency;
-        null !== $reason && $obj['reason'] = $reason;
+        null !== $amount && $self['amount'] = $amount;
+        null !== $currency && $self['currency'] = $currency;
+        null !== $reason && $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -191,10 +191,10 @@ final class Refund implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -202,10 +202,10 @@ final class Refund implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -221,10 +221,10 @@ final class Refund implements BaseModel
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -232,10 +232,10 @@ final class Refund implements BaseModel
      */
     public function withIsPartial(bool $isPartial): self
     {
-        $obj = clone $this;
-        $obj['isPartial'] = $isPartial;
+        $self = clone $this;
+        $self['isPartial'] = $isPartial;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -245,10 +245,10 @@ final class Refund implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -256,10 +256,10 @@ final class Refund implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -267,10 +267,10 @@ final class Refund implements BaseModel
      */
     public function withRefundID(string $refundID): self
     {
-        $obj = clone $this;
-        $obj['refundID'] = $refundID;
+        $self = clone $this;
+        $self['refundID'] = $refundID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -280,10 +280,10 @@ final class Refund implements BaseModel
      */
     public function withStatus(RefundStatus|string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -291,10 +291,10 @@ final class Refund implements BaseModel
      */
     public function withAmount(?int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -304,10 +304,10 @@ final class Refund implements BaseModel
      */
     public function withCurrency(Currency|string|null $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -315,9 +315,9 @@ final class Refund implements BaseModel
      */
     public function withReason(?string $reason): self
     {
-        $obj = clone $this;
-        $obj['reason'] = $reason;
+        $self = clone $this;
+        $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 }

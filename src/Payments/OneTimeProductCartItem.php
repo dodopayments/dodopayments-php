@@ -62,30 +62,30 @@ final class OneTimeProductCartItem implements BaseModel
         int $quantity,
         ?int $amount = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['productID'] = $productID;
-        $obj['quantity'] = $quantity;
+        $self['productID'] = $productID;
+        $self['quantity'] = $quantity;
 
-        null !== $amount && $obj['amount'] = $amount;
+        null !== $amount && $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     public function withProductID(string $productID): self
     {
-        $obj = clone $this;
-        $obj['productID'] = $productID;
+        $self = clone $this;
+        $self['productID'] = $productID;
 
-        return $obj;
+        return $self;
     }
 
     public function withQuantity(int $quantity): self
     {
-        $obj = clone $this;
-        $obj['quantity'] = $quantity;
+        $self = clone $this;
+        $self['quantity'] = $quantity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -95,9 +95,9 @@ final class OneTimeProductCartItem implements BaseModel
      */
     public function withAmount(?int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 }

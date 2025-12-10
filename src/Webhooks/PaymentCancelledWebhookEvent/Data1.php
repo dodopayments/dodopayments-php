@@ -393,43 +393,43 @@ final class Data1 implements BaseModel
         ?\DateTimeInterface $updatedAt = null,
         PayloadType|string|null $payloadType = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['billing'] = $billing;
-        $obj['brandID'] = $brandID;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['currency'] = $currency;
-        $obj['customer'] = $customer;
-        $obj['digitalProductsDelivered'] = $digitalProductsDelivered;
-        $obj['disputes'] = $disputes;
-        $obj['metadata'] = $metadata;
-        $obj['paymentID'] = $paymentID;
-        $obj['refunds'] = $refunds;
-        $obj['settlementAmount'] = $settlementAmount;
-        $obj['settlementCurrency'] = $settlementCurrency;
-        $obj['totalAmount'] = $totalAmount;
+        $self['billing'] = $billing;
+        $self['brandID'] = $brandID;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['currency'] = $currency;
+        $self['customer'] = $customer;
+        $self['digitalProductsDelivered'] = $digitalProductsDelivered;
+        $self['disputes'] = $disputes;
+        $self['metadata'] = $metadata;
+        $self['paymentID'] = $paymentID;
+        $self['refunds'] = $refunds;
+        $self['settlementAmount'] = $settlementAmount;
+        $self['settlementCurrency'] = $settlementCurrency;
+        $self['totalAmount'] = $totalAmount;
 
-        null !== $cardIssuingCountry && $obj['cardIssuingCountry'] = $cardIssuingCountry;
-        null !== $cardLastFour && $obj['cardLastFour'] = $cardLastFour;
-        null !== $cardNetwork && $obj['cardNetwork'] = $cardNetwork;
-        null !== $cardType && $obj['cardType'] = $cardType;
-        null !== $checkoutSessionID && $obj['checkoutSessionID'] = $checkoutSessionID;
-        null !== $discountID && $obj['discountID'] = $discountID;
-        null !== $errorCode && $obj['errorCode'] = $errorCode;
-        null !== $errorMessage && $obj['errorMessage'] = $errorMessage;
-        null !== $paymentLink && $obj['paymentLink'] = $paymentLink;
-        null !== $paymentMethod && $obj['paymentMethod'] = $paymentMethod;
-        null !== $paymentMethodType && $obj['paymentMethodType'] = $paymentMethodType;
-        null !== $productCart && $obj['productCart'] = $productCart;
-        null !== $settlementTax && $obj['settlementTax'] = $settlementTax;
-        null !== $status && $obj['status'] = $status;
-        null !== $subscriptionID && $obj['subscriptionID'] = $subscriptionID;
-        null !== $tax && $obj['tax'] = $tax;
-        null !== $updatedAt && $obj['updatedAt'] = $updatedAt;
-        null !== $payloadType && $obj['payloadType'] = $payloadType;
+        null !== $cardIssuingCountry && $self['cardIssuingCountry'] = $cardIssuingCountry;
+        null !== $cardLastFour && $self['cardLastFour'] = $cardLastFour;
+        null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
+        null !== $cardType && $self['cardType'] = $cardType;
+        null !== $checkoutSessionID && $self['checkoutSessionID'] = $checkoutSessionID;
+        null !== $discountID && $self['discountID'] = $discountID;
+        null !== $errorCode && $self['errorCode'] = $errorCode;
+        null !== $errorMessage && $self['errorMessage'] = $errorMessage;
+        null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
+        null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
+        null !== $productCart && $self['productCart'] = $productCart;
+        null !== $settlementTax && $self['settlementTax'] = $settlementTax;
+        null !== $status && $self['status'] = $status;
+        null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
+        null !== $tax && $self['tax'] = $tax;
+        null !== $updatedAt && $self['updatedAt'] = $updatedAt;
+        null !== $payloadType && $self['payloadType'] = $payloadType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -443,10 +443,10 @@ final class Data1 implements BaseModel
      */
     public function withBilling(BillingAddress|array $billing): self
     {
-        $obj = clone $this;
-        $obj['billing'] = $billing;
+        $self = clone $this;
+        $self['billing'] = $billing;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -454,10 +454,10 @@ final class Data1 implements BaseModel
      */
     public function withBrandID(string $brandID): self
     {
-        $obj = clone $this;
-        $obj['brandID'] = $brandID;
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -465,10 +465,10 @@ final class Data1 implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -476,10 +476,10 @@ final class Data1 implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -487,10 +487,10 @@ final class Data1 implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -504,10 +504,10 @@ final class Data1 implements BaseModel
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -516,10 +516,10 @@ final class Data1 implements BaseModel
     public function withDigitalProductsDelivered(
         bool $digitalProductsDelivered
     ): self {
-        $obj = clone $this;
-        $obj['digitalProductsDelivered'] = $digitalProductsDelivered;
+        $self = clone $this;
+        $self['digitalProductsDelivered'] = $digitalProductsDelivered;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -539,10 +539,10 @@ final class Data1 implements BaseModel
      */
     public function withDisputes(array $disputes): self
     {
-        $obj = clone $this;
-        $obj['disputes'] = $disputes;
+        $self = clone $this;
+        $self['disputes'] = $disputes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -552,10 +552,10 @@ final class Data1 implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -563,10 +563,10 @@ final class Data1 implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -586,10 +586,10 @@ final class Data1 implements BaseModel
      */
     public function withRefunds(array $refunds): self
     {
-        $obj = clone $this;
-        $obj['refunds'] = $refunds;
+        $self = clone $this;
+        $self['refunds'] = $refunds;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -598,10 +598,10 @@ final class Data1 implements BaseModel
      */
     public function withSettlementAmount(int $settlementAmount): self
     {
-        $obj = clone $this;
-        $obj['settlementAmount'] = $settlementAmount;
+        $self = clone $this;
+        $self['settlementAmount'] = $settlementAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -610,10 +610,10 @@ final class Data1 implements BaseModel
     public function withSettlementCurrency(
         Currency|string $settlementCurrency
     ): self {
-        $obj = clone $this;
-        $obj['settlementCurrency'] = $settlementCurrency;
+        $self = clone $this;
+        $self['settlementCurrency'] = $settlementCurrency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -621,10 +621,10 @@ final class Data1 implements BaseModel
      */
     public function withTotalAmount(int $totalAmount): self
     {
-        $obj = clone $this;
-        $obj['totalAmount'] = $totalAmount;
+        $self = clone $this;
+        $self['totalAmount'] = $totalAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -635,10 +635,10 @@ final class Data1 implements BaseModel
     public function withCardIssuingCountry(
         CountryCode|string $cardIssuingCountry
     ): self {
-        $obj = clone $this;
-        $obj['cardIssuingCountry'] = $cardIssuingCountry;
+        $self = clone $this;
+        $self['cardIssuingCountry'] = $cardIssuingCountry;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -646,10 +646,10 @@ final class Data1 implements BaseModel
      */
     public function withCardLastFour(?string $cardLastFour): self
     {
-        $obj = clone $this;
-        $obj['cardLastFour'] = $cardLastFour;
+        $self = clone $this;
+        $self['cardLastFour'] = $cardLastFour;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -657,10 +657,10 @@ final class Data1 implements BaseModel
      */
     public function withCardNetwork(?string $cardNetwork): self
     {
-        $obj = clone $this;
-        $obj['cardNetwork'] = $cardNetwork;
+        $self = clone $this;
+        $self['cardNetwork'] = $cardNetwork;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -668,10 +668,10 @@ final class Data1 implements BaseModel
      */
     public function withCardType(?string $cardType): self
     {
-        $obj = clone $this;
-        $obj['cardType'] = $cardType;
+        $self = clone $this;
+        $self['cardType'] = $cardType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -680,10 +680,10 @@ final class Data1 implements BaseModel
      */
     public function withCheckoutSessionID(?string $checkoutSessionID): self
     {
-        $obj = clone $this;
-        $obj['checkoutSessionID'] = $checkoutSessionID;
+        $self = clone $this;
+        $self['checkoutSessionID'] = $checkoutSessionID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -691,10 +691,10 @@ final class Data1 implements BaseModel
      */
     public function withDiscountID(?string $discountID): self
     {
-        $obj = clone $this;
-        $obj['discountID'] = $discountID;
+        $self = clone $this;
+        $self['discountID'] = $discountID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -702,10 +702,10 @@ final class Data1 implements BaseModel
      */
     public function withErrorCode(?string $errorCode): self
     {
-        $obj = clone $this;
-        $obj['errorCode'] = $errorCode;
+        $self = clone $this;
+        $self['errorCode'] = $errorCode;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -713,10 +713,10 @@ final class Data1 implements BaseModel
      */
     public function withErrorMessage(?string $errorMessage): self
     {
-        $obj = clone $this;
-        $obj['errorMessage'] = $errorMessage;
+        $self = clone $this;
+        $self['errorMessage'] = $errorMessage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -724,10 +724,10 @@ final class Data1 implements BaseModel
      */
     public function withPaymentLink(?string $paymentLink): self
     {
-        $obj = clone $this;
-        $obj['paymentLink'] = $paymentLink;
+        $self = clone $this;
+        $self['paymentLink'] = $paymentLink;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -735,10 +735,10 @@ final class Data1 implements BaseModel
      */
     public function withPaymentMethod(?string $paymentMethod): self
     {
-        $obj = clone $this;
-        $obj['paymentMethod'] = $paymentMethod;
+        $self = clone $this;
+        $self['paymentMethod'] = $paymentMethod;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -746,10 +746,10 @@ final class Data1 implements BaseModel
      */
     public function withPaymentMethodType(?string $paymentMethodType): self
     {
-        $obj = clone $this;
-        $obj['paymentMethodType'] = $paymentMethodType;
+        $self = clone $this;
+        $self['paymentMethodType'] = $paymentMethodType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -761,10 +761,10 @@ final class Data1 implements BaseModel
      */
     public function withProductCart(?array $productCart): self
     {
-        $obj = clone $this;
-        $obj['productCart'] = $productCart;
+        $self = clone $this;
+        $self['productCart'] = $productCart;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -774,10 +774,10 @@ final class Data1 implements BaseModel
      */
     public function withSettlementTax(?int $settlementTax): self
     {
-        $obj = clone $this;
-        $obj['settlementTax'] = $settlementTax;
+        $self = clone $this;
+        $self['settlementTax'] = $settlementTax;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -785,10 +785,10 @@ final class Data1 implements BaseModel
      */
     public function withStatus(IntentStatus|string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -796,10 +796,10 @@ final class Data1 implements BaseModel
      */
     public function withSubscriptionID(?string $subscriptionID): self
     {
-        $obj = clone $this;
-        $obj['subscriptionID'] = $subscriptionID;
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -807,10 +807,10 @@ final class Data1 implements BaseModel
      */
     public function withTax(?int $tax): self
     {
-        $obj = clone $this;
-        $obj['tax'] = $tax;
+        $self = clone $this;
+        $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -818,10 +818,10 @@ final class Data1 implements BaseModel
      */
     public function withUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -831,9 +831,9 @@ final class Data1 implements BaseModel
      */
     public function withPayloadType(PayloadType|string $payloadType): self
     {
-        $obj = clone $this;
-        $obj['payloadType'] = $payloadType;
+        $self = clone $this;
+        $self['payloadType'] = $payloadType;
 
-        return $obj;
+        return $self;
     }
 }

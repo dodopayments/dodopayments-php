@@ -101,17 +101,17 @@ final class CheckoutSessionStatus implements BaseModel
         ?string $paymentID = null,
         IntentStatus|string|null $paymentStatus = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['createdAt'] = $createdAt;
+        $self['id'] = $id;
+        $self['createdAt'] = $createdAt;
 
-        null !== $customerEmail && $obj['customerEmail'] = $customerEmail;
-        null !== $customerName && $obj['customerName'] = $customerName;
-        null !== $paymentID && $obj['paymentID'] = $paymentID;
-        null !== $paymentStatus && $obj['paymentStatus'] = $paymentStatus;
+        null !== $customerEmail && $self['customerEmail'] = $customerEmail;
+        null !== $customerName && $self['customerName'] = $customerName;
+        null !== $paymentID && $self['paymentID'] = $paymentID;
+        null !== $paymentStatus && $self['paymentStatus'] = $paymentStatus;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -119,10 +119,10 @@ final class CheckoutSessionStatus implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -130,10 +130,10 @@ final class CheckoutSessionStatus implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -141,10 +141,10 @@ final class CheckoutSessionStatus implements BaseModel
      */
     public function withCustomerEmail(?string $customerEmail): self
     {
-        $obj = clone $this;
-        $obj['customerEmail'] = $customerEmail;
+        $self = clone $this;
+        $self['customerEmail'] = $customerEmail;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -152,10 +152,10 @@ final class CheckoutSessionStatus implements BaseModel
      */
     public function withCustomerName(?string $customerName): self
     {
-        $obj = clone $this;
-        $obj['customerName'] = $customerName;
+        $self = clone $this;
+        $self['customerName'] = $customerName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,10 +165,10 @@ final class CheckoutSessionStatus implements BaseModel
      */
     public function withPaymentID(?string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -181,9 +181,9 @@ final class CheckoutSessionStatus implements BaseModel
     public function withPaymentStatus(
         IntentStatus|string|null $paymentStatus
     ): self {
-        $obj = clone $this;
-        $obj['paymentStatus'] = $paymentStatus;
+        $self = clone $this;
+        $self['paymentStatus'] = $paymentStatus;
 
-        return $obj;
+        return $self;
     }
 }

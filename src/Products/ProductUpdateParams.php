@@ -245,23 +245,23 @@ final class ProductUpdateParams implements BaseModel
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price = null,
         TaxCategory|string|null $taxCategory = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $addons && $obj['addons'] = $addons;
-        null !== $brandID && $obj['brandID'] = $brandID;
-        null !== $description && $obj['description'] = $description;
-        null !== $digitalProductDelivery && $obj['digitalProductDelivery'] = $digitalProductDelivery;
-        null !== $imageID && $obj['imageID'] = $imageID;
-        null !== $licenseKeyActivationMessage && $obj['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
-        null !== $licenseKeyActivationsLimit && $obj['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
-        null !== $licenseKeyDuration && $obj['licenseKeyDuration'] = $licenseKeyDuration;
-        null !== $licenseKeyEnabled && $obj['licenseKeyEnabled'] = $licenseKeyEnabled;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $name && $obj['name'] = $name;
-        null !== $price && $obj['price'] = $price;
-        null !== $taxCategory && $obj['taxCategory'] = $taxCategory;
+        null !== $addons && $self['addons'] = $addons;
+        null !== $brandID && $self['brandID'] = $brandID;
+        null !== $description && $self['description'] = $description;
+        null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
+        null !== $imageID && $self['imageID'] = $imageID;
+        null !== $licenseKeyActivationMessage && $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
+        null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
+        null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
+        null !== $licenseKeyEnabled && $self['licenseKeyEnabled'] = $licenseKeyEnabled;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $name && $self['name'] = $name;
+        null !== $price && $self['price'] = $price;
+        null !== $taxCategory && $self['taxCategory'] = $taxCategory;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -271,18 +271,18 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withAddons(?array $addons): self
     {
-        $obj = clone $this;
-        $obj['addons'] = $addons;
+        $self = clone $this;
+        $self['addons'] = $addons;
 
-        return $obj;
+        return $self;
     }
 
     public function withBrandID(?string $brandID): self
     {
-        $obj = clone $this;
-        $obj['brandID'] = $brandID;
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -290,10 +290,10 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -308,10 +308,10 @@ final class ProductUpdateParams implements BaseModel
     public function withDigitalProductDelivery(
         DigitalProductDelivery|array|null $digitalProductDelivery
     ): self {
-        $obj = clone $this;
-        $obj['digitalProductDelivery'] = $digitalProductDelivery;
+        $self = clone $this;
+        $self['digitalProductDelivery'] = $digitalProductDelivery;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -319,10 +319,10 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withImageID(?string $imageID): self
     {
-        $obj = clone $this;
-        $obj['imageID'] = $imageID;
+        $self = clone $this;
+        $self['imageID'] = $imageID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -334,10 +334,10 @@ final class ProductUpdateParams implements BaseModel
     public function withLicenseKeyActivationMessage(
         ?string $licenseKeyActivationMessage
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
+        $self = clone $this;
+        $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -349,10 +349,10 @@ final class ProductUpdateParams implements BaseModel
     public function withLicenseKeyActivationsLimit(
         ?int $licenseKeyActivationsLimit
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
+        $self = clone $this;
+        $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -368,10 +368,10 @@ final class ProductUpdateParams implements BaseModel
     public function withLicenseKeyDuration(
         LicenseKeyDuration|array|null $licenseKeyDuration
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyDuration'] = $licenseKeyDuration;
+        $self = clone $this;
+        $self['licenseKeyDuration'] = $licenseKeyDuration;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -382,10 +382,10 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {
-        $obj = clone $this;
-        $obj['licenseKeyEnabled'] = $licenseKeyEnabled;
+        $self = clone $this;
+        $self['licenseKeyEnabled'] = $licenseKeyEnabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -395,10 +395,10 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -406,10 +406,10 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -453,10 +453,10 @@ final class ProductUpdateParams implements BaseModel
     public function withPrice(
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price
     ): self {
-        $obj = clone $this;
-        $obj['price'] = $price;
+        $self = clone $this;
+        $self['price'] = $price;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -466,9 +466,9 @@ final class ProductUpdateParams implements BaseModel
      */
     public function withTaxCategory(TaxCategory|string|null $taxCategory): self
     {
-        $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $self = clone $this;
+        $self['taxCategory'] = $taxCategory;
 
-        return $obj;
+        return $self;
     }
 }

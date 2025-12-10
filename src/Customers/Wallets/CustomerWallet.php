@@ -79,31 +79,31 @@ final class CustomerWallet implements BaseModel
         string $customerID,
         \DateTimeInterface $updatedAt,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['balance'] = $balance;
-        $obj['createdAt'] = $createdAt;
-        $obj['currency'] = $currency;
-        $obj['customerID'] = $customerID;
-        $obj['updatedAt'] = $updatedAt;
+        $self['balance'] = $balance;
+        $self['createdAt'] = $createdAt;
+        $self['currency'] = $currency;
+        $self['customerID'] = $customerID;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withBalance(int $balance): self
     {
-        $obj = clone $this;
-        $obj['balance'] = $balance;
+        $self = clone $this;
+        $self['balance'] = $balance;
 
-        return $obj;
+        return $self;
     }
 
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,25 +111,25 @@ final class CustomerWallet implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 }

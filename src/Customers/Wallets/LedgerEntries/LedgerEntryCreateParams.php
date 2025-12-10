@@ -94,24 +94,24 @@ final class LedgerEntryCreateParams implements BaseModel
         ?string $idempotencyKey = null,
         ?string $reason = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['amount'] = $amount;
-        $obj['currency'] = $currency;
-        $obj['entryType'] = $entryType;
+        $self['amount'] = $amount;
+        $self['currency'] = $currency;
+        $self['entryType'] = $entryType;
 
-        null !== $idempotencyKey && $obj['idempotencyKey'] = $idempotencyKey;
-        null !== $reason && $obj['reason'] = $reason;
+        null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
+        null !== $reason && $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 
     public function withAmount(int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class LedgerEntryCreateParams implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -134,10 +134,10 @@ final class LedgerEntryCreateParams implements BaseModel
      */
     public function withEntryType(EntryType|string $entryType): self
     {
-        $obj = clone $this;
-        $obj['entryType'] = $entryType;
+        $self = clone $this;
+        $self['entryType'] = $entryType;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -145,17 +145,17 @@ final class LedgerEntryCreateParams implements BaseModel
      */
     public function withIdempotencyKey(?string $idempotencyKey): self
     {
-        $obj = clone $this;
-        $obj['idempotencyKey'] = $idempotencyKey;
+        $self = clone $this;
+        $self['idempotencyKey'] = $idempotencyKey;
 
-        return $obj;
+        return $self;
     }
 
     public function withReason(?string $reason): self
     {
-        $obj = clone $this;
-        $obj['reason'] = $reason;
+        $self = clone $this;
+        $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 }

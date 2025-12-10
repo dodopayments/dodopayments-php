@@ -105,15 +105,15 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
         ?int $pageSize = null,
         ?\DateTimeInterface $startDate = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $endDate && $obj['endDate'] = $endDate;
-        null !== $meterID && $obj['meterID'] = $meterID;
-        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
-        null !== $pageSize && $obj['pageSize'] = $pageSize;
-        null !== $startDate && $obj['startDate'] = $startDate;
+        null !== $endDate && $self['endDate'] = $endDate;
+        null !== $meterID && $self['meterID'] = $meterID;
+        null !== $pageNumber && $self['pageNumber'] = $pageNumber;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
+        null !== $startDate && $self['startDate'] = $startDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      */
     public function withEndDate(?\DateTimeInterface $endDate): self
     {
-        $obj = clone $this;
-        $obj['endDate'] = $endDate;
+        $self = clone $this;
+        $self['endDate'] = $endDate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,10 +132,10 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      */
     public function withMeterID(?string $meterID): self
     {
-        $obj = clone $this;
-        $obj['meterID'] = $meterID;
+        $self = clone $this;
+        $self['meterID'] = $meterID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,10 +143,10 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      */
     public function withPageNumber(?int $pageNumber): self
     {
-        $obj = clone $this;
-        $obj['pageNumber'] = $pageNumber;
+        $self = clone $this;
+        $self['pageNumber'] = $pageNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,10 +154,10 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      */
     public function withPageSize(?int $pageSize): self
     {
-        $obj = clone $this;
-        $obj['pageSize'] = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,9 +165,9 @@ final class SubscriptionRetrieveUsageHistoryParams implements BaseModel
      */
     public function withStartDate(?\DateTimeInterface $startDate): self
     {
-        $obj = clone $this;
-        $obj['startDate'] = $startDate;
+        $self = clone $this;
+        $self['startDate'] = $startDate;
 
-        return $obj;
+        return $self;
     }
 }
