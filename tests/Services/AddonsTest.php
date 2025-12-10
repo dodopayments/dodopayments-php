@@ -80,10 +80,15 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->addons->list();
+        $page = $this->client->addons->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(AddonResponse::class, $item);
+        }
     }
 
     #[Test]

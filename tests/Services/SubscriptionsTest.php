@@ -9,6 +9,8 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
+use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
+use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
@@ -107,10 +109,15 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->subscriptions->list();
+        $page = $this->client->subscriptions->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(SubscriptionListResponse::class, $item);
+        }
     }
 
     #[Test]
@@ -212,12 +219,20 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testRetrieveUsageHistory(): void
     {
-        $result = $this->client->subscriptions->retrieveUsageHistory(
+        $page = $this->client->subscriptions->retrieveUsageHistory(
             'subscription_id'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(
+                SubscriptionGetUsageHistoryResponse::class,
+                $item
+            );
+        }
     }
 
     #[Test]

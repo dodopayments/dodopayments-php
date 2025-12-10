@@ -5,6 +5,7 @@ namespace Tests\Services;
 use Dodopayments\Client;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
+use Dodopayments\Refunds\RefundListResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -62,9 +63,14 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->refunds->list();
+        $page = $this->client->refunds->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(RefundListResponse::class, $item);
+        }
     }
 }
