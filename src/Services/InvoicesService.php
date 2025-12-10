@@ -13,6 +13,11 @@ final class InvoicesService implements InvoicesContract
     /**
      * @api
      */
+    public InvoicesRawService $raw;
+
+    /**
+     * @api
+     */
     public PaymentsService $payments;
 
     /**
@@ -20,6 +25,7 @@ final class InvoicesService implements InvoicesContract
      */
     public function __construct(private Client $client)
     {
+        $this->raw = new InvoicesRawService($client);
         $this->payments = new PaymentsService($client);
     }
 }

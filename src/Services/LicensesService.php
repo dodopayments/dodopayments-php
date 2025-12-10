@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Licenses\LicenseActivateParams;
 use Dodopayments\Licenses\LicenseActivateResponse;
-use Dodopayments\Licenses\LicenseDeactivateParams;
-use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicensesContract;
@@ -18,64 +14,53 @@ use Dodopayments\ServiceContracts\LicensesContract;
 final class LicensesService implements LicensesContract
 {
     /**
+     * @api
+     */
+    public LicensesRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new LicensesRawService($client);
+    }
 
     /**
      * @api
-     *
-     * @param array{licenseKey: string, name: string}|LicenseActivateParams $params
      *
      * @throws APIException
      */
     public function activate(
-        array|LicenseActivateParams $params,
+        string $licenseKey,
+        string $name,
         ?RequestOptions $requestOptions = null
     ): LicenseActivateResponse {
-        [$parsed, $options] = LicenseActivateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['licenseKey' => $licenseKey, 'name' => $name];
 
-        /** @var BaseResponse<LicenseActivateResponse> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'licenses/activate',
-            body: (object) $parsed,
-            options: $options,
-            convert: LicenseActivateResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->activate(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
-     *
-     * @param array{
-     *   licenseKey: string, licenseKeyInstanceID: string
-     * }|LicenseDeactivateParams $params
      *
      * @throws APIException
      */
     public function deactivate(
-        array|LicenseDeactivateParams $params,
+        string $licenseKey,
+        string $licenseKeyInstanceID,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        [$parsed, $options] = LicenseDeactivateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'licenseKey' => $licenseKey,
+            'licenseKeyInstanceID' => $licenseKeyInstanceID,
+        ];
 
-        /** @var BaseResponse<mixed> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'licenses/deactivate',
-            body: (object) $parsed,
-            options: $options,
-            convert: null,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->deactivate(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -83,29 +68,22 @@ final class LicensesService implements LicensesContract
     /**
      * @api
      *
-     * @param array{
-     *   licenseKey: string, licenseKeyInstanceID?: string|null
-     * }|LicenseValidateParams $params
-     *
      * @throws APIException
      */
     public function validate(
-        array|LicenseValidateParams $params,
-        ?RequestOptions $requestOptions = null
+        string $licenseKey,
+        ?string $licenseKeyInstanceID = null,
+        ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
-        [$parsed, $options] = LicenseValidateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'licenseKey' => $licenseKey,
+            'licenseKeyInstanceID' => $licenseKeyInstanceID,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<LicenseValidateResponse> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'licenses/validate',
-            body: (object) $parsed,
-            options: $options,
-            convert: LicenseValidateResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->validate(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

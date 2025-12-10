@@ -30,12 +30,12 @@ final class MetersTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->meters->create([
-            'aggregation' => ['type' => 'count'],
-            'eventName' => 'event_name',
-            'measurementUnit' => 'measurement_unit',
-            'name' => 'name',
-        ]);
+        $result = $this->client->meters->create(
+            aggregation: ['type' => 'count'],
+            eventName: 'event_name',
+            measurementUnit: 'measurement_unit',
+            name: 'name',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Meter::class, $result);
@@ -44,20 +44,20 @@ final class MetersTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->meters->create([
-            'aggregation' => ['type' => 'count', 'key' => 'key'],
-            'eventName' => 'event_name',
-            'measurementUnit' => 'measurement_unit',
-            'name' => 'name',
-            'description' => 'description',
-            'filter' => [
+        $result = $this->client->meters->create(
+            aggregation: ['type' => 'count', 'key' => 'key'],
+            eventName: 'event_name',
+            measurementUnit: 'measurement_unit',
+            name: 'name',
+            description: 'description',
+            filter: [
                 'clauses' => [
                     ['key' => 'user_id', 'operator' => 'equals', 'value' => 'user123'],
                     ['key' => 'amount', 'operator' => 'greater_than', 'value' => 100],
                 ],
                 'conjunction' => 'and',
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Meter::class, $result);
@@ -75,7 +75,7 @@ final class MetersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->meters->list([]);
+        $result = $this->client->meters->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

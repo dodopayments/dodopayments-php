@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace Dodopayments\Services;
 
-use Dodopayments\Addons\AddonCreateParams;
-use Dodopayments\Addons\AddonListParams;
 use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
-use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -22,46 +17,57 @@ use Dodopayments\ServiceContracts\AddonsContract;
 final class AddonsService implements AddonsContract
 {
     /**
+     * @api
+     */
+    public AddonsRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new AddonsRawService($client);
+    }
 
     /**
      * @api
      *
-     * @param array{
-     *   currency: value-of<Currency>,
-     *   name: string,
-     *   price: int,
-     *   taxCategory: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
-     *   description?: string|null,
-     * }|AddonCreateParams $params
+     * @param 'AED'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BRL'|'BSD'|'BWP'|'BYN'|'BZD'|'CAD'|'CHF'|'CLP'|'CNY'|'COP'|'CRC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SEK'|'SGD'|'SHP'|'SLE'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SZL'|'THB'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'UYU'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|Currency $currency The currency of the Addon
+     * @param string $name Name of the Addon
+     * @param int $price Amount of the addon
+     * @param 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory $taxCategory Tax category applied to this Addon
+     * @param string|null $description Optional description of the Addon
      *
      * @throws APIException
      */
     public function create(
-        array|AddonCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        string|Currency $currency,
+        string $name,
+        int $price,
+        string|TaxCategory $taxCategory,
+        ?string $description = null,
+        ?RequestOptions $requestOptions = null,
     ): AddonResponse {
-        [$parsed, $options] = AddonCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'currency' => $currency,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+            'description' => $description,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<AddonResponse> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'addons',
-            body: (object) $parsed,
-            options: $options,
-            convert: AddonResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
+     *
+     * @param string $id Addon Id
      *
      * @throws APIException
      */
@@ -69,13 +75,8 @@ final class AddonsService implements AddonsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonResponse {
-        /** @var BaseResponse<AddonResponse> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['addons/%1$s', $id],
-            options: $requestOptions,
-            convert: AddonResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -83,35 +84,39 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @param array{
-     *   currency?: value-of<Currency>,
-     *   description?: string|null,
-     *   imageID?: string|null,
-     *   name?: string|null,
-     *   price?: int|null,
-     *   taxCategory?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
-     * }|AddonUpdateParams $params
+     * @param string $id Addon Id
+     * @param 'AED'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BRL'|'BSD'|'BWP'|'BYN'|'BZD'|'CAD'|'CHF'|'CLP'|'CNY'|'COP'|'CRC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SEK'|'SGD'|'SHP'|'SLE'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SZL'|'THB'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'UYU'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|Currency|null $currency The currency of the Addon
+     * @param string|null $description description of the Addon, optional and must be at most 1000 characters
+     * @param string|null $imageID Addon image id after its uploaded to S3
+     * @param string|null $name name of the Addon, optional and must be at most 100 characters
+     * @param int|null $price Amount of the addon
+     * @param 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null $taxCategory tax category of the Addon
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|AddonUpdateParams $params,
+        string|Currency|null $currency = null,
+        ?string $description = null,
+        ?string $imageID = null,
+        ?string $name = null,
+        ?int $price = null,
+        string|TaxCategory|null $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
-        [$parsed, $options] = AddonUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'currency' => $currency,
+            'description' => $description,
+            'imageID' => $imageID,
+            'name' => $name,
+            'price' => $price,
+            'taxCategory' => $taxCategory,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<AddonResponse> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['addons/%1$s', $id],
-            body: (object) $parsed,
-            options: $options,
-            convert: AddonResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -119,39 +124,32 @@ final class AddonsService implements AddonsContract
     /**
      * @api
      *
-     * @param array{pageNumber?: int, pageSize?: int}|AddonListParams $params
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<AddonResponse>
      *
      * @throws APIException
      */
     public function list(
-        array|AddonListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = AddonListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<AddonResponse>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'addons',
-            query: Util::array_transform_keys(
-                $parsed,
-                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
-            ),
-            options: $options,
-            convert: AddonResponse::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
+     *
+     * @param string $id Addon Id
      *
      * @throws APIException
      */
@@ -159,13 +157,8 @@ final class AddonsService implements AddonsContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): AddonUpdateImagesResponse {
-        /** @var BaseResponse<AddonUpdateImagesResponse> */
-        $response = $this->client->request(
-            method: 'put',
-            path: ['addons/%1$s/images', $id],
-            options: $requestOptions,
-            convert: AddonUpdateImagesResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->updateImages($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }

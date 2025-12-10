@@ -5,21 +5,22 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\WebhooksContract;
 use Dodopayments\Services\Webhooks\HeadersService;
 use Dodopayments\WebhookEvents\WebhookEventType;
-use Dodopayments\Webhooks\WebhookCreateParams;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
-use Dodopayments\Webhooks\WebhookListParams;
-use Dodopayments\Webhooks\WebhookUpdateParams;
 
 final class WebhooksService implements WebhooksContract
 {
+    /**
+     * @api
+     */
+    public WebhooksRawService $raw;
+
     /**
      * @api
      */
@@ -30,6 +31,7 @@ final class WebhooksService implements WebhooksContract
      */
     public function __construct(private Client $client)
     {
+        $this->raw = new WebhooksRawService($client);
         $this->headers = new HeadersService($client);
     }
 
@@ -38,36 +40,46 @@ final class WebhooksService implements WebhooksContract
      *
      * Create a new webhook
      *
-     * @param array{
-     *   url: string,
-     *   description?: string|null,
-     *   disabled?: bool|null,
-     *   filterTypes?: list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType>,
-     *   headers?: array<string,string>|null,
-     *   idempotencyKey?: string|null,
-     *   metadata?: array<string,string>|null,
-     *   rateLimit?: int|null,
-     * }|WebhookCreateParams $params
+     * @param string $url Url of the webhook
+     * @param bool|null $disabled Create the webhook in a disabled state.
+     *
+     * Default is false
+     * @param list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType> $filterTypes Filter events to the webhook.
+     *
+     * Webhook event will only be sent for events in the list.
+     * @param array<string,string>|null $headers Custom headers to be passed
+     * @param string|null $idempotencyKey The request's idempotency key
+     * @param array<string,string>|null $metadata Metadata to be passed to the webhook
+     * Defaut is {}
      *
      * @throws APIException
      */
     public function create(
-        array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        string $url,
+        ?string $description = null,
+        ?bool $disabled = null,
+        ?array $filterTypes = null,
+        ?array $headers = null,
+        ?string $idempotencyKey = null,
+        ?array $metadata = null,
+        ?int $rateLimit = null,
+        ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        [$parsed, $options] = WebhookCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'url' => $url,
+            'description' => $description,
+            'disabled' => $disabled,
+            'filterTypes' => $filterTypes,
+            'headers' => $headers,
+            'idempotencyKey' => $idempotencyKey,
+            'metadata' => $metadata,
+            'rateLimit' => $rateLimit,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<WebhookDetails> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'webhooks',
-            body: (object) $parsed,
-            options: $options,
-            convert: WebhookDetails::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -83,13 +95,8 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookDetails {
-        /** @var BaseResponse<WebhookDetails> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['webhooks/%1$s', $webhookID],
-            options: $requestOptions,
-            convert: WebhookDetails::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -99,35 +106,40 @@ final class WebhooksService implements WebhooksContract
      *
      * Patch a webhook by id
      *
-     * @param array{
-     *   description?: string|null,
-     *   disabled?: bool|null,
-     *   filterTypes?: list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType>|null,
-     *   metadata?: array<string,string>|null,
-     *   rateLimit?: int|null,
-     *   url?: string|null,
-     * }|WebhookUpdateParams $params
+     * @param string|null $description Description of the webhook
+     * @param bool|null $disabled to Disable the endpoint, set it to true
+     * @param list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType>|null $filterTypes Filter events to the endpoint.
+     *
+     * Webhook event will only be sent for events in the list.
+     * @param array<string,string>|null $metadata Metadata
+     * @param int|null $rateLimit Rate limit
+     * @param string|null $url Url endpoint
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
-        array|WebhookUpdateParams $params,
+        ?string $description = null,
+        ?bool $disabled = null,
+        ?array $filterTypes = null,
+        ?array $metadata = null,
+        ?int $rateLimit = null,
+        ?string $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        [$parsed, $options] = WebhookUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'description' => $description,
+            'disabled' => $disabled,
+            'filterTypes' => $filterTypes,
+            'metadata' => $metadata,
+            'rateLimit' => $rateLimit,
+            'url' => $url,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<WebhookDetails> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['webhooks/%1$s', $webhookID],
-            body: (object) $parsed,
-            options: $options,
-            convert: WebhookDetails::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -137,30 +149,24 @@ final class WebhooksService implements WebhooksContract
      *
      * List all webhooks
      *
-     * @param array{iterator?: string|null, limit?: int|null}|WebhookListParams $params
+     * @param string|null $iterator The iterator returned from a prior invocation
+     * @param int|null $limit Limit the number of returned items
      *
      * @return CursorPagePagination<WebhookDetails>
      *
      * @throws APIException
      */
     public function list(
-        array|WebhookListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?string $iterator = null,
+        ?int $limit = null,
+        ?RequestOptions $requestOptions = null,
     ): CursorPagePagination {
-        [$parsed, $options] = WebhookListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['iterator' => $iterator, 'limit' => $limit];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<CursorPagePagination<WebhookDetails>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'webhooks',
-            query: $parsed,
-            options: $options,
-            convert: WebhookDetails::class,
-            page: CursorPagePagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -176,13 +182,8 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        /** @var BaseResponse<mixed> */
-        $response = $this->client->request(
-            method: 'delete',
-            path: ['webhooks/%1$s', $webhookID],
-            options: $requestOptions,
-            convert: null,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->delete($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -198,13 +199,8 @@ final class WebhooksService implements WebhooksContract
         string $webhookID,
         ?RequestOptions $requestOptions = null
     ): WebhookGetSecretResponse {
-        /** @var BaseResponse<WebhookGetSecretResponse> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['webhooks/%1$s/secret', $webhookID],
-            options: $requestOptions,
-            convert: WebhookGetSecretResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveSecret($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

@@ -41,7 +41,7 @@ final class LicenseKeyInstancesTest extends TestCase
     {
         $result = $this->client->licenseKeyInstances->update(
             'lki_123',
-            ['name' => 'name']
+            name: 'name'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -53,7 +53,7 @@ final class LicenseKeyInstancesTest extends TestCase
     {
         $result = $this->client->licenseKeyInstances->update(
             'lki_123',
-            ['name' => 'name']
+            name: 'name'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -63,7 +63,7 @@ final class LicenseKeyInstancesTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->licenseKeyInstances->list([]);
+        $result = $this->client->licenseKeyInstances->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

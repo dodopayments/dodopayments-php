@@ -31,9 +31,10 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->discounts->create([
-            'amount' => 0, 'type' => DiscountType::PERCENTAGE,
-        ]);
+        $result = $this->client->discounts->create(
+            amount: 0,
+            type: DiscountType::PERCENTAGE
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Discount::class, $result);
@@ -42,16 +43,16 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->discounts->create([
-            'amount' => 0,
-            'type' => DiscountType::PERCENTAGE,
-            'code' => 'code',
-            'expiresAt' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
-            'name' => 'name',
-            'restrictedTo' => ['string'],
-            'subscriptionCycles' => 0,
-            'usageLimit' => 0,
-        ]);
+        $result = $this->client->discounts->create(
+            amount: 0,
+            type: DiscountType::PERCENTAGE,
+            code: 'code',
+            expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            name: 'name',
+            restrictedTo: ['string'],
+            subscriptionCycles: 0,
+            usageLimit: 0,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Discount::class, $result);
@@ -69,7 +70,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->discounts->update('discount_id', []);
+        $result = $this->client->discounts->update('discount_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Discount::class, $result);
@@ -78,7 +79,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->discounts->list([]);
+        $result = $this->client->discounts->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

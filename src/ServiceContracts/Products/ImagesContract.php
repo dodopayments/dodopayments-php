@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts\Products;
 
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Products\Images\ImageUpdateParams;
 use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
 
@@ -14,13 +13,13 @@ interface ImagesContract
     /**
      * @api
      *
-     * @param array<mixed>|ImageUpdateParams $params
+     * @param string $id Product Id
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|ImageUpdateParams $params,
+        ?bool $forceUpdate = null,
         ?RequestOptions $requestOptions = null,
     ): ImageUpdateResponse;
 }

@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
-use Dodopayments\Refunds\RefundCreateParams;
-use Dodopayments\Refunds\RefundListParams;
 use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
@@ -20,47 +16,56 @@ use Dodopayments\ServiceContracts\RefundsContract;
 final class RefundsService implements RefundsContract
 {
     /**
+     * @api
+     */
+    public RefundsRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new RefundsRawService($client);
+    }
 
     /**
      * @api
      *
-     * @param array{
-     *   paymentID: string,
-     *   items?: list<array{
-     *     itemID: string, amount?: int|null, taxInclusive?: bool
-     *   }>|null,
-     *   metadata?: array<string,string>,
-     *   reason?: string|null,
-     * }|RefundCreateParams $params
+     * @param string $paymentID the unique identifier of the payment to be refunded
+     * @param list<array{
+     *   itemID: string, amount?: int|null, taxInclusive?: bool
+     * }>|null $items Partially Refund an Individual Item
+     * @param array<string,string> $metadata additional metadata associated with the refund
+     * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      *
      * @throws APIException
      */
     public function create(
-        array|RefundCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        string $paymentID,
+        ?array $items = null,
+        ?array $metadata = null,
+        ?string $reason = null,
+        ?RequestOptions $requestOptions = null,
     ): Refund {
-        [$parsed, $options] = RefundCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'paymentID' => $paymentID,
+            'items' => $items,
+            'metadata' => $metadata,
+            'reason' => $reason,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<Refund> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'refunds',
-            body: (object) $parsed,
-            options: $options,
-            convert: Refund::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
+     *
+     * @param string $refundID Refund Id
      *
      * @throws APIException
      */
@@ -68,13 +73,8 @@ final class RefundsService implements RefundsContract
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): Refund {
-        /** @var BaseResponse<Refund> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['refunds/%1$s', $refundID],
-            options: $requestOptions,
-            convert: Refund::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($refundID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -82,46 +82,39 @@ final class RefundsService implements RefundsContract
     /**
      * @api
      *
-     * @param array{
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
-     *   customerID?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     *   status?: 'succeeded'|'failed'|'pending'|'review'|Status,
-     * }|RefundListParams $params
+     * @param string|\DateTimeInterface $createdAtGte Get events after this created time
+     * @param string|\DateTimeInterface $createdAtLte Get events created before this time
+     * @param string $customerID Filter by customer_id
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
+     * @param 'succeeded'|'failed'|'pending'|'review'|Status $status Filter by status
      *
      * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */
     public function list(
-        array|RefundListParams $params,
-        ?RequestOptions $requestOptions = null
+        string|\DateTimeInterface|null $createdAtGte = null,
+        string|\DateTimeInterface|null $createdAtLte = null,
+        ?string $customerID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        string|Status|null $status = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = RefundListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'customerID' => $customerID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+            'status' => $status,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<RefundListResponse>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'refunds',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'createdAtGte' => 'created_at_gte',
-                    'createdAtLte' => 'created_at_lte',
-                    'customerID' => 'customer_id',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                ],
-            ),
-            options: $options,
-            convert: RefundListResponse::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

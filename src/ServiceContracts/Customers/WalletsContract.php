@@ -13,6 +13,8 @@ interface WalletsContract
     /**
      * @api
      *
+     * @param string $customerID Customer ID
+     *
      * @throws APIException
      */
     public function list(

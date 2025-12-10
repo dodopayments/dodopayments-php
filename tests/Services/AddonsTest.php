@@ -33,12 +33,12 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->addons->create([
-            'currency' => Currency::AED,
-            'name' => 'name',
-            'price' => 0,
-            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
-        ]);
+        $result = $this->client->addons->create(
+            currency: Currency::AED,
+            name: 'name',
+            price: 0,
+            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(AddonResponse::class, $result);
@@ -47,13 +47,13 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->addons->create([
-            'currency' => Currency::AED,
-            'name' => 'name',
-            'price' => 0,
-            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
-            'description' => 'description',
-        ]);
+        $result = $this->client->addons->create(
+            currency: Currency::AED,
+            name: 'name',
+            price: 0,
+            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            description: 'description',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(AddonResponse::class, $result);
@@ -71,7 +71,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->addons->update('id', []);
+        $result = $this->client->addons->update('id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(AddonResponse::class, $result);
@@ -80,7 +80,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->addons->list([]);
+        $result = $this->client->addons->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

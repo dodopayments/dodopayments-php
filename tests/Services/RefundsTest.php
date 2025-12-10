@@ -30,7 +30,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->refunds->create(['paymentID' => 'payment_id']);
+        $result = $this->client->refunds->create(paymentID: 'payment_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Refund::class, $result);
@@ -39,14 +39,12 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->refunds->create([
-            'paymentID' => 'payment_id',
-            'items' => [
-                ['itemID' => 'item_id', 'amount' => 0, 'taxInclusive' => true],
-            ],
-            'metadata' => ['foo' => 'string'],
-            'reason' => 'reason',
-        ]);
+        $result = $this->client->refunds->create(
+            paymentID: 'payment_id',
+            items: [['itemID' => 'item_id', 'amount' => 0, 'taxInclusive' => true]],
+            metadata: ['foo' => 'string'],
+            reason: 'reason',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Refund::class, $result);
@@ -64,7 +62,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->refunds->list([]);
+        $result = $this->client->refunds->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
-use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\CustomerPortalContract;
@@ -16,35 +13,37 @@ use Dodopayments\ServiceContracts\Customers\CustomerPortalContract;
 final class CustomerPortalService implements CustomerPortalContract
 {
     /**
+     * @api
+     */
+    public CustomerPortalRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new CustomerPortalRawService($client);
+    }
 
     /**
      * @api
      *
-     * @param array{sendEmail?: bool}|CustomerPortalCreateParams $params
+     * @param string $customerID Customer Id
+     * @param bool $sendEmail if true, will send link to user
      *
      * @throws APIException
      */
     public function create(
         string $customerID,
-        array|CustomerPortalCreateParams $params,
+        ?bool $sendEmail = null,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession {
-        [$parsed, $options] = CustomerPortalCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['sendEmail' => $sendEmail];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<CustomerPortalSession> */
-        $response = $this->client->request(
-            method: 'post',
-            path: ['customers/%1$s/customer-portal/session', $customerID],
-            query: Util::array_transform_keys($parsed, ['sendEmail' => 'send_email']),
-            options: $options,
-            convert: CustomerPortalSession::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create($customerID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
