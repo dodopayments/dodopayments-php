@@ -51,12 +51,12 @@ final class SubscriptionData implements BaseModel
         OnDemandSubscription|array|null $onDemand = null,
         ?int $trialPeriodDays = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $onDemand && $obj['onDemand'] = $onDemand;
-        null !== $trialPeriodDays && $obj['trialPeriodDays'] = $trialPeriodDays;
+        null !== $onDemand && $self['onDemand'] = $onDemand;
+        null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -71,10 +71,10 @@ final class SubscriptionData implements BaseModel
     public function withOnDemand(
         OnDemandSubscription|array|null $onDemand
     ): self {
-        $obj = clone $this;
-        $obj['onDemand'] = $onDemand;
+        $self = clone $this;
+        $self['onDemand'] = $onDemand;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -82,9 +82,9 @@ final class SubscriptionData implements BaseModel
      */
     public function withTrialPeriodDays(?int $trialPeriodDays): self
     {
-        $obj = clone $this;
-        $obj['trialPeriodDays'] = $trialPeriodDays;
+        $self = clone $this;
+        $self['trialPeriodDays'] = $trialPeriodDays;
 
-        return $obj;
+        return $self;
     }
 }

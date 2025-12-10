@@ -94,16 +94,16 @@ final class OnDemandSubscription implements BaseModel
         ?string $productDescription = null,
         ?int $productPrice = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['mandateOnly'] = $mandateOnly;
+        $self['mandateOnly'] = $mandateOnly;
 
-        null !== $adaptiveCurrencyFeesInclusive && $obj['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
-        null !== $productCurrency && $obj['productCurrency'] = $productCurrency;
-        null !== $productDescription && $obj['productDescription'] = $productDescription;
-        null !== $productPrice && $obj['productPrice'] = $productPrice;
+        null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
+        null !== $productCurrency && $self['productCurrency'] = $productCurrency;
+        null !== $productDescription && $self['productDescription'] = $productDescription;
+        null !== $productPrice && $self['productPrice'] = $productPrice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -111,10 +111,10 @@ final class OnDemandSubscription implements BaseModel
      */
     public function withMandateOnly(bool $mandateOnly): self
     {
-        $obj = clone $this;
-        $obj['mandateOnly'] = $mandateOnly;
+        $self = clone $this;
+        $self['mandateOnly'] = $mandateOnly;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -124,10 +124,10 @@ final class OnDemandSubscription implements BaseModel
     public function withAdaptiveCurrencyFeesInclusive(
         ?bool $adaptiveCurrencyFeesInclusive
     ): self {
-        $obj = clone $this;
-        $obj['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
+        $self = clone $this;
+        $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -138,10 +138,10 @@ final class OnDemandSubscription implements BaseModel
     public function withProductCurrency(
         Currency|string|null $productCurrency
     ): self {
-        $obj = clone $this;
-        $obj['productCurrency'] = $productCurrency;
+        $self = clone $this;
+        $self['productCurrency'] = $productCurrency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -150,10 +150,10 @@ final class OnDemandSubscription implements BaseModel
      */
     public function withProductDescription(?string $productDescription): self
     {
-        $obj = clone $this;
-        $obj['productDescription'] = $productDescription;
+        $self = clone $this;
+        $self['productDescription'] = $productDescription;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -164,9 +164,9 @@ final class OnDemandSubscription implements BaseModel
      */
     public function withProductPrice(?int $productPrice): self
     {
-        $obj = clone $this;
-        $obj['productPrice'] = $productPrice;
+        $self = clone $this;
+        $self['productPrice'] = $productPrice;
 
-        return $obj;
+        return $self;
     }
 }

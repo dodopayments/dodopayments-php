@@ -98,18 +98,18 @@ final class Meter implements BaseModel
         string $pricePerUnit,
         ?string $description = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['currency'] = $currency;
-        $obj['freeThreshold'] = $freeThreshold;
-        $obj['measurementUnit'] = $measurementUnit;
-        $obj['meterID'] = $meterID;
-        $obj['name'] = $name;
-        $obj['pricePerUnit'] = $pricePerUnit;
+        $self['currency'] = $currency;
+        $self['freeThreshold'] = $freeThreshold;
+        $self['measurementUnit'] = $measurementUnit;
+        $self['meterID'] = $meterID;
+        $self['name'] = $name;
+        $self['pricePerUnit'] = $pricePerUnit;
 
-        null !== $description && $obj['description'] = $description;
+        null !== $description && $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -117,57 +117,57 @@ final class Meter implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     public function withFreeThreshold(int $freeThreshold): self
     {
-        $obj = clone $this;
-        $obj['freeThreshold'] = $freeThreshold;
+        $self = clone $this;
+        $self['freeThreshold'] = $freeThreshold;
 
-        return $obj;
+        return $self;
     }
 
     public function withMeasurementUnit(string $measurementUnit): self
     {
-        $obj = clone $this;
-        $obj['measurementUnit'] = $measurementUnit;
+        $self = clone $this;
+        $self['measurementUnit'] = $measurementUnit;
 
-        return $obj;
+        return $self;
     }
 
     public function withMeterID(string $meterID): self
     {
-        $obj = clone $this;
-        $obj['meterID'] = $meterID;
+        $self = clone $this;
+        $self['meterID'] = $meterID;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withPricePerUnit(string $pricePerUnit): self
     {
-        $obj = clone $this;
-        $obj['pricePerUnit'] = $pricePerUnit;
+        $self = clone $this;
+        $self['pricePerUnit'] = $pricePerUnit;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 }

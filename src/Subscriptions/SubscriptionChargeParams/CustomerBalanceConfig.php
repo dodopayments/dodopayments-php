@@ -47,12 +47,12 @@ final class CustomerBalanceConfig implements BaseModel
         ?bool $allowCustomerCreditsPurchase = null,
         ?bool $allowCustomerCreditsUsage = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $allowCustomerCreditsPurchase && $obj['allowCustomerCreditsPurchase'] = $allowCustomerCreditsPurchase;
-        null !== $allowCustomerCreditsUsage && $obj['allowCustomerCreditsUsage'] = $allowCustomerCreditsUsage;
+        null !== $allowCustomerCreditsPurchase && $self['allowCustomerCreditsPurchase'] = $allowCustomerCreditsPurchase;
+        null !== $allowCustomerCreditsUsage && $self['allowCustomerCreditsUsage'] = $allowCustomerCreditsUsage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -61,10 +61,10 @@ final class CustomerBalanceConfig implements BaseModel
     public function withAllowCustomerCreditsPurchase(
         ?bool $allowCustomerCreditsPurchase
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerCreditsPurchase'] = $allowCustomerCreditsPurchase;
+        $self = clone $this;
+        $self['allowCustomerCreditsPurchase'] = $allowCustomerCreditsPurchase;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -73,9 +73,9 @@ final class CustomerBalanceConfig implements BaseModel
     public function withAllowCustomerCreditsUsage(
         ?bool $allowCustomerCreditsUsage
     ): self {
-        $obj = clone $this;
-        $obj['allowCustomerCreditsUsage'] = $allowCustomerCreditsUsage;
+        $self = clone $this;
+        $self['allowCustomerCreditsUsage'] = $allowCustomerCreditsUsage;
 
-        return $obj;
+        return $self;
     }
 }

@@ -176,22 +176,22 @@ final class UsageBasedPrice implements BaseModel
         ?array $meters = null,
         ?bool $taxInclusive = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['currency'] = $currency;
-        $obj['discount'] = $discount;
-        $obj['fixedPrice'] = $fixedPrice;
-        $obj['paymentFrequencyCount'] = $paymentFrequencyCount;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
-        $obj['purchasingPowerParity'] = $purchasingPowerParity;
-        $obj['subscriptionPeriodCount'] = $subscriptionPeriodCount;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
-        $obj['type'] = $type;
+        $self['currency'] = $currency;
+        $self['discount'] = $discount;
+        $self['fixedPrice'] = $fixedPrice;
+        $self['paymentFrequencyCount'] = $paymentFrequencyCount;
+        $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $self['type'] = $type;
 
-        null !== $meters && $obj['meters'] = $meters;
-        null !== $taxInclusive && $obj['taxInclusive'] = $taxInclusive;
+        null !== $meters && $self['meters'] = $meters;
+        null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -201,10 +201,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -212,10 +212,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withDiscount(int $discount): self
     {
-        $obj = clone $this;
-        $obj['discount'] = $discount;
+        $self = clone $this;
+        $self['discount'] = $discount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -224,10 +224,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withFixedPrice(int $fixedPrice): self
     {
-        $obj = clone $this;
-        $obj['fixedPrice'] = $fixedPrice;
+        $self = clone $this;
+        $self['fixedPrice'] = $fixedPrice;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -236,10 +236,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
-        $obj = clone $this;
-        $obj['paymentFrequencyCount'] = $paymentFrequencyCount;
+        $self = clone $this;
+        $self['paymentFrequencyCount'] = $paymentFrequencyCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -250,10 +250,10 @@ final class UsageBasedPrice implements BaseModel
     public function withPaymentFrequencyInterval(
         TimeInterval|string $paymentFrequencyInterval
     ): self {
-        $obj = clone $this;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $self = clone $this;
+        $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -262,10 +262,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
-        $obj = clone $this;
-        $obj['purchasingPowerParity'] = $purchasingPowerParity;
+        $self = clone $this;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -275,10 +275,10 @@ final class UsageBasedPrice implements BaseModel
     public function withSubscriptionPeriodCount(
         int $subscriptionPeriodCount
     ): self {
-        $obj = clone $this;
-        $obj['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+        $self = clone $this;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -289,10 +289,10 @@ final class UsageBasedPrice implements BaseModel
     public function withSubscriptionPeriodInterval(
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
-        $obj = clone $this;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $self = clone $this;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -300,10 +300,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -318,10 +318,10 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withMeters(?array $meters): self
     {
-        $obj = clone $this;
-        $obj['meters'] = $meters;
+        $self = clone $this;
+        $self['meters'] = $meters;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -329,9 +329,9 @@ final class UsageBasedPrice implements BaseModel
      */
     public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $obj = clone $this;
-        $obj['taxInclusive'] = $taxInclusive;
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 }

@@ -67,14 +67,14 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
         string $paymentMethodID,
         ?string $returnURL = null
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['type'] = $type;
-        $obj['paymentMethodID'] = $paymentMethodID;
+        $self['type'] = $type;
+        $self['paymentMethodID'] = $paymentMethodID;
 
-        null !== $returnURL && $obj['returnURL'] = $returnURL;
+        null !== $returnURL && $self['returnURL'] = $returnURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -82,25 +82,25 @@ final class SubscriptionUpdatePaymentMethodParams implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     public function withReturnURL(?string $returnURL): self
     {
-        $obj = clone $this;
-        $obj['returnURL'] = $returnURL;
+        $self = clone $this;
+        $self['returnURL'] = $returnURL;
 
-        return $obj;
+        return $self;
     }
 
     public function withPaymentMethodID(string $paymentMethodID): self
     {
-        $obj = clone $this;
-        $obj['paymentMethodID'] = $paymentMethodID;
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
-        return $obj;
+        return $self;
     }
 }

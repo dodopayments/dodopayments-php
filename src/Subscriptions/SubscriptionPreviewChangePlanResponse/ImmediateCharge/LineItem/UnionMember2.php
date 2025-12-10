@@ -139,40 +139,40 @@ final class UnionMember2 implements BaseModel
         ?string $description = null,
         ?int $tax = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['chargeableUnits'] = $chargeableUnits;
-        $obj['currency'] = $currency;
-        $obj['freeThreshold'] = $freeThreshold;
-        $obj['name'] = $name;
-        $obj['pricePerUnit'] = $pricePerUnit;
-        $obj['subtotal'] = $subtotal;
-        $obj['taxInclusive'] = $taxInclusive;
-        $obj['taxRate'] = $taxRate;
-        $obj['type'] = $type;
-        $obj['unitsConsumed'] = $unitsConsumed;
+        $self['id'] = $id;
+        $self['chargeableUnits'] = $chargeableUnits;
+        $self['currency'] = $currency;
+        $self['freeThreshold'] = $freeThreshold;
+        $self['name'] = $name;
+        $self['pricePerUnit'] = $pricePerUnit;
+        $self['subtotal'] = $subtotal;
+        $self['taxInclusive'] = $taxInclusive;
+        $self['taxRate'] = $taxRate;
+        $self['type'] = $type;
+        $self['unitsConsumed'] = $unitsConsumed;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $tax && $obj['tax'] = $tax;
+        null !== $description && $self['description'] = $description;
+        null !== $tax && $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withChargeableUnits(string $chargeableUnits): self
     {
-        $obj = clone $this;
-        $obj['chargeableUnits'] = $chargeableUnits;
+        $self = clone $this;
+        $self['chargeableUnits'] = $chargeableUnits;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -180,58 +180,58 @@ final class UnionMember2 implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     public function withFreeThreshold(int $freeThreshold): self
     {
-        $obj = clone $this;
-        $obj['freeThreshold'] = $freeThreshold;
+        $self = clone $this;
+        $self['freeThreshold'] = $freeThreshold;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withPricePerUnit(string $pricePerUnit): self
     {
-        $obj = clone $this;
-        $obj['pricePerUnit'] = $pricePerUnit;
+        $self = clone $this;
+        $self['pricePerUnit'] = $pricePerUnit;
 
-        return $obj;
+        return $self;
     }
 
     public function withSubtotal(int $subtotal): self
     {
-        $obj = clone $this;
-        $obj['subtotal'] = $subtotal;
+        $self = clone $this;
+        $self['subtotal'] = $subtotal;
 
-        return $obj;
+        return $self;
     }
 
     public function withTaxInclusive(bool $taxInclusive): self
     {
-        $obj = clone $this;
-        $obj['taxInclusive'] = $taxInclusive;
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 
     public function withTaxRate(float $taxRate): self
     {
-        $obj = clone $this;
-        $obj['taxRate'] = $taxRate;
+        $self = clone $this;
+        $self['taxRate'] = $taxRate;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -239,33 +239,33 @@ final class UnionMember2 implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     public function withUnitsConsumed(string $unitsConsumed): self
     {
-        $obj = clone $this;
-        $obj['unitsConsumed'] = $unitsConsumed;
+        $self = clone $this;
+        $self['unitsConsumed'] = $unitsConsumed;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     public function withTax(?int $tax): self
     {
-        $obj = clone $this;
-        $obj['tax'] = $tax;
+        $self = clone $this;
+        $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 }

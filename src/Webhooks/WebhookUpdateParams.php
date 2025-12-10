@@ -93,16 +93,16 @@ final class WebhookUpdateParams implements BaseModel
         ?int $rateLimit = null,
         ?string $url = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $disabled && $obj['disabled'] = $disabled;
-        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $rateLimit && $obj['rateLimit'] = $rateLimit;
-        null !== $url && $obj['url'] = $url;
+        null !== $description && $self['description'] = $description;
+        null !== $disabled && $self['disabled'] = $disabled;
+        null !== $filterTypes && $self['filterTypes'] = $filterTypes;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $rateLimit && $self['rateLimit'] = $rateLimit;
+        null !== $url && $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -110,10 +110,10 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withDisabled(?bool $disabled): self
     {
-        $obj = clone $this;
-        $obj['disabled'] = $disabled;
+        $self = clone $this;
+        $self['disabled'] = $disabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -136,10 +136,10 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withFilterTypes(?array $filterTypes): self
     {
-        $obj = clone $this;
-        $obj['filterTypes'] = $filterTypes;
+        $self = clone $this;
+        $self['filterTypes'] = $filterTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -149,10 +149,10 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -160,10 +160,10 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withRateLimit(?int $rateLimit): self
     {
-        $obj = clone $this;
-        $obj['rateLimit'] = $rateLimit;
+        $self = clone $this;
+        $self['rateLimit'] = $rateLimit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -171,9 +171,9 @@ final class WebhookUpdateParams implements BaseModel
      */
     public function withURL(?string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

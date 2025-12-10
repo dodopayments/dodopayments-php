@@ -54,27 +54,27 @@ final class LicenseActivateParams implements BaseModel
      */
     public static function with(string $licenseKey, string $name): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['licenseKey'] = $licenseKey;
-        $obj['name'] = $name;
+        $self['licenseKey'] = $licenseKey;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withLicenseKey(string $licenseKey): self
     {
-        $obj = clone $this;
-        $obj['licenseKey'] = $licenseKey;
+        $self = clone $this;
+        $self['licenseKey'] = $licenseKey;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 }

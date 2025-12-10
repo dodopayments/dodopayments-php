@@ -115,17 +115,17 @@ final class UsageEventListParams implements BaseModel
         ?int $pageSize = null,
         ?\DateTimeInterface $start = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $customerID && $obj['customerID'] = $customerID;
-        null !== $end && $obj['end'] = $end;
-        null !== $eventName && $obj['eventName'] = $eventName;
-        null !== $meterID && $obj['meterID'] = $meterID;
-        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
-        null !== $pageSize && $obj['pageSize'] = $pageSize;
-        null !== $start && $obj['start'] = $start;
+        null !== $customerID && $self['customerID'] = $customerID;
+        null !== $end && $self['end'] = $end;
+        null !== $eventName && $self['eventName'] = $eventName;
+        null !== $meterID && $self['meterID'] = $meterID;
+        null !== $pageNumber && $self['pageNumber'] = $pageNumber;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
+        null !== $start && $self['start'] = $start;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -133,10 +133,10 @@ final class UsageEventListParams implements BaseModel
      */
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -144,10 +144,10 @@ final class UsageEventListParams implements BaseModel
      */
     public function withEnd(\DateTimeInterface $end): self
     {
-        $obj = clone $this;
-        $obj['end'] = $end;
+        $self = clone $this;
+        $self['end'] = $end;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -155,10 +155,10 @@ final class UsageEventListParams implements BaseModel
      */
     public function withEventName(string $eventName): self
     {
-        $obj = clone $this;
-        $obj['eventName'] = $eventName;
+        $self = clone $this;
+        $self['eventName'] = $eventName;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -166,10 +166,10 @@ final class UsageEventListParams implements BaseModel
      */
     public function withMeterID(string $meterID): self
     {
-        $obj = clone $this;
-        $obj['meterID'] = $meterID;
+        $self = clone $this;
+        $self['meterID'] = $meterID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -177,10 +177,10 @@ final class UsageEventListParams implements BaseModel
      */
     public function withPageNumber(int $pageNumber): self
     {
-        $obj = clone $this;
-        $obj['pageNumber'] = $pageNumber;
+        $self = clone $this;
+        $self['pageNumber'] = $pageNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -188,10 +188,10 @@ final class UsageEventListParams implements BaseModel
      */
     public function withPageSize(int $pageSize): self
     {
-        $obj = clone $this;
-        $obj['pageSize'] = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -199,9 +199,9 @@ final class UsageEventListParams implements BaseModel
      */
     public function withStart(\DateTimeInterface $start): self
     {
-        $obj = clone $this;
-        $obj['start'] = $start;
+        $self = clone $this;
+        $self['start'] = $start;
 
-        return $obj;
+        return $self;
     }
 }

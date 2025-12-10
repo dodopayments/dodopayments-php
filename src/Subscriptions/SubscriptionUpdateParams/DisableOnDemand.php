@@ -45,19 +45,19 @@ final class DisableOnDemand implements BaseModel
      */
     public static function with(\DateTimeInterface $nextBillingDate): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['nextBillingDate'] = $nextBillingDate;
+        $self['nextBillingDate'] = $nextBillingDate;
 
-        return $obj;
+        return $self;
     }
 
     public function withNextBillingDate(
         \DateTimeInterface $nextBillingDate
     ): self {
-        $obj = clone $this;
-        $obj['nextBillingDate'] = $nextBillingDate;
+        $self = clone $this;
+        $self['nextBillingDate'] = $nextBillingDate;
 
-        return $obj;
+        return $self;
     }
 }

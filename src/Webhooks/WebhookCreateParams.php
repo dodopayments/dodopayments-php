@@ -124,19 +124,19 @@ final class WebhookCreateParams implements BaseModel
         ?array $metadata = null,
         ?int $rateLimit = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['url'] = $url;
+        $self['url'] = $url;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $disabled && $obj['disabled'] = $disabled;
-        null !== $filterTypes && $obj['filterTypes'] = $filterTypes;
-        null !== $headers && $obj['headers'] = $headers;
-        null !== $idempotencyKey && $obj['idempotencyKey'] = $idempotencyKey;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $rateLimit && $obj['rateLimit'] = $rateLimit;
+        null !== $description && $self['description'] = $description;
+        null !== $disabled && $self['disabled'] = $disabled;
+        null !== $filterTypes && $self['filterTypes'] = $filterTypes;
+        null !== $headers && $self['headers'] = $headers;
+        null !== $idempotencyKey && $self['idempotencyKey'] = $idempotencyKey;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $rateLimit && $self['rateLimit'] = $rateLimit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -144,18 +144,18 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,10 +165,10 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withDisabled(?bool $disabled): self
     {
-        $obj = clone $this;
-        $obj['disabled'] = $disabled;
+        $self = clone $this;
+        $self['disabled'] = $disabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -180,10 +180,10 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withFilterTypes(array $filterTypes): self
     {
-        $obj = clone $this;
-        $obj['filterTypes'] = $filterTypes;
+        $self = clone $this;
+        $self['filterTypes'] = $filterTypes;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -193,10 +193,10 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withHeaders(?array $headers): self
     {
-        $obj = clone $this;
-        $obj['headers'] = $headers;
+        $self = clone $this;
+        $self['headers'] = $headers;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -204,10 +204,10 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withIdempotencyKey(?string $idempotencyKey): self
     {
-        $obj = clone $this;
-        $obj['idempotencyKey'] = $idempotencyKey;
+        $self = clone $this;
+        $self['idempotencyKey'] = $idempotencyKey;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -218,17 +218,17 @@ final class WebhookCreateParams implements BaseModel
      */
     public function withMetadata(?array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     public function withRateLimit(?int $rateLimit): self
     {
-        $obj = clone $this;
-        $obj['rateLimit'] = $rateLimit;
+        $self = clone $this;
+        $self['rateLimit'] = $rateLimit;
 
-        return $obj;
+        return $self;
     }
 }

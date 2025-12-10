@@ -129,29 +129,29 @@ final class Meter implements BaseModel
         ?string $description = null,
         MeterFilter|array|null $filter = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['aggregation'] = $aggregation;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['eventName'] = $eventName;
-        $obj['measurementUnit'] = $measurementUnit;
-        $obj['name'] = $name;
-        $obj['updatedAt'] = $updatedAt;
+        $self['id'] = $id;
+        $self['aggregation'] = $aggregation;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['eventName'] = $eventName;
+        $self['measurementUnit'] = $measurementUnit;
+        $self['name'] = $name;
+        $self['updatedAt'] = $updatedAt;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $filter && $obj['filter'] = $filter;
+        null !== $description && $self['description'] = $description;
+        null !== $filter && $self['filter'] = $filter;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -161,66 +161,66 @@ final class Meter implements BaseModel
      */
     public function withAggregation(MeterAggregation|array $aggregation): self
     {
-        $obj = clone $this;
-        $obj['aggregation'] = $aggregation;
+        $self = clone $this;
+        $self['aggregation'] = $aggregation;
 
-        return $obj;
+        return $self;
     }
 
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withEventName(string $eventName): self
     {
-        $obj = clone $this;
-        $obj['eventName'] = $eventName;
+        $self = clone $this;
+        $self['eventName'] = $eventName;
 
-        return $obj;
+        return $self;
     }
 
     public function withMeasurementUnit(string $measurementUnit): self
     {
-        $obj = clone $this;
-        $obj['measurementUnit'] = $measurementUnit;
+        $self = clone $this;
+        $self['measurementUnit'] = $measurementUnit;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -236,9 +236,9 @@ final class Meter implements BaseModel
      */
     public function withFilter(MeterFilter|array|null $filter): self
     {
-        $obj = clone $this;
-        $obj['filter'] = $filter;
+        $self = clone $this;
+        $self['filter'] = $filter;
 
-        return $obj;
+        return $self;
     }
 }

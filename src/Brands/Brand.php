@@ -124,63 +124,63 @@ final class Brand implements BaseModel
         ?string $supportEmail = null,
         ?string $url = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['brandID'] = $brandID;
-        $obj['businessID'] = $businessID;
-        $obj['enabled'] = $enabled;
-        $obj['statementDescriptor'] = $statementDescriptor;
-        $obj['verificationEnabled'] = $verificationEnabled;
-        $obj['verificationStatus'] = $verificationStatus;
+        $self['brandID'] = $brandID;
+        $self['businessID'] = $businessID;
+        $self['enabled'] = $enabled;
+        $self['statementDescriptor'] = $statementDescriptor;
+        $self['verificationEnabled'] = $verificationEnabled;
+        $self['verificationStatus'] = $verificationStatus;
 
-        null !== $description && $obj['description'] = $description;
-        null !== $image && $obj['image'] = $image;
-        null !== $name && $obj['name'] = $name;
-        null !== $reasonForHold && $obj['reasonForHold'] = $reasonForHold;
-        null !== $supportEmail && $obj['supportEmail'] = $supportEmail;
-        null !== $url && $obj['url'] = $url;
+        null !== $description && $self['description'] = $description;
+        null !== $image && $self['image'] = $image;
+        null !== $name && $self['name'] = $name;
+        null !== $reasonForHold && $self['reasonForHold'] = $reasonForHold;
+        null !== $supportEmail && $self['supportEmail'] = $supportEmail;
+        null !== $url && $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withBrandID(string $brandID): self
     {
-        $obj = clone $this;
-        $obj['brandID'] = $brandID;
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
-        return $obj;
+        return $self;
     }
 
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     public function withEnabled(bool $enabled): self
     {
-        $obj = clone $this;
-        $obj['enabled'] = $enabled;
+        $self = clone $this;
+        $self['enabled'] = $enabled;
 
-        return $obj;
+        return $self;
     }
 
     public function withStatementDescriptor(string $statementDescriptor): self
     {
-        $obj = clone $this;
-        $obj['statementDescriptor'] = $statementDescriptor;
+        $self = clone $this;
+        $self['statementDescriptor'] = $statementDescriptor;
 
-        return $obj;
+        return $self;
     }
 
     public function withVerificationEnabled(bool $verificationEnabled): self
     {
-        $obj = clone $this;
-        $obj['verificationEnabled'] = $verificationEnabled;
+        $self = clone $this;
+        $self['verificationEnabled'] = $verificationEnabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -189,34 +189,34 @@ final class Brand implements BaseModel
     public function withVerificationStatus(
         VerificationStatus|string $verificationStatus
     ): self {
-        $obj = clone $this;
-        $obj['verificationStatus'] = $verificationStatus;
+        $self = clone $this;
+        $self['verificationStatus'] = $verificationStatus;
 
-        return $obj;
+        return $self;
     }
 
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     public function withImage(?string $image): self
     {
-        $obj = clone $this;
-        $obj['image'] = $image;
+        $self = clone $this;
+        $self['image'] = $image;
 
-        return $obj;
+        return $self;
     }
 
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -224,25 +224,25 @@ final class Brand implements BaseModel
      */
     public function withReasonForHold(?string $reasonForHold): self
     {
-        $obj = clone $this;
-        $obj['reasonForHold'] = $reasonForHold;
+        $self = clone $this;
+        $self['reasonForHold'] = $reasonForHold;
 
-        return $obj;
+        return $self;
     }
 
     public function withSupportEmail(?string $supportEmail): self
     {
-        $obj = clone $this;
-        $obj['supportEmail'] = $supportEmail;
+        $self = clone $this;
+        $self['supportEmail'] = $supportEmail;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(?string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }

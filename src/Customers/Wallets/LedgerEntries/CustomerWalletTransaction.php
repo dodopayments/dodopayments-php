@@ -132,71 +132,71 @@ final class CustomerWalletTransaction implements BaseModel
         ?string $reason = null,
         ?string $referenceObjectID = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['afterBalance'] = $afterBalance;
-        $obj['amount'] = $amount;
-        $obj['beforeBalance'] = $beforeBalance;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['currency'] = $currency;
-        $obj['customerID'] = $customerID;
-        $obj['eventType'] = $eventType;
-        $obj['isCredit'] = $isCredit;
+        $self['id'] = $id;
+        $self['afterBalance'] = $afterBalance;
+        $self['amount'] = $amount;
+        $self['beforeBalance'] = $beforeBalance;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['currency'] = $currency;
+        $self['customerID'] = $customerID;
+        $self['eventType'] = $eventType;
+        $self['isCredit'] = $isCredit;
 
-        null !== $reason && $obj['reason'] = $reason;
-        null !== $referenceObjectID && $obj['referenceObjectID'] = $referenceObjectID;
+        null !== $reason && $self['reason'] = $reason;
+        null !== $referenceObjectID && $self['referenceObjectID'] = $referenceObjectID;
 
-        return $obj;
+        return $self;
     }
 
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     public function withAfterBalance(int $afterBalance): self
     {
-        $obj = clone $this;
-        $obj['afterBalance'] = $afterBalance;
+        $self = clone $this;
+        $self['afterBalance'] = $afterBalance;
 
-        return $obj;
+        return $self;
     }
 
     public function withAmount(int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     public function withBeforeBalance(int $beforeBalance): self
     {
-        $obj = clone $this;
-        $obj['beforeBalance'] = $beforeBalance;
+        $self = clone $this;
+        $self['beforeBalance'] = $beforeBalance;
 
-        return $obj;
+        return $self;
     }
 
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -204,18 +204,18 @@ final class CustomerWalletTransaction implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -223,33 +223,33 @@ final class CustomerWalletTransaction implements BaseModel
      */
     public function withEventType(EventType|string $eventType): self
     {
-        $obj = clone $this;
-        $obj['eventType'] = $eventType;
+        $self = clone $this;
+        $self['eventType'] = $eventType;
 
-        return $obj;
+        return $self;
     }
 
     public function withIsCredit(bool $isCredit): self
     {
-        $obj = clone $this;
-        $obj['isCredit'] = $isCredit;
+        $self = clone $this;
+        $self['isCredit'] = $isCredit;
 
-        return $obj;
+        return $self;
     }
 
     public function withReason(?string $reason): self
     {
-        $obj = clone $this;
-        $obj['reason'] = $reason;
+        $self = clone $this;
+        $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 
     public function withReferenceObjectID(?string $referenceObjectID): self
     {
-        $obj = clone $this;
-        $obj['referenceObjectID'] = $referenceObjectID;
+        $self = clone $this;
+        $self['referenceObjectID'] = $referenceObjectID;
 
-        return $obj;
+        return $self;
     }
 }

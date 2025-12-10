@@ -204,26 +204,26 @@ final class PayoutListResponse implements BaseModel
         ?string $payoutDocumentURL = null,
         ?string $remarks = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['amount'] = $amount;
-        $obj['businessID'] = $businessID;
-        $obj['chargebacks'] = $chargebacks;
-        $obj['createdAt'] = $createdAt;
-        $obj['currency'] = $currency;
-        $obj['fee'] = $fee;
-        $obj['paymentMethod'] = $paymentMethod;
-        $obj['payoutID'] = $payoutID;
-        $obj['refunds'] = $refunds;
-        $obj['status'] = $status;
-        $obj['tax'] = $tax;
-        $obj['updatedAt'] = $updatedAt;
+        $self['amount'] = $amount;
+        $self['businessID'] = $businessID;
+        $self['chargebacks'] = $chargebacks;
+        $self['createdAt'] = $createdAt;
+        $self['currency'] = $currency;
+        $self['fee'] = $fee;
+        $self['paymentMethod'] = $paymentMethod;
+        $self['payoutID'] = $payoutID;
+        $self['refunds'] = $refunds;
+        $self['status'] = $status;
+        $self['tax'] = $tax;
+        $self['updatedAt'] = $updatedAt;
 
-        null !== $name && $obj['name'] = $name;
-        null !== $payoutDocumentURL && $obj['payoutDocumentURL'] = $payoutDocumentURL;
-        null !== $remarks && $obj['remarks'] = $remarks;
+        null !== $name && $self['name'] = $name;
+        null !== $payoutDocumentURL && $self['payoutDocumentURL'] = $payoutDocumentURL;
+        null !== $remarks && $self['remarks'] = $remarks;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,10 +231,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withAmount(int $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -242,10 +242,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -253,10 +253,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withChargebacks(int $chargebacks): self
     {
-        $obj = clone $this;
-        $obj['chargebacks'] = $chargebacks;
+        $self = clone $this;
+        $self['chargebacks'] = $chargebacks;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -264,10 +264,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -277,10 +277,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -288,10 +288,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withFee(int $fee): self
     {
-        $obj = clone $this;
-        $obj['fee'] = $fee;
+        $self = clone $this;
+        $self['fee'] = $fee;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -299,10 +299,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withPaymentMethod(string $paymentMethod): self
     {
-        $obj = clone $this;
-        $obj['paymentMethod'] = $paymentMethod;
+        $self = clone $this;
+        $self['paymentMethod'] = $paymentMethod;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -310,10 +310,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withPayoutID(string $payoutID): self
     {
-        $obj = clone $this;
-        $obj['payoutID'] = $payoutID;
+        $self = clone $this;
+        $self['payoutID'] = $payoutID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -321,10 +321,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withRefunds(int $refunds): self
     {
-        $obj = clone $this;
-        $obj['refunds'] = $refunds;
+        $self = clone $this;
+        $self['refunds'] = $refunds;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -334,10 +334,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withStatus(Status|string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -345,10 +345,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withTax(int $tax): self
     {
-        $obj = clone $this;
-        $obj['tax'] = $tax;
+        $self = clone $this;
+        $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -356,10 +356,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -367,10 +367,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -378,10 +378,10 @@ final class PayoutListResponse implements BaseModel
      */
     public function withPayoutDocumentURL(?string $payoutDocumentURL): self
     {
-        $obj = clone $this;
-        $obj['payoutDocumentURL'] = $payoutDocumentURL;
+        $self = clone $this;
+        $self['payoutDocumentURL'] = $payoutDocumentURL;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -389,9 +389,9 @@ final class PayoutListResponse implements BaseModel
      */
     public function withRemarks(?string $remarks): self
     {
-        $obj = clone $this;
-        $obj['remarks'] = $remarks;
+        $self = clone $this;
+        $self['remarks'] = $remarks;
 
-        return $obj;
+        return $self;
     }
 }

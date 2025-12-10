@@ -262,37 +262,37 @@ final class Product implements BaseModel
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?string $name = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['brandID'] = $brandID;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['isRecurring'] = $isRecurring;
-        $obj['licenseKeyEnabled'] = $licenseKeyEnabled;
-        $obj['metadata'] = $metadata;
-        $obj['price'] = $price;
-        $obj['productID'] = $productID;
-        $obj['taxCategory'] = $taxCategory;
-        $obj['updatedAt'] = $updatedAt;
+        $self['brandID'] = $brandID;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['isRecurring'] = $isRecurring;
+        $self['licenseKeyEnabled'] = $licenseKeyEnabled;
+        $self['metadata'] = $metadata;
+        $self['price'] = $price;
+        $self['productID'] = $productID;
+        $self['taxCategory'] = $taxCategory;
+        $self['updatedAt'] = $updatedAt;
 
-        null !== $addons && $obj['addons'] = $addons;
-        null !== $description && $obj['description'] = $description;
-        null !== $digitalProductDelivery && $obj['digitalProductDelivery'] = $digitalProductDelivery;
-        null !== $image && $obj['image'] = $image;
-        null !== $licenseKeyActivationMessage && $obj['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
-        null !== $licenseKeyActivationsLimit && $obj['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
-        null !== $licenseKeyDuration && $obj['licenseKeyDuration'] = $licenseKeyDuration;
-        null !== $name && $obj['name'] = $name;
+        null !== $addons && $self['addons'] = $addons;
+        null !== $description && $self['description'] = $description;
+        null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
+        null !== $image && $self['image'] = $image;
+        null !== $licenseKeyActivationMessage && $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
+        null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
+        null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
+        null !== $name && $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     public function withBrandID(string $brandID): self
     {
-        $obj = clone $this;
-        $obj['brandID'] = $brandID;
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -300,10 +300,10 @@ final class Product implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -311,10 +311,10 @@ final class Product implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -322,10 +322,10 @@ final class Product implements BaseModel
      */
     public function withIsRecurring(bool $isRecurring): self
     {
-        $obj = clone $this;
-        $obj['isRecurring'] = $isRecurring;
+        $self = clone $this;
+        $self['isRecurring'] = $isRecurring;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -333,10 +333,10 @@ final class Product implements BaseModel
      */
     public function withLicenseKeyEnabled(bool $licenseKeyEnabled): self
     {
-        $obj = clone $this;
-        $obj['licenseKeyEnabled'] = $licenseKeyEnabled;
+        $self = clone $this;
+        $self['licenseKeyEnabled'] = $licenseKeyEnabled;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -346,10 +346,10 @@ final class Product implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -393,10 +393,10 @@ final class Product implements BaseModel
     public function withPrice(
         OneTimePrice|array|RecurringPrice|UsageBasedPrice $price
     ): self {
-        $obj = clone $this;
-        $obj['price'] = $price;
+        $self = clone $this;
+        $self['price'] = $price;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -404,10 +404,10 @@ final class Product implements BaseModel
      */
     public function withProductID(string $productID): self
     {
-        $obj = clone $this;
-        $obj['productID'] = $productID;
+        $self = clone $this;
+        $self['productID'] = $productID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -417,10 +417,10 @@ final class Product implements BaseModel
      */
     public function withTaxCategory(TaxCategory|string $taxCategory): self
     {
-        $obj = clone $this;
-        $obj['taxCategory'] = $taxCategory;
+        $self = clone $this;
+        $self['taxCategory'] = $taxCategory;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -428,10 +428,10 @@ final class Product implements BaseModel
      */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $obj = clone $this;
-        $obj['updatedAt'] = $updatedAt;
+        $self = clone $this;
+        $self['updatedAt'] = $updatedAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -441,10 +441,10 @@ final class Product implements BaseModel
      */
     public function withAddons(?array $addons): self
     {
-        $obj = clone $this;
-        $obj['addons'] = $addons;
+        $self = clone $this;
+        $self['addons'] = $addons;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -452,10 +452,10 @@ final class Product implements BaseModel
      */
     public function withDescription(?string $description): self
     {
-        $obj = clone $this;
-        $obj['description'] = $description;
+        $self = clone $this;
+        $self['description'] = $description;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -466,10 +466,10 @@ final class Product implements BaseModel
     public function withDigitalProductDelivery(
         DigitalProductDelivery|array|null $digitalProductDelivery
     ): self {
-        $obj = clone $this;
-        $obj['digitalProductDelivery'] = $digitalProductDelivery;
+        $self = clone $this;
+        $self['digitalProductDelivery'] = $digitalProductDelivery;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -477,10 +477,10 @@ final class Product implements BaseModel
      */
     public function withImage(?string $image): self
     {
-        $obj = clone $this;
-        $obj['image'] = $image;
+        $self = clone $this;
+        $self['image'] = $image;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -489,10 +489,10 @@ final class Product implements BaseModel
     public function withLicenseKeyActivationMessage(
         ?string $licenseKeyActivationMessage
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
+        $self = clone $this;
+        $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -501,10 +501,10 @@ final class Product implements BaseModel
     public function withLicenseKeyActivationsLimit(
         ?int $licenseKeyActivationsLimit
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
+        $self = clone $this;
+        $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -517,10 +517,10 @@ final class Product implements BaseModel
     public function withLicenseKeyDuration(
         LicenseKeyDuration|array|null $licenseKeyDuration
     ): self {
-        $obj = clone $this;
-        $obj['licenseKeyDuration'] = $licenseKeyDuration;
+        $self = clone $this;
+        $self['licenseKeyDuration'] = $licenseKeyDuration;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -528,9 +528,9 @@ final class Product implements BaseModel
      */
     public function withName(?string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 }

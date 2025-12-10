@@ -169,22 +169,22 @@ final class RecurringPrice implements BaseModel
         ?bool $taxInclusive = null,
         ?int $trialPeriodDays = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['currency'] = $currency;
-        $obj['discount'] = $discount;
-        $obj['paymentFrequencyCount'] = $paymentFrequencyCount;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
-        $obj['price'] = $price;
-        $obj['purchasingPowerParity'] = $purchasingPowerParity;
-        $obj['subscriptionPeriodCount'] = $subscriptionPeriodCount;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
-        $obj['type'] = $type;
+        $self['currency'] = $currency;
+        $self['discount'] = $discount;
+        $self['paymentFrequencyCount'] = $paymentFrequencyCount;
+        $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $self['price'] = $price;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $self['type'] = $type;
 
-        null !== $taxInclusive && $obj['taxInclusive'] = $taxInclusive;
-        null !== $trialPeriodDays && $obj['trialPeriodDays'] = $trialPeriodDays;
+        null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
+        null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -194,10 +194,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -205,10 +205,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withDiscount(int $discount): self
     {
-        $obj = clone $this;
-        $obj['discount'] = $discount;
+        $self = clone $this;
+        $self['discount'] = $discount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -217,10 +217,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
-        $obj = clone $this;
-        $obj['paymentFrequencyCount'] = $paymentFrequencyCount;
+        $self = clone $this;
+        $self['paymentFrequencyCount'] = $paymentFrequencyCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,10 +231,10 @@ final class RecurringPrice implements BaseModel
     public function withPaymentFrequencyInterval(
         TimeInterval|string $paymentFrequencyInterval
     ): self {
-        $obj = clone $this;
-        $obj['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $self = clone $this;
+        $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -243,10 +243,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withPrice(int $price): self
     {
-        $obj = clone $this;
-        $obj['price'] = $price;
+        $self = clone $this;
+        $self['price'] = $price;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -255,10 +255,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withPurchasingPowerParity(bool $purchasingPowerParity): self
     {
-        $obj = clone $this;
-        $obj['purchasingPowerParity'] = $purchasingPowerParity;
+        $self = clone $this;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -268,10 +268,10 @@ final class RecurringPrice implements BaseModel
     public function withSubscriptionPeriodCount(
         int $subscriptionPeriodCount
     ): self {
-        $obj = clone $this;
-        $obj['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+        $self = clone $this;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -282,10 +282,10 @@ final class RecurringPrice implements BaseModel
     public function withSubscriptionPeriodInterval(
         TimeInterval|string $subscriptionPeriodInterval
     ): self {
-        $obj = clone $this;
-        $obj['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $self = clone $this;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -293,10 +293,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withType(Type|string $type): self
     {
-        $obj = clone $this;
-        $obj['type'] = $type;
+        $self = clone $this;
+        $self['type'] = $type;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -304,10 +304,10 @@ final class RecurringPrice implements BaseModel
      */
     public function withTaxInclusive(?bool $taxInclusive): self
     {
-        $obj = clone $this;
-        $obj['taxInclusive'] = $taxInclusive;
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -315,9 +315,9 @@ final class RecurringPrice implements BaseModel
      */
     public function withTrialPeriodDays(int $trialPeriodDays): self
     {
-        $obj = clone $this;
-        $obj['trialPeriodDays'] = $trialPeriodDays;
+        $self = clone $this;
+        $self['trialPeriodDays'] = $trialPeriodDays;
 
-        return $obj;
+        return $self;
     }
 }

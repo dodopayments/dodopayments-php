@@ -54,20 +54,20 @@ final class LicenseKeyDuration implements BaseModel
      */
     public static function with(int $count, TimeInterval|string $interval): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['count'] = $count;
-        $obj['interval'] = $interval;
+        $self['count'] = $count;
+        $self['interval'] = $interval;
 
-        return $obj;
+        return $self;
     }
 
     public function withCount(int $count): self
     {
-        $obj = clone $this;
-        $obj['count'] = $count;
+        $self = clone $this;
+        $self['count'] = $count;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -75,9 +75,9 @@ final class LicenseKeyDuration implements BaseModel
      */
     public function withInterval(TimeInterval|string $interval): self
     {
-        $obj = clone $this;
-        $obj['interval'] = $interval;
+        $self = clone $this;
+        $self['interval'] = $interval;
 
-        return $obj;
+        return $self;
     }
 }

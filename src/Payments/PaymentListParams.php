@@ -102,18 +102,18 @@ final class PaymentListParams implements BaseModel
         Status|string|null $status = null,
         ?string $subscriptionID = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        null !== $brandID && $obj['brandID'] = $brandID;
-        null !== $createdAtGte && $obj['createdAtGte'] = $createdAtGte;
-        null !== $createdAtLte && $obj['createdAtLte'] = $createdAtLte;
-        null !== $customerID && $obj['customerID'] = $customerID;
-        null !== $pageNumber && $obj['pageNumber'] = $pageNumber;
-        null !== $pageSize && $obj['pageSize'] = $pageSize;
-        null !== $status && $obj['status'] = $status;
-        null !== $subscriptionID && $obj['subscriptionID'] = $subscriptionID;
+        null !== $brandID && $self['brandID'] = $brandID;
+        null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
+        null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
+        null !== $customerID && $self['customerID'] = $customerID;
+        null !== $pageNumber && $self['pageNumber'] = $pageNumber;
+        null !== $pageSize && $self['pageSize'] = $pageSize;
+        null !== $status && $self['status'] = $status;
+        null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -121,10 +121,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withBrandID(string $brandID): self
     {
-        $obj = clone $this;
-        $obj['brandID'] = $brandID;
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -132,10 +132,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
     {
-        $obj = clone $this;
-        $obj['createdAtGte'] = $createdAtGte;
+        $self = clone $this;
+        $self['createdAtGte'] = $createdAtGte;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,10 +143,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
     {
-        $obj = clone $this;
-        $obj['createdAtLte'] = $createdAtLte;
+        $self = clone $this;
+        $self['createdAtLte'] = $createdAtLte;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,10 +154,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withCustomerID(string $customerID): self
     {
-        $obj = clone $this;
-        $obj['customerID'] = $customerID;
+        $self = clone $this;
+        $self['customerID'] = $customerID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,10 +165,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withPageNumber(int $pageNumber): self
     {
-        $obj = clone $this;
-        $obj['pageNumber'] = $pageNumber;
+        $self = clone $this;
+        $self['pageNumber'] = $pageNumber;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -176,10 +176,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withPageSize(int $pageSize): self
     {
-        $obj = clone $this;
-        $obj['pageSize'] = $pageSize;
+        $self = clone $this;
+        $self['pageSize'] = $pageSize;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -189,10 +189,10 @@ final class PaymentListParams implements BaseModel
      */
     public function withStatus(Status|string $status): self
     {
-        $obj = clone $this;
-        $obj['status'] = $status;
+        $self = clone $this;
+        $self['status'] = $status;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -200,9 +200,9 @@ final class PaymentListParams implements BaseModel
      */
     public function withSubscriptionID(string $subscriptionID): self
     {
-        $obj = clone $this;
-        $obj['subscriptionID'] = $subscriptionID;
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
 
-        return $obj;
+        return $self;
     }
 }

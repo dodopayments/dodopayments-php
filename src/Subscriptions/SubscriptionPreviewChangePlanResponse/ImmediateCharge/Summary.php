@@ -96,18 +96,18 @@ final class Summary implements BaseModel
         ?int $settlementTax = null,
         ?int $tax = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['currency'] = $currency;
-        $obj['customerCredits'] = $customerCredits;
-        $obj['settlementAmount'] = $settlementAmount;
-        $obj['settlementCurrency'] = $settlementCurrency;
-        $obj['totalAmount'] = $totalAmount;
+        $self['currency'] = $currency;
+        $self['customerCredits'] = $customerCredits;
+        $self['settlementAmount'] = $settlementAmount;
+        $self['settlementCurrency'] = $settlementCurrency;
+        $self['totalAmount'] = $totalAmount;
 
-        null !== $settlementTax && $obj['settlementTax'] = $settlementTax;
-        null !== $tax && $obj['tax'] = $tax;
+        null !== $settlementTax && $self['settlementTax'] = $settlementTax;
+        null !== $tax && $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -115,26 +115,26 @@ final class Summary implements BaseModel
      */
     public function withCurrency(Currency|string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     public function withCustomerCredits(int $customerCredits): self
     {
-        $obj = clone $this;
-        $obj['customerCredits'] = $customerCredits;
+        $self = clone $this;
+        $self['customerCredits'] = $customerCredits;
 
-        return $obj;
+        return $self;
     }
 
     public function withSettlementAmount(int $settlementAmount): self
     {
-        $obj = clone $this;
-        $obj['settlementAmount'] = $settlementAmount;
+        $self = clone $this;
+        $self['settlementAmount'] = $settlementAmount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,33 +143,33 @@ final class Summary implements BaseModel
     public function withSettlementCurrency(
         Currency|string $settlementCurrency
     ): self {
-        $obj = clone $this;
-        $obj['settlementCurrency'] = $settlementCurrency;
+        $self = clone $this;
+        $self['settlementCurrency'] = $settlementCurrency;
 
-        return $obj;
+        return $self;
     }
 
     public function withTotalAmount(int $totalAmount): self
     {
-        $obj = clone $this;
-        $obj['totalAmount'] = $totalAmount;
+        $self = clone $this;
+        $self['totalAmount'] = $totalAmount;
 
-        return $obj;
+        return $self;
     }
 
     public function withSettlementTax(?int $settlementTax): self
     {
-        $obj = clone $this;
-        $obj['settlementTax'] = $settlementTax;
+        $self = clone $this;
+        $self['settlementTax'] = $settlementTax;
 
-        return $obj;
+        return $self;
     }
 
     public function withTax(?int $tax): self
     {
-        $obj = clone $this;
-        $obj['tax'] = $tax;
+        $self = clone $this;
+        $self['tax'] = $tax;
 
-        return $obj;
+        return $self;
     }
 }

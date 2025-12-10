@@ -131,18 +131,18 @@ final class DisputeListResponse implements BaseModel
         DisputeStatus|string $disputeStatus,
         string $paymentID,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['amount'] = $amount;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['currency'] = $currency;
-        $obj['disputeID'] = $disputeID;
-        $obj['disputeStage'] = $disputeStage;
-        $obj['disputeStatus'] = $disputeStatus;
-        $obj['paymentID'] = $paymentID;
+        $self['amount'] = $amount;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['currency'] = $currency;
+        $self['disputeID'] = $disputeID;
+        $self['disputeStage'] = $disputeStage;
+        $self['disputeStatus'] = $disputeStatus;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -150,10 +150,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withAmount(string $amount): self
     {
-        $obj = clone $this;
-        $obj['amount'] = $amount;
+        $self = clone $this;
+        $self['amount'] = $amount;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -161,10 +161,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -172,10 +172,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -183,10 +183,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withCurrency(string $currency): self
     {
-        $obj = clone $this;
-        $obj['currency'] = $currency;
+        $self = clone $this;
+        $self['currency'] = $currency;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -194,10 +194,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withDisputeID(string $disputeID): self
     {
-        $obj = clone $this;
-        $obj['disputeID'] = $disputeID;
+        $self = clone $this;
+        $self['disputeID'] = $disputeID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -207,10 +207,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withDisputeStage(DisputeStage|string $disputeStage): self
     {
-        $obj = clone $this;
-        $obj['disputeStage'] = $disputeStage;
+        $self = clone $this;
+        $self['disputeStage'] = $disputeStage;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -220,10 +220,10 @@ final class DisputeListResponse implements BaseModel
      */
     public function withDisputeStatus(DisputeStatus|string $disputeStatus): self
     {
-        $obj = clone $this;
-        $obj['disputeStatus'] = $disputeStatus;
+        $self = clone $this;
+        $self['disputeStatus'] = $disputeStatus;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -231,9 +231,9 @@ final class DisputeListResponse implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 }

@@ -125,17 +125,17 @@ final class LicenseActivateResponse implements BaseModel
         string $name,
         Product|array $product,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['id'] = $id;
-        $obj['businessID'] = $businessID;
-        $obj['createdAt'] = $createdAt;
-        $obj['customer'] = $customer;
-        $obj['licenseKeyID'] = $licenseKeyID;
-        $obj['name'] = $name;
-        $obj['product'] = $product;
+        $self['id'] = $id;
+        $self['businessID'] = $businessID;
+        $self['createdAt'] = $createdAt;
+        $self['customer'] = $customer;
+        $self['licenseKeyID'] = $licenseKeyID;
+        $self['name'] = $name;
+        $self['product'] = $product;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -143,10 +143,10 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withID(string $id): self
     {
-        $obj = clone $this;
-        $obj['id'] = $id;
+        $self = clone $this;
+        $self['id'] = $id;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -154,10 +154,10 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withBusinessID(string $businessID): self
     {
-        $obj = clone $this;
-        $obj['businessID'] = $businessID;
+        $self = clone $this;
+        $self['businessID'] = $businessID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -165,10 +165,10 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
-        $obj = clone $this;
-        $obj['createdAt'] = $createdAt;
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -184,10 +184,10 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
-        $obj = clone $this;
-        $obj['customer'] = $customer;
+        $self = clone $this;
+        $self['customer'] = $customer;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -195,10 +195,10 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withLicenseKeyID(string $licenseKeyID): self
     {
-        $obj = clone $this;
-        $obj['licenseKeyID'] = $licenseKeyID;
+        $self = clone $this;
+        $self['licenseKeyID'] = $licenseKeyID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -206,10 +206,10 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withName(string $name): self
     {
-        $obj = clone $this;
-        $obj['name'] = $name;
+        $self = clone $this;
+        $self['name'] = $name;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -219,9 +219,9 @@ final class LicenseActivateResponse implements BaseModel
      */
     public function withProduct(Product|array $product): self
     {
-        $obj = clone $this;
-        $obj['product'] = $product;
+        $self = clone $this;
+        $self['product'] = $product;
 
-        return $obj;
+        return $self;
     }
 }

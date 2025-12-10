@@ -92,15 +92,15 @@ final class RefundCreateParams implements BaseModel
         ?array $metadata = null,
         ?string $reason = null,
     ): self {
-        $obj = new self;
+        $self = new self;
 
-        $obj['paymentID'] = $paymentID;
+        $self['paymentID'] = $paymentID;
 
-        null !== $items && $obj['items'] = $items;
-        null !== $metadata && $obj['metadata'] = $metadata;
-        null !== $reason && $obj['reason'] = $reason;
+        null !== $items && $self['items'] = $items;
+        null !== $metadata && $self['metadata'] = $metadata;
+        null !== $reason && $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -108,10 +108,10 @@ final class RefundCreateParams implements BaseModel
      */
     public function withPaymentID(string $paymentID): self
     {
-        $obj = clone $this;
-        $obj['paymentID'] = $paymentID;
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -123,10 +123,10 @@ final class RefundCreateParams implements BaseModel
      */
     public function withItems(?array $items): self
     {
-        $obj = clone $this;
-        $obj['items'] = $items;
+        $self = clone $this;
+        $self['items'] = $items;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -136,10 +136,10 @@ final class RefundCreateParams implements BaseModel
      */
     public function withMetadata(array $metadata): self
     {
-        $obj = clone $this;
-        $obj['metadata'] = $metadata;
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
-        return $obj;
+        return $self;
     }
 
     /**
@@ -147,9 +147,9 @@ final class RefundCreateParams implements BaseModel
      */
     public function withReason(?string $reason): self
     {
-        $obj = clone $this;
-        $obj['reason'] = $reason;
+        $self = clone $this;
+        $self['reason'] = $reason;
 
-        return $obj;
+        return $self;
     }
 }

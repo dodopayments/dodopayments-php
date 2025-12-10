@@ -50,27 +50,27 @@ final class AddonUpdateImagesResponse implements BaseModel
      */
     public static function with(string $imageID, string $url): self
     {
-        $obj = new self;
+        $self = new self;
 
-        $obj['imageID'] = $imageID;
-        $obj['url'] = $url;
+        $self['imageID'] = $imageID;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 
     public function withImageID(string $imageID): self
     {
-        $obj = clone $this;
-        $obj['imageID'] = $imageID;
+        $self = clone $this;
+        $self['imageID'] = $imageID;
 
-        return $obj;
+        return $self;
     }
 
     public function withURL(string $url): self
     {
-        $obj = clone $this;
-        $obj['url'] = $url;
+        $self = clone $this;
+        $self['url'] = $url;
 
-        return $obj;
+        return $self;
     }
 }
