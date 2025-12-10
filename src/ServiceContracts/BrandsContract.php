@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Brands\Brand;
-use Dodopayments\Brands\BrandCreateParams;
 use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
-use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 
@@ -17,17 +15,21 @@ interface BrandsContract
     /**
      * @api
      *
-     * @param array<mixed>|BrandCreateParams $params
-     *
      * @throws APIException
      */
     public function create(
-        array|BrandCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        ?string $description = null,
+        ?string $name = null,
+        ?string $statementDescriptor = null,
+        ?string $supportEmail = null,
+        ?string $url = null,
+        ?RequestOptions $requestOptions = null,
     ): Brand;
 
     /**
      * @api
+     *
+     * @param string $id Brand Id
      *
      * @throws APIException
      */
@@ -39,13 +41,17 @@ interface BrandsContract
     /**
      * @api
      *
-     * @param array<mixed>|BrandUpdateParams $params
+     * @param string $id Brand Id
+     * @param string|null $imageID The UUID you got back from the presigned‐upload call
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|BrandUpdateParams $params,
+        ?string $imageID = null,
+        ?string $name = null,
+        ?string $statementDescriptor = null,
+        ?string $supportEmail = null,
         ?RequestOptions $requestOptions = null,
     ): Brand;
 
@@ -60,6 +66,8 @@ interface BrandsContract
 
     /**
      * @api
+     *
+     * @param string $id Brand Id
      *
      * @throws APIException
      */

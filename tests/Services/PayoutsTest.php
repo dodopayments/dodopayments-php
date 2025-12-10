@@ -29,7 +29,7 @@ final class PayoutsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->payouts->list([]);
+        $result = $this->client->payouts->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);

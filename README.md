@@ -40,9 +40,9 @@ $client = new Client(
   environment: 'test_mode',
 );
 
-$checkoutSessionResponse = $client->checkoutSessions->create([
-  'productCart' => [['productID' => 'product_id', 'quantity' => 0]]
-]);
+$checkoutSessionResponse = $client->checkoutSessions->create(
+  productCart: [['productID' => 'product_id', 'quantity' => 0]]
+);
 
 var_dump($checkoutSessionResponse->session_id);
 ```
@@ -70,7 +70,7 @@ $client = new Client(
   environment: 'test_mode',
 );
 
-$page = $client->payments->list([]);
+$page = $client->payments->list();
 
 var_dump($page);
 
@@ -94,13 +94,13 @@ When the library is unable to connect to the API, or if the API returns a non-su
 use Dodopayments\Core\Exceptions\APIConnectionException;
 
 try {
-  $checkoutSessionResponse = $client->checkoutSessions->create([
-    'productCart' => [['productID' => 'product_id', 'quantity' => 0]]
-  ]);
+  $checkoutSessionResponse = $client->checkoutSessions->create(
+    productCart: [['productID' => 'product_id', 'quantity' => 0]]
+  );
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
   var_dump($e->getPrevious());
-} catch (RateLimitError $_) {
+} catch (RateLimitError $e) {
   echo "A 429 status code was received; we should back off a bit.", PHP_EOL;
 } catch (APIStatusError $e) {
   echo "Another non-200-range status code was received", PHP_EOL;
@@ -143,8 +143,8 @@ $client = new Client(maxRetries: 0);
 
 // Or, configure per-request:
 $result = $client->checkoutSessions->create(
-  ['productCart' => [['productID' => 'product_id', 'quantity' => 0]]],
-  RequestOptions::with(maxRetries: 5),
+  productCart: [['productID' => 'product_id', 'quantity' => 0]],
+  requestOptions: RequestOptions::with(maxRetries: 5),
 );
 ```
 
@@ -164,8 +164,8 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 use Dodopayments\RequestOptions;
 
 $checkoutSessionResponse = $client->checkoutSessions->create(
-  ['productCart' => [['productID' => 'product_id', 'quantity' => 0]]],
-  RequestOptions::with(
+  productCart: [['productID' => 'product_id', 'quantity' => 0]],
+  requestOptions: RequestOptions::with(
     extraQueryParams: ['my_query_parameter' => 'value'],
     extraBodyParams: ['my_body_parameter' => 'value'],
     extraHeaders: ['my-header' => 'value'],

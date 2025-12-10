@@ -5,25 +5,31 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeyInstancesContract;
 
 final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
 {
     /**
+     * @api
+     */
+    public LicenseKeyInstancesRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new LicenseKeyInstancesRawService($client);
+    }
 
     /**
      * @api
+     *
+     * @param string $id License key instance ID
      *
      * @throws APIException
      */
@@ -31,13 +37,8 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         string $id,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        /** @var BaseResponse<LicenseKeyInstance> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['license_key_instances/%1$s', $id],
-            options: $requestOptions,
-            convert: LicenseKeyInstance::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -45,28 +46,19 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @param array{name: string}|LicenseKeyInstanceUpdateParams $params
+     * @param string $id License key instance ID
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|LicenseKeyInstanceUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        string $name,
+        ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        [$parsed, $options] = LicenseKeyInstanceUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = ['name' => $name];
 
-        /** @var BaseResponse<LicenseKeyInstance> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['license_key_instances/%1$s', $id],
-            body: (object) $parsed,
-            options: $options,
-            convert: LicenseKeyInstance::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -74,39 +66,30 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @param array{
-     *   licenseKeyID?: string|null, pageNumber?: int|null, pageSize?: int|null
-     * }|LicenseKeyInstanceListParams $params
+     * @param string|null $licenseKeyID Filter by license key ID
+     * @param int|null $pageNumber Page number default is 0
+     * @param int|null $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<LicenseKeyInstance>
      *
      * @throws APIException
      */
     public function list(
-        array|LicenseKeyInstanceListParams $params,
+        ?string $licenseKeyID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'licenseKeyID' => $licenseKeyID,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<LicenseKeyInstance>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'license_key_instances',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'licenseKeyID' => 'license_key_id',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                ],
-            ),
-            options: $options,
-            convert: LicenseKeyInstance::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

@@ -30,9 +30,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testActivate(): void
     {
-        $result = $this->client->licenses->activate([
-            'licenseKey' => 'license_key', 'name' => 'name',
-        ]);
+        $result = $this->client->licenses->activate(
+            licenseKey: 'license_key',
+            name: 'name'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LicenseActivateResponse::class, $result);
@@ -41,9 +42,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testActivateWithOptionalParams(): void
     {
-        $result = $this->client->licenses->activate([
-            'licenseKey' => 'license_key', 'name' => 'name',
-        ]);
+        $result = $this->client->licenses->activate(
+            licenseKey: 'license_key',
+            name: 'name'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LicenseActivateResponse::class, $result);
@@ -52,10 +54,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testDeactivate(): void
     {
-        $result = $this->client->licenses->deactivate([
-            'licenseKey' => 'license_key',
-            'licenseKeyInstanceID' => 'license_key_instance_id',
-        ]);
+        $result = $this->client->licenses->deactivate(
+            licenseKey: 'license_key',
+            licenseKeyInstanceID: 'license_key_instance_id'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -64,10 +66,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testDeactivateWithOptionalParams(): void
     {
-        $result = $this->client->licenses->deactivate([
-            'licenseKey' => 'license_key',
-            'licenseKeyInstanceID' => 'license_key_instance_id',
-        ]);
+        $result = $this->client->licenses->deactivate(
+            licenseKey: 'license_key',
+            licenseKeyInstanceID: 'license_key_instance_id'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -76,9 +78,9 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testValidate(): void
     {
-        $result = $this->client->licenses->validate([
-            'licenseKey' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
-        ]);
+        $result = $this->client->licenses->validate(
+            licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LicenseValidateResponse::class, $result);
@@ -87,10 +89,10 @@ final class LicensesTest extends TestCase
     #[Test]
     public function testValidateWithOptionalParams(): void
     {
-        $result = $this->client->licenses->validate([
-            'licenseKey' => '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
-            'licenseKeyInstanceID' => 'lki_123',
-        ]);
+        $result = $this->client->licenses->validate(
+            licenseKey: '2b1f8e2d-c41e-4e8f-b2d3-d9fd61c38f43',
+            licenseKeyInstanceID: 'lki_123',
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LicenseValidateResponse::class, $result);

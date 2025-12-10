@@ -7,14 +7,14 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
-use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 
 interface LicenseKeyInstancesContract
 {
     /**
      * @api
+     *
+     * @param string $id License key instance ID
      *
      * @throws APIException
      */
@@ -26,27 +26,31 @@ interface LicenseKeyInstancesContract
     /**
      * @api
      *
-     * @param array<mixed>|LicenseKeyInstanceUpdateParams $params
+     * @param string $id License key instance ID
      *
      * @throws APIException
      */
     public function update(
         string $id,
-        array|LicenseKeyInstanceUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        string $name,
+        ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance;
 
     /**
      * @api
      *
-     * @param array<mixed>|LicenseKeyInstanceListParams $params
+     * @param string|null $licenseKeyID Filter by license key ID
+     * @param int|null $pageNumber Page number default is 0
+     * @param int|null $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<LicenseKeyInstance>
      *
      * @throws APIException
      */
     public function list(
-        array|LicenseKeyInstanceListParams $params,
+        ?string $licenseKeyID = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination;
 }

@@ -33,9 +33,9 @@ final class CheckoutSessionsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->checkoutSessions->create([
-            'productCart' => [['productID' => 'product_id', 'quantity' => 0]],
-        ]);
+        $result = $this->client->checkoutSessions->create(
+            productCart: [['productID' => 'product_id', 'quantity' => 0]]
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CheckoutSessionResponse::class, $result);
@@ -44,8 +44,8 @@ final class CheckoutSessionsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->checkoutSessions->create([
-            'productCart' => [
+        $result = $this->client->checkoutSessions->create(
+            productCart: [
                 [
                     'productID' => 'product_id',
                     'quantity' => 0,
@@ -53,25 +53,25 @@ final class CheckoutSessionsTest extends TestCase
                     'amount' => 0,
                 ],
             ],
-            'allowedPaymentMethodTypes' => [PaymentMethodTypes::CREDIT],
-            'billingAddress' => [
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
+            billingAddress: [
                 'country' => CountryCode::AF,
                 'city' => 'city',
                 'state' => 'state',
                 'street' => 'street',
                 'zipcode' => 'zipcode',
             ],
-            'billingCurrency' => Currency::AED,
-            'confirm' => true,
-            'customer' => ['customerID' => 'customer_id'],
-            'customization' => [
+            billingCurrency: Currency::AED,
+            confirm: true,
+            customer: ['customerID' => 'customer_id'],
+            customization: [
                 'forceLanguage' => 'force_language',
                 'showOnDemandTag' => true,
                 'showOrderDetails' => true,
                 'theme' => 'dark',
             ],
-            'discountCode' => 'discount_code',
-            'featureFlags' => [
+            discountCode: 'discount_code',
+            featureFlags: [
                 'allowCurrencySelection' => true,
                 'allowCustomerEditingCity' => true,
                 'allowCustomerEditingCountry' => true,
@@ -85,12 +85,12 @@ final class CheckoutSessionsTest extends TestCase
                 'allowTaxID' => true,
                 'alwaysCreateNewCustomer' => true,
             ],
-            'force3DS' => true,
-            'metadata' => ['foo' => 'string'],
-            'minimalAddress' => true,
-            'returnURL' => 'return_url',
-            'showSavedPaymentMethods' => true,
-            'subscriptionData' => [
+            force3DS: true,
+            metadata: ['foo' => 'string'],
+            minimalAddress: true,
+            returnURL: 'return_url',
+            showSavedPaymentMethods: true,
+            subscriptionData: [
                 'onDemand' => [
                     'mandateOnly' => true,
                     'adaptiveCurrencyFeesInclusive' => true,
@@ -100,7 +100,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
                 'trialPeriodDays' => 0,
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CheckoutSessionResponse::class, $result);

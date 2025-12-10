@@ -29,10 +29,7 @@ final class CustomerPortalTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->customers->customerPortal->create(
-            'customer_id',
-            []
-        );
+        $result = $this->client->customers->customerPortal->create('customer_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CustomerPortalSession::class, $result);

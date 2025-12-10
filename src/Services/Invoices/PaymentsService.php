@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Invoices;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Invoices\PaymentsContract;
@@ -13,9 +12,17 @@ use Dodopayments\ServiceContracts\Invoices\PaymentsContract;
 final class PaymentsService implements PaymentsContract
 {
     /**
+     * @api
+     */
+    public PaymentsRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new PaymentsRawService($client);
+    }
 
     /**
      * @api
@@ -26,14 +33,8 @@ final class PaymentsService implements PaymentsContract
         string $paymentID,
         ?RequestOptions $requestOptions = null
     ): string {
-        /** @var BaseResponse<string> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['invoices/payments/%1$s', $paymentID],
-            headers: ['Accept' => 'application/pdf'],
-            options: $requestOptions,
-            convert: 'string',
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($paymentID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -47,14 +48,8 @@ final class PaymentsService implements PaymentsContract
         string $refundID,
         ?RequestOptions $requestOptions = null
     ): string {
-        /** @var BaseResponse<string> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['invoices/refunds/%1$s', $refundID],
-            headers: ['Accept' => 'application/pdf'],
-            options: $requestOptions,
-            convert: 'string',
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveRefund($refundID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

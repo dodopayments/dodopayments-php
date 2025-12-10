@@ -40,7 +40,7 @@ final class HeadersTest extends TestCase
     {
         $result = $this->client->webhooks->headers->update(
             'webhook_id',
-            ['headers' => ['foo' => 'string']]
+            headers: ['foo' => 'string']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -52,7 +52,7 @@ final class HeadersTest extends TestCase
     {
         $result = $this->client->webhooks->headers->update(
             'webhook_id',
-            ['headers' => ['foo' => 'string']]
+            headers: ['foo' => 'string']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

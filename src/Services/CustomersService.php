@@ -5,14 +5,9 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
-use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
-use Dodopayments\Customers\CustomerListParams;
-use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersContract;
@@ -21,6 +16,11 @@ use Dodopayments\Services\Customers\WalletsService;
 
 final class CustomersService implements CustomersContract
 {
+    /**
+     * @api
+     */
+    public CustomersRawService $raw;
+
     /**
      * @api
      */
@@ -36,6 +36,7 @@ final class CustomersService implements CustomersContract
      */
     public function __construct(private Client $client)
     {
+        $this->raw = new CustomersRawService($client);
         $this->customerPortal = new CustomerPortalService($client);
         $this->wallets = new WalletsService($client);
     }
@@ -43,38 +44,36 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
-     * @param array{
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>,
-     *   phoneNumber?: string|null,
-     * }|CustomerCreateParams $params
+     * @param array<string,string> $metadata Additional metadata for the customer
      *
      * @throws APIException
      */
     public function create(
-        array|CustomerCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        string $email,
+        string $name,
+        ?array $metadata = null,
+        ?string $phoneNumber = null,
+        ?RequestOptions $requestOptions = null,
     ): Customer {
-        [$parsed, $options] = CustomerCreateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'email' => $email,
+            'name' => $name,
+            'metadata' => $metadata,
+            'phoneNumber' => $phoneNumber,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<Customer> */
-        $response = $this->client->request(
-            method: 'post',
-            path: 'customers',
-            body: (object) $parsed,
-            options: $options,
-            convert: Customer::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
+     *
+     * @param string $customerID Customer Id
      *
      * @throws APIException
      */
@@ -82,13 +81,8 @@ final class CustomersService implements CustomersContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): Customer {
-        /** @var BaseResponse<Customer> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['customers/%1$s', $customerID],
-            options: $requestOptions,
-            convert: Customer::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($customerID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -96,32 +90,26 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
-     * @param array{
-     *   metadata?: array<string,string>|null,
-     *   name?: string|null,
-     *   phoneNumber?: string|null,
-     * }|CustomerUpdateParams $params
+     * @param string $customerID Customer Id
+     * @param array<string,string>|null $metadata Additional metadata for the customer
      *
      * @throws APIException
      */
     public function update(
         string $customerID,
-        array|CustomerUpdateParams $params,
+        ?array $metadata = null,
+        ?string $name = null,
+        ?string $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        [$parsed, $options] = CustomerUpdateParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'metadata' => $metadata, 'name' => $name, 'phoneNumber' => $phoneNumber,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<Customer> */
-        $response = $this->client->request(
-            method: 'patch',
-            path: ['customers/%1$s', $customerID],
-            body: (object) $parsed,
-            options: $options,
-            convert: Customer::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->update($customerID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -129,41 +117,36 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
-     * @param array{
-     *   email?: string, pageNumber?: int, pageSize?: int
-     * }|CustomerListParams $params
+     * @param string $email Filter by customer email
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<Customer>
      *
      * @throws APIException
      */
     public function list(
-        array|CustomerListParams $params,
-        ?RequestOptions $requestOptions = null
+        ?string $email = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = CustomerListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<Customer>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'customers',
-            query: Util::array_transform_keys(
-                $parsed,
-                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
-            ),
-            options: $options,
-            convert: Customer::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
 
     /**
      * @api
+     *
+     * @param string $customerID Customer Id
      *
      * @throws APIException
      */
@@ -171,13 +154,8 @@ final class CustomersService implements CustomersContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): CustomerGetPaymentMethodsResponse {
-        /** @var BaseResponse<CustomerGetPaymentMethodsResponse> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['customers/%1$s/payment-methods', $customerID],
-            options: $requestOptions,
-            convert: CustomerGetPaymentMethodsResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrievePaymentMethods($customerID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

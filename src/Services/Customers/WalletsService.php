@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Wallets\WalletListResponse;
 use Dodopayments\RequestOptions;
@@ -17,6 +16,11 @@ final class WalletsService implements WalletsContract
     /**
      * @api
      */
+    public WalletsRawService $raw;
+
+    /**
+     * @api
+     */
     public LedgerEntriesService $ledgerEntries;
 
     /**
@@ -24,11 +28,14 @@ final class WalletsService implements WalletsContract
      */
     public function __construct(private Client $client)
     {
+        $this->raw = new WalletsRawService($client);
         $this->ledgerEntries = new LedgerEntriesService($client);
     }
 
     /**
      * @api
+     *
+     * @param string $customerID Customer ID
      *
      * @throws APIException
      */
@@ -36,13 +43,8 @@ final class WalletsService implements WalletsContract
         string $customerID,
         ?RequestOptions $requestOptions = null
     ): WalletListResponse {
-        /** @var BaseResponse<WalletListResponse> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['customers/%1$s/wallets', $customerID],
-            options: $requestOptions,
-            convert: WalletListResponse::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list($customerID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
-use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Disputes\DisputeListParams;
 use Dodopayments\Disputes\DisputeListParams\DisputeStage;
 use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
 use Dodopayments\Disputes\DisputeListResponse;
@@ -20,12 +17,22 @@ use Dodopayments\ServiceContracts\DisputesContract;
 final class DisputesService implements DisputesContract
 {
     /**
+     * @api
+     */
+    public DisputesRawService $raw;
+
+    /**
      * @internal
      */
-    public function __construct(private Client $client) {}
+    public function __construct(private Client $client)
+    {
+        $this->raw = new DisputesRawService($client);
+    }
 
     /**
      * @api
+     *
+     * @param string $disputeID Dispute Id
      *
      * @throws APIException
      */
@@ -33,13 +40,8 @@ final class DisputesService implements DisputesContract
         string $disputeID,
         ?RequestOptions $requestOptions = null
     ): GetDispute {
-        /** @var BaseResponse<GetDispute> */
-        $response = $this->client->request(
-            method: 'get',
-            path: ['disputes/%1$s', $disputeID],
-            options: $requestOptions,
-            convert: GetDispute::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieve($disputeID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -47,49 +49,42 @@ final class DisputesService implements DisputesContract
     /**
      * @api
      *
-     * @param array{
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
-     *   customerID?: string,
-     *   disputeStage?: 'pre_dispute'|'dispute'|'pre_arbitration'|DisputeStage,
-     *   disputeStatus?: value-of<DisputeStatus>,
-     *   pageNumber?: int,
-     *   pageSize?: int,
-     * }|DisputeListParams $params
+     * @param string|\DateTimeInterface $createdAtGte Get events after this created time
+     * @param string|\DateTimeInterface $createdAtLte Get events created before this time
+     * @param string $customerID Filter by customer_id
+     * @param 'pre_dispute'|'dispute'|'pre_arbitration'|DisputeStage $disputeStage Filter by dispute stage
+     * @param 'dispute_opened'|'dispute_expired'|'dispute_accepted'|'dispute_cancelled'|'dispute_challenged'|'dispute_won'|'dispute_lost'|DisputeStatus $disputeStatus Filter by dispute status
+     * @param int $pageNumber Page number default is 0
+     * @param int $pageSize Page size default is 10 max is 100
      *
      * @return DefaultPageNumberPagination<DisputeListResponse>
      *
      * @throws APIException
      */
     public function list(
-        array|DisputeListParams $params,
-        ?RequestOptions $requestOptions = null
+        string|\DateTimeInterface|null $createdAtGte = null,
+        string|\DateTimeInterface|null $createdAtLte = null,
+        ?string $customerID = null,
+        string|DisputeStage|null $disputeStage = null,
+        string|DisputeStatus|null $disputeStatus = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        [$parsed, $options] = DisputeListParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
+        $params = [
+            'createdAtGte' => $createdAtGte,
+            'createdAtLte' => $createdAtLte,
+            'customerID' => $customerID,
+            'disputeStage' => $disputeStage,
+            'disputeStatus' => $disputeStatus,
+            'pageNumber' => $pageNumber,
+            'pageSize' => $pageSize,
+        ];
+        // @phpstan-ignore-next-line function.impossibleType
+        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
 
-        /** @var BaseResponse<DefaultPageNumberPagination<DisputeListResponse>> */
-        $response = $this->client->request(
-            method: 'get',
-            path: 'disputes',
-            query: Util::array_transform_keys(
-                $parsed,
-                [
-                    'createdAtGte' => 'created_at_gte',
-                    'createdAtLte' => 'created_at_lte',
-                    'customerID' => 'customer_id',
-                    'disputeStage' => 'dispute_stage',
-                    'disputeStatus' => 'dispute_status',
-                    'pageNumber' => 'page_number',
-                    'pageSize' => 'page_size',
-                ],
-            ),
-            options: $options,
-            convert: DisputeListResponse::class,
-            page: DefaultPageNumberPagination::class,
-        );
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

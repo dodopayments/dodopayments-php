@@ -40,7 +40,7 @@ final class UsageEventsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->usageEvents->list([]);
+        $result = $this->client->usageEvents->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
@@ -49,15 +49,15 @@ final class UsageEventsTest extends TestCase
     #[Test]
     public function testIngest(): void
     {
-        $result = $this->client->usageEvents->ingest([
-            'events' => [
+        $result = $this->client->usageEvents->ingest(
+            events: [
                 [
                     'customerID' => 'customer_id',
                     'eventID' => 'event_id',
                     'eventName' => 'event_name',
                 ],
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UsageEventIngestResponse::class, $result);
@@ -66,8 +66,8 @@ final class UsageEventsTest extends TestCase
     #[Test]
     public function testIngestWithOptionalParams(): void
     {
-        $result = $this->client->usageEvents->ingest([
-            'events' => [
+        $result = $this->client->usageEvents->ingest(
+            events: [
                 [
                     'customerID' => 'customer_id',
                     'eventID' => 'event_id',
@@ -76,7 +76,7 @@ final class UsageEventsTest extends TestCase
                     'timestamp' => new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
                 ],
             ],
-        ]);
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(UsageEventIngestResponse::class, $result);

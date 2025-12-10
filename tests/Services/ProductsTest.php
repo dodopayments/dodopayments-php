@@ -34,17 +34,17 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->products->create([
-            'name' => 'name',
-            'price' => [
+        $result = $this->client->products->create(
+            name: 'name',
+            price: [
                 'currency' => Currency::AED,
                 'discount' => 0,
                 'price' => 0,
                 'purchasingPowerParity' => true,
                 'type' => 'one_time_price',
             ],
-            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
-        ]);
+            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Product::class, $result);
@@ -53,9 +53,9 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testCreateWithOptionalParams(): void
     {
-        $result = $this->client->products->create([
-            'name' => 'name',
-            'price' => [
+        $result = $this->client->products->create(
+            name: 'name',
+            price: [
                 'currency' => Currency::AED,
                 'discount' => 0,
                 'price' => 0,
@@ -65,19 +65,19 @@ final class ProductsTest extends TestCase
                 'suggestedPrice' => 0,
                 'taxInclusive' => true,
             ],
-            'taxCategory' => TaxCategory::DIGITAL_PRODUCTS,
-            'addons' => ['string'],
-            'brandID' => 'brand_id',
-            'description' => 'description',
-            'digitalProductDelivery' => [
+            taxCategory: TaxCategory::DIGITAL_PRODUCTS,
+            addons: ['string'],
+            brandID: 'brand_id',
+            description: 'description',
+            digitalProductDelivery: [
                 'externalURL' => 'external_url', 'instructions' => 'instructions',
             ],
-            'licenseKeyActivationMessage' => 'license_key_activation_message',
-            'licenseKeyActivationsLimit' => 0,
-            'licenseKeyDuration' => ['count' => 0, 'interval' => TimeInterval::DAY],
-            'licenseKeyEnabled' => true,
-            'metadata' => ['foo' => 'string'],
-        ]);
+            licenseKeyActivationMessage: 'license_key_activation_message',
+            licenseKeyActivationsLimit: 0,
+            licenseKeyDuration: ['count' => 0, 'interval' => TimeInterval::DAY],
+            licenseKeyEnabled: true,
+            metadata: ['foo' => 'string'],
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Product::class, $result);
@@ -95,7 +95,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->products->update('id', []);
+        $result = $this->client->products->update('id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -104,7 +104,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->products->list([]);
+        $result = $this->client->products->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
@@ -131,10 +131,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFiles(): void
     {
-        $result = $this->client->products->updateFiles(
-            'id',
-            ['fileName' => 'file_name']
-        );
+        $result = $this->client->products->updateFiles('id', fileName: 'file_name');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ProductUpdateFilesResponse::class, $result);
@@ -143,10 +140,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFilesWithOptionalParams(): void
     {
-        $result = $this->client->products->updateFiles(
-            'id',
-            ['fileName' => 'file_name']
-        );
+        $result = $this->client->products->updateFiles('id', fileName: 'file_name');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ProductUpdateFilesResponse::class, $result);
