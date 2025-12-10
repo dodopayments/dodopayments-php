@@ -77,10 +77,15 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->webhooks->list();
+        $page = $this->client->webhooks->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(CursorPagePagination::class, $result);
+        $this->assertInstanceOf(CursorPagePagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(WebhookDetails::class, $item);
+        }
     }
 
     #[Test]

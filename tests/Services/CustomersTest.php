@@ -72,10 +72,15 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->customers->list();
+        $page = $this->client->customers->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(Customer::class, $item);
+        }
     }
 
     #[Test]

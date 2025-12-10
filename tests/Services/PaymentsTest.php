@@ -8,6 +8,7 @@ use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
+use Dodopayments\Payments\PaymentListResponse;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Payments\PaymentNewResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -87,10 +88,15 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->payments->list();
+        $page = $this->client->payments->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(PaymentListResponse::class, $item);
+        }
     }
 
     #[Test]

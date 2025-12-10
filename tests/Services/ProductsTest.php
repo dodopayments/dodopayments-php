@@ -7,6 +7,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Product;
+use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\Subscriptions\TimeInterval;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -104,10 +105,15 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->products->list();
+        $page = $this->client->products->list();
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(DefaultPageNumberPagination::class, $result);
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(ProductListResponse::class, $item);
+        }
     }
 
     #[Test]
