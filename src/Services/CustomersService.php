@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\DefaultPageNumberPagination;
@@ -55,14 +56,14 @@ final class CustomersService implements CustomersContract
         ?string $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        $params = [
-            'email' => $email,
-            'name' => $name,
-            'metadata' => $metadata,
-            'phoneNumber' => $phoneNumber,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'email' => $email,
+                'name' => $name,
+                'metadata' => $metadata,
+                'phoneNumber' => $phoneNumber,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -102,11 +103,9 @@ final class CustomersService implements CustomersContract
         ?string $phoneNumber = null,
         ?RequestOptions $requestOptions = null,
     ): Customer {
-        $params = [
-            'metadata' => $metadata, 'name' => $name, 'phoneNumber' => $phoneNumber,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['metadata' => $metadata, 'name' => $name, 'phoneNumber' => $phoneNumber]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($customerID, params: $params, requestOptions: $requestOptions);
@@ -131,11 +130,9 @@ final class CustomersService implements CustomersContract
         ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

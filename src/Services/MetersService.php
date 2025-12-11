@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterAggregation;
@@ -82,16 +83,16 @@ final class MetersService implements MetersContract
         array|MeterFilter|null $filter = null,
         ?RequestOptions $requestOptions = null,
     ): Meter {
-        $params = [
-            'aggregation' => $aggregation,
-            'eventName' => $eventName,
-            'measurementUnit' => $measurementUnit,
-            'name' => $name,
-            'description' => $description,
-            'filter' => $filter,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'aggregation' => $aggregation,
+                'eventName' => $eventName,
+                'measurementUnit' => $measurementUnit,
+                'name' => $name,
+                'description' => $description,
+                'filter' => $filter,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -133,13 +134,13 @@ final class MetersService implements MetersContract
         ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'archived' => $archived,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'archived' => $archived,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
