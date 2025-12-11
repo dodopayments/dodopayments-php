@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments;
 
 use Dodopayments\Core\BaseClient;
+use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BrandsService;
 use Dodopayments\Services\CheckoutSessionsService;
