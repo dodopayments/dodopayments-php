@@ -8,6 +8,7 @@ use Dodopayments\Addons\AddonResponse;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
@@ -48,15 +49,15 @@ final class AddonsService implements AddonsContract
         ?string $description = null,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
-        $params = [
-            'currency' => $currency,
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-            'description' => $description,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'currency' => $currency,
+                'name' => $name,
+                'price' => $price,
+                'taxCategory' => $taxCategory,
+                'description' => $description,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -104,16 +105,16 @@ final class AddonsService implements AddonsContract
         string|TaxCategory|null $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): AddonResponse {
-        $params = [
-            'currency' => $currency,
-            'description' => $description,
-            'imageID' => $imageID,
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'currency' => $currency,
+                'description' => $description,
+                'imageID' => $imageID,
+                'name' => $name,
+                'price' => $price,
+                'taxCategory' => $taxCategory,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
@@ -136,9 +137,9 @@ final class AddonsService implements AddonsContract
         ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

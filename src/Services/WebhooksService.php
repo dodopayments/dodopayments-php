@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\WebhooksContract;
@@ -65,18 +66,18 @@ final class WebhooksService implements WebhooksContract
         ?int $rateLimit = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        $params = [
-            'url' => $url,
-            'description' => $description,
-            'disabled' => $disabled,
-            'filterTypes' => $filterTypes,
-            'headers' => $headers,
-            'idempotencyKey' => $idempotencyKey,
-            'metadata' => $metadata,
-            'rateLimit' => $rateLimit,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'url' => $url,
+                'description' => $description,
+                'disabled' => $disabled,
+                'filterTypes' => $filterTypes,
+                'headers' => $headers,
+                'idempotencyKey' => $idempotencyKey,
+                'metadata' => $metadata,
+                'rateLimit' => $rateLimit,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -127,16 +128,16 @@ final class WebhooksService implements WebhooksContract
         ?string $url = null,
         ?RequestOptions $requestOptions = null,
     ): WebhookDetails {
-        $params = [
-            'description' => $description,
-            'disabled' => $disabled,
-            'filterTypes' => $filterTypes,
-            'metadata' => $metadata,
-            'rateLimit' => $rateLimit,
-            'url' => $url,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'description' => $description,
+                'disabled' => $disabled,
+                'filterTypes' => $filterTypes,
+                'metadata' => $metadata,
+                'rateLimit' => $rateLimit,
+                'url' => $url,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);
@@ -161,9 +162,7 @@ final class WebhooksService implements WebhooksContract
         ?int $limit = null,
         ?RequestOptions $requestOptions = null,
     ): CursorPagePagination {
-        $params = ['iterator' => $iterator, 'limit' => $limit];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['iterator' => $iterator, 'limit' => $limit]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

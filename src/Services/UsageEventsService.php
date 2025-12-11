@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\UsageEventsContract;
@@ -117,17 +118,17 @@ final class UsageEventsService implements UsageEventsContract
         string|\DateTimeInterface|null $start = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'customerID' => $customerID,
-            'end' => $end,
-            'eventName' => $eventName,
-            'meterID' => $meterID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'start' => $start,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'customerID' => $customerID,
+                'end' => $end,
+                'eventName' => $eventName,
+                'meterID' => $meterID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'start' => $start,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
@@ -184,7 +185,7 @@ final class UsageEventsService implements UsageEventsContract
         array $events,
         ?RequestOptions $requestOptions = null
     ): UsageEventIngestResponse {
-        $params = ['events' => $events];
+        $params = Util::removeNulls(['events' => $events]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->ingest(params: $params, requestOptions: $requestOptions);

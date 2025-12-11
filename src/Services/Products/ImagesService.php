@@ -6,6 +6,7 @@ namespace Dodopayments\Services\Products;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Products\ImagesContract;
@@ -37,9 +38,7 @@ final class ImagesService implements ImagesContract
         ?bool $forceUpdate = null,
         ?RequestOptions $requestOptions = null
     ): ImageUpdateResponse {
-        $params = ['forceUpdate' => $forceUpdate];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['forceUpdate' => $forceUpdate]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);

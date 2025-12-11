@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstance;
 use Dodopayments\RequestOptions;
@@ -55,7 +56,7 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         string $name,
         ?RequestOptions $requestOptions = null
     ): LicenseKeyInstance {
-        $params = ['name' => $name];
+        $params = Util::removeNulls(['name' => $name]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
@@ -80,13 +81,13 @@ final class LicenseKeyInstancesService implements LicenseKeyInstancesContract
         ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'licenseKeyID' => $licenseKeyID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'licenseKeyID' => $licenseKeyID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

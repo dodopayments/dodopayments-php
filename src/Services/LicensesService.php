@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Licenses\LicenseActivateResponse;
 use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
@@ -36,7 +37,7 @@ final class LicensesService implements LicensesContract
         string $name,
         ?RequestOptions $requestOptions = null
     ): LicenseActivateResponse {
-        $params = ['licenseKey' => $licenseKey, 'name' => $name];
+        $params = Util::removeNulls(['licenseKey' => $licenseKey, 'name' => $name]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->activate(params: $params, requestOptions: $requestOptions);
@@ -54,10 +55,12 @@ final class LicensesService implements LicensesContract
         string $licenseKeyInstanceID,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $params = [
-            'licenseKey' => $licenseKey,
-            'licenseKeyInstanceID' => $licenseKeyInstanceID,
-        ];
+        $params = Util::removeNulls(
+            [
+                'licenseKey' => $licenseKey,
+                'licenseKeyInstanceID' => $licenseKeyInstanceID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->deactivate(params: $params, requestOptions: $requestOptions);
@@ -75,12 +78,12 @@ final class LicensesService implements LicensesContract
         ?string $licenseKeyInstanceID = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseValidateResponse {
-        $params = [
-            'licenseKey' => $licenseKey,
-            'licenseKeyInstanceID' => $licenseKeyInstanceID,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'licenseKey' => $licenseKey,
+                'licenseKeyInstanceID' => $licenseKeyInstanceID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->validate(params: $params, requestOptions: $requestOptions);
