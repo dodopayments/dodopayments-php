@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
@@ -105,26 +106,26 @@ final class SubscriptionsService implements SubscriptionsContract
         ?int $trialPeriodDays = null,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionNewResponse {
-        $params = [
-            'billing' => $billing,
-            'customer' => $customer,
-            'productID' => $productID,
-            'quantity' => $quantity,
-            'addons' => $addons,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingCurrency' => $billingCurrency,
-            'discountCode' => $discountCode,
-            'force3DS' => $force3DS,
-            'metadata' => $metadata,
-            'onDemand' => $onDemand,
-            'paymentLink' => $paymentLink,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'taxID' => $taxID,
-            'trialPeriodDays' => $trialPeriodDays,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'billing' => $billing,
+                'customer' => $customer,
+                'productID' => $productID,
+                'quantity' => $quantity,
+                'addons' => $addons,
+                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+                'billingCurrency' => $billingCurrency,
+                'discountCode' => $discountCode,
+                'force3DS' => $force3DS,
+                'metadata' => $metadata,
+                'onDemand' => $onDemand,
+                'paymentLink' => $paymentLink,
+                'returnURL' => $returnURL,
+                'showSavedPaymentMethods' => $showSavedPaymentMethods,
+                'taxID' => $taxID,
+                'trialPeriodDays' => $trialPeriodDays,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -179,18 +180,18 @@ final class SubscriptionsService implements SubscriptionsContract
         ?string $taxID = null,
         ?RequestOptions $requestOptions = null,
     ): Subscription {
-        $params = [
-            'billing' => $billing,
-            'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
-            'customerName' => $customerName,
-            'disableOnDemand' => $disableOnDemand,
-            'metadata' => $metadata,
-            'nextBillingDate' => $nextBillingDate,
-            'status' => $status,
-            'taxID' => $taxID,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'billing' => $billing,
+                'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
+                'customerName' => $customerName,
+                'disableOnDemand' => $disableOnDemand,
+                'metadata' => $metadata,
+                'nextBillingDate' => $nextBillingDate,
+                'status' => $status,
+                'taxID' => $taxID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($subscriptionID, params: $params, requestOptions: $requestOptions);
@@ -223,17 +224,17 @@ final class SubscriptionsService implements SubscriptionsContract
         string|Status|null $status = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'brandID' => $brandID,
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'brandID' => $brandID,
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'status' => $status,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
@@ -263,14 +264,14 @@ final class SubscriptionsService implements SubscriptionsContract
         ?array $addons = null,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $params = [
-            'productID' => $productID,
-            'prorationBillingMode' => $prorationBillingMode,
-            'quantity' => $quantity,
-            'addons' => $addons,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'productID' => $productID,
+                'prorationBillingMode' => $prorationBillingMode,
+                'quantity' => $quantity,
+                'addons' => $addons,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->changePlan($subscriptionID, params: $params, requestOptions: $requestOptions);
@@ -307,16 +308,16 @@ final class SubscriptionsService implements SubscriptionsContract
         ?string $productDescription = null,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionChargeResponse {
-        $params = [
-            'productPrice' => $productPrice,
-            'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
-            'customerBalanceConfig' => $customerBalanceConfig,
-            'metadata' => $metadata,
-            'productCurrency' => $productCurrency,
-            'productDescription' => $productDescription,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'productPrice' => $productPrice,
+                'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
+                'customerBalanceConfig' => $customerBalanceConfig,
+                'metadata' => $metadata,
+                'productCurrency' => $productCurrency,
+                'productDescription' => $productDescription,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->charge($subscriptionID, params: $params, requestOptions: $requestOptions);
@@ -346,14 +347,14 @@ final class SubscriptionsService implements SubscriptionsContract
         ?array $addons = null,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionPreviewChangePlanResponse {
-        $params = [
-            'productID' => $productID,
-            'prorationBillingMode' => $prorationBillingMode,
-            'quantity' => $quantity,
-            'addons' => $addons,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'productID' => $productID,
+                'prorationBillingMode' => $prorationBillingMode,
+                'quantity' => $quantity,
+                'addons' => $addons,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->previewChangePlan($subscriptionID, params: $params, requestOptions: $requestOptions);
@@ -416,15 +417,15 @@ final class SubscriptionsService implements SubscriptionsContract
         string|\DateTimeInterface|null $startDate = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'endDate' => $endDate,
-            'meterID' => $meterID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'startDate' => $startDate,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'endDate' => $endDate,
+                'meterID' => $meterID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'startDate' => $startDate,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveUsageHistory($subscriptionID, params: $params, requestOptions: $requestOptions);
@@ -447,13 +448,13 @@ final class SubscriptionsService implements SubscriptionsContract
         ?string $returnURL = null,
         ?RequestOptions $requestOptions = null,
     ): SubscriptionUpdatePaymentMethodResponse {
-        $params = [
-            'type' => $type,
-            'returnURL' => $returnURL,
-            'paymentMethodID' => $paymentMethodID,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'type' => $type,
+                'returnURL' => $returnURL,
+                'paymentMethodID' => $paymentMethodID,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->updatePaymentMethod($subscriptionID, params: $params, requestOptions: $requestOptions);

@@ -6,6 +6,7 @@ namespace Dodopayments\Services\Webhooks;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Webhooks\HeadersContract;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
@@ -56,7 +57,7 @@ final class HeadersService implements HeadersContract
         array $headers,
         ?RequestOptions $requestOptions = null
     ): mixed {
-        $params = ['headers' => $headers];
+        $params = Util::removeNulls(['headers' => $headers]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($webhookID, params: $params, requestOptions: $requestOptions);

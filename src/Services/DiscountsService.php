@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountType;
@@ -65,18 +66,18 @@ final class DiscountsService implements DiscountsContract
         ?int $usageLimit = null,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        $params = [
-            'amount' => $amount,
-            'type' => $type,
-            'code' => $code,
-            'expiresAt' => $expiresAt,
-            'name' => $name,
-            'restrictedTo' => $restrictedTo,
-            'subscriptionCycles' => $subscriptionCycles,
-            'usageLimit' => $usageLimit,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'amount' => $amount,
+                'type' => $type,
+                'code' => $code,
+                'expiresAt' => $expiresAt,
+                'name' => $name,
+                'restrictedTo' => $restrictedTo,
+                'subscriptionCycles' => $subscriptionCycles,
+                'usageLimit' => $usageLimit,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -136,18 +137,18 @@ final class DiscountsService implements DiscountsContract
         ?int $usageLimit = null,
         ?RequestOptions $requestOptions = null,
     ): Discount {
-        $params = [
-            'amount' => $amount,
-            'code' => $code,
-            'expiresAt' => $expiresAt,
-            'name' => $name,
-            'restrictedTo' => $restrictedTo,
-            'subscriptionCycles' => $subscriptionCycles,
-            'type' => $type,
-            'usageLimit' => $usageLimit,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'amount' => $amount,
+                'code' => $code,
+                'expiresAt' => $expiresAt,
+                'name' => $name,
+                'restrictedTo' => $restrictedTo,
+                'subscriptionCycles' => $subscriptionCycles,
+                'type' => $type,
+                'usageLimit' => $usageLimit,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($discountID, params: $params, requestOptions: $requestOptions);
@@ -172,9 +173,9 @@ final class DiscountsService implements DiscountsContract
         ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = ['pageNumber' => $pageNumber, 'pageSize' => $pageSize];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

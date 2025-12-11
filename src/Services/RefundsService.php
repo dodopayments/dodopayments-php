@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundListParams\Status;
@@ -47,14 +48,14 @@ final class RefundsService implements RefundsContract
         ?string $reason = null,
         ?RequestOptions $requestOptions = null,
     ): Refund {
-        $params = [
-            'paymentID' => $paymentID,
-            'items' => $items,
-            'metadata' => $metadata,
-            'reason' => $reason,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'paymentID' => $paymentID,
+                'items' => $items,
+                'metadata' => $metadata,
+                'reason' => $reason,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -102,16 +103,16 @@ final class RefundsService implements RefundsContract
         string|Status|null $status = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'createdAtGte' => $createdAtGte,
-            'createdAtLte' => $createdAtLte,
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'status' => $status,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'status' => $status,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

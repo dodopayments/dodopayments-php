@@ -9,6 +9,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
@@ -111,25 +112,25 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         ?array $subscriptionData = null,
         ?RequestOptions $requestOptions = null,
     ): CheckoutSessionResponse {
-        $params = [
-            'productCart' => $productCart,
-            'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
-            'billingAddress' => $billingAddress,
-            'billingCurrency' => $billingCurrency,
-            'confirm' => $confirm,
-            'customer' => $customer,
-            'customization' => $customization,
-            'discountCode' => $discountCode,
-            'featureFlags' => $featureFlags,
-            'force3DS' => $force3DS,
-            'metadata' => $metadata,
-            'minimalAddress' => $minimalAddress,
-            'returnURL' => $returnURL,
-            'showSavedPaymentMethods' => $showSavedPaymentMethods,
-            'subscriptionData' => $subscriptionData,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'productCart' => $productCart,
+                'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
+                'billingAddress' => $billingAddress,
+                'billingCurrency' => $billingCurrency,
+                'confirm' => $confirm,
+                'customer' => $customer,
+                'customization' => $customization,
+                'discountCode' => $discountCode,
+                'featureFlags' => $featureFlags,
+                'force3DS' => $force3DS,
+                'metadata' => $metadata,
+                'minimalAddress' => $minimalAddress,
+                'returnURL' => $returnURL,
+                'showSavedPaymentMethods' => $showSavedPaymentMethods,
+                'subscriptionData' => $subscriptionData,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);

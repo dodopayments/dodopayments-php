@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
@@ -64,13 +65,13 @@ final class LicenseKeysService implements LicenseKeysContract
         string|\DateTimeInterface|null $expiresAt = null,
         ?RequestOptions $requestOptions = null,
     ): LicenseKey {
-        $params = [
-            'activationsLimit' => $activationsLimit,
-            'disabled' => $disabled,
-            'expiresAt' => $expiresAt,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'activationsLimit' => $activationsLimit,
+                'disabled' => $disabled,
+                'expiresAt' => $expiresAt,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
@@ -99,15 +100,15 @@ final class LicenseKeysService implements LicenseKeysContract
         string|Status|null $status = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'customerID' => $customerID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'productID' => $productID,
-            'status' => $status,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'customerID' => $customerID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'productID' => $productID,
+                'status' => $status,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);

@@ -6,6 +6,7 @@ namespace Dodopayments\Services\Customers;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\CustomerPortalContract;
@@ -38,9 +39,7 @@ final class CustomerPortalService implements CustomerPortalContract
         ?bool $sendEmail = null,
         ?RequestOptions $requestOptions = null,
     ): CustomerPortalSession {
-        $params = ['sendEmail' => $sendEmail];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(['sendEmail' => $sendEmail]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create($customerID, params: $params, requestOptions: $requestOptions);

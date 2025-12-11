@@ -9,6 +9,7 @@ use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsContract;
 
@@ -40,15 +41,15 @@ final class BrandsService implements BrandsContract
         ?string $url = null,
         ?RequestOptions $requestOptions = null,
     ): Brand {
-        $params = [
-            'description' => $description,
-            'name' => $name,
-            'statementDescriptor' => $statementDescriptor,
-            'supportEmail' => $supportEmail,
-            'url' => $url,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'description' => $description,
+                'name' => $name,
+                'statementDescriptor' => $statementDescriptor,
+                'supportEmail' => $supportEmail,
+                'url' => $url,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -91,14 +92,14 @@ final class BrandsService implements BrandsContract
         ?string $supportEmail = null,
         ?RequestOptions $requestOptions = null,
     ): Brand {
-        $params = [
-            'imageID' => $imageID,
-            'name' => $name,
-            'statementDescriptor' => $statementDescriptor,
-            'supportEmail' => $supportEmail,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'imageID' => $imageID,
+                'name' => $name,
+                'statementDescriptor' => $statementDescriptor,
+                'supportEmail' => $supportEmail,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);

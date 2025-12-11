@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
@@ -80,22 +81,22 @@ final class ProductsService implements ProductsContract
         ?array $metadata = null,
         ?RequestOptions $requestOptions = null,
     ): Product {
-        $params = [
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-            'addons' => $addons,
-            'brandID' => $brandID,
-            'description' => $description,
-            'digitalProductDelivery' => $digitalProductDelivery,
-            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-            'licenseKeyDuration' => $licenseKeyDuration,
-            'licenseKeyEnabled' => $licenseKeyEnabled,
-            'metadata' => $metadata,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'name' => $name,
+                'price' => $price,
+                'taxCategory' => $taxCategory,
+                'addons' => $addons,
+                'brandID' => $brandID,
+                'description' => $description,
+                'digitalProductDelivery' => $digitalProductDelivery,
+                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+                'licenseKeyDuration' => $licenseKeyDuration,
+                'licenseKeyEnabled' => $licenseKeyEnabled,
+                'metadata' => $metadata,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
@@ -173,23 +174,23 @@ final class ProductsService implements ProductsContract
         string|TaxCategory|null $taxCategory = null,
         ?RequestOptions $requestOptions = null,
     ): mixed {
-        $params = [
-            'addons' => $addons,
-            'brandID' => $brandID,
-            'description' => $description,
-            'digitalProductDelivery' => $digitalProductDelivery,
-            'imageID' => $imageID,
-            'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
-            'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
-            'licenseKeyDuration' => $licenseKeyDuration,
-            'licenseKeyEnabled' => $licenseKeyEnabled,
-            'metadata' => $metadata,
-            'name' => $name,
-            'price' => $price,
-            'taxCategory' => $taxCategory,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'addons' => $addons,
+                'brandID' => $brandID,
+                'description' => $description,
+                'digitalProductDelivery' => $digitalProductDelivery,
+                'imageID' => $imageID,
+                'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
+                'licenseKeyActivationsLimit' => $licenseKeyActivationsLimit,
+                'licenseKeyDuration' => $licenseKeyDuration,
+                'licenseKeyEnabled' => $licenseKeyEnabled,
+                'metadata' => $metadata,
+                'name' => $name,
+                'price' => $price,
+                'taxCategory' => $taxCategory,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($id, params: $params, requestOptions: $requestOptions);
@@ -221,15 +222,15 @@ final class ProductsService implements ProductsContract
         ?bool $recurring = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'archived' => $archived,
-            'brandID' => $brandID,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-            'recurring' => $recurring,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'archived' => $archived,
+                'brandID' => $brandID,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'recurring' => $recurring,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
@@ -279,7 +280,7 @@ final class ProductsService implements ProductsContract
         string $fileName,
         ?RequestOptions $requestOptions = null
     ): ProductUpdateFilesResponse {
-        $params = ['fileName' => $fileName];
+        $params = Util::removeNulls(['fileName' => $fileName]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->updateFiles($id, params: $params, requestOptions: $requestOptions);

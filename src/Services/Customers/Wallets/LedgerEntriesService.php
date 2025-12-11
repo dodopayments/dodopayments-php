@@ -6,6 +6,7 @@ namespace Dodopayments\Services\Customers\Wallets;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\Customers\Wallets\CustomerWallet;
 use Dodopayments\Customers\Wallets\LedgerEntries\CustomerWalletTransaction;
 use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryCreateParams\EntryType;
@@ -48,15 +49,15 @@ final class LedgerEntriesService implements LedgerEntriesContract
         ?string $reason = null,
         ?RequestOptions $requestOptions = null,
     ): CustomerWallet {
-        $params = [
-            'amount' => $amount,
-            'currency' => $currency,
-            'entryType' => $entryType,
-            'idempotencyKey' => $idempotencyKey,
-            'reason' => $reason,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'amount' => $amount,
+                'currency' => $currency,
+                'entryType' => $entryType,
+                'idempotencyKey' => $idempotencyKey,
+                'reason' => $reason,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create($customerID, params: $params, requestOptions: $requestOptions);
@@ -81,13 +82,13 @@ final class LedgerEntriesService implements LedgerEntriesContract
         ?int $pageSize = null,
         ?RequestOptions $requestOptions = null,
     ): DefaultPageNumberPagination {
-        $params = [
-            'currency' => $currency,
-            'pageNumber' => $pageNumber,
-            'pageSize' => $pageSize,
-        ];
-        // @phpstan-ignore-next-line function.impossibleType
-        $params = array_filter($params, callback: static fn ($v) => !is_null($v));
+        $params = Util::removeNulls(
+            [
+                'currency' => $currency,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+            ],
+        );
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list($customerID, params: $params, requestOptions: $requestOptions);
