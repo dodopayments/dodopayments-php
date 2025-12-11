@@ -1,5 +1,35 @@
 # Changelog
 
+## 3.5.0 (2025-12-11)
+
+Full Changelog: [v3.4.0...v3.5.0](https://github.com/dodopayments/dodopayments-php/compare/v3.4.0...v3.5.0)
+
+### ⚠ BREAKING CHANGES
+
+* use camel casing for all class properties
+
+### Features
+
+* add `BaseResponse` class for accessing raw responses ([4bff2da](https://github.com/dodopayments/dodopayments-php/commit/4bff2da4e6738cfec94c74560e843b94a6d499cd))
+* split out services into normal & raw types ([b704b39](https://github.com/dodopayments/dodopayments-php/commit/b704b391282587e55b580f30a5477b7ba77b9987))
+* support unwrapping envelopes ([5e00fc2](https://github.com/dodopayments/dodopayments-php/commit/5e00fc205d91db2a51909eace98707bbd7300ce1))
+* use camel casing for all class properties ([ad5812f](https://github.com/dodopayments/dodopayments-php/commit/ad5812f5e3b6635f68f50c65aae437993a67f0df))
+
+
+### Bug Fixes
+
+* a number of serialization errors ([759ca2d](https://github.com/dodopayments/dodopayments-php/commit/759ca2d55c9455cd534440d0cda476a1794e74cf))
+* correctly serialize dates ([7c8d49c](https://github.com/dodopayments/dodopayments-php/commit/7c8d49c16ca0881c1b86ceb682234a4db9859ed0))
+* remove duplicate types ([78c6834](https://github.com/dodopayments/dodopayments-php/commit/78c6834a789175e965b83cd76d6dd393e96104ac))
+
+
+### Chores
+
+* ensure constant values are marked as optional in array types ([b1e78ba](https://github.com/dodopayments/dodopayments-php/commit/b1e78bacfd274132a56413c4173f0c299d7dc3c2))
+* **internal:** improve pagination tests ([72a51e7](https://github.com/dodopayments/dodopayments-php/commit/72a51e7ba1e5ea785e5c812d8ed08a65f5974926))
+* switch from `#[Api(optional: true|false)]` to `#[Required]|#[Optional]` for annotations ([8213bfc](https://github.com/dodopayments/dodopayments-php/commit/8213bfcde1cd84c9347796bd464bc584ca16935c))
+* use `$self = clone $this;` instead of `$obj = clone $this;` ([7dc5092](https://github.com/dodopayments/dodopayments-php/commit/7dc5092f13fba613d3cab6eae427c71ab942766f))
+
 ## 3.4.0 (2025-12-08)
 
 Full Changelog: [v3.3.0...v3.4.0](https://github.com/dodopayments/dodopayments-php/compare/v3.3.0...v3.4.0)
