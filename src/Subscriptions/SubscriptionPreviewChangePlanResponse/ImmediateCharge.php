@@ -10,15 +10,15 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember0;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember0\Type;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember1;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember2;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription\Type;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary;
 
 /**
  * @phpstan-type ImmediateChargeShape = array{
- *   lineItems: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
+ *   lineItems: list<Subscription|Addon|Meter>, summary: Summary
  * }
  */
 final class ImmediateCharge implements BaseModel
@@ -26,7 +26,7 @@ final class ImmediateCharge implements BaseModel
     /** @use SdkModel<ImmediateChargeShape> */
     use SdkModel;
 
-    /** @var list<UnionMember0|UnionMember1|UnionMember2> $lineItems */
+    /** @var list<Subscription|Addon|Meter> $lineItems */
     #[Required('line_items', list: LineItem::class)]
     public array $lineItems;
 
@@ -57,7 +57,7 @@ final class ImmediateCharge implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<UnionMember0|array{
+     * @param list<Subscription|array{
      *   id: string,
      *   currency: value-of<Currency>,
      *   productID: string,
@@ -70,7 +70,7 @@ final class ImmediateCharge implements BaseModel
      *   name?: string|null,
      *   tax?: int|null,
      *   taxRate?: float|null,
-     * }|UnionMember1|array{
+     * }|Addon|array{
      *   id: string,
      *   currency: value-of<Currency>,
      *   name: string,
@@ -79,11 +79,11 @@ final class ImmediateCharge implements BaseModel
      *   taxCategory: value-of<TaxCategory>,
      *   taxInclusive: bool,
      *   taxRate: float,
-     *   type: value-of<UnionMember1\Type>,
+     *   type: value-of<Addon\Type>,
      *   unitPrice: int,
      *   description?: string|null,
      *   tax?: int|null,
-     * }|UnionMember2|array{
+     * }|Meter|array{
      *   id: string,
      *   chargeableUnits: string,
      *   currency: value-of<Currency>,
@@ -93,7 +93,7 @@ final class ImmediateCharge implements BaseModel
      *   subtotal: int,
      *   taxInclusive: bool,
      *   taxRate: float,
-     *   type: value-of<UnionMember2\Type>,
+     *   type: value-of<Meter\Type>,
      *   unitsConsumed: string,
      *   description?: string|null,
      *   tax?: int|null,
@@ -119,7 +119,7 @@ final class ImmediateCharge implements BaseModel
     }
 
     /**
-     * @param list<UnionMember0|array{
+     * @param list<Subscription|array{
      *   id: string,
      *   currency: value-of<Currency>,
      *   productID: string,
@@ -132,7 +132,7 @@ final class ImmediateCharge implements BaseModel
      *   name?: string|null,
      *   tax?: int|null,
      *   taxRate?: float|null,
-     * }|UnionMember1|array{
+     * }|Addon|array{
      *   id: string,
      *   currency: value-of<Currency>,
      *   name: string,
@@ -141,11 +141,11 @@ final class ImmediateCharge implements BaseModel
      *   taxCategory: value-of<TaxCategory>,
      *   taxInclusive: bool,
      *   taxRate: float,
-     *   type: value-of<UnionMember1\Type>,
+     *   type: value-of<Addon\Type>,
      *   unitPrice: int,
      *   description?: string|null,
      *   tax?: int|null,
-     * }|UnionMember2|array{
+     * }|Meter|array{
      *   id: string,
      *   chargeableUnits: string,
      *   currency: value-of<Currency>,
@@ -155,7 +155,7 @@ final class ImmediateCharge implements BaseModel
      *   subtotal: int,
      *   taxInclusive: bool,
      *   taxRate: float,
-     *   type: value-of<UnionMember2\Type>,
+     *   type: value-of<Meter\Type>,
      *   unitsConsumed: string,
      *   description?: string|null,
      *   tax?: int|null,

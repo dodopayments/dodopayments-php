@@ -14,9 +14,11 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
+ * @deprecated
  * @see Dodopayments\Services\SubscriptionsService::create()
  *
  * @phpstan-type SubscriptionCreateParamsShape = array{
@@ -45,6 +47,9 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *     productDescription?: string|null,
  *     productPrice?: int|null,
  *   },
+ *   oneTimeProductCart?: list<OneTimeProductCartItem|array{
+ *     productID: string, quantity: int, amount?: int|null
+ *   }>|null,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
  *   showSavedPaymentMethods?: bool,
@@ -140,6 +145,18 @@ final class SubscriptionCreateParams implements BaseModel
     public ?OnDemandSubscription $onDemand;
 
     /**
+     * List of one time products that will be bundled with the first payment for this subscription.
+     *
+     * @var list<OneTimeProductCartItem>|null $oneTimeProductCart
+     */
+    #[Optional(
+        'one_time_product_cart',
+        list: OneTimeProductCartItem::class,
+        nullable: true
+    )]
+    public ?array $oneTimeProductCart;
+
+    /**
      * If true, generates a payment link.
      * Defaults to false if not specified.
      */
@@ -224,6 +241,9 @@ final class SubscriptionCreateParams implements BaseModel
      *   productDescription?: string|null,
      *   productPrice?: int|null,
      * }|null $onDemand
+     * @param list<OneTimeProductCartItem|array{
+     *   productID: string, quantity: int, amount?: int|null
+     * }>|null $oneTimeProductCart
      */
     public static function with(
         BillingAddress|array $billing,
@@ -237,6 +257,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?bool $force3DS = null,
         ?array $metadata = null,
         OnDemandSubscription|array|null $onDemand = null,
+        ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
         ?string $returnURL = null,
         ?bool $showSavedPaymentMethods = null,
@@ -257,6 +278,7 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $force3DS && $self['force3DS'] = $force3DS;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onDemand && $self['onDemand'] = $onDemand;
+        null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $returnURL && $self['returnURL'] = $returnURL;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
@@ -419,6 +441,21 @@ final class SubscriptionCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['onDemand'] = $onDemand;
+
+        return $self;
+    }
+
+    /**
+     * List of one time products that will be bundled with the first payment for this subscription.
+     *
+     * @param list<OneTimeProductCartItem|array{
+     *   productID: string, quantity: int, amount?: int|null
+     * }>|null $oneTimeProductCart
+     */
+    public function withOneTimeProductCart(?array $oneTimeProductCart): self
+    {
+        $self = clone $this;
+        $self['oneTimeProductCart'] = $oneTimeProductCart;
 
         return $self;
     }

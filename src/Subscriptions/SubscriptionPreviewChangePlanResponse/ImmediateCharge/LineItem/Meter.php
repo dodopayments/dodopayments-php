@@ -9,10 +9,10 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember2\Type;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter\Type;
 
 /**
- * @phpstan-type UnionMember2Shape = array{
+ * @phpstan-type MeterShape = array{
  *   id: string,
  *   chargeableUnits: string,
  *   currency: value-of<Currency>,
@@ -28,9 +28,9 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  *   tax?: int|null,
  * }
  */
-final class UnionMember2 implements BaseModel
+final class Meter implements BaseModel
 {
-    /** @use SdkModel<UnionMember2Shape> */
+    /** @use SdkModel<MeterShape> */
     use SdkModel;
 
     #[Required]
@@ -75,11 +75,11 @@ final class UnionMember2 implements BaseModel
     public ?int $tax;
 
     /**
-     * `new UnionMember2()` is missing required properties by the API.
+     * `new Meter()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UnionMember2::with(
+     * Meter::with(
      *   id: ...,
      *   chargeableUnits: ...,
      *   currency: ...,
@@ -97,7 +97,7 @@ final class UnionMember2 implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UnionMember2)
+     * (new Meter)
      *   ->withID(...)
      *   ->withChargeableUnits(...)
      *   ->withCurrency(...)

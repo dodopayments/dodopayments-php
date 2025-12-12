@@ -7,9 +7,9 @@ namespace Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\Immed
 use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember0;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember1;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember2;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription;
 
 final class LineItem implements ConverterSource
 {
@@ -20,6 +20,6 @@ final class LineItem implements ConverterSource
      */
     public static function variants(): array
     {
-        return [UnionMember0::class, UnionMember1::class, UnionMember2::class];
+        return [Subscription::class, Addon::class, Meter::class];
     }
 }

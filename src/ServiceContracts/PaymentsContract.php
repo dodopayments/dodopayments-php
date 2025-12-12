@@ -21,6 +21,8 @@ use Dodopayments\RequestOptions;
 interface PaymentsContract
 {
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{

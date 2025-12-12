@@ -12,6 +12,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsRawContract;
@@ -44,6 +45,8 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function __construct(private Client $client) {}
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{
@@ -70,6 +73,9 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *     productDescription?: string|null,
      *     productPrice?: int|null,
      *   }|null,
+     *   oneTimeProductCart?: list<array{
+     *     productID: string, quantity: int, amount?: int|null
+     *   }|OneTimeProductCartItem>|null,
      *   paymentLink?: bool|null,
      *   returnURL?: string|null,
      *   showSavedPaymentMethods?: bool,

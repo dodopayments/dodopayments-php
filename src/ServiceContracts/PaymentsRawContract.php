@@ -18,6 +18,8 @@ use Dodopayments\RequestOptions;
 interface PaymentsRawContract
 {
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array<mixed>|PaymentCreateParams $params

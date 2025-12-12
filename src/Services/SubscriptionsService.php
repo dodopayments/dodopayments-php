@@ -11,6 +11,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsContract;
@@ -42,6 +43,8 @@ final class SubscriptionsService implements SubscriptionsContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{
@@ -75,6 +78,9 @@ final class SubscriptionsService implements SubscriptionsContract
      *   productDescription?: string|null,
      *   productPrice?: int|null,
      * }|null $onDemand
+     * @param list<array{
+     *   productID: string, quantity: int, amount?: int|null
+     * }|OneTimeProductCartItem>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
@@ -99,6 +105,7 @@ final class SubscriptionsService implements SubscriptionsContract
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?array $onDemand = null,
+        ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
         ?string $returnURL = null,
         ?bool $showSavedPaymentMethods = null,
@@ -119,6 +126,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'force3DS' => $force3DS,
                 'metadata' => $metadata,
                 'onDemand' => $onDemand,
+                'oneTimeProductCart' => $oneTimeProductCart,
                 'paymentLink' => $paymentLink,
                 'returnURL' => $returnURL,
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,
