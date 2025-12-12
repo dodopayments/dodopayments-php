@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
 
 /**
  * @phpstan-type SubscriptionNewResponseShape = array{
@@ -21,6 +22,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   clientSecret?: string|null,
  *   discountID?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
+ *   oneTimeProductCart?: list<OneTimeProductCart>|null,
  *   paymentLink?: string|null,
  * }
  */
@@ -89,6 +91,18 @@ final class SubscriptionNewResponse implements BaseModel
     public ?\DateTimeInterface $expiresOn;
 
     /**
+     * One time products associated with the purchase of subscription.
+     *
+     * @var list<OneTimeProductCart>|null $oneTimeProductCart
+     */
+    #[Optional(
+        'one_time_product_cart',
+        list: OneTimeProductCart::class,
+        nullable: true
+    )]
+    public ?array $oneTimeProductCart;
+
+    /**
      * URL to checkout page.
      */
     #[Optional('payment_link', nullable: true)]
@@ -140,6 +154,9 @@ final class SubscriptionNewResponse implements BaseModel
      *   phoneNumber?: string|null,
      * } $customer
      * @param array<string,string> $metadata
+     * @param list<OneTimeProductCart|array{
+     *   productID: string, quantity: int
+     * }>|null $oneTimeProductCart
      */
     public static function with(
         array $addons,
@@ -151,6 +168,7 @@ final class SubscriptionNewResponse implements BaseModel
         ?string $clientSecret = null,
         ?string $discountID = null,
         ?\DateTimeInterface $expiresOn = null,
+        ?array $oneTimeProductCart = null,
         ?string $paymentLink = null,
     ): self {
         $self = new self;
@@ -165,6 +183,7 @@ final class SubscriptionNewResponse implements BaseModel
         null !== $clientSecret && $self['clientSecret'] = $clientSecret;
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $expiresOn && $self['expiresOn'] = $expiresOn;
+        null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
 
         return $self;
@@ -278,6 +297,21 @@ final class SubscriptionNewResponse implements BaseModel
     {
         $self = clone $this;
         $self['expiresOn'] = $expiresOn;
+
+        return $self;
+    }
+
+    /**
+     * One time products associated with the purchase of subscription.
+     *
+     * @param list<OneTimeProductCart|array{
+     *   productID: string, quantity: int
+     * }>|null $oneTimeProductCart
+     */
+    public function withOneTimeProductCart(?array $oneTimeProductCart): self
+    {
+        $self = clone $this;
+        $self['oneTimeProductCart'] = $oneTimeProductCart;
 
         return $self;
     }

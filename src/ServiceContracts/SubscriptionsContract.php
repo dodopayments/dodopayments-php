@@ -9,6 +9,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\Subscriptions\Subscription;
@@ -26,6 +27,8 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 interface SubscriptionsContract
 {
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{
@@ -59,6 +62,9 @@ interface SubscriptionsContract
      *   productDescription?: string|null,
      *   productPrice?: int|null,
      * }|null $onDemand
+     * @param list<array{
+     *   productID: string, quantity: int, amount?: int|null
+     * }|OneTimeProductCartItem>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
@@ -83,6 +89,7 @@ interface SubscriptionsContract
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?array $onDemand = null,
+        ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
         ?string $returnURL = null,
         ?bool $showSavedPaymentMethods = null,

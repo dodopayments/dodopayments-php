@@ -27,6 +27,8 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 interface SubscriptionsRawContract
 {
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array<mixed>|SubscriptionCreateParams $params

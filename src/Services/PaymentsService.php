@@ -37,6 +37,8 @@ final class PaymentsService implements PaymentsContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{

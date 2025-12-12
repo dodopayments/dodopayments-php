@@ -77,6 +77,9 @@ final class SubscriptionsTest extends TestCase
                 'productDescription' => 'product_description',
                 'productPrice' => 0,
             ],
+            oneTimeProductCart: [
+                ['productID' => 'product_id', 'quantity' => 0, 'amount' => 0],
+            ],
             paymentLink: true,
             returnURL: 'return_url',
             showSavedPaymentMethods: true,
