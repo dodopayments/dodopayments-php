@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.6.0 (2025-12-12)
+
+Full Changelog: [v3.5.0...v3.6.0](https://github.com/dodopayments/dodopayments-php/compare/v3.5.0...v3.6.0)
+
+### Features
+
+* add idempotency header support ([5b8ce1f](https://github.com/dodopayments/dodopayments-php/commit/5b8ce1fc46627b287ecdb6575cd121082d1791c8))
+* **api:** manual updates ([0f7116d](https://github.com/dodopayments/dodopayments-php/commit/0f7116d35047278096d03175d303cb5513a5f8e1))
+
+
+### Chores
+
+* **internal:** codegen related update ([aa3bcee](https://github.com/dodopayments/dodopayments-php/commit/aa3bceef9a090db64a5205ad5e346defaa9cada5))
+* **internal:** codegen related update ([7f77a66](https://github.com/dodopayments/dodopayments-php/commit/7f77a66699e0874a997ab215beace7cdf36cd2da))
+
 ## 3.5.0 (2025-12-11)
 
 Full Changelog: [v3.4.0...v3.5.0](https://github.com/dodopayments/dodopayments-php/compare/v3.4.0...v3.5.0)
