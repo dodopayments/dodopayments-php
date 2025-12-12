@@ -13,6 +13,7 @@ use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 
 /**
+ * @deprecated
  * @see Dodopayments\Services\PaymentsService::create()
  *
  * @phpstan-type PaymentCreateParamsShape = array{

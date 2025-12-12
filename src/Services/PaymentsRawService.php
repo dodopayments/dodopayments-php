@@ -33,6 +33,8 @@ final class PaymentsRawService implements PaymentsRawContract
     public function __construct(private Client $client) {}
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{

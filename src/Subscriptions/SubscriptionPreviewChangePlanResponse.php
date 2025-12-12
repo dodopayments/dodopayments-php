@@ -10,11 +10,9 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\Subscriptions\Subscription\Meter;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember0;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember1;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\UnionMember2;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary;
 
 /**
@@ -63,7 +61,8 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ImmediateCharge|array{
-     *   lineItems: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
+     *   lineItems: list<ImmediateCharge\LineItem\Subscription|Addon|Meter>,
+     *   summary: Summary,
      * } $immediateCharge
      * @param Subscription|array{
      *   addons: list<AddonCartResponseItem>,
@@ -73,7 +72,7 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
      *   metadata: array<string,string>,
-     *   meters: list<Meter>,
+     *   meters: list<Subscription\Meter>,
      *   nextBillingDate: \DateTimeInterface,
      *   onDemand: bool,
      *   paymentFrequencyCount: int,
@@ -110,7 +109,8 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
 
     /**
      * @param ImmediateCharge|array{
-     *   lineItems: list<UnionMember0|UnionMember1|UnionMember2>, summary: Summary
+     *   lineItems: list<ImmediateCharge\LineItem\Subscription|Addon|Meter>,
+     *   summary: Summary,
      * } $immediateCharge
      */
     public function withImmediateCharge(
@@ -133,7 +133,7 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      *   currency: value-of<Currency>,
      *   customer: CustomerLimitedDetails,
      *   metadata: array<string,string>,
-     *   meters: list<Meter>,
+     *   meters: list<Subscription\Meter>,
      *   nextBillingDate: \DateTimeInterface,
      *   onDemand: bool,
      *   paymentFrequencyCount: int,
