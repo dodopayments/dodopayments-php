@@ -47,6 +47,7 @@ use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data\PayloadType;
  *   discountID?: string|null,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
+ *   invoiceID?: string|null,
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
@@ -195,6 +196,12 @@ final class Data implements BaseModel
      */
     #[Optional('error_message', nullable: true)]
     public ?string $errorMessage;
+
+    /**
+     * Invoice ID for this payment. Uses India-specific invoice ID if available.
+     */
+    #[Optional('invoice_id', nullable: true)]
+    public ?string $invoiceID;
 
     /**
      * Checkout URL.
@@ -382,6 +389,7 @@ final class Data implements BaseModel
         ?string $discountID = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
+        ?string $invoiceID = null,
         ?string $paymentLink = null,
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
@@ -418,6 +426,7 @@ final class Data implements BaseModel
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
+        null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
         null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
@@ -715,6 +724,17 @@ final class Data implements BaseModel
     {
         $self = clone $this;
         $self['errorMessage'] = $errorMessage;
+
+        return $self;
+    }
+
+    /**
+     * Invoice ID for this payment. Uses India-specific invoice ID if available.
+     */
+    public function withInvoiceID(?string $invoiceID): self
+    {
+        $self = clone $this;
+        $self['invoiceID'] = $invoiceID;
 
         return $self;
     }
