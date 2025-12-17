@@ -22,7 +22,7 @@ interface PaymentsRawContract
      *
      * @api
      *
-     * @param array<mixed>|PaymentCreateParams $params
+     * @param array<string,mixed>|PaymentCreateParams $params
      *
      * @return BaseResponse<PaymentNewResponse>
      *
@@ -50,7 +50,7 @@ interface PaymentsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|PaymentListParams $params
+     * @param array<string,mixed>|PaymentListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<PaymentListResponse>>
      *

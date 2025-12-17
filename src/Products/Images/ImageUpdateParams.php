@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Services\Products\ImagesService::update()
  *
- * @phpstan-type ImageUpdateParamsShape = array{forceUpdate?: bool}
+ * @phpstan-type ImageUpdateParamsShape = array{forceUpdate?: bool|null}
  */
 final class ImageUpdateParams implements BaseModel
 {

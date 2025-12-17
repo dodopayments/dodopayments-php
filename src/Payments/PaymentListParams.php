@@ -14,14 +14,14 @@ use Dodopayments\Payments\PaymentListParams\Status;
  * @see Dodopayments\Services\PaymentsService::list()
  *
  * @phpstan-type PaymentListParamsShape = array{
- *   brandID?: string,
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   status?: Status|value-of<Status>,
- *   subscriptionID?: string,
+ *   brandID?: string|null,
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
+ *   customerID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   status?: null|Status|value-of<Status>,
+ *   subscriptionID?: string|null,
  * }
  */
 final class PaymentListParams implements BaseModel

@@ -14,13 +14,13 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
  * @see Dodopayments\Services\SubscriptionsService::list()
  *
  * @phpstan-type SubscriptionListParamsShape = array{
- *   brandID?: string,
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   status?: Status|value-of<Status>,
+ *   brandID?: string|null,
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
+ *   customerID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   status?: null|Status|value-of<Status>,
  * }
  */
 final class SubscriptionListParams implements BaseModel

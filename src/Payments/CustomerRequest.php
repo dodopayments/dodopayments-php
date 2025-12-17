@@ -8,6 +8,12 @@ use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
+/**
+ * @phpstan-import-type AttachExistingCustomerShape from \Dodopayments\Payments\AttachExistingCustomer
+ * @phpstan-import-type NewCustomerShape from \Dodopayments\Payments\NewCustomer
+ *
+ * @phpstan-type CustomerRequestShape = AttachExistingCustomerShape|NewCustomerShape
+ */
 final class CustomerRequest implements ConverterSource
 {
     use SdkUnion;

@@ -19,7 +19,7 @@ interface AddonsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|AddonCreateParams $params
+     * @param array<string,mixed>|AddonCreateParams $params
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -48,7 +48,7 @@ interface AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
-     * @param array<mixed>|AddonUpdateParams $params
+     * @param array<string,mixed>|AddonUpdateParams $params
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -63,7 +63,7 @@ interface AddonsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|AddonListParams $params
+     * @param array<string,mixed>|AddonListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<AddonResponse>>
      *

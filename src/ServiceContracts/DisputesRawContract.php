@@ -31,7 +31,7 @@ interface DisputesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DisputeListParams $params
+     * @param array<string,mixed>|DisputeListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<DisputeListResponse>>
      *

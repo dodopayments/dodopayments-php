@@ -14,7 +14,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type OnDemandSubscriptionShape = array{
  *   mandateOnly: bool,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   productCurrency?: value-of<Currency>|null,
+ *   productCurrency?: null|Currency|value-of<Currency>,
  *   productDescription?: string|null,
  *   productPrice?: int|null,
  * }

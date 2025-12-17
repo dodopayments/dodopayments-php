@@ -32,7 +32,7 @@ interface LicenseKeyInstancesRawContract
      * @api
      *
      * @param string $id License key instance ID
-     * @param array<mixed>|LicenseKeyInstanceUpdateParams $params
+     * @param array<string,mixed>|LicenseKeyInstanceUpdateParams $params
      *
      * @return BaseResponse<LicenseKeyInstance>
      *
@@ -47,7 +47,7 @@ interface LicenseKeyInstancesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LicenseKeyInstanceListParams $params
+     * @param array<string,mixed>|LicenseKeyInstanceListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<LicenseKeyInstance>>
      *

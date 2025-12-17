@@ -6,7 +6,6 @@ namespace Dodopayments\CheckoutSessions;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization\Theme;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
@@ -15,68 +14,37 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
-use Dodopayments\Subscriptions\AttachAddon;
-use Dodopayments\Subscriptions\OnDemandSubscription;
 
 /**
  * @see Dodopayments\Services\CheckoutSessionsService::create()
  *
+ * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
+ * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
+ * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
+ * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
+ *
  * @phpstan-type CheckoutSessionCreateParamsShape = array{
- *   productCart: list<ProductCart|array{
- *     productID: string,
- *     quantity: int,
- *     addons?: list<AttachAddon>|null,
- *     amount?: int|null,
- *   }>,
+ *   productCart: list<ProductCartShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
- *   billingAddress?: null|BillingAddress|array{
- *     country: value-of<CountryCode>,
- *     city?: string|null,
- *     state?: string|null,
- *     street?: string|null,
- *     zipcode?: string|null,
- *   },
+ *   billingAddress?: BillingAddressShape|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
- *   confirm?: bool,
- *   customer?: null|AttachExistingCustomer|array{
- *     customerID: string
- *   }|NewCustomer|array{
- *     email: string, name?: string|null, phoneNumber?: string|null
- *   },
- *   customization?: Customization|array{
- *     forceLanguage?: string|null,
- *     showOnDemandTag?: bool|null,
- *     showOrderDetails?: bool|null,
- *     theme?: value-of<Theme>|null,
- *   },
+ *   confirm?: bool|null,
+ *   customer?: CustomerRequestShape|null,
+ *   customization?: CustomizationShape|null,
  *   discountCode?: string|null,
- *   featureFlags?: FeatureFlags|array{
- *     allowCurrencySelection?: bool|null,
- *     allowCustomerEditingCity?: bool|null,
- *     allowCustomerEditingCountry?: bool|null,
- *     allowCustomerEditingEmail?: bool|null,
- *     allowCustomerEditingName?: bool|null,
- *     allowCustomerEditingState?: bool|null,
- *     allowCustomerEditingStreet?: bool|null,
- *     allowCustomerEditingZipcode?: bool|null,
- *     allowDiscountCode?: bool|null,
- *     allowPhoneNumberCollection?: bool|null,
- *     allowTaxID?: bool|null,
- *     alwaysCreateNewCustomer?: bool|null,
- *   },
+ *   featureFlags?: FeatureFlagsShape|null,
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
- *   minimalAddress?: bool,
+ *   minimalAddress?: bool|null,
  *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool,
- *   subscriptionData?: null|SubscriptionData|array{
- *     onDemand?: OnDemandSubscription|null, trialPeriodDays?: int|null
- *   },
+ *   showSavedPaymentMethods?: bool|null,
+ *   subscriptionData?: SubscriptionDataShape|null,
  * }
  */
 final class CheckoutSessionCreateParams implements BaseModel
@@ -203,48 +171,15 @@ final class CheckoutSessionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ProductCart|array{
-     *   productID: string,
-     *   quantity: int,
-     *   addons?: list<AttachAddon>|null,
-     *   amount?: int|null,
-     * }> $productCart
+     * @param list<ProductCartShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * }|null $billingAddress
+     * @param BillingAddressShape|null $billingAddress
      * @param Currency|value-of<Currency>|null $billingCurrency
-     * @param AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
-     *   email: string, name?: string|null, phoneNumber?: string|null
-     * }|null $customer
-     * @param Customization|array{
-     *   forceLanguage?: string|null,
-     *   showOnDemandTag?: bool|null,
-     *   showOrderDetails?: bool|null,
-     *   theme?: value-of<Theme>|null,
-     * } $customization
-     * @param FeatureFlags|array{
-     *   allowCurrencySelection?: bool|null,
-     *   allowCustomerEditingCity?: bool|null,
-     *   allowCustomerEditingCountry?: bool|null,
-     *   allowCustomerEditingEmail?: bool|null,
-     *   allowCustomerEditingName?: bool|null,
-     *   allowCustomerEditingState?: bool|null,
-     *   allowCustomerEditingStreet?: bool|null,
-     *   allowCustomerEditingZipcode?: bool|null,
-     *   allowDiscountCode?: bool|null,
-     *   allowPhoneNumberCollection?: bool|null,
-     *   allowTaxID?: bool|null,
-     *   alwaysCreateNewCustomer?: bool|null,
-     * } $featureFlags
+     * @param CustomerRequestShape|null $customer
+     * @param CustomizationShape $customization
+     * @param FeatureFlagsShape $featureFlags
      * @param array<string,string>|null $metadata
-     * @param SubscriptionData|array{
-     *   onDemand?: OnDemandSubscription|null, trialPeriodDays?: int|null
-     * }|null $subscriptionData
+     * @param SubscriptionDataShape|null $subscriptionData
      */
     public static function with(
         array $productCart,
@@ -286,12 +221,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     }
 
     /**
-     * @param list<ProductCart|array{
-     *   productID: string,
-     *   quantity: int,
-     *   addons?: list<AttachAddon>|null,
-     *   amount?: int|null,
-     * }> $productCart
+     * @param list<ProductCartShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {
@@ -323,13 +253,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * Billing address information for the session.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * }|null $billingAddress
+     * @param BillingAddressShape|null $billingAddress
      */
     public function withBillingAddress(
         BillingAddress|array|null $billingAddress
@@ -368,9 +292,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * Customer details for the session.
      *
-     * @param AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
-     *   email: string, name?: string|null, phoneNumber?: string|null
-     * }|null $customer
+     * @param CustomerRequestShape|null $customer
      */
     public function withCustomer(
         AttachExistingCustomer|array|NewCustomer|null $customer
@@ -384,12 +306,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * Customization for the checkout session page.
      *
-     * @param Customization|array{
-     *   forceLanguage?: string|null,
-     *   showOnDemandTag?: bool|null,
-     *   showOrderDetails?: bool|null,
-     *   theme?: value-of<Theme>|null,
-     * } $customization
+     * @param CustomizationShape $customization
      */
     public function withCustomization(Customization|array $customization): self
     {
@@ -408,20 +325,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     }
 
     /**
-     * @param FeatureFlags|array{
-     *   allowCurrencySelection?: bool|null,
-     *   allowCustomerEditingCity?: bool|null,
-     *   allowCustomerEditingCountry?: bool|null,
-     *   allowCustomerEditingEmail?: bool|null,
-     *   allowCustomerEditingName?: bool|null,
-     *   allowCustomerEditingState?: bool|null,
-     *   allowCustomerEditingStreet?: bool|null,
-     *   allowCustomerEditingZipcode?: bool|null,
-     *   allowDiscountCode?: bool|null,
-     *   allowPhoneNumberCollection?: bool|null,
-     *   allowTaxID?: bool|null,
-     *   alwaysCreateNewCustomer?: bool|null,
-     * } $featureFlags
+     * @param FeatureFlagsShape $featureFlags
      */
     public function withFeatureFlags(FeatureFlags|array $featureFlags): self
     {
@@ -490,9 +394,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     }
 
     /**
-     * @param SubscriptionData|array{
-     *   onDemand?: OnDemandSubscription|null, trialPeriodDays?: int|null
-     * }|null $subscriptionData
+     * @param SubscriptionDataShape|null $subscriptionData
      */
     public function withSubscriptionData(
         SubscriptionData|array|null $subscriptionData

@@ -16,7 +16,7 @@ interface CustomerPortalRawContract
      * @api
      *
      * @param string $customerID Customer Id
-     * @param array<mixed>|CustomerPortalCreateParams $params
+     * @param array<string,mixed>|CustomerPortalCreateParams $params
      *
      * @return BaseResponse<CustomerPortalSession>
      *

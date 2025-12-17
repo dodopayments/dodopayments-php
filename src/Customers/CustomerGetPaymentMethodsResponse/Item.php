@@ -10,16 +10,17 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\PaymentMethod;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
+ * @phpstan-import-type CardShape from \Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card
+ *
  * @phpstan-type ItemShape = array{
- *   paymentMethod: value-of<PaymentMethod>,
+ *   paymentMethod: PaymentMethod|value-of<PaymentMethod>,
  *   paymentMethodID: string,
- *   card?: Card|null,
+ *   card?: null|Card|CardShape,
  *   lastUsedAt?: \DateTimeInterface|null,
- *   paymentMethodType?: value-of<PaymentMethodTypes>|null,
+ *   paymentMethodType?: null|PaymentMethodTypes|value-of<PaymentMethodTypes>,
  *   recurringEnabled?: bool|null,
  * }
  */
@@ -83,14 +84,7 @@ final class Item implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param PaymentMethod|value-of<PaymentMethod> $paymentMethod
-     * @param Card|array{
-     *   cardIssuingCountry?: value-of<CountryCode>|null,
-     *   cardNetwork?: string|null,
-     *   cardType?: string|null,
-     *   expiryMonth?: string|null,
-     *   expiryYear?: string|null,
-     *   last4Digits?: string|null,
-     * }|null $card
+     * @param CardShape|null $card
      * @param PaymentMethodTypes|value-of<PaymentMethodTypes>|null $paymentMethodType
      */
     public static function with(
@@ -138,14 +132,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * @param Card|array{
-     *   cardIssuingCountry?: value-of<CountryCode>|null,
-     *   cardNetwork?: string|null,
-     *   cardType?: string|null,
-     *   expiryMonth?: string|null,
-     *   expiryYear?: string|null,
-     *   last4Digits?: string|null,
-     * }|null $card
+     * @param CardShape|null $card
      */
     public function withCard(Card|array|null $card): self
     {

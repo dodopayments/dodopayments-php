@@ -12,8 +12,10 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
 /**
  * Filter condition with key, operator, and value.
  *
+ * @phpstan-import-type ValueShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2FilterCondition\Value
+ *
  * @phpstan-type Level2FilterConditionShape = array{
- *   key: string, operator: value-of<Operator>, value: string|float|bool
+ *   key: string, operator: Operator|value-of<Operator>, value: ValueShape
  * }
  */
 final class Level2FilterCondition implements BaseModel
@@ -62,6 +64,7 @@ final class Level2FilterCondition implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Operator|value-of<Operator> $operator
+     * @param ValueShape $value
      */
     public static function with(
         string $key,
@@ -101,6 +104,8 @@ final class Level2FilterCondition implements BaseModel
 
     /**
      * Filter value - can be string, number, or boolean.
+     *
+     * @param ValueShape $value
      */
     public function withValue(string|float|bool $value): self
     {

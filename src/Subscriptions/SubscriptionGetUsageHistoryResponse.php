@@ -7,13 +7,14 @@ namespace Dodopayments\Subscriptions;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
 
 /**
+ * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter
+ *
  * @phpstan-type SubscriptionGetUsageHistoryResponseShape = array{
  *   endDate: \DateTimeInterface,
- *   meters: list<Meter>,
+ *   meters: list<MeterShape>,
  *   startDate: \DateTimeInterface,
  * }
  */
@@ -71,16 +72,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Meter|array{
-     *   id: string,
-     *   chargeableUnits: string,
-     *   consumedUnits: string,
-     *   currency: value-of<Currency>,
-     *   freeThreshold: int,
-     *   name: string,
-     *   pricePerUnit: string,
-     *   totalPrice: int,
-     * }> $meters
+     * @param list<MeterShape> $meters
      */
     public static function with(
         \DateTimeInterface $endDate,
@@ -110,16 +102,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel
     /**
      * List of meters and their usage for this billing period.
      *
-     * @param list<Meter|array{
-     *   id: string,
-     *   chargeableUnits: string,
-     *   consumedUnits: string,
-     *   currency: value-of<Currency>,
-     *   freeThreshold: int,
-     *   name: string,
-     *   pricePerUnit: string,
-     *   totalPrice: int,
-     * }> $meters
+     * @param list<MeterShape> $meters
      */
     public function withMeters(array $meters): self
     {

@@ -12,7 +12,7 @@ use Dodopayments\Misc\CountryCode;
 
 /**
  * @phpstan-type BillingAddressShape = array{
- *   country: value-of<CountryCode>,
+ *   country: CountryCode|value-of<CountryCode>,
  *   city?: string|null,
  *   state?: string|null,
  *   street?: string|null,

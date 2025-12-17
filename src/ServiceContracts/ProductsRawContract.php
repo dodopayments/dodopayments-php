@@ -21,7 +21,7 @@ interface ProductsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ProductCreateParams $params
+     * @param array<string,mixed>|ProductCreateParams $params
      *
      * @return BaseResponse<Product>
      *
@@ -49,7 +49,7 @@ interface ProductsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ProductUpdateParams $params
+     * @param array<string,mixed>|ProductUpdateParams $params
      *
      * @return BaseResponse<mixed>
      *
@@ -64,7 +64,7 @@ interface ProductsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|ProductListParams $params
+     * @param array<string,mixed>|ProductListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<ProductListResponse>>
      *
@@ -103,7 +103,7 @@ interface ProductsRawContract
      * @api
      *
      * @param string $id Product Id
-     * @param array<mixed>|ProductUpdateFilesParams $params
+     * @param array<string,mixed>|ProductUpdateFilesParams $params
      *
      * @return BaseResponse<ProductUpdateFilesResponse>
      *

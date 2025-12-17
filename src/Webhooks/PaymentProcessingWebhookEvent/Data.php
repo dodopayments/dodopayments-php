@@ -9,8 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
-use Dodopayments\Disputes\DisputeStage;
-use Dodopayments\Disputes\DisputeStatus;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
@@ -18,28 +16,33 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\IntentStatus;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\Payment\Refund;
-use Dodopayments\Refunds\RefundStatus;
 use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data\PayloadType;
 
 /**
  * Event-specific data.
  *
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
+ * @phpstan-import-type RefundShape from \Dodopayments\Payments\Payment\Refund
+ * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
+ *
  * @phpstan-type DataShape = array{
- *   billing: BillingAddress,
+ *   billing: BillingAddress|BillingAddressShape,
  *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   currency: value-of<Currency>,
- *   customer: CustomerLimitedDetails,
+ *   currency: Currency|value-of<Currency>,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
- *   disputes: list<Dispute>,
+ *   disputes: list<DisputeShape>,
  *   metadata: array<string,string>,
  *   paymentID: string,
- *   refunds: list<Refund>,
+ *   refunds: list<RefundShape>,
  *   settlementAmount: int,
- *   settlementCurrency: value-of<Currency>,
+ *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
- *   cardIssuingCountry?: value-of<CountryCode>|null,
+ *   cardIssuingCountry?: null|CountryCode|value-of<CountryCode>,
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
  *   cardType?: string|null,
@@ -51,13 +54,13 @@ use Dodopayments\Webhooks\PaymentProcessingWebhookEvent\Data\PayloadType;
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
- *   productCart?: list<ProductCart>|null,
+ *   productCart?: list<ProductCartShape>|null,
  *   settlementTax?: int|null,
- *   status?: value-of<IntentStatus>|null,
+ *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
  *   tax?: int|null,
  *   updatedAt?: \DateTimeInterface|null,
- *   payloadType?: value-of<PayloadType>|null,
+ *   payloadType?: null|PayloadType|value-of<PayloadType>,
  * }
  */
 final class Data implements BaseModel
@@ -320,49 +323,15 @@ final class Data implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
+     * @param BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
-     * @param list<Dispute|array{
-     *   amount: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   currency: string,
-     *   disputeID: string,
-     *   disputeStage: value-of<DisputeStage>,
-     *   disputeStatus: value-of<DisputeStatus>,
-     *   paymentID: string,
-     *   remarks?: string|null,
-     * }> $disputes
+     * @param CustomerLimitedDetailsShape $customer
+     * @param list<DisputeShape> $disputes
      * @param array<string,string> $metadata
-     * @param list<Refund|array{
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   isPartial: bool,
-     *   paymentID: string,
-     *   refundID: string,
-     *   status: value-of<RefundStatus>,
-     *   amount?: int|null,
-     *   currency?: value-of<Currency>|null,
-     *   reason?: string|null,
-     * }> $refunds
+     * @param list<RefundShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param CountryCode|value-of<CountryCode> $cardIssuingCountry
-     * @param list<ProductCart|array{
-     *   productID: string, quantity: int
-     * }>|null $productCart
+     * @param list<ProductCartShape>|null $productCart
      * @param IntentStatus|value-of<IntentStatus> $status
      * @param PayloadType|value-of<PayloadType> $payloadType
      */
@@ -442,13 +411,7 @@ final class Data implements BaseModel
     }
 
     /**
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
+     * @param BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -503,13 +466,7 @@ final class Data implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
@@ -534,17 +491,7 @@ final class Data implements BaseModel
     /**
      * List of disputes associated with this payment.
      *
-     * @param list<Dispute|array{
-     *   amount: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   currency: string,
-     *   disputeID: string,
-     *   disputeStage: value-of<DisputeStage>,
-     *   disputeStatus: value-of<DisputeStatus>,
-     *   paymentID: string,
-     *   remarks?: string|null,
-     * }> $disputes
+     * @param list<DisputeShape> $disputes
      */
     public function withDisputes(array $disputes): self
     {
@@ -581,17 +528,7 @@ final class Data implements BaseModel
     /**
      * List of refunds issued for this payment.
      *
-     * @param list<Refund|array{
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   isPartial: bool,
-     *   paymentID: string,
-     *   refundID: string,
-     *   status: value-of<RefundStatus>,
-     *   amount?: int|null,
-     *   currency?: value-of<Currency>|null,
-     *   reason?: string|null,
-     * }> $refunds
+     * @param list<RefundShape> $refunds
      */
     public function withRefunds(array $refunds): self
     {
@@ -775,9 +712,7 @@ final class Data implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @param list<ProductCart|array{
-     *   productID: string, quantity: int
-     * }>|null $productCart
+     * @param list<ProductCartShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

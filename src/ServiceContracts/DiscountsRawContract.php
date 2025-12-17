@@ -18,7 +18,7 @@ interface DiscountsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DiscountCreateParams $params
+     * @param array<string,mixed>|DiscountCreateParams $params
      *
      * @return BaseResponse<Discount>
      *
@@ -47,7 +47,7 @@ interface DiscountsRawContract
      * @api
      *
      * @param string $discountID Discount Id
-     * @param array<mixed>|DiscountUpdateParams $params
+     * @param array<string,mixed>|DiscountUpdateParams $params
      *
      * @return BaseResponse<Discount>
      *
@@ -62,7 +62,7 @@ interface DiscountsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|DiscountListParams $params
+     * @param array<string,mixed>|DiscountListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<Discount>>
      *

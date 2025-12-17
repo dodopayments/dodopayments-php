@@ -15,13 +15,12 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 /**
  * @see Dodopayments\Services\SubscriptionsService::charge()
  *
+ * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ *
  * @phpstan-type SubscriptionChargeParamsShape = array{
  *   productPrice: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   customerBalanceConfig?: null|CustomerBalanceConfig|array{
- *     allowCustomerCreditsPurchase?: bool|null,
- *     allowCustomerCreditsUsage?: bool|null,
- *   },
+ *   customerBalanceConfig?: CustomerBalanceConfigShape|null,
  *   metadata?: array<string,string>|null,
  *   productCurrency?: null|Currency|value-of<Currency>,
  *   productDescription?: string|null,
@@ -100,10 +99,7 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerBalanceConfig|array{
-     *   allowCustomerCreditsPurchase?: bool|null,
-     *   allowCustomerCreditsUsage?: bool|null,
-     * }|null $customerBalanceConfig
+     * @param CustomerBalanceConfigShape|null $customerBalanceConfig
      * @param array<string,string>|null $metadata
      * @param Currency|value-of<Currency>|null $productCurrency
      */
@@ -156,10 +152,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Specify how customer balance is used for the payment.
      *
-     * @param CustomerBalanceConfig|array{
-     *   allowCustomerCreditsPurchase?: bool|null,
-     *   allowCustomerCreditsUsage?: bool|null,
-     * }|null $customerBalanceConfig
+     * @param CustomerBalanceConfigShape|null $customerBalanceConfig
      */
     public function withCustomerBalanceConfig(
         CustomerBalanceConfig|array|null $customerBalanceConfig

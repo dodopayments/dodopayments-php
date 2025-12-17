@@ -9,35 +9,28 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 
 /**
  * @deprecated
  * @see Dodopayments\Services\PaymentsService::create()
  *
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ *
  * @phpstan-type PaymentCreateParamsShape = array{
- *   billing: BillingAddress|array{
- *     country: value-of<CountryCode>,
- *     city?: string|null,
- *     state?: string|null,
- *     street?: string|null,
- *     zipcode?: string|null,
- *   },
- *   customer: AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
- *     email: string, name?: string|null, phoneNumber?: string|null
- *   },
- *   productCart: list<OneTimeProductCartItem|array{
- *     productID: string, quantity: int, amount?: int|null
- *   }>,
+ *   billing: BillingAddressShape,
+ *   customer: CustomerRequestShape,
+ *   productCart: list<OneTimeProductCartItemShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
  *   force3DS?: bool|null,
- *   metadata?: array<string,string>,
+ *   metadata?: array<string,string>|null,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool,
+ *   showSavedPaymentMethods?: bool|null,
  *   taxID?: string|null,
  * }
  */
@@ -166,19 +159,9 @@ final class PaymentCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
-     * @param AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
-     *   email: string, name?: string|null, phoneNumber?: string|null
-     * } $customer
-     * @param list<OneTimeProductCartItem|array{
-     *   productID: string, quantity: int, amount?: int|null
-     * }> $productCart
+     * @param BillingAddressShape $billing
+     * @param CustomerRequestShape $customer
+     * @param list<OneTimeProductCartItemShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string,string> $metadata
@@ -219,13 +202,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Billing address details for the payment.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
+     * @param BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -238,9 +215,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Customer information for the payment.
      *
-     * @param AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
-     *   email: string, name?: string|null, phoneNumber?: string|null
-     * } $customer
+     * @param CustomerRequestShape $customer
      */
     public function withCustomer(
         AttachExistingCustomer|array|NewCustomer $customer
@@ -254,9 +229,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @param list<OneTimeProductCartItem|array{
-     *   productID: string, quantity: int, amount?: int|null
-     * }> $productCart
+     * @param list<OneTimeProductCartItemShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {

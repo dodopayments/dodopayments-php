@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Services\Customers\CustomerPortalService::create()
  *
- * @phpstan-type CustomerPortalCreateParamsShape = array{sendEmail?: bool}
+ * @phpstan-type CustomerPortalCreateParamsShape = array{sendEmail?: bool|null}
  */
 final class CustomerPortalCreateParams implements BaseModel
 {

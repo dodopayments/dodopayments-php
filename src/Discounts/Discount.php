@@ -18,7 +18,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   discountID: string,
  *   restrictedTo: list<string>,
  *   timesUsed: int,
- *   type: value-of<DiscountType>,
+ *   type: DiscountType|value-of<DiscountType>,
  *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
  *   subscriptionCycles?: int|null,

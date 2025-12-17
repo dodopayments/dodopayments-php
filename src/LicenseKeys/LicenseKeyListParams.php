@@ -14,11 +14,11 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
  * @see Dodopayments\Services\LicenseKeysService::list()
  *
  * @phpstan-type LicenseKeyListParamsShape = array{
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   productID?: string,
- *   status?: Status|value-of<Status>,
+ *   customerID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   productID?: string|null,
+ *   status?: null|Status|value-of<Status>,
  * }
  */
 final class LicenseKeyListParams implements BaseModel

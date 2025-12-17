@@ -11,6 +11,13 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription;
 
+/**
+ * @phpstan-import-type SubscriptionShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription
+ * @phpstan-import-type AddonShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon
+ * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter
+ *
+ * @phpstan-type LineItemShape = SubscriptionShape|AddonShape|MeterShape
+ */
 final class LineItem implements ConverterSource
 {
     use SdkUnion;

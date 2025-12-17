@@ -13,11 +13,11 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\ProductsService::list()
  *
  * @phpstan-type ProductListParamsShape = array{
- *   archived?: bool,
- *   brandID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   recurring?: bool,
+ *   archived?: bool|null,
+ *   brandID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   recurring?: bool|null,
  * }
  */
 final class ProductListParams implements BaseModel

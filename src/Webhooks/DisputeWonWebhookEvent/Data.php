@@ -21,11 +21,11 @@ use Dodopayments\Webhooks\DisputeWonWebhookEvent\Data\PayloadType;
  *   createdAt: \DateTimeInterface,
  *   currency: string,
  *   disputeID: string,
- *   disputeStage: value-of<DisputeStage>,
- *   disputeStatus: value-of<DisputeStatus>,
+ *   disputeStage: DisputeStage|value-of<DisputeStage>,
+ *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
  *   remarks?: string|null,
- *   payloadType?: value-of<PayloadType>|null,
+ *   payloadType?: null|PayloadType|value-of<PayloadType>,
  * }
  */
 final class Data implements BaseModel
