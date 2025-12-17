@@ -16,19 +16,21 @@ use Dodopayments\Webhooks\RefundSucceededWebhookEvent\Data\PayloadType;
 /**
  * Event-specific data.
  *
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ *
  * @phpstan-type DataShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   customer: CustomerLimitedDetails,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   isPartial: bool,
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   refundID: string,
- *   status: value-of<RefundStatus>,
+ *   status: RefundStatus|value-of<RefundStatus>,
  *   amount?: int|null,
- *   currency?: value-of<Currency>|null,
+ *   currency?: null|Currency|value-of<Currency>,
  *   reason?: string|null,
- *   payloadType?: value-of<PayloadType>|null,
+ *   payloadType?: null|PayloadType|value-of<PayloadType>,
  * }
  */
 final class Data implements BaseModel
@@ -146,13 +148,7 @@ final class Data implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency> $currency
@@ -214,13 +210,7 @@ final class Data implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

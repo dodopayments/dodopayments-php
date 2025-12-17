@@ -16,7 +16,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type CustomerCreateParamsShape = array{
  *   email: string,
  *   name: string,
- *   metadata?: array<string,string>,
+ *   metadata?: array<string,string>|null,
  *   phoneNumber?: string|null,
  * }
  */

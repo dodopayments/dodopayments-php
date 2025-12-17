@@ -27,7 +27,7 @@ interface HeadersRawContract
     /**
      * @api
      *
-     * @param array<mixed>|HeaderUpdateParams $params
+     * @param array<string,mixed>|HeaderUpdateParams $params
      *
      * @return BaseResponse<mixed>
      *

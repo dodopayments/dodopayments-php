@@ -12,8 +12,10 @@ use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Operator;
 /**
  * Filter condition with key, operator, and value.
  *
+ * @phpstan-import-type ValueShape from \Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Value
+ *
  * @phpstan-type DirectFilterConditionShape = array{
- *   key: string, operator: value-of<Operator>, value: string|float|bool
+ *   key: string, operator: Operator|value-of<Operator>, value: ValueShape
  * }
  */
 final class DirectFilterCondition implements BaseModel
@@ -62,6 +64,7 @@ final class DirectFilterCondition implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Operator|value-of<Operator> $operator
+     * @param ValueShape $value
      */
     public static function with(
         string $key,
@@ -101,6 +104,8 @@ final class DirectFilterCondition implements BaseModel
 
     /**
      * Filter value - can be string, number, or boolean.
+     *
+     * @param ValueShape $value
      */
     public function withValue(string|float|bool $value): self
     {

@@ -16,7 +16,7 @@ interface CheckoutSessionsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|CheckoutSessionCreateParams $params
+     * @param array<string,mixed>|CheckoutSessionCreateParams $params
      *
      * @return BaseResponse<CheckoutSessionResponse>
      *

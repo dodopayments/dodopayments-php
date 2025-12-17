@@ -7,11 +7,12 @@ namespace Dodopayments\Customers\Wallets;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
 
 /**
+ * @phpstan-import-type CustomerWalletShape from \Dodopayments\Customers\Wallets\CustomerWallet
+ *
  * @phpstan-type WalletListResponseShape = array{
- *   items: list<CustomerWallet>, totalBalanceUsd: int
+ *   items: list<CustomerWalletShape>, totalBalanceUsd: int
  * }
  */
 final class WalletListResponse implements BaseModel
@@ -53,13 +54,7 @@ final class WalletListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<CustomerWallet|array{
-     *   balance: int,
-     *   createdAt: \DateTimeInterface,
-     *   currency: value-of<Currency>,
-     *   customerID: string,
-     *   updatedAt: \DateTimeInterface,
-     * }> $items
+     * @param list<CustomerWalletShape> $items
      */
     public static function with(array $items, int $totalBalanceUsd): self
     {
@@ -72,13 +67,7 @@ final class WalletListResponse implements BaseModel
     }
 
     /**
-     * @param list<CustomerWallet|array{
-     *   balance: int,
-     *   createdAt: \DateTimeInterface,
-     *   currency: value-of<Currency>,
-     *   customerID: string,
-     *   updatedAt: \DateTimeInterface,
-     * }> $items
+     * @param list<CustomerWalletShape> $items
      */
     public function withItems(array $items): self
     {

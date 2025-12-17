@@ -14,12 +14,12 @@ use Dodopayments\Refunds\RefundListParams\Status;
  * @see Dodopayments\Services\RefundsService::list()
  *
  * @phpstan-type RefundListParamsShape = array{
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   status?: Status|value-of<Status>,
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
+ *   customerID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   status?: null|Status|value-of<Status>,
  * }
  */
 final class RefundListParams implements BaseModel

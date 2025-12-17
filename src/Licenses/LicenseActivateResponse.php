@@ -11,14 +11,17 @@ use Dodopayments\Licenses\LicenseActivateResponse\Product;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type ProductShape from \Dodopayments\Licenses\LicenseActivateResponse\Product
+ *
  * @phpstan-type LicenseActivateResponseShape = array{
  *   id: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   customer: CustomerLimitedDetails,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   licenseKeyID: string,
  *   name: string,
- *   product: Product,
+ *   product: Product|ProductShape,
  * }
  */
 final class LicenseActivateResponse implements BaseModel
@@ -107,14 +110,8 @@ final class LicenseActivateResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
-     * @param Product|array{productID: string, name?: string|null} $product
+     * @param CustomerLimitedDetailsShape $customer
+     * @param ProductShape $product
      */
     public static function with(
         string $id,
@@ -174,13 +171,7 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Limited customer details associated with the license key.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
@@ -215,7 +206,7 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Related product info. Present if the license key is tied to a product.
      *
-     * @param Product|array{productID: string, name?: string|null} $product
+     * @param ProductShape $product
      */
     public function withProduct(Product|array $product): self
     {

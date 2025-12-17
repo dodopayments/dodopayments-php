@@ -17,7 +17,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   enabled: bool,
  *   statementDescriptor: string,
  *   verificationEnabled: bool,
- *   verificationStatus: value-of<VerificationStatus>,
+ *   verificationStatus: VerificationStatus|value-of<VerificationStatus>,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,

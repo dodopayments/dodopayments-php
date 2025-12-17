@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type CustomerWalletShape = array{
  *   balance: int,
  *   createdAt: \DateTimeInterface,
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   customerID: string,
  *   updatedAt: \DateTimeInterface,
  * }

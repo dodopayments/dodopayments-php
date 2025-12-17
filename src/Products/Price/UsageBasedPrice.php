@@ -16,17 +16,19 @@ use Dodopayments\Subscriptions\TimeInterval;
 /**
  * Usage Based price details.
  *
+ * @phpstan-import-type AddMeterToPriceShape from \Dodopayments\Products\AddMeterToPrice
+ *
  * @phpstan-type UsageBasedPriceShape = array{
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   discount: int,
  *   fixedPrice: int,
  *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: value-of<TimeInterval>,
+ *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
  *   purchasingPowerParity: bool,
  *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: value-of<TimeInterval>,
- *   type: value-of<Type>,
- *   meters?: list<AddMeterToPrice>|null,
+ *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
+ *   type: Type|value-of<Type>,
+ *   meters?: list<AddMeterToPriceShape>|null,
  *   taxInclusive?: bool|null,
  * }
  */
@@ -154,14 +156,7 @@ final class UsageBasedPrice implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param Type|value-of<Type> $type
-     * @param list<AddMeterToPrice|array{
-     *   meterID: string,
-     *   pricePerUnit: string,
-     *   description?: string|null,
-     *   freeThreshold?: int|null,
-     *   measurementUnit?: string|null,
-     *   name?: string|null,
-     * }>|null $meters
+     * @param list<AddMeterToPriceShape>|null $meters
      */
     public static function with(
         Currency|string $currency,
@@ -307,14 +302,7 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * @param list<AddMeterToPrice|array{
-     *   meterID: string,
-     *   pricePerUnit: string,
-     *   description?: string|null,
-     *   freeThreshold?: int|null,
-     *   measurementUnit?: string|null,
-     *   name?: string|null,
-     * }>|null $meters
+     * @param list<AddMeterToPriceShape>|null $meters
      */
     public function withMeters(?array $meters): self
     {

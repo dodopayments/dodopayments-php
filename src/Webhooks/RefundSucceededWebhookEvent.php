@@ -7,19 +7,17 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\Refunds\RefundStatus;
 use Dodopayments\Webhooks\RefundSucceededWebhookEvent\Data;
-use Dodopayments\Webhooks\RefundSucceededWebhookEvent\Data\PayloadType;
 use Dodopayments\Webhooks\RefundSucceededWebhookEvent\Type;
 
 /**
+ * @phpstan-import-type DataShape from \Dodopayments\Webhooks\RefundSucceededWebhookEvent\Data
+ *
  * @phpstan-type RefundSucceededWebhookEventShape = array{
  *   businessID: string,
- *   data: Data,
+ *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  * }
  */
 final class RefundSucceededWebhookEvent implements BaseModel
@@ -83,20 +81,7 @@ final class RefundSucceededWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|array{
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   customer: CustomerLimitedDetails,
-     *   isPartial: bool,
-     *   metadata: array<string,string>,
-     *   paymentID: string,
-     *   refundID: string,
-     *   status: value-of<RefundStatus>,
-     *   amount?: int|null,
-     *   currency?: value-of<Currency>|null,
-     *   reason?: string|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -129,20 +114,7 @@ final class RefundSucceededWebhookEvent implements BaseModel
     /**
      * Event-specific data.
      *
-     * @param Data|array{
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   customer: CustomerLimitedDetails,
-     *   isPartial: bool,
-     *   metadata: array<string,string>,
-     *   paymentID: string,
-     *   refundID: string,
-     *   status: value-of<RefundStatus>,
-     *   amount?: int|null,
-     *   currency?: value-of<Currency>|null,
-     *   reason?: string|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      */
     public function withData(Data|array $data): self
     {

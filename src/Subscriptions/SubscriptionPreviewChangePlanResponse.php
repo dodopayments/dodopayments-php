@@ -7,17 +7,15 @@ namespace Dodopayments\Subscriptions;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary;
 
 /**
+ * @phpstan-import-type ImmediateChargeShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge
+ * @phpstan-import-type SubscriptionShape from \Dodopayments\Subscriptions\Subscription
+ *
  * @phpstan-type SubscriptionPreviewChangePlanResponseShape = array{
- *   immediateCharge: ImmediateCharge, newPlan: Subscription
+ *   immediateCharge: ImmediateCharge|ImmediateChargeShape,
+ *   newPlan: Subscription|SubscriptionShape,
  * }
  */
 final class SubscriptionPreviewChangePlanResponse implements BaseModel
@@ -60,40 +58,8 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ImmediateCharge|array{
-     *   lineItems: list<ImmediateCharge\LineItem\Subscription|Addon|Meter>,
-     *   summary: Summary,
-     * } $immediateCharge
-     * @param Subscription|array{
-     *   addons: list<AddonCartResponseItem>,
-     *   billing: BillingAddress,
-     *   cancelAtNextBillingDate: bool,
-     *   createdAt: \DateTimeInterface,
-     *   currency: value-of<Currency>,
-     *   customer: CustomerLimitedDetails,
-     *   metadata: array<string,string>,
-     *   meters: list<Subscription\Meter>,
-     *   nextBillingDate: \DateTimeInterface,
-     *   onDemand: bool,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   previousBillingDate: \DateTimeInterface,
-     *   productID: string,
-     *   quantity: int,
-     *   recurringPreTaxAmount: int,
-     *   status: value-of<SubscriptionStatus>,
-     *   subscriptionID: string,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   taxInclusive: bool,
-     *   trialPeriodDays: int,
-     *   cancelledAt?: \DateTimeInterface|null,
-     *   discountCyclesRemaining?: int|null,
-     *   discountID?: string|null,
-     *   expiresAt?: \DateTimeInterface|null,
-     *   paymentMethodID?: string|null,
-     *   taxID?: string|null,
-     * } $newPlan
+     * @param ImmediateChargeShape $immediateCharge
+     * @param SubscriptionShape $newPlan
      */
     public static function with(
         ImmediateCharge|array $immediateCharge,
@@ -108,10 +74,7 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     }
 
     /**
-     * @param ImmediateCharge|array{
-     *   lineItems: list<ImmediateCharge\LineItem\Subscription|Addon|Meter>,
-     *   summary: Summary,
-     * } $immediateCharge
+     * @param ImmediateChargeShape $immediateCharge
      */
     public function withImmediateCharge(
         ImmediateCharge|array $immediateCharge
@@ -125,36 +88,7 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     /**
      * Response struct representing subscription details.
      *
-     * @param Subscription|array{
-     *   addons: list<AddonCartResponseItem>,
-     *   billing: BillingAddress,
-     *   cancelAtNextBillingDate: bool,
-     *   createdAt: \DateTimeInterface,
-     *   currency: value-of<Currency>,
-     *   customer: CustomerLimitedDetails,
-     *   metadata: array<string,string>,
-     *   meters: list<Subscription\Meter>,
-     *   nextBillingDate: \DateTimeInterface,
-     *   onDemand: bool,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   previousBillingDate: \DateTimeInterface,
-     *   productID: string,
-     *   quantity: int,
-     *   recurringPreTaxAmount: int,
-     *   status: value-of<SubscriptionStatus>,
-     *   subscriptionID: string,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   taxInclusive: bool,
-     *   trialPeriodDays: int,
-     *   cancelledAt?: \DateTimeInterface|null,
-     *   discountCyclesRemaining?: int|null,
-     *   discountID?: string|null,
-     *   expiresAt?: \DateTimeInterface|null,
-     *   paymentMethodID?: string|null,
-     *   taxID?: string|null,
-     * } $newPlan
+     * @param SubscriptionShape $newPlan
      */
     public function withNewPlan(Subscription|array $newPlan): self
     {

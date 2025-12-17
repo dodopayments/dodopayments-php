@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\MetersService::list()
  *
  * @phpstan-type MeterListParamsShape = array{
- *   archived?: bool, pageNumber?: int, pageSize?: int
+ *   archived?: bool|null, pageNumber?: int|null, pageSize?: int|null
  * }
  */
 final class MeterListParams implements BaseModel

@@ -8,70 +8,32 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
-use Dodopayments\Products\Price\OneTimePrice\Type;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
-use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @see Dodopayments\Services\ProductsService::update()
+ *
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery
+ * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
+ * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  *
  * @phpstan-type ProductUpdateParamsShape = array{
  *   addons?: list<string>|null,
  *   brandID?: string|null,
  *   description?: string|null,
- *   digitalProductDelivery?: null|DigitalProductDelivery|array{
- *     externalURL?: string|null,
- *     files?: list<string>|null,
- *     instructions?: string|null,
- *   },
+ *   digitalProductDelivery?: DigitalProductDeliveryShape|null,
  *   imageID?: string|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: null|LicenseKeyDuration|array{
- *     count: int, interval: value-of<TimeInterval>
- *   },
+ *   licenseKeyDuration?: LicenseKeyDurationShape|null,
  *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
- *   price?: null|OneTimePrice|array{
- *     currency: value-of<Currency>,
- *     discount: int,
- *     price: int,
- *     purchasingPowerParity: bool,
- *     type: value-of<Type>,
- *     payWhatYouWant?: bool|null,
- *     suggestedPrice?: int|null,
- *     taxInclusive?: bool|null,
- *   }|RecurringPrice|array{
- *     currency: value-of<Currency>,
- *     discount: int,
- *     paymentFrequencyCount: int,
- *     paymentFrequencyInterval: value-of<TimeInterval>,
- *     price: int,
- *     purchasingPowerParity: bool,
- *     subscriptionPeriodCount: int,
- *     subscriptionPeriodInterval: value-of<TimeInterval>,
- *     type: value-of<\Dodopayments\Products\Price\RecurringPrice\Type>,
- *     taxInclusive?: bool|null,
- *     trialPeriodDays?: int|null,
- *   }|UsageBasedPrice|array{
- *     currency: value-of<Currency>,
- *     discount: int,
- *     fixedPrice: int,
- *     paymentFrequencyCount: int,
- *     paymentFrequencyInterval: value-of<TimeInterval>,
- *     purchasingPowerParity: bool,
- *     subscriptionPeriodCount: int,
- *     subscriptionPeriodInterval: value-of<TimeInterval>,
- *     type: value-of<\Dodopayments\Products\Price\UsageBasedPrice\Type>,
- *     meters?: list<AddMeterToPrice>|null,
- *     taxInclusive?: bool|null,
- *   },
+ *   price?: PriceShape|null,
  *   taxCategory?: null|TaxCategory|value-of<TaxCategory>,
  * }
  */
@@ -185,49 +147,10 @@ final class ProductUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $addons
-     * @param DigitalProductDelivery|array{
-     *   externalURL?: string|null,
-     *   files?: list<string>|null,
-     *   instructions?: string|null,
-     * }|null $digitalProductDelivery
-     * @param LicenseKeyDuration|array{
-     *   count: int, interval: value-of<TimeInterval>
-     * }|null $licenseKeyDuration
+     * @param DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
-     * @param OneTimePrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   type: value-of<Type>,
-     *   payWhatYouWant?: bool|null,
-     *   suggestedPrice?: int|null,
-     *   taxInclusive?: bool|null,
-     * }|RecurringPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<RecurringPrice\Type>,
-     *   taxInclusive?: bool|null,
-     *   trialPeriodDays?: int|null,
-     * }|UsageBasedPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   fixedPrice: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<UsageBasedPrice\Type>,
-     *   meters?: list<AddMeterToPrice>|null,
-     *   taxInclusive?: bool|null,
-     * }|null $price
+     * @param PriceShape|null $price
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
      */
     public static function with(
@@ -299,11 +222,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Choose how you would like you digital product delivered.
      *
-     * @param DigitalProductDelivery|array{
-     *   externalURL?: string|null,
-     *   files?: list<string>|null,
-     *   instructions?: string|null,
-     * }|null $digitalProductDelivery
+     * @param DigitalProductDeliveryShape|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
         DigitalProductDelivery|array|null $digitalProductDelivery
@@ -361,9 +280,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
      *
-     * @param LicenseKeyDuration|array{
-     *   count: int, interval: value-of<TimeInterval>
-     * }|null $licenseKeyDuration
+     * @param LicenseKeyDurationShape|null $licenseKeyDuration
      */
     public function withLicenseKeyDuration(
         LicenseKeyDuration|array|null $licenseKeyDuration
@@ -415,40 +332,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Price details of the product.
      *
-     * @param OneTimePrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   type: value-of<Type>,
-     *   payWhatYouWant?: bool|null,
-     *   suggestedPrice?: int|null,
-     *   taxInclusive?: bool|null,
-     * }|RecurringPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<RecurringPrice\Type>,
-     *   taxInclusive?: bool|null,
-     *   trialPeriodDays?: int|null,
-     * }|UsageBasedPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   fixedPrice: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<UsageBasedPrice\Type>,
-     *   meters?: list<AddMeterToPrice>|null,
-     *   taxInclusive?: bool|null,
-     * }|null $price
+     * @param PriceShape|null $price
      */
     public function withPrice(
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price

@@ -32,7 +32,7 @@ interface LicenseKeysRawContract
      * @api
      *
      * @param string $id License key ID
-     * @param array<mixed>|LicenseKeyUpdateParams $params
+     * @param array<string,mixed>|LicenseKeyUpdateParams $params
      *
      * @return BaseResponse<LicenseKey>
      *
@@ -47,7 +47,7 @@ interface LicenseKeysRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LicenseKeyListParams $params
+     * @param array<string,mixed>|LicenseKeyListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<LicenseKey>>
      *

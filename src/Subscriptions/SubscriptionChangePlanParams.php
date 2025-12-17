@@ -14,11 +14,13 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
 /**
  * @see Dodopayments\Services\SubscriptionsService::changePlan()
  *
+ * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ *
  * @phpstan-type SubscriptionChangePlanParamsShape = array{
  *   productID: string,
  *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
- *   addons?: list<AttachAddon|array{addonID: string, quantity: int}>|null,
+ *   addons?: list<AttachAddonShape>|null,
  * }
  */
 final class SubscriptionChangePlanParams implements BaseModel
@@ -86,7 +88,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
-     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
+     * @param list<AttachAddonShape>|null $addons
      */
     public static function with(
         string $productID,
@@ -145,7 +147,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons.
      *
-     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
+     * @param list<AttachAddonShape>|null $addons
      */
     public function withAddons(?array $addons): self
     {

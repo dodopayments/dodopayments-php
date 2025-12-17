@@ -11,26 +11,26 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
-use Dodopayments\Products\Price\OneTimePrice\Type;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
-use Dodopayments\Subscriptions\TimeInterval;
 
 /**
+ * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
+ *
  * @phpstan-type ProductListResponseShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   isRecurring: bool,
  *   metadata: array<string,string>,
  *   productID: string,
- *   taxCategory: value-of<TaxCategory>,
+ *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   updatedAt: \DateTimeInterface,
- *   currency?: value-of<Currency>|null,
+ *   currency?: null|Currency|value-of<Currency>,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   priceDetail?: null|OneTimePrice|RecurringPrice|UsageBasedPrice,
+ *   priceDetail?: null|PriceShape|OneTimePrice|RecurringPrice|UsageBasedPrice,
  *   taxInclusive?: bool|null,
  * }
  */
@@ -179,40 +179,7 @@ final class ProductListResponse implements BaseModel
      * @param array<string,string> $metadata
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Currency|value-of<Currency>|null $currency
-     * @param OneTimePrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   type: value-of<Type>,
-     *   payWhatYouWant?: bool|null,
-     *   suggestedPrice?: int|null,
-     *   taxInclusive?: bool|null,
-     * }|RecurringPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<RecurringPrice\Type>,
-     *   taxInclusive?: bool|null,
-     *   trialPeriodDays?: int|null,
-     * }|UsageBasedPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   fixedPrice: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<UsageBasedPrice\Type>,
-     *   meters?: list<AddMeterToPrice>|null,
-     *   taxInclusive?: bool|null,
-     * }|null $priceDetail
+     * @param PriceShape|null $priceDetail
      */
     public static function with(
         string $businessID,
@@ -400,40 +367,7 @@ final class ProductListResponse implements BaseModel
     /**
      * Details of the price.
      *
-     * @param OneTimePrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   type: value-of<Type>,
-     *   payWhatYouWant?: bool|null,
-     *   suggestedPrice?: int|null,
-     *   taxInclusive?: bool|null,
-     * }|RecurringPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   price: int,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<RecurringPrice\Type>,
-     *   taxInclusive?: bool|null,
-     *   trialPeriodDays?: int|null,
-     * }|UsageBasedPrice|array{
-     *   currency: value-of<Currency>,
-     *   discount: int,
-     *   fixedPrice: int,
-     *   paymentFrequencyCount: int,
-     *   paymentFrequencyInterval: value-of<TimeInterval>,
-     *   purchasingPowerParity: bool,
-     *   subscriptionPeriodCount: int,
-     *   subscriptionPeriodInterval: value-of<TimeInterval>,
-     *   type: value-of<UsageBasedPrice\Type>,
-     *   meters?: list<AddMeterToPrice>|null,
-     *   taxInclusive?: bool|null,
-     * }|null $priceDetail
+     * @param PriceShape|null $priceDetail
      */
     public function withPriceDetail(
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail

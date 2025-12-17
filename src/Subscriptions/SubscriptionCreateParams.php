@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -21,38 +20,28 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @deprecated
  * @see Dodopayments\Services\SubscriptionsService::create()
  *
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ *
  * @phpstan-type SubscriptionCreateParamsShape = array{
- *   billing: BillingAddress|array{
- *     country: value-of<CountryCode>,
- *     city?: string|null,
- *     state?: string|null,
- *     street?: string|null,
- *     zipcode?: string|null,
- *   },
- *   customer: AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
- *     email: string, name?: string|null, phoneNumber?: string|null
- *   },
+ *   billing: BillingAddressShape,
+ *   customer: CustomerRequestShape,
  *   productID: string,
  *   quantity: int,
- *   addons?: list<AttachAddon|array{addonID: string, quantity: int}>|null,
+ *   addons?: list<AttachAddonShape>|null,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
  *   force3DS?: bool|null,
- *   metadata?: array<string,string>,
- *   onDemand?: null|OnDemandSubscription|array{
- *     mandateOnly: bool,
- *     adaptiveCurrencyFeesInclusive?: bool|null,
- *     productCurrency?: value-of<Currency>|null,
- *     productDescription?: string|null,
- *     productPrice?: int|null,
- *   },
- *   oneTimeProductCart?: list<OneTimeProductCartItem|array{
- *     productID: string, quantity: int, amount?: int|null
- *   }>|null,
+ *   metadata?: array<string,string>|null,
+ *   onDemand?: OnDemandSubscriptionShape|null,
+ *   oneTimeProductCart?: list<OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
- *   showSavedPaymentMethods?: bool,
+ *   showSavedPaymentMethods?: bool|null,
  *   taxID?: string|null,
  *   trialPeriodDays?: int|null,
  * }
@@ -220,30 +209,14 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
-     * @param AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
-     *   email: string, name?: string|null, phoneNumber?: string|null
-     * } $customer
-     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
+     * @param BillingAddressShape $billing
+     * @param CustomerRequestShape $customer
+     * @param list<AttachAddonShape>|null $addons
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string,string> $metadata
-     * @param OnDemandSubscription|array{
-     *   mandateOnly: bool,
-     *   adaptiveCurrencyFeesInclusive?: bool|null,
-     *   productCurrency?: value-of<Currency>|null,
-     *   productDescription?: string|null,
-     *   productPrice?: int|null,
-     * }|null $onDemand
-     * @param list<OneTimeProductCartItem|array{
-     *   productID: string, quantity: int, amount?: int|null
-     * }>|null $oneTimeProductCart
+     * @param OnDemandSubscriptionShape|null $onDemand
+     * @param list<OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public static function with(
         BillingAddress|array $billing,
@@ -291,13 +264,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Billing address information for the subscription.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
+     * @param BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -310,9 +277,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Customer details for the subscription.
      *
-     * @param AttachExistingCustomer|array{customerID: string}|NewCustomer|array{
-     *   email: string, name?: string|null, phoneNumber?: string|null
-     * } $customer
+     * @param CustomerRequestShape $customer
      */
     public function withCustomer(
         AttachExistingCustomer|array|NewCustomer $customer
@@ -348,7 +313,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Attach addons to this subscription.
      *
-     * @param list<AttachAddon|array{addonID: string, quantity: int}>|null $addons
+     * @param list<AttachAddonShape>|null $addons
      */
     public function withAddons(?array $addons): self
     {
@@ -428,13 +393,7 @@ final class SubscriptionCreateParams implements BaseModel
     }
 
     /**
-     * @param OnDemandSubscription|array{
-     *   mandateOnly: bool,
-     *   adaptiveCurrencyFeesInclusive?: bool|null,
-     *   productCurrency?: value-of<Currency>|null,
-     *   productDescription?: string|null,
-     *   productPrice?: int|null,
-     * }|null $onDemand
+     * @param OnDemandSubscriptionShape|null $onDemand
      */
     public function withOnDemand(
         OnDemandSubscription|array|null $onDemand
@@ -448,9 +407,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * List of one time products that will be bundled with the first payment for this subscription.
      *
-     * @param list<OneTimeProductCartItem|array{
-     *   productID: string, quantity: int, amount?: int|null
-     * }>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

@@ -31,7 +31,7 @@ interface SubscriptionsRawContract
      *
      * @api
      *
-     * @param array<mixed>|SubscriptionCreateParams $params
+     * @param array<string,mixed>|SubscriptionCreateParams $params
      *
      * @return BaseResponse<SubscriptionNewResponse>
      *
@@ -60,7 +60,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array<mixed>|SubscriptionUpdateParams $params
+     * @param array<string,mixed>|SubscriptionUpdateParams $params
      *
      * @return BaseResponse<Subscription>
      *
@@ -75,7 +75,7 @@ interface SubscriptionsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|SubscriptionListParams $params
+     * @param array<string,mixed>|SubscriptionListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<SubscriptionListResponse>>
      *
@@ -90,7 +90,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array<mixed>|SubscriptionChangePlanParams $params
+     * @param array<string,mixed>|SubscriptionChangePlanParams $params
      *
      * @return BaseResponse<mixed>
      *
@@ -106,7 +106,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array<mixed>|SubscriptionChargeParams $params
+     * @param array<string,mixed>|SubscriptionChargeParams $params
      *
      * @return BaseResponse<SubscriptionChargeResponse>
      *
@@ -122,7 +122,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array<mixed>|SubscriptionPreviewChangePlanParams $params
+     * @param array<string,mixed>|SubscriptionPreviewChangePlanParams $params
      *
      * @return BaseResponse<SubscriptionPreviewChangePlanResponse>
      *
@@ -138,7 +138,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Unique subscription identifier
-     * @param array<mixed>|SubscriptionRetrieveUsageHistoryParams $params
+     * @param array<string,mixed>|SubscriptionRetrieveUsageHistoryParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse,>,>
      *
@@ -154,7 +154,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array<mixed>|SubscriptionUpdatePaymentMethodParams $params
+     * @param array<string,mixed>|SubscriptionUpdatePaymentMethodParams $params
      *
      * @return BaseResponse<SubscriptionUpdatePaymentMethodResponse>
      *

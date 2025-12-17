@@ -15,8 +15,8 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   createdAt: \DateTimeInterface,
  *   currency: string,
  *   disputeID: string,
- *   disputeStage: value-of<DisputeStage>,
- *   disputeStatus: value-of<DisputeStatus>,
+ *   disputeStage: DisputeStage|value-of<DisputeStage>,
+ *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
  * }
  */

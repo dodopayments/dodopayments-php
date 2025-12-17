@@ -16,7 +16,7 @@ interface PayoutsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|PayoutListParams $params
+     * @param array<string,mixed>|PayoutListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<PayoutListResponse>>
      *

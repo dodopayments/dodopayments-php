@@ -10,8 +10,12 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Products\Product\DigitalProductDelivery\File;
 
 /**
+ * @phpstan-import-type FileShape from \Dodopayments\Products\Product\DigitalProductDelivery\File
+ *
  * @phpstan-type DigitalProductDeliveryShape = array{
- *   externalURL?: string|null, files?: list<File>|null, instructions?: string|null
+ *   externalURL?: string|null,
+ *   files?: list<FileShape>|null,
+ *   instructions?: string|null,
  * }
  */
 final class DigitalProductDelivery implements BaseModel
@@ -49,9 +53,7 @@ final class DigitalProductDelivery implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<File|array{
-     *   fileID: string, fileName: string, url: string
-     * }>|null $files
+     * @param list<FileShape>|null $files
      */
     public static function with(
         ?string $externalURL = null,
@@ -81,9 +83,7 @@ final class DigitalProductDelivery implements BaseModel
     /**
      * Uploaded files ids of digital product.
      *
-     * @param list<File|array{
-     *   fileID: string, fileName: string, url: string
-     * }>|null $files
+     * @param list<FileShape>|null $files
      */
     public function withFiles(?array $files): self
     {

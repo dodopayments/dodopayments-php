@@ -11,18 +11,20 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 
 /**
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ *
  * @phpstan-type PaymentListResponseShape = array{
  *   brandID: string,
  *   createdAt: \DateTimeInterface,
- *   currency: value-of<Currency>,
- *   customer: CustomerLimitedDetails,
+ *   currency: Currency|value-of<Currency>,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   totalAmount: int,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
- *   status?: value-of<IntentStatus>|null,
+ *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
  * }
  */
@@ -112,13 +114,7 @@ final class PaymentListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
@@ -183,13 +179,7 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

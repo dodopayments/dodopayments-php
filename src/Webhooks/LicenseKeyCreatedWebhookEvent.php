@@ -7,17 +7,17 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\LicenseKeys\LicenseKeyStatus;
 use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data;
-use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data\PayloadType;
 use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Type;
 
 /**
+ * @phpstan-import-type DataShape from \Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data
+ *
  * @phpstan-type LicenseKeyCreatedWebhookEventShape = array{
  *   businessID: string,
- *   data: Data,
+ *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  * }
  */
 final class LicenseKeyCreatedWebhookEvent implements BaseModel
@@ -81,21 +81,7 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|array{
-     *   id: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   customerID: string,
-     *   instancesCount: int,
-     *   key: string,
-     *   paymentID: string,
-     *   productID: string,
-     *   status: value-of<LicenseKeyStatus>,
-     *   activationsLimit?: int|null,
-     *   expiresAt?: \DateTimeInterface|null,
-     *   subscriptionID?: string|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -128,21 +114,7 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
     /**
      * Event-specific data.
      *
-     * @param Data|array{
-     *   id: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   customerID: string,
-     *   instancesCount: int,
-     *   key: string,
-     *   paymentID: string,
-     *   productID: string,
-     *   status: value-of<LicenseKeyStatus>,
-     *   activationsLimit?: int|null,
-     *   expiresAt?: \DateTimeInterface|null,
-     *   subscriptionID?: string|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      */
     public function withData(Data|array $data): self
     {

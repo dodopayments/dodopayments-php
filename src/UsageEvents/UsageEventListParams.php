@@ -39,13 +39,13 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\UsageEventsService::list()
  *
  * @phpstan-type UsageEventListParamsShape = array{
- *   customerID?: string,
- *   end?: \DateTimeInterface,
- *   eventName?: string,
- *   meterID?: string,
- *   pageNumber?: int,
- *   pageSize?: int,
- *   start?: \DateTimeInterface,
+ *   customerID?: string|null,
+ *   end?: \DateTimeInterface|null,
+ *   eventName?: string|null,
+ *   meterID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
+ *   start?: \DateTimeInterface|null,
  * }
  */
 final class UsageEventListParams implements BaseModel

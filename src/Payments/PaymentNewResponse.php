@@ -10,16 +10,19 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ *
  * @phpstan-type PaymentNewResponseShape = array{
  *   clientSecret: string,
- *   customer: CustomerLimitedDetails,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   totalAmount: int,
  *   discountID?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
  *   paymentLink?: string|null,
- *   productCart?: list<OneTimeProductCartItem>|null,
+ *   productCart?: list<OneTimeProductCartItemShape>|null,
  * }
  */
 final class PaymentNewResponse implements BaseModel
@@ -125,17 +128,9 @@ final class PaymentNewResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<OneTimeProductCartItem|array{
-     *   productID: string, quantity: int, amount?: int|null
-     * }>|null $productCart
+     * @param list<OneTimeProductCartItemShape>|null $productCart
      */
     public static function with(
         string $clientSecret,
@@ -179,13 +174,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Limited details about the customer making the payment.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
@@ -266,9 +255,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Optional list of products included in the payment.
      *
-     * @param list<OneTimeProductCartItem|array{
-     *   productID: string, quantity: int, amount?: int|null
-     * }>|null $productCart
+     * @param list<OneTimeProductCartItemShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

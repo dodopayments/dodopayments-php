@@ -7,18 +7,17 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Disputes\DisputeStage;
-use Dodopayments\Disputes\DisputeStatus;
 use Dodopayments\Webhooks\DisputeAcceptedWebhookEvent\Data;
-use Dodopayments\Webhooks\DisputeAcceptedWebhookEvent\Data\PayloadType;
 use Dodopayments\Webhooks\DisputeAcceptedWebhookEvent\Type;
 
 /**
+ * @phpstan-import-type DataShape from \Dodopayments\Webhooks\DisputeAcceptedWebhookEvent\Data
+ *
  * @phpstan-type DisputeAcceptedWebhookEventShape = array{
  *   businessID: string,
- *   data: Data,
+ *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  * }
  */
 final class DisputeAcceptedWebhookEvent implements BaseModel
@@ -82,18 +81,7 @@ final class DisputeAcceptedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|array{
-     *   amount: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   currency: string,
-     *   disputeID: string,
-     *   disputeStage: value-of<DisputeStage>,
-     *   disputeStatus: value-of<DisputeStatus>,
-     *   paymentID: string,
-     *   remarks?: string|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -126,18 +114,7 @@ final class DisputeAcceptedWebhookEvent implements BaseModel
     /**
      * Event-specific data.
      *
-     * @param Data|array{
-     *   amount: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   currency: string,
-     *   disputeID: string,
-     *   disputeStage: value-of<DisputeStage>,
-     *   disputeStatus: value-of<DisputeStatus>,
-     *   paymentID: string,
-     *   remarks?: string|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      */
     public function withData(Data|array $data): self
     {

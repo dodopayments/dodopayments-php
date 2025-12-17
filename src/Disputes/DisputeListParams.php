@@ -15,13 +15,13 @@ use Dodopayments\Disputes\DisputeListParams\DisputeStatus;
  * @see Dodopayments\Services\DisputesService::list()
  *
  * @phpstan-type DisputeListParamsShape = array{
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   customerID?: string,
- *   disputeStage?: \Dodopayments\Disputes\DisputeListParams\DisputeStage|value-of<\Dodopayments\Disputes\DisputeListParams\DisputeStage>,
- *   disputeStatus?: \Dodopayments\Disputes\DisputeListParams\DisputeStatus|value-of<\Dodopayments\Disputes\DisputeListParams\DisputeStatus>,
- *   pageNumber?: int,
- *   pageSize?: int,
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
+ *   customerID?: string|null,
+ *   disputeStage?: null|\Dodopayments\Disputes\DisputeListParams\DisputeStage|value-of<\Dodopayments\Disputes\DisputeListParams\DisputeStage>,
+ *   disputeStatus?: null|\Dodopayments\Disputes\DisputeListParams\DisputeStatus|value-of<\Dodopayments\Disputes\DisputeListParams\DisputeStatus>,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class DisputeListParams implements BaseModel

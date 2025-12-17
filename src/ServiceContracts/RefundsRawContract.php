@@ -18,7 +18,7 @@ interface RefundsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|RefundCreateParams $params
+     * @param array<string,mixed>|RefundCreateParams $params
      *
      * @return BaseResponse<Refund>
      *
@@ -46,7 +46,7 @@ interface RefundsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|RefundListParams $params
+     * @param array<string,mixed>|RefundListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<RefundListResponse>>
      *

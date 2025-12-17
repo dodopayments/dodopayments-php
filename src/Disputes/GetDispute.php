@@ -11,15 +11,17 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ *
  * @phpstan-type GetDisputeShape = array{
  *   amount: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   currency: string,
- *   customer: CustomerLimitedDetails,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   disputeID: string,
- *   disputeStage: value-of<DisputeStage>,
- *   disputeStatus: value-of<DisputeStatus>,
+ *   disputeStage: DisputeStage|value-of<DisputeStage>,
+ *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
  *   reason?: string|null,
  *   remarks?: string|null,
@@ -143,13 +145,7 @@ final class GetDispute implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
@@ -231,13 +227,7 @@ final class GetDispute implements BaseModel
     /**
      * The customer who filed the dispute.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

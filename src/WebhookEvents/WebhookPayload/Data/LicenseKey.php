@@ -21,11 +21,11 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey\PayloadType;
  *   key: string,
  *   paymentID: string,
  *   productID: string,
- *   status: value-of<LicenseKeyStatus>,
+ *   status: LicenseKeyStatus|value-of<LicenseKeyStatus>,
  *   activationsLimit?: int|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   subscriptionID?: string|null,
- *   payloadType: value-of<PayloadType>,
+ *   payloadType: PayloadType|value-of<PayloadType>,
  * }
  */
 final class LicenseKey implements BaseModel

@@ -16,7 +16,7 @@ interface ImagesRawContract
      * @api
      *
      * @param string $id Product Id
-     * @param array<mixed>|ImageUpdateParams $params
+     * @param array<string,mixed>|ImageUpdateParams $params
      *
      * @return BaseResponse<ImageUpdateResponse>
      *

@@ -12,9 +12,13 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
 
 /**
+ * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart
+ *
  * @phpstan-type SubscriptionNewResponseShape = array{
- *   addons: list<AddonCartResponseItem>,
- *   customer: CustomerLimitedDetails,
+ *   addons: list<AddonCartResponseItemShape>,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   recurringPreTaxAmount: int,
@@ -22,7 +26,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  *   clientSecret?: string|null,
  *   discountID?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
- *   oneTimeProductCart?: list<OneTimeProductCart>|null,
+ *   oneTimeProductCart?: list<OneTimeProductCartShape>|null,
  *   paymentLink?: string|null,
  * }
  */
@@ -145,18 +149,10 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItem|array{addonID: string, quantity: int}> $addons
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param list<AddonCartResponseItemShape> $addons
+     * @param CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<OneTimeProductCart|array{
-     *   productID: string, quantity: int
-     * }>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public static function with(
         array $addons,
@@ -192,7 +188,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItem|array{addonID: string, quantity: int}> $addons
+     * @param list<AddonCartResponseItemShape> $addons
      */
     public function withAddons(array $addons): self
     {
@@ -205,13 +201,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Customer details associated with this subscription.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
@@ -304,9 +294,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * One time products associated with the purchase of subscription.
      *
-     * @param list<OneTimeProductCart|array{
-     *   productID: string, quantity: int
-     * }>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

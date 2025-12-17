@@ -17,7 +17,7 @@ interface MetersRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MeterCreateParams $params
+     * @param array<string,mixed>|MeterCreateParams $params
      *
      * @return BaseResponse<Meter>
      *
@@ -45,7 +45,7 @@ interface MetersRawContract
     /**
      * @api
      *
-     * @param array<mixed>|MeterListParams $params
+     * @param array<string,mixed>|MeterListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<Meter>>
      *

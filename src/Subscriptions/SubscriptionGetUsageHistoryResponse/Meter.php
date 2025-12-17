@@ -14,7 +14,7 @@ use Dodopayments\Misc\Currency;
  *   id: string,
  *   chargeableUnits: string,
  *   consumedUnits: string,
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   freeThreshold: int,
  *   name: string,
  *   pricePerUnit: string,

@@ -12,7 +12,7 @@ use Dodopayments\Meters\MeterAggregation\Type;
 
 /**
  * @phpstan-type MeterAggregationShape = array{
- *   type: value-of<Type>, key?: string|null
+ *   type: Type|value-of<Type>, key?: string|null
  * }
  */
 final class MeterAggregation implements BaseModel

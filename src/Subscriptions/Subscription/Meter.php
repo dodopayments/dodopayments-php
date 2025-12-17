@@ -14,7 +14,7 @@ use Dodopayments\Misc\Currency;
  * Response struct representing usage-based meter cart details for a subscription.
  *
  * @phpstan-type MeterShape = array{
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   freeThreshold: int,
  *   measurementUnit: string,
  *   meterID: string,

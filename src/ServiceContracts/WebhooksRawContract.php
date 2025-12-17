@@ -19,7 +19,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param array<mixed>|WebhookCreateParams $params
+     * @param array<string,mixed>|WebhookCreateParams $params
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -45,7 +45,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param array<mixed>|WebhookUpdateParams $params
+     * @param array<string,mixed>|WebhookUpdateParams $params
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -60,7 +60,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
-     * @param array<mixed>|WebhookListParams $params
+     * @param array<string,mixed>|WebhookListParams $params
      *
      * @return BaseResponse<CursorPagePagination<WebhookDetails>>
      *

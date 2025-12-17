@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Dodopayments\Brands;
 
-use Dodopayments\Brands\Brand\VerificationStatus;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type BrandListResponseShape = array{items: list<Brand>}
+ * @phpstan-import-type BrandShape from \Dodopayments\Brands\Brand
+ *
+ * @phpstan-type BrandListResponseShape = array{items: list<BrandShape>}
  */
 final class BrandListResponse implements BaseModel
 {
@@ -49,20 +50,7 @@ final class BrandListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Brand|array{
-     *   brandID: string,
-     *   businessID: string,
-     *   enabled: bool,
-     *   statementDescriptor: string,
-     *   verificationEnabled: bool,
-     *   verificationStatus: value-of<VerificationStatus>,
-     *   description?: string|null,
-     *   image?: string|null,
-     *   name?: string|null,
-     *   reasonForHold?: string|null,
-     *   supportEmail?: string|null,
-     *   url?: string|null,
-     * }> $items
+     * @param list<BrandShape> $items
      */
     public static function with(array $items): self
     {
@@ -76,20 +64,7 @@ final class BrandListResponse implements BaseModel
     /**
      * List of brands for this business.
      *
-     * @param list<Brand|array{
-     *   brandID: string,
-     *   businessID: string,
-     *   enabled: bool,
-     *   statementDescriptor: string,
-     *   verificationEnabled: bool,
-     *   verificationStatus: value-of<VerificationStatus>,
-     *   description?: string|null,
-     *   image?: string|null,
-     *   name?: string|null,
-     *   reasonForHold?: string|null,
-     *   supportEmail?: string|null,
-     *   url?: string|null,
-     * }> $items
+     * @param list<BrandShape> $items
      */
     public function withItems(array $items): self
     {

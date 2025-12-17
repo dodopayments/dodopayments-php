@@ -8,12 +8,13 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item;
-use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\Card;
-use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item\PaymentMethod;
-use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
- * @phpstan-type CustomerGetPaymentMethodsResponseShape = array{items: list<Item>}
+ * @phpstan-import-type ItemShape from \Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item
+ *
+ * @phpstan-type CustomerGetPaymentMethodsResponseShape = array{
+ *   items: list<ItemShape>
+ * }
  */
 final class CustomerGetPaymentMethodsResponse implements BaseModel
 {
@@ -48,14 +49,7 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Item|array{
-     *   paymentMethod: value-of<PaymentMethod>,
-     *   paymentMethodID: string,
-     *   card?: Card|null,
-     *   lastUsedAt?: \DateTimeInterface|null,
-     *   paymentMethodType?: value-of<PaymentMethodTypes>|null,
-     *   recurringEnabled?: bool|null,
-     * }> $items
+     * @param list<ItemShape> $items
      */
     public static function with(array $items): self
     {
@@ -67,14 +61,7 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
     }
 
     /**
-     * @param list<Item|array{
-     *   paymentMethod: value-of<PaymentMethod>,
-     *   paymentMethodID: string,
-     *   card?: Card|null,
-     *   lastUsedAt?: \DateTimeInterface|null,
-     *   paymentMethodType?: value-of<PaymentMethodTypes>|null,
-     *   recurringEnabled?: bool|null,
-     * }> $items
+     * @param list<ItemShape> $items
      */
     public function withItems(array $items): self
     {

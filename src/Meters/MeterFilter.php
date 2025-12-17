@@ -9,10 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses;
 use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
-use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Operator;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1FilterCondition;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter;
 use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
@@ -21,9 +18,10 @@ use Dodopayments\Meters\MeterFilter\Conjunction;
  * Supports up to 3 levels of nesting to create complex filter expressions.
  * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
  *
+ * @phpstan-import-type ClausesShape from \Dodopayments\Meters\MeterFilter\Clauses
+ *
  * @phpstan-type MeterFilterShape = array{
- *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
- *   conjunction: value-of<Conjunction>,
+ *   clauses: ClausesShape, conjunction: Conjunction|value-of<Conjunction>
  * }
  */
 final class MeterFilter implements BaseModel
@@ -71,12 +69,7 @@ final class MeterFilter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DirectFilterCondition|array{
-     *   key: string, operator: value-of<Operator>, value: string|float|bool
-     * }>|list<NestedMeterFilter|array{
-     *   clauses: list<Level1FilterCondition>|list<Level1NestedFilter>,
-     *   conjunction: value-of<NestedMeterFilter\Conjunction>,
-     * }> $clauses
+     * @param ClausesShape $clauses
      * @param Conjunction|value-of<Conjunction> $conjunction
      */
     public static function with(
@@ -94,12 +87,7 @@ final class MeterFilter implements BaseModel
     /**
      * Filter clauses - can be direct conditions or nested filters (up to 3 levels deep).
      *
-     * @param list<DirectFilterCondition|array{
-     *   key: string, operator: value-of<Operator>, value: string|float|bool
-     * }>|list<NestedMeterFilter|array{
-     *   clauses: list<Level1FilterCondition>|list<Level1NestedFilter>,
-     *   conjunction: value-of<NestedMeterFilter\Conjunction>,
-     * }> $clauses
+     * @param ClausesShape $clauses
      */
     public function withClauses(array $clauses): self
     {
