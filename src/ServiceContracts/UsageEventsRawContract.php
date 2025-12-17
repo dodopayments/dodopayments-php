@@ -32,7 +32,7 @@ interface UsageEventsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|UsageEventListParams $params
+     * @param array<string,mixed>|UsageEventListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<Event>>
      *
@@ -46,7 +46,7 @@ interface UsageEventsRawContract
     /**
      * @api
      *
-     * @param array<mixed>|UsageEventIngestParams $params
+     * @param array<string,mixed>|UsageEventIngestParams $params
      *
      * @return BaseResponse<UsageEventIngestResponse>
      *

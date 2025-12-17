@@ -8,26 +8,20 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
  * @see Dodopayments\Services\SubscriptionsService::update()
  *
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
+ *
  * @phpstan-type SubscriptionUpdateParamsShape = array{
- *   billing?: null|BillingAddress|array{
- *     country: value-of<CountryCode>,
- *     city?: string|null,
- *     state?: string|null,
- *     street?: string|null,
- *     zipcode?: string|null,
- *   },
+ *   billing?: BillingAddressShape|null,
  *   cancelAtNextBillingDate?: bool|null,
  *   customerName?: string|null,
- *   disableOnDemand?: null|DisableOnDemand|array{
- *     nextBillingDate: \DateTimeInterface
- *   },
+ *   disableOnDemand?: DisableOnDemandShape|null,
  *   metadata?: array<string,string>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
  *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
@@ -79,16 +73,8 @@ final class SubscriptionUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * }|null $billing
-     * @param DisableOnDemand|array{
-     *   nextBillingDate: \DateTimeInterface
-     * }|null $disableOnDemand
+     * @param BillingAddressShape|null $billing
+     * @param DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
@@ -117,13 +103,7 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * }|null $billing
+     * @param BillingAddressShape|null $billing
      */
     public function withBilling(BillingAddress|array|null $billing): self
     {
@@ -154,9 +134,7 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param DisableOnDemand|array{
-     *   nextBillingDate: \DateTimeInterface
-     * }|null $disableOnDemand
+     * @param DisableOnDemandShape|null $disableOnDemand
      */
     public function withDisableOnDemand(
         DisableOnDemand|array|null $disableOnDemand

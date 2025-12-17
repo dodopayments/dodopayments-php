@@ -11,13 +11,15 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
+ * @phpstan-import-type MetadataShape from \Dodopayments\UsageEvents\Event\Metadata
+ *
  * @phpstan-type EventShape = array{
  *   businessID: string,
  *   customerID: string,
  *   eventID: string,
  *   eventName: string,
  *   timestamp: \DateTimeInterface,
- *   metadata?: array<string,string|float|bool>|null,
+ *   metadata?: array<string,MetadataShape>|null,
  * }
  */
 final class Event implements BaseModel
@@ -79,7 +81,7 @@ final class Event implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,string|float|bool>|null $metadata
+     * @param array<string,MetadataShape>|null $metadata
      */
     public static function with(
         string $businessID,
@@ -145,7 +147,7 @@ final class Event implements BaseModel
     /**
      * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      *
-     * @param array<string,string|float|bool>|null $metadata
+     * @param array<string,MetadataShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

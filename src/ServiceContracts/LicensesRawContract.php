@@ -18,7 +18,7 @@ interface LicensesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LicenseActivateParams $params
+     * @param array<string,mixed>|LicenseActivateParams $params
      *
      * @return BaseResponse<LicenseActivateResponse>
      *
@@ -32,7 +32,7 @@ interface LicensesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LicenseDeactivateParams $params
+     * @param array<string,mixed>|LicenseDeactivateParams $params
      *
      * @return BaseResponse<mixed>
      *
@@ -46,7 +46,7 @@ interface LicensesRawContract
     /**
      * @api
      *
-     * @param array<mixed>|LicenseValidateParams $params
+     * @param array<string,mixed>|LicenseValidateParams $params
      *
      * @return BaseResponse<LicenseValidateResponse>
      *

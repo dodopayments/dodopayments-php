@@ -15,11 +15,11 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  * One-time price details.
  *
  * @phpstan-type OneTimePriceShape = array{
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   discount: int,
  *   price: int,
  *   purchasingPowerParity: bool,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  *   payWhatYouWant?: bool|null,
  *   suggestedPrice?: int|null,
  *   taxInclusive?: bool|null,

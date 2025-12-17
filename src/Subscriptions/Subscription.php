@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -17,27 +16,32 @@ use Dodopayments\Subscriptions\Subscription\Meter;
 /**
  * Response struct representing subscription details.
  *
+ * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\Subscription\Meter
+ *
  * @phpstan-type SubscriptionShape = array{
- *   addons: list<AddonCartResponseItem>,
- *   billing: BillingAddress,
+ *   addons: list<AddonCartResponseItemShape>,
+ *   billing: BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
- *   currency: value-of<Currency>,
- *   customer: CustomerLimitedDetails,
+ *   currency: Currency|value-of<Currency>,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
- *   meters: list<Meter>,
+ *   meters: list<MeterShape>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
  *   paymentFrequencyCount: int,
- *   paymentFrequencyInterval: value-of<TimeInterval>,
+ *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
  *   previousBillingDate: \DateTimeInterface,
  *   productID: string,
  *   quantity: int,
  *   recurringPreTaxAmount: int,
- *   status: value-of<SubscriptionStatus>,
+ *   status: SubscriptionStatus|value-of<SubscriptionStatus>,
  *   subscriptionID: string,
  *   subscriptionPeriodCount: int,
- *   subscriptionPeriodInterval: value-of<TimeInterval>,
+ *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   taxInclusive: bool,
  *   trialPeriodDays: int,
  *   cancelledAt?: \DateTimeInterface|null,
@@ -304,32 +308,12 @@ final class Subscription implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItem|array{addonID: string, quantity: int}> $addons
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
+     * @param list<AddonCartResponseItemShape> $addons
+     * @param BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<Meter|array{
-     *   currency: value-of<Currency>,
-     *   freeThreshold: int,
-     *   measurementUnit: string,
-     *   meterID: string,
-     *   name: string,
-     *   pricePerUnit: string,
-     *   description?: string|null,
-     * }> $meters
+     * @param list<MeterShape> $meters
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
@@ -402,7 +386,7 @@ final class Subscription implements BaseModel
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItem|array{addonID: string, quantity: int}> $addons
+     * @param list<AddonCartResponseItemShape> $addons
      */
     public function withAddons(array $addons): self
     {
@@ -415,13 +399,7 @@ final class Subscription implements BaseModel
     /**
      * Billing address details for payments.
      *
-     * @param BillingAddress|array{
-     *   country: value-of<CountryCode>,
-     *   city?: string|null,
-     *   state?: string|null,
-     *   street?: string|null,
-     *   zipcode?: string|null,
-     * } $billing
+     * @param BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -470,13 +448,7 @@ final class Subscription implements BaseModel
     /**
      * Customer details associated with the subscription.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
@@ -502,15 +474,7 @@ final class Subscription implements BaseModel
     /**
      * Meters associated with this subscription (for usage-based billing).
      *
-     * @param list<Meter|array{
-     *   currency: value-of<Currency>,
-     *   freeThreshold: int,
-     *   measurementUnit: string,
-     *   meterID: string,
-     *   name: string,
-     *   pricePerUnit: string,
-     *   description?: string|null,
-     * }> $meters
+     * @param list<MeterShape> $meters
      */
     public function withMeters(array $meters): self
     {

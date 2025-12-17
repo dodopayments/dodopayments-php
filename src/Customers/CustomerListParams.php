@@ -13,7 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\CustomersService::list()
  *
  * @phpstan-type CustomerListParamsShape = array{
- *   email?: string, pageNumber?: int, pageSize?: int
+ *   email?: string|null, pageNumber?: int|null, pageSize?: int|null
  * }
  */
 final class CustomerListParams implements BaseModel

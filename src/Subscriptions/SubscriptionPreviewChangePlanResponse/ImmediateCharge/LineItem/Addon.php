@@ -15,14 +15,14 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
 /**
  * @phpstan-type AddonShape = array{
  *   id: string,
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   name: string,
  *   prorationFactor: float,
  *   quantity: int,
- *   taxCategory: value-of<TaxCategory>,
+ *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   taxInclusive: bool,
  *   taxRate: float,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  *   unitPrice: int,
  *   description?: string|null,
  *   tax?: int|null,

@@ -11,7 +11,7 @@ use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-type LicenseKeyDurationShape = array{
- *   count: int, interval: value-of<TimeInterval>
+ *   count: int, interval: TimeInterval|value-of<TimeInterval>
  * }
  */
 final class LicenseKeyDuration implements BaseModel

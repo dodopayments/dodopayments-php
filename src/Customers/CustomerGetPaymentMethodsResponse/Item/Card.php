@@ -11,7 +11,7 @@ use Dodopayments\Misc\CountryCode;
 
 /**
  * @phpstan-type CardShape = array{
- *   cardIssuingCountry?: value-of<CountryCode>|null,
+ *   cardIssuingCountry?: null|CountryCode|value-of<CountryCode>,
  *   cardNetwork?: string|null,
  *   cardType?: string|null,
  *   expiryMonth?: string|null,

@@ -18,9 +18,9 @@ use Dodopayments\Refunds\RefundStatus;
  *   isPartial: bool,
  *   paymentID: string,
  *   refundID: string,
- *   status: value-of<RefundStatus>,
+ *   status: RefundStatus|value-of<RefundStatus>,
  *   amount?: int|null,
- *   currency?: value-of<Currency>|null,
+ *   currency?: null|Currency|value-of<Currency>,
  *   reason?: string|null,
  * }
  */

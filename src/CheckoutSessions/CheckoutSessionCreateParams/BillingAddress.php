@@ -14,7 +14,7 @@ use Dodopayments\Misc\CountryCode;
  * Billing address information for the session.
  *
  * @phpstan-type BillingAddressShape = array{
- *   country: value-of<CountryCode>,
+ *   country: CountryCode|value-of<CountryCode>,
  *   city?: string|null,
  *   state?: string|null,
  *   street?: string|null,

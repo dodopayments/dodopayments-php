@@ -12,10 +12,10 @@ use Dodopayments\Misc\Currency;
 
 /**
  * @phpstan-type SummaryShape = array{
- *   currency: value-of<Currency>,
+ *   currency: Currency|value-of<Currency>,
  *   customerCredits: int,
  *   settlementAmount: int,
- *   settlementCurrency: value-of<Currency>,
+ *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
  *   settlementTax?: int|null,
  *   tax?: int|null,

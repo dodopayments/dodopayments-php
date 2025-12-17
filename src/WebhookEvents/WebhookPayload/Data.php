@@ -15,6 +15,14 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
 /**
  * The latest data at the time of delivery attempt.
+ *
+ * @phpstan-import-type PaymentShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Payment
+ * @phpstan-import-type SubscriptionShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription
+ * @phpstan-import-type RefundShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Refund
+ * @phpstan-import-type DisputeShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute
+ * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey
+ *
+ * @phpstan-type DataShape = PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape
  */
 final class Data implements ConverterSource
 {

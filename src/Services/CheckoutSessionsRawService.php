@@ -32,7 +32,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   productCart: list<array{
      *     productID: string,
      *     quantity: int,
-     *     addons?: list<array<mixed>>|null,
+     *     addons?: list<array<string,mixed>>|null,
      *     amount?: int|null,
      *   }>,
      *   allowedPaymentMethodTypes?: list<'credit'|'debit'|'upi_collect'|'upi_intent'|'apple_pay'|'cashapp'|'google_pay'|'multibanco'|'bancontact_card'|'eps'|'ideal'|'przelewy24'|'paypal'|'affirm'|'klarna'|'sepa'|'ach'|'amazon_pay'|'afterpay_clearpay'|PaymentMethodTypes>|null,

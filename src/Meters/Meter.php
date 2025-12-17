@@ -8,15 +8,14 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Meters\MeterAggregation\Type;
-use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
-use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
+ * @phpstan-import-type MeterAggregationShape from \Dodopayments\Meters\MeterAggregation
+ * @phpstan-import-type MeterFilterShape from \Dodopayments\Meters\MeterFilter
+ *
  * @phpstan-type MeterShape = array{
  *   id: string,
- *   aggregation: MeterAggregation,
+ *   aggregation: MeterAggregation|MeterAggregationShape,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   eventName: string,
@@ -24,7 +23,7 @@ use Dodopayments\Meters\MeterFilter\Conjunction;
  *   name: string,
  *   updatedAt: \DateTimeInterface,
  *   description?: string|null,
- *   filter?: MeterFilter|null,
+ *   filter?: null|MeterFilter|MeterFilterShape,
  * }
  */
 final class Meter implements BaseModel
@@ -109,13 +108,8 @@ final class Meter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MeterAggregation|array{
-     *   type: value-of<Type>, key?: string|null
-     * } $aggregation
-     * @param MeterFilter|array{
-     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
-     *   conjunction: value-of<Conjunction>,
-     * }|null $filter
+     * @param MeterAggregationShape $aggregation
+     * @param MeterFilterShape|null $filter
      */
     public static function with(
         string $id,
@@ -155,9 +149,7 @@ final class Meter implements BaseModel
     }
 
     /**
-     * @param MeterAggregation|array{
-     *   type: value-of<Type>, key?: string|null
-     * } $aggregation
+     * @param MeterAggregationShape $aggregation
      */
     public function withAggregation(MeterAggregation|array $aggregation): self
     {
@@ -229,10 +221,7 @@ final class Meter implements BaseModel
      * Supports up to 3 levels of nesting to create complex filter expressions.
      * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
      *
-     * @param MeterFilter|array{
-     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
-     *   conjunction: value-of<Conjunction>,
-     * }|null $filter
+     * @param MeterFilterShape|null $filter
      */
     public function withFilter(MeterFilter|array|null $filter): self
     {

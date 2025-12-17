@@ -7,24 +7,17 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Disputes\Dispute;
-use Dodopayments\Misc\CountryCode;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\Payments\IntentStatus;
-use Dodopayments\Payments\Payment\ProductCart;
-use Dodopayments\Payments\Payment\Refund;
 use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data;
-use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data\PayloadType;
 use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Type;
 
 /**
+ * @phpstan-import-type DataShape from \Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data
+ *
  * @phpstan-type PaymentCancelledWebhookEventShape = array{
  *   businessID: string,
- *   data: Data,
+ *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
- *   type: value-of<Type>,
+ *   type: Type|value-of<Type>,
  * }
  */
 final class PaymentCancelledWebhookEvent implements BaseModel
@@ -88,41 +81,7 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|array{
-     *   billing: BillingAddress,
-     *   brandID: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   currency: value-of<Currency>,
-     *   customer: CustomerLimitedDetails,
-     *   digitalProductsDelivered: bool,
-     *   disputes: list<Dispute>,
-     *   metadata: array<string,string>,
-     *   paymentID: string,
-     *   refunds: list<Refund>,
-     *   settlementAmount: int,
-     *   settlementCurrency: value-of<Currency>,
-     *   totalAmount: int,
-     *   cardIssuingCountry?: value-of<CountryCode>|null,
-     *   cardLastFour?: string|null,
-     *   cardNetwork?: string|null,
-     *   cardType?: string|null,
-     *   checkoutSessionID?: string|null,
-     *   discountID?: string|null,
-     *   errorCode?: string|null,
-     *   errorMessage?: string|null,
-     *   invoiceID?: string|null,
-     *   paymentLink?: string|null,
-     *   paymentMethod?: string|null,
-     *   paymentMethodType?: string|null,
-     *   productCart?: list<ProductCart>|null,
-     *   settlementTax?: int|null,
-     *   status?: value-of<IntentStatus>|null,
-     *   subscriptionID?: string|null,
-     *   tax?: int|null,
-     *   updatedAt?: \DateTimeInterface|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -155,41 +114,7 @@ final class PaymentCancelledWebhookEvent implements BaseModel
     /**
      * Event-specific data.
      *
-     * @param Data|array{
-     *   billing: BillingAddress,
-     *   brandID: string,
-     *   businessID: string,
-     *   createdAt: \DateTimeInterface,
-     *   currency: value-of<Currency>,
-     *   customer: CustomerLimitedDetails,
-     *   digitalProductsDelivered: bool,
-     *   disputes: list<Dispute>,
-     *   metadata: array<string,string>,
-     *   paymentID: string,
-     *   refunds: list<Refund>,
-     *   settlementAmount: int,
-     *   settlementCurrency: value-of<Currency>,
-     *   totalAmount: int,
-     *   cardIssuingCountry?: value-of<CountryCode>|null,
-     *   cardLastFour?: string|null,
-     *   cardNetwork?: string|null,
-     *   cardType?: string|null,
-     *   checkoutSessionID?: string|null,
-     *   discountID?: string|null,
-     *   errorCode?: string|null,
-     *   errorMessage?: string|null,
-     *   invoiceID?: string|null,
-     *   paymentLink?: string|null,
-     *   paymentMethod?: string|null,
-     *   paymentMethodType?: string|null,
-     *   productCart?: list<ProductCart>|null,
-     *   settlementTax?: int|null,
-     *   status?: value-of<IntentStatus>|null,
-     *   subscriptionID?: string|null,
-     *   tax?: int|null,
-     *   updatedAt?: \DateTimeInterface|null,
-     *   payloadType?: value-of<PayloadType>|null,
-     * } $data
+     * @param DataShape $data
      */
     public function withData(Data|array $data): self
     {

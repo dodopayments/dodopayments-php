@@ -14,7 +14,9 @@ use Dodopayments\Misc\Currency;
  * @see Dodopayments\Services\Customers\Wallets\LedgerEntriesService::list()
  *
  * @phpstan-type LedgerEntryListParamsShape = array{
- *   currency?: Currency|value-of<Currency>, pageNumber?: int, pageSize?: int
+ *   currency?: null|Currency|value-of<Currency>,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class LedgerEntryListParams implements BaseModel

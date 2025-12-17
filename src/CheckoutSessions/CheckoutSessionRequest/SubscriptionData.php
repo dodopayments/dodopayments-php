@@ -7,12 +7,14 @@ namespace Dodopayments\CheckoutSessions\CheckoutSessionRequest;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 
 /**
+ * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
+ *
  * @phpstan-type SubscriptionDataShape = array{
- *   onDemand?: OnDemandSubscription|null, trialPeriodDays?: int|null
+ *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
+ *   trialPeriodDays?: int|null,
  * }
  */
 final class SubscriptionData implements BaseModel
@@ -39,13 +41,7 @@ final class SubscriptionData implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param OnDemandSubscription|array{
-     *   mandateOnly: bool,
-     *   adaptiveCurrencyFeesInclusive?: bool|null,
-     *   productCurrency?: value-of<Currency>|null,
-     *   productDescription?: string|null,
-     *   productPrice?: int|null,
-     * }|null $onDemand
+     * @param OnDemandSubscriptionShape|null $onDemand
      */
     public static function with(
         OnDemandSubscription|array|null $onDemand = null,
@@ -60,13 +56,7 @@ final class SubscriptionData implements BaseModel
     }
 
     /**
-     * @param OnDemandSubscription|array{
-     *   mandateOnly: bool,
-     *   adaptiveCurrencyFeesInclusive?: bool|null,
-     *   productCurrency?: value-of<Currency>|null,
-     *   productDescription?: string|null,
-     *   productPrice?: int|null,
-     * }|null $onDemand
+     * @param OnDemandSubscriptionShape|null $onDemand
      */
     public function withOnDemand(
         OnDemandSubscription|array|null $onDemand

@@ -20,7 +20,7 @@ use Dodopayments\WebhookEvents\WebhookEventType;
  *   url: string,
  *   description?: string|null,
  *   disabled?: bool|null,
- *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>,
+ *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>|null,
  *   headers?: array<string,string>|null,
  *   idempotencyKey?: string|null,
  *   metadata?: array<string,string>|null,

@@ -9,24 +9,20 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Meters\MeterAggregation\Type;
-use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
-use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
  * @see Dodopayments\Services\MetersService::create()
  *
+ * @phpstan-import-type MeterAggregationShape from \Dodopayments\Meters\MeterAggregation
+ * @phpstan-import-type MeterFilterShape from \Dodopayments\Meters\MeterFilter
+ *
  * @phpstan-type MeterCreateParamsShape = array{
- *   aggregation: MeterAggregation|array{type: value-of<Type>, key?: string|null},
+ *   aggregation: MeterAggregationShape,
  *   eventName: string,
  *   measurementUnit: string,
  *   name: string,
  *   description?: string|null,
- *   filter?: null|MeterFilter|array{
- *     clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
- *     conjunction: value-of<Conjunction>,
- *   },
+ *   filter?: MeterFilterShape|null,
  * }
  */
 final class MeterCreateParams implements BaseModel
@@ -101,13 +97,8 @@ final class MeterCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MeterAggregation|array{
-     *   type: value-of<Type>, key?: string|null
-     * } $aggregation
-     * @param MeterFilter|array{
-     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
-     *   conjunction: value-of<Conjunction>,
-     * }|null $filter
+     * @param MeterAggregationShape $aggregation
+     * @param MeterFilterShape|null $filter
      */
     public static function with(
         MeterAggregation|array $aggregation,
@@ -133,9 +124,7 @@ final class MeterCreateParams implements BaseModel
     /**
      * Aggregation configuration for the meter.
      *
-     * @param MeterAggregation|array{
-     *   type: value-of<Type>, key?: string|null
-     * } $aggregation
+     * @param MeterAggregationShape $aggregation
      */
     public function withAggregation(MeterAggregation|array $aggregation): self
     {
@@ -192,10 +181,7 @@ final class MeterCreateParams implements BaseModel
     /**
      * Optional filter to apply to the meter.
      *
-     * @param MeterFilter|array{
-     *   clauses: list<DirectFilterCondition>|list<NestedMeterFilter>,
-     *   conjunction: value-of<Conjunction>,
-     * }|null $filter
+     * @param MeterFilterShape|null $filter
      */
     public function withFilter(MeterFilter|array|null $filter): self
     {

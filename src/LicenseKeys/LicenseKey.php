@@ -19,7 +19,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   key: string,
  *   paymentID: string,
  *   productID: string,
- *   status: value-of<LicenseKeyStatus>,
+ *   status: LicenseKeyStatus|value-of<LicenseKeyStatus>,
  *   activationsLimit?: int|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   subscriptionID?: string|null,

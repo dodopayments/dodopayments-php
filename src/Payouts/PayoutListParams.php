@@ -13,10 +13,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\PayoutsService::list()
  *
  * @phpstan-type PayoutListParamsShape = array{
- *   createdAtGte?: \DateTimeInterface,
- *   createdAtLte?: \DateTimeInterface,
- *   pageNumber?: int,
- *   pageSize?: int,
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class PayoutListParams implements BaseModel

@@ -13,6 +13,11 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
 
 /**
  * Level 1: Can be conditions or nested filters (2 more levels allowed).
+ *
+ * @phpstan-import-type Level1FilterConditionShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1FilterCondition
+ * @phpstan-import-type Level1NestedFilterShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter
+ *
+ * @phpstan-type ClausesShape = list<Level1FilterConditionShape>|list<Level1NestedFilterShape>
  */
 final class Clauses implements ConverterSource
 {

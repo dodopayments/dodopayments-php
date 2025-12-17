@@ -19,7 +19,7 @@ interface LedgerEntriesRawContract
      * @api
      *
      * @param string $customerID Customer ID
-     * @param array<mixed>|LedgerEntryCreateParams $params
+     * @param array<string,mixed>|LedgerEntryCreateParams $params
      *
      * @return BaseResponse<CustomerWallet>
      *
@@ -35,7 +35,7 @@ interface LedgerEntriesRawContract
      * @api
      *
      * @param string $customerID Customer ID
-     * @param array<mixed>|LedgerEntryListParams $params
+     * @param array<string,mixed>|LedgerEntryListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<CustomerWalletTransaction>>
      *

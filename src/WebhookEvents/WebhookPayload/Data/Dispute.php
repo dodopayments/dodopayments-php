@@ -14,19 +14,21 @@ use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 
 /**
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ *
  * @phpstan-type DisputeShape = array{
  *   amount: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   currency: string,
- *   customer: CustomerLimitedDetails,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   disputeID: string,
- *   disputeStage: value-of<DisputeStage>,
- *   disputeStatus: value-of<DisputeStatus>,
+ *   disputeStage: DisputeStage|value-of<DisputeStage>,
+ *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
  *   reason?: string|null,
  *   remarks?: string|null,
- *   payloadType: value-of<PayloadType>,
+ *   payloadType: PayloadType|value-of<PayloadType>,
  * }
  */
 final class Dispute implements BaseModel
@@ -142,13 +144,7 @@ final class Dispute implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      * @param PayloadType|value-of<PayloadType> $payloadType
@@ -231,13 +227,7 @@ final class Dispute implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetails|array{
-     *   customerID: string,
-     *   email: string,
-     *   name: string,
-     *   metadata?: array<string,string>|null,
-     *   phoneNumber?: string|null,
-     * } $customer
+     * @param CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

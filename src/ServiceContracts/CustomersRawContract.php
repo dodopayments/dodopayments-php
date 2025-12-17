@@ -19,7 +19,7 @@ interface CustomersRawContract
     /**
      * @api
      *
-     * @param array<mixed>|CustomerCreateParams $params
+     * @param array<string,mixed>|CustomerCreateParams $params
      *
      * @return BaseResponse<Customer>
      *
@@ -48,7 +48,7 @@ interface CustomersRawContract
      * @api
      *
      * @param string $customerID Customer Id
-     * @param array<mixed>|CustomerUpdateParams $params
+     * @param array<string,mixed>|CustomerUpdateParams $params
      *
      * @return BaseResponse<Customer>
      *
@@ -63,7 +63,7 @@ interface CustomersRawContract
     /**
      * @api
      *
-     * @param array<mixed>|CustomerListParams $params
+     * @param array<string,mixed>|CustomerListParams $params
      *
      * @return BaseResponse<DefaultPageNumberPagination<Customer>>
      *

@@ -39,7 +39,7 @@ final class MetersRawService implements MetersRawContract
      *   name: string,
      *   description?: string|null,
      *   filter?: array{
-     *     clauses: list<array<mixed>>|list<array<mixed>>,
+     *     clauses: list<array<string,mixed>>|list<array<string,mixed>>,
      *     conjunction: 'and'|'or'|Conjunction,
      *   }|MeterFilter|null,
      * }|MeterCreateParams $params

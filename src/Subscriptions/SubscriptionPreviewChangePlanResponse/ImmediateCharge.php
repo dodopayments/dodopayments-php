@@ -7,18 +7,18 @@ namespace Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Currency;
-use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription\Type;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary;
 
 /**
+ * @phpstan-import-type LineItemShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem
+ * @phpstan-import-type SummaryShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary
+ *
  * @phpstan-type ImmediateChargeShape = array{
- *   lineItems: list<Subscription|Addon|Meter>, summary: Summary
+ *   lineItems: list<LineItemShape>, summary: Summary|SummaryShape
  * }
  */
 final class ImmediateCharge implements BaseModel
@@ -57,56 +57,8 @@ final class ImmediateCharge implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Subscription|array{
-     *   id: string,
-     *   currency: value-of<Currency>,
-     *   productID: string,
-     *   prorationFactor: float,
-     *   quantity: int,
-     *   taxInclusive: bool,
-     *   type: value-of<Type>,
-     *   unitPrice: int,
-     *   description?: string|null,
-     *   name?: string|null,
-     *   tax?: int|null,
-     *   taxRate?: float|null,
-     * }|Addon|array{
-     *   id: string,
-     *   currency: value-of<Currency>,
-     *   name: string,
-     *   prorationFactor: float,
-     *   quantity: int,
-     *   taxCategory: value-of<TaxCategory>,
-     *   taxInclusive: bool,
-     *   taxRate: float,
-     *   type: value-of<Addon\Type>,
-     *   unitPrice: int,
-     *   description?: string|null,
-     *   tax?: int|null,
-     * }|Meter|array{
-     *   id: string,
-     *   chargeableUnits: string,
-     *   currency: value-of<Currency>,
-     *   freeThreshold: int,
-     *   name: string,
-     *   pricePerUnit: string,
-     *   subtotal: int,
-     *   taxInclusive: bool,
-     *   taxRate: float,
-     *   type: value-of<Meter\Type>,
-     *   unitsConsumed: string,
-     *   description?: string|null,
-     *   tax?: int|null,
-     * }> $lineItems
-     * @param Summary|array{
-     *   currency: value-of<Currency>,
-     *   customerCredits: int,
-     *   settlementAmount: int,
-     *   settlementCurrency: value-of<Currency>,
-     *   totalAmount: int,
-     *   settlementTax?: int|null,
-     *   tax?: int|null,
-     * } $summary
+     * @param list<LineItemShape> $lineItems
+     * @param SummaryShape $summary
      */
     public static function with(array $lineItems, Summary|array $summary): self
     {
@@ -119,47 +71,7 @@ final class ImmediateCharge implements BaseModel
     }
 
     /**
-     * @param list<Subscription|array{
-     *   id: string,
-     *   currency: value-of<Currency>,
-     *   productID: string,
-     *   prorationFactor: float,
-     *   quantity: int,
-     *   taxInclusive: bool,
-     *   type: value-of<Type>,
-     *   unitPrice: int,
-     *   description?: string|null,
-     *   name?: string|null,
-     *   tax?: int|null,
-     *   taxRate?: float|null,
-     * }|Addon|array{
-     *   id: string,
-     *   currency: value-of<Currency>,
-     *   name: string,
-     *   prorationFactor: float,
-     *   quantity: int,
-     *   taxCategory: value-of<TaxCategory>,
-     *   taxInclusive: bool,
-     *   taxRate: float,
-     *   type: value-of<Addon\Type>,
-     *   unitPrice: int,
-     *   description?: string|null,
-     *   tax?: int|null,
-     * }|Meter|array{
-     *   id: string,
-     *   chargeableUnits: string,
-     *   currency: value-of<Currency>,
-     *   freeThreshold: int,
-     *   name: string,
-     *   pricePerUnit: string,
-     *   subtotal: int,
-     *   taxInclusive: bool,
-     *   taxRate: float,
-     *   type: value-of<Meter\Type>,
-     *   unitsConsumed: string,
-     *   description?: string|null,
-     *   tax?: int|null,
-     * }> $lineItems
+     * @param list<LineItemShape> $lineItems
      */
     public function withLineItems(array $lineItems): self
     {
@@ -170,15 +82,7 @@ final class ImmediateCharge implements BaseModel
     }
 
     /**
-     * @param Summary|array{
-     *   currency: value-of<Currency>,
-     *   customerCredits: int,
-     *   settlementAmount: int,
-     *   settlementCurrency: value-of<Currency>,
-     *   totalAmount: int,
-     *   settlementTax?: int|null,
-     *   tax?: int|null,
-     * } $summary
+     * @param SummaryShape $summary
      */
     public function withSummary(Summary|array $summary): self
     {

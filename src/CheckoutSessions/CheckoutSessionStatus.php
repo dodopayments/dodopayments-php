@@ -17,7 +17,7 @@ use Dodopayments\Payments\IntentStatus;
  *   customerEmail?: string|null,
  *   customerName?: string|null,
  *   paymentID?: string|null,
- *   paymentStatus?: value-of<IntentStatus>|null,
+ *   paymentStatus?: null|IntentStatus|value-of<IntentStatus>,
  * }
  */
 final class CheckoutSessionStatus implements BaseModel

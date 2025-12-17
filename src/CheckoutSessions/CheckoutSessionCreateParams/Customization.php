@@ -16,7 +16,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   forceLanguage?: string|null,
  *   showOnDemandTag?: bool|null,
  *   showOrderDetails?: bool|null,
- *   theme?: value-of<Theme>|null,
+ *   theme?: null|Theme|value-of<Theme>,
  * }
  */
 final class Customization implements BaseModel
