@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.0.0 (2025-12-17)
+
+Full Changelog: [v3.7.0...v4.0.0](https://github.com/dodopayments/dodopayments-php/compare/v3.7.0...v4.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* use aliases for phpstan types
+
+### Features
+
+* use aliases for phpstan types ([82156db](https://github.com/dodopayments/dodopayments-php/commit/82156dbd9c982bb951419065115667f588a450d6))
+
+
+### Bug Fixes
+
+* support arrays in query param construction ([24ea3b8](https://github.com/dodopayments/dodopayments-php/commit/24ea3b8f6223955116f5264316b87cc13966e441))
+
 ## 3.7.0 (2025-12-16)
 
 Full Changelog: [v3.6.0...v3.7.0](https://github.com/dodopayments/dodopayments-php/compare/v3.6.0...v3.7.0)
