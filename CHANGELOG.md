@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.1.0 (2025-12-18)
+
+Full Changelog: [v4.0.0...v4.1.0](https://github.com/dodopayments/dodopayments-php/compare/v4.0.0...v4.1.0)
+
+### Features
+
+* improved phpstan type annotations ([984ea6b](https://github.com/dodopayments/dodopayments-php/commit/984ea6bea24fa3064d4ed6a28365184fd39b4d5e))
+
+
+### Chores
+
+* **internal:** codegen related update ([cf666be](https://github.com/dodopayments/dodopayments-php/commit/cf666be22cc69cce2179ae37368d61cdd65e0f09))
+* **internal:** codegen related update ([f986322](https://github.com/dodopayments/dodopayments-php/commit/f986322a96ebf880d812f371c498022c94ff8485))
+
 ## 4.0.0 (2025-12-17)
 
 Full Changelog: [v3.7.0...v4.0.0](https://github.com/dodopayments/dodopayments-php/compare/v3.7.0...v4.0.0)
