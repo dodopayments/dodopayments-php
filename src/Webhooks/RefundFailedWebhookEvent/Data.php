@@ -148,11 +148,11 @@ final class Data implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
-     * @param Currency|value-of<Currency> $currency
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param Currency|value-of<Currency>|null $currency
+     * @param PayloadType|value-of<PayloadType>|null $payloadType
      */
     public static function with(
         string $businessID,
@@ -210,7 +210,7 @@ final class Data implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

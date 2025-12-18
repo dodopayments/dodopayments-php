@@ -110,7 +110,7 @@ final class WebhookCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes
+     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes
      * @param array<string,string>|null $headers
      * @param array<string,string>|null $metadata
      */

@@ -41,7 +41,7 @@ final class SubscriptionData implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param OnDemandSubscriptionShape|null $onDemand
+     * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      */
     public static function with(
         OnDemandSubscription|array|null $onDemand = null,
@@ -56,7 +56,7 @@ final class SubscriptionData implements BaseModel
     }
 
     /**
-     * @param OnDemandSubscriptionShape|null $onDemand
+     * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      */
     public function withOnDemand(
         OnDemandSubscription|array|null $onDemand

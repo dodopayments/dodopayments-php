@@ -146,7 +146,7 @@ final class Refund implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency>|null $currency
@@ -207,7 +207,7 @@ final class Refund implements BaseModel
     /**
      * Details about the customer for this refund (from the associated payment).
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

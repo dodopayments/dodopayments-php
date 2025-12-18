@@ -145,7 +145,7 @@ final class GetDispute implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
      */
@@ -227,7 +227,7 @@ final class GetDispute implements BaseModel
     /**
      * The customer who filed the dispute.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

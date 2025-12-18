@@ -300,15 +300,15 @@ final class Data implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AddonCartResponseItemShape> $addons
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param list<MeterShape> $meters
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param PayloadType|value-of<PayloadType>|null $payloadType
      */
     public static function with(
         array $addons,
@@ -391,7 +391,7 @@ final class Data implements BaseModel
     }
 
     /**
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -436,7 +436,7 @@ final class Data implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
