@@ -30,7 +30,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   image?: string|null,
  *   name?: string|null,
  *   price?: int|null,
- *   priceDetail?: null|PriceShape|OneTimePrice|RecurringPrice|UsageBasedPrice,
+ *   priceDetail?: PriceShape|null,
  *   taxInclusive?: bool|null,
  * }
  */

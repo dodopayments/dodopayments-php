@@ -114,7 +114,7 @@ final class PaymentListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
@@ -179,7 +179,7 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

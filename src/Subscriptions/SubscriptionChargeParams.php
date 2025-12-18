@@ -20,7 +20,7 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
  * @phpstan-type SubscriptionChargeParamsShape = array{
  *   productPrice: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
- *   customerBalanceConfig?: CustomerBalanceConfigShape|null,
+ *   customerBalanceConfig?: null|CustomerBalanceConfig|CustomerBalanceConfigShape,
  *   metadata?: array<string,string>|null,
  *   productCurrency?: null|Currency|value-of<Currency>,
  *   productDescription?: string|null,
@@ -99,7 +99,7 @@ final class SubscriptionChargeParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerBalanceConfigShape|null $customerBalanceConfig
+     * @param CustomerBalanceConfig|CustomerBalanceConfigShape|null $customerBalanceConfig
      * @param array<string,string>|null $metadata
      * @param Currency|value-of<Currency>|null $productCurrency
      */
@@ -152,7 +152,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Specify how customer balance is used for the payment.
      *
-     * @param CustomerBalanceConfigShape|null $customerBalanceConfig
+     * @param CustomerBalanceConfig|CustomerBalanceConfigShape|null $customerBalanceConfig
      */
     public function withCustomerBalanceConfig(
         CustomerBalanceConfig|array|null $customerBalanceConfig

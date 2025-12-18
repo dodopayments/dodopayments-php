@@ -18,7 +18,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  *
  * @phpstan-type WebhookPayloadShape = array{
  *   businessID: string,
- *   data: Payment|Subscription|Refund|Dispute|LicenseKey|DataShape,
+ *   data: DataShape,
  *   timestamp: \DateTimeInterface,
  *   type: WebhookEventType|value-of<WebhookEventType>,
  * }

@@ -134,7 +134,7 @@ final class Data implements BaseModel
      *
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param PayloadType|value-of<PayloadType>|null $payloadType
      */
     public static function with(
         string $amount,

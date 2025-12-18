@@ -110,8 +110,8 @@ final class LicenseActivateResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetailsShape $customer
-     * @param ProductShape $product
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
+     * @param Product|ProductShape $product
      */
     public static function with(
         string $id,
@@ -171,7 +171,7 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Limited customer details associated with the license key.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {
@@ -206,7 +206,7 @@ final class LicenseActivateResponse implements BaseModel
     /**
      * Related product info. Present if the license key is tied to a product.
      *
-     * @param ProductShape $product
+     * @param Product|ProductShape $product
      */
     public function withProduct(Product|array $product): self
     {

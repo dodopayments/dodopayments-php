@@ -58,7 +58,7 @@ final class ImmediateCharge implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<LineItemShape> $lineItems
-     * @param SummaryShape $summary
+     * @param Summary|SummaryShape $summary
      */
     public static function with(array $lineItems, Summary|array $summary): self
     {
@@ -82,7 +82,7 @@ final class ImmediateCharge implements BaseModel
     }
 
     /**
-     * @param SummaryShape $summary
+     * @param Summary|SummaryShape $summary
      */
     public function withSummary(Summary|array $summary): self
     {

@@ -82,7 +82,7 @@ final class RefundCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ItemShape>|null $items
-     * @param array<string,string> $metadata
+     * @param array<string,string>|null $metadata
      */
     public static function with(
         string $paymentID,

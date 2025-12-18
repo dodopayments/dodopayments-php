@@ -26,7 +26,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  *   isRecurring: bool,
  *   licenseKeyEnabled: bool,
  *   metadata: array<string,string>,
- *   price: OneTimePrice|RecurringPrice|UsageBasedPrice|PriceShape,
+ *   price: PriceShape,
  *   productID: string,
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   updatedAt: \DateTimeInterface,
@@ -202,8 +202,8 @@ final class Product implements BaseModel
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
-     * @param DigitalProductDeliveryShape|null $digitalProductDelivery
-     * @param LicenseKeyDurationShape|null $licenseKeyDuration
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      */
     public static function with(
         string $brandID,
@@ -389,7 +389,7 @@ final class Product implements BaseModel
     }
 
     /**
-     * @param DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
         DigitalProductDelivery|array|null $digitalProductDelivery
@@ -438,7 +438,7 @@ final class Product implements BaseModel
     /**
      * Duration of the license key validity, if enabled.
      *
-     * @param LicenseKeyDurationShape|null $licenseKeyDuration
+     * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      */
     public function withLicenseKeyDuration(
         LicenseKeyDuration|array|null $licenseKeyDuration

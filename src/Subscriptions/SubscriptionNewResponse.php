@@ -150,7 +150,7 @@ final class SubscriptionNewResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AddonCartResponseItemShape> $addons
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param list<OneTimeProductCartShape>|null $oneTimeProductCart
      */
@@ -201,7 +201,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Customer details associated with this subscription.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

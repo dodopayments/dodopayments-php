@@ -58,8 +58,8 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ImmediateChargeShape $immediateCharge
-     * @param SubscriptionShape $newPlan
+     * @param ImmediateCharge|ImmediateChargeShape $immediateCharge
+     * @param Subscription|SubscriptionShape $newPlan
      */
     public static function with(
         ImmediateCharge|array $immediateCharge,
@@ -74,7 +74,7 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     }
 
     /**
-     * @param ImmediateChargeShape $immediateCharge
+     * @param ImmediateCharge|ImmediateChargeShape $immediateCharge
      */
     public function withImmediateCharge(
         ImmediateCharge|array $immediateCharge
@@ -88,7 +88,7 @@ final class SubscriptionPreviewChangePlanResponse implements BaseModel
     /**
      * Response struct representing subscription details.
      *
-     * @param SubscriptionShape $newPlan
+     * @param Subscription|SubscriptionShape $newPlan
      */
     public function withNewPlan(Subscription|array $newPlan): self
     {

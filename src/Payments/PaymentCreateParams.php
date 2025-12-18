@@ -20,7 +20,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type PaymentCreateParamsShape = array{
- *   billing: BillingAddressShape,
+ *   billing: BillingAddress|BillingAddressShape,
  *   customer: CustomerRequestShape,
  *   productCart: list<OneTimeProductCartItemShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
@@ -159,12 +159,12 @@ final class PaymentCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      * @param CustomerRequestShape $customer
      * @param list<OneTimeProductCartItemShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
-     * @param array<string,string> $metadata
+     * @param array<string,string>|null $metadata
      */
     public static function with(
         BillingAddress|array $billing,
@@ -202,7 +202,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * Billing address details for the payment.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {

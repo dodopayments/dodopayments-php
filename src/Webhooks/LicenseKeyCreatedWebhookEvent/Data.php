@@ -157,7 +157,7 @@ final class Data implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param LicenseKeyStatus|value-of<LicenseKeyStatus> $status
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param PayloadType|value-of<PayloadType>|null $payloadType
      */
     public static function with(
         string $id,
