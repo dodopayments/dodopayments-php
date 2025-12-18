@@ -128,7 +128,7 @@ final class PaymentNewResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param list<OneTimeProductCartItemShape>|null $productCart
      */
@@ -174,7 +174,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Limited details about the customer making the payment.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

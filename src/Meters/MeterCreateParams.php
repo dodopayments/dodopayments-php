@@ -17,12 +17,12 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-import-type MeterFilterShape from \Dodopayments\Meters\MeterFilter
  *
  * @phpstan-type MeterCreateParamsShape = array{
- *   aggregation: MeterAggregationShape,
+ *   aggregation: MeterAggregation|MeterAggregationShape,
  *   eventName: string,
  *   measurementUnit: string,
  *   name: string,
  *   description?: string|null,
- *   filter?: MeterFilterShape|null,
+ *   filter?: null|MeterFilter|MeterFilterShape,
  * }
  */
 final class MeterCreateParams implements BaseModel
@@ -97,8 +97,8 @@ final class MeterCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MeterAggregationShape $aggregation
-     * @param MeterFilterShape|null $filter
+     * @param MeterAggregation|MeterAggregationShape $aggregation
+     * @param MeterFilter|MeterFilterShape|null $filter
      */
     public static function with(
         MeterAggregation|array $aggregation,
@@ -124,7 +124,7 @@ final class MeterCreateParams implements BaseModel
     /**
      * Aggregation configuration for the meter.
      *
-     * @param MeterAggregationShape $aggregation
+     * @param MeterAggregation|MeterAggregationShape $aggregation
      */
     public function withAggregation(MeterAggregation|array $aggregation): self
     {
@@ -181,7 +181,7 @@ final class MeterCreateParams implements BaseModel
     /**
      * Optional filter to apply to the meter.
      *
-     * @param MeterFilterShape|null $filter
+     * @param MeterFilter|MeterFilterShape|null $filter
      */
     public function withFilter(MeterFilter|array|null $filter): self
     {

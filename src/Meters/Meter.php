@@ -108,8 +108,8 @@ final class Meter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param MeterAggregationShape $aggregation
-     * @param MeterFilterShape|null $filter
+     * @param MeterAggregation|MeterAggregationShape $aggregation
+     * @param MeterFilter|MeterFilterShape|null $filter
      */
     public static function with(
         string $id,
@@ -149,7 +149,7 @@ final class Meter implements BaseModel
     }
 
     /**
-     * @param MeterAggregationShape $aggregation
+     * @param MeterAggregation|MeterAggregationShape $aggregation
      */
     public function withAggregation(MeterAggregation|array $aggregation): self
     {
@@ -221,7 +221,7 @@ final class Meter implements BaseModel
      * Supports up to 3 levels of nesting to create complex filter expressions.
      * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
      *
-     * @param MeterFilterShape|null $filter
+     * @param MeterFilter|MeterFilterShape|null $filter
      */
     public function withFilter(MeterFilter|array|null $filter): self
     {

@@ -27,7 +27,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type SubscriptionCreateParamsShape = array{
- *   billing: BillingAddressShape,
+ *   billing: BillingAddress|BillingAddressShape,
  *   customer: CustomerRequestShape,
  *   productID: string,
  *   quantity: int,
@@ -37,7 +37,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   discountCode?: string|null,
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
- *   onDemand?: OnDemandSubscriptionShape|null,
+ *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
  *   oneTimeProductCart?: list<OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
  *   returnURL?: string|null,
@@ -209,13 +209,13 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      * @param CustomerRequestShape $customer
      * @param list<AttachAddonShape>|null $addons
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
-     * @param array<string,string> $metadata
-     * @param OnDemandSubscriptionShape|null $onDemand
+     * @param array<string,string>|null $metadata
+     * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      * @param list<OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public static function with(
@@ -264,7 +264,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Billing address information for the subscription.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -393,7 +393,7 @@ final class SubscriptionCreateParams implements BaseModel
     }
 
     /**
-     * @param OnDemandSubscriptionShape|null $onDemand
+     * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      */
     public function withOnDemand(
         OnDemandSubscription|array|null $onDemand

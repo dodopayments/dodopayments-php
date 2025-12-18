@@ -144,11 +144,11 @@ final class Refund implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param PayloadType|value-of<PayloadType> $payloadType
-     * @param Currency|value-of<Currency> $currency
+     * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
         string $businessID,
@@ -206,7 +206,7 @@ final class Refund implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

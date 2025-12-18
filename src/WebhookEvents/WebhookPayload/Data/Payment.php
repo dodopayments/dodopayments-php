@@ -319,17 +319,17 @@ final class Payment implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<DisputeShape> $disputes
      * @param array<string,string> $metadata
      * @param list<RefundShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param PayloadType|value-of<PayloadType> $payloadType
-     * @param CountryCode|value-of<CountryCode> $cardIssuingCountry
+     * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<ProductCartShape>|null $productCart
-     * @param IntentStatus|value-of<IntentStatus> $status
+     * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
         BillingAddress|array $billing,
@@ -407,7 +407,7 @@ final class Payment implements BaseModel
     }
 
     /**
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -462,7 +462,7 @@ final class Payment implements BaseModel
     }
 
     /**
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

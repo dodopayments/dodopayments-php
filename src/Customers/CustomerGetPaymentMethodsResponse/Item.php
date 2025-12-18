@@ -84,7 +84,7 @@ final class Item implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param PaymentMethod|value-of<PaymentMethod> $paymentMethod
-     * @param CardShape|null $card
+     * @param Card|CardShape|null $card
      * @param PaymentMethodTypes|value-of<PaymentMethodTypes>|null $paymentMethodType
      */
     public static function with(
@@ -132,7 +132,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * @param CardShape|null $card
+     * @param Card|CardShape|null $card
      */
     public function withCard(Card|array|null $card): self
     {

@@ -66,7 +66,7 @@ final class Customization implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Theme|value-of<Theme> $theme
+     * @param Theme|value-of<Theme>|null $theme
      */
     public static function with(
         ?string $forceLanguage = null,

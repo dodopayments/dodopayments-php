@@ -276,9 +276,9 @@ final class SubscriptionListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
@@ -346,7 +346,7 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Billing address details for payments.
      *
-     * @param BillingAddressShape $billing
+     * @param BillingAddress|BillingAddressShape $billing
      */
     public function withBilling(BillingAddress|array $billing): self
     {
@@ -395,7 +395,7 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Customer details associated with the subscription.
      *
-     * @param CustomerLimitedDetailsShape $customer
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      */
     public function withCustomer(CustomerLimitedDetails|array $customer): self
     {

@@ -81,7 +81,7 @@ final class DisputeAcceptedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param DataShape $data
+     * @param Data|DataShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
@@ -114,7 +114,7 @@ final class DisputeAcceptedWebhookEvent implements BaseModel
     /**
      * Event-specific data.
      *
-     * @param DataShape $data
+     * @param Data|DataShape $data
      */
     public function withData(Data|array $data): self
     {

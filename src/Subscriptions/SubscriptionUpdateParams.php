@@ -18,10 +18,10 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  *
  * @phpstan-type SubscriptionUpdateParamsShape = array{
- *   billing?: BillingAddressShape|null,
+ *   billing?: null|BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate?: bool|null,
  *   customerName?: string|null,
- *   disableOnDemand?: DisableOnDemandShape|null,
+ *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
  *   metadata?: array<string,string>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
  *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
@@ -73,8 +73,8 @@ final class SubscriptionUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param BillingAddressShape|null $billing
-     * @param DisableOnDemandShape|null $disableOnDemand
+     * @param BillingAddress|BillingAddressShape|null $billing
+     * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
@@ -103,7 +103,7 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param BillingAddressShape|null $billing
+     * @param BillingAddress|BillingAddressShape|null $billing
      */
     public function withBilling(BillingAddress|array|null $billing): self
     {
@@ -134,7 +134,7 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param DisableOnDemandShape|null $disableOnDemand
+     * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      */
     public function withDisableOnDemand(
         DisableOnDemand|array|null $disableOnDemand

@@ -32,19 +32,19 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @phpstan-type CheckoutSessionCreateParamsShape = array{
  *   productCart: list<ProductCartShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
- *   billingAddress?: BillingAddressShape|null,
+ *   billingAddress?: null|BillingAddress|BillingAddressShape,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   confirm?: bool|null,
  *   customer?: CustomerRequestShape|null,
- *   customization?: CustomizationShape|null,
+ *   customization?: null|Customization|CustomizationShape,
  *   discountCode?: string|null,
- *   featureFlags?: FeatureFlagsShape|null,
+ *   featureFlags?: null|FeatureFlags|FeatureFlagsShape,
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
  *   minimalAddress?: bool|null,
  *   returnURL?: string|null,
  *   showSavedPaymentMethods?: bool|null,
- *   subscriptionData?: SubscriptionDataShape|null,
+ *   subscriptionData?: null|SubscriptionData|SubscriptionDataShape,
  * }
  */
 final class CheckoutSessionCreateParams implements BaseModel
@@ -173,13 +173,13 @@ final class CheckoutSessionCreateParams implements BaseModel
      *
      * @param list<ProductCartShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
-     * @param BillingAddressShape|null $billingAddress
+     * @param BillingAddress|BillingAddressShape|null $billingAddress
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param CustomerRequestShape|null $customer
-     * @param CustomizationShape $customization
-     * @param FeatureFlagsShape $featureFlags
+     * @param Customization|CustomizationShape|null $customization
+     * @param FeatureFlags|FeatureFlagsShape|null $featureFlags
      * @param array<string,string>|null $metadata
-     * @param SubscriptionDataShape|null $subscriptionData
+     * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
      */
     public static function with(
         array $productCart,
@@ -253,7 +253,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * Billing address information for the session.
      *
-     * @param BillingAddressShape|null $billingAddress
+     * @param BillingAddress|BillingAddressShape|null $billingAddress
      */
     public function withBillingAddress(
         BillingAddress|array|null $billingAddress
@@ -306,7 +306,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     /**
      * Customization for the checkout session page.
      *
-     * @param CustomizationShape $customization
+     * @param Customization|CustomizationShape $customization
      */
     public function withCustomization(Customization|array $customization): self
     {
@@ -325,7 +325,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     }
 
     /**
-     * @param FeatureFlagsShape $featureFlags
+     * @param FeatureFlags|FeatureFlagsShape $featureFlags
      */
     public function withFeatureFlags(FeatureFlags|array $featureFlags): self
     {
@@ -394,7 +394,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     }
 
     /**
-     * @param SubscriptionDataShape|null $subscriptionData
+     * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
      */
     public function withSubscriptionData(
         SubscriptionData|array|null $subscriptionData

@@ -25,11 +25,11 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *   addons?: list<string>|null,
  *   brandID?: string|null,
  *   description?: string|null,
- *   digitalProductDelivery?: DigitalProductDeliveryShape|null,
+ *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   imageID?: string|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyDuration?: LicenseKeyDurationShape|null,
+ *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
  *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
@@ -147,8 +147,8 @@ final class ProductUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $addons
-     * @param DigitalProductDeliveryShape|null $digitalProductDelivery
-     * @param LicenseKeyDurationShape|null $licenseKeyDuration
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      * @param PriceShape|null $price
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
@@ -222,7 +222,7 @@ final class ProductUpdateParams implements BaseModel
     /**
      * Choose how you would like you digital product delivered.
      *
-     * @param DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
         DigitalProductDelivery|array|null $digitalProductDelivery
@@ -280,7 +280,7 @@ final class ProductUpdateParams implements BaseModel
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
      *
-     * @param LicenseKeyDurationShape|null $licenseKeyDuration
+     * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      */
     public function withLicenseKeyDuration(
         LicenseKeyDuration|array|null $licenseKeyDuration
