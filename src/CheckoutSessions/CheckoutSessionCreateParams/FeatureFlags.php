@@ -22,6 +22,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   allowPhoneNumberCollection?: bool|null,
  *   allowTaxID?: bool|null,
  *   alwaysCreateNewCustomer?: bool|null,
+ *   redirectImmediately?: bool|null,
  * }
  */
 final class FeatureFlags implements BaseModel
@@ -91,6 +92,14 @@ final class FeatureFlags implements BaseModel
     #[Optional('always_create_new_customer')]
     public ?bool $alwaysCreateNewCustomer;
 
+    /**
+     * If true, redirects the customer immediately after payment completion.
+     *
+     * Default is false
+     */
+    #[Optional('redirect_immediately')]
+    public ?bool $redirectImmediately;
+
     public function __construct()
     {
         $this->initialize();
@@ -114,6 +123,7 @@ final class FeatureFlags implements BaseModel
         ?bool $allowPhoneNumberCollection = null,
         ?bool $allowTaxID = null,
         ?bool $alwaysCreateNewCustomer = null,
+        ?bool $redirectImmediately = null,
     ): self {
         $self = new self;
 
@@ -129,6 +139,7 @@ final class FeatureFlags implements BaseModel
         null !== $allowPhoneNumberCollection && $self['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
         null !== $allowTaxID && $self['allowTaxID'] = $allowTaxID;
         null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
+        null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
 
         return $self;
     }
@@ -261,6 +272,19 @@ final class FeatureFlags implements BaseModel
     ): self {
         $self = clone $this;
         $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
+
+        return $self;
+    }
+
+    /**
+     * If true, redirects the customer immediately after payment completion.
+     *
+     * Default is false
+     */
+    public function withRedirectImmediately(bool $redirectImmediately): self
+    {
+        $self = clone $this;
+        $self['redirectImmediately'] = $redirectImmediately;
 
         return $self;
     }

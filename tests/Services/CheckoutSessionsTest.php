@@ -84,11 +84,13 @@ final class CheckoutSessionsTest extends TestCase
                 'allowPhoneNumberCollection' => true,
                 'allowTaxID' => true,
                 'alwaysCreateNewCustomer' => true,
+                'redirectImmediately' => true,
             ],
             force3DS: true,
             metadata: ['foo' => 'string'],
             minimalAddress: true,
             returnURL: 'return_url',
+            shortLink: true,
             showSavedPaymentMethods: true,
             subscriptionData: [
                 'onDemand' => [

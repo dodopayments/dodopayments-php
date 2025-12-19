@@ -55,7 +55,9 @@ final class PaymentsRawService implements PaymentsRawContract
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>,
      *   paymentLink?: bool|null,
+     *   redirectImmediately?: bool,
      *   returnURL?: string|null,
+     *   shortLink?: bool|null,
      *   showSavedPaymentMethods?: bool,
      *   taxID?: string|null,
      * }|PaymentCreateParams $params

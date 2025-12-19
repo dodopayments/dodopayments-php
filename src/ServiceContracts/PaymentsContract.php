@@ -48,8 +48,12 @@ interface PaymentsContract
      * @param array<string,string> $metadata Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      * @param bool|null $paymentLink Whether to generate a payment link. Defaults to false if not specified.
+     * @param bool $redirectImmediately If true, redirects the customer immediately after payment completion
+     * False by default
      * @param string|null $returnURL Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
+     * @param bool|null $shortLink If true, returns a shortened payment link.
+     * Defaults to false if not specified.
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
      * False by default
      * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
@@ -66,7 +70,9 @@ interface PaymentsContract
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $paymentLink = null,
+        ?bool $redirectImmediately = null,
         ?string $returnURL = null,
+        ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         ?string $taxID = null,
         ?RequestOptions $requestOptions = null,

@@ -83,7 +83,11 @@ final class SubscriptionsService implements SubscriptionsContract
      * }|OneTimeProductCartItem>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
+     * @param bool $redirectImmediately If true, redirects the customer immediately after payment completion
+     * False by default
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
+     * @param bool|null $shortLink If true, returns a shortened payment link.
+     * Defaults to false if not specified.
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer
      * False by default
      * @param string|null $taxID Tax ID in case the payment is B2B. If tax id validation fails the payment creation will fail
@@ -107,7 +111,9 @@ final class SubscriptionsService implements SubscriptionsContract
         ?array $onDemand = null,
         ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
+        ?bool $redirectImmediately = null,
         ?string $returnURL = null,
+        ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         ?string $taxID = null,
         ?int $trialPeriodDays = null,
@@ -128,7 +134,9 @@ final class SubscriptionsService implements SubscriptionsContract
                 'onDemand' => $onDemand,
                 'oneTimeProductCart' => $oneTimeProductCart,
                 'paymentLink' => $paymentLink,
+                'redirectImmediately' => $redirectImmediately,
                 'returnURL' => $returnURL,
+                'shortLink' => $shortLink,
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,
                 'taxID' => $taxID,
                 'trialPeriodDays' => $trialPeriodDays,
