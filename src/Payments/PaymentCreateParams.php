@@ -29,7 +29,9 @@ use Dodopayments\Misc\Currency;
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
  *   paymentLink?: bool|null,
+ *   redirectImmediately?: bool|null,
  *   returnURL?: string|null,
+ *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
  *   taxID?: string|null,
  * }
@@ -113,11 +115,25 @@ final class PaymentCreateParams implements BaseModel
     public ?bool $paymentLink;
 
     /**
+     * If true, redirects the customer immediately after payment completion
+     * False by default.
+     */
+    #[Optional('redirect_immediately')]
+    public ?bool $redirectImmediately;
+
+    /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
     #[Optional('return_url', nullable: true)]
     public ?string $returnURL;
+
+    /**
+     * If true, returns a shortened payment link.
+     * Defaults to false if not specified.
+     */
+    #[Optional('short_link', nullable: true)]
+    public ?bool $shortLink;
 
     /**
      * Display saved payment methods of a returning customer
@@ -176,7 +192,9 @@ final class PaymentCreateParams implements BaseModel
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $paymentLink = null,
+        ?bool $redirectImmediately = null,
         ?string $returnURL = null,
+        ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         ?string $taxID = null,
     ): self {
@@ -192,7 +210,9 @@ final class PaymentCreateParams implements BaseModel
         null !== $force3DS && $self['force3DS'] = $force3DS;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
         null !== $returnURL && $self['returnURL'] = $returnURL;
+        null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
         null !== $taxID && $self['taxID'] = $taxID;
 
@@ -320,6 +340,18 @@ final class PaymentCreateParams implements BaseModel
     }
 
     /**
+     * If true, redirects the customer immediately after payment completion
+     * False by default.
+     */
+    public function withRedirectImmediately(bool $redirectImmediately): self
+    {
+        $self = clone $this;
+        $self['redirectImmediately'] = $redirectImmediately;
+
+        return $self;
+    }
+
+    /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
@@ -327,6 +359,18 @@ final class PaymentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['returnURL'] = $returnURL;
+
+        return $self;
+    }
+
+    /**
+     * If true, returns a shortened payment link.
+     * Defaults to false if not specified.
+     */
+    public function withShortLink(?bool $shortLink): self
+    {
+        $self = clone $this;
+        $self['shortLink'] = $shortLink;
 
         return $self;
     }

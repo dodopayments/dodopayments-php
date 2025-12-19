@@ -66,11 +66,13 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *     allowPhoneNumberCollection?: bool,
      *     allowTaxID?: bool,
      *     alwaysCreateNewCustomer?: bool,
+     *     redirectImmediately?: bool,
      *   },
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>|null,
      *   minimalAddress?: bool,
      *   returnURL?: string|null,
+     *   shortLink?: bool,
      *   showSavedPaymentMethods?: bool,
      *   subscriptionData?: array{
      *     onDemand?: array{

@@ -40,6 +40,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   metadata?: array<string,string>|null,
  *   minimalAddress?: bool|null,
  *   returnURL?: string|null,
+ *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
  *   subscriptionData?: null|SubscriptionData|SubscriptionDataShape,
  * }
@@ -135,6 +136,13 @@ final class CheckoutSessionRequest implements BaseModel
     public ?string $returnURL;
 
     /**
+     * If true, returns a shortened checkout URL.
+     * Defaults to false if not specified.
+     */
+    #[Optional('short_link')]
+    public ?bool $shortLink;
+
+    /**
      * Display saved payment methods of a returning customer False by default.
      */
     #[Optional('show_saved_payment_methods')]
@@ -191,6 +199,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?array $metadata = null,
         ?bool $minimalAddress = null,
         ?string $returnURL = null,
+        ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         SubscriptionData|array|null $subscriptionData = null,
     ): self {
@@ -210,6 +219,7 @@ final class CheckoutSessionRequest implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $minimalAddress && $self['minimalAddress'] = $minimalAddress;
         null !== $returnURL && $self['returnURL'] = $returnURL;
+        null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
         null !== $subscriptionData && $self['subscriptionData'] = $subscriptionData;
 
@@ -373,6 +383,18 @@ final class CheckoutSessionRequest implements BaseModel
     {
         $self = clone $this;
         $self['returnURL'] = $returnURL;
+
+        return $self;
+    }
+
+    /**
+     * If true, returns a shortened checkout URL.
+     * Defaults to false if not specified.
+     */
+    public function withShortLink(bool $shortLink): self
+    {
+        $self = clone $this;
+        $self['shortLink'] = $shortLink;
 
         return $self;
     }

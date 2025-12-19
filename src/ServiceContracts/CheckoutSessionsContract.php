@@ -59,11 +59,14 @@ interface CheckoutSessionsContract
      *   allowPhoneNumberCollection?: bool,
      *   allowTaxID?: bool,
      *   alwaysCreateNewCustomer?: bool,
+     *   redirectImmediately?: bool,
      * } $featureFlags
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
      * @param array<string,string>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
      * @param string|null $returnURL the url to redirect after payment failure or success
+     * @param bool $shortLink If true, returns a shortened checkout URL.
+     * Defaults to false if not specified.
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
      * @param array{
      *   onDemand?: array{
@@ -92,6 +95,7 @@ interface CheckoutSessionsContract
         ?array $metadata = null,
         ?bool $minimalAddress = null,
         ?string $returnURL = null,
+        ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         ?array $subscriptionData = null,
         ?RequestOptions $requestOptions = null,

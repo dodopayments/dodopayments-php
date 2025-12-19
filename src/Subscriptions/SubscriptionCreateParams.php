@@ -40,7 +40,9 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
  *   oneTimeProductCart?: list<OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
+ *   redirectImmediately?: bool|null,
  *   returnURL?: string|null,
+ *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
  *   taxID?: string|null,
  *   trialPeriodDays?: int|null,
@@ -153,10 +155,24 @@ final class SubscriptionCreateParams implements BaseModel
     public ?bool $paymentLink;
 
     /**
+     * If true, redirects the customer immediately after payment completion
+     * False by default.
+     */
+    #[Optional('redirect_immediately')]
+    public ?bool $redirectImmediately;
+
+    /**
      * Optional URL to redirect after successful subscription creation.
      */
     #[Optional('return_url', nullable: true)]
     public ?string $returnURL;
+
+    /**
+     * If true, returns a shortened payment link.
+     * Defaults to false if not specified.
+     */
+    #[Optional('short_link', nullable: true)]
+    public ?bool $shortLink;
 
     /**
      * Display saved payment methods of a returning customer
@@ -232,7 +248,9 @@ final class SubscriptionCreateParams implements BaseModel
         OnDemandSubscription|array|null $onDemand = null,
         ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
+        ?bool $redirectImmediately = null,
         ?string $returnURL = null,
+        ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         ?string $taxID = null,
         ?int $trialPeriodDays = null,
@@ -253,7 +271,9 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $onDemand && $self['onDemand'] = $onDemand;
         null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
         null !== $returnURL && $self['returnURL'] = $returnURL;
+        null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
         null !== $taxID && $self['taxID'] = $taxID;
         null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
@@ -430,12 +450,36 @@ final class SubscriptionCreateParams implements BaseModel
     }
 
     /**
+     * If true, redirects the customer immediately after payment completion
+     * False by default.
+     */
+    public function withRedirectImmediately(bool $redirectImmediately): self
+    {
+        $self = clone $this;
+        $self['redirectImmediately'] = $redirectImmediately;
+
+        return $self;
+    }
+
+    /**
      * Optional URL to redirect after successful subscription creation.
      */
     public function withReturnURL(?string $returnURL): self
     {
         $self = clone $this;
         $self['returnURL'] = $returnURL;
+
+        return $self;
+    }
+
+    /**
+     * If true, returns a shortened payment link.
+     * Defaults to false if not specified.
+     */
+    public function withShortLink(?bool $shortLink): self
+    {
+        $self = clone $this;
+        $self['shortLink'] = $shortLink;
 
         return $self;
     }
