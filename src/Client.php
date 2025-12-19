@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Dodopayments;
 
 use Dodopayments\Core\BaseClient;
-use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BrandsService;
 use Dodopayments\Services\CheckoutSessionsService;
@@ -133,13 +132,15 @@ class Client extends BaseClient
      */
     public MetersService $meters;
 
-    public function __construct(?string $bearerToken = null, ?string $baseUrl = null)
-    {
-        $this->bearerToken = (string) ($bearerToken ?? getenv('DODO_PAYMENTS_API_KEY'));
+    public function __construct(
+        ?string $bearerToken = null,
+        ?string $baseUrl = null,
+    ) {
+        $this->bearerToken
+            = (string) ($bearerToken ?? getenv('DODO_PAYMENTS_API_KEY'));
 
-        $baseUrl ??= getenv(
-            'DODO_PAYMENTS_BASE_URL'
-        ) ?: 'https://live.dodopayments.com';
+        $baseUrl ??=
+            getenv('DODO_PAYMENTS_BASE_URL') ?: 'https://live.dodopayments.com';
 
         $options = RequestOptions::with(
             uriFactory: Psr17FactoryDiscovery::findUriFactory(),
@@ -155,13 +156,14 @@ class Client extends BaseClient
                 'User-Agent' => sprintf('Dodo Payments/PHP %s', '3.5.0'),
                 'X-Stainless-Lang' => 'php',
                 'X-Stainless-Package-Version' => '3.5.0',
-                'X-Stainless-OS' => $this->getNormalizedOS(),
-                'X-Stainless-Arch' => $this->getNormalizedArchitecture(),
+                // Disabled because these methods are missing
+                // 'X-Stainless-OS' => $this->getNormalizedOS(),
+                // 'X-Stainless-Arch' => $this->getNormalizedArchitecture(),
                 'X-Stainless-Runtime' => 'php',
                 'X-Stainless-Runtime-Version' => phpversion(),
             ],
             baseUrl: $baseUrl,
-            options: $options
+            options: $options,
         );
 
         $this->checkoutSessions = new CheckoutSessionsService($this);
@@ -189,8 +191,10 @@ class Client extends BaseClient
     /** @return array<string,string> */
     protected function authHeaders(): array
     {
-        return $this->bearerToken ? [
-            'Authorization' => "Bearer {$this->bearerToken}",
-        ] : [];
+        return $this->bearerToken
+            ? [
+                'Authorization' => "Bearer {$this->bearerToken}",
+            ]
+            : [];
     }
 }
