@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.1 (2025-12-19)
+
+Full Changelog: [v4.1.0...v4.1.1](https://github.com/dodopayments/dodopayments-php/compare/v4.1.0...v4.1.1)
+
+### Chores
+
+* **internal:** codegen related update ([cf689da](https://github.com/dodopayments/dodopayments-php/commit/cf689da8ee2924d4ff837460332b3f5426fee8cd))
+* **internal:** codegen related update ([5d18687](https://github.com/dodopayments/dodopayments-php/commit/5d18687bd8ce2ad009a1a2166511e519f8cff0cf))
+
 ## 4.1.0 (2025-12-18)
 
 Full Changelog: [v4.0.0...v4.1.0](https://github.com/dodopayments/dodopayments-php/compare/v4.0.0...v4.1.0)
