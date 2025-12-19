@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.2 (2025-12-19)
+
+Full Changelog: [v4.1.1...v4.1.2](https://github.com/dodopayments/dodopayments-php/compare/v4.1.1...v4.1.2)
+
+### Bug Fixes
+
+* **Client:** comment out calls to non-existing methods in __construct ([d567562](https://github.com/dodopayments/dodopayments-php/commit/d567562a76563ada0d633bce8b2f1ece5c262bd8))
+* handle plaintext responses when decoding for APIStatusException ([e9e6051](https://github.com/dodopayments/dodopayments-php/commit/e9e6051d59fcb76cef358a6976999c6f4d4d2f36))
+
 ## 4.1.1 (2025-12-19)
 
 Full Changelog: [v4.1.0...v4.1.1](https://github.com/dodopayments/dodopayments-php/compare/v4.1.0...v4.1.1)
