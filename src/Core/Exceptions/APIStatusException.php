@@ -22,19 +22,34 @@ class APIStatusException extends APIException
         $this->response = $response;
         $this->status = $response->getStatusCode();
 
-        $summary = Util::prettyEncodeJson(['status' => $this->status, 'body' => Util::decodeJson($response->getBody())]);
+        $rawBody = $response->getBody();
+
+        try {
+            $body = Util::decodeJson($rawBody);
+        } catch (\Throwable $e) {
+            $body = $rawBody->__toString();
+        }
+
+        $summary = Util::prettyEncodeJson([
+            'status' => $this->status,
+            'body' => $body,
+        ]);
 
         if ('' != $message) {
             $summary .= $message.PHP_EOL.$summary;
         }
 
-        parent::__construct(request: $request, message: $summary, previous: $previous);
+        parent::__construct(
+            request: $request,
+            message: $summary,
+            previous: $previous,
+        );
     }
 
     public static function from(
         RequestInterface $request,
         ResponseInterface $response,
-        string $message = ''
+        string $message = '',
     ): self {
         $status = $response->getStatusCode();
 
@@ -47,9 +62,13 @@ class APIStatusException extends APIException
             422 === $status => UnprocessableEntityException::class,
             429 === $status => RateLimitException::class,
             $status >= 500 => InternalServerException::class,
-            default => APIStatusException::class
+            default => APIStatusException::class,
         };
 
-        return new $cls(request: $request, response: $response, message: $message);
+        return new $cls(
+            request: $request,
+            response: $response,
+            message: $message,
+        );
     }
 }
