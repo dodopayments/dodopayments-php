@@ -71,6 +71,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>|null,
      *   minimalAddress?: bool,
+     *   paymentMethodID?: string|null,
      *   returnURL?: string|null,
      *   shortLink?: bool,
      *   showSavedPaymentMethods?: bool,

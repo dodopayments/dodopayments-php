@@ -67,6 +67,9 @@ interface SubscriptionsContract
      * }|OneTimeProductCartItem>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
+     * @param string|null $paymentMethodID Optional payment method ID to use for this subscription.
+     * If provided, customer_id must also be provided (via AttachExistingCustomer).
+     * The payment method will be validated for eligibility with the subscription's currency.
      * @param bool $redirectImmediately If true, redirects the customer immediately after payment completion
      * False by default
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
@@ -95,6 +98,7 @@ interface SubscriptionsContract
         ?array $onDemand = null,
         ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
+        ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,

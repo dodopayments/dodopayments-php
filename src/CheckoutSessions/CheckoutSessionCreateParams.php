@@ -42,6 +42,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
  *   minimalAddress?: bool|null,
+ *   paymentMethodID?: string|null,
  *   returnURL?: string|null,
  *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
@@ -134,6 +135,14 @@ final class CheckoutSessionCreateParams implements BaseModel
     public ?bool $minimalAddress;
 
     /**
+     * Optional payment method ID to use for this checkout session.
+     * Only allowed when `confirm` is true.
+     * If provided, existing customer id must also be provided.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
+    /**
      * The url to redirect after payment failure or success.
      */
     #[Optional('return_url', nullable: true)]
@@ -202,6 +211,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $minimalAddress = null,
+        ?string $paymentMethodID = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
@@ -222,6 +232,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         null !== $force3DS && $self['force3DS'] = $force3DS;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $minimalAddress && $self['minimalAddress'] = $minimalAddress;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $returnURL && $self['returnURL'] = $returnURL;
         null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
@@ -376,6 +387,19 @@ final class CheckoutSessionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['minimalAddress'] = $minimalAddress;
+
+        return $self;
+    }
+
+    /**
+     * Optional payment method ID to use for this checkout session.
+     * Only allowed when `confirm` is true.
+     * If provided, existing customer id must also be provided.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
         return $self;
     }
