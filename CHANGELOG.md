@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.4.0 (2025-12-23)
+
+Full Changelog: [v4.3.0...v4.4.0](https://github.com/dodopayments/dodopayments-php/compare/v4.3.0...v4.4.0)
+
+### Features
+
+* **api:** manual updates ([ec132cb](https://github.com/dodopayments/dodopayments-php/commit/ec132cb491064ab39f0551e551a2fb5f645d91c0))
+
 ## 4.3.0 (2025-12-23)
 
 Full Changelog: [v4.2.0...v4.3.0](https://github.com/dodopayments/dodopayments-php/compare/v4.2.0...v4.3.0)
