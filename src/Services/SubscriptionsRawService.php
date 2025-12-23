@@ -77,6 +77,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *     productID: string, quantity: int, amount?: int|null
      *   }|OneTimeProductCartItem>|null,
      *   paymentLink?: bool|null,
+     *   paymentMethodID?: string|null,
      *   redirectImmediately?: bool,
      *   returnURL?: string|null,
      *   shortLink?: bool|null,

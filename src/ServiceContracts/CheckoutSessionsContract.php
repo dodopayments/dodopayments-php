@@ -64,6 +64,9 @@ interface CheckoutSessionsContract
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
      * @param array<string,string>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
+     * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
+     * Only allowed when `confirm` is true.
+     * If provided, existing customer id must also be provided.
      * @param string|null $returnURL the url to redirect after payment failure or success
      * @param bool $shortLink If true, returns a shortened checkout URL.
      * Defaults to false if not specified.
@@ -94,6 +97,7 @@ interface CheckoutSessionsContract
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $minimalAddress = null,
+        ?string $paymentMethodID = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,

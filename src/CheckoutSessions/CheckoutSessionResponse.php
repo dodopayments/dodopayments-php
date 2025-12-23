@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
  * @phpstan-type CheckoutSessionResponseShape = array{
- *   checkoutURL: string, sessionID: string
+ *   sessionID: string, checkoutURL?: string|null
  * }
  */
 final class CheckoutSessionResponse implements BaseModel
@@ -19,29 +20,29 @@ final class CheckoutSessionResponse implements BaseModel
     use SdkModel;
 
     /**
-     * Checkout url.
-     */
-    #[Required('checkout_url')]
-    public string $checkoutURL;
-
-    /**
      * The ID of the created checkout session.
      */
     #[Required('session_id')]
     public string $sessionID;
 
     /**
+     * Checkout url (None when payment_method_id is provided).
+     */
+    #[Optional('checkout_url', nullable: true)]
+    public ?string $checkoutURL;
+
+    /**
      * `new CheckoutSessionResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CheckoutSessionResponse::with(checkoutURL: ..., sessionID: ...)
+     * CheckoutSessionResponse::with(sessionID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CheckoutSessionResponse)->withCheckoutURL(...)->withSessionID(...)
+     * (new CheckoutSessionResponse)->withSessionID(...)
      * ```
      */
     public function __construct()
@@ -54,23 +55,15 @@ final class CheckoutSessionResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $checkoutURL, string $sessionID): self
-    {
+    public static function with(
+        string $sessionID,
+        ?string $checkoutURL = null
+    ): self {
         $self = new self;
 
-        $self['checkoutURL'] = $checkoutURL;
         $self['sessionID'] = $sessionID;
 
-        return $self;
-    }
-
-    /**
-     * Checkout url.
-     */
-    public function withCheckoutURL(string $checkoutURL): self
-    {
-        $self = clone $this;
-        $self['checkoutURL'] = $checkoutURL;
+        null !== $checkoutURL && $self['checkoutURL'] = $checkoutURL;
 
         return $self;
     }
@@ -82,6 +75,17 @@ final class CheckoutSessionResponse implements BaseModel
     {
         $self = clone $this;
         $self['sessionID'] = $sessionID;
+
+        return $self;
+    }
+
+    /**
+     * Checkout url (None when payment_method_id is provided).
+     */
+    public function withCheckoutURL(?string $checkoutURL): self
+    {
+        $self = clone $this;
+        $self['checkoutURL'] = $checkoutURL;
 
         return $self;
     }

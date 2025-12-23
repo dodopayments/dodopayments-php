@@ -40,6 +40,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
  *   oneTimeProductCart?: list<OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
+ *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
  *   returnURL?: string|null,
  *   shortLink?: bool|null,
@@ -155,6 +156,14 @@ final class SubscriptionCreateParams implements BaseModel
     public ?bool $paymentLink;
 
     /**
+     * Optional payment method ID to use for this subscription.
+     * If provided, customer_id must also be provided (via AttachExistingCustomer).
+     * The payment method will be validated for eligibility with the subscription's currency.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
+    /**
      * If true, redirects the customer immediately after payment completion
      * False by default.
      */
@@ -248,6 +257,7 @@ final class SubscriptionCreateParams implements BaseModel
         OnDemandSubscription|array|null $onDemand = null,
         ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
+        ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
@@ -271,6 +281,7 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $onDemand && $self['onDemand'] = $onDemand;
         null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
         null !== $returnURL && $self['returnURL'] = $returnURL;
         null !== $shortLink && $self['shortLink'] = $shortLink;
@@ -445,6 +456,19 @@ final class SubscriptionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['paymentLink'] = $paymentLink;
+
+        return $self;
+    }
+
+    /**
+     * Optional payment method ID to use for this subscription.
+     * If provided, customer_id must also be provided (via AttachExistingCustomer).
+     * The payment method will be validated for eligibility with the subscription's currency.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
         return $self;
     }
