@@ -17,6 +17,7 @@ use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\ProductsContract;
 use Dodopayments\Services\Products\ImagesService;
+use Dodopayments\Services\Products\ShortLinksService;
 use Dodopayments\Subscriptions\TimeInterval;
 
 final class ProductsService implements ProductsContract
@@ -32,12 +33,18 @@ final class ProductsService implements ProductsContract
     public ImagesService $images;
 
     /**
+     * @api
+     */
+    public ShortLinksService $shortLinks;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
     {
         $this->raw = new ProductsRawService($client);
         $this->images = new ImagesService($client);
+        $this->shortLinks = new ShortLinksService($client);
     }
 
     /**
