@@ -81,6 +81,7 @@ final class SubscriptionsTest extends TestCase
                 ['productID' => 'product_id', 'quantity' => 0, 'amount' => 0],
             ],
             paymentLink: true,
+            paymentMethodID: 'payment_method_id',
             redirectImmediately: true,
             returnURL: 'return_url',
             shortLink: true,

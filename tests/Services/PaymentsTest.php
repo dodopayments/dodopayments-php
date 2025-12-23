@@ -67,6 +67,7 @@ final class PaymentsTest extends TestCase
             force3DS: true,
             metadata: ['foo' => 'string'],
             paymentLink: true,
+            paymentMethodID: 'payment_method_id',
             redirectImmediately: true,
             returnURL: 'return_url',
             shortLink: true,

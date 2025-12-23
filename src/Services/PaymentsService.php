@@ -64,6 +64,9 @@ final class PaymentsService implements PaymentsContract
      * @param array<string,string> $metadata Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      * @param bool|null $paymentLink Whether to generate a payment link. Defaults to false if not specified.
+     * @param string|null $paymentMethodID Optional payment method ID to use for this payment.
+     * If provided, customer_id must also be provided.
+     * The payment method will be validated for eligibility with the payment's currency.
      * @param bool $redirectImmediately If true, redirects the customer immediately after payment completion
      * False by default
      * @param string|null $returnURL Optional URL to redirect the customer after payment.
@@ -86,6 +89,7 @@ final class PaymentsService implements PaymentsContract
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $paymentLink = null,
+        ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
@@ -104,6 +108,7 @@ final class PaymentsService implements PaymentsContract
                 'force3DS' => $force3DS,
                 'metadata' => $metadata,
                 'paymentLink' => $paymentLink,
+                'paymentMethodID' => $paymentMethodID,
                 'redirectImmediately' => $redirectImmediately,
                 'returnURL' => $returnURL,
                 'shortLink' => $shortLink,

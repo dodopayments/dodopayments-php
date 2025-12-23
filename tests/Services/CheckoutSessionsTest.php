@@ -89,6 +89,7 @@ final class CheckoutSessionsTest extends TestCase
             force3DS: true,
             metadata: ['foo' => 'string'],
             minimalAddress: true,
+            paymentMethodID: 'payment_method_id',
             returnURL: 'return_url',
             shortLink: true,
             showSavedPaymentMethods: true,
