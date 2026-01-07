@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Dodopayments\Core\Contracts;
 
 /**
- * @internal
+ * @phpstan-import-type NormalizedRequest from \Dodopayments\Core\BaseClient
  *
- * @phpstan-import-type normalized_request from \Dodopayments\Core\BaseClient
+ * @internal
  *
  * @template Item
  *
