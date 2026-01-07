@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\RefundSucceededWebhookEvent\Data;
+use Dodopayments\Refunds\Refund;
 use Dodopayments\Webhooks\RefundSucceededWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\RefundSucceededWebhookEvent\Data
+ * @phpstan-import-type RefundShape from \Dodopayments\Refunds\Refund
  *
  * @phpstan-type RefundSucceededWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: Refund|RefundShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -31,11 +31,8 @@ final class RefundSucceededWebhookEvent implements BaseModel
     #[Required('business_id')]
     public string $businessID;
 
-    /**
-     * Event-specific data.
-     */
     #[Required]
-    public Data $data;
+    public Refund $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -81,12 +78,12 @@ final class RefundSucceededWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param Refund|RefundShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        Refund|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -112,11 +109,9 @@ final class RefundSucceededWebhookEvent implements BaseModel
     }
 
     /**
-     * Event-specific data.
-     *
-     * @param Data|DataShape $data
+     * @param Refund|RefundShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(Refund|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

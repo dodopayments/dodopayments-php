@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data;
+use Dodopayments\Payments\Payment;
 use Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\PaymentCancelledWebhookEvent\Data
+ * @phpstan-import-type PaymentShape from \Dodopayments\Payments\Payment
  *
  * @phpstan-type PaymentCancelledWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: Payment|PaymentShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -31,11 +31,8 @@ final class PaymentCancelledWebhookEvent implements BaseModel
     #[Required('business_id')]
     public string $businessID;
 
-    /**
-     * Event-specific data.
-     */
     #[Required]
-    public Data $data;
+    public Payment $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -81,12 +78,12 @@ final class PaymentCancelledWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param Payment|PaymentShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        Payment|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -112,11 +109,9 @@ final class PaymentCancelledWebhookEvent implements BaseModel
     }
 
     /**
-     * Event-specific data.
-     *
-     * @param Data|DataShape $data
+     * @param Payment|PaymentShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(Payment|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data;
+use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent\Data
+ * @phpstan-import-type LicenseKeyShape from \Dodopayments\LicenseKeys\LicenseKey
  *
  * @phpstan-type LicenseKeyCreatedWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: LicenseKey|LicenseKeyShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -31,11 +31,8 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
     #[Required('business_id')]
     public string $businessID;
 
-    /**
-     * Event-specific data.
-     */
     #[Required]
-    public Data $data;
+    public LicenseKey $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -81,12 +78,12 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param LicenseKey|LicenseKeyShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        LicenseKey|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -112,11 +109,9 @@ final class LicenseKeyCreatedWebhookEvent implements BaseModel
     }
 
     /**
-     * Event-specific data.
-     *
-     * @param Data|DataShape $data
+     * @param LicenseKey|LicenseKeyShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(LicenseKey|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

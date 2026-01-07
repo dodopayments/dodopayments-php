@@ -36,6 +36,7 @@ use Dodopayments\Payments\Payment\Refund;
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
+ *   cardHolderName?: string|null,
  *   cardIssuingCountry?: null|CountryCode|value-of<CountryCode>,
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
@@ -156,6 +157,12 @@ final class Payment implements BaseModel
      */
     #[Required('total_amount')]
     public int $totalAmount;
+
+    /**
+     * Cardholder name.
+     */
+    #[Optional('card_holder_name', nullable: true)]
+    public ?string $cardHolderName;
 
     /**
      * ISO2 country code of the card.
@@ -353,6 +360,7 @@ final class Payment implements BaseModel
         int $settlementAmount,
         Currency|string $settlementCurrency,
         int $totalAmount,
+        ?string $cardHolderName = null,
         CountryCode|string|null $cardIssuingCountry = null,
         ?string $cardLastFour = null,
         ?string $cardNetwork = null,
@@ -389,6 +397,7 @@ final class Payment implements BaseModel
         $self['settlementCurrency'] = $settlementCurrency;
         $self['totalAmount'] = $totalAmount;
 
+        null !== $cardHolderName && $self['cardHolderName'] = $cardHolderName;
         null !== $cardIssuingCountry && $self['cardIssuingCountry'] = $cardIssuingCountry;
         null !== $cardLastFour && $self['cardLastFour'] = $cardLastFour;
         null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
@@ -579,6 +588,17 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['totalAmount'] = $totalAmount;
+
+        return $self;
+    }
+
+    /**
+     * Cardholder name.
+     */
+    public function withCardHolderName(?string $cardHolderName): self
+    {
+        $self = clone $this;
+        $self['cardHolderName'] = $cardHolderName;
 
         return $self;
     }
