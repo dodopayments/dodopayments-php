@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\DisputeOpenedWebhookEvent\Data;
+use Dodopayments\Disputes\Dispute;
 use Dodopayments\Webhooks\DisputeOpenedWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\DisputeOpenedWebhookEvent\Data
+ * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
  *
  * @phpstan-type DisputeOpenedWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: Dispute|DisputeShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -31,11 +31,8 @@ final class DisputeOpenedWebhookEvent implements BaseModel
     #[Required('business_id')]
     public string $businessID;
 
-    /**
-     * Event-specific data.
-     */
     #[Required]
-    public Data $data;
+    public Dispute $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -81,12 +78,12 @@ final class DisputeOpenedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param Dispute|DisputeShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        Dispute|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -112,11 +109,9 @@ final class DisputeOpenedWebhookEvent implements BaseModel
     }
 
     /**
-     * Event-specific data.
-     *
-     * @param Data|DataShape $data
+     * @param Dispute|DisputeShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(Dispute|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

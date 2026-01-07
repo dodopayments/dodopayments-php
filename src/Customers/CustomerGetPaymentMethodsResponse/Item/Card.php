@@ -11,6 +11,7 @@ use Dodopayments\Misc\CountryCode;
 
 /**
  * @phpstan-type CardShape = array{
+ *   cardHolderName?: string|null,
  *   cardIssuingCountry?: null|CountryCode|value-of<CountryCode>,
  *   cardNetwork?: string|null,
  *   cardType?: string|null,
@@ -23,6 +24,9 @@ final class Card implements BaseModel
 {
     /** @use SdkModel<CardShape> */
     use SdkModel;
+
+    #[Optional('card_holder_name', nullable: true)]
+    public ?string $cardHolderName;
 
     /**
      * ISO country code alpha2 variant.
@@ -60,6 +64,7 @@ final class Card implements BaseModel
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      */
     public static function with(
+        ?string $cardHolderName = null,
         CountryCode|string|null $cardIssuingCountry = null,
         ?string $cardNetwork = null,
         ?string $cardType = null,
@@ -69,12 +74,21 @@ final class Card implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $cardHolderName && $self['cardHolderName'] = $cardHolderName;
         null !== $cardIssuingCountry && $self['cardIssuingCountry'] = $cardIssuingCountry;
         null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
         null !== $cardType && $self['cardType'] = $cardType;
         null !== $expiryMonth && $self['expiryMonth'] = $expiryMonth;
         null !== $expiryYear && $self['expiryYear'] = $expiryYear;
         null !== $last4Digits && $self['last4Digits'] = $last4Digits;
+
+        return $self;
+    }
+
+    public function withCardHolderName(?string $cardHolderName): self
+    {
+        $self = clone $this;
+        $self['cardHolderName'] = $cardHolderName;
 
         return $self;
     }
