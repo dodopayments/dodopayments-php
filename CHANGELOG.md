@@ -1,5 +1,19 @@
 # Changelog
 
+## 4.5.0 (2026-01-07)
+
+Full Changelog: [v4.4.0...v4.5.0](https://github.com/dodopayments/dodopayments-php/compare/v4.4.0...v4.5.0)
+
+### Features
+
+* **api:** updated openapi spec to v1.70.0 ([b47db90](https://github.com/dodopayments/dodopayments-php/commit/b47db90b7e6f1c5c1c7a6b6911f5c2c627623a97))
+
+
+### Chores
+
+* **internal:** codegen related update ([a665d52](https://github.com/dodopayments/dodopayments-php/commit/a665d52d2c385277b31c1597516f1b17e5d640a4))
+* **internal:** refactor auth by moving concern from base client into client ([a615f12](https://github.com/dodopayments/dodopayments-php/commit/a615f12b16454bec96e6b36c4e9f697669b4bc16))
+
 ## 4.4.0 (2025-12-23)
 
 Full Changelog: [v4.3.0...v4.4.0](https://github.com/dodopayments/dodopayments-php/compare/v4.3.0...v4.4.0)
