@@ -65,7 +65,7 @@ final class SubscriptionsTest extends TestCase
             productID: 'product_id',
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingCurrency: Currency::AED,
             discountCode: 'discount_code',
             force3DS: true,

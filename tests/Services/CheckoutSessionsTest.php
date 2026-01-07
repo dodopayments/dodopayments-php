@@ -53,7 +53,7 @@ final class CheckoutSessionsTest extends TestCase
                     'amount' => 0,
                 ],
             ],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingAddress: [
                 'country' => CountryCode::AF,
                 'city' => 'city',

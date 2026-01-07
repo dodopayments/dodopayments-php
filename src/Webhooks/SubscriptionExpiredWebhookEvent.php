@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\SubscriptionExpiredWebhookEvent\Data;
+use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Webhooks\SubscriptionExpiredWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\SubscriptionExpiredWebhookEvent\Data
+ * @phpstan-import-type SubscriptionShape from \Dodopayments\Subscriptions\Subscription
  *
  * @phpstan-type SubscriptionExpiredWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: Subscription|SubscriptionShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -32,10 +32,10 @@ final class SubscriptionExpiredWebhookEvent implements BaseModel
     public string $businessID;
 
     /**
-     * Event-specific data.
+     * Response struct representing subscription details.
      */
     #[Required]
-    public Data $data;
+    public Subscription $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -81,12 +81,12 @@ final class SubscriptionExpiredWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param Subscription|SubscriptionShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        Subscription|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -112,11 +112,11 @@ final class SubscriptionExpiredWebhookEvent implements BaseModel
     }
 
     /**
-     * Event-specific data.
+     * Response struct representing subscription details.
      *
-     * @param Data|DataShape $data
+     * @param Subscription|SubscriptionShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(Subscription|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

@@ -29,13 +29,7 @@ final class Item implements BaseModel
     /** @use SdkModel<ItemShape> */
     use SdkModel;
 
-    /**
-     * PaymentMethod enum from hyperswitch.
-     *
-     * https://github.com/juspay/hyperswitch/blob/ecd05d53c99ae701ac94893ec632a3988afe3238/crates/common_enums/src/enums.rs#L2097
-     *
-     * @var value-of<PaymentMethod> $paymentMethod
-     */
+    /** @var value-of<PaymentMethod> $paymentMethod */
     #[Required('payment_method', enum: PaymentMethod::class)]
     public string $paymentMethod;
 
@@ -109,10 +103,6 @@ final class Item implements BaseModel
     }
 
     /**
-     * PaymentMethod enum from hyperswitch.
-     *
-     * https://github.com/juspay/hyperswitch/blob/ecd05d53c99ae701ac94893ec632a3988afe3238/crates/common_enums/src/enums.rs#L2097
-     *
      * @param PaymentMethod|value-of<PaymentMethod> $paymentMethod
      */
     public function withPaymentMethod(PaymentMethod|string $paymentMethod): self
