@@ -46,7 +46,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-import-type EventInputShape from \Dodopayments\UsageEvents\EventInput
  *
- * @phpstan-type UsageEventIngestParamsShape = array{events: list<EventInputShape>}
+ * @phpstan-type UsageEventIngestParamsShape = array{
+ *   events: list<EventInput|EventInputShape>
+ * }
  */
 final class UsageEventIngestParams implements BaseModel
 {
@@ -86,7 +88,7 @@ final class UsageEventIngestParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<EventInputShape> $events
+     * @param list<EventInput|EventInputShape> $events
      */
     public static function with(array $events): self
     {
@@ -100,7 +102,7 @@ final class UsageEventIngestParams implements BaseModel
     /**
      * List of events to be pushed.
      *
-     * @param list<EventInputShape> $events
+     * @param list<EventInput|EventInputShape> $events
      */
     public function withEvents(array $events): self
     {

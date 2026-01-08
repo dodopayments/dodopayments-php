@@ -15,6 +15,9 @@ use Dodopayments\Payments\PaymentListResponse;
 use Dodopayments\Payments\PaymentNewResponse;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface PaymentsRawContract
 {
     /**
@@ -23,6 +26,7 @@ interface PaymentsRawContract
      * @api
      *
      * @param array<string,mixed>|PaymentCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PaymentNewResponse>
      *
@@ -30,13 +34,14 @@ interface PaymentsRawContract
      */
     public function create(
         array|PaymentCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $paymentID Payment Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Payment>
      *
@@ -44,13 +49,14 @@ interface PaymentsRawContract
      */
     public function retrieve(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|PaymentListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<PaymentListResponse>>
      *
@@ -58,13 +64,14 @@ interface PaymentsRawContract
      */
     public function list(
         array|PaymentListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $paymentID Payment Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PaymentGetLineItemsResponse>
      *
@@ -72,6 +79,6 @@ interface PaymentsRawContract
      */
     public function retrieveLineItems(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

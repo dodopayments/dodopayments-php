@@ -13,12 +13,16 @@ use Dodopayments\Refunds\RefundListParams;
 use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface RefundsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|RefundCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Refund>
      *
@@ -26,13 +30,14 @@ interface RefundsRawContract
      */
     public function create(
         array|RefundCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $refundID Refund Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Refund>
      *
@@ -40,13 +45,14 @@ interface RefundsRawContract
      */
     public function retrieve(
         string $refundID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|RefundListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<RefundListResponse>>
      *
@@ -54,6 +60,6 @@ interface RefundsRawContract
      */
     public function list(
         array|RefundListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

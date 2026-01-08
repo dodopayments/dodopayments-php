@@ -15,6 +15,9 @@ use Dodopayments\WebhookEvents\WebhookEventType;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class WebhooksService implements WebhooksContract
 {
     /**
@@ -45,13 +48,14 @@ final class WebhooksService implements WebhooksContract
      * @param bool|null $disabled Create the webhook in a disabled state.
      *
      * Default is false
-     * @param list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType> $filterTypes Filter events to the webhook.
+     * @param list<WebhookEventType|value-of<WebhookEventType>> $filterTypes Filter events to the webhook.
      *
      * Webhook event will only be sent for events in the list.
      * @param array<string,string>|null $headers Custom headers to be passed
      * @param string|null $idempotencyKey The request's idempotency key
      * @param array<string,string>|null $metadata Metadata to be passed to the webhook
      * Defaut is {}
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -64,7 +68,7 @@ final class WebhooksService implements WebhooksContract
         ?string $idempotencyKey = null,
         ?array $metadata = null,
         ?int $rateLimit = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): WebhookDetails {
         $params = Util::removeNulls(
             [
@@ -90,11 +94,13 @@ final class WebhooksService implements WebhooksContract
      *
      * Get a webhook by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WebhookDetails {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($webhookID, requestOptions: $requestOptions);
@@ -109,12 +115,13 @@ final class WebhooksService implements WebhooksContract
      *
      * @param string|null $description Description of the webhook
      * @param bool|null $disabled to Disable the endpoint, set it to true
-     * @param list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType>|null $filterTypes Filter events to the endpoint.
+     * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes Filter events to the endpoint.
      *
      * Webhook event will only be sent for events in the list.
      * @param array<string,string>|null $metadata Metadata
      * @param int|null $rateLimit Rate limit
      * @param string|null $url Url endpoint
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -126,7 +133,7 @@ final class WebhooksService implements WebhooksContract
         ?array $metadata = null,
         ?int $rateLimit = null,
         ?string $url = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): WebhookDetails {
         $params = Util::removeNulls(
             [
@@ -152,6 +159,7 @@ final class WebhooksService implements WebhooksContract
      *
      * @param string|null $iterator The iterator returned from a prior invocation
      * @param int|null $limit Limit the number of returned items
+     * @param RequestOpts|null $requestOptions
      *
      * @return CursorPagePagination<WebhookDetails>
      *
@@ -160,7 +168,7 @@ final class WebhooksService implements WebhooksContract
     public function list(
         ?string $iterator = null,
         ?int $limit = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): CursorPagePagination {
         $params = Util::removeNulls(['iterator' => $iterator, 'limit' => $limit]);
 
@@ -175,11 +183,13 @@ final class WebhooksService implements WebhooksContract
      *
      * Delete a webhook by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($webhookID, requestOptions: $requestOptions);
@@ -192,11 +202,13 @@ final class WebhooksService implements WebhooksContract
      *
      * Get webhook secret by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieveSecret(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WebhookGetSecretResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveSecret($webhookID, requestOptions: $requestOptions);

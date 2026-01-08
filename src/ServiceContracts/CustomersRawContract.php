@@ -14,12 +14,16 @@ use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface CustomersRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|CustomerCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Customer>
      *
@@ -27,13 +31,14 @@ interface CustomersRawContract
      */
     public function create(
         array|CustomerCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Customer>
      *
@@ -41,7 +46,7 @@ interface CustomersRawContract
      */
     public function retrieve(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -49,6 +54,7 @@ interface CustomersRawContract
      *
      * @param string $customerID Customer Id
      * @param array<string,mixed>|CustomerUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Customer>
      *
@@ -57,13 +63,14 @@ interface CustomersRawContract
     public function update(
         string $customerID,
         array|CustomerUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|CustomerListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Customer>>
      *
@@ -71,13 +78,14 @@ interface CustomersRawContract
      */
     public function list(
         array|CustomerListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerGetPaymentMethodsResponse>
      *
@@ -85,6 +93,6 @@ interface CustomersRawContract
      */
     public function retrievePaymentMethods(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

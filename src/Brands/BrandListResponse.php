@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-import-type BrandShape from \Dodopayments\Brands\Brand
  *
- * @phpstan-type BrandListResponseShape = array{items: list<BrandShape>}
+ * @phpstan-type BrandListResponseShape = array{items: list<Brand|BrandShape>}
  */
 final class BrandListResponse implements BaseModel
 {
@@ -50,7 +50,7 @@ final class BrandListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<BrandShape> $items
+     * @param list<Brand|BrandShape> $items
      */
     public static function with(array $items): self
     {
@@ -64,7 +64,7 @@ final class BrandListResponse implements BaseModel
     /**
      * List of brands for this business.
      *
-     * @param list<BrandShape> $items
+     * @param list<Brand|BrandShape> $items
      */
     public function withItems(array $items): self
     {

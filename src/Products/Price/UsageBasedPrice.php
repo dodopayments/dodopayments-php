@@ -28,7 +28,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   type: Type|value-of<Type>,
- *   meters?: list<AddMeterToPriceShape>|null,
+ *   meters?: list<AddMeterToPrice|AddMeterToPriceShape>|null,
  *   taxInclusive?: bool|null,
  * }
  */
@@ -156,7 +156,7 @@ final class UsageBasedPrice implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param Type|value-of<Type> $type
-     * @param list<AddMeterToPriceShape>|null $meters
+     * @param list<AddMeterToPrice|AddMeterToPriceShape>|null $meters
      */
     public static function with(
         Currency|string $currency,
@@ -302,7 +302,7 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * @param list<AddMeterToPriceShape>|null $meters
+     * @param list<AddMeterToPrice|AddMeterToPriceShape>|null $meters
      */
     public function withMeters(?array $meters): self
     {

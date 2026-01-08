@@ -11,12 +11,16 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface CheckoutSessionsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|CheckoutSessionCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CheckoutSessionResponse>
      *
@@ -24,11 +28,13 @@ interface CheckoutSessionsRawContract
      */
     public function create(
         array|CheckoutSessionCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CheckoutSessionStatus>
      *
@@ -36,6 +42,6 @@ interface CheckoutSessionsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

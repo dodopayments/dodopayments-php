@@ -24,6 +24,9 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface SubscriptionsRawContract
 {
     /**
@@ -32,6 +35,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param array<string,mixed>|SubscriptionCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionNewResponse>
      *
@@ -39,13 +43,14 @@ interface SubscriptionsRawContract
      */
     public function create(
         array|SubscriptionCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
      *
@@ -53,7 +58,7 @@ interface SubscriptionsRawContract
      */
     public function retrieve(
         string $subscriptionID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -61,6 +66,7 @@ interface SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array<string,mixed>|SubscriptionUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
      *
@@ -69,13 +75,14 @@ interface SubscriptionsRawContract
     public function update(
         string $subscriptionID,
         array|SubscriptionUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|SubscriptionListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<SubscriptionListResponse>>
      *
@@ -83,7 +90,7 @@ interface SubscriptionsRawContract
      */
     public function list(
         array|SubscriptionListParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -91,6 +98,7 @@ interface SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array<string,mixed>|SubscriptionChangePlanParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -99,7 +107,7 @@ interface SubscriptionsRawContract
     public function changePlan(
         string $subscriptionID,
         array|SubscriptionChangePlanParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -107,6 +115,7 @@ interface SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array<string,mixed>|SubscriptionChargeParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionChargeResponse>
      *
@@ -115,7 +124,7 @@ interface SubscriptionsRawContract
     public function charge(
         string $subscriptionID,
         array|SubscriptionChargeParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -123,6 +132,7 @@ interface SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array<string,mixed>|SubscriptionPreviewChangePlanParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionPreviewChangePlanResponse>
      *
@@ -131,7 +141,7 @@ interface SubscriptionsRawContract
     public function previewChangePlan(
         string $subscriptionID,
         array|SubscriptionPreviewChangePlanParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -139,6 +149,7 @@ interface SubscriptionsRawContract
      *
      * @param string $subscriptionID Unique subscription identifier
      * @param array<string,mixed>|SubscriptionRetrieveUsageHistoryParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse,>,>
      *
@@ -147,7 +158,7 @@ interface SubscriptionsRawContract
     public function retrieveUsageHistory(
         string $subscriptionID,
         array|SubscriptionRetrieveUsageHistoryParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -155,6 +166,7 @@ interface SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array<string,mixed>|SubscriptionUpdatePaymentMethodParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionUpdatePaymentMethodResponse>
      *
@@ -163,6 +175,6 @@ interface SubscriptionsRawContract
     public function updatePaymentMethod(
         string $subscriptionID,
         array|SubscriptionUpdatePaymentMethodParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

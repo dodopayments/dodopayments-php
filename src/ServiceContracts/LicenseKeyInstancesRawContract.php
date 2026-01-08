@@ -12,12 +12,16 @@ use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceListParams;
 use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface LicenseKeyInstancesRawContract
 {
     /**
      * @api
      *
      * @param string $id License key instance ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseKeyInstance>
      *
@@ -25,7 +29,7 @@ interface LicenseKeyInstancesRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -33,6 +37,7 @@ interface LicenseKeyInstancesRawContract
      *
      * @param string $id License key instance ID
      * @param array<string,mixed>|LicenseKeyInstanceUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseKeyInstance>
      *
@@ -41,13 +46,14 @@ interface LicenseKeyInstancesRawContract
     public function update(
         string $id,
         array|LicenseKeyInstanceUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|LicenseKeyInstanceListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<LicenseKeyInstance>>
      *
@@ -55,6 +61,6 @@ interface LicenseKeyInstancesRawContract
      */
     public function list(
         array|LicenseKeyInstanceListParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

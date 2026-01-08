@@ -13,12 +13,16 @@ use Dodopayments\UsageEvents\UsageEventIngestParams;
 use Dodopayments\UsageEvents\UsageEventIngestResponse;
 use Dodopayments\UsageEvents\UsageEventListParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface UsageEventsRawContract
 {
     /**
      * @api
      *
      * @param string $eventID Unique event identifier (case-sensitive, must match the ID used during ingestion)
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Event>
      *
@@ -26,13 +30,14 @@ interface UsageEventsRawContract
      */
     public function retrieve(
         string $eventID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|UsageEventListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Event>>
      *
@@ -40,13 +45,14 @@ interface UsageEventsRawContract
      */
     public function list(
         array|UsageEventListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|UsageEventIngestParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UsageEventIngestResponse>
      *
@@ -54,6 +60,6 @@ interface UsageEventsRawContract
      */
     public function ingest(
         array|UsageEventIngestParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

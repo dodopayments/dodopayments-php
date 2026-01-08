@@ -10,10 +10,15 @@ use Dodopayments\RequestOptions;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface HeadersRawContract
 {
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<HeaderGetResponse>
      *
@@ -21,13 +26,14 @@ interface HeadersRawContract
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|HeaderUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -36,6 +42,6 @@ interface HeadersRawContract
     public function update(
         string $webhookID,
         array|HeaderUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

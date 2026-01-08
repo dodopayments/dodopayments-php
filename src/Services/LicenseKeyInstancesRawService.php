@@ -15,6 +15,9 @@ use Dodopayments\LicenseKeyInstances\LicenseKeyInstanceUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeyInstancesRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContract
 {
     // @phpstan-ignore-next-line
@@ -27,6 +30,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
      * @api
      *
      * @param string $id License key instance ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseKeyInstance>
      *
@@ -34,7 +38,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -50,6 +54,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
      *
      * @param string $id License key instance ID
      * @param array{name: string}|LicenseKeyInstanceUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseKeyInstance>
      *
@@ -58,7 +63,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
     public function update(
         string $id,
         array|LicenseKeyInstanceUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseKeyInstanceUpdateParams::parseRequest(
             $params,
@@ -81,6 +86,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
      * @param array{
      *   licenseKeyID?: string|null, pageNumber?: int|null, pageSize?: int|null
      * }|LicenseKeyInstanceListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<LicenseKeyInstance>>
      *
@@ -88,7 +94,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
      */
     public function list(
         array|LicenseKeyInstanceListParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseKeyInstanceListParams::parseRequest(
             $params,

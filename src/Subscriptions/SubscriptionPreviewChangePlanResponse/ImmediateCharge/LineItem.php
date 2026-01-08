@@ -16,7 +16,8 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  * @phpstan-import-type AddonShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon
  * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter
  *
- * @phpstan-type LineItemShape = SubscriptionShape|AddonShape|MeterShape
+ * @phpstan-type LineItemVariants = Subscription|Addon|Meter
+ * @phpstan-type LineItemShape = LineItemVariants|SubscriptionShape|AddonShape|MeterShape
  */
 final class LineItem implements ConverterSource
 {

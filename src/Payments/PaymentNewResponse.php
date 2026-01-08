@@ -22,7 +22,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   discountID?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
  *   paymentLink?: string|null,
- *   productCart?: list<OneTimeProductCartItemShape>|null,
+ *   productCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  * }
  */
 final class PaymentNewResponse implements BaseModel
@@ -130,7 +130,7 @@ final class PaymentNewResponse implements BaseModel
      *
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<OneTimeProductCartItemShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public static function with(
         string $clientSecret,
@@ -255,7 +255,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Optional list of products included in the payment.
      *
-     * @param list<OneTimeProductCartItemShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

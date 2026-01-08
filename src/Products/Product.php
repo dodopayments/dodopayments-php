@@ -15,6 +15,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product\DigitalProductDelivery;
 
 /**
+ * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\Product\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -82,6 +83,8 @@ final class Product implements BaseModel
 
     /**
      * Pricing information for the product.
+     *
+     * @var PriceVariants $price
      */
     #[Required]
     public OneTimePrice|RecurringPrice|UsageBasedPrice $price;

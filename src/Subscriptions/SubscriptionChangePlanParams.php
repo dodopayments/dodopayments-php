@@ -20,7 +20,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  *   productID: string,
  *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
- *   addons?: list<AttachAddonShape>|null,
+ *   addons?: list<AttachAddon|AttachAddonShape>|null,
  * }
  */
 final class SubscriptionChangePlanParams implements BaseModel
@@ -88,7 +88,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
-     * @param list<AttachAddonShape>|null $addons
+     * @param list<AttachAddon|AttachAddonShape>|null $addons
      */
     public static function with(
         string $productID,
@@ -147,7 +147,7 @@ final class SubscriptionChangePlanParams implements BaseModel
      * Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons.
      *
-     * @param list<AttachAddonShape>|null $addons
+     * @param list<AttachAddon|AttachAddonShape>|null $addons
      */
     public function withAddons(?array $addons): self
     {

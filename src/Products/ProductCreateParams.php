@@ -18,6 +18,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 /**
  * @see Dodopayments\Services\ProductsService::create()
  *
+ * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -51,6 +52,8 @@ final class ProductCreateParams implements BaseModel
 
     /**
      * Price configuration for the product.
+     *
+     * @var PriceVariants $price
      */
     #[Required]
     public OneTimePrice|RecurringPrice|UsageBasedPrice $price;

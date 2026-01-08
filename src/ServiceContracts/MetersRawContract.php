@@ -12,12 +12,16 @@ use Dodopayments\Meters\MeterCreateParams;
 use Dodopayments\Meters\MeterListParams;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface MetersRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|MeterCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
      *
@@ -25,13 +29,14 @@ interface MetersRawContract
      */
     public function create(
         array|MeterCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Meter ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
      *
@@ -39,13 +44,14 @@ interface MetersRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|MeterListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Meter>>
      *
@@ -53,13 +59,14 @@ interface MetersRawContract
      */
     public function list(
         array|MeterListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Meter ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -67,13 +74,14 @@ interface MetersRawContract
      */
     public function archive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Meter ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -81,6 +89,6 @@ interface MetersRawContract
      */
     public function unarchive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

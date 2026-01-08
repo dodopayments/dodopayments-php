@@ -13,6 +13,9 @@ use Dodopayments\Products\ShortLinks\ShortLinkListResponse;
 use Dodopayments\Products\ShortLinks\ShortLinkNewResponse;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface ShortLinksRawContract
 {
     /**
@@ -20,6 +23,7 @@ interface ShortLinksRawContract
      *
      * @param string $id Product Id
      * @param array<string,mixed>|ShortLinkCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ShortLinkNewResponse>
      *
@@ -28,13 +32,14 @@ interface ShortLinksRawContract
     public function create(
         string $id,
         array|ShortLinkCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|ShortLinkListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<ShortLinkListResponse>>
      *
@@ -42,6 +47,6 @@ interface ShortLinksRawContract
      */
     public function list(
         array|ShortLinkListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

@@ -10,6 +10,9 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Invoices\PaymentsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class PaymentsRawService implements PaymentsRawContract
 {
     // @phpstan-ignore-next-line
@@ -21,13 +24,15 @@ final class PaymentsRawService implements PaymentsRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<string>
      *
      * @throws APIException
      */
     public function retrieve(
         string $paymentID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -42,13 +47,15 @@ final class PaymentsRawService implements PaymentsRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<string>
      *
      * @throws APIException
      */
     public function retrieveRefund(
         string $refundID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

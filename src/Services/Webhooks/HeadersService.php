@@ -11,6 +11,9 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Webhooks\HeadersContract;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class HeadersService implements HeadersContract
 {
     /**
@@ -31,11 +34,13 @@ final class HeadersService implements HeadersContract
      *
      * Get a webhook by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): HeaderGetResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($webhookID, requestOptions: $requestOptions);
@@ -49,13 +54,14 @@ final class HeadersService implements HeadersContract
      * Patch a webhook by id
      *
      * @param array<string,string> $headers Object of header-value pair to update or add
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function update(
         string $webhookID,
         array $headers,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): mixed {
         $params = Util::removeNulls(['headers' => $headers]);
 
