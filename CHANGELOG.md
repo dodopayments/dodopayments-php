@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.6.0 (2026-01-08)
+
+Full Changelog: [v4.5.0...v4.6.0](https://github.com/dodopayments/dodopayments-php/compare/v4.5.0...v4.6.0)
+
+### Features
+
+* simplify and make the phpstan types more consistent ([e72aada](https://github.com/dodopayments/dodopayments-php/commit/e72aada1b4a6892940394efdc6c389c416781ae3))
+
 ## 4.5.0 (2026-01-07)
 
 Full Changelog: [v4.4.0...v4.5.0](https://github.com/dodopayments/dodopayments-php/compare/v4.4.0...v4.5.0)
