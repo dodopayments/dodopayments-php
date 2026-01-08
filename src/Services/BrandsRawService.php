@@ -15,6 +15,9 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class BrandsRawService implements BrandsRawContract
 {
     // @phpstan-ignore-next-line
@@ -33,6 +36,7 @@ final class BrandsRawService implements BrandsRawContract
      *   supportEmail?: string|null,
      *   url?: string|null,
      * }|BrandCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Brand>
      *
@@ -40,7 +44,7 @@ final class BrandsRawService implements BrandsRawContract
      */
     public function create(
         array|BrandCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = BrandCreateParams::parseRequest(
             $params,
@@ -63,6 +67,7 @@ final class BrandsRawService implements BrandsRawContract
      * Thin handler just calls `get_brand` and wraps in `Json(...)`
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Brand>
      *
@@ -70,7 +75,7 @@ final class BrandsRawService implements BrandsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -91,6 +96,7 @@ final class BrandsRawService implements BrandsRawContract
      *   statementDescriptor?: string|null,
      *   supportEmail?: string|null,
      * }|BrandUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Brand>
      *
@@ -99,7 +105,7 @@ final class BrandsRawService implements BrandsRawContract
     public function update(
         string $id,
         array|BrandUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = BrandUpdateParams::parseRequest(
             $params,
@@ -119,12 +125,15 @@ final class BrandsRawService implements BrandsRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<BrandListResponse>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): BaseResponse
-    {
+    public function list(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
@@ -138,6 +147,7 @@ final class BrandsRawService implements BrandsRawContract
      * @api
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BrandUpdateImagesResponse>
      *
@@ -145,7 +155,7 @@ final class BrandsRawService implements BrandsRawContract
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

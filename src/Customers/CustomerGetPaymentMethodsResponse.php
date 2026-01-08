@@ -13,7 +13,7 @@ use Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item;
  * @phpstan-import-type ItemShape from \Dodopayments\Customers\CustomerGetPaymentMethodsResponse\Item
  *
  * @phpstan-type CustomerGetPaymentMethodsResponseShape = array{
- *   items: list<ItemShape>
+ *   items: list<Item|ItemShape>
  * }
  */
 final class CustomerGetPaymentMethodsResponse implements BaseModel
@@ -49,7 +49,7 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ItemShape> $items
+     * @param list<Item|ItemShape> $items
      */
     public static function with(array $items): self
     {
@@ -61,7 +61,7 @@ final class CustomerGetPaymentMethodsResponse implements BaseModel
     }
 
     /**
-     * @param list<ItemShape> $items
+     * @param list<Item|ItemShape> $items
      */
     public function withItems(array $items): self
     {

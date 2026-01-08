@@ -11,9 +11,9 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
-use Dodopayments\Products\Price;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
+use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesParams;
@@ -21,8 +21,14 @@ use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\Products\ProductUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\ProductsRawContract;
-use Dodopayments\Subscriptions\TimeInterval;
 
+/**
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
+ * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
+ * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class ProductsRawService implements ProductsRawContract
 {
     // @phpstan-ignore-next-line
@@ -36,22 +42,19 @@ final class ProductsRawService implements ProductsRawContract
      *
      * @param array{
      *   name: string,
-     *   price: Price|array<string,mixed>,
-     *   taxCategory: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
+     *   price: PriceShape,
+     *   taxCategory: TaxCategory|value-of<TaxCategory>,
      *   addons?: list<string>|null,
      *   brandID?: string|null,
      *   description?: string|null,
-     *   digitalProductDelivery?: array{
-     *     externalURL?: string|null, instructions?: string|null
-     *   }|null,
+     *   digitalProductDelivery?: DigitalProductDelivery|DigitalProductDeliveryShape|null,
      *   licenseKeyActivationMessage?: string|null,
      *   licenseKeyActivationsLimit?: int|null,
-     *   licenseKeyDuration?: array{
-     *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
-     *   }|LicenseKeyDuration|null,
+     *   licenseKeyDuration?: LicenseKeyDuration|LicenseKeyDurationShape|null,
      *   licenseKeyEnabled?: bool|null,
      *   metadata?: array<string,string>,
      * }|ProductCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Product>
      *
@@ -59,7 +62,7 @@ final class ProductsRawService implements ProductsRawContract
      */
     public function create(
         array|ProductCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ProductCreateParams::parseRequest(
             $params,
@@ -80,6 +83,7 @@ final class ProductsRawService implements ProductsRawContract
      * @api
      *
      * @param string $id Product Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Product>
      *
@@ -87,7 +91,7 @@ final class ProductsRawService implements ProductsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -105,23 +109,18 @@ final class ProductsRawService implements ProductsRawContract
      *   addons?: list<string>|null,
      *   brandID?: string|null,
      *   description?: string|null,
-     *   digitalProductDelivery?: array{
-     *     externalURL?: string|null,
-     *     files?: list<string>|null,
-     *     instructions?: string|null,
-     *   }|null,
+     *   digitalProductDelivery?: ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null,
      *   imageID?: string|null,
      *   licenseKeyActivationMessage?: string|null,
      *   licenseKeyActivationsLimit?: int|null,
-     *   licenseKeyDuration?: array{
-     *     count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
-     *   }|LicenseKeyDuration|null,
+     *   licenseKeyDuration?: LicenseKeyDuration|LicenseKeyDurationShape|null,
      *   licenseKeyEnabled?: bool|null,
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
-     *   price?: Price|array<string,mixed>|null,
-     *   taxCategory?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
+     *   price?: PriceShape|null,
+     *   taxCategory?: TaxCategory|value-of<TaxCategory>|null,
      * }|ProductUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -130,7 +129,7 @@ final class ProductsRawService implements ProductsRawContract
     public function update(
         string $id,
         array|ProductUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ProductUpdateParams::parseRequest(
             $params,
@@ -157,6 +156,7 @@ final class ProductsRawService implements ProductsRawContract
      *   pageSize?: int,
      *   recurring?: bool,
      * }|ProductListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<ProductListResponse>>
      *
@@ -164,7 +164,7 @@ final class ProductsRawService implements ProductsRawContract
      */
     public function list(
         array|ProductListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ProductListParams::parseRequest(
             $params,
@@ -192,13 +192,15 @@ final class ProductsRawService implements ProductsRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<mixed>
      *
      * @throws APIException
      */
     public function archive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -212,13 +214,15 @@ final class ProductsRawService implements ProductsRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<mixed>
      *
      * @throws APIException
      */
     public function unarchive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -234,6 +238,7 @@ final class ProductsRawService implements ProductsRawContract
      *
      * @param string $id Product Id
      * @param array{fileName: string}|ProductUpdateFilesParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ProductUpdateFilesResponse>
      *
@@ -242,7 +247,7 @@ final class ProductsRawService implements ProductsRawContract
     public function updateFiles(
         string $id,
         array|ProductUpdateFilesParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ProductUpdateFilesParams::parseRequest(
             $params,

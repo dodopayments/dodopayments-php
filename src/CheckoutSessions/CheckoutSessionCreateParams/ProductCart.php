@@ -16,7 +16,7 @@ use Dodopayments\Subscriptions\AttachAddon;
  * @phpstan-type ProductCartShape = array{
  *   productID: string,
  *   quantity: int,
- *   addons?: list<AttachAddonShape>|null,
+ *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   amount?: int|null,
  * }
  */
@@ -78,7 +78,7 @@ final class ProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AttachAddonShape>|null $addons
+     * @param list<AttachAddon|AttachAddonShape>|null $addons
      */
     public static function with(
         string $productID,
@@ -119,7 +119,7 @@ final class ProductCart implements BaseModel
     /**
      * only valid if product is a subscription.
      *
-     * @param list<AttachAddonShape>|null $addons
+     * @param list<AttachAddon|AttachAddonShape>|null $addons
      */
     public function withAddons(?array $addons): self
     {

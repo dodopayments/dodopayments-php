@@ -13,12 +13,16 @@ use Dodopayments\Licenses\LicenseValidateParams;
 use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface LicensesRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|LicenseActivateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseActivateResponse>
      *
@@ -26,13 +30,14 @@ interface LicensesRawContract
      */
     public function activate(
         array|LicenseActivateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|LicenseDeactivateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -40,13 +45,14 @@ interface LicensesRawContract
      */
     public function deactivate(
         array|LicenseDeactivateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|LicenseValidateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseValidateResponse>
      *
@@ -54,6 +60,6 @@ interface LicensesRawContract
      */
     public function validate(
         array|LicenseValidateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

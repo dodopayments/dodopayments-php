@@ -10,18 +10,22 @@ use Dodopayments\LicenseKeys\LicenseKey;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface LicenseKeysContract
 {
     /**
      * @api
      *
      * @param string $id License key ID
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): LicenseKey;
 
     /**
@@ -32,8 +36,9 @@ interface LicenseKeysContract
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      * @param bool|null $disabled Indicates whether the license key should be disabled.
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
-     * @param string|\DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
+     * @param \DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -41,8 +46,8 @@ interface LicenseKeysContract
         string $id,
         ?int $activationsLimit = null,
         ?bool $disabled = null,
-        string|\DateTimeInterface|null $expiresAt = null,
-        ?RequestOptions $requestOptions = null,
+        ?\DateTimeInterface $expiresAt = null,
+        RequestOptions|array|null $requestOptions = null,
     ): LicenseKey;
 
     /**
@@ -52,7 +57,8 @@ interface LicenseKeysContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product ID
-     * @param 'active'|'expired'|'disabled'|Status $status Filter by license key status
+     * @param Status|value-of<Status> $status Filter by license key status
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<LicenseKey>
      *
@@ -63,7 +69,7 @@ interface LicenseKeysContract
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
-        string|Status|null $status = null,
-        ?RequestOptions $requestOptions = null,
+        Status|string|null $status = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
 }

@@ -29,10 +29,10 @@ use Dodopayments\Payments\Payment\Refund;
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
- *   disputes: list<DisputeShape>,
+ *   disputes: list<Dispute|DisputeShape>,
  *   metadata: array<string,string>,
  *   paymentID: string,
- *   refunds: list<RefundShape>,
+ *   refunds: list<Refund|RefundShape>,
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
@@ -49,7 +49,7 @@ use Dodopayments\Payments\Payment\Refund;
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
- *   productCart?: list<ProductCartShape>|null,
+ *   productCart?: list<ProductCart|ProductCartShape>|null,
  *   settlementTax?: int|null,
  *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
@@ -337,12 +337,12 @@ final class Payment implements BaseModel
      * @param BillingAddress|BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
-     * @param list<DisputeShape> $disputes
+     * @param list<Dispute|DisputeShape> $disputes
      * @param array<string,string> $metadata
-     * @param list<RefundShape> $refunds
+     * @param list<Refund|RefundShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
-     * @param list<ProductCartShape>|null $productCart
+     * @param list<ProductCart|ProductCartShape>|null $productCart
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
@@ -507,7 +507,7 @@ final class Payment implements BaseModel
     /**
      * List of disputes associated with this payment.
      *
-     * @param list<DisputeShape> $disputes
+     * @param list<Dispute|DisputeShape> $disputes
      */
     public function withDisputes(array $disputes): self
     {
@@ -544,7 +544,7 @@ final class Payment implements BaseModel
     /**
      * List of refunds issued for this payment.
      *
-     * @param list<RefundShape> $refunds
+     * @param list<Refund|RefundShape> $refunds
      */
     public function withRefunds(array $refunds): self
     {
@@ -742,7 +742,7 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @param list<ProductCartShape>|null $productCart
+     * @param list<ProductCart|ProductCartShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

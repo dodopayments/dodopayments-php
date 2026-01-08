@@ -15,6 +15,7 @@ use Dodopayments\Misc\Currency;
  * @deprecated
  * @see Dodopayments\Services\PaymentsService::create()
  *
+ * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
@@ -22,7 +23,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress|BillingAddressShape,
  *   customer: CustomerRequestShape,
- *   productCart: list<OneTimeProductCartItemShape>,
+ *   productCart: list<OneTimeProductCartItem|OneTimeProductCartItemShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
@@ -51,6 +52,8 @@ final class PaymentCreateParams implements BaseModel
 
     /**
      * Customer information for the payment.
+     *
+     * @var CustomerRequestVariants $customer
      */
     #[Required]
     public AttachExistingCustomer|NewCustomer $customer;
@@ -186,7 +189,7 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param BillingAddress|BillingAddressShape $billing
      * @param CustomerRequestShape $customer
-     * @param list<OneTimeProductCartItemShape> $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string,string>|null $metadata
@@ -260,7 +263,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @param list<OneTimeProductCartItemShape> $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {

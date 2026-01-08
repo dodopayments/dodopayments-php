@@ -13,12 +13,16 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface BrandsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|BrandCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Brand>
      *
@@ -26,13 +30,14 @@ interface BrandsRawContract
      */
     public function create(
         array|BrandCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Brand>
      *
@@ -40,7 +45,7 @@ interface BrandsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -48,6 +53,7 @@ interface BrandsRawContract
      *
      * @param string $id Brand Id
      * @param array<string,mixed>|BrandUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Brand>
      *
@@ -56,22 +62,27 @@ interface BrandsRawContract
     public function update(
         string $id,
         array|BrandUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<BrandListResponse>
      *
      * @throws APIException
      */
-    public function list(?RequestOptions $requestOptions = null): BaseResponse;
+    public function list(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BrandUpdateImagesResponse>
      *
@@ -79,6 +90,6 @@ interface BrandsRawContract
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

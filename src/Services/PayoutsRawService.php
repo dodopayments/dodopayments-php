@@ -14,6 +14,9 @@ use Dodopayments\Payouts\PayoutListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\PayoutsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class PayoutsRawService implements PayoutsRawContract
 {
     // @phpstan-ignore-next-line
@@ -26,11 +29,12 @@ final class PayoutsRawService implements PayoutsRawContract
      * @api
      *
      * @param array{
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
      *   pageNumber?: int,
      *   pageSize?: int,
      * }|PayoutListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<PayoutListResponse>>
      *
@@ -38,7 +42,7 @@ final class PayoutsRawService implements PayoutsRawContract
      */
     public function list(
         array|PayoutListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = PayoutListParams::parseRequest(
             $params,

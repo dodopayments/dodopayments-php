@@ -16,12 +16,16 @@ use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\Products\ProductUpdateParams;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface ProductsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|ProductCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Product>
      *
@@ -29,13 +33,14 @@ interface ProductsRawContract
      */
     public function create(
         array|ProductCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Product Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Product>
      *
@@ -43,13 +48,14 @@ interface ProductsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|ProductUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -58,13 +64,14 @@ interface ProductsRawContract
     public function update(
         string $id,
         array|ProductUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|ProductListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<ProductListResponse>>
      *
@@ -72,11 +79,13 @@ interface ProductsRawContract
      */
     public function list(
         array|ProductListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -84,11 +93,13 @@ interface ProductsRawContract
      */
     public function archive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -96,7 +107,7 @@ interface ProductsRawContract
      */
     public function unarchive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -104,6 +115,7 @@ interface ProductsRawContract
      *
      * @param string $id Product Id
      * @param array<string,mixed>|ProductUpdateFilesParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ProductUpdateFilesResponse>
      *
@@ -112,6 +124,6 @@ interface ProductsRawContract
     public function updateFiles(
         string $id,
         array|ProductUpdateFilesParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

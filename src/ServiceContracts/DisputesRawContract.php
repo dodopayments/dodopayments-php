@@ -12,12 +12,16 @@ use Dodopayments\Disputes\DisputeListResponse;
 use Dodopayments\Disputes\GetDispute;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface DisputesRawContract
 {
     /**
      * @api
      *
      * @param string $disputeID Dispute Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<GetDispute>
      *
@@ -25,13 +29,14 @@ interface DisputesRawContract
      */
     public function retrieve(
         string $disputeID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|DisputeListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<DisputeListResponse>>
      *
@@ -39,6 +44,6 @@ interface DisputesRawContract
      */
     public function list(
         array|DisputeListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

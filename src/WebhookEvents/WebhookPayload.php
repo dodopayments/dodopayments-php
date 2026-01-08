@@ -14,6 +14,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
 /**
+ * @phpstan-import-type DataVariants from \Dodopayments\WebhookEvents\WebhookPayload\Data
  * @phpstan-import-type DataShape from \Dodopayments\WebhookEvents\WebhookPayload\Data
  *
  * @phpstan-type WebhookPayloadShape = array{
@@ -33,6 +34,8 @@ final class WebhookPayload implements BaseModel
 
     /**
      * The latest data at the time of delivery attempt.
+     *
+     * @var DataVariants $data
      */
     #[Required]
     public Payment|Subscription|Refund|Dispute|LicenseKey $data;

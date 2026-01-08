@@ -11,7 +11,8 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 /**
  * Metadata value can be a string, integer, number, or boolean.
  *
- * @phpstan-type MetadataShape = string|float|bool
+ * @phpstan-type MetadataVariants = string|float|bool
+ * @phpstan-type MetadataShape = MetadataVariants
  */
 final class Metadata implements ConverterSource
 {

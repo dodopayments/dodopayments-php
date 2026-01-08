@@ -22,14 +22,14 @@ use Dodopayments\Subscriptions\Subscription\Meter;
  * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\Subscription\Meter
  *
  * @phpstan-type SubscriptionShape = array{
- *   addons: list<AddonCartResponseItemShape>,
+ *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
  *   billing: BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
- *   meters: list<MeterShape>,
+ *   meters: list<Meter|MeterShape>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
  *   paymentFrequencyCount: int,
@@ -308,12 +308,12 @@ final class Subscription implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItemShape> $addons
+     * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param BillingAddress|BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<MeterShape> $meters
+     * @param list<Meter|MeterShape> $meters
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
@@ -386,7 +386,7 @@ final class Subscription implements BaseModel
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItemShape> $addons
+     * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      */
     public function withAddons(array $addons): self
     {
@@ -474,7 +474,7 @@ final class Subscription implements BaseModel
     /**
      * Meters associated with this subscription (for usage-based billing).
      *
-     * @param list<MeterShape> $meters
+     * @param list<Meter|MeterShape> $meters
      */
     public function withMeters(array $meters): self
     {

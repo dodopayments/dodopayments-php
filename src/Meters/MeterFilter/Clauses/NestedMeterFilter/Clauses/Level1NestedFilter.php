@@ -8,13 +8,12 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2FilterCondition;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Conjunction;
 
 /**
  * Level 2 nested filter.
  *
+ * @phpstan-import-type ClausesVariants from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses
  * @phpstan-import-type ClausesShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses
  *
  * @phpstan-type Level1NestedFilterShape = array{
@@ -29,7 +28,7 @@ final class Level1NestedFilter implements BaseModel
     /**
      * Level 2: Can be conditions or nested filters (1 more level allowed).
      *
-     * @var list<Level2FilterCondition>|list<Level2NestedFilter> $clauses
+     * @var ClausesVariants $clauses
      */
     #[Required(union: Clauses::class)]
     public array $clauses;

@@ -16,6 +16,9 @@ use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeysRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class LicenseKeysRawService implements LicenseKeysRawContract
 {
     // @phpstan-ignore-next-line
@@ -28,6 +31,7 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      * @api
      *
      * @param string $id License key ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseKey>
      *
@@ -35,7 +39,7 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -53,8 +57,9 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      * @param array{
      *   activationsLimit?: int|null,
      *   disabled?: bool|null,
-     *   expiresAt?: string|\DateTimeInterface|null,
+     *   expiresAt?: \DateTimeInterface|null,
      * }|LicenseKeyUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseKey>
      *
@@ -63,7 +68,7 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
     public function update(
         string $id,
         array|LicenseKeyUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseKeyUpdateParams::parseRequest(
             $params,
@@ -88,8 +93,9 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      *   pageNumber?: int,
      *   pageSize?: int,
      *   productID?: string,
-     *   status?: 'active'|'expired'|'disabled'|Status,
+     *   status?: Status|value-of<Status>,
      * }|LicenseKeyListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<LicenseKey>>
      *
@@ -97,7 +103,7 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      */
     public function list(
         array|LicenseKeyListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseKeyListParams::parseRequest(
             $params,

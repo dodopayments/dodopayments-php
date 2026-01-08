@@ -17,7 +17,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart
  *
  * @phpstan-type SubscriptionNewResponseShape = array{
- *   addons: list<AddonCartResponseItemShape>,
+ *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
  *   paymentID: string,
@@ -26,7 +26,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  *   clientSecret?: string|null,
  *   discountID?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
- *   oneTimeProductCart?: list<OneTimeProductCartShape>|null,
+ *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
  *   paymentLink?: string|null,
  * }
  */
@@ -149,10 +149,10 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<AddonCartResponseItemShape> $addons
+     * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<OneTimeProductCartShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public static function with(
         array $addons,
@@ -188,7 +188,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Addons associated with this subscription.
      *
-     * @param list<AddonCartResponseItemShape> $addons
+     * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      */
     public function withAddons(array $addons): self
     {
@@ -294,7 +294,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * One time products associated with the purchase of subscription.
      *
-     * @param list<OneTimeProductCartShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

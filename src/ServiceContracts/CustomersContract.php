@@ -10,12 +10,16 @@ use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface CustomersContract
 {
     /**
      * @api
      *
      * @param array<string,string> $metadata Additional metadata for the customer
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -24,19 +28,20 @@ interface CustomersContract
         string $name,
         ?array $metadata = null,
         ?string $phoneNumber = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Customer;
 
     /**
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Customer;
 
     /**
@@ -44,6 +49,7 @@ interface CustomersContract
      *
      * @param string $customerID Customer Id
      * @param array<string,string>|null $metadata Additional metadata for the customer
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -52,7 +58,7 @@ interface CustomersContract
         ?array $metadata = null,
         ?string $name = null,
         ?string $phoneNumber = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Customer;
 
     /**
@@ -61,6 +67,7 @@ interface CustomersContract
      * @param string $email Filter by customer email
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<Customer>
      *
@@ -70,18 +77,19 @@ interface CustomersContract
         ?string $email = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
 
     /**
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrievePaymentMethods(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): CustomerGetPaymentMethodsResponse;
 }

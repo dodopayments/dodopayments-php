@@ -15,6 +15,9 @@ use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicensesRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class LicensesRawService implements LicensesRawContract
 {
     // @phpstan-ignore-next-line
@@ -27,6 +30,7 @@ final class LicensesRawService implements LicensesRawContract
      * @api
      *
      * @param array{licenseKey: string, name: string}|LicenseActivateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseActivateResponse>
      *
@@ -34,7 +38,7 @@ final class LicensesRawService implements LicensesRawContract
      */
     public function activate(
         array|LicenseActivateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseActivateParams::parseRequest(
             $params,
@@ -57,6 +61,7 @@ final class LicensesRawService implements LicensesRawContract
      * @param array{
      *   licenseKey: string, licenseKeyInstanceID: string
      * }|LicenseDeactivateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -64,7 +69,7 @@ final class LicensesRawService implements LicensesRawContract
      */
     public function deactivate(
         array|LicenseDeactivateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseDeactivateParams::parseRequest(
             $params,
@@ -87,6 +92,7 @@ final class LicensesRawService implements LicensesRawContract
      * @param array{
      *   licenseKey: string, licenseKeyInstanceID?: string|null
      * }|LicenseValidateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<LicenseValidateResponse>
      *
@@ -94,7 +100,7 @@ final class LicensesRawService implements LicensesRawContract
      */
     public function validate(
         array|LicenseValidateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LicenseValidateParams::parseRequest(
             $params,

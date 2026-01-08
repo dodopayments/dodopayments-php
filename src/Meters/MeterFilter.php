@@ -8,8 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses;
-use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter;
 use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
@@ -18,6 +16,7 @@ use Dodopayments\Meters\MeterFilter\Conjunction;
  * Supports up to 3 levels of nesting to create complex filter expressions.
  * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
  *
+ * @phpstan-import-type ClausesVariants from \Dodopayments\Meters\MeterFilter\Clauses
  * @phpstan-import-type ClausesShape from \Dodopayments\Meters\MeterFilter\Clauses
  *
  * @phpstan-type MeterFilterShape = array{
@@ -32,7 +31,7 @@ final class MeterFilter implements BaseModel
     /**
      * Filter clauses - can be direct conditions or nested filters (up to 3 levels deep).
      *
-     * @var list<DirectFilterCondition>|list<NestedMeterFilter> $clauses
+     * @var ClausesVariants $clauses
      */
     #[Required(union: Clauses::class)]
     public array $clauses;

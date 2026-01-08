@@ -10,10 +10,15 @@ use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface BrandsContract
 {
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -23,19 +28,20 @@ interface BrandsContract
         ?string $statementDescriptor = null,
         ?string $supportEmail = null,
         ?string $url = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Brand;
 
     /**
      * @api
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Brand;
 
     /**
@@ -43,6 +49,7 @@ interface BrandsContract
      *
      * @param string $id Brand Id
      * @param string|null $imageID The UUID you got back from the presigned‐upload call
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -52,27 +59,30 @@ interface BrandsContract
         ?string $name = null,
         ?string $statementDescriptor = null,
         ?string $supportEmail = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Brand;
 
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function list(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BrandListResponse;
 
     /**
      * @api
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BrandUpdateImagesResponse;
 }

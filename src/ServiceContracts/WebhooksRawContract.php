@@ -14,12 +14,16 @@ use Dodopayments\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Webhooks\WebhookListParams;
 use Dodopayments\Webhooks\WebhookUpdateParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface WebhooksRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|WebhookCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -27,11 +31,13 @@ interface WebhooksRawContract
      */
     public function create(
         array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -39,13 +45,14 @@ interface WebhooksRawContract
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|WebhookUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -54,13 +61,14 @@ interface WebhooksRawContract
     public function update(
         string $webhookID,
         array|WebhookUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|WebhookListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CursorPagePagination<WebhookDetails>>
      *
@@ -68,11 +76,13 @@ interface WebhooksRawContract
      */
     public function list(
         array|WebhookListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -80,11 +90,13 @@ interface WebhooksRawContract
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
      * @api
+     *
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookGetSecretResponse>
      *
@@ -92,6 +104,6 @@ interface WebhooksRawContract
      */
     public function retrieveSecret(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

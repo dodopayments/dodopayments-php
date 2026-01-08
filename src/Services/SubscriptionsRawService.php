@@ -9,17 +9,19 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsRawContract;
+use Dodopayments\Subscriptions\AttachAddon;
+use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
+use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionCreateParams;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
@@ -32,10 +34,21 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
+/**
+ * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
+ * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class SubscriptionsRawService implements SubscriptionsRawContract
 {
     // @phpstan-ignore-next-line
@@ -50,32 +63,18 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @api
      *
      * @param array{
-     *   billing: array{
-     *     country: 'AF'|'AX'|'AL'|'DZ'|'AS'|'AD'|'AO'|'AI'|'AQ'|'AG'|'AR'|'AM'|'AW'|'AU'|'AT'|'AZ'|'BS'|'BH'|'BD'|'BB'|'BY'|'BE'|'BZ'|'BJ'|'BM'|'BT'|'BO'|'BQ'|'BA'|'BW'|'BV'|'BR'|'IO'|'BN'|'BG'|'BF'|'BI'|'KH'|'CM'|'CA'|'CV'|'KY'|'CF'|'TD'|'CL'|'CN'|'CX'|'CC'|'CO'|'KM'|'CG'|'CD'|'CK'|'CR'|'CI'|'HR'|'CU'|'CW'|'CY'|'CZ'|'DK'|'DJ'|'DM'|'DO'|'EC'|'EG'|'SV'|'GQ'|'ER'|'EE'|'ET'|'FK'|'FO'|'FJ'|'FI'|'FR'|'GF'|'PF'|'TF'|'GA'|'GM'|'GE'|'DE'|'GH'|'GI'|'GR'|'GL'|'GD'|'GP'|'GU'|'GT'|'GG'|'GN'|'GW'|'GY'|'HT'|'HM'|'VA'|'HN'|'HK'|'HU'|'IS'|'IN'|'ID'|'IR'|'IQ'|'IE'|'IM'|'IL'|'IT'|'JM'|'JP'|'JE'|'JO'|'KZ'|'KE'|'KI'|'KP'|'KR'|'KW'|'KG'|'LA'|'LV'|'LB'|'LS'|'LR'|'LY'|'LI'|'LT'|'LU'|'MO'|'MK'|'MG'|'MW'|'MY'|'MV'|'ML'|'MT'|'MH'|'MQ'|'MR'|'MU'|'YT'|'MX'|'FM'|'MD'|'MC'|'MN'|'ME'|'MS'|'MA'|'MZ'|'MM'|'NA'|'NR'|'NP'|'NL'|'NC'|'NZ'|'NI'|'NE'|'NG'|'NU'|'NF'|'MP'|'NO'|'OM'|'PK'|'PW'|'PS'|'PA'|'PG'|'PY'|'PE'|'PH'|'PN'|'PL'|'PT'|'PR'|'QA'|'RE'|'RO'|'RU'|'RW'|'BL'|'SH'|'KN'|'LC'|'MF'|'PM'|'VC'|'WS'|'SM'|'ST'|'SA'|'SN'|'RS'|'SC'|'SL'|'SG'|'SX'|'SK'|'SI'|'SB'|'SO'|'ZA'|'GS'|'SS'|'ES'|'LK'|'SD'|'SR'|'SJ'|'SZ'|'SE'|'CH'|'SY'|'TW'|'TJ'|'TZ'|'TH'|'TL'|'TG'|'TK'|'TO'|'TT'|'TN'|'TR'|'TM'|'TC'|'TV'|'UG'|'UA'|'AE'|'GB'|'UM'|'US'|'UY'|'UZ'|'VU'|'VE'|'VN'|'VG'|'VI'|'WF'|'EH'|'YE'|'ZM'|'ZW'|CountryCode,
-     *     city?: string|null,
-     *     state?: string|null,
-     *     street?: string|null,
-     *     zipcode?: string|null,
-     *   }|BillingAddress,
-     *   customer: array<string,mixed>,
+     *   billing: BillingAddress|BillingAddressShape,
+     *   customer: CustomerRequestShape,
      *   productID: string,
      *   quantity: int,
-     *   addons?: list<array{addonID: string, quantity: int}>|null,
-     *   allowedPaymentMethodTypes?: list<'ach'|'affirm'|'afterpay_clearpay'|'alfamart'|'ali_pay'|'ali_pay_hk'|'alma'|'amazon_pay'|'apple_pay'|'atome'|'bacs'|'bancontact_card'|'becs'|'benefit'|'bizum'|'blik'|'boleto'|'bca_bank_transfer'|'bni_va'|'bri_va'|'card_redirect'|'cimb_va'|'classic'|'credit'|'crypto_currency'|'cashapp'|'dana'|'danamon_va'|'debit'|'duit_now'|'efecty'|'eft'|'eps'|'fps'|'evoucher'|'giropay'|'givex'|'google_pay'|'go_pay'|'gcash'|'ideal'|'interac'|'indomaret'|'klarna'|'kakao_pay'|'local_bank_redirect'|'mandiri_va'|'knet'|'mb_way'|'mobile_pay'|'momo'|'momo_atm'|'multibanco'|'online_banking_thailand'|'online_banking_czech_republic'|'online_banking_finland'|'online_banking_fpx'|'online_banking_poland'|'online_banking_slovakia'|'oxxo'|'pago_efectivo'|'permata_bank_transfer'|'open_banking_uk'|'pay_bright'|'paypal'|'paze'|'pix'|'pay_safe_card'|'przelewy24'|'prompt_pay'|'pse'|'red_compra'|'red_pagos'|'samsung_pay'|'sepa'|'sepa_bank_transfer'|'sofort'|'swish'|'touch_n_go'|'trustly'|'twint'|'upi_collect'|'upi_intent'|'vipps'|'viet_qr'|'venmo'|'walley'|'we_chat_pay'|'seven_eleven'|'lawson'|'mini_stop'|'family_mart'|'seicomart'|'pay_easy'|'local_bank_transfer'|'mifinity'|'open_banking_pis'|'direct_carrier_billing'|'instant_bank_transfer'|'billie'|'zip'|'revolut_pay'|'naver_pay'|'payco'|PaymentMethodTypes>|null,
+     *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
      *   billingCurrency?: value-of<Currency>,
      *   discountCode?: string|null,
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>,
-     *   onDemand?: array{
-     *     mandateOnly: bool,
-     *     adaptiveCurrencyFeesInclusive?: bool|null,
-     *     productCurrency?: 'AED'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BRL'|'BSD'|'BWP'|'BYN'|'BZD'|'CAD'|'CHF'|'CLP'|'CNY'|'COP'|'CRC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SEK'|'SGD'|'SHP'|'SLE'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SZL'|'THB'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'UYU'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|Currency|null,
-     *     productDescription?: string|null,
-     *     productPrice?: int|null,
-     *   }|null,
-     *   oneTimeProductCart?: list<array{
-     *     productID: string, quantity: int, amount?: int|null
-     *   }|OneTimeProductCartItem>|null,
+     *   onDemand?: OnDemandSubscription|OnDemandSubscriptionShape|null,
+     *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
      *   paymentLink?: bool|null,
      *   paymentMethodID?: string|null,
      *   redirectImmediately?: bool,
@@ -85,6 +84,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   taxID?: string|null,
      *   trialPeriodDays?: int|null,
      * }|SubscriptionCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionNewResponse>
      *
@@ -92,7 +92,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      */
     public function create(
         array|SubscriptionCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionCreateParams::parseRequest(
             $params,
@@ -113,6 +113,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
      *
@@ -120,7 +121,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      */
     public function retrieve(
         string $subscriptionID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -136,21 +137,16 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array{
-     *   billing?: array{
-     *     country: 'AF'|'AX'|'AL'|'DZ'|'AS'|'AD'|'AO'|'AI'|'AQ'|'AG'|'AR'|'AM'|'AW'|'AU'|'AT'|'AZ'|'BS'|'BH'|'BD'|'BB'|'BY'|'BE'|'BZ'|'BJ'|'BM'|'BT'|'BO'|'BQ'|'BA'|'BW'|'BV'|'BR'|'IO'|'BN'|'BG'|'BF'|'BI'|'KH'|'CM'|'CA'|'CV'|'KY'|'CF'|'TD'|'CL'|'CN'|'CX'|'CC'|'CO'|'KM'|'CG'|'CD'|'CK'|'CR'|'CI'|'HR'|'CU'|'CW'|'CY'|'CZ'|'DK'|'DJ'|'DM'|'DO'|'EC'|'EG'|'SV'|'GQ'|'ER'|'EE'|'ET'|'FK'|'FO'|'FJ'|'FI'|'FR'|'GF'|'PF'|'TF'|'GA'|'GM'|'GE'|'DE'|'GH'|'GI'|'GR'|'GL'|'GD'|'GP'|'GU'|'GT'|'GG'|'GN'|'GW'|'GY'|'HT'|'HM'|'VA'|'HN'|'HK'|'HU'|'IS'|'IN'|'ID'|'IR'|'IQ'|'IE'|'IM'|'IL'|'IT'|'JM'|'JP'|'JE'|'JO'|'KZ'|'KE'|'KI'|'KP'|'KR'|'KW'|'KG'|'LA'|'LV'|'LB'|'LS'|'LR'|'LY'|'LI'|'LT'|'LU'|'MO'|'MK'|'MG'|'MW'|'MY'|'MV'|'ML'|'MT'|'MH'|'MQ'|'MR'|'MU'|'YT'|'MX'|'FM'|'MD'|'MC'|'MN'|'ME'|'MS'|'MA'|'MZ'|'MM'|'NA'|'NR'|'NP'|'NL'|'NC'|'NZ'|'NI'|'NE'|'NG'|'NU'|'NF'|'MP'|'NO'|'OM'|'PK'|'PW'|'PS'|'PA'|'PG'|'PY'|'PE'|'PH'|'PN'|'PL'|'PT'|'PR'|'QA'|'RE'|'RO'|'RU'|'RW'|'BL'|'SH'|'KN'|'LC'|'MF'|'PM'|'VC'|'WS'|'SM'|'ST'|'SA'|'SN'|'RS'|'SC'|'SL'|'SG'|'SX'|'SK'|'SI'|'SB'|'SO'|'ZA'|'GS'|'SS'|'ES'|'LK'|'SD'|'SR'|'SJ'|'SZ'|'SE'|'CH'|'SY'|'TW'|'TJ'|'TZ'|'TH'|'TL'|'TG'|'TK'|'TO'|'TT'|'TN'|'TR'|'TM'|'TC'|'TV'|'UG'|'UA'|'AE'|'GB'|'UM'|'US'|'UY'|'UZ'|'VU'|'VE'|'VN'|'VG'|'VI'|'WF'|'EH'|'YE'|'ZM'|'ZW'|CountryCode,
-     *     city?: string|null,
-     *     state?: string|null,
-     *     street?: string|null,
-     *     zipcode?: string|null,
-     *   }|BillingAddress|null,
+     *   billing?: BillingAddress|BillingAddressShape|null,
      *   cancelAtNextBillingDate?: bool|null,
      *   customerName?: string|null,
-     *   disableOnDemand?: array{nextBillingDate: string|\DateTimeInterface}|null,
+     *   disableOnDemand?: DisableOnDemand|DisableOnDemandShape|null,
      *   metadata?: array<string,string>|null,
-     *   nextBillingDate?: string|\DateTimeInterface|null,
-     *   status?: 'pending'|'active'|'on_hold'|'cancelled'|'failed'|'expired'|SubscriptionStatus|null,
+     *   nextBillingDate?: \DateTimeInterface|null,
+     *   status?: SubscriptionStatus|value-of<SubscriptionStatus>|null,
      *   taxID?: string|null,
      * }|SubscriptionUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
      *
@@ -159,7 +155,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function update(
         string $subscriptionID,
         array|SubscriptionUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionUpdateParams::parseRequest(
             $params,
@@ -181,13 +177,14 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param array{
      *   brandID?: string,
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
-     *   status?: 'pending'|'active'|'on_hold'|'cancelled'|'failed'|'expired'|Status,
+     *   status?: Status|value-of<Status>,
      * }|SubscriptionListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<SubscriptionListResponse>>
      *
@@ -195,7 +192,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      */
     public function list(
         array|SubscriptionListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionListParams::parseRequest(
             $params,
@@ -229,10 +226,11 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param string $subscriptionID Subscription Id
      * @param array{
      *   productID: string,
-     *   prorationBillingMode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|ProrationBillingMode,
+     *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
      *   quantity: int,
-     *   addons?: list<array{addonID: string, quantity: int}>|null,
+     *   addons?: list<AttachAddon|AttachAddonShape>|null,
      * }|SubscriptionChangePlanParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -241,7 +239,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function changePlan(
         string $subscriptionID,
         array|SubscriptionChangePlanParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionChangePlanParams::parseRequest(
             $params,
@@ -265,14 +263,12 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param array{
      *   productPrice: int,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
-     *   customerBalanceConfig?: array{
-     *     allowCustomerCreditsPurchase?: bool|null,
-     *     allowCustomerCreditsUsage?: bool|null,
-     *   }|null,
+     *   customerBalanceConfig?: CustomerBalanceConfig|CustomerBalanceConfigShape|null,
      *   metadata?: array<string,string>|null,
      *   productCurrency?: value-of<Currency>,
      *   productDescription?: string|null,
      * }|SubscriptionChargeParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionChargeResponse>
      *
@@ -281,7 +277,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function charge(
         string $subscriptionID,
         array|SubscriptionChargeParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionChargeParams::parseRequest(
             $params,
@@ -304,10 +300,11 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param string $subscriptionID Subscription Id
      * @param array{
      *   productID: string,
-     *   prorationBillingMode: 'prorated_immediately'|'full_immediately'|'difference_immediately'|SubscriptionPreviewChangePlanParams\ProrationBillingMode,
+     *   prorationBillingMode: SubscriptionPreviewChangePlanParams\ProrationBillingMode|value-of<SubscriptionPreviewChangePlanParams\ProrationBillingMode>,
      *   quantity: int,
-     *   addons?: list<array{addonID: string, quantity: int}>|null,
+     *   addons?: list<AttachAddon|AttachAddonShape>|null,
      * }|SubscriptionPreviewChangePlanParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionPreviewChangePlanResponse>
      *
@@ -316,7 +313,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function previewChangePlan(
         string $subscriptionID,
         array|SubscriptionPreviewChangePlanParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionPreviewChangePlanParams::parseRequest(
             $params,
@@ -370,12 +367,13 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param string $subscriptionID Unique subscription identifier
      * @param array{
-     *   endDate?: string|\DateTimeInterface|null,
+     *   endDate?: \DateTimeInterface|null,
      *   meterID?: string|null,
      *   pageNumber?: int|null,
      *   pageSize?: int|null,
-     *   startDate?: string|\DateTimeInterface|null,
+     *   startDate?: \DateTimeInterface|null,
      * }|SubscriptionRetrieveUsageHistoryParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<SubscriptionGetUsageHistoryResponse,>,>
      *
@@ -384,7 +382,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function retrieveUsageHistory(
         string $subscriptionID,
         array|SubscriptionRetrieveUsageHistoryParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionRetrieveUsageHistoryParams::parseRequest(
             $params,
@@ -416,8 +414,9 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array{
-     *   type: 'existing'|Type, returnURL?: string|null, paymentMethodID: string
+     *   type: Type|value-of<Type>, returnURL?: string|null, paymentMethodID: string
      * }|SubscriptionUpdatePaymentMethodParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<SubscriptionUpdatePaymentMethodResponse>
      *
@@ -426,7 +425,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
     public function updatePaymentMethod(
         string $subscriptionID,
         array|SubscriptionUpdatePaymentMethodParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = SubscriptionUpdatePaymentMethodParams::parseRequest(
             $params,

@@ -13,6 +13,9 @@ use Dodopayments\Discounts\DiscountType;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\DiscountsContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class DiscountsService implements DiscountsContract
 {
     /**
@@ -41,30 +44,31 @@ final class DiscountsService implements DiscountsContract
      * - If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
      *
      * Must be at least 1.
-     * @param 'percentage'|DiscountType $type The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
+     * @param DiscountType|value-of<DiscountType> $type The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
      * @param string|null $code Optionally supply a code (will be uppercased).
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
-     * @param string|\DateTimeInterface|null $expiresAt when the discount expires, if ever
+     * @param \DateTimeInterface|null $expiresAt when the discount expires, if ever
      * @param list<string>|null $restrictedTo list of product IDs to restrict usage (if any)
      * @param int|null $subscriptionCycles Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
      * @param int|null $usageLimit How many times this discount can be used (if any).
      * Must be >= 1 if provided.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
         int $amount,
-        string|DiscountType $type,
+        DiscountType|string $type,
         ?string $code = null,
-        string|\DateTimeInterface|null $expiresAt = null,
+        ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
         ?array $restrictedTo = null,
         ?int $subscriptionCycles = null,
         ?int $usageLimit = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Discount {
         $params = Util::removeNulls(
             [
@@ -91,12 +95,13 @@ final class DiscountsService implements DiscountsContract
      * GET /discounts/{discount_id}
      *
      * @param string $discountID Discount Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $discountID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Discount {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($discountID, requestOptions: $requestOptions);
@@ -121,7 +126,8 @@ final class DiscountsService implements DiscountsContract
      * @param int|null $subscriptionCycles Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
-     * @param 'percentage'|DiscountType|null $type if present, update the discount type
+     * @param DiscountType|value-of<DiscountType>|null $type if present, update the discount type
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -129,13 +135,13 @@ final class DiscountsService implements DiscountsContract
         string $discountID,
         ?int $amount = null,
         ?string $code = null,
-        string|\DateTimeInterface|null $expiresAt = null,
+        ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
         ?array $restrictedTo = null,
         ?int $subscriptionCycles = null,
-        string|DiscountType|null $type = null,
+        DiscountType|string|null $type = null,
         ?int $usageLimit = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Discount {
         $params = Util::removeNulls(
             [
@@ -163,6 +169,7 @@ final class DiscountsService implements DiscountsContract
      *
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<Discount>
      *
@@ -171,7 +178,7 @@ final class DiscountsService implements DiscountsContract
     public function list(
         ?int $pageNumber = null,
         ?int $pageSize = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
             ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
@@ -189,12 +196,13 @@ final class DiscountsService implements DiscountsContract
      * DELETE /discounts/{discount_id}
      *
      * @param string $discountID Discount Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function delete(
         string $discountID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->delete($discountID, requestOptions: $requestOptions);

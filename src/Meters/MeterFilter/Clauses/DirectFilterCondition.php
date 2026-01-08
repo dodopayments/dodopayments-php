@@ -12,6 +12,7 @@ use Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Operator;
 /**
  * Filter condition with key, operator, and value.
  *
+ * @phpstan-import-type ValueVariants from \Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Value
  * @phpstan-import-type ValueShape from \Dodopayments\Meters\MeterFilter\Clauses\DirectFilterCondition\Value
  *
  * @phpstan-type DirectFilterConditionShape = array{
@@ -35,6 +36,8 @@ final class DirectFilterCondition implements BaseModel
 
     /**
      * Filter value - can be string, number, or boolean.
+     *
+     * @var ValueVariants $value
      */
     #[Required]
     public string|float|bool $value;

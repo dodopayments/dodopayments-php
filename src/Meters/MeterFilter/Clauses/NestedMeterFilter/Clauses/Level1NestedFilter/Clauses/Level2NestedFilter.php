@@ -16,7 +16,8 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
  * @phpstan-import-type ClauseShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Clause
  *
  * @phpstan-type Level2NestedFilterShape = array{
- *   clauses: list<ClauseShape>, conjunction: Conjunction|value-of<Conjunction>
+ *   clauses: list<Clause|ClauseShape>,
+ *   conjunction: Conjunction|value-of<Conjunction>,
  * }
  */
 final class Level2NestedFilter implements BaseModel
@@ -60,7 +61,7 @@ final class Level2NestedFilter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ClauseShape> $clauses
+     * @param list<Clause|ClauseShape> $clauses
      * @param Conjunction|value-of<Conjunction> $conjunction
      */
     public static function with(
@@ -78,7 +79,7 @@ final class Level2NestedFilter implements BaseModel
     /**
      * Level 3: Filter conditions only (max depth reached).
      *
-     * @param list<ClauseShape> $clauses
+     * @param list<Clause|ClauseShape> $clauses
      */
     public function withClauses(array $clauses): self
     {

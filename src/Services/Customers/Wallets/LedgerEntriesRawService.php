@@ -18,6 +18,9 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\Wallets\LedgerEntriesRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class LedgerEntriesRawService implements LedgerEntriesRawContract
 {
     // @phpstan-ignore-next-line
@@ -33,10 +36,11 @@ final class LedgerEntriesRawService implements LedgerEntriesRawContract
      * @param array{
      *   amount: int,
      *   currency: value-of<Currency>,
-     *   entryType: 'credit'|'debit'|EntryType,
+     *   entryType: EntryType|value-of<EntryType>,
      *   idempotencyKey?: string|null,
      *   reason?: string|null,
      * }|LedgerEntryCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerWallet>
      *
@@ -45,7 +49,7 @@ final class LedgerEntriesRawService implements LedgerEntriesRawContract
     public function create(
         string $customerID,
         array|LedgerEntryCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LedgerEntryCreateParams::parseRequest(
             $params,
@@ -69,6 +73,7 @@ final class LedgerEntriesRawService implements LedgerEntriesRawContract
      * @param array{
      *   currency?: value-of<Currency>, pageNumber?: int, pageSize?: int
      * }|LedgerEntryListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<CustomerWalletTransaction>>
      *
@@ -77,7 +82,7 @@ final class LedgerEntriesRawService implements LedgerEntriesRawContract
     public function list(
         string $customerID,
         array|LedgerEntryListParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = LedgerEntryListParams::parseRequest(
             $params,

@@ -9,12 +9,16 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Wallets\WalletListResponse;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface WalletsRawContract
 {
     /**
      * @api
      *
      * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WalletListResponse>
      *
@@ -22,6 +26,6 @@ interface WalletsRawContract
      */
     public function list(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

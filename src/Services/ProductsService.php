@@ -10,16 +10,25 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
-use Dodopayments\Products\Price;
+use Dodopayments\Products\Price\OneTimePrice;
+use Dodopayments\Products\Price\RecurringPrice;
+use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
+use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\ProductsContract;
 use Dodopayments\Services\Products\ImagesService;
 use Dodopayments\Services\Products\ShortLinksService;
-use Dodopayments\Subscriptions\TimeInterval;
 
+/**
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
+ * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
+ * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class ProductsService implements ProductsContract
 {
     /**
@@ -51,42 +60,39 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param string $name Name of the product
-     * @param Price|array<string,mixed> $price Price configuration for the product
-     * @param 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory $taxCategory Tax category applied to this product
+     * @param PriceShape $price Price configuration for the product
+     * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this product
      * @param list<string>|null $addons Addons available for subscription product
      * @param string|null $brandID Brand id for the product, if not provided will default to primary brand
      * @param string|null $description Optional description of the product
-     * @param array{
-     *   externalURL?: string|null, instructions?: string|null
-     * }|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery Choose how you would like you digital product delivered
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
      * @param int|null $licenseKeyActivationsLimit The number of times the license key can be activated.
      * Must be 0 or greater
-     * @param array{
-     *   count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
-     * }|LicenseKeyDuration|null $licenseKeyDuration Duration configuration for the license key.
+     * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration Duration configuration for the license key.
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period
      * @param bool|null $licenseKeyEnabled When true, generates and sends a license key to your customer.
      * Defaults to false
      * @param array<string,string> $metadata Additional metadata for the product
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
         string $name,
-        Price|array $price,
-        string|TaxCategory $taxCategory,
+        OneTimePrice|array|RecurringPrice|UsageBasedPrice $price,
+        TaxCategory|string $taxCategory,
         ?array $addons = null,
         ?string $brandID = null,
         ?string $description = null,
-        ?array $digitalProductDelivery = null,
+        DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
-        array|LicenseKeyDuration|null $licenseKeyDuration = null,
+        LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Product {
         $params = Util::removeNulls(
             [
@@ -115,12 +121,13 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param string $id Product Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Product {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
@@ -133,11 +140,7 @@ final class ProductsService implements ProductsContract
      *
      * @param list<string>|null $addons Available Addons for subscription products
      * @param string|null $description description of the product, optional and must be at most 1000 characters
-     * @param array{
-     *   externalURL?: string|null,
-     *   files?: list<string>|null,
-     *   instructions?: string|null,
-     * }|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null $digitalProductDelivery Choose how you would like you digital product delivered
      * @param string|null $imageID Product image id after its uploaded to S3
      * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.
      *
@@ -147,9 +150,7 @@ final class ProductsService implements ProductsContract
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
-     * @param array{
-     *   count: int, interval: 'Day'|'Week'|'Month'|'Year'|TimeInterval
-     * }|LicenseKeyDuration|null $licenseKeyDuration Duration of the license key if enabled.
+     * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration Duration of the license key if enabled.
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
@@ -159,8 +160,9 @@ final class ProductsService implements ProductsContract
      * become applicable.
      * @param array<string,string>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
-     * @param Price|array<string,mixed>|null $price price details of the product
-     * @param 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null $taxCategory tax category of the product
+     * @param PriceShape|null $price price details of the product
+     * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the product
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -169,17 +171,17 @@ final class ProductsService implements ProductsContract
         ?array $addons = null,
         ?string $brandID = null,
         ?string $description = null,
-        ?array $digitalProductDelivery = null,
+        \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $imageID = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
-        array|LicenseKeyDuration|null $licenseKeyDuration = null,
+        LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
         ?string $name = null,
-        Price|array|null $price = null,
-        string|TaxCategory|null $taxCategory = null,
-        ?RequestOptions $requestOptions = null,
+        OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price = null,
+        TaxCategory|string|null $taxCategory = null,
+        RequestOptions|array|null $requestOptions = null,
     ): mixed {
         $params = Util::removeNulls(
             [
@@ -216,6 +218,7 @@ final class ProductsService implements ProductsContract
      * - `true`: Show only recurring pricing products (e.g. subscriptions)
      * - `false`: Show only one-time price products
      * - `null` or absent: Show both types of products
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<ProductListResponse>
      *
@@ -227,7 +230,7 @@ final class ProductsService implements ProductsContract
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?bool $recurring = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
             [
@@ -248,11 +251,13 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function archive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->archive($id, requestOptions: $requestOptions);
@@ -263,11 +268,13 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function unarchive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): mixed {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->unarchive($id, requestOptions: $requestOptions);
@@ -279,13 +286,14 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param string $id Product Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function updateFiles(
         string $id,
         string $fileName,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): ProductUpdateFilesResponse {
         $params = Util::removeNulls(['fileName' => $fileName]);
 

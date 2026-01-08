@@ -12,7 +12,8 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type AttachExistingCustomerShape from \Dodopayments\Payments\AttachExistingCustomer
  * @phpstan-import-type NewCustomerShape from \Dodopayments\Payments\NewCustomer
  *
- * @phpstan-type CustomerRequestShape = AttachExistingCustomerShape|NewCustomerShape
+ * @phpstan-type CustomerRequestVariants = AttachExistingCustomer|NewCustomer
+ * @phpstan-type CustomerRequestShape = CustomerRequestVariants|AttachExistingCustomerShape|NewCustomerShape
  */
 final class CustomerRequest implements ConverterSource
 {

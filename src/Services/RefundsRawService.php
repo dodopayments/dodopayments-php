@@ -11,12 +11,17 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
+use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams;
 use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\RefundsRawContract;
 
+/**
+ * @phpstan-import-type ItemShape from \Dodopayments\Refunds\RefundCreateParams\Item
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class RefundsRawService implements RefundsRawContract
 {
     // @phpstan-ignore-next-line
@@ -30,12 +35,11 @@ final class RefundsRawService implements RefundsRawContract
      *
      * @param array{
      *   paymentID: string,
-     *   items?: list<array{
-     *     itemID: string, amount?: int|null, taxInclusive?: bool
-     *   }>|null,
+     *   items?: list<Item|ItemShape>|null,
      *   metadata?: array<string,string>,
      *   reason?: string|null,
      * }|RefundCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Refund>
      *
@@ -43,7 +47,7 @@ final class RefundsRawService implements RefundsRawContract
      */
     public function create(
         array|RefundCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = RefundCreateParams::parseRequest(
             $params,
@@ -64,6 +68,7 @@ final class RefundsRawService implements RefundsRawContract
      * @api
      *
      * @param string $refundID Refund Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Refund>
      *
@@ -71,7 +76,7 @@ final class RefundsRawService implements RefundsRawContract
      */
     public function retrieve(
         string $refundID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -86,13 +91,14 @@ final class RefundsRawService implements RefundsRawContract
      * @api
      *
      * @param array{
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
-     *   status?: 'succeeded'|'failed'|'pending'|'review'|Status,
+     *   status?: Status|value-of<Status>,
      * }|RefundListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<RefundListResponse>>
      *
@@ -100,7 +106,7 @@ final class RefundsRawService implements RefundsRawContract
      */
     public function list(
         array|RefundListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = RefundListParams::parseRequest(
             $params,

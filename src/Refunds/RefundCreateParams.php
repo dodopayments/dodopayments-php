@@ -18,7 +18,7 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
  *
  * @phpstan-type RefundCreateParamsShape = array{
  *   paymentID: string,
- *   items?: list<ItemShape>|null,
+ *   items?: list<Item|ItemShape>|null,
  *   metadata?: array<string,string>|null,
  *   reason?: string|null,
  * }
@@ -81,7 +81,7 @@ final class RefundCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ItemShape>|null $items
+     * @param list<Item|ItemShape>|null $items
      * @param array<string,string>|null $metadata
      */
     public static function with(
@@ -115,7 +115,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * Partially Refund an Individual Item.
      *
-     * @param list<ItemShape>|null $items
+     * @param list<Item|ItemShape>|null $items
      */
     public function withItems(?array $items): self
     {

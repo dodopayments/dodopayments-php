@@ -17,6 +17,9 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class CustomersRawService implements CustomersRawContract
 {
     // @phpstan-ignore-next-line
@@ -34,6 +37,7 @@ final class CustomersRawService implements CustomersRawContract
      *   metadata?: array<string,string>,
      *   phoneNumber?: string|null,
      * }|CustomerCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Customer>
      *
@@ -41,7 +45,7 @@ final class CustomersRawService implements CustomersRawContract
      */
     public function create(
         array|CustomerCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = CustomerCreateParams::parseRequest(
             $params,
@@ -62,6 +66,7 @@ final class CustomersRawService implements CustomersRawContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Customer>
      *
@@ -69,7 +74,7 @@ final class CustomersRawService implements CustomersRawContract
      */
     public function retrieve(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -89,6 +94,7 @@ final class CustomersRawService implements CustomersRawContract
      *   name?: string|null,
      *   phoneNumber?: string|null,
      * }|CustomerUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Customer>
      *
@@ -97,7 +103,7 @@ final class CustomersRawService implements CustomersRawContract
     public function update(
         string $customerID,
         array|CustomerUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = CustomerUpdateParams::parseRequest(
             $params,
@@ -120,6 +126,7 @@ final class CustomersRawService implements CustomersRawContract
      * @param array{
      *   email?: string, pageNumber?: int, pageSize?: int
      * }|CustomerListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Customer>>
      *
@@ -127,7 +134,7 @@ final class CustomersRawService implements CustomersRawContract
      */
     public function list(
         array|CustomerListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = CustomerListParams::parseRequest(
             $params,
@@ -152,6 +159,7 @@ final class CustomersRawService implements CustomersRawContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerGetPaymentMethodsResponse>
      *
@@ -159,7 +167,7 @@ final class CustomersRawService implements CustomersRawContract
      */
     public function retrievePaymentMethods(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

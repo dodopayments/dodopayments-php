@@ -16,6 +16,9 @@ use Dodopayments\Products\ShortLinks\ShortLinkNewResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Products\ShortLinksRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class ShortLinksRawService implements ShortLinksRawContract
 {
     // @phpstan-ignore-next-line
@@ -34,6 +37,7 @@ final class ShortLinksRawService implements ShortLinksRawContract
      * @param array{
      *   slug: string, staticCheckoutParams?: array<string,string>|null
      * }|ShortLinkCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ShortLinkNewResponse>
      *
@@ -42,7 +46,7 @@ final class ShortLinksRawService implements ShortLinksRawContract
     public function create(
         string $id,
         array|ShortLinkCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ShortLinkCreateParams::parseRequest(
             $params,
@@ -67,6 +71,7 @@ final class ShortLinksRawService implements ShortLinksRawContract
      * @param array{
      *   pageNumber?: int, pageSize?: int, productID?: string
      * }|ShortLinkListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<ShortLinkListResponse>>
      *
@@ -74,7 +79,7 @@ final class ShortLinksRawService implements ShortLinksRawContract
      */
     public function list(
         array|ShortLinkListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ShortLinkListParams::parseRequest(
             $params,
