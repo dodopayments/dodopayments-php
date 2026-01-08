@@ -30,8 +30,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
 /**
- * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  * @phpstan-import-type NormalizedRequest from \Dodopayments\Core\BaseClient
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 class Client extends BaseClient
 {
@@ -137,19 +137,28 @@ class Client extends BaseClient
      */
     public MetersService $meters;
 
-    public function __construct(?string $bearerToken = null, ?string $baseUrl = null)
-    {
+    /**
+     * @param RequestOpts|null $requestOptions
+     */
+    public function __construct(
+        ?string $bearerToken = null,
+        ?string $baseUrl = null,
+        RequestOptions|array|null $requestOptions = null,
+    ) {
         $this->bearerToken = (string) ($bearerToken ?? getenv('DODO_PAYMENTS_API_KEY'));
 
         $baseUrl ??= getenv(
             'DODO_PAYMENTS_BASE_URL'
         ) ?: 'https://live.dodopayments.com';
 
-        $options = RequestOptions::with(
-            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-            transporter: Psr18ClientDiscovery::find(),
+        $options = RequestOptions::parse(
+            RequestOptions::with(
+                uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+                streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+                requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+                transporter: Psr18ClientDiscovery::find(),
+            ),
+            $requestOptions,
         );
 
         parent::__construct(
