@@ -11,6 +11,9 @@ use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\CustomerPortalContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class CustomerPortalService implements CustomerPortalContract
 {
     /**
@@ -31,13 +34,14 @@ final class CustomerPortalService implements CustomerPortalContract
      *
      * @param string $customerID Customer Id
      * @param bool $sendEmail if true, will send link to user
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
         string $customerID,
         ?bool $sendEmail = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): CustomerPortalSession {
         $params = Util::removeNulls(['sendEmail' => $sendEmail]);
 

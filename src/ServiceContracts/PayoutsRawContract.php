@@ -11,12 +11,16 @@ use Dodopayments\Payouts\PayoutListParams;
 use Dodopayments\Payouts\PayoutListResponse;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface PayoutsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|PayoutListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<PayoutListResponse>>
      *
@@ -24,6 +28,6 @@ interface PayoutsRawContract
      */
     public function list(
         array|PayoutListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

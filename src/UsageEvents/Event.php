@@ -11,6 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\UsageEvents\Event\Metadata;
 
 /**
+ * @phpstan-import-type MetadataVariants from \Dodopayments\UsageEvents\Event\Metadata
  * @phpstan-import-type MetadataShape from \Dodopayments\UsageEvents\Event\Metadata
  *
  * @phpstan-type EventShape = array{
@@ -45,7 +46,7 @@ final class Event implements BaseModel
     /**
      * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      *
-     * @var array<string,string|float|bool>|null $metadata
+     * @var array<string,MetadataVariants>|null $metadata
      */
     #[Optional(map: Metadata::class, nullable: true)]
     public ?array $metadata;

@@ -12,6 +12,7 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Filt
 /**
  * Filter condition with key, operator, and value.
  *
+ * @phpstan-import-type ValueVariants from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1FilterCondition\Value
  * @phpstan-import-type ValueShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1FilterCondition\Value
  *
  * @phpstan-type Level1FilterConditionShape = array{
@@ -35,6 +36,8 @@ final class Level1FilterCondition implements BaseModel
 
     /**
      * Filter value - can be string, number, or boolean.
+     *
+     * @var ValueVariants $value
      */
     #[Required]
     public string|float|bool $value;

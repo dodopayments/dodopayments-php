@@ -8,12 +8,10 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary;
 
 /**
+ * @phpstan-import-type LineItemVariants from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem
  * @phpstan-import-type LineItemShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem
  * @phpstan-import-type SummaryShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary
  *
@@ -26,7 +24,7 @@ final class ImmediateCharge implements BaseModel
     /** @use SdkModel<ImmediateChargeShape> */
     use SdkModel;
 
-    /** @var list<Subscription|Addon|Meter> $lineItems */
+    /** @var list<LineItemVariants> $lineItems */
     #[Required('line_items', list: LineItem::class)]
     public array $lineItems;
 

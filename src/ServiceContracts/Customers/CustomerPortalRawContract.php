@@ -10,6 +10,9 @@ use Dodopayments\Customers\CustomerPortal\CustomerPortalCreateParams;
 use Dodopayments\Customers\CustomerPortalSession;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface CustomerPortalRawContract
 {
     /**
@@ -17,6 +20,7 @@ interface CustomerPortalRawContract
      *
      * @param string $customerID Customer Id
      * @param array<string,mixed>|CustomerPortalCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerPortalSession>
      *
@@ -25,6 +29,6 @@ interface CustomerPortalRawContract
     public function create(
         string $customerID,
         array|CustomerPortalCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

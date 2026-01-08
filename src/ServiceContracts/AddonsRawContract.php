@@ -14,12 +14,16 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface AddonsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|AddonCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -27,13 +31,14 @@ interface AddonsRawContract
      */
     public function create(
         array|AddonCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -41,7 +46,7 @@ interface AddonsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -49,6 +54,7 @@ interface AddonsRawContract
      *
      * @param string $id Addon Id
      * @param array<string,mixed>|AddonUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -57,13 +63,14 @@ interface AddonsRawContract
     public function update(
         string $id,
         array|AddonUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|AddonListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<AddonResponse>>
      *
@@ -71,13 +78,14 @@ interface AddonsRawContract
      */
     public function list(
         array|AddonListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonUpdateImagesResponse>
      *
@@ -85,6 +93,6 @@ interface AddonsRawContract
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

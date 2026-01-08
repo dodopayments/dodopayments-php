@@ -12,6 +12,9 @@ use Dodopayments\Misc\CountryCode;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MiscRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class MiscRawService implements MiscRawContract
 {
     // @phpstan-ignore-next-line
@@ -23,12 +26,14 @@ final class MiscRawService implements MiscRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<list<value-of<CountryCode>>>
      *
      * @throws APIException
      */
     public function listSupportedCountries(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

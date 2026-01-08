@@ -10,6 +10,9 @@ use Dodopayments\Misc\CountryCode;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MiscContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class MiscService implements MiscContract
 {
     /**
@@ -28,12 +31,14 @@ final class MiscService implements MiscContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return list<value-of<CountryCode>>
      *
      * @throws APIException
      */
     public function listSupportedCountries(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): array {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listSupportedCountries(requestOptions: $requestOptions);

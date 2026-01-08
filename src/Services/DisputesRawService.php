@@ -17,6 +17,9 @@ use Dodopayments\Disputes\GetDispute;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\DisputesRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class DisputesRawService implements DisputesRawContract
 {
     // @phpstan-ignore-next-line
@@ -29,6 +32,7 @@ final class DisputesRawService implements DisputesRawContract
      * @api
      *
      * @param string $disputeID Dispute Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<GetDispute>
      *
@@ -36,7 +40,7 @@ final class DisputesRawService implements DisputesRawContract
      */
     public function retrieve(
         string $disputeID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -51,14 +55,15 @@ final class DisputesRawService implements DisputesRawContract
      * @api
      *
      * @param array{
-     *   createdAtGte?: string|\DateTimeInterface,
-     *   createdAtLte?: string|\DateTimeInterface,
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
-     *   disputeStage?: 'pre_dispute'|'dispute'|'pre_arbitration'|DisputeStage,
+     *   disputeStage?: DisputeStage|value-of<DisputeStage>,
      *   disputeStatus?: value-of<DisputeStatus>,
      *   pageNumber?: int,
      *   pageSize?: int,
      * }|DisputeListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<DisputeListResponse>>
      *
@@ -66,7 +71,7 @@ final class DisputesRawService implements DisputesRawContract
      */
     public function list(
         array|DisputeListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = DisputeListParams::parseRequest(
             $params,

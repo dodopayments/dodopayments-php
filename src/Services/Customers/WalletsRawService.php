@@ -11,6 +11,9 @@ use Dodopayments\Customers\Wallets\WalletListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\WalletsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class WalletsRawService implements WalletsRawContract
 {
     // @phpstan-ignore-next-line
@@ -23,6 +26,7 @@ final class WalletsRawService implements WalletsRawContract
      * @api
      *
      * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WalletListResponse>
      *
@@ -30,7 +34,7 @@ final class WalletsRawService implements WalletsRawContract
      */
     public function list(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

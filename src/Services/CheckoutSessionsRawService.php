@@ -5,18 +5,30 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization\Theme;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
-use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CheckoutSessionsRawContract;
 
+/**
+ * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
+ * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
+ * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
+ * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
 {
     // @phpstan-ignore-next-line
@@ -29,45 +41,15 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      * @api
      *
      * @param array{
-     *   productCart: list<array{
-     *     productID: string,
-     *     quantity: int,
-     *     addons?: list<array<string,mixed>>|null,
-     *     amount?: int|null,
-     *   }>,
-     *   allowedPaymentMethodTypes?: list<'ach'|'affirm'|'afterpay_clearpay'|'alfamart'|'ali_pay'|'ali_pay_hk'|'alma'|'amazon_pay'|'apple_pay'|'atome'|'bacs'|'bancontact_card'|'becs'|'benefit'|'bizum'|'blik'|'boleto'|'bca_bank_transfer'|'bni_va'|'bri_va'|'card_redirect'|'cimb_va'|'classic'|'credit'|'crypto_currency'|'cashapp'|'dana'|'danamon_va'|'debit'|'duit_now'|'efecty'|'eft'|'eps'|'fps'|'evoucher'|'giropay'|'givex'|'google_pay'|'go_pay'|'gcash'|'ideal'|'interac'|'indomaret'|'klarna'|'kakao_pay'|'local_bank_redirect'|'mandiri_va'|'knet'|'mb_way'|'mobile_pay'|'momo'|'momo_atm'|'multibanco'|'online_banking_thailand'|'online_banking_czech_republic'|'online_banking_finland'|'online_banking_fpx'|'online_banking_poland'|'online_banking_slovakia'|'oxxo'|'pago_efectivo'|'permata_bank_transfer'|'open_banking_uk'|'pay_bright'|'paypal'|'paze'|'pix'|'pay_safe_card'|'przelewy24'|'prompt_pay'|'pse'|'red_compra'|'red_pagos'|'samsung_pay'|'sepa'|'sepa_bank_transfer'|'sofort'|'swish'|'touch_n_go'|'trustly'|'twint'|'upi_collect'|'upi_intent'|'vipps'|'viet_qr'|'venmo'|'walley'|'we_chat_pay'|'seven_eleven'|'lawson'|'mini_stop'|'family_mart'|'seicomart'|'pay_easy'|'local_bank_transfer'|'mifinity'|'open_banking_pis'|'direct_carrier_billing'|'instant_bank_transfer'|'billie'|'zip'|'revolut_pay'|'naver_pay'|'payco'|PaymentMethodTypes>|null,
-     *   billingAddress?: array{
-     *     country: 'AF'|'AX'|'AL'|'DZ'|'AS'|'AD'|'AO'|'AI'|'AQ'|'AG'|'AR'|'AM'|'AW'|'AU'|'AT'|'AZ'|'BS'|'BH'|'BD'|'BB'|'BY'|'BE'|'BZ'|'BJ'|'BM'|'BT'|'BO'|'BQ'|'BA'|'BW'|'BV'|'BR'|'IO'|'BN'|'BG'|'BF'|'BI'|'KH'|'CM'|'CA'|'CV'|'KY'|'CF'|'TD'|'CL'|'CN'|'CX'|'CC'|'CO'|'KM'|'CG'|'CD'|'CK'|'CR'|'CI'|'HR'|'CU'|'CW'|'CY'|'CZ'|'DK'|'DJ'|'DM'|'DO'|'EC'|'EG'|'SV'|'GQ'|'ER'|'EE'|'ET'|'FK'|'FO'|'FJ'|'FI'|'FR'|'GF'|'PF'|'TF'|'GA'|'GM'|'GE'|'DE'|'GH'|'GI'|'GR'|'GL'|'GD'|'GP'|'GU'|'GT'|'GG'|'GN'|'GW'|'GY'|'HT'|'HM'|'VA'|'HN'|'HK'|'HU'|'IS'|'IN'|'ID'|'IR'|'IQ'|'IE'|'IM'|'IL'|'IT'|'JM'|'JP'|'JE'|'JO'|'KZ'|'KE'|'KI'|'KP'|'KR'|'KW'|'KG'|'LA'|'LV'|'LB'|'LS'|'LR'|'LY'|'LI'|'LT'|'LU'|'MO'|'MK'|'MG'|'MW'|'MY'|'MV'|'ML'|'MT'|'MH'|'MQ'|'MR'|'MU'|'YT'|'MX'|'FM'|'MD'|'MC'|'MN'|'ME'|'MS'|'MA'|'MZ'|'MM'|'NA'|'NR'|'NP'|'NL'|'NC'|'NZ'|'NI'|'NE'|'NG'|'NU'|'NF'|'MP'|'NO'|'OM'|'PK'|'PW'|'PS'|'PA'|'PG'|'PY'|'PE'|'PH'|'PN'|'PL'|'PT'|'PR'|'QA'|'RE'|'RO'|'RU'|'RW'|'BL'|'SH'|'KN'|'LC'|'MF'|'PM'|'VC'|'WS'|'SM'|'ST'|'SA'|'SN'|'RS'|'SC'|'SL'|'SG'|'SX'|'SK'|'SI'|'SB'|'SO'|'ZA'|'GS'|'SS'|'ES'|'LK'|'SD'|'SR'|'SJ'|'SZ'|'SE'|'CH'|'SY'|'TW'|'TJ'|'TZ'|'TH'|'TL'|'TG'|'TK'|'TO'|'TT'|'TN'|'TR'|'TM'|'TC'|'TV'|'UG'|'UA'|'AE'|'GB'|'UM'|'US'|'UY'|'UZ'|'VU'|'VE'|'VN'|'VG'|'VI'|'WF'|'EH'|'YE'|'ZM'|'ZW'|CountryCode,
-     *     city?: string|null,
-     *     state?: string|null,
-     *     street?: string|null,
-     *     zipcode?: string|null,
-     *   }|null,
+     *   productCart: list<ProductCart|ProductCartShape>,
+     *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
+     *   billingAddress?: BillingAddress|BillingAddressShape|null,
      *   billingCurrency?: value-of<Currency>,
      *   confirm?: bool,
-     *   customer?: array<string,mixed>|null,
-     *   customization?: array{
-     *     forceLanguage?: string|null,
-     *     showOnDemandTag?: bool,
-     *     showOrderDetails?: bool,
-     *     theme?: 'dark'|'light'|'system'|Theme,
-     *   },
+     *   customer?: CustomerRequestShape|null,
+     *   customization?: Customization|CustomizationShape,
      *   discountCode?: string|null,
-     *   featureFlags?: array{
-     *     allowCurrencySelection?: bool,
-     *     allowCustomerEditingCity?: bool,
-     *     allowCustomerEditingCountry?: bool,
-     *     allowCustomerEditingEmail?: bool,
-     *     allowCustomerEditingName?: bool,
-     *     allowCustomerEditingState?: bool,
-     *     allowCustomerEditingStreet?: bool,
-     *     allowCustomerEditingZipcode?: bool,
-     *     allowDiscountCode?: bool,
-     *     allowPhoneNumberCollection?: bool,
-     *     allowTaxID?: bool,
-     *     alwaysCreateNewCustomer?: bool,
-     *     redirectImmediately?: bool,
-     *   },
+     *   featureFlags?: FeatureFlags|FeatureFlagsShape,
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>|null,
      *   minimalAddress?: bool,
@@ -75,17 +57,9 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   returnURL?: string|null,
      *   shortLink?: bool,
      *   showSavedPaymentMethods?: bool,
-     *   subscriptionData?: array{
-     *     onDemand?: array{
-     *       mandateOnly: bool,
-     *       adaptiveCurrencyFeesInclusive?: bool|null,
-     *       productCurrency?: 'AED'|'ALL'|'AMD'|'ANG'|'AOA'|'ARS'|'AUD'|'AWG'|'AZN'|'BAM'|'BBD'|'BDT'|'BGN'|'BHD'|'BIF'|'BMD'|'BND'|'BOB'|'BRL'|'BSD'|'BWP'|'BYN'|'BZD'|'CAD'|'CHF'|'CLP'|'CNY'|'COP'|'CRC'|'CUP'|'CVE'|'CZK'|'DJF'|'DKK'|'DOP'|'DZD'|'EGP'|'ETB'|'EUR'|'FJD'|'FKP'|'GBP'|'GEL'|'GHS'|'GIP'|'GMD'|'GNF'|'GTQ'|'GYD'|'HKD'|'HNL'|'HRK'|'HTG'|'HUF'|'IDR'|'ILS'|'INR'|'IQD'|'JMD'|'JOD'|'JPY'|'KES'|'KGS'|'KHR'|'KMF'|'KRW'|'KWD'|'KYD'|'KZT'|'LAK'|'LBP'|'LKR'|'LRD'|'LSL'|'LYD'|'MAD'|'MDL'|'MGA'|'MKD'|'MMK'|'MNT'|'MOP'|'MRU'|'MUR'|'MVR'|'MWK'|'MXN'|'MYR'|'MZN'|'NAD'|'NGN'|'NIO'|'NOK'|'NPR'|'NZD'|'OMR'|'PAB'|'PEN'|'PGK'|'PHP'|'PKR'|'PLN'|'PYG'|'QAR'|'RON'|'RSD'|'RUB'|'RWF'|'SAR'|'SBD'|'SCR'|'SEK'|'SGD'|'SHP'|'SLE'|'SLL'|'SOS'|'SRD'|'SSP'|'STN'|'SVC'|'SZL'|'THB'|'TND'|'TOP'|'TRY'|'TTD'|'TWD'|'TZS'|'UAH'|'UGX'|'USD'|'UYU'|'UZS'|'VES'|'VND'|'VUV'|'WST'|'XAF'|'XCD'|'XOF'|'XPF'|'YER'|'ZAR'|'ZMW'|Currency|null,
-     *       productDescription?: string|null,
-     *       productPrice?: int|null,
-     *     }|null,
-     *     trialPeriodDays?: int|null,
-     *   }|null,
+     *   subscriptionData?: SubscriptionData|SubscriptionDataShape|null,
      * }|CheckoutSessionCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CheckoutSessionResponse>
      *
@@ -93,7 +67,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      */
     public function create(
         array|CheckoutSessionCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = CheckoutSessionCreateParams::parseRequest(
             $params,
@@ -113,13 +87,15 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<CheckoutSessionStatus>
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

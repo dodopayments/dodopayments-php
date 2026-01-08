@@ -14,7 +14,7 @@ use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse\Meter;
  *
  * @phpstan-type SubscriptionGetUsageHistoryResponseShape = array{
  *   endDate: \DateTimeInterface,
- *   meters: list<MeterShape>,
+ *   meters: list<Meter|MeterShape>,
  *   startDate: \DateTimeInterface,
  * }
  */
@@ -72,7 +72,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<MeterShape> $meters
+     * @param list<Meter|MeterShape> $meters
      */
     public static function with(
         \DateTimeInterface $endDate,
@@ -102,7 +102,7 @@ final class SubscriptionGetUsageHistoryResponse implements BaseModel
     /**
      * List of meters and their usage for this billing period.
      *
-     * @param list<MeterShape> $meters
+     * @param list<Meter|MeterShape> $meters
      */
     public function withMeters(array $meters): self
     {

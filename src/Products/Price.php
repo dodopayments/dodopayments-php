@@ -18,7 +18,8 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  * @phpstan-import-type RecurringPriceShape from \Dodopayments\Products\Price\RecurringPrice
  * @phpstan-import-type UsageBasedPriceShape from \Dodopayments\Products\Price\UsageBasedPrice
  *
- * @phpstan-type PriceShape = OneTimePriceShape|RecurringPriceShape|UsageBasedPriceShape
+ * @phpstan-type PriceVariants = OneTimePrice|RecurringPrice|UsageBasedPrice
+ * @phpstan-type PriceShape = PriceVariants|OneTimePriceShape|RecurringPriceShape|UsageBasedPriceShape
  */
 final class Price implements ConverterSource
 {

@@ -13,6 +13,9 @@ use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class BrandsService implements BrandsContract
 {
     /**
@@ -31,6 +34,8 @@ final class BrandsService implements BrandsContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function create(
@@ -39,7 +44,7 @@ final class BrandsService implements BrandsContract
         ?string $statementDescriptor = null,
         ?string $supportEmail = null,
         ?string $url = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Brand {
         $params = Util::removeNulls(
             [
@@ -63,12 +68,13 @@ final class BrandsService implements BrandsContract
      * Thin handler just calls `get_brand` and wraps in `Json(...)`
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Brand {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
@@ -81,6 +87,7 @@ final class BrandsService implements BrandsContract
      *
      * @param string $id Brand Id
      * @param string|null $imageID The UUID you got back from the presigned‐upload call
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -90,7 +97,7 @@ final class BrandsService implements BrandsContract
         ?string $name = null,
         ?string $statementDescriptor = null,
         ?string $supportEmail = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Brand {
         $params = Util::removeNulls(
             [
@@ -110,10 +117,12 @@ final class BrandsService implements BrandsContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function list(
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BrandListResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(requestOptions: $requestOptions);
@@ -125,12 +134,13 @@ final class BrandsService implements BrandsContract
      * @api
      *
      * @param string $id Brand Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BrandUpdateImagesResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->updateImages($id, requestOptions: $requestOptions);

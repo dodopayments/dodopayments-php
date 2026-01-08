@@ -11,7 +11,8 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 /**
  * Filter value - can be string, number, or boolean.
  *
- * @phpstan-type ValueShape = string|float|bool
+ * @phpstan-type ValueVariants = string|float|bool
+ * @phpstan-type ValueShape = ValueVariants
  */
 final class Value implements ConverterSource
 {

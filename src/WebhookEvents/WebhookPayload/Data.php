@@ -22,7 +22,8 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  * @phpstan-import-type DisputeShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute
  * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey
  *
- * @phpstan-type DataShape = PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape
+ * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey
+ * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape
  */
 final class Data implements ConverterSource
 {

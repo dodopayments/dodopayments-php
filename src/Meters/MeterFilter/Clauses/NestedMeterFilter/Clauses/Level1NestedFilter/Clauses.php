@@ -17,7 +17,8 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
  * @phpstan-import-type Level2FilterConditionShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2FilterCondition
  * @phpstan-import-type Level2NestedFilterShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter
  *
- * @phpstan-type ClausesShape = list<Level2FilterConditionShape>|list<Level2NestedFilterShape>
+ * @phpstan-type ClausesVariants = list<Level2FilterCondition>|list<Level2NestedFilter>
+ * @phpstan-type ClausesShape = ClausesVariants|list<Level2FilterConditionShape>|list<Level2NestedFilterShape>
  */
 final class Clauses implements ConverterSource
 {

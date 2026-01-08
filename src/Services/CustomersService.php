@@ -15,6 +15,9 @@ use Dodopayments\ServiceContracts\CustomersContract;
 use Dodopayments\Services\Customers\CustomerPortalService;
 use Dodopayments\Services\Customers\WalletsService;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class CustomersService implements CustomersContract
 {
     /**
@@ -46,6 +49,7 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array<string,string> $metadata Additional metadata for the customer
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -54,7 +58,7 @@ final class CustomersService implements CustomersContract
         string $name,
         ?array $metadata = null,
         ?string $phoneNumber = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Customer {
         $params = Util::removeNulls(
             [
@@ -75,12 +79,13 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Customer {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($customerID, requestOptions: $requestOptions);
@@ -93,6 +98,7 @@ final class CustomersService implements CustomersContract
      *
      * @param string $customerID Customer Id
      * @param array<string,string>|null $metadata Additional metadata for the customer
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -101,7 +107,7 @@ final class CustomersService implements CustomersContract
         ?array $metadata = null,
         ?string $name = null,
         ?string $phoneNumber = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Customer {
         $params = Util::removeNulls(
             ['metadata' => $metadata, 'name' => $name, 'phoneNumber' => $phoneNumber]
@@ -119,6 +125,7 @@ final class CustomersService implements CustomersContract
      * @param string $email Filter by customer email
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<Customer>
      *
@@ -128,7 +135,7 @@ final class CustomersService implements CustomersContract
         ?string $email = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
             ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize]
@@ -144,12 +151,13 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrievePaymentMethods(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): CustomerGetPaymentMethodsResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrievePaymentMethods($customerID, requestOptions: $requestOptions);

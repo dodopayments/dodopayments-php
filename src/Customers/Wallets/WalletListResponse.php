@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-import-type CustomerWalletShape from \Dodopayments\Customers\Wallets\CustomerWallet
  *
  * @phpstan-type WalletListResponseShape = array{
- *   items: list<CustomerWalletShape>, totalBalanceUsd: int
+ *   items: list<CustomerWallet|CustomerWalletShape>, totalBalanceUsd: int
  * }
  */
 final class WalletListResponse implements BaseModel
@@ -54,7 +54,7 @@ final class WalletListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<CustomerWalletShape> $items
+     * @param list<CustomerWallet|CustomerWalletShape> $items
      */
     public static function with(array $items, int $totalBalanceUsd): self
     {
@@ -67,7 +67,7 @@ final class WalletListResponse implements BaseModel
     }
 
     /**
-     * @param list<CustomerWalletShape> $items
+     * @param list<CustomerWallet|CustomerWalletShape> $items
      */
     public function withItems(array $items): self
     {

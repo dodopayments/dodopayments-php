@@ -11,6 +11,9 @@ use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Products\ImagesContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class ImagesService implements ImagesContract
 {
     /**
@@ -30,13 +33,14 @@ final class ImagesService implements ImagesContract
      * @api
      *
      * @param string $id Product Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function update(
         string $id,
         ?bool $forceUpdate = null,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): ImageUpdateResponse {
         $params = Util::removeNulls(['forceUpdate' => $forceUpdate]);
 

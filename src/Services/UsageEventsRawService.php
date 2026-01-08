@@ -12,10 +12,15 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\UsageEventsRawContract;
 use Dodopayments\UsageEvents\Event;
+use Dodopayments\UsageEvents\EventInput;
 use Dodopayments\UsageEvents\UsageEventIngestParams;
 use Dodopayments\UsageEvents\UsageEventIngestResponse;
 use Dodopayments\UsageEvents\UsageEventListParams;
 
+/**
+ * @phpstan-import-type EventInputShape from \Dodopayments\UsageEvents\EventInput
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class UsageEventsRawService implements UsageEventsRawContract
 {
     // @phpstan-ignore-next-line
@@ -50,6 +55,7 @@ final class UsageEventsRawService implements UsageEventsRawContract
      * ```
      *
      * @param string $eventID Unique event identifier (case-sensitive, must match the ID used during ingestion)
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Event>
      *
@@ -57,7 +63,7 @@ final class UsageEventsRawService implements UsageEventsRawContract
      */
     public function retrieve(
         string $eventID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -99,13 +105,14 @@ final class UsageEventsRawService implements UsageEventsRawContract
      *
      * @param array{
      *   customerID?: string,
-     *   end?: string|\DateTimeInterface,
+     *   end?: \DateTimeInterface,
      *   eventName?: string,
      *   meterID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
-     *   start?: string|\DateTimeInterface,
+     *   start?: \DateTimeInterface,
      * }|UsageEventListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Event>>
      *
@@ -113,7 +120,7 @@ final class UsageEventsRawService implements UsageEventsRawContract
      */
     public function list(
         array|UsageEventListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UsageEventListParams::parseRequest(
             $params,
@@ -176,14 +183,9 @@ final class UsageEventsRawService implements UsageEventsRawContract
      * ```
      *
      * @param array{
-     *   events: list<array{
-     *     customerID: string,
-     *     eventID: string,
-     *     eventName: string,
-     *     metadata?: array<string,string|float|bool>|null,
-     *     timestamp?: string|\DateTimeInterface|null,
-     *   }>,
+     *   events: list<EventInput|EventInputShape>
      * }|UsageEventIngestParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<UsageEventIngestResponse>
      *
@@ -191,7 +193,7 @@ final class UsageEventsRawService implements UsageEventsRawContract
      */
     public function ingest(
         array|UsageEventIngestParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = UsageEventIngestParams::parseRequest(
             $params,

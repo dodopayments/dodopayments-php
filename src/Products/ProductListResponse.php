@@ -15,6 +15,7 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
+ * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  *
  * @phpstan-type ProductListResponseShape = array{
@@ -127,6 +128,8 @@ final class ProductListResponse implements BaseModel
 
     /**
      * Details of the price.
+     *
+     * @var PriceVariants|null $priceDetail
      */
     #[Optional('price_detail', nullable: true)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail;

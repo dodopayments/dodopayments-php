@@ -13,6 +13,9 @@ use Dodopayments\Products\Images\ImageUpdateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Products\ImagesRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class ImagesRawService implements ImagesRawContract
 {
     // @phpstan-ignore-next-line
@@ -26,6 +29,7 @@ final class ImagesRawService implements ImagesRawContract
      *
      * @param string $id Product Id
      * @param array{forceUpdate?: bool}|ImageUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ImageUpdateResponse>
      *
@@ -34,7 +38,7 @@ final class ImagesRawService implements ImagesRawContract
     public function update(
         string $id,
         array|ImageUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = ImageUpdateParams::parseRequest(
             $params,

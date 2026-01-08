@@ -11,14 +11,17 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterAggregation;
-use Dodopayments\Meters\MeterAggregation\Type;
 use Dodopayments\Meters\MeterCreateParams;
 use Dodopayments\Meters\MeterFilter;
-use Dodopayments\Meters\MeterFilter\Conjunction;
 use Dodopayments\Meters\MeterListParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MetersRawContract;
 
+/**
+ * @phpstan-import-type MeterAggregationShape from \Dodopayments\Meters\MeterAggregation
+ * @phpstan-import-type MeterFilterShape from \Dodopayments\Meters\MeterFilter
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class MetersRawService implements MetersRawContract
 {
     // @phpstan-ignore-next-line
@@ -31,18 +34,14 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param array{
-     *   aggregation: array{
-     *     type: 'count'|'sum'|'max'|'last'|Type, key?: string|null
-     *   }|MeterAggregation,
+     *   aggregation: MeterAggregation|MeterAggregationShape,
      *   eventName: string,
      *   measurementUnit: string,
      *   name: string,
      *   description?: string|null,
-     *   filter?: array{
-     *     clauses: list<array<string,mixed>>|list<array<string,mixed>>,
-     *     conjunction: 'and'|'or'|Conjunction,
-     *   }|MeterFilter|null,
+     *   filter?: MeterFilter|MeterFilterShape|null,
      * }|MeterCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
      *
@@ -50,7 +49,7 @@ final class MetersRawService implements MetersRawContract
      */
     public function create(
         array|MeterCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = MeterCreateParams::parseRequest(
             $params,
@@ -71,6 +70,7 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param string $id Meter ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
      *
@@ -78,7 +78,7 @@ final class MetersRawService implements MetersRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -95,6 +95,7 @@ final class MetersRawService implements MetersRawContract
      * @param array{
      *   archived?: bool, pageNumber?: int, pageSize?: int
      * }|MeterListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Meter>>
      *
@@ -102,7 +103,7 @@ final class MetersRawService implements MetersRawContract
      */
     public function list(
         array|MeterListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = MeterListParams::parseRequest(
             $params,
@@ -127,6 +128,7 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param string $id Meter ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -134,7 +136,7 @@ final class MetersRawService implements MetersRawContract
      */
     public function archive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -149,6 +151,7 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param string $id Meter ID
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -156,7 +159,7 @@ final class MetersRawService implements MetersRawContract
      */
     public function unarchive(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

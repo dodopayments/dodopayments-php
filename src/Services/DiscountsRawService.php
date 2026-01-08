@@ -17,6 +17,9 @@ use Dodopayments\Discounts\DiscountUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\DiscountsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class DiscountsRawService implements DiscountsRawContract
 {
     // @phpstan-ignore-next-line
@@ -33,14 +36,15 @@ final class DiscountsRawService implements DiscountsRawContract
      *
      * @param array{
      *   amount: int,
-     *   type: 'percentage'|DiscountType,
+     *   type: DiscountType|value-of<DiscountType>,
      *   code?: string|null,
-     *   expiresAt?: string|\DateTimeInterface|null,
+     *   expiresAt?: \DateTimeInterface|null,
      *   name?: string|null,
      *   restrictedTo?: list<string>|null,
      *   subscriptionCycles?: int|null,
      *   usageLimit?: int|null,
      * }|DiscountCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Discount>
      *
@@ -48,7 +52,7 @@ final class DiscountsRawService implements DiscountsRawContract
      */
     public function create(
         array|DiscountCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = DiscountCreateParams::parseRequest(
             $params,
@@ -71,6 +75,7 @@ final class DiscountsRawService implements DiscountsRawContract
      * GET /discounts/{discount_id}
      *
      * @param string $discountID Discount Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Discount>
      *
@@ -78,7 +83,7 @@ final class DiscountsRawService implements DiscountsRawContract
      */
     public function retrieve(
         string $discountID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -98,13 +103,14 @@ final class DiscountsRawService implements DiscountsRawContract
      * @param array{
      *   amount?: int|null,
      *   code?: string|null,
-     *   expiresAt?: string|\DateTimeInterface|null,
+     *   expiresAt?: \DateTimeInterface|null,
      *   name?: string|null,
      *   restrictedTo?: list<string>|null,
      *   subscriptionCycles?: int|null,
-     *   type?: 'percentage'|DiscountType|null,
+     *   type?: DiscountType|value-of<DiscountType>|null,
      *   usageLimit?: int|null,
      * }|DiscountUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Discount>
      *
@@ -113,7 +119,7 @@ final class DiscountsRawService implements DiscountsRawContract
     public function update(
         string $discountID,
         array|DiscountUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = DiscountUpdateParams::parseRequest(
             $params,
@@ -136,6 +142,7 @@ final class DiscountsRawService implements DiscountsRawContract
      * GET /discounts
      *
      * @param array{pageNumber?: int, pageSize?: int}|DiscountListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Discount>>
      *
@@ -143,7 +150,7 @@ final class DiscountsRawService implements DiscountsRawContract
      */
     public function list(
         array|DiscountListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = DiscountListParams::parseRequest(
             $params,
@@ -170,6 +177,7 @@ final class DiscountsRawService implements DiscountsRawContract
      * DELETE /discounts/{discount_id}
      *
      * @param string $discountID Discount Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -177,7 +185,7 @@ final class DiscountsRawService implements DiscountsRawContract
      */
     public function delete(
         string $discountID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

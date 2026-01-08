@@ -13,6 +13,9 @@ use Dodopayments\Customers\Wallets\LedgerEntries\LedgerEntryListParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface LedgerEntriesRawContract
 {
     /**
@@ -20,6 +23,7 @@ interface LedgerEntriesRawContract
      *
      * @param string $customerID Customer ID
      * @param array<string,mixed>|LedgerEntryCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerWallet>
      *
@@ -28,7 +32,7 @@ interface LedgerEntriesRawContract
     public function create(
         string $customerID,
         array|LedgerEntryCreateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -36,6 +40,7 @@ interface LedgerEntriesRawContract
      *
      * @param string $customerID Customer ID
      * @param array<string,mixed>|LedgerEntryListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<CustomerWalletTransaction>>
      *
@@ -44,6 +49,6 @@ interface LedgerEntriesRawContract
     public function list(
         string $customerID,
         array|LedgerEntryListParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

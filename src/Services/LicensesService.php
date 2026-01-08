@@ -12,6 +12,9 @@ use Dodopayments\Licenses\LicenseValidateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicensesContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class LicensesService implements LicensesContract
 {
     /**
@@ -30,12 +33,14 @@ final class LicensesService implements LicensesContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function activate(
         string $licenseKey,
         string $name,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): LicenseActivateResponse {
         $params = Util::removeNulls(['licenseKey' => $licenseKey, 'name' => $name]);
 
@@ -48,12 +53,14 @@ final class LicensesService implements LicensesContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function deactivate(
         string $licenseKey,
         string $licenseKeyInstanceID,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): mixed {
         $params = Util::removeNulls(
             [
@@ -71,12 +78,14 @@ final class LicensesService implements LicensesContract
     /**
      * @api
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @throws APIException
      */
     public function validate(
         string $licenseKey,
         ?string $licenseKeyInstanceID = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): LicenseValidateResponse {
         $params = Util::removeNulls(
             [

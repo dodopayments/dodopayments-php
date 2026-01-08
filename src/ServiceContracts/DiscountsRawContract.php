@@ -13,12 +13,16 @@ use Dodopayments\Discounts\DiscountListParams;
 use Dodopayments\Discounts\DiscountUpdateParams;
 use Dodopayments\RequestOptions;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 interface DiscountsRawContract
 {
     /**
      * @api
      *
      * @param array<string,mixed>|DiscountCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Discount>
      *
@@ -26,13 +30,14 @@ interface DiscountsRawContract
      */
     public function create(
         array|DiscountCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $discountID Discount Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Discount>
      *
@@ -40,7 +45,7 @@ interface DiscountsRawContract
      */
     public function retrieve(
         string $discountID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -48,6 +53,7 @@ interface DiscountsRawContract
      *
      * @param string $discountID Discount Id
      * @param array<string,mixed>|DiscountUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Discount>
      *
@@ -56,13 +62,14 @@ interface DiscountsRawContract
     public function update(
         string $discountID,
         array|DiscountUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param array<string,mixed>|DiscountListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Discount>>
      *
@@ -70,13 +77,14 @@ interface DiscountsRawContract
      */
     public function list(
         array|DiscountListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
      * @api
      *
      * @param string $discountID Discount Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -84,6 +92,6 @@ interface DiscountsRawContract
      */
     public function delete(
         string $discountID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 }

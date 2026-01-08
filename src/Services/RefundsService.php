@@ -9,11 +9,16 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Refunds\Refund;
+use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams\Status;
 use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\RefundsContract;
 
+/**
+ * @phpstan-import-type ItemShape from \Dodopayments\Refunds\RefundCreateParams\Item
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class RefundsService implements RefundsContract
 {
     /**
@@ -33,11 +38,10 @@ final class RefundsService implements RefundsContract
      * @api
      *
      * @param string $paymentID the unique identifier of the payment to be refunded
-     * @param list<array{
-     *   itemID: string, amount?: int|null, taxInclusive?: bool
-     * }>|null $items Partially Refund an Individual Item
+     * @param list<Item|ItemShape>|null $items Partially Refund an Individual Item
      * @param array<string,string> $metadata additional metadata associated with the refund
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -46,7 +50,7 @@ final class RefundsService implements RefundsContract
         ?array $items = null,
         ?array $metadata = null,
         ?string $reason = null,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Refund {
         $params = Util::removeNulls(
             [
@@ -67,12 +71,13 @@ final class RefundsService implements RefundsContract
      * @api
      *
      * @param string $refundID Refund Id
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $refundID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): Refund {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($refundID, requestOptions: $requestOptions);
@@ -83,25 +88,26 @@ final class RefundsService implements RefundsContract
     /**
      * @api
      *
-     * @param string|\DateTimeInterface $createdAtGte Get events after this created time
-     * @param string|\DateTimeInterface $createdAtLte Get events created before this time
+     * @param \DateTimeInterface $createdAtGte Get events after this created time
+     * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer_id
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
-     * @param 'succeeded'|'failed'|'pending'|'review'|Status $status Filter by status
+     * @param Status|value-of<Status> $status Filter by status
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<RefundListResponse>
      *
      * @throws APIException
      */
     public function list(
-        string|\DateTimeInterface|null $createdAtGte = null,
-        string|\DateTimeInterface|null $createdAtLte = null,
+        ?\DateTimeInterface $createdAtGte = null,
+        ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
-        string|Status|null $status = null,
-        ?RequestOptions $requestOptions = null,
+        Status|string|null $status = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
             [

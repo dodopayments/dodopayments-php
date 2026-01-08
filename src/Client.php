@@ -29,8 +29,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
 /**
- * @phpstan-import-type NormalizedRequest from \Dodopayments\Core\BaseClient
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ * @phpstan-import-type NormalizedRequest from \Dodopayments\Core\BaseClient
  */
 class Client extends BaseClient
 {

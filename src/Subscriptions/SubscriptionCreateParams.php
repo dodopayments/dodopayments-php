@@ -20,6 +20,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @deprecated
  * @see Dodopayments\Services\SubscriptionsService::create()
  *
+ * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
@@ -31,14 +32,14 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   customer: CustomerRequestShape,
  *   productID: string,
  *   quantity: int,
- *   addons?: list<AttachAddonShape>|null,
+ *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
- *   oneTimeProductCart?: list<OneTimeProductCartItemShape>|null,
+ *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
  *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
@@ -63,6 +64,8 @@ final class SubscriptionCreateParams implements BaseModel
 
     /**
      * Customer details for the subscription.
+     *
+     * @var CustomerRequestVariants $customer
      */
     #[Required]
     public AttachExistingCustomer|NewCustomer $customer;
@@ -236,12 +239,12 @@ final class SubscriptionCreateParams implements BaseModel
      *
      * @param BillingAddress|BillingAddressShape $billing
      * @param CustomerRequestShape $customer
-     * @param list<AttachAddonShape>|null $addons
+     * @param list<AttachAddon|AttachAddonShape>|null $addons
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string,string>|null $metadata
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
-     * @param list<OneTimeProductCartItemShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public static function with(
         BillingAddress|array $billing,
@@ -344,7 +347,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * Attach addons to this subscription.
      *
-     * @param list<AttachAddonShape>|null $addons
+     * @param list<AttachAddon|AttachAddonShape>|null $addons
      */
     public function withAddons(?array $addons): self
     {
@@ -438,7 +441,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * List of one time products that will be bundled with the first payment for this subscription.
      *
-     * @param list<OneTimeProductCartItemShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

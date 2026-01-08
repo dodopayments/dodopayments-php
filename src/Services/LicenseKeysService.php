@@ -13,6 +13,9 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeysContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class LicenseKeysService implements LicenseKeysContract
 {
     /**
@@ -32,12 +35,13 @@ final class LicenseKeysService implements LicenseKeysContract
      * @api
      *
      * @param string $id License key ID
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): LicenseKey {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
@@ -53,8 +57,9 @@ final class LicenseKeysService implements LicenseKeysContract
      * Use `null` to remove the limit, or omit this field to leave it unchanged.
      * @param bool|null $disabled Indicates whether the license key should be disabled.
      * A value of `true` disables the key, while `false` enables it. Omit this field to leave it unchanged.
-     * @param string|\DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
+     * @param \DateTimeInterface|null $expiresAt The updated expiration timestamp for the license key in UTC.
      * Use `null` to remove the expiration date, or omit this field to leave it unchanged.
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
@@ -62,8 +67,8 @@ final class LicenseKeysService implements LicenseKeysContract
         string $id,
         ?int $activationsLimit = null,
         ?bool $disabled = null,
-        string|\DateTimeInterface|null $expiresAt = null,
-        ?RequestOptions $requestOptions = null,
+        ?\DateTimeInterface $expiresAt = null,
+        RequestOptions|array|null $requestOptions = null,
     ): LicenseKey {
         $params = Util::removeNulls(
             [
@@ -86,7 +91,8 @@ final class LicenseKeysService implements LicenseKeysContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product ID
-     * @param 'active'|'expired'|'disabled'|Status $status Filter by license key status
+     * @param Status|value-of<Status> $status Filter by license key status
+     * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<LicenseKey>
      *
@@ -97,8 +103,8 @@ final class LicenseKeysService implements LicenseKeysContract
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
-        string|Status|null $status = null,
-        ?RequestOptions $requestOptions = null,
+        Status|string|null $status = null,
+        RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
             [

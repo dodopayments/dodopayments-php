@@ -11,6 +11,9 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Customers\WalletsContract;
 use Dodopayments\Services\Customers\Wallets\LedgerEntriesService;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class WalletsService implements WalletsContract
 {
     /**
@@ -36,12 +39,13 @@ final class WalletsService implements WalletsContract
      * @api
      *
      * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function list(
         string $customerID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): WalletListResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list($customerID, requestOptions: $requestOptions);

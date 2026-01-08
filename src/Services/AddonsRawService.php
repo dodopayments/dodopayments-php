@@ -19,6 +19,9 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\AddonsRawContract;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class AddonsRawService implements AddonsRawContract
 {
     // @phpstan-ignore-next-line
@@ -34,9 +37,10 @@ final class AddonsRawService implements AddonsRawContract
      *   currency: value-of<Currency>,
      *   name: string,
      *   price: int,
-     *   taxCategory: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory,
+     *   taxCategory: TaxCategory|value-of<TaxCategory>,
      *   description?: string|null,
      * }|AddonCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -44,7 +48,7 @@ final class AddonsRawService implements AddonsRawContract
      */
     public function create(
         array|AddonCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = AddonCreateParams::parseRequest(
             $params,
@@ -65,6 +69,7 @@ final class AddonsRawService implements AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -72,7 +77,7 @@ final class AddonsRawService implements AddonsRawContract
      */
     public function retrieve(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -93,8 +98,9 @@ final class AddonsRawService implements AddonsRawContract
      *   imageID?: string|null,
      *   name?: string|null,
      *   price?: int|null,
-     *   taxCategory?: 'digital_products'|'saas'|'e_book'|'edtech'|TaxCategory|null,
+     *   taxCategory?: TaxCategory|value-of<TaxCategory>|null,
      * }|AddonUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
      *
@@ -103,7 +109,7 @@ final class AddonsRawService implements AddonsRawContract
     public function update(
         string $id,
         array|AddonUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = AddonUpdateParams::parseRequest(
             $params,
@@ -124,6 +130,7 @@ final class AddonsRawService implements AddonsRawContract
      * @api
      *
      * @param array{pageNumber?: int, pageSize?: int}|AddonListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<AddonResponse>>
      *
@@ -131,7 +138,7 @@ final class AddonsRawService implements AddonsRawContract
      */
     public function list(
         array|AddonListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = AddonListParams::parseRequest(
             $params,
@@ -156,6 +163,7 @@ final class AddonsRawService implements AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonUpdateImagesResponse>
      *
@@ -163,7 +171,7 @@ final class AddonsRawService implements AddonsRawContract
      */
     public function updateImages(
         string $id,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

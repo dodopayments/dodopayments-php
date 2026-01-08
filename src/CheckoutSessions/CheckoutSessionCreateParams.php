@@ -22,6 +22,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
 /**
  * @see Dodopayments\Services\CheckoutSessionsService::create()
  *
+ * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
  * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
@@ -30,7 +31,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
  *
  * @phpstan-type CheckoutSessionCreateParamsShape = array{
- *   productCart: list<ProductCartShape>,
+ *   productCart: list<ProductCart|ProductCartShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: null|BillingAddress|BillingAddressShape,
  *   billingCurrency?: null|Currency|value-of<Currency>,
@@ -98,6 +99,8 @@ final class CheckoutSessionCreateParams implements BaseModel
 
     /**
      * Customer details for the session.
+     *
+     * @var CustomerRequestVariants|null $customer
      */
     #[Optional(nullable: true)]
     public AttachExistingCustomer|NewCustomer|null $customer;
@@ -188,7 +191,7 @@ final class CheckoutSessionCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ProductCartShape> $productCart
+     * @param list<ProductCart|ProductCartShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param BillingAddress|BillingAddressShape|null $billingAddress
      * @param Currency|value-of<Currency>|null $billingCurrency
@@ -242,7 +245,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     }
 
     /**
-     * @param list<ProductCartShape> $productCart
+     * @param list<ProductCart|ProductCartShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {

@@ -17,6 +17,9 @@ use Dodopayments\Webhooks\WebhookGetSecretResponse;
 use Dodopayments\Webhooks\WebhookListParams;
 use Dodopayments\Webhooks\WebhookUpdateParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class WebhooksRawService implements WebhooksRawContract
 {
     // @phpstan-ignore-next-line
@@ -34,12 +37,13 @@ final class WebhooksRawService implements WebhooksRawContract
      *   url: string,
      *   description?: string|null,
      *   disabled?: bool|null,
-     *   filterTypes?: list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType>,
+     *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>,
      *   headers?: array<string,string>|null,
      *   idempotencyKey?: string|null,
      *   metadata?: array<string,string>|null,
      *   rateLimit?: int|null,
      * }|WebhookCreateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -47,7 +51,7 @@ final class WebhooksRawService implements WebhooksRawContract
      */
     public function create(
         array|WebhookCreateParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = WebhookCreateParams::parseRequest(
             $params,
@@ -69,13 +73,15 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Get a webhook by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<WebhookDetails>
      *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -94,11 +100,12 @@ final class WebhooksRawService implements WebhooksRawContract
      * @param array{
      *   description?: string|null,
      *   disabled?: bool|null,
-     *   filterTypes?: list<'payment.succeeded'|'payment.failed'|'payment.processing'|'payment.cancelled'|'refund.succeeded'|'refund.failed'|'dispute.opened'|'dispute.expired'|'dispute.accepted'|'dispute.cancelled'|'dispute.challenged'|'dispute.won'|'dispute.lost'|'subscription.active'|'subscription.renewed'|'subscription.on_hold'|'subscription.cancelled'|'subscription.failed'|'subscription.expired'|'subscription.plan_changed'|'subscription.updated'|'license_key.created'|WebhookEventType>|null,
+     *   filterTypes?: list<WebhookEventType|value-of<WebhookEventType>>|null,
      *   metadata?: array<string,string>|null,
      *   rateLimit?: int|null,
      *   url?: string|null,
      * }|WebhookUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
      *
@@ -107,7 +114,7 @@ final class WebhooksRawService implements WebhooksRawContract
     public function update(
         string $webhookID,
         array|WebhookUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = WebhookUpdateParams::parseRequest(
             $params,
@@ -130,6 +137,7 @@ final class WebhooksRawService implements WebhooksRawContract
      * List all webhooks
      *
      * @param array{iterator?: string|null, limit?: int|null}|WebhookListParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CursorPagePagination<WebhookDetails>>
      *
@@ -137,7 +145,7 @@ final class WebhooksRawService implements WebhooksRawContract
      */
     public function list(
         array|WebhookListParams $params,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = WebhookListParams::parseRequest(
             $params,
@@ -160,13 +168,15 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Delete a webhook by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<mixed>
      *
      * @throws APIException
      */
     public function delete(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -182,13 +192,15 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Get webhook secret by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<WebhookGetSecretResponse>
      *
      * @throws APIException
      */
     public function retrieveSecret(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(

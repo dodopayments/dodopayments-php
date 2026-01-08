@@ -12,6 +12,9 @@ use Dodopayments\ServiceContracts\Webhooks\HeadersRawContract;
 use Dodopayments\Webhooks\Headers\HeaderGetResponse;
 use Dodopayments\Webhooks\Headers\HeaderUpdateParams;
 
+/**
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
+ */
 final class HeadersRawService implements HeadersRawContract
 {
     // @phpstan-ignore-next-line
@@ -25,13 +28,15 @@ final class HeadersRawService implements HeadersRawContract
      *
      * Get a webhook by id
      *
+     * @param RequestOpts|null $requestOptions
+     *
      * @return BaseResponse<HeaderGetResponse>
      *
      * @throws APIException
      */
     public function retrieve(
         string $webhookID,
-        ?RequestOptions $requestOptions = null
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
@@ -48,6 +53,7 @@ final class HeadersRawService implements HeadersRawContract
      * Patch a webhook by id
      *
      * @param array{headers: array<string,string>}|HeaderUpdateParams $params
+     * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
      *
@@ -56,7 +62,7 @@ final class HeadersRawService implements HeadersRawContract
     public function update(
         string $webhookID,
         array|HeaderUpdateParams $params,
-        ?RequestOptions $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
         [$parsed, $options] = HeaderUpdateParams::parseRequest(
             $params,
