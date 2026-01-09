@@ -136,15 +136,14 @@ You can use the `maxRetries` option to configure or disable this:
 <?php
 
 use Dodopayments\Client;
-use Dodopayments\RequestOptions;
 
 // Configure the default for all requests:
-$client = new Client(maxRetries: 0);
+$client = new Client(requestOptions: ['maxRetries' => 0]);
 
 // Or, configure per-request:
 $result = $client->checkoutSessions->create(
   productCart: [['productID' => 'product_id', 'quantity' => 0]],
-  requestOptions: RequestOptions::with(maxRetries: 5),
+  requestOptions: ['maxRetries' => 5],
 );
 ```
 
@@ -161,15 +160,13 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 ```php
 <?php
 
-use Dodopayments\RequestOptions;
-
 $checkoutSessionResponse = $client->checkoutSessions->create(
   productCart: [['productID' => 'product_id', 'quantity' => 0]],
-  requestOptions: RequestOptions::with(
-    extraQueryParams: ['my_query_parameter' => 'value'],
-    extraBodyParams: ['my_body_parameter' => 'value'],
-    extraHeaders: ['my-header' => 'value'],
-  ),
+  requestOptions: [
+    'extraQueryParams' => ['my_query_parameter' => 'value'],
+    'extraBodyParams' => ['my_body_parameter' => 'value'],
+    'extraHeaders' => ['my-header' => 'value'],
+  ],
 );
 ```
 
