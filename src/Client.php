@@ -29,8 +29,8 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
 /**
- * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  * @phpstan-import-type NormalizedRequest from \Dodopayments\Core\BaseClient
+ * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 class Client extends BaseClient
 {
@@ -146,11 +146,14 @@ class Client extends BaseClient
         $baseUrl ??=
             getenv('DODO_PAYMENTS_BASE_URL') ?: 'https://live.dodopayments.com';
 
-        $options = RequestOptions::with(
-            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-            transporter: Psr18ClientDiscovery::find(),
+        $options = RequestOptions::parse(
+            RequestOptions::with(
+                uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+                streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+                requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+                transporter: Psr18ClientDiscovery::find(),
+            ),
+            $requestOptions,
         );
 
         parent::__construct(
