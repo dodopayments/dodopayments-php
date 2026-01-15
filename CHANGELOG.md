@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.0.1 (2026-01-15)
+
+Full Changelog: [v5.0.0...v5.0.1](https://github.com/dodopayments/dodopayments-php/compare/v5.0.0...v5.0.1)
+
+### Bug Fixes
+
+* add missing Util import, update package version in header and remove invalid code ([55e8961](https://github.com/dodopayments/dodopayments-php/commit/55e896122b2cff6bc70b7614530679520a7bc6a9))
+
 ## 5.0.0 (2026-01-15)
 
 Full Changelog: [v4.6.0...v5.0.0](https://github.com/dodopayments/dodopayments-php/compare/v4.6.0...v5.0.0)
