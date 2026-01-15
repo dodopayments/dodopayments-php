@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments;
 
 use Dodopayments\Core\BaseClient;
+use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BrandsService;
 use Dodopayments\Services\CheckoutSessionsService;
@@ -146,21 +147,18 @@ class Client extends BaseClient
         $baseUrl ??=
             getenv('DODO_PAYMENTS_BASE_URL') ?: 'https://live.dodopayments.com';
 
-        $options = RequestOptions::parse(
-            RequestOptions::with(
-                uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-                streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-                requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-                transporter: Psr18ClientDiscovery::find(),
-            ),
-            $requestOptions,
+        $options = RequestOptions::with(
+            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+            transporter: Psr18ClientDiscovery::find(),
         );
 
         parent::__construct(
             headers: [
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'User-Agent' => sprintf('Dodo Payments/PHP %s', '3.5.0'),
+                'User-Agent' => sprintf('Dodo Payments/PHP %s', '5.0.0'),
                 'X-Stainless-Lang' => 'php',
                 'X-Stainless-Package-Version' => '4.6.0',
                 'X-Stainless-Arch' => Util::machtype(),
