@@ -1,5 +1,34 @@
 # Changelog
 
+## 5.0.0 (2026-01-15)
+
+Full Changelog: [v4.6.0...v5.0.0](https://github.com/dodopayments/dodopayments-php/compare/v4.6.0...v5.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* replace special flag type `omittable` with just `null`
+
+### Features
+
+* replace special flag type `omittable` with just `null` ([4a6494c](https://github.com/dodopayments/dodopayments-php/commit/4a6494c6fa536c8fe2435d15acdbc11157ed0ef5))
+
+
+### Bug Fixes
+
+* typos in README.md ([8a87979](https://github.com/dodopayments/dodopayments-php/commit/8a87979d835677a7469fd280e82f455193b2893d))
+
+
+### Chores
+
+* add git attributes and composer lock file ([7b8c11a](https://github.com/dodopayments/dodopayments-php/commit/7b8c11a998bc30cb4c9217e6b4eb57518ad2655e))
+* **internal:** add a basic client test ([6a8b8e9](https://github.com/dodopayments/dodopayments-php/commit/6a8b8e9d04b19cab490894b658e16522b59d1927))
+* **internal:** codegen related update ([d1a3304](https://github.com/dodopayments/dodopayments-php/commit/d1a33043acd18320ff06bb9e350a0e5ed2e6eed0))
+* **internal:** codegen related update ([0d4b8af](https://github.com/dodopayments/dodopayments-php/commit/0d4b8afcd9d2134d0da96aef4a0e17f60f4a9cd9))
+* **internal:** codegen related update ([e6ca156](https://github.com/dodopayments/dodopayments-php/commit/e6ca156fd1932b286262370055abf5ffc8c9189f))
+* **internal:** codegen related update ([025ae1d](https://github.com/dodopayments/dodopayments-php/commit/025ae1da692c4d2edb57a631f927b28bed50e57a))
+* **internal:** version bump ([f613018](https://github.com/dodopayments/dodopayments-php/commit/f613018ee7eda562661573f1cc2462a4ef2b826a))
+* **readme:** remove beta warning now that we're in ga ([8c4f88e](https://github.com/dodopayments/dodopayments-php/commit/8c4f88eb55e1a8e09b04ca3945209de57ad0f018))
+
 ## 4.6.0 (2026-01-08)
 
 Full Changelog: [v4.5.0...v4.6.0](https://github.com/dodopayments/dodopayments-php/compare/v4.5.0...v4.6.0)
