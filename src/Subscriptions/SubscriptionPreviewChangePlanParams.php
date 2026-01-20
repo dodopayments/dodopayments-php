@@ -21,6 +21,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
  *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
+ *   metadata?: array<string,string>|null,
  * }
  */
 final class SubscriptionPreviewChangePlanParams implements BaseModel
@@ -59,6 +60,14 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     public ?array $addons;
 
     /**
+     * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
+     *
+     * @var array<string,string>|null $metadata
+     */
+    #[Optional(map: 'string', nullable: true)]
+    public ?array $metadata;
+
+    /**
      * `new SubscriptionPreviewChangePlanParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -89,12 +98,14 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      * @param list<AttachAddon|AttachAddonShape>|null $addons
+     * @param array<string,string>|null $metadata
      */
     public static function with(
         string $productID,
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?array $metadata = null,
     ): self {
         $self = new self;
 
@@ -103,6 +114,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         $self['quantity'] = $quantity;
 
         null !== $addons && $self['addons'] = $addons;
+        null !== $metadata && $self['metadata'] = $metadata;
 
         return $self;
     }
@@ -153,6 +165,19 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     {
         $self = clone $this;
         $self['addons'] = $addons;
+
+        return $self;
+    }
+
+    /**
+     * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
+     *
+     * @param array<string,string>|null $metadata
+     */
+    public function withMetadata(?array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
         return $self;
     }

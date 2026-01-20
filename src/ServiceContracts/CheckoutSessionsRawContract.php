@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Core\Contracts\BaseResponse;
@@ -43,5 +45,20 @@ interface CheckoutSessionsRawContract
     public function retrieve(
         string $id,
         RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|CheckoutSessionPreviewParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CheckoutSessionPreviewResponse>
+     *
+     * @throws APIException
+     */
+    public function preview(
+        array|CheckoutSessionPreviewParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

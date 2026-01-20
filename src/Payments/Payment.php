@@ -46,6 +46,7 @@ use Dodopayments\Payments\Payment\Refund;
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
  *   invoiceID?: string|null,
+ *   invoiceURL?: string|null,
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
@@ -222,6 +223,12 @@ final class Payment implements BaseModel
     public ?string $invoiceID;
 
     /**
+     * URL to download the invoice PDF for this payment.
+     */
+    #[Optional('invoice_url', nullable: true)]
+    public ?string $invoiceURL;
+
+    /**
      * Checkout URL.
      */
     #[Optional('payment_link', nullable: true)]
@@ -370,6 +377,7 @@ final class Payment implements BaseModel
         ?string $errorCode = null,
         ?string $errorMessage = null,
         ?string $invoiceID = null,
+        ?string $invoiceURL = null,
         ?string $paymentLink = null,
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
@@ -407,6 +415,7 @@ final class Payment implements BaseModel
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
+        null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
         null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
@@ -702,6 +711,17 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['invoiceID'] = $invoiceID;
+
+        return $self;
+    }
+
+    /**
+     * URL to download the invoice PDF for this payment.
+     */
+    public function withInvoiceURL(?string $invoiceURL): self
+    {
+        $self = clone $this;
+        $self['invoiceURL'] = $invoiceURL;
 
         return $self;
     }

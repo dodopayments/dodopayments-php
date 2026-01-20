@@ -2,6 +2,7 @@
 
 namespace Tests\Services;
 
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
@@ -53,7 +54,7 @@ final class CheckoutSessionsTest extends TestCase
                     'amount' => 0,
                 ],
             ],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
             billingAddress: [
                 'country' => CountryCode::AF,
                 'city' => 'city',
@@ -90,6 +91,7 @@ final class CheckoutSessionsTest extends TestCase
             metadata: ['foo' => 'string'],
             minimalAddress: true,
             paymentMethodID: 'payment_method_id',
+            productCollectionID: 'product_collection_id',
             returnURL: 'return_url',
             shortLink: true,
             showSavedPaymentMethods: true,
@@ -116,5 +118,85 @@ final class CheckoutSessionsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CheckoutSessionStatus::class, $result);
+    }
+
+    #[Test]
+    public function testPreview(): void
+    {
+        $result = $this->client->checkoutSessions->preview(
+            productCart: [['productID' => 'product_id', 'quantity' => 0]]
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CheckoutSessionPreviewResponse::class, $result);
+    }
+
+    #[Test]
+    public function testPreviewWithOptionalParams(): void
+    {
+        $result = $this->client->checkoutSessions->preview(
+            productCart: [
+                [
+                    'productID' => 'product_id',
+                    'quantity' => 0,
+                    'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
+                    'amount' => 0,
+                ],
+            ],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
+            billingAddress: [
+                'country' => CountryCode::AF,
+                'city' => 'city',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
+            ],
+            billingCurrency: Currency::AED,
+            confirm: true,
+            customer: ['customerID' => 'customer_id'],
+            customization: [
+                'forceLanguage' => 'force_language',
+                'showOnDemandTag' => true,
+                'showOrderDetails' => true,
+                'theme' => 'dark',
+            ],
+            discountCode: 'discount_code',
+            featureFlags: [
+                'allowCurrencySelection' => true,
+                'allowCustomerEditingCity' => true,
+                'allowCustomerEditingCountry' => true,
+                'allowCustomerEditingEmail' => true,
+                'allowCustomerEditingName' => true,
+                'allowCustomerEditingState' => true,
+                'allowCustomerEditingStreet' => true,
+                'allowCustomerEditingZipcode' => true,
+                'allowDiscountCode' => true,
+                'allowPhoneNumberCollection' => true,
+                'allowTaxID' => true,
+                'alwaysCreateNewCustomer' => true,
+                'redirectImmediately' => true,
+            ],
+            force3DS: true,
+            metadata: ['foo' => 'string'],
+            minimalAddress: true,
+            paymentMethodID: 'payment_method_id',
+            productCollectionID: 'product_collection_id',
+            returnURL: 'return_url',
+            shortLink: true,
+            showSavedPaymentMethods: true,
+            subscriptionData: [
+                'onDemand' => [
+                    'mandateOnly' => true,
+                    'adaptiveCurrencyFeesInclusive' => true,
+                    'productCurrency' => Currency::AED,
+                    'productDescription' => 'product_description',
+                    'productPrice' => 0,
+                ],
+                'trialPeriodDays' => 0,
+            ],
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CheckoutSessionPreviewResponse::class, $result);
     }
 }
