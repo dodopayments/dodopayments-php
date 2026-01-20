@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.1.0 (2026-01-20)
+
+Full Changelog: [v5.0.1...v5.1.0](https://github.com/dodopayments/dodopayments-php/compare/v5.0.1...v5.1.0)
+
+### Features
+
+* **api:** update openapi spec to v1.73.0 ([d7d8034](https://github.com/dodopayments/dodopayments-php/commit/d7d8034706232d001ab600db6c9e863a6b099819))
+
+
+### Chores
+
+* **internal:** minor test script reformatting ([4bd5b90](https://github.com/dodopayments/dodopayments-php/commit/4bd5b90468aa32dcb27aa4320dbae61d454b9b7b))
+* **internal:** update `actions/checkout` version ([87585c6](https://github.com/dodopayments/dodopayments-php/commit/87585c6fac543d80ad0c800bbfd05b58da11439b))
+
 ## 5.0.1 (2026-01-15)
 
 Full Changelog: [v5.0.0...v5.0.1](https://github.com/dodopayments/dodopayments-php/compare/v5.0.0...v5.0.1)
