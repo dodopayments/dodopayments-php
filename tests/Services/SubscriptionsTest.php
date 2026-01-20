@@ -65,7 +65,7 @@ final class SubscriptionsTest extends TestCase
             productID: 'product_id',
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
             billingCurrency: Currency::AED,
             discountCode: 'discount_code',
             force3DS: true,
@@ -149,6 +149,7 @@ final class SubscriptionsTest extends TestCase
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            metadata: ['foo' => 'string'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -213,6 +214,7 @@ final class SubscriptionsTest extends TestCase
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            metadata: ['foo' => 'string'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

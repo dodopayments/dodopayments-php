@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -20,17 +20,17 @@ use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
 
 /**
- * @see Dodopayments\Services\CheckoutSessionsService::create()
+ * @see Dodopayments\Services\CheckoutSessionsService::preview()
  *
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
- * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
+ * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
- * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
- * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
+ * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization
+ * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags
+ * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData
  *
- * @phpstan-type CheckoutSessionCreateParamsShape = array{
+ * @phpstan-type CheckoutSessionPreviewParamsShape = array{
  *   productCart: list<ProductCart|ProductCartShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: null|BillingAddress|BillingAddressShape,
@@ -51,9 +51,9 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   subscriptionData?: null|SubscriptionData|SubscriptionDataShape,
  * }
  */
-final class CheckoutSessionCreateParams implements BaseModel
+final class CheckoutSessionPreviewParams implements BaseModel
 {
-    /** @use SdkModel<CheckoutSessionCreateParamsShape> */
+    /** @use SdkModel<CheckoutSessionPreviewParamsShape> */
     use SdkModel;
     use SdkParams;
 
@@ -175,17 +175,17 @@ final class CheckoutSessionCreateParams implements BaseModel
     public ?SubscriptionData $subscriptionData;
 
     /**
-     * `new CheckoutSessionCreateParams()` is missing required properties by the API.
+     * `new CheckoutSessionPreviewParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CheckoutSessionCreateParams::with(productCart: ...)
+     * CheckoutSessionPreviewParams::with(productCart: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CheckoutSessionCreateParams)->withProductCart(...)
+     * (new CheckoutSessionPreviewParams)->withProductCart(...)
      * ```
      */
     public function __construct()

@@ -41,6 +41,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   metadata?: array<string,string>|null,
  *   minimalAddress?: bool|null,
  *   paymentMethodID?: string|null,
+ *   productCollectionID?: string|null,
  *   returnURL?: string|null,
  *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
@@ -142,6 +143,12 @@ final class CheckoutSessionRequest implements BaseModel
     public ?string $paymentMethodID;
 
     /**
+     * Product collection ID for collection-based checkout flow.
+     */
+    #[Optional('product_collection_id', nullable: true)]
+    public ?string $productCollectionID;
+
+    /**
      * The url to redirect after payment failure or success.
      */
     #[Optional('return_url', nullable: true)]
@@ -211,6 +218,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?array $metadata = null,
         ?bool $minimalAddress = null,
         ?string $paymentMethodID = null,
+        ?string $productCollectionID = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
@@ -232,6 +240,7 @@ final class CheckoutSessionRequest implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $minimalAddress && $self['minimalAddress'] = $minimalAddress;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
+        null !== $productCollectionID && $self['productCollectionID'] = $productCollectionID;
         null !== $returnURL && $self['returnURL'] = $returnURL;
         null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
@@ -399,6 +408,17 @@ final class CheckoutSessionRequest implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethodID'] = $paymentMethodID;
+
+        return $self;
+    }
+
+    /**
+     * Product collection ID for collection-based checkout flow.
+     */
+    public function withProductCollectionID(?string $productCollectionID): self
+    {
+        $self = clone $this;
+        $self['productCollectionID'] = $productCollectionID;
 
         return $self;
     }
