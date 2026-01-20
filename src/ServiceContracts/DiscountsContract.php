@@ -127,4 +127,17 @@ interface DiscountsContract
         string $discountID,
         RequestOptions|array|null $requestOptions = null
     ): mixed;
+
+    /**
+     * @api
+     *
+     * @param string $code The discount code (e.g., 'SAVE20')
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveByCode(
+        string $code,
+        RequestOptions|array|null $requestOptions = null
+    ): Discount;
 }

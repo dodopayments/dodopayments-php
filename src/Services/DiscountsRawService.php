@@ -195,4 +195,31 @@ final class DiscountsRawService implements DiscountsRawContract
             convert: null,
         );
     }
+
+    /**
+     * @api
+     *
+     * Validate and fetch a discount by its code name (e.g., "SAVE20").
+     * This allows real-time validation directly against the API using the
+     * human-readable discount code instead of requiring the internal discount_id.
+     *
+     * @param string $code The discount code (e.g., 'SAVE20')
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Discount>
+     *
+     * @throws APIException
+     */
+    public function retrieveByCode(
+        string $code,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['discounts/code/%1$s', $code],
+            options: $requestOptions,
+            convert: Discount::class,
+        );
+    }
 }

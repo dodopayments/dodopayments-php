@@ -269,6 +269,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -279,6 +280,7 @@ final class SubscriptionsService implements SubscriptionsContract
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?array $metadata = null,
         RequestOptions|array|null $requestOptions = null,
     ): mixed {
         $params = Util::removeNulls(
@@ -287,6 +289,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'prorationBillingMode' => $prorationBillingMode,
                 'quantity' => $quantity,
                 'addons' => $addons,
+                'metadata' => $metadata,
             ],
         );
 
@@ -349,6 +352,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -359,6 +363,7 @@ final class SubscriptionsService implements SubscriptionsContract
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?array $metadata = null,
         RequestOptions|array|null $requestOptions = null,
     ): SubscriptionPreviewChangePlanResponse {
         $params = Util::removeNulls(
@@ -367,6 +372,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'prorationBillingMode' => $prorationBillingMode,
                 'quantity' => $quantity,
                 'addons' => $addons,
+                'metadata' => $metadata,
             ],
         );
 

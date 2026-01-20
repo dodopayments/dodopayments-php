@@ -98,4 +98,13 @@ final class DiscountsTest extends TestCase
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
     }
+
+    #[Test]
+    public function testRetrieveByCode(): void
+    {
+        $result = $this->client->discounts->retrieveByCode('code');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Discount::class, $result);
+    }
 }

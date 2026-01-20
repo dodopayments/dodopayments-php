@@ -94,4 +94,19 @@ interface DiscountsRawContract
         string $discountID,
         RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $code The discount code (e.g., 'SAVE20')
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Discount>
+     *
+     * @throws APIException
+     */
+    public function retrieveByCode(
+        string $code,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
 }

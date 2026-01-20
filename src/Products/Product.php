@@ -39,6 +39,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  *   licenseKeyActivationsLimit?: int|null,
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
  *   name?: string|null,
+ *   productCollectionID?: string|null,
  * }
  */
 final class Product implements BaseModel
@@ -157,6 +158,12 @@ final class Product implements BaseModel
     public ?string $name;
 
     /**
+     * The product collection ID this product belongs to, if any.
+     */
+    #[Optional('product_collection_id', nullable: true)]
+    public ?string $productCollectionID;
+
+    /**
      * `new Product()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -227,6 +234,7 @@ final class Product implements BaseModel
         ?int $licenseKeyActivationsLimit = null,
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?string $name = null,
+        ?string $productCollectionID = null,
     ): self {
         $self = new self;
 
@@ -249,6 +257,7 @@ final class Product implements BaseModel
         null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
         null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
         null !== $name && $self['name'] = $name;
+        null !== $productCollectionID && $self['productCollectionID'] = $productCollectionID;
 
         return $self;
     }
@@ -459,6 +468,17 @@ final class Product implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * The product collection ID this product belongs to, if any.
+     */
+    public function withProductCollectionID(?string $productCollectionID): self
+    {
+        $self = clone $this;
+        $self['productCollectionID'] = $productCollectionID;
 
         return $self;
     }

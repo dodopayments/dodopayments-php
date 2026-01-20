@@ -183,6 +183,7 @@ interface SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -193,6 +194,7 @@ interface SubscriptionsContract
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?array $metadata = null,
         RequestOptions|array|null $requestOptions = null,
     ): mixed;
 
@@ -233,6 +235,7 @@ interface SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -243,6 +246,7 @@ interface SubscriptionsContract
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?array $metadata = null,
         RequestOptions|array|null $requestOptions = null,
     ): SubscriptionPreviewChangePlanResponse;
 

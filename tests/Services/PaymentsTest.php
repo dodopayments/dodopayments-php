@@ -61,7 +61,7 @@ final class PaymentsTest extends TestCase
             productCart: [
                 ['productID' => 'product_id', 'quantity' => 0, 'amount' => 0],
             ],
-            allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
+            allowedPaymentMethodTypes: [PaymentMethodTypes::CREDIT],
             billingCurrency: Currency::AED,
             discountCode: 'discount_code',
             force3DS: true,

@@ -209,4 +209,26 @@ final class DiscountsService implements DiscountsContract
 
         return $response->parse();
     }
+
+    /**
+     * @api
+     *
+     * Validate and fetch a discount by its code name (e.g., "SAVE20").
+     * This allows real-time validation directly against the API using the
+     * human-readable discount code instead of requiring the internal discount_id.
+     *
+     * @param string $code The discount code (e.g., 'SAVE20')
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveByCode(
+        string $code,
+        RequestOptions|array|null $requestOptions = null
+    ): Discount {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveByCode($code, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
 }

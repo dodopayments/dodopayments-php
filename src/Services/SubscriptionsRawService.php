@@ -229,6 +229,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
      *   quantity: int,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   metadata?: array<string,string>|null,
      * }|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -303,6 +304,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   prorationBillingMode: SubscriptionPreviewChangePlanParams\ProrationBillingMode|value-of<SubscriptionPreviewChangePlanParams\ProrationBillingMode>,
      *   quantity: int,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   metadata?: array<string,string>|null,
      * }|SubscriptionPreviewChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
