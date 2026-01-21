@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\CheckoutSessions;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
@@ -25,6 +26,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
  * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
  * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
@@ -36,6 +38,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   billingAddress?: null|BillingAddress|BillingAddressShape,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   confirm?: bool|null,
+ *   customFields?: list<CustomField|CustomFieldShape>|null,
  *   customer?: CustomerRequestShape|null,
  *   customization?: null|Customization|CustomizationShape,
  *   discountCode?: string|null,
@@ -97,6 +100,14 @@ final class CheckoutSessionCreateParams implements BaseModel
      */
     #[Optional]
     public ?bool $confirm;
+
+    /**
+     * Custom fields to collect from customer during checkout (max 5 fields).
+     *
+     * @var list<CustomField>|null $customFields
+     */
+    #[Optional('custom_fields', list: CustomField::class, nullable: true)]
+    public ?array $customFields;
 
     /**
      * Customer details for the session.
@@ -202,6 +213,7 @@ final class CheckoutSessionCreateParams implements BaseModel
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param BillingAddress|BillingAddressShape|null $billingAddress
      * @param Currency|value-of<Currency>|null $billingCurrency
+     * @param list<CustomField|CustomFieldShape>|null $customFields
      * @param CustomerRequestShape|null $customer
      * @param Customization|CustomizationShape|null $customization
      * @param FeatureFlags|FeatureFlagsShape|null $featureFlags
@@ -214,6 +226,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         BillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
         ?bool $confirm = null,
+        ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
         Customization|array|null $customization = null,
         ?string $discountCode = null,
@@ -236,6 +249,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
         null !== $confirm && $self['confirm'] = $confirm;
+        null !== $customFields && $self['customFields'] = $customFields;
         null !== $customer && $self['customer'] = $customer;
         null !== $customization && $self['customization'] = $customization;
         null !== $discountCode && $self['discountCode'] = $discountCode;
@@ -318,6 +332,19 @@ final class CheckoutSessionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['confirm'] = $confirm;
+
+        return $self;
+    }
+
+    /**
+     * Custom fields to collect from customer during checkout (max 5 fields).
+     *
+     * @param list<CustomField|CustomFieldShape>|null $customFields
+     */
+    public function withCustomFields(?array $customFields): self
+    {
+        $self = clone $this;
+        $self['customFields'] = $customFields;
 
         return $self;
     }

@@ -43,6 +43,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
  *   paymentMethodID?: string|null,
+ *   productName?: string|null,
  *   taxID?: string|null,
  * }
  */
@@ -206,6 +207,12 @@ final class SubscriptionListResponse implements BaseModel
     public ?string $paymentMethodID;
 
     /**
+     * Name of the product associated with this subscription.
+     */
+    #[Optional('product_name', nullable: true)]
+    public ?string $productName;
+
+    /**
      * Tax identifier provided for this subscription (if applicable).
      */
     #[Optional('tax_id', nullable: true)]
@@ -309,6 +316,7 @@ final class SubscriptionListResponse implements BaseModel
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
         ?string $paymentMethodID = null,
+        ?string $productName = null,
         ?string $taxID = null,
     ): self {
         $self = new self;
@@ -338,6 +346,7 @@ final class SubscriptionListResponse implements BaseModel
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
+        null !== $productName && $self['productName'] = $productName;
         null !== $taxID && $self['taxID'] = $taxID;
 
         return $self;
@@ -624,6 +633,17 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethodID'] = $paymentMethodID;
+
+        return $self;
+    }
+
+    /**
+     * Name of the product associated with this subscription.
+     */
+    public function withProductName(?string $productName): self
+    {
+        $self = clone $this;
+        $self['productName'] = $productName;
 
         return $self;
     }

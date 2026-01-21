@@ -64,6 +64,16 @@ final class CheckoutSessionsTest extends TestCase
             ],
             billingCurrency: Currency::AED,
             confirm: true,
+            customFields: [
+                [
+                    'fieldType' => 'text',
+                    'key' => 'key',
+                    'label' => 'label',
+                    'options' => ['string'],
+                    'placeholder' => 'placeholder',
+                    'required' => true,
+                ],
+            ],
             customer: ['customerID' => 'customer_id'],
             customization: [
                 'forceLanguage' => 'force_language',
@@ -153,6 +163,16 @@ final class CheckoutSessionsTest extends TestCase
             ],
             billingCurrency: Currency::AED,
             confirm: true,
+            customFields: [
+                [
+                    'fieldType' => 'text',
+                    'key' => 'key',
+                    'label' => 'label',
+                    'options' => ['string'],
+                    'placeholder' => 'placeholder',
+                    'required' => true,
+                ],
+            ],
             customer: ['customerID' => 'customer_id'],
             customization: [
                 'forceLanguage' => 'force_language',

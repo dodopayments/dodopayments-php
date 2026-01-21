@@ -6,6 +6,7 @@ namespace Dodopayments\Services;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
@@ -25,11 +26,13 @@ use Dodopayments\ServiceContracts\CheckoutSessionsRawContract;
 /**
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
  * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField
  * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
  * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart as ProductCartShape1
  * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress as BillingAddressShape1
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\CustomField as CustomFieldShape1
  * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization as CustomizationShape1
  * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags as FeatureFlagsShape1
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData as SubscriptionDataShape1
@@ -53,6 +56,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   billingAddress?: BillingAddress|BillingAddressShape|null,
      *   billingCurrency?: value-of<Currency>,
      *   confirm?: bool,
+     *   customFields?: list<CustomField|CustomFieldShape>|null,
      *   customer?: CustomerRequestShape|null,
      *   customization?: Customization|CustomizationShape,
      *   discountCode?: string|null,
@@ -123,6 +127,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   billingAddress?: CheckoutSessionPreviewParams\BillingAddress|BillingAddressShape1|null,
      *   billingCurrency?: value-of<Currency>,
      *   confirm?: bool,
+     *   customFields?: list<CheckoutSessionPreviewParams\CustomField|CustomFieldShape1>|null,
      *   customer?: CustomerRequestShape|null,
      *   customization?: CheckoutSessionPreviewParams\Customization|CustomizationShape1,
      *   discountCode?: string|null,

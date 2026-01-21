@@ -89,6 +89,8 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      * @api
      *
      * @param array{
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
@@ -117,6 +119,8 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
             query: Util::array_transform_keys(
                 $parsed,
                 [
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
                     'customerID' => 'customer_id',
                     'pageNumber' => 'page_number',
                     'pageSize' => 'page_size',

@@ -14,6 +14,8 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
  * @see Dodopayments\Services\LicenseKeysService::list()
  *
  * @phpstan-type LicenseKeyListParamsShape = array{
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
  *   customerID?: string|null,
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
@@ -26,6 +28,18 @@ final class LicenseKeyListParams implements BaseModel
     /** @use SdkModel<LicenseKeyListParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Filter license keys created on or after this timestamp.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $createdAtGte;
+
+    /**
+     * Filter license keys created on or before this timestamp.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $createdAtLte;
 
     /**
      * Filter by customer ID.
@@ -72,6 +86,8 @@ final class LicenseKeyListParams implements BaseModel
      * @param Status|value-of<Status>|null $status
      */
     public static function with(
+        ?\DateTimeInterface $createdAtGte = null,
+        ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
@@ -80,11 +96,35 @@ final class LicenseKeyListParams implements BaseModel
     ): self {
         $self = new self;
 
+        null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
+        null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $productID && $self['productID'] = $productID;
         null !== $status && $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * Filter license keys created on or after this timestamp.
+     */
+    public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
+    {
+        $self = clone $this;
+        $self['createdAtGte'] = $createdAtGte;
+
+        return $self;
+    }
+
+    /**
+     * Filter license keys created on or before this timestamp.
+     */
+    public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
+    {
+        $self = clone $this;
+        $self['createdAtLte'] = $createdAtLte;
 
         return $self;
     }
