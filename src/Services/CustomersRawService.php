@@ -124,7 +124,12 @@ final class CustomersRawService implements CustomersRawContract
      * @api
      *
      * @param array{
-     *   email?: string, pageNumber?: int, pageSize?: int
+     *   createdAtGte?: \DateTimeInterface,
+     *   createdAtLte?: \DateTimeInterface,
+     *   email?: string,
+     *   name?: string,
+     *   pageNumber?: int,
+     *   pageSize?: int,
      * }|CustomerListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -147,7 +152,12 @@ final class CustomersRawService implements CustomersRawContract
             path: 'customers',
             query: Util::array_transform_keys(
                 $parsed,
-                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+                [
+                    'createdAtGte' => 'created_at_gte',
+                    'createdAtLte' => 'created_at_lte',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
             ),
             options: $options,
             convert: Customer::class,

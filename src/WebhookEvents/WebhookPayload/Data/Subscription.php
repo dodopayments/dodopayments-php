@@ -12,6 +12,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\AddonCartResponseItem;
+use Dodopayments\Subscriptions\Subscription\CustomFieldResponse;
 use Dodopayments\Subscriptions\Subscription\Meter;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
@@ -24,6 +25,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\Subscription\Meter
+ * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Subscriptions\Subscription\CustomFieldResponse
  *
  * @phpstan-type SubscriptionShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
@@ -49,6 +51,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *   taxInclusive: bool,
  *   trialPeriodDays: int,
  *   cancelledAt?: \DateTimeInterface|null,
+ *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
@@ -193,6 +196,18 @@ final class Subscription implements BaseModel
     public ?\DateTimeInterface $cancelledAt;
 
     /**
+     * Customer's responses to custom fields collected during checkout.
+     *
+     * @var list<CustomFieldResponse>|null $customFieldResponses
+     */
+    #[Optional(
+        'custom_field_responses',
+        list: CustomFieldResponse::class,
+        nullable: true
+    )]
+    public ?array $customFieldResponses;
+
+    /**
      * Number of remaining discount cycles if discount is applied.
      */
     #[Optional('discount_cycles_remaining', nullable: true)]
@@ -307,6 +322,7 @@ final class Subscription implements BaseModel
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      */
     public static function with(
         array $addons,
@@ -333,6 +349,7 @@ final class Subscription implements BaseModel
         int $trialPeriodDays,
         PayloadType|string $payloadType,
         ?\DateTimeInterface $cancelledAt = null,
+        ?array $customFieldResponses = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
         ?\DateTimeInterface $expiresAt = null,
@@ -366,6 +383,7 @@ final class Subscription implements BaseModel
         $self['payloadType'] = $payloadType;
 
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
+        null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
@@ -636,6 +654,19 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['cancelledAt'] = $cancelledAt;
+
+        return $self;
+    }
+
+    /**
+     * Customer's responses to custom fields collected during checkout.
+     *
+     * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     */
+    public function withCustomFieldResponses(?array $customFieldResponses): self
+    {
+        $self = clone $this;
+        $self['customFieldResponses'] = $customFieldResponses;
 
         return $self;
     }

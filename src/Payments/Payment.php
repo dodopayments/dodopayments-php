@@ -11,6 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\Payment\CustomFieldResponse;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\Payment\Refund;
 
@@ -19,6 +20,7 @@ use Dodopayments\Payments\Payment\Refund;
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
  * @phpstan-import-type RefundShape from \Dodopayments\Payments\Payment\Refund
+ * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\Payment\CustomFieldResponse
  * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
  *
  * @phpstan-type PaymentShape = array{
@@ -42,6 +44,7 @@ use Dodopayments\Payments\Payment\Refund;
  *   cardNetwork?: string|null,
  *   cardType?: string|null,
  *   checkoutSessionID?: string|null,
+ *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountID?: string|null,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
@@ -199,6 +202,18 @@ final class Payment implements BaseModel
     public ?string $checkoutSessionID;
 
     /**
+     * Customer's responses to custom fields collected during checkout.
+     *
+     * @var list<CustomFieldResponse>|null $customFieldResponses
+     */
+    #[Optional(
+        'custom_field_responses',
+        list: CustomFieldResponse::class,
+        nullable: true
+    )]
+    public ?array $customFieldResponses;
+
+    /**
      * The discount id if discount is applied.
      */
     #[Optional('discount_id', nullable: true)]
@@ -349,6 +364,7 @@ final class Payment implements BaseModel
      * @param list<Refund|RefundShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
+     * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<ProductCart|ProductCartShape>|null $productCart
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
@@ -373,6 +389,7 @@ final class Payment implements BaseModel
         ?string $cardNetwork = null,
         ?string $cardType = null,
         ?string $checkoutSessionID = null,
+        ?array $customFieldResponses = null,
         ?string $discountID = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
@@ -411,6 +428,7 @@ final class Payment implements BaseModel
         null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
         null !== $cardType && $self['cardType'] = $cardType;
         null !== $checkoutSessionID && $self['checkoutSessionID'] = $checkoutSessionID;
+        null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
@@ -667,6 +685,19 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['checkoutSessionID'] = $checkoutSessionID;
+
+        return $self;
+    }
+
+    /**
+     * Customer's responses to custom fields collected during checkout.
+     *
+     * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     */
+    public function withCustomFieldResponses(?array $customFieldResponses): self
+    {
+        $self = clone $this;
+        $self['customFieldResponses'] = $customFieldResponses;
 
         return $self;
     }

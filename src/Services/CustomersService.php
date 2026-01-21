@@ -122,7 +122,10 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
+     * @param \DateTimeInterface $createdAtGte Filter customers created on or after this timestamp
+     * @param \DateTimeInterface $createdAtLte Filter customers created on or before this timestamp
      * @param string $email Filter by customer email
+     * @param string $name Filter by customer name (partial match, case-insensitive)
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param RequestOpts|null $requestOptions
@@ -132,13 +135,23 @@ final class CustomersService implements CustomersContract
      * @throws APIException
      */
     public function list(
+        ?\DateTimeInterface $createdAtGte = null,
+        ?\DateTimeInterface $createdAtLte = null,
         ?string $email = null,
+        ?string $name = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
-            ['email' => $email, 'pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+            [
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
+                'email' => $email,
+                'name' => $name,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

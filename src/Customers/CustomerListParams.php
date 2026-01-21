@@ -13,7 +13,12 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\CustomersService::list()
  *
  * @phpstan-type CustomerListParamsShape = array{
- *   email?: string|null, pageNumber?: int|null, pageSize?: int|null
+ *   createdAtGte?: \DateTimeInterface|null,
+ *   createdAtLte?: \DateTimeInterface|null,
+ *   email?: string|null,
+ *   name?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class CustomerListParams implements BaseModel
@@ -23,10 +28,28 @@ final class CustomerListParams implements BaseModel
     use SdkParams;
 
     /**
+     * Filter customers created on or after this timestamp.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $createdAtGte;
+
+    /**
+     * Filter customers created on or before this timestamp.
+     */
+    #[Optional]
+    public ?\DateTimeInterface $createdAtLte;
+
+    /**
      * Filter by customer email.
      */
     #[Optional]
     public ?string $email;
+
+    /**
+     * Filter by customer name (partial match, case-insensitive).
+     */
+    #[Optional]
+    public ?string $name;
 
     /**
      * Page number default is 0.
@@ -51,15 +74,43 @@ final class CustomerListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
+        ?\DateTimeInterface $createdAtGte = null,
+        ?\DateTimeInterface $createdAtLte = null,
         ?string $email = null,
+        ?string $name = null,
         ?int $pageNumber = null,
-        ?int $pageSize = null
+        ?int $pageSize = null,
     ): self {
         $self = new self;
 
+        null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
+        null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
         null !== $email && $self['email'] = $email;
+        null !== $name && $self['name'] = $name;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
+
+        return $self;
+    }
+
+    /**
+     * Filter customers created on or after this timestamp.
+     */
+    public function withCreatedAtGte(\DateTimeInterface $createdAtGte): self
+    {
+        $self = clone $this;
+        $self['createdAtGte'] = $createdAtGte;
+
+        return $self;
+    }
+
+    /**
+     * Filter customers created on or before this timestamp.
+     */
+    public function withCreatedAtLte(\DateTimeInterface $createdAtLte): self
+    {
+        $self = clone $this;
+        $self['createdAtLte'] = $createdAtLte;
 
         return $self;
     }
@@ -71,6 +122,17 @@ final class CustomerListParams implements BaseModel
     {
         $self = clone $this;
         $self['email'] = $email;
+
+        return $self;
+    }
+
+    /**
+     * Filter by customer name (partial match, case-insensitive).
+     */
+    public function withName(string $name): self
+    {
+        $self = clone $this;
+        $self['name'] = $name;
 
         return $self;
     }

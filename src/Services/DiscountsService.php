@@ -167,8 +167,12 @@ final class DiscountsService implements DiscountsContract
      *
      * GET /discounts
      *
+     * @param bool $active Filter by active status (true = not expired, false = expired)
+     * @param string $code Filter by discount code (partial match, case-insensitive)
+     * @param DiscountType|value-of<DiscountType> $discountType Filter by discount type (percentage)
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
+     * @param string $productID Filter by product restriction (only discounts that apply to this product)
      * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<Discount>
@@ -176,12 +180,23 @@ final class DiscountsService implements DiscountsContract
      * @throws APIException
      */
     public function list(
+        ?bool $active = null,
+        ?string $code = null,
+        DiscountType|string|null $discountType = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
+        ?string $productID = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
-            ['pageNumber' => $pageNumber, 'pageSize' => $pageSize]
+            [
+                'active' => $active,
+                'code' => $code,
+                'discountType' => $discountType,
+                'pageNumber' => $pageNumber,
+                'pageSize' => $pageSize,
+                'productID' => $productID,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

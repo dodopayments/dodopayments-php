@@ -22,6 +22,8 @@ use Dodopayments\Misc\Currency;
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   totalAmount: int,
+ *   invoiceID?: string|null,
+ *   invoiceURL?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
  *   status?: null|IntentStatus|value-of<IntentStatus>,
@@ -58,6 +60,18 @@ final class PaymentListResponse implements BaseModel
 
     #[Required('total_amount')]
     public int $totalAmount;
+
+    /**
+     * Invoice ID for this payment. Uses India-specific invoice ID if available.
+     */
+    #[Optional('invoice_id', nullable: true)]
+    public ?string $invoiceID;
+
+    /**
+     * URL to download the invoice PDF for this payment.
+     */
+    #[Optional('invoice_url', nullable: true)]
+    public ?string $invoiceURL;
 
     #[Optional('payment_method', nullable: true)]
     public ?string $paymentMethod;
@@ -127,6 +141,8 @@ final class PaymentListResponse implements BaseModel
         array $metadata,
         string $paymentID,
         int $totalAmount,
+        ?string $invoiceID = null,
+        ?string $invoiceURL = null,
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
         IntentStatus|string|null $status = null,
@@ -143,6 +159,8 @@ final class PaymentListResponse implements BaseModel
         $self['paymentID'] = $paymentID;
         $self['totalAmount'] = $totalAmount;
 
+        null !== $invoiceID && $self['invoiceID'] = $invoiceID;
+        null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
         null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
         null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
         null !== $status && $self['status'] = $status;
@@ -221,6 +239,28 @@ final class PaymentListResponse implements BaseModel
     {
         $self = clone $this;
         $self['totalAmount'] = $totalAmount;
+
+        return $self;
+    }
+
+    /**
+     * Invoice ID for this payment. Uses India-specific invoice ID if available.
+     */
+    public function withInvoiceID(?string $invoiceID): self
+    {
+        $self = clone $this;
+        $self['invoiceID'] = $invoiceID;
+
+        return $self;
+    }
+
+    /**
+     * URL to download the invoice PDF for this payment.
+     */
+    public function withInvoiceURL(?string $invoiceURL): self
+    {
+        $self = clone $this;
+        $self['invoiceURL'] = $invoiceURL;
 
         return $self;
     }
