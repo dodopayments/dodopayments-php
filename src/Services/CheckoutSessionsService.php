@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
+use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
@@ -25,11 +26,13 @@ use Dodopayments\ServiceContracts\CheckoutSessionsContract;
 /**
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
  * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField
  * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
  * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart as ProductCartShape1
  * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress as BillingAddressShape1
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\CustomField as CustomFieldShape1
  * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization as CustomizationShape1
  * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags as FeatureFlagsShape1
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData as SubscriptionDataShape1
@@ -64,6 +67,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param BillingAddress|BillingAddressShape|null $billingAddress Billing address information for the session
      * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
+     * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
      * @param Customization|CustomizationShape $customization Customization for the checkout session page
      * @param FeatureFlags|FeatureFlagsShape $featureFlags
@@ -89,6 +93,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         BillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
         ?bool $confirm = null,
+        ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
         Customization|array|null $customization = null,
         ?string $discountCode = null,
@@ -111,6 +116,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'billingAddress' => $billingAddress,
                 'billingCurrency' => $billingCurrency,
                 'confirm' => $confirm,
+                'customFields' => $customFields,
                 'customer' => $customer,
                 'customization' => $customization,
                 'discountCode' => $discountCode,
@@ -163,6 +169,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress|BillingAddressShape1|null $billingAddress Billing address information for the session
      * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
+     * @param list<\Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\CustomField|CustomFieldShape1>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
      * @param \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization|CustomizationShape1 $customization Customization for the checkout session page
      * @param \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags|FeatureFlagsShape1 $featureFlags
@@ -188,6 +195,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
         ?bool $confirm = null,
+        ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
         \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization|array|null $customization = null,
         ?string $discountCode = null,
@@ -210,6 +218,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'billingAddress' => $billingAddress,
                 'billingCurrency' => $billingCurrency,
                 'confirm' => $confirm,
+                'customFields' => $customFields,
                 'customer' => $customer,
                 'customization' => $customization,
                 'discountCode' => $discountCode,

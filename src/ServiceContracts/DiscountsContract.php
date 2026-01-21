@@ -101,8 +101,12 @@ interface DiscountsContract
     /**
      * @api
      *
+     * @param bool $active Filter by active status (true = not expired, false = expired)
+     * @param string $code Filter by discount code (partial match, case-insensitive)
+     * @param DiscountType|value-of<DiscountType> $discountType Filter by discount type (percentage)
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
+     * @param string $productID Filter by product restriction (only discounts that apply to this product)
      * @param RequestOpts|null $requestOptions
      *
      * @return DefaultPageNumberPagination<Discount>
@@ -110,8 +114,12 @@ interface DiscountsContract
      * @throws APIException
      */
     public function list(
+        ?bool $active = null,
+        ?string $code = null,
+        DiscountType|string|null $discountType = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
+        ?string $productID = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
 

@@ -87,6 +87,8 @@ final class LicenseKeysService implements LicenseKeysContract
     /**
      * @api
      *
+     * @param \DateTimeInterface $createdAtGte Filter license keys created on or after this timestamp
+     * @param \DateTimeInterface $createdAtLte Filter license keys created on or before this timestamp
      * @param string $customerID Filter by customer ID
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
@@ -99,6 +101,8 @@ final class LicenseKeysService implements LicenseKeysContract
      * @throws APIException
      */
     public function list(
+        ?\DateTimeInterface $createdAtGte = null,
+        ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
@@ -108,6 +112,8 @@ final class LicenseKeysService implements LicenseKeysContract
     ): DefaultPageNumberPagination {
         $params = Util::removeNulls(
             [
+                'createdAtGte' => $createdAtGte,
+                'createdAtLte' => $createdAtLte,
                 'customerID' => $customerID,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,

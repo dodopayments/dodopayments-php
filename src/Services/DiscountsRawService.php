@@ -141,7 +141,14 @@ final class DiscountsRawService implements DiscountsRawContract
      *
      * GET /discounts
      *
-     * @param array{pageNumber?: int, pageSize?: int}|DiscountListParams $params
+     * @param array{
+     *   active?: bool,
+     *   code?: string,
+     *   discountType?: DiscountType|value-of<DiscountType>,
+     *   pageNumber?: int,
+     *   pageSize?: int,
+     *   productID?: string,
+     * }|DiscountListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<Discount>>
@@ -163,7 +170,12 @@ final class DiscountsRawService implements DiscountsRawContract
             path: 'discounts',
             query: Util::array_transform_keys(
                 $parsed,
-                ['pageNumber' => 'page_number', 'pageSize' => 'page_size']
+                [
+                    'discountType' => 'discount_type',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                    'productID' => 'product_id',
+                ],
             ),
             options: $options,
             convert: Discount::class,
