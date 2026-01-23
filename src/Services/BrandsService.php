@@ -93,18 +93,22 @@ final class BrandsService implements BrandsContract
      */
     public function update(
         string $id,
+        ?string $description = null,
         ?string $imageID = null,
         ?string $name = null,
         ?string $statementDescriptor = null,
         ?string $supportEmail = null,
+        ?string $url = null,
         RequestOptions|array|null $requestOptions = null,
     ): Brand {
         $params = Util::removeNulls(
             [
+                'description' => $description,
                 'imageID' => $imageID,
                 'name' => $name,
                 'statementDescriptor' => $statementDescriptor,
                 'supportEmail' => $supportEmail,
+                'url' => $url,
             ],
         );
 
