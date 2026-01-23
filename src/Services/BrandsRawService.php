@@ -91,10 +91,12 @@ final class BrandsRawService implements BrandsRawContract
      *
      * @param string $id Brand Id
      * @param array{
+     *   description?: string|null,
      *   imageID?: string|null,
      *   name?: string|null,
      *   statementDescriptor?: string|null,
      *   supportEmail?: string|null,
+     *   url?: string|null,
      * }|BrandUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

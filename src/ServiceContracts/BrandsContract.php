@@ -55,10 +55,12 @@ interface BrandsContract
      */
     public function update(
         string $id,
+        ?string $description = null,
         ?string $imageID = null,
         ?string $name = null,
         ?string $statementDescriptor = null,
         ?string $supportEmail = null,
+        ?string $url = null,
         RequestOptions|array|null $requestOptions = null,
     ): Brand;
 
