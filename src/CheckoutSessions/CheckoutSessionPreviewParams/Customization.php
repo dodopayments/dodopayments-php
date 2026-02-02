@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization\Theme;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization\ThemeConfig;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -12,11 +13,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Customization for the checkout session page.
  *
+ * @phpstan-import-type ThemeConfigShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization\ThemeConfig
+ *
  * @phpstan-type CustomizationShape = array{
  *   forceLanguage?: string|null,
  *   showOnDemandTag?: bool|null,
  *   showOrderDetails?: bool|null,
  *   theme?: null|Theme|value-of<Theme>,
+ *   themeConfig?: null|ThemeConfig|ThemeConfigShape,
  * }
  */
 final class Customization implements BaseModel
@@ -47,7 +51,7 @@ final class Customization implements BaseModel
     public ?bool $showOrderDetails;
 
     /**
-     * Theme of the page.
+     * Theme of the page (determines which mode - light/dark/system - to use).
      *
      * Default is `System`.
      *
@@ -55,6 +59,12 @@ final class Customization implements BaseModel
      */
     #[Optional(enum: Theme::class)]
     public ?string $theme;
+
+    /**
+     * Optional custom theme configuration with colors for light and dark modes.
+     */
+    #[Optional('theme_config', nullable: true)]
+    public ?ThemeConfig $themeConfig;
 
     public function __construct()
     {
@@ -67,12 +77,14 @@ final class Customization implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Theme|value-of<Theme>|null $theme
+     * @param ThemeConfig|ThemeConfigShape|null $themeConfig
      */
     public static function with(
         ?string $forceLanguage = null,
         ?bool $showOnDemandTag = null,
         ?bool $showOrderDetails = null,
         Theme|string|null $theme = null,
+        ThemeConfig|array|null $themeConfig = null,
     ): self {
         $self = new self;
 
@@ -80,6 +92,7 @@ final class Customization implements BaseModel
         null !== $showOnDemandTag && $self['showOnDemandTag'] = $showOnDemandTag;
         null !== $showOrderDetails && $self['showOrderDetails'] = $showOrderDetails;
         null !== $theme && $self['theme'] = $theme;
+        null !== $themeConfig && $self['themeConfig'] = $themeConfig;
 
         return $self;
     }
@@ -122,7 +135,7 @@ final class Customization implements BaseModel
     }
 
     /**
-     * Theme of the page.
+     * Theme of the page (determines which mode - light/dark/system - to use).
      *
      * Default is `System`.
      *
@@ -132,6 +145,19 @@ final class Customization implements BaseModel
     {
         $self = clone $this;
         $self['theme'] = $theme;
+
+        return $self;
+    }
+
+    /**
+     * Optional custom theme configuration with colors for light and dark modes.
+     *
+     * @param ThemeConfig|ThemeConfigShape|null $themeConfig
+     */
+    public function withThemeConfig(ThemeConfig|array|null $themeConfig): self
+    {
+        $self = clone $this;
+        $self['themeConfig'] = $themeConfig;
 
         return $self;
     }

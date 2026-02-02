@@ -17,11 +17,7 @@ enum FieldType: string
 
     case URL = 'url';
 
-    case PHONE = 'phone';
-
     case DATE = 'date';
-
-    case DATETIME = 'datetime';
 
     case DROPDOWN = 'dropdown';
 
