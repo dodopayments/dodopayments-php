@@ -1,5 +1,23 @@
 # Changelog
 
+## 5.4.0 (2026-02-02)
+
+Full Changelog: [v5.3.0...v5.4.0](https://github.com/dodopayments/dodopayments-php/compare/v5.3.0...v5.4.0)
+
+### Features
+
+* **api:** updated openapi spec for v1.78.1 ([09fe16e](https://github.com/dodopayments/dodopayments-php/commit/09fe16e856a968e673f0611589fd8a94edac80a9))
+
+
+### Bug Fixes
+
+* used redirect count instead of retry count in base client ([4365e3b](https://github.com/dodopayments/dodopayments-php/commit/4365e3bfed532b81f63c40f521e8a24b83f2e489))
+
+
+### Chores
+
+* **internal:** ignore stainless-internal artifacts ([e39f12f](https://github.com/dodopayments/dodopayments-php/commit/e39f12f1c11954bae82d24c8de5726d3c93260bd))
+
 ## 5.3.0 (2026-01-23)
 
 Full Changelog: [v5.2.0...v5.3.0](https://github.com/dodopayments/dodopayments-php/compare/v5.2.0...v5.3.0)
