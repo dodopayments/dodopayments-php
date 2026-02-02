@@ -13,7 +13,7 @@ The REST API documentation can be found on [docs.dodopayments.com](https://docs.
 <!-- x-release-please-start-version -->
 
 ```
-composer require "dodopayments/client 5.3.0"
+composer require "dodopayments/client 5.4.0"
 ```
 
 <!-- x-release-please-end -->
