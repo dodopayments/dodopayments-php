@@ -6,6 +6,7 @@ use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
 use Dodopayments\Client;
+use Dodopayments\Core\Util;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
@@ -25,7 +26,7 @@ final class CheckoutSessionsTest extends TestCase
     {
         parent::setUp();
 
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $testUrl = Util::getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
         $client = new Client(bearerToken: 'My Bearer Token', baseUrl: $testUrl);
 
         $this->client = $client;

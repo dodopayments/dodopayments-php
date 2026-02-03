@@ -145,9 +145,11 @@ class Client extends BaseClient
         ?string $baseUrl = null,
         RequestOptions|array|null $requestOptions = null,
     ) {
-        $this->bearerToken = (string) ($bearerToken ?? getenv('DODO_PAYMENTS_API_KEY'));
+        $this->bearerToken = (string) ($bearerToken ?? Util::getenv(
+            'DODO_PAYMENTS_API_KEY'
+        ));
 
-        $baseUrl ??= getenv(
+        $baseUrl ??= Util::getenv(
             'DODO_PAYMENTS_BASE_URL'
         ) ?: 'https://live.dodopayments.com';
 
