@@ -151,6 +151,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
             metadata: ['foo' => 'string'],
+            onPaymentFailure: 'prevent_change',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -216,6 +217,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
             metadata: ['foo' => 'string'],
+            onPaymentFailure: 'prevent_change',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

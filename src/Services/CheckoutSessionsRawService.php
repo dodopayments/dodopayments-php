@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Dodopayments\Services;
 
+use Dodopayments\CheckoutSessions\CheckoutSessionBillingAddress;
 use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart;
-use Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData;
+use Dodopayments\CheckoutSessions\CheckoutSessionCustomization;
+use Dodopayments\CheckoutSessions\CheckoutSessionFlags;
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams;
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionResponse;
 use Dodopayments\CheckoutSessions\CheckoutSessionStatus;
+use Dodopayments\CheckoutSessions\CustomField;
+use Dodopayments\CheckoutSessions\ProductItemReq;
+use Dodopayments\CheckoutSessions\SubscriptionData;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
@@ -24,19 +24,13 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CheckoutSessionsRawContract;
 
 /**
- * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\ProductCart
- * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\BillingAddress
- * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\CustomField
- * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\Customization
- * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\FeatureFlags
- * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionCreateParams\SubscriptionData
- * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart as ProductCartShape1
- * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress as BillingAddressShape1
- * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\CustomField as CustomFieldShape1
- * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization as CustomizationShape1
- * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags as FeatureFlagsShape1
- * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData as SubscriptionDataShape1
+ * @phpstan-import-type ProductItemReqShape from \Dodopayments\CheckoutSessions\ProductItemReq
+ * @phpstan-import-type CheckoutSessionBillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionBillingAddress
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CustomField
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type CheckoutSessionCustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCustomization
+ * @phpstan-import-type CheckoutSessionFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionFlags
+ * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\SubscriptionData
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
@@ -51,16 +45,16 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      * @api
      *
      * @param array{
-     *   productCart: list<ProductCart|ProductCartShape>,
+     *   productCart: list<ProductItemReq|ProductItemReqShape>,
      *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
-     *   billingAddress?: BillingAddress|BillingAddressShape|null,
+     *   billingAddress?: CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null,
      *   billingCurrency?: value-of<Currency>,
      *   confirm?: bool,
      *   customFields?: list<CustomField|CustomFieldShape>|null,
      *   customer?: CustomerRequestShape|null,
-     *   customization?: Customization|CustomizationShape,
+     *   customization?: CheckoutSessionCustomization|CheckoutSessionCustomizationShape,
      *   discountCode?: string|null,
-     *   featureFlags?: FeatureFlags|FeatureFlagsShape,
+     *   featureFlags?: CheckoutSessionFlags|CheckoutSessionFlagsShape,
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>|null,
      *   minimalAddress?: bool,
@@ -122,16 +116,16 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      * @api
      *
      * @param array{
-     *   productCart: list<CheckoutSessionPreviewParams\ProductCart|ProductCartShape1>,
+     *   productCart: list<ProductItemReq|ProductItemReqShape>,
      *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
-     *   billingAddress?: CheckoutSessionPreviewParams\BillingAddress|BillingAddressShape1|null,
+     *   billingAddress?: CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null,
      *   billingCurrency?: value-of<Currency>,
      *   confirm?: bool,
-     *   customFields?: list<CheckoutSessionPreviewParams\CustomField|CustomFieldShape1>|null,
+     *   customFields?: list<CustomField|CustomFieldShape>|null,
      *   customer?: CustomerRequestShape|null,
-     *   customization?: CheckoutSessionPreviewParams\Customization|CustomizationShape1,
+     *   customization?: CheckoutSessionCustomization|CheckoutSessionCustomizationShape,
      *   discountCode?: string|null,
-     *   featureFlags?: CheckoutSessionPreviewParams\FeatureFlags|FeatureFlagsShape1,
+     *   featureFlags?: CheckoutSessionFlags|CheckoutSessionFlagsShape,
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>|null,
      *   minimalAddress?: bool,
@@ -140,7 +134,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   returnURL?: string|null,
      *   shortLink?: bool,
      *   showSavedPaymentMethods?: bool,
-     *   subscriptionData?: CheckoutSessionPreviewParams\SubscriptionData|SubscriptionDataShape1|null,
+     *   subscriptionData?: SubscriptionData|SubscriptionDataShape|null,
      * }|CheckoutSessionPreviewParams $params
      * @param RequestOpts|null $requestOptions
      *

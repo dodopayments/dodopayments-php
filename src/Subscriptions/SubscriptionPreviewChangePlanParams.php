@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode;
 
 /**
@@ -22,6 +23,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
  *   quantity: int,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   metadata?: array<string,string>|null,
+ *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
  * }
  */
 final class SubscriptionPreviewChangePlanParams implements BaseModel
@@ -68,6 +70,22 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     public ?array $metadata;
 
     /**
+     * Controls behavior when the plan change payment fails.
+     * - `prevent_change`: Keep subscription on current plan until payment succeeds
+     * - `apply_change` (default): Apply plan change immediately regardless of payment outcome.
+     *
+     * If not specified, uses the business-level default setting.
+     *
+     * @var value-of<OnPaymentFailure>|null $onPaymentFailure
+     */
+    #[Optional(
+        'on_payment_failure',
+        enum: OnPaymentFailure::class,
+        nullable: true
+    )]
+    public ?string $onPaymentFailure;
+
+    /**
      * `new SubscriptionPreviewChangePlanParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -99,6 +117,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      * @param list<AttachAddon|AttachAddonShape>|null $addons
      * @param array<string,string>|null $metadata
+     * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
      */
     public static function with(
         string $productID,
@@ -106,6 +125,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         int $quantity,
         ?array $addons = null,
         ?array $metadata = null,
+        OnPaymentFailure|string|null $onPaymentFailure = null,
     ): self {
         $self = new self;
 
@@ -115,6 +135,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
 
         null !== $addons && $self['addons'] = $addons;
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $onPaymentFailure && $self['onPaymentFailure'] = $onPaymentFailure;
 
         return $self;
     }
@@ -178,6 +199,24 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Controls behavior when the plan change payment fails.
+     * - `prevent_change`: Keep subscription on current plan until payment succeeds
+     * - `apply_change` (default): Apply plan change immediately regardless of payment outcome.
+     *
+     * If not specified, uses the business-level default setting.
+     *
+     * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
+     */
+    public function withOnPaymentFailure(
+        OnPaymentFailure|string|null $onPaymentFailure
+    ): self {
+        $self = clone $this;
+        $self['onPaymentFailure'] = $onPaymentFailure;
 
         return $self;
     }

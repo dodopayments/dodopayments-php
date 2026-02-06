@@ -19,6 +19,7 @@ use Dodopayments\ServiceContracts\SubscriptionsContract;
 use Dodopayments\Subscriptions\AttachAddon;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
@@ -270,6 +271,11 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
      * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
+     * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
+     * - `prevent_change`: Keep subscription on current plan until payment succeeds
+     * - `apply_change` (default): Apply plan change immediately regardless of payment outcome
+     *
+     * If not specified, uses the business-level default setting.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -281,6 +287,7 @@ final class SubscriptionsService implements SubscriptionsContract
         int $quantity,
         ?array $addons = null,
         ?array $metadata = null,
+        OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,
     ): mixed {
         $params = Util::removeNulls(
@@ -290,6 +297,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'quantity' => $quantity,
                 'addons' => $addons,
                 'metadata' => $metadata,
+                'onPaymentFailure' => $onPaymentFailure,
             ],
         );
 
@@ -353,6 +361,11 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
      * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
+     * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
+     * - `prevent_change`: Keep subscription on current plan until payment succeeds
+     * - `apply_change` (default): Apply plan change immediately regardless of payment outcome
+     *
+     * If not specified, uses the business-level default setting.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -364,6 +377,7 @@ final class SubscriptionsService implements SubscriptionsContract
         int $quantity,
         ?array $addons = null,
         ?array $metadata = null,
+        \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,
     ): SubscriptionPreviewChangePlanResponse {
         $params = Util::removeNulls(
@@ -373,6 +387,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'quantity' => $quantity,
                 'addons' => $addons,
                 'metadata' => $metadata,
+                'onPaymentFailure' => $onPaymentFailure,
             ],
         );
 
