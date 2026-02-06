@@ -1,5 +1,18 @@
 # Changelog
 
+## 5.5.0 (2026-02-06)
+
+Full Changelog: [v5.4.0...v5.5.0](https://github.com/dodopayments/dodopayments-php/compare/v5.4.0...v5.5.0)
+
+### Features
+
+* use `$_ENV` aware getenv helper ([be1e669](https://github.com/dodopayments/dodopayments-php/commit/be1e6691be65f9de47df9a750d7966624f0d18fe))
+
+
+### Chores
+
+* **internal:** php cs fixer should not be memory limited ([b649475](https://github.com/dodopayments/dodopayments-php/commit/b649475b19f4608d849cb9c6946e6eda23649360))
+
 ## 5.4.0 (2026-02-02)
 
 Full Changelog: [v5.3.0...v5.4.0](https://github.com/dodopayments/dodopayments-php/compare/v5.3.0...v5.4.0)
