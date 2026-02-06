@@ -18,7 +18,7 @@ use Dodopayments\Refunds\RefundStatus;
  *   isPartial: bool,
  *   paymentID: string,
  *   refundID: string,
- *   status: RefundStatus|value-of<RefundStatus>,
+ *   status: \Dodopayments\Refunds\RefundStatus|value-of<\Dodopayments\Refunds\RefundStatus>,
  *   amount?: int|null,
  *   currency?: null|Currency|value-of<Currency>,
  *   reason?: string|null,
@@ -214,8 +214,9 @@ final class Refund implements BaseModel
      *
      * @param RefundStatus|value-of<RefundStatus> $status
      */
-    public function withStatus(RefundStatus|string $status): self
-    {
+    public function withStatus(
+        RefundStatus|string $status
+    ): self {
         $self = clone $this;
         $self['status'] = $status;
 

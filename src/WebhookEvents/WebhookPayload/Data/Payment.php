@@ -17,6 +17,7 @@ use Dodopayments\Payments\IntentStatus;
 use Dodopayments\Payments\Payment\CustomFieldResponse;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\Payment\Refund;
+use Dodopayments\Payments\Payment\RefundStatus;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
 
 /**
@@ -58,6 +59,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
  *   productCart?: list<ProductCart|ProductCartShape>|null,
+ *   refundStatus?: null|RefundStatus|value-of<RefundStatus>,
  *   settlementTax?: int|null,
  *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
@@ -260,6 +262,14 @@ final class Payment implements BaseModel
     public ?array $productCart;
 
     /**
+     * Summary of the refund status for this payment. None if no succeeded refunds exist.
+     *
+     * @var value-of<RefundStatus>|null $refundStatus
+     */
+    #[Optional('refund_status', enum: RefundStatus::class, nullable: true)]
+    public ?string $refundStatus;
+
+    /**
      * This represents the portion of settlement_amount that corresponds to taxes collected.
      * Especially relevant for adaptive pricing where the tax component must be tracked separately
      * in your Dodo balance.
@@ -359,6 +369,7 @@ final class Payment implements BaseModel
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<ProductCart|ProductCartShape>|null $productCart
+     * @param RefundStatus|value-of<RefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
@@ -393,6 +404,7 @@ final class Payment implements BaseModel
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
         ?array $productCart = null,
+        RefundStatus|string|null $refundStatus = null,
         ?int $settlementTax = null,
         IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
@@ -433,6 +445,7 @@ final class Payment implements BaseModel
         null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
         null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
         null !== $productCart && $self['productCart'] = $productCart;
+        null !== $refundStatus && $self['refundStatus'] = $refundStatus;
         null !== $settlementTax && $self['settlementTax'] = $settlementTax;
         null !== $status && $self['status'] = $status;
         null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
@@ -785,6 +798,20 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['productCart'] = $productCart;
+
+        return $self;
+    }
+
+    /**
+     * Summary of the refund status for this payment. None if no succeeded refunds exist.
+     *
+     * @param RefundStatus|value-of<RefundStatus>|null $refundStatus
+     */
+    public function withRefundStatus(
+        RefundStatus|string|null $refundStatus
+    ): self {
+        $self = clone $this;
+        $self['refundStatus'] = $refundStatus;
 
         return $self;
     }
