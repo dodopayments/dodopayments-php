@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Disputes\DisputeListResponse;
 use Dodopayments\Disputes\GetDispute;
@@ -22,7 +23,7 @@ final class DisputesTest extends TestCase
     {
         parent::setUp();
 
-        $testUrl = getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $testUrl = Util::getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
         $client = new Client(bearerToken: 'My Bearer Token', baseUrl: $testUrl);
 
         $this->client = $client;
