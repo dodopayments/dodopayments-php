@@ -7,6 +7,7 @@ namespace Dodopayments;
 use Dodopayments\Core\BaseClient;
 use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
+use Dodopayments\Services\BalancesService;
 use Dodopayments\Services\BrandsService;
 use Dodopayments\Services\CheckoutSessionsService;
 use Dodopayments\Services\CustomersService;
@@ -138,6 +139,11 @@ class Client extends BaseClient
     public MetersService $meters;
 
     /**
+     * @api
+     */
+    public BalancesService $balances;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -199,6 +205,7 @@ class Client extends BaseClient
         $this->webhookEvents = new WebhookEventsService($this);
         $this->usageEvents = new UsageEventsService($this);
         $this->meters = new MetersService($this);
+        $this->balances = new BalancesService($this);
     }
 
     /** @return array<string,string> */

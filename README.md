@@ -42,10 +42,10 @@ var_dump($checkoutSessionResponse->session_id);
 
 ### Value Objects
 
-It is recommended to use the static `with` constructor `AttachExistingCustomer::with(customerID: 'customer_id', ...)`
+It is recommended to use the static `with` constructor `CheckoutSessionBillingAddress::with(country: 'AF', ...)`
 and named parameters to initialize value objects.
 
-However, builders are also provided `(new AttachExistingCustomer)->withCustomerID('customer_id')`.
+However, builders are also provided `(new CheckoutSessionBillingAddress)->withCountry('AF')`.
 
 ### Pagination
 
