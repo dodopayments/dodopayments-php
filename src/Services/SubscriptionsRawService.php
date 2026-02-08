@@ -19,6 +19,7 @@ use Dodopayments\Subscriptions\AttachAddon;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
@@ -230,6 +231,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   quantity: int,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
      *   metadata?: array<string,string>|null,
+     *   onPaymentFailure?: OnPaymentFailure|value-of<OnPaymentFailure>|null,
      * }|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -305,6 +307,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   quantity: int,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
      *   metadata?: array<string,string>|null,
+     *   onPaymentFailure?: SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null,
      * }|SubscriptionPreviewChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *

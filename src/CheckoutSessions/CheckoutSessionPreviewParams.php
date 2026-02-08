@@ -4,12 +4,6 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
-use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress;
-use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\CustomField;
-use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization;
-use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags;
-use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart;
-use Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -24,25 +18,25 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @see Dodopayments\Services\CheckoutSessionsService::preview()
  *
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\ProductCart
- * @phpstan-import-type BillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\BillingAddress
- * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\CustomField
+ * @phpstan-import-type ProductItemReqShape from \Dodopayments\CheckoutSessions\ProductItemReq
+ * @phpstan-import-type CheckoutSessionBillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionBillingAddress
+ * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CustomField
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type CustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\Customization
- * @phpstan-import-type FeatureFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\FeatureFlags
- * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewParams\SubscriptionData
+ * @phpstan-import-type CheckoutSessionCustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCustomization
+ * @phpstan-import-type CheckoutSessionFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionFlags
+ * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\SubscriptionData
  *
  * @phpstan-type CheckoutSessionPreviewParamsShape = array{
- *   productCart: list<ProductCart|ProductCartShape>,
+ *   productCart: list<ProductItemReq|ProductItemReqShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
- *   billingAddress?: null|BillingAddress|BillingAddressShape,
+ *   billingAddress?: null|CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   confirm?: bool|null,
  *   customFields?: list<CustomField|CustomFieldShape>|null,
  *   customer?: CustomerRequestShape|null,
- *   customization?: null|Customization|CustomizationShape,
+ *   customization?: null|CheckoutSessionCustomization|CheckoutSessionCustomizationShape,
  *   discountCode?: string|null,
- *   featureFlags?: null|FeatureFlags|FeatureFlagsShape,
+ *   featureFlags?: null|CheckoutSessionFlags|CheckoutSessionFlagsShape,
  *   force3DS?: bool|null,
  *   metadata?: array<string,string>|null,
  *   minimalAddress?: bool|null,
@@ -60,8 +54,8 @@ final class CheckoutSessionPreviewParams implements BaseModel
     use SdkModel;
     use SdkParams;
 
-    /** @var list<ProductCart> $productCart */
-    #[Required('product_cart', list: ProductCart::class)]
+    /** @var list<ProductItemReq> $productCart */
+    #[Required('product_cart', list: ProductItemReq::class)]
     public array $productCart;
 
     /**
@@ -85,7 +79,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
      * Billing address information for the session.
      */
     #[Optional('billing_address', nullable: true)]
-    public ?BillingAddress $billingAddress;
+    public ?CheckoutSessionBillingAddress $billingAddress;
 
     /**
      * This field is ingored if adaptive pricing is disabled.
@@ -121,13 +115,13 @@ final class CheckoutSessionPreviewParams implements BaseModel
      * Customization for the checkout session page.
      */
     #[Optional]
-    public ?Customization $customization;
+    public ?CheckoutSessionCustomization $customization;
 
     #[Optional('discount_code', nullable: true)]
     public ?string $discountCode;
 
     #[Optional('feature_flags')]
-    public ?FeatureFlags $featureFlags;
+    public ?CheckoutSessionFlags $featureFlags;
 
     /**
      * Override merchant default 3DS behaviour for this session.
@@ -209,28 +203,28 @@ final class CheckoutSessionPreviewParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<ProductCart|ProductCartShape> $productCart
+     * @param list<ProductItemReq|ProductItemReqShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
-     * @param BillingAddress|BillingAddressShape|null $billingAddress
+     * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param list<CustomField|CustomFieldShape>|null $customFields
      * @param CustomerRequestShape|null $customer
-     * @param Customization|CustomizationShape|null $customization
-     * @param FeatureFlags|FeatureFlagsShape|null $featureFlags
+     * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape|null $customization
+     * @param CheckoutSessionFlags|CheckoutSessionFlagsShape|null $featureFlags
      * @param array<string,string>|null $metadata
      * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
      */
     public static function with(
         array $productCart,
         ?array $allowedPaymentMethodTypes = null,
-        BillingAddress|array|null $billingAddress = null,
+        CheckoutSessionBillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
-        Customization|array|null $customization = null,
+        CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
-        FeatureFlags|array|null $featureFlags = null,
+        CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $minimalAddress = null,
@@ -268,7 +262,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
     }
 
     /**
-     * @param list<ProductCart|ProductCartShape> $productCart
+     * @param list<ProductItemReq|ProductItemReqShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {
@@ -300,10 +294,10 @@ final class CheckoutSessionPreviewParams implements BaseModel
     /**
      * Billing address information for the session.
      *
-     * @param BillingAddress|BillingAddressShape|null $billingAddress
+     * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress
      */
     public function withBillingAddress(
-        BillingAddress|array|null $billingAddress
+        CheckoutSessionBillingAddress|array|null $billingAddress
     ): self {
         $self = clone $this;
         $self['billingAddress'] = $billingAddress;
@@ -366,10 +360,11 @@ final class CheckoutSessionPreviewParams implements BaseModel
     /**
      * Customization for the checkout session page.
      *
-     * @param Customization|CustomizationShape $customization
+     * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization
      */
-    public function withCustomization(Customization|array $customization): self
-    {
+    public function withCustomization(
+        CheckoutSessionCustomization|array $customization
+    ): self {
         $self = clone $this;
         $self['customization'] = $customization;
 
@@ -385,10 +380,11 @@ final class CheckoutSessionPreviewParams implements BaseModel
     }
 
     /**
-     * @param FeatureFlags|FeatureFlagsShape $featureFlags
+     * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags
      */
-    public function withFeatureFlags(FeatureFlags|array $featureFlags): self
-    {
+    public function withFeatureFlags(
+        CheckoutSessionFlags|array $featureFlags
+    ): self {
         $self = clone $this;
         $self['featureFlags'] = $featureFlags;
 

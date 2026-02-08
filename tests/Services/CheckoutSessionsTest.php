@@ -100,6 +100,8 @@ final class CheckoutSessionsTest extends TestCase
                         'textSecondary' => 'text_secondary',
                         'textSuccess' => 'text_success',
                     ],
+                    'fontPrimaryURL' => 'font_primary_url',
+                    'fontSecondaryURL' => 'font_secondary_url',
                     'fontSize' => 'xs',
                     'fontWeight' => 'normal',
                     'light' => [
@@ -241,6 +243,8 @@ final class CheckoutSessionsTest extends TestCase
                         'textSecondary' => 'text_secondary',
                         'textSuccess' => 'text_success',
                     ],
+                    'fontPrimaryURL' => 'font_primary_url',
+                    'fontSecondaryURL' => 'font_secondary_url',
                     'fontSize' => 'xs',
                     'fontWeight' => 'normal',
                     'light' => [
