@@ -31,7 +31,7 @@ final class PaymentsTest extends TestCase
     public function testRetrieve(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism doesn\'t support application/pdf responses');
+            $this->markTestSkipped('Mock server doesn\'t support application/pdf responses');
         }
 
         $result = $this->client->invoices->payments->retrieve('payment_id');
@@ -44,7 +44,7 @@ final class PaymentsTest extends TestCase
     public function testRetrieveRefund(): void
     {
         if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Prism doesn\'t support application/pdf responses');
+            $this->markTestSkipped('Mock server doesn\'t support application/pdf responses');
         }
 
         $result = $this->client->invoices->payments->retrieveRefund('refund_id');
