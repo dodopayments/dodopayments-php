@@ -17,6 +17,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   allowCustomerEditingName?: bool|null,
  *   allowCustomerEditingState?: bool|null,
  *   allowCustomerEditingStreet?: bool|null,
+ *   allowCustomerEditingTaxID?: bool|null,
  *   allowCustomerEditingZipcode?: bool|null,
  *   allowDiscountCode?: bool|null,
  *   allowPhoneNumberCollection?: bool|null,
@@ -55,6 +56,9 @@ final class CheckoutSessionFlags implements BaseModel
 
     #[Optional('allow_customer_editing_street')]
     public ?bool $allowCustomerEditingStreet;
+
+    #[Optional('allow_customer_editing_tax_id')]
+    public ?bool $allowCustomerEditingTaxID;
 
     #[Optional('allow_customer_editing_zipcode')]
     public ?bool $allowCustomerEditingZipcode;
@@ -118,6 +122,7 @@ final class CheckoutSessionFlags implements BaseModel
         ?bool $allowCustomerEditingName = null,
         ?bool $allowCustomerEditingState = null,
         ?bool $allowCustomerEditingStreet = null,
+        ?bool $allowCustomerEditingTaxID = null,
         ?bool $allowCustomerEditingZipcode = null,
         ?bool $allowDiscountCode = null,
         ?bool $allowPhoneNumberCollection = null,
@@ -134,6 +139,7 @@ final class CheckoutSessionFlags implements BaseModel
         null !== $allowCustomerEditingName && $self['allowCustomerEditingName'] = $allowCustomerEditingName;
         null !== $allowCustomerEditingState && $self['allowCustomerEditingState'] = $allowCustomerEditingState;
         null !== $allowCustomerEditingStreet && $self['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
+        null !== $allowCustomerEditingTaxID && $self['allowCustomerEditingTaxID'] = $allowCustomerEditingTaxID;
         null !== $allowCustomerEditingZipcode && $self['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
         null !== $allowDiscountCode && $self['allowDiscountCode'] = $allowDiscountCode;
         null !== $allowPhoneNumberCollection && $self['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
@@ -208,6 +214,15 @@ final class CheckoutSessionFlags implements BaseModel
     ): self {
         $self = clone $this;
         $self['allowCustomerEditingStreet'] = $allowCustomerEditingStreet;
+
+        return $self;
+    }
+
+    public function withAllowCustomerEditingTaxID(
+        bool $allowCustomerEditingTaxID
+    ): self {
+        $self = clone $this;
+        $self['allowCustomerEditingTaxID'] = $allowCustomerEditingTaxID;
 
         return $self;
     }

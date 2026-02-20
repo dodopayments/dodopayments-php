@@ -13,9 +13,11 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type AddMeterToPriceShape = array{
  *   meterID: string,
  *   pricePerUnit: string,
+ *   creditEntitlementID?: string|null,
  *   description?: string|null,
  *   freeThreshold?: int|null,
  *   measurementUnit?: string|null,
+ *   meterUnitsPerCredit?: string|null,
  *   name?: string|null,
  * }
  */
@@ -34,6 +36,12 @@ final class AddMeterToPrice implements BaseModel
     public string $pricePerUnit;
 
     /**
+     * Optional credit entitlement ID to link this meter to for credit-based billing.
+     */
+    #[Optional('credit_entitlement_id', nullable: true)]
+    public ?string $creditEntitlementID;
+
+    /**
      * Meter description. Will ignored on Request, but will be shown in response.
      */
     #[Optional(nullable: true)]
@@ -47,6 +55,12 @@ final class AddMeterToPrice implements BaseModel
      */
     #[Optional('measurement_unit', nullable: true)]
     public ?string $measurementUnit;
+
+    /**
+     * Number of meter units that equal one credit. Required when credit_entitlement_id is set.
+     */
+    #[Optional('meter_units_per_credit', nullable: true)]
+    public ?string $meterUnitsPerCredit;
 
     /**
      * Meter name. Will ignored on Request, but will be shown in response.
@@ -81,9 +95,11 @@ final class AddMeterToPrice implements BaseModel
     public static function with(
         string $meterID,
         string $pricePerUnit,
+        ?string $creditEntitlementID = null,
         ?string $description = null,
         ?int $freeThreshold = null,
         ?string $measurementUnit = null,
+        ?string $meterUnitsPerCredit = null,
         ?string $name = null,
     ): self {
         $self = new self;
@@ -91,9 +107,11 @@ final class AddMeterToPrice implements BaseModel
         $self['meterID'] = $meterID;
         $self['pricePerUnit'] = $pricePerUnit;
 
+        null !== $creditEntitlementID && $self['creditEntitlementID'] = $creditEntitlementID;
         null !== $description && $self['description'] = $description;
         null !== $freeThreshold && $self['freeThreshold'] = $freeThreshold;
         null !== $measurementUnit && $self['measurementUnit'] = $measurementUnit;
+        null !== $meterUnitsPerCredit && $self['meterUnitsPerCredit'] = $meterUnitsPerCredit;
         null !== $name && $self['name'] = $name;
 
         return $self;
@@ -114,6 +132,17 @@ final class AddMeterToPrice implements BaseModel
     {
         $self = clone $this;
         $self['pricePerUnit'] = $pricePerUnit;
+
+        return $self;
+    }
+
+    /**
+     * Optional credit entitlement ID to link this meter to for credit-based billing.
+     */
+    public function withCreditEntitlementID(?string $creditEntitlementID): self
+    {
+        $self = clone $this;
+        $self['creditEntitlementID'] = $creditEntitlementID;
 
         return $self;
     }
@@ -144,6 +173,17 @@ final class AddMeterToPrice implements BaseModel
     {
         $self = clone $this;
         $self['measurementUnit'] = $measurementUnit;
+
+        return $self;
+    }
+
+    /**
+     * Number of meter units that equal one credit. Required when credit_entitlement_id is set.
+     */
+    public function withMeterUnitsPerCredit(?string $meterUnitsPerCredit): self
+    {
+        $self = clone $this;
+        $self['meterUnitsPerCredit'] = $meterUnitsPerCredit;
 
         return $self;
     }

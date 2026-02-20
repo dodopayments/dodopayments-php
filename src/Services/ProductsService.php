@@ -14,6 +14,7 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
+use Dodopayments\Products\ProductCreateParams\CreditEntitlement;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
@@ -23,7 +24,9 @@ use Dodopayments\Services\Products\ImagesService;
 use Dodopayments\Services\Products\ShortLinksService;
 
 /**
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductCreateParams\CreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductUpdateParams\CreditEntitlement as CreditEntitlementShape1
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -64,6 +67,7 @@ final class ProductsService implements ProductsContract
      * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this product
      * @param list<string>|null $addons Addons available for subscription product
      * @param string|null $brandID Brand id for the product, if not provided will default to primary brand
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements Optional credit entitlements to attach (max 3)
      * @param string|null $description Optional description of the product
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery Choose how you would like you digital product delivered
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
@@ -85,6 +89,7 @@ final class ProductsService implements ProductsContract
         TaxCategory|string $taxCategory,
         ?array $addons = null,
         ?string $brandID = null,
+        ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $licenseKeyActivationMessage = null,
@@ -101,6 +106,7 @@ final class ProductsService implements ProductsContract
                 'taxCategory' => $taxCategory,
                 'addons' => $addons,
                 'brandID' => $brandID,
+                'creditEntitlements' => $creditEntitlements,
                 'description' => $description,
                 'digitalProductDelivery' => $digitalProductDelivery,
                 'licenseKeyActivationMessage' => $licenseKeyActivationMessage,
@@ -139,6 +145,8 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param list<string>|null $addons Available Addons for subscription products
+     * @param list<\Dodopayments\Products\ProductUpdateParams\CreditEntitlement|CreditEntitlementShape1>|null $creditEntitlements Credit entitlements to update (replaces all existing when present)
+     * Send empty array to remove all, omit field to leave unchanged
      * @param string|null $description description of the product, optional and must be at most 1000 characters
      * @param \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null $digitalProductDelivery Choose how you would like you digital product delivered
      * @param string|null $imageID Product image id after its uploaded to S3
@@ -170,6 +178,7 @@ final class ProductsService implements ProductsContract
         string $id,
         ?array $addons = null,
         ?string $brandID = null,
+        ?array $creditEntitlements = null,
         ?string $description = null,
         \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $imageID = null,
@@ -187,6 +196,7 @@ final class ProductsService implements ProductsContract
             [
                 'addons' => $addons,
                 'brandID' => $brandID,
+                'creditEntitlements' => $creditEntitlements,
                 'description' => $description,
                 'digitalProductDelivery' => $digitalProductDelivery,
                 'imageID' => $imageID,

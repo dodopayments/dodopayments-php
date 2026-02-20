@@ -135,6 +135,7 @@ final class CheckoutSessionsTest extends TestCase
                 'allowCustomerEditingName' => true,
                 'allowCustomerEditingState' => true,
                 'allowCustomerEditingStreet' => true,
+                'allowCustomerEditingTaxID' => true,
                 'allowCustomerEditingZipcode' => true,
                 'allowDiscountCode' => true,
                 'allowPhoneNumberCollection' => true,
@@ -160,6 +161,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
                 'trialPeriodDays' => 0,
             ],
+            taxID: 'tax_id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -278,6 +280,7 @@ final class CheckoutSessionsTest extends TestCase
                 'allowCustomerEditingName' => true,
                 'allowCustomerEditingState' => true,
                 'allowCustomerEditingStreet' => true,
+                'allowCustomerEditingTaxID' => true,
                 'allowCustomerEditingZipcode' => true,
                 'allowDiscountCode' => true,
                 'allowPhoneNumberCollection' => true,
@@ -303,6 +306,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
                 'trialPeriodDays' => 0,
             ],
+            taxID: 'tax_id',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

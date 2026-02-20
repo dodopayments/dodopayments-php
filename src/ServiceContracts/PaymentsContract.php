@@ -104,6 +104,7 @@ interface PaymentsContract
      * @param string $customerID Filter by customer id
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
+     * @param string $productID Filter by product id
      * @param Status|value-of<Status> $status Filter by status
      * @param string $subscriptionID Filter by subscription id
      * @param RequestOpts|null $requestOptions
@@ -119,6 +120,7 @@ interface PaymentsContract
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
+        ?string $productID = null,
         Status|string|null $status = null,
         ?string $subscriptionID = null,
         RequestOptions|array|null $requestOptions = null,

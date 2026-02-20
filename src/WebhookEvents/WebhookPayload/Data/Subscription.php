@@ -12,8 +12,10 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\AddonCartResponseItem;
+use Dodopayments\Subscriptions\Subscription\CreditEntitlementCart;
 use Dodopayments\Subscriptions\Subscription\CustomFieldResponse;
 use Dodopayments\Subscriptions\Subscription\Meter;
+use Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
@@ -23,7 +25,9 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *
  * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\Subscription\CreditEntitlementCart
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MeterCreditEntitlementCartShape from \Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart
  * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\Subscription\Meter
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Subscriptions\Subscription\CustomFieldResponse
  *
@@ -32,9 +36,11 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *   billing: BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
+ *   creditEntitlementCart: list<CreditEntitlementCart|CreditEntitlementCartShape>,
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
+ *   meterCreditEntitlementCart: list<MeterCreditEntitlementCart|MeterCreditEntitlementCartShape>,
  *   meters: list<Meter|MeterShape>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
@@ -88,6 +94,14 @@ final class Subscription implements BaseModel
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
+    /**
+     * Credit entitlement cart settings for this subscription.
+     *
+     * @var list<CreditEntitlementCart> $creditEntitlementCart
+     */
+    #[Required('credit_entitlement_cart', list: CreditEntitlementCart::class)]
+    public array $creditEntitlementCart;
+
     /** @var value-of<Currency> $currency */
     #[Required(enum: Currency::class)]
     public string $currency;
@@ -102,6 +116,17 @@ final class Subscription implements BaseModel
      */
     #[Required(map: 'string')]
     public array $metadata;
+
+    /**
+     * Meter credit entitlement cart settings for this subscription.
+     *
+     * @var list<MeterCreditEntitlementCart> $meterCreditEntitlementCart
+     */
+    #[Required(
+        'meter_credit_entitlement_cart',
+        list: MeterCreditEntitlementCart::class
+    )]
+    public array $meterCreditEntitlementCart;
 
     /**
      * Meters associated with this subscription (for usage-based billing).
@@ -251,9 +276,11 @@ final class Subscription implements BaseModel
      *   billing: ...,
      *   cancelAtNextBillingDate: ...,
      *   createdAt: ...,
+     *   creditEntitlementCart: ...,
      *   currency: ...,
      *   customer: ...,
      *   metadata: ...,
+     *   meterCreditEntitlementCart: ...,
      *   meters: ...,
      *   nextBillingDate: ...,
      *   onDemand: ...,
@@ -281,9 +308,11 @@ final class Subscription implements BaseModel
      *   ->withBilling(...)
      *   ->withCancelAtNextBillingDate(...)
      *   ->withCreatedAt(...)
+     *   ->withCreditEntitlementCart(...)
      *   ->withCurrency(...)
      *   ->withCustomer(...)
      *   ->withMetadata(...)
+     *   ->withMeterCreditEntitlementCart(...)
      *   ->withMeters(...)
      *   ->withNextBillingDate(...)
      *   ->withOnDemand(...)
@@ -314,9 +343,11 @@ final class Subscription implements BaseModel
      *
      * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param BillingAddress|BillingAddressShape $billing
+     * @param list<CreditEntitlementCart|CreditEntitlementCartShape> $creditEntitlementCart
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
+     * @param list<MeterCreditEntitlementCart|MeterCreditEntitlementCartShape> $meterCreditEntitlementCart
      * @param list<Meter|MeterShape> $meters
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
@@ -329,9 +360,11 @@ final class Subscription implements BaseModel
         BillingAddress|array $billing,
         bool $cancelAtNextBillingDate,
         \DateTimeInterface $createdAt,
+        array $creditEntitlementCart,
         Currency|string $currency,
         CustomerLimitedDetails|array $customer,
         array $metadata,
+        array $meterCreditEntitlementCart,
         array $meters,
         \DateTimeInterface $nextBillingDate,
         bool $onDemand,
@@ -362,9 +395,11 @@ final class Subscription implements BaseModel
         $self['billing'] = $billing;
         $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
         $self['createdAt'] = $createdAt;
+        $self['creditEntitlementCart'] = $creditEntitlementCart;
         $self['currency'] = $currency;
         $self['customer'] = $customer;
         $self['metadata'] = $metadata;
+        $self['meterCreditEntitlementCart'] = $meterCreditEntitlementCart;
         $self['meters'] = $meters;
         $self['nextBillingDate'] = $nextBillingDate;
         $self['onDemand'] = $onDemand;
@@ -441,6 +476,20 @@ final class Subscription implements BaseModel
     }
 
     /**
+     * Credit entitlement cart settings for this subscription.
+     *
+     * @param list<CreditEntitlementCart|CreditEntitlementCartShape> $creditEntitlementCart
+     */
+    public function withCreditEntitlementCart(
+        array $creditEntitlementCart
+    ): self {
+        $self = clone $this;
+        $self['creditEntitlementCart'] = $creditEntitlementCart;
+
+        return $self;
+    }
+
+    /**
      * @param Currency|value-of<Currency> $currency
      */
     public function withCurrency(Currency|string $currency): self
@@ -471,6 +520,20 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Meter credit entitlement cart settings for this subscription.
+     *
+     * @param list<MeterCreditEntitlementCart|MeterCreditEntitlementCartShape> $meterCreditEntitlementCart
+     */
+    public function withMeterCreditEntitlementCart(
+        array $meterCreditEntitlementCart
+    ): self {
+        $self = clone $this;
+        $self['meterCreditEntitlementCart'] = $meterCreditEntitlementCart;
 
         return $self;
     }

@@ -28,6 +28,7 @@ use Dodopayments\Misc\Currency;
  *   productCart: list<ProductCart|ProductCartShape>,
  *   totalPrice: int,
  *   recurringBreakup?: null|RecurringBreakup|RecurringBreakupShape,
+ *   taxIDErrMsg?: string|null,
  *   totalTax?: int|null,
  * }
  */
@@ -77,6 +78,12 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      */
     #[Optional('recurring_breakup', nullable: true)]
     public ?RecurringBreakup $recurringBreakup;
+
+    /**
+     * Error message if tax ID validation failed.
+     */
+    #[Optional('tax_id_err_msg', nullable: true)]
+    public ?string $taxIDErrMsg;
 
     /**
      * Total tax.
@@ -132,6 +139,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         array $productCart,
         int $totalPrice,
         RecurringBreakup|array|null $recurringBreakup = null,
+        ?string $taxIDErrMsg = null,
         ?int $totalTax = null,
     ): self {
         $self = new self;
@@ -143,6 +151,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         $self['totalPrice'] = $totalPrice;
 
         null !== $recurringBreakup && $self['recurringBreakup'] = $recurringBreakup;
+        null !== $taxIDErrMsg && $self['taxIDErrMsg'] = $taxIDErrMsg;
         null !== $totalTax && $self['totalTax'] = $totalTax;
 
         return $self;
@@ -222,6 +231,17 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['recurringBreakup'] = $recurringBreakup;
+
+        return $self;
+    }
+
+    /**
+     * Error message if tax ID validation failed.
+     */
+    public function withTaxIDErrMsg(?string $taxIDErrMsg): self
+    {
+        $self = clone $this;
+        $self['taxIDErrMsg'] = $taxIDErrMsg;
 
         return $self;
     }

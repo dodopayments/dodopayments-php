@@ -12,10 +12,12 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\Product\CreditEntitlement;
 use Dodopayments\Products\Product\DigitalProductDelivery;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\Product\CreditEntitlement
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\Product\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -24,6 +26,7 @@ use Dodopayments\Products\Product\DigitalProductDelivery;
  *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
+ *   creditEntitlements: list<CreditEntitlement|CreditEntitlementShape>,
  *   isRecurring: bool,
  *   licenseKeyEnabled: bool,
  *   metadata: array<string,string>,
@@ -61,6 +64,14 @@ final class Product implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * Attached credit entitlements with settings.
+     *
+     * @var list<CreditEntitlement> $creditEntitlements
+     */
+    #[Required('credit_entitlements', list: CreditEntitlement::class)]
+    public array $creditEntitlements;
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
@@ -172,6 +183,7 @@ final class Product implements BaseModel
      *   brandID: ...,
      *   businessID: ...,
      *   createdAt: ...,
+     *   creditEntitlements: ...,
      *   isRecurring: ...,
      *   licenseKeyEnabled: ...,
      *   metadata: ...,
@@ -189,6 +201,7 @@ final class Product implements BaseModel
      *   ->withBrandID(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
+     *   ->withCreditEntitlements(...)
      *   ->withIsRecurring(...)
      *   ->withLicenseKeyEnabled(...)
      *   ->withMetadata(...)
@@ -208,6 +221,7 @@ final class Product implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<CreditEntitlement|CreditEntitlementShape> $creditEntitlements
      * @param array<string,string> $metadata
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
@@ -219,6 +233,7 @@ final class Product implements BaseModel
         string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
+        array $creditEntitlements,
         bool $isRecurring,
         bool $licenseKeyEnabled,
         array $metadata,
@@ -241,6 +256,7 @@ final class Product implements BaseModel
         $self['brandID'] = $brandID;
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
+        $self['creditEntitlements'] = $creditEntitlements;
         $self['isRecurring'] = $isRecurring;
         $self['licenseKeyEnabled'] = $licenseKeyEnabled;
         $self['metadata'] = $metadata;
@@ -288,6 +304,19 @@ final class Product implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Attached credit entitlements with settings.
+     *
+     * @param list<CreditEntitlement|CreditEntitlementShape> $creditEntitlements
+     */
+    public function withCreditEntitlements(array $creditEntitlements): self
+    {
+        $self = clone $this;
+        $self['creditEntitlements'] = $creditEntitlements;
 
         return $self;
     }

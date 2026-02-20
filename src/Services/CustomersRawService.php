@@ -90,6 +90,7 @@ final class CustomersRawService implements CustomersRawContract
      *
      * @param string $customerID Customer Id
      * @param array{
+     *   email?: string|null,
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
      *   phoneNumber?: string|null,

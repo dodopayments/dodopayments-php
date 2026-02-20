@@ -38,13 +38,13 @@ final class ThemeConfig implements BaseModel
     public ?ThemeModeConfig $dark;
 
     /**
-     * URL for the primary font.
+     * URL for the primary font. Must be a valid https:// URL.
      */
     #[Optional('font_primary_url', nullable: true)]
     public ?string $fontPrimaryURL;
 
     /**
-     * URL for the secondary font.
+     * URL for the secondary font. Must be a valid https:// URL.
      */
     #[Optional('font_secondary_url', nullable: true)]
     public ?string $fontSecondaryURL;
@@ -72,13 +72,13 @@ final class ThemeConfig implements BaseModel
     public ?ThemeModeConfig $light;
 
     /**
-     * Custom text for the pay button (e.g., "Complete Purchase", "Subscribe Now").
+     * Custom text for the pay button (e.g., "Complete Purchase", "Subscribe Now"). Max 100 characters.
      */
     #[Optional('pay_button_text', nullable: true)]
     public ?string $payButtonText;
 
     /**
-     * Border radius for UI elements (e.g., "4px", "0.5rem", "8px").
+     * Border radius for UI elements. Must be a number followed by px, rem, or em (e.g., "4px", "0.5rem", "1em").
      */
     #[Optional(nullable: true)]
     public ?string $radius;
@@ -136,7 +136,7 @@ final class ThemeConfig implements BaseModel
     }
 
     /**
-     * URL for the primary font.
+     * URL for the primary font. Must be a valid https:// URL.
      */
     public function withFontPrimaryURL(?string $fontPrimaryURL): self
     {
@@ -147,7 +147,7 @@ final class ThemeConfig implements BaseModel
     }
 
     /**
-     * URL for the secondary font.
+     * URL for the secondary font. Must be a valid https:// URL.
      */
     public function withFontSecondaryURL(?string $fontSecondaryURL): self
     {
@@ -197,7 +197,7 @@ final class ThemeConfig implements BaseModel
     }
 
     /**
-     * Custom text for the pay button (e.g., "Complete Purchase", "Subscribe Now").
+     * Custom text for the pay button (e.g., "Complete Purchase", "Subscribe Now"). Max 100 characters.
      */
     public function withPayButtonText(?string $payButtonText): self
     {
@@ -208,7 +208,7 @@ final class ThemeConfig implements BaseModel
     }
 
     /**
-     * Border radius for UI elements (e.g., "4px", "0.5rem", "8px").
+     * Border radius for UI elements. Must be a number followed by px, rem, or em (e.g., "4px", "0.5rem", "1em").
      */
     public function withRadius(?string $radius): self
     {

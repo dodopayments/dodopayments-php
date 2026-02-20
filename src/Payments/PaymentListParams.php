@@ -20,6 +20,7 @@ use Dodopayments\Payments\PaymentListParams\Status;
  *   customerID?: string|null,
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
+ *   productID?: string|null,
  *   status?: null|Status|value-of<Status>,
  *   subscriptionID?: string|null,
  * }
@@ -67,6 +68,12 @@ final class PaymentListParams implements BaseModel
     public ?int $pageSize;
 
     /**
+     * Filter by product id.
+     */
+    #[Optional]
+    public ?string $productID;
+
+    /**
      * Filter by status.
      *
      * @var value-of<Status>|null $status
@@ -99,6 +106,7 @@ final class PaymentListParams implements BaseModel
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
+        ?string $productID = null,
         Status|string|null $status = null,
         ?string $subscriptionID = null,
     ): self {
@@ -110,6 +118,7 @@ final class PaymentListParams implements BaseModel
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
+        null !== $productID && $self['productID'] = $productID;
         null !== $status && $self['status'] = $status;
         null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
 
@@ -178,6 +187,17 @@ final class PaymentListParams implements BaseModel
     {
         $self = clone $this;
         $self['pageSize'] = $pageSize;
+
+        return $self;
+    }
+
+    /**
+     * Filter by product id.
+     */
+    public function withProductID(string $productID): self
+    {
+        $self = clone $this;
+        $self['productID'] = $productID;
 
         return $self;
     }
