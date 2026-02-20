@@ -35,6 +35,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
@@ -44,6 +45,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
@@ -140,6 +142,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param array{
      *   billing?: BillingAddress|BillingAddressShape|null,
      *   cancelAtNextBillingDate?: bool|null,
+     *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
      *   customerName?: string|null,
      *   disableOnDemand?: DisableOnDemand|DisableOnDemandShape|null,
      *   metadata?: array<string,string>|null,
@@ -183,6 +186,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
+     *   productID?: string,
      *   status?: Status|value-of<Status>,
      * }|SubscriptionListParams $params
      * @param RequestOpts|null $requestOptions
@@ -213,6 +217,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
                     'customerID' => 'customer_id',
                     'pageNumber' => 'page_number',
                     'pageSize' => 'page_size',
+                    'productID' => 'product_id',
                 ],
             ),
             options: $options,

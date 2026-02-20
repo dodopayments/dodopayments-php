@@ -13,6 +13,7 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
+use Dodopayments\Products\ProductCreateParams\CreditEntitlement;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
@@ -23,7 +24,9 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\ProductsRawContract;
 
 /**
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductCreateParams\CreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductUpdateParams\CreditEntitlement as CreditEntitlementShape1
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -46,6 +49,7 @@ final class ProductsRawService implements ProductsRawContract
      *   taxCategory: TaxCategory|value-of<TaxCategory>,
      *   addons?: list<string>|null,
      *   brandID?: string|null,
+     *   creditEntitlements?: list<CreditEntitlement|CreditEntitlementShape>|null,
      *   description?: string|null,
      *   digitalProductDelivery?: DigitalProductDelivery|DigitalProductDeliveryShape|null,
      *   licenseKeyActivationMessage?: string|null,
@@ -108,6 +112,7 @@ final class ProductsRawService implements ProductsRawContract
      * @param array{
      *   addons?: list<string>|null,
      *   brandID?: string|null,
+     *   creditEntitlements?: list<ProductUpdateParams\CreditEntitlement|CreditEntitlementShape1>|null,
      *   description?: string|null,
      *   digitalProductDelivery?: ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null,
      *   imageID?: string|null,

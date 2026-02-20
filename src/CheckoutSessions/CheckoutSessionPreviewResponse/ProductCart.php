@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse;
 
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart\Addon;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart\CreditEntitlement;
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart\Meter;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
@@ -14,10 +15,12 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 
 /**
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart\CreditEntitlement
  * @phpstan-import-type MeterShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart\Meter
  * @phpstan-import-type AddonShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart\Addon
  *
  * @phpstan-type ProductCartShape = array{
+ *   creditEntitlements: list<CreditEntitlement|CreditEntitlementShape>,
  *   currency: Currency|value-of<Currency>,
  *   discountedPrice: int,
  *   isSubscription: bool,
@@ -42,6 +45,14 @@ final class ProductCart implements BaseModel
 {
     /** @use SdkModel<ProductCartShape> */
     use SdkModel;
+
+    /**
+     * Credit entitlements that will be granted upon purchase.
+     *
+     * @var list<CreditEntitlement> $creditEntitlements
+     */
+    #[Required('credit_entitlements', list: CreditEntitlement::class)]
+    public array $creditEntitlements;
 
     /**
      * the currency in which the calculatiosn were made.
@@ -153,6 +164,7 @@ final class ProductCart implements BaseModel
      * To enforce required parameters use
      * ```
      * ProductCart::with(
+     *   creditEntitlements: ...,
      *   currency: ...,
      *   discountedPrice: ...,
      *   isSubscription: ...,
@@ -172,6 +184,7 @@ final class ProductCart implements BaseModel
      *
      * ```
      * (new ProductCart)
+     *   ->withCreditEntitlements(...)
      *   ->withCurrency(...)
      *   ->withDiscountedPrice(...)
      *   ->withIsSubscription(...)
@@ -196,6 +209,7 @@ final class ProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<CreditEntitlement|CreditEntitlementShape> $creditEntitlements
      * @param Currency|value-of<Currency> $currency
      * @param list<Meter|MeterShape> $meters
      * @param Currency|value-of<Currency> $ogCurrency
@@ -203,6 +217,7 @@ final class ProductCart implements BaseModel
      * @param list<Addon|AddonShape>|null $addons
      */
     public static function with(
+        array $creditEntitlements,
         Currency|string $currency,
         int $discountedPrice,
         bool $isSubscription,
@@ -224,6 +239,7 @@ final class ProductCart implements BaseModel
     ): self {
         $self = new self;
 
+        $self['creditEntitlements'] = $creditEntitlements;
         $self['currency'] = $currency;
         $self['discountedPrice'] = $discountedPrice;
         $self['isSubscription'] = $isSubscription;
@@ -243,6 +259,19 @@ final class ProductCart implements BaseModel
         null !== $discountCycle && $self['discountCycle'] = $discountCycle;
         null !== $name && $self['name'] = $name;
         null !== $tax && $self['tax'] = $tax;
+
+        return $self;
+    }
+
+    /**
+     * Credit entitlements that will be granted upon purchase.
+     *
+     * @param list<CreditEntitlement|CreditEntitlementShape> $creditEntitlements
+     */
+    public function withCreditEntitlements(array $creditEntitlements): self
+    {
+        $self = clone $this;
+        $self['creditEntitlements'] = $creditEntitlements;
 
         return $self;
     }

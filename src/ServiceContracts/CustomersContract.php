@@ -55,6 +55,7 @@ interface CustomersContract
      */
     public function update(
         string $customerID,
+        ?string $email = null,
         ?array $metadata = null,
         ?string $name = null,
         ?string $phoneNumber = null,

@@ -12,12 +12,14 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\ProductUpdateParams\CreditEntitlement;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
 
 /**
  * @see Dodopayments\Services\ProductsService::update()
  *
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductUpdateParams\CreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
@@ -25,6 +27,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  * @phpstan-type ProductUpdateParamsShape = array{
  *   addons?: list<string>|null,
  *   brandID?: string|null,
+ *   creditEntitlements?: list<CreditEntitlement|CreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   imageID?: string|null,
@@ -54,6 +57,19 @@ final class ProductUpdateParams implements BaseModel
 
     #[Optional('brand_id', nullable: true)]
     public ?string $brandID;
+
+    /**
+     * Credit entitlements to update (replaces all existing when present)
+     * Send empty array to remove all, omit field to leave unchanged.
+     *
+     * @var list<CreditEntitlement>|null $creditEntitlements
+     */
+    #[Optional(
+        'credit_entitlements',
+        list: CreditEntitlement::class,
+        nullable: true
+    )]
+    public ?array $creditEntitlements;
 
     /**
      * Description of the product, optional and must be at most 1000 characters.
@@ -150,6 +166,7 @@ final class ProductUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<string>|null $addons
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
@@ -159,6 +176,7 @@ final class ProductUpdateParams implements BaseModel
     public static function with(
         ?array $addons = null,
         ?string $brandID = null,
+        ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $imageID = null,
@@ -175,6 +193,7 @@ final class ProductUpdateParams implements BaseModel
 
         null !== $addons && $self['addons'] = $addons;
         null !== $brandID && $self['brandID'] = $brandID;
+        null !== $creditEntitlements && $self['creditEntitlements'] = $creditEntitlements;
         null !== $description && $self['description'] = $description;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
         null !== $imageID && $self['imageID'] = $imageID;
@@ -207,6 +226,20 @@ final class ProductUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['brandID'] = $brandID;
+
+        return $self;
+    }
+
+    /**
+     * Credit entitlements to update (replaces all existing when present)
+     * Send empty array to remove all, omit field to leave unchanged.
+     *
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
+     */
+    public function withCreditEntitlements(?array $creditEntitlements): self
+    {
+        $self = clone $this;
+        $self['creditEntitlements'] = $creditEntitlements;
 
         return $self;
     }

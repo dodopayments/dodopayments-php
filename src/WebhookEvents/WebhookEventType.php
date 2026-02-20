@@ -62,4 +62,20 @@ enum WebhookEventType: string
     case PAYOUT_FAILED = 'payout.failed';
 
     case PAYOUT_SUCCESS = 'payout.success';
+
+    case CREDIT_ADDED = 'credit.added';
+
+    case CREDIT_DEDUCTED = 'credit.deducted';
+
+    case CREDIT_EXPIRED = 'credit.expired';
+
+    case CREDIT_ROLLED_OVER = 'credit.rolled_over';
+
+    case CREDIT_ROLLOVER_FORFEITED = 'credit.rollover_forfeited';
+
+    case CREDIT_OVERAGE_CHARGED = 'credit.overage_charged';
+
+    case CREDIT_MANUAL_ADJUSTMENT = 'credit.manual_adjustment';
+
+    case CREDIT_BALANCE_LOW = 'credit.balance_low';
 }
