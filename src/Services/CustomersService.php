@@ -104,13 +104,19 @@ final class CustomersService implements CustomersContract
      */
     public function update(
         string $customerID,
+        ?string $email = null,
         ?array $metadata = null,
         ?string $name = null,
         ?string $phoneNumber = null,
         RequestOptions|array|null $requestOptions = null,
     ): Customer {
         $params = Util::removeNulls(
-            ['metadata' => $metadata, 'name' => $name, 'phoneNumber' => $phoneNumber]
+            [
+                'email' => $email,
+                'metadata' => $metadata,
+                'name' => $name,
+                'phoneNumber' => $phoneNumber,
+            ],
         );
 
         // @phpstan-ignore-next-line argument.type

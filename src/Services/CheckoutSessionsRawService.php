@@ -64,6 +64,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   shortLink?: bool,
      *   showSavedPaymentMethods?: bool,
      *   subscriptionData?: SubscriptionData|SubscriptionDataShape|null,
+     *   taxID?: string|null,
      * }|CheckoutSessionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -135,6 +136,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   shortLink?: bool,
      *   showSavedPaymentMethods?: bool,
      *   subscriptionData?: SubscriptionData|SubscriptionDataShape|null,
+     *   taxID?: string|null,
      * }|CheckoutSessionPreviewParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -7,6 +7,8 @@ namespace Dodopayments\WebhookEvents\WebhookPayload;
 use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
@@ -21,9 +23,11 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  * @phpstan-import-type RefundShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Refund
  * @phpstan-import-type DisputeShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute
  * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey
+ * @phpstan-import-type CreditLedgerEntryShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry
+ * @phpstan-import-type CreditBalanceLowShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow
  *
- * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey
- * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape
+ * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow
+ * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|CreditLedgerEntryShape|CreditBalanceLowShape
  */
 final class Data implements ConverterSource
 {
@@ -40,6 +44,8 @@ final class Data implements ConverterSource
             Refund::class,
             Dispute::class,
             LicenseKey::class,
+            CreditLedgerEntry::class,
+            CreditBalanceLow::class,
         ];
     }
 }

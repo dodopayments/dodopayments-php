@@ -46,6 +46,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
  *   subscriptionData?: null|SubscriptionData|SubscriptionDataShape,
+ *   taxID?: string|null,
  * }
  */
 final class CheckoutSessionPreviewParams implements BaseModel
@@ -180,6 +181,12 @@ final class CheckoutSessionPreviewParams implements BaseModel
     public ?SubscriptionData $subscriptionData;
 
     /**
+     * Tax ID for the customer (e.g. VAT number). Requires billing_address with country.
+     */
+    #[Optional('tax_id', nullable: true)]
+    public ?string $taxID;
+
+    /**
      * `new CheckoutSessionPreviewParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -234,6 +241,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         SubscriptionData|array|null $subscriptionData = null,
+        ?string $taxID = null,
     ): self {
         $self = new self;
 
@@ -257,6 +265,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
         null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
         null !== $subscriptionData && $self['subscriptionData'] = $subscriptionData;
+        null !== $taxID && $self['taxID'] = $taxID;
 
         return $self;
     }
@@ -493,6 +502,17 @@ final class CheckoutSessionPreviewParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['subscriptionData'] = $subscriptionData;
+
+        return $self;
+    }
+
+    /**
+     * Tax ID for the customer (e.g. VAT number). Requires billing_address with country.
+     */
+    public function withTaxID(?string $taxID): self
+    {
+        $self = clone $this;
+        $self['taxID'] = $taxID;
 
         return $self;
     }

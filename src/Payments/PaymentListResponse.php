@@ -19,6 +19,7 @@ use Dodopayments\Misc\Currency;
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
+ *   hasLicenseKey: bool,
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   totalAmount: int,
@@ -50,6 +51,9 @@ final class PaymentListResponse implements BaseModel
 
     #[Required('digital_products_delivered')]
     public bool $digitalProductsDelivered;
+
+    #[Required('has_license_key')]
+    public bool $hasLicenseKey;
 
     /** @var array<string,string> $metadata */
     #[Required(map: 'string')]
@@ -97,6 +101,7 @@ final class PaymentListResponse implements BaseModel
      *   currency: ...,
      *   customer: ...,
      *   digitalProductsDelivered: ...,
+     *   hasLicenseKey: ...,
      *   metadata: ...,
      *   paymentID: ...,
      *   totalAmount: ...,
@@ -112,6 +117,7 @@ final class PaymentListResponse implements BaseModel
      *   ->withCurrency(...)
      *   ->withCustomer(...)
      *   ->withDigitalProductsDelivered(...)
+     *   ->withHasLicenseKey(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
      *   ->withTotalAmount(...)
@@ -138,6 +144,7 @@ final class PaymentListResponse implements BaseModel
         Currency|string $currency,
         CustomerLimitedDetails|array $customer,
         bool $digitalProductsDelivered,
+        bool $hasLicenseKey,
         array $metadata,
         string $paymentID,
         int $totalAmount,
@@ -155,6 +162,7 @@ final class PaymentListResponse implements BaseModel
         $self['currency'] = $currency;
         $self['customer'] = $customer;
         $self['digitalProductsDelivered'] = $digitalProductsDelivered;
+        $self['hasLicenseKey'] = $hasLicenseKey;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
         $self['totalAmount'] = $totalAmount;
@@ -212,6 +220,14 @@ final class PaymentListResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['digitalProductsDelivered'] = $digitalProductsDelivered;
+
+        return $self;
+    }
+
+    public function withHasLicenseKey(bool $hasLicenseKey): self
+    {
+        $self = clone $this;
+        $self['hasLicenseKey'] = $hasLicenseKey;
 
         return $self;
     }

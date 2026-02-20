@@ -9,17 +9,20 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
 /**
  * @see Dodopayments\Services\SubscriptionsService::update()
  *
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  *
  * @phpstan-type SubscriptionUpdateParamsShape = array{
  *   billing?: null|BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate?: bool|null,
+ *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
  *   customerName?: string|null,
  *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
  *   metadata?: array<string,string>|null,
@@ -42,6 +45,18 @@ final class SubscriptionUpdateParams implements BaseModel
      */
     #[Optional('cancel_at_next_billing_date', nullable: true)]
     public ?bool $cancelAtNextBillingDate;
+
+    /**
+     * Update credit entitlement cart settings.
+     *
+     * @var list<CreditEntitlementCart>|null $creditEntitlementCart
+     */
+    #[Optional(
+        'credit_entitlement_cart',
+        list: CreditEntitlementCart::class,
+        nullable: true,
+    )]
+    public ?array $creditEntitlementCart;
 
     #[Optional('customer_name', nullable: true)]
     public ?string $customerName;
@@ -74,6 +89,7 @@ final class SubscriptionUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BillingAddress|BillingAddressShape|null $billing
+     * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
@@ -81,6 +97,7 @@ final class SubscriptionUpdateParams implements BaseModel
     public static function with(
         BillingAddress|array|null $billing = null,
         ?bool $cancelAtNextBillingDate = null,
+        ?array $creditEntitlementCart = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
         ?array $metadata = null,
@@ -92,6 +109,7 @@ final class SubscriptionUpdateParams implements BaseModel
 
         null !== $billing && $self['billing'] = $billing;
         null !== $cancelAtNextBillingDate && $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+        null !== $creditEntitlementCart && $self['creditEntitlementCart'] = $creditEntitlementCart;
         null !== $customerName && $self['customerName'] = $customerName;
         null !== $disableOnDemand && $self['disableOnDemand'] = $disableOnDemand;
         null !== $metadata && $self['metadata'] = $metadata;
@@ -121,6 +139,20 @@ final class SubscriptionUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+
+        return $self;
+    }
+
+    /**
+     * Update credit entitlement cart settings.
+     *
+     * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart
+     */
+    public function withCreditEntitlementCart(
+        ?array $creditEntitlementCart
+    ): self {
+        $self = clone $this;
+        $self['creditEntitlementCart'] = $creditEntitlementCart;
 
         return $self;
     }

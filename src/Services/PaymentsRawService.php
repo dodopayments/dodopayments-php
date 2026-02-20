@@ -117,6 +117,7 @@ final class PaymentsRawService implements PaymentsRawContract
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
+     *   productID?: string,
      *   status?: value-of<Status>,
      *   subscriptionID?: string,
      * }|PaymentListParams $params
@@ -148,6 +149,7 @@ final class PaymentsRawService implements PaymentsRawContract
                     'customerID' => 'customer_id',
                     'pageNumber' => 'page_number',
                     'pageSize' => 'page_size',
+                    'productID' => 'product_id',
                     'subscriptionID' => 'subscription_id',
                 ],
             ),

@@ -77,6 +77,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * Defaults to false if not specified.
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
      * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
+     * @param string|null $taxID Tax ID for the customer (e.g. VAT number). Requires billing_address with country.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -101,6 +102,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         SubscriptionData|array|null $subscriptionData = null,
+        ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,
     ): CheckoutSessionResponse {
         $params = Util::removeNulls(
@@ -124,6 +126,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'shortLink' => $shortLink,
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,
                 'subscriptionData' => $subscriptionData,
+                'taxID' => $taxID,
             ],
         );
 
@@ -179,6 +182,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * Defaults to false if not specified.
      * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
      * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
+     * @param string|null $taxID Tax ID for the customer (e.g. VAT number). Requires billing_address with country.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -203,6 +207,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
         SubscriptionData|array|null $subscriptionData = null,
+        ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,
     ): CheckoutSessionPreviewResponse {
         $params = Util::removeNulls(
@@ -226,6 +231,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'shortLink' => $shortLink,
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,
                 'subscriptionData' => $subscriptionData,
+                'taxID' => $taxID,
             ],
         );
 

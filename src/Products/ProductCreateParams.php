@@ -13,6 +13,7 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\ProductCreateParams\CreditEntitlement;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 
 /**
@@ -20,6 +21,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductCreateParams\CreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  *
@@ -29,6 +31,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
  *   brandID?: string|null,
+ *   creditEntitlements?: list<CreditEntitlement|CreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   licenseKeyActivationMessage?: string|null,
@@ -79,6 +82,18 @@ final class ProductCreateParams implements BaseModel
      */
     #[Optional('brand_id', nullable: true)]
     public ?string $brandID;
+
+    /**
+     * Optional credit entitlements to attach (max 3).
+     *
+     * @var list<CreditEntitlement>|null $creditEntitlements
+     */
+    #[Optional(
+        'credit_entitlements',
+        list: CreditEntitlement::class,
+        nullable: true
+    )]
+    public ?array $creditEntitlements;
 
     /**
      * Optional description of the product.
@@ -155,6 +170,7 @@ final class ProductCreateParams implements BaseModel
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
@@ -165,6 +181,7 @@ final class ProductCreateParams implements BaseModel
         TaxCategory|string $taxCategory,
         ?array $addons = null,
         ?string $brandID = null,
+        ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $licenseKeyActivationMessage = null,
@@ -181,6 +198,7 @@ final class ProductCreateParams implements BaseModel
 
         null !== $addons && $self['addons'] = $addons;
         null !== $brandID && $self['brandID'] = $brandID;
+        null !== $creditEntitlements && $self['creditEntitlements'] = $creditEntitlements;
         null !== $description && $self['description'] = $description;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
         null !== $licenseKeyActivationMessage && $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
@@ -250,6 +268,19 @@ final class ProductCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['brandID'] = $brandID;
+
+        return $self;
+    }
+
+    /**
+     * Optional credit entitlements to attach (max 3).
+     *
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
+     */
+    public function withCreditEntitlements(?array $creditEntitlements): self
+    {
+        $self = clone $this;
+        $self['creditEntitlements'] = $creditEntitlements;
 
         return $self;
     }
