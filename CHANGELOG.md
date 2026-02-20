@@ -1,5 +1,19 @@
 # Changelog
 
+## 5.7.0 (2026-02-20)
+
+Full Changelog: [v5.6.0...v5.7.0](https://github.com/dodopayments/dodopayments-php/compare/v5.6.0...v5.7.0)
+
+### Features
+
+* **api:** updated openapi spec to v1.84.0 ([03dbce8](https://github.com/dodopayments/dodopayments-php/commit/03dbce84ff3296b037a80f4897c57798b760c652))
+
+
+### Chores
+
+* **release:** add packagist trigger on published release ([41adac8](https://github.com/dodopayments/dodopayments-php/commit/41adac85c2b0be7edc1407895e2d859c9ac76b97))
+* update mock server docs ([8a5cb20](https://github.com/dodopayments/dodopayments-php/commit/8a5cb2016da5b4d18fbc6a75089642f668b5eb15))
+
 ## 5.6.0 (2026-02-08)
 
 Full Changelog: [v5.5.0...v5.6.0](https://github.com/dodopayments/dodopayments-php/compare/v5.5.0...v5.6.0)
