@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.7.1 (2026-02-27)
+
+Full Changelog: [v5.7.0...v5.7.1](https://github.com/dodopayments/dodopayments-php/compare/v5.7.0...v5.7.1)
+
+### Chores
+
+* **internal:** upgrade phpunit ([2132fd6](https://github.com/dodopayments/dodopayments-php/commit/2132fd659d7a3b73738c126462d0411d0a431255))
+
 ## 5.7.0 (2026-02-20)
 
 Full Changelog: [v5.6.0...v5.7.0](https://github.com/dodopayments/dodopayments-php/compare/v5.6.0...v5.7.0)
