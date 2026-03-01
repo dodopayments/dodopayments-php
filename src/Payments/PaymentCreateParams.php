@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\PaymentCreateParams\ProductCart;
 
 /**
  * @deprecated
@@ -18,12 +19,12 @@ use Dodopayments\Misc\Currency;
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\PaymentCreateParams\ProductCart
  *
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress|BillingAddressShape,
  *   customer: CustomerRequestShape,
- *   productCart: list<OneTimeProductCartItem|OneTimeProductCartItemShape>,
+ *   productCart: list<ProductCart|ProductCartShape>,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
@@ -61,9 +62,9 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @var list<OneTimeProductCartItem> $productCart
+     * @var list<ProductCart> $productCart
      */
-    #[Required('product_cart', list: OneTimeProductCartItem::class)]
+    #[Required('product_cart', list: ProductCart::class)]
     public array $productCart;
 
     /**
@@ -189,7 +190,7 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param BillingAddress|BillingAddressShape $billing
      * @param CustomerRequestShape $customer
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart
+     * @param list<ProductCart|ProductCartShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string,string>|null $metadata
@@ -263,7 +264,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart
+     * @param list<ProductCart|ProductCartShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {

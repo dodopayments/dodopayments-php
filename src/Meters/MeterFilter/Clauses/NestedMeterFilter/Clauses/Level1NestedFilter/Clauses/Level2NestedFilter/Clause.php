@@ -7,7 +7,7 @@ namespace Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Leve
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Clause\Operator;
+use Dodopayments\Meters\FilterOperator;
 
 /**
  * Filter condition with key, operator, and value.
@@ -16,7 +16,9 @@ use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1Nest
  * @phpstan-import-type ValueShape from \Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses\Level2NestedFilter\Clause\Value
  *
  * @phpstan-type ClauseShape = array{
- *   key: string, operator: Operator|value-of<Operator>, value: ValueShape
+ *   key: string,
+ *   operator: FilterOperator|value-of<FilterOperator>,
+ *   value: ValueShape,
  * }
  */
 final class Clause implements BaseModel
@@ -30,8 +32,8 @@ final class Clause implements BaseModel
     #[Required]
     public string $key;
 
-    /** @var value-of<Operator> $operator */
-    #[Required(enum: Operator::class)]
+    /** @var value-of<FilterOperator> $operator */
+    #[Required(enum: FilterOperator::class)]
     public string $operator;
 
     /**
@@ -66,12 +68,12 @@ final class Clause implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Operator|value-of<Operator> $operator
+     * @param FilterOperator|value-of<FilterOperator> $operator
      * @param ValueShape $value
      */
     public static function with(
         string $key,
-        Operator|string $operator,
+        FilterOperator|string $operator,
         string|float|bool $value
     ): self {
         $self = new self;
@@ -95,9 +97,9 @@ final class Clause implements BaseModel
     }
 
     /**
-     * @param Operator|value-of<Operator> $operator
+     * @param FilterOperator|value-of<FilterOperator> $operator
      */
-    public function withOperator(Operator|string $operator): self
+    public function withOperator(FilterOperator|string $operator): self
     {
         $self = clone $this;
         $self['operator'] = $operator;

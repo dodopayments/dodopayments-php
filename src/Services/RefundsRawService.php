@@ -9,12 +9,12 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Payments\RefundListItem;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams;
 use Dodopayments\Refunds\RefundListParams\Status;
-use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\RefundsRawContract;
 
@@ -97,10 +97,11 @@ final class RefundsRawService implements RefundsRawContract
      *   pageNumber?: int,
      *   pageSize?: int,
      *   status?: Status|value-of<Status>,
+     *   subscriptionID?: string,
      * }|RefundListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DefaultPageNumberPagination<RefundListResponse>>
+     * @return BaseResponse<DefaultPageNumberPagination<RefundListItem>>
      *
      * @throws APIException
      */
@@ -125,10 +126,11 @@ final class RefundsRawService implements RefundsRawContract
                     'customerID' => 'customer_id',
                     'pageNumber' => 'page_number',
                     'pageSize' => 'page_size',
+                    'subscriptionID' => 'subscription_id',
                 ],
             ),
             options: $options,
-            convert: RefundListResponse::class,
+            convert: RefundListItem::class,
             page: DefaultPageNumberPagination::class,
         );
     }

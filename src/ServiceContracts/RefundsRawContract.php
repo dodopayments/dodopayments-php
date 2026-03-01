@@ -7,10 +7,10 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Payments\RefundListItem;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
 use Dodopayments\Refunds\RefundListParams;
-use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 
 /**
@@ -54,7 +54,7 @@ interface RefundsRawContract
      * @param array<string,mixed>|RefundListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DefaultPageNumberPagination<RefundListResponse>>
+     * @return BaseResponse<DefaultPageNumberPagination<RefundListItem>>
      *
      * @throws APIException
      */

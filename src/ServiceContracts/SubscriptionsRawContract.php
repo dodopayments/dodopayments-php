@@ -13,6 +13,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionCreateParams;
+use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
@@ -142,6 +143,21 @@ interface SubscriptionsRawContract
         string $subscriptionID,
         array|SubscriptionPreviewChangePlanParams $params,
         RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $subscriptionID Subscription ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<SubscriptionGetCreditUsageResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveCreditUsage(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**

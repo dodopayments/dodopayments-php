@@ -8,8 +8,9 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\CreditEntitlements\CbbOverageBehavior;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Products\Product\CreditEntitlement\ProrationBehavior;
+use Dodopayments\Products\CbbProrationBehavior;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
@@ -21,11 +22,9 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   creditEntitlementName: string,
  *   creditEntitlementUnit: string,
  *   creditsAmount: string,
- *   creditsReduceOverage: bool,
- *   overageChargeAtBilling: bool,
+ *   overageBehavior: CbbOverageBehavior|value-of<CbbOverageBehavior>,
  *   overageEnabled: bool,
- *   preserveOverageAtReset: bool,
- *   prorationBehavior: ProrationBehavior|value-of<ProrationBehavior>,
+ *   prorationBehavior: CbbProrationBehavior|value-of<CbbProrationBehavior>,
  *   rolloverEnabled: bool,
  *   trialCreditsExpireAfterTrial: bool,
  *   currency?: null|Currency|value-of<Currency>,
@@ -76,16 +75,12 @@ final class CreditEntitlement implements BaseModel
     public string $creditsAmount;
 
     /**
-     * Whether new credit grants reduce existing overage.
+     * Controls how overage is handled at billing cycle end.
+     *
+     * @var value-of<CbbOverageBehavior> $overageBehavior
      */
-    #[Required('credits_reduce_overage')]
-    public bool $creditsReduceOverage;
-
-    /**
-     * Whether overage is charged at billing.
-     */
-    #[Required('overage_charge_at_billing')]
-    public bool $overageChargeAtBilling;
+    #[Required('overage_behavior', enum: CbbOverageBehavior::class)]
+    public string $overageBehavior;
 
     /**
      * Whether overage is enabled.
@@ -94,17 +89,11 @@ final class CreditEntitlement implements BaseModel
     public bool $overageEnabled;
 
     /**
-     * Whether to preserve overage balance when credits reset.
-     */
-    #[Required('preserve_overage_at_reset')]
-    public bool $preserveOverageAtReset;
-
-    /**
      * Proration behavior for credit grants during plan changes.
      *
-     * @var value-of<ProrationBehavior> $prorationBehavior
+     * @var value-of<CbbProrationBehavior> $prorationBehavior
      */
-    #[Required('proration_behavior', enum: ProrationBehavior::class)]
+    #[Required('proration_behavior', enum: CbbProrationBehavior::class)]
     public string $prorationBehavior;
 
     /**
@@ -198,10 +187,8 @@ final class CreditEntitlement implements BaseModel
      *   creditEntitlementName: ...,
      *   creditEntitlementUnit: ...,
      *   creditsAmount: ...,
-     *   creditsReduceOverage: ...,
-     *   overageChargeAtBilling: ...,
+     *   overageBehavior: ...,
      *   overageEnabled: ...,
-     *   preserveOverageAtReset: ...,
      *   prorationBehavior: ...,
      *   rolloverEnabled: ...,
      *   trialCreditsExpireAfterTrial: ...,
@@ -217,10 +204,8 @@ final class CreditEntitlement implements BaseModel
      *   ->withCreditEntitlementName(...)
      *   ->withCreditEntitlementUnit(...)
      *   ->withCreditsAmount(...)
-     *   ->withCreditsReduceOverage(...)
-     *   ->withOverageChargeAtBilling(...)
+     *   ->withOverageBehavior(...)
      *   ->withOverageEnabled(...)
-     *   ->withPreserveOverageAtReset(...)
      *   ->withProrationBehavior(...)
      *   ->withRolloverEnabled(...)
      *   ->withTrialCreditsExpireAfterTrial(...)
@@ -236,7 +221,8 @@ final class CreditEntitlement implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ProrationBehavior|value-of<ProrationBehavior> $prorationBehavior
+     * @param CbbOverageBehavior|value-of<CbbOverageBehavior> $overageBehavior
+     * @param CbbProrationBehavior|value-of<CbbProrationBehavior> $prorationBehavior
      * @param Currency|value-of<Currency>|null $currency
      * @param TimeInterval|value-of<TimeInterval>|null $rolloverTimeframeInterval
      */
@@ -246,11 +232,9 @@ final class CreditEntitlement implements BaseModel
         string $creditEntitlementName,
         string $creditEntitlementUnit,
         string $creditsAmount,
-        bool $creditsReduceOverage,
-        bool $overageChargeAtBilling,
+        CbbOverageBehavior|string $overageBehavior,
         bool $overageEnabled,
-        bool $preserveOverageAtReset,
-        ProrationBehavior|string $prorationBehavior,
+        CbbProrationBehavior|string $prorationBehavior,
         bool $rolloverEnabled,
         bool $trialCreditsExpireAfterTrial,
         Currency|string|null $currency = null,
@@ -271,10 +255,8 @@ final class CreditEntitlement implements BaseModel
         $self['creditEntitlementName'] = $creditEntitlementName;
         $self['creditEntitlementUnit'] = $creditEntitlementUnit;
         $self['creditsAmount'] = $creditsAmount;
-        $self['creditsReduceOverage'] = $creditsReduceOverage;
-        $self['overageChargeAtBilling'] = $overageChargeAtBilling;
+        $self['overageBehavior'] = $overageBehavior;
         $self['overageEnabled'] = $overageEnabled;
-        $self['preserveOverageAtReset'] = $preserveOverageAtReset;
         $self['prorationBehavior'] = $prorationBehavior;
         $self['rolloverEnabled'] = $rolloverEnabled;
         $self['trialCreditsExpireAfterTrial'] = $trialCreditsExpireAfterTrial;
@@ -351,24 +333,15 @@ final class CreditEntitlement implements BaseModel
     }
 
     /**
-     * Whether new credit grants reduce existing overage.
+     * Controls how overage is handled at billing cycle end.
+     *
+     * @param CbbOverageBehavior|value-of<CbbOverageBehavior> $overageBehavior
      */
-    public function withCreditsReduceOverage(bool $creditsReduceOverage): self
-    {
-        $self = clone $this;
-        $self['creditsReduceOverage'] = $creditsReduceOverage;
-
-        return $self;
-    }
-
-    /**
-     * Whether overage is charged at billing.
-     */
-    public function withOverageChargeAtBilling(
-        bool $overageChargeAtBilling
+    public function withOverageBehavior(
+        CbbOverageBehavior|string $overageBehavior
     ): self {
         $self = clone $this;
-        $self['overageChargeAtBilling'] = $overageChargeAtBilling;
+        $self['overageBehavior'] = $overageBehavior;
 
         return $self;
     }
@@ -385,24 +358,12 @@ final class CreditEntitlement implements BaseModel
     }
 
     /**
-     * Whether to preserve overage balance when credits reset.
-     */
-    public function withPreserveOverageAtReset(
-        bool $preserveOverageAtReset
-    ): self {
-        $self = clone $this;
-        $self['preserveOverageAtReset'] = $preserveOverageAtReset;
-
-        return $self;
-    }
-
-    /**
      * Proration behavior for credit grants during plan changes.
      *
-     * @param ProrationBehavior|value-of<ProrationBehavior> $prorationBehavior
+     * @param CbbProrationBehavior|value-of<CbbProrationBehavior> $prorationBehavior
      */
     public function withProrationBehavior(
-        ProrationBehavior|string $prorationBehavior
+        CbbProrationBehavior|string $prorationBehavior
     ): self {
         $self = clone $this;
         $self['prorationBehavior'] = $prorationBehavior;

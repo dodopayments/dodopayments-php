@@ -7,6 +7,7 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
+use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
@@ -86,6 +87,19 @@ interface CustomersContract
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function listCreditEntitlements(
+        string $customerID,
+        RequestOptions|array|null $requestOptions = null
+    ): CustomerListCreditEntitlementsResponse;
 
     /**
      * @api

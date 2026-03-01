@@ -4,9 +4,11 @@ namespace Tests\Services;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Util;
+use Dodopayments\CreditEntitlements\CbbOverageBehavior;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
+use Dodopayments\Products\CbbProrationBehavior;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
@@ -74,17 +76,15 @@ final class ProductsTest extends TestCase
                 [
                     'creditEntitlementID' => 'credit_entitlement_id',
                     'creditsAmount' => 'credits_amount',
-                    'creditsReduceOverage' => true,
                     'currency' => Currency::AED,
                     'expiresAfterDays' => 0,
                     'lowBalanceThresholdPercent' => 0,
                     'maxRolloverCount' => 0,
-                    'overageChargeAtBilling' => true,
+                    'overageBehavior' => CbbOverageBehavior::FORGIVE_AT_RESET,
                     'overageEnabled' => true,
                     'overageLimit' => 'overage_limit',
-                    'preserveOverageAtReset' => true,
                     'pricePerUnit' => 'price_per_unit',
-                    'prorationBehavior' => 'prorate',
+                    'prorationBehavior' => CbbProrationBehavior::PRORATE,
                     'rolloverEnabled' => true,
                     'rolloverPercentage' => 0,
                     'rolloverTimeframeCount' => 0,

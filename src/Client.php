@@ -10,6 +10,7 @@ use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BalancesService;
 use Dodopayments\Services\BrandsService;
 use Dodopayments\Services\CheckoutSessionsService;
+use Dodopayments\Services\CreditEntitlementsService;
 use Dodopayments\Services\CustomersService;
 use Dodopayments\Services\DiscountsService;
 use Dodopayments\Services\DisputesService;
@@ -144,6 +145,11 @@ class Client extends BaseClient
     public BalancesService $balances;
 
     /**
+     * @api
+     */
+    public CreditEntitlementsService $creditEntitlements;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -200,6 +206,7 @@ class Client extends BaseClient
         $this->usageEvents = new UsageEventsService($this);
         $this->meters = new MetersService($this);
         $this->balances = new BalancesService($this);
+        $this->creditEntitlements = new CreditEntitlementsService($this);
     }
 
     /** @return array<string,string> */
