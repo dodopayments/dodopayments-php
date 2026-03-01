@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Disputes\DisputeStatus;
 use Dodopayments\Misc\Currency;
 
 /**
@@ -23,10 +24,12 @@ use Dodopayments\Misc\Currency;
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   totalAmount: int,
+ *   disputeStatus?: null|DisputeStatus|value-of<DisputeStatus>,
  *   invoiceID?: string|null,
  *   invoiceURL?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
+ *   refundStatus?: null|PaymentRefundStatus|value-of<PaymentRefundStatus>,
  *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
  * }
@@ -66,6 +69,14 @@ final class PaymentListResponse implements BaseModel
     public int $totalAmount;
 
     /**
+     * The most recent dispute status for this payment. None if no disputes exist.
+     *
+     * @var value-of<DisputeStatus>|null $disputeStatus
+     */
+    #[Optional('dispute_status', enum: DisputeStatus::class, nullable: true)]
+    public ?string $disputeStatus;
+
+    /**
      * Invoice ID for this payment. Uses India-specific invoice ID if available.
      */
     #[Optional('invoice_id', nullable: true)]
@@ -82,6 +93,14 @@ final class PaymentListResponse implements BaseModel
 
     #[Optional('payment_method_type', nullable: true)]
     public ?string $paymentMethodType;
+
+    /**
+     * Summary of the refund status for this payment. None if no succeeded refunds exist.
+     *
+     * @var value-of<PaymentRefundStatus>|null $refundStatus
+     */
+    #[Optional('refund_status', enum: PaymentRefundStatus::class, nullable: true)]
+    public ?string $refundStatus;
 
     /** @var value-of<IntentStatus>|null $status */
     #[Optional(enum: IntentStatus::class, nullable: true)]
@@ -136,6 +155,8 @@ final class PaymentListResponse implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
+     * @param DisputeStatus|value-of<DisputeStatus>|null $disputeStatus
+     * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
@@ -148,10 +169,12 @@ final class PaymentListResponse implements BaseModel
         array $metadata,
         string $paymentID,
         int $totalAmount,
+        DisputeStatus|string|null $disputeStatus = null,
         ?string $invoiceID = null,
         ?string $invoiceURL = null,
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
+        PaymentRefundStatus|string|null $refundStatus = null,
         IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
     ): self {
@@ -167,10 +190,12 @@ final class PaymentListResponse implements BaseModel
         $self['paymentID'] = $paymentID;
         $self['totalAmount'] = $totalAmount;
 
+        null !== $disputeStatus && $self['disputeStatus'] = $disputeStatus;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
         null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
         null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
+        null !== $refundStatus && $self['refundStatus'] = $refundStatus;
         null !== $status && $self['status'] = $status;
         null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
 
@@ -260,6 +285,20 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
+     * The most recent dispute status for this payment. None if no disputes exist.
+     *
+     * @param DisputeStatus|value-of<DisputeStatus>|null $disputeStatus
+     */
+    public function withDisputeStatus(
+        DisputeStatus|string|null $disputeStatus
+    ): self {
+        $self = clone $this;
+        $self['disputeStatus'] = $disputeStatus;
+
+        return $self;
+    }
+
+    /**
      * Invoice ID for this payment. Uses India-specific invoice ID if available.
      */
     public function withInvoiceID(?string $invoiceID): self
@@ -293,6 +332,20 @@ final class PaymentListResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethodType'] = $paymentMethodType;
+
+        return $self;
+    }
+
+    /**
+     * Summary of the refund status for this payment. None if no succeeded refunds exist.
+     *
+     * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
+     */
+    public function withRefundStatus(
+        PaymentRefundStatus|string|null $refundStatus
+    ): self {
+        $self = clone $this;
+        $self['refundStatus'] = $refundStatus;
 
         return $self;
     }

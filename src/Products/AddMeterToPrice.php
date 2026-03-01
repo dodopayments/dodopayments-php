@@ -12,13 +12,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type AddMeterToPriceShape = array{
  *   meterID: string,
- *   pricePerUnit: string,
  *   creditEntitlementID?: string|null,
  *   description?: string|null,
  *   freeThreshold?: int|null,
  *   measurementUnit?: string|null,
  *   meterUnitsPerCredit?: string|null,
  *   name?: string|null,
+ *   pricePerUnit?: string|null,
  * }
  */
 final class AddMeterToPrice implements BaseModel
@@ -28,12 +28,6 @@ final class AddMeterToPrice implements BaseModel
 
     #[Required('meter_id')]
     public string $meterID;
-
-    /**
-     * The price per unit in lowest denomination. Must be greater than zero. Supports up to 5 digits before decimal point and 12 decimal places.
-     */
-    #[Required('price_per_unit')]
-    public string $pricePerUnit;
 
     /**
      * Optional credit entitlement ID to link this meter to for credit-based billing.
@@ -69,17 +63,23 @@ final class AddMeterToPrice implements BaseModel
     public ?string $name;
 
     /**
+     * The price per unit in lowest denomination. Must be greater than zero. Supports up to 5 digits before decimal point and 12 decimal places.
+     */
+    #[Optional('price_per_unit', nullable: true)]
+    public ?string $pricePerUnit;
+
+    /**
      * `new AddMeterToPrice()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * AddMeterToPrice::with(meterID: ..., pricePerUnit: ...)
+     * AddMeterToPrice::with(meterID: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new AddMeterToPrice)->withMeterID(...)->withPricePerUnit(...)
+     * (new AddMeterToPrice)->withMeterID(...)
      * ```
      */
     public function __construct()
@@ -94,18 +94,17 @@ final class AddMeterToPrice implements BaseModel
      */
     public static function with(
         string $meterID,
-        string $pricePerUnit,
         ?string $creditEntitlementID = null,
         ?string $description = null,
         ?int $freeThreshold = null,
         ?string $measurementUnit = null,
         ?string $meterUnitsPerCredit = null,
         ?string $name = null,
+        ?string $pricePerUnit = null,
     ): self {
         $self = new self;
 
         $self['meterID'] = $meterID;
-        $self['pricePerUnit'] = $pricePerUnit;
 
         null !== $creditEntitlementID && $self['creditEntitlementID'] = $creditEntitlementID;
         null !== $description && $self['description'] = $description;
@@ -113,6 +112,7 @@ final class AddMeterToPrice implements BaseModel
         null !== $measurementUnit && $self['measurementUnit'] = $measurementUnit;
         null !== $meterUnitsPerCredit && $self['meterUnitsPerCredit'] = $meterUnitsPerCredit;
         null !== $name && $self['name'] = $name;
+        null !== $pricePerUnit && $self['pricePerUnit'] = $pricePerUnit;
 
         return $self;
     }
@@ -121,17 +121,6 @@ final class AddMeterToPrice implements BaseModel
     {
         $self = clone $this;
         $self['meterID'] = $meterID;
-
-        return $self;
-    }
-
-    /**
-     * The price per unit in lowest denomination. Must be greater than zero. Supports up to 5 digits before decimal point and 12 decimal places.
-     */
-    public function withPricePerUnit(string $pricePerUnit): self
-    {
-        $self = clone $this;
-        $self['pricePerUnit'] = $pricePerUnit;
 
         return $self;
     }
@@ -195,6 +184,17 @@ final class AddMeterToPrice implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * The price per unit in lowest denomination. Must be greater than zero. Supports up to 5 digits before decimal point and 12 decimal places.
+     */
+    public function withPricePerUnit(?string $pricePerUnit): self
+    {
+        $self = clone $this;
+        $self['pricePerUnit'] = $pricePerUnit;
 
         return $self;
     }

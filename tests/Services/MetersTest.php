@@ -5,6 +5,8 @@ namespace Tests\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Meters\Conjunction;
+use Dodopayments\Meters\FilterOperator;
 use Dodopayments\Meters\Meter;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -53,10 +55,18 @@ final class MetersTest extends TestCase
             description: 'description',
             filter: [
                 'clauses' => [
-                    ['key' => 'user_id', 'operator' => 'equals', 'value' => 'user123'],
-                    ['key' => 'amount', 'operator' => 'greater_than', 'value' => 100],
+                    [
+                        'key' => 'user_id',
+                        'operator' => FilterOperator::EQUALS,
+                        'value' => 'user123',
+                    ],
+                    [
+                        'key' => 'amount',
+                        'operator' => FilterOperator::GREATER_THAN,
+                        'value' => 100,
+                    ],
                 ],
-                'conjunction' => 'and',
+                'conjunction' => Conjunction::AND,
             ],
         );
 

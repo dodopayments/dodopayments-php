@@ -9,6 +9,14 @@ use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 
 /**
+ * @phpstan-import-type CreditAddedWebhookEventShape from \Dodopayments\Webhooks\CreditAddedWebhookEvent
+ * @phpstan-import-type CreditBalanceLowWebhookEventShape from \Dodopayments\Webhooks\CreditBalanceLowWebhookEvent
+ * @phpstan-import-type CreditDeductedWebhookEventShape from \Dodopayments\Webhooks\CreditDeductedWebhookEvent
+ * @phpstan-import-type CreditExpiredWebhookEventShape from \Dodopayments\Webhooks\CreditExpiredWebhookEvent
+ * @phpstan-import-type CreditManualAdjustmentWebhookEventShape from \Dodopayments\Webhooks\CreditManualAdjustmentWebhookEvent
+ * @phpstan-import-type CreditOverageChargedWebhookEventShape from \Dodopayments\Webhooks\CreditOverageChargedWebhookEvent
+ * @phpstan-import-type CreditRolledOverWebhookEventShape from \Dodopayments\Webhooks\CreditRolledOverWebhookEvent
+ * @phpstan-import-type CreditRolloverForfeitedWebhookEventShape from \Dodopayments\Webhooks\CreditRolloverForfeitedWebhookEvent
  * @phpstan-import-type DisputeAcceptedWebhookEventShape from \Dodopayments\Webhooks\DisputeAcceptedWebhookEvent
  * @phpstan-import-type DisputeCancelledWebhookEventShape from \Dodopayments\Webhooks\DisputeCancelledWebhookEvent
  * @phpstan-import-type DisputeChallengedWebhookEventShape from \Dodopayments\Webhooks\DisputeChallengedWebhookEvent
@@ -32,8 +40,8 @@ use Dodopayments\Core\Conversion\Contracts\ConverterSource;
  * @phpstan-import-type SubscriptionRenewedWebhookEventShape from \Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent
  * @phpstan-import-type SubscriptionUpdatedWebhookEventShape from \Dodopayments\Webhooks\SubscriptionUpdatedWebhookEvent
  *
- * @phpstan-type UnwrapWebhookEventVariants = DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent
- * @phpstan-type UnwrapWebhookEventShape = UnwrapWebhookEventVariants|DisputeAcceptedWebhookEventShape|DisputeCancelledWebhookEventShape|DisputeChallengedWebhookEventShape|DisputeExpiredWebhookEventShape|DisputeLostWebhookEventShape|DisputeOpenedWebhookEventShape|DisputeWonWebhookEventShape|LicenseKeyCreatedWebhookEventShape|PaymentCancelledWebhookEventShape|PaymentFailedWebhookEventShape|PaymentProcessingWebhookEventShape|PaymentSucceededWebhookEventShape|RefundFailedWebhookEventShape|RefundSucceededWebhookEventShape|SubscriptionActiveWebhookEventShape|SubscriptionCancelledWebhookEventShape|SubscriptionExpiredWebhookEventShape|SubscriptionFailedWebhookEventShape|SubscriptionOnHoldWebhookEventShape|SubscriptionPlanChangedWebhookEventShape|SubscriptionRenewedWebhookEventShape|SubscriptionUpdatedWebhookEventShape
+ * @phpstan-type UnwrapWebhookEventVariants = CreditAddedWebhookEvent|CreditBalanceLowWebhookEvent|CreditDeductedWebhookEvent|CreditExpiredWebhookEvent|CreditManualAdjustmentWebhookEvent|CreditOverageChargedWebhookEvent|CreditRolledOverWebhookEvent|CreditRolloverForfeitedWebhookEvent|DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent
+ * @phpstan-type UnwrapWebhookEventShape = UnwrapWebhookEventVariants|CreditAddedWebhookEventShape|CreditBalanceLowWebhookEventShape|CreditDeductedWebhookEventShape|CreditExpiredWebhookEventShape|CreditManualAdjustmentWebhookEventShape|CreditOverageChargedWebhookEventShape|CreditRolledOverWebhookEventShape|CreditRolloverForfeitedWebhookEventShape|DisputeAcceptedWebhookEventShape|DisputeCancelledWebhookEventShape|DisputeChallengedWebhookEventShape|DisputeExpiredWebhookEventShape|DisputeLostWebhookEventShape|DisputeOpenedWebhookEventShape|DisputeWonWebhookEventShape|LicenseKeyCreatedWebhookEventShape|PaymentCancelledWebhookEventShape|PaymentFailedWebhookEventShape|PaymentProcessingWebhookEventShape|PaymentSucceededWebhookEventShape|RefundFailedWebhookEventShape|RefundSucceededWebhookEventShape|SubscriptionActiveWebhookEventShape|SubscriptionCancelledWebhookEventShape|SubscriptionExpiredWebhookEventShape|SubscriptionFailedWebhookEventShape|SubscriptionOnHoldWebhookEventShape|SubscriptionPlanChangedWebhookEventShape|SubscriptionRenewedWebhookEventShape|SubscriptionUpdatedWebhookEventShape
  */
 final class UnwrapWebhookEvent implements ConverterSource
 {
@@ -45,6 +53,14 @@ final class UnwrapWebhookEvent implements ConverterSource
     public static function variants(): array
     {
         return [
+            CreditAddedWebhookEvent::class,
+            CreditBalanceLowWebhookEvent::class,
+            CreditDeductedWebhookEvent::class,
+            CreditExpiredWebhookEvent::class,
+            CreditManualAdjustmentWebhookEvent::class,
+            CreditOverageChargedWebhookEvent::class,
+            CreditRolledOverWebhookEvent::class,
+            CreditRolloverForfeitedWebhookEvent::class,
             DisputeAcceptedWebhookEvent::class,
             DisputeCancelledWebhookEvent::class,
             DisputeChallengedWebhookEvent::class,

@@ -11,8 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Payments\CustomFieldResponse;
 use Dodopayments\Subscriptions\Subscription\CreditEntitlementCart;
-use Dodopayments\Subscriptions\Subscription\CustomFieldResponse;
 use Dodopayments\Subscriptions\Subscription\Meter;
 use Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart;
 
@@ -25,7 +25,7 @@ use Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart;
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type MeterCreditEntitlementCartShape from \Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart
  * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\Subscription\Meter
- * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Subscriptions\Subscription\CustomFieldResponse
+ * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  *
  * @phpstan-type SubscriptionShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,

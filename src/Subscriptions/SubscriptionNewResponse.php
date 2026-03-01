@@ -9,12 +9,12 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
+use Dodopayments\Payments\OneTimeProductCartItem;
 
 /**
  * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
- * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type SubscriptionNewResponseShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
@@ -26,7 +26,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  *   clientSecret?: string|null,
  *   discountID?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
- *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
+ *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  *   paymentLink?: string|null,
  * }
  */
@@ -97,11 +97,11 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * One time products associated with the purchase of subscription.
      *
-     * @var list<OneTimeProductCart>|null $oneTimeProductCart
+     * @var list<OneTimeProductCartItem>|null $oneTimeProductCart
      */
     #[Optional(
         'one_time_product_cart',
-        list: OneTimeProductCart::class,
+        list: OneTimeProductCartItem::class,
         nullable: true
     )]
     public ?array $oneTimeProductCart;
@@ -152,7 +152,7 @@ final class SubscriptionNewResponse implements BaseModel
      * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public static function with(
         array $addons,
@@ -294,7 +294,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * One time products associated with the purchase of subscription.
      *
-     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

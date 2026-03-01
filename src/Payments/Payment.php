@@ -11,18 +11,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\Payment\CustomFieldResponse;
-use Dodopayments\Payments\Payment\ProductCart;
-use Dodopayments\Payments\Payment\Refund;
-use Dodopayments\Payments\Payment\RefundStatus;
 
 /**
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
- * @phpstan-import-type RefundShape from \Dodopayments\Payments\Payment\Refund
- * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\Payment\CustomFieldResponse
- * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
+ * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
+ * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type PaymentShape = array{
  *   billing: BillingAddress|BillingAddressShape,
@@ -35,7 +31,7 @@ use Dodopayments\Payments\Payment\RefundStatus;
  *   disputes: list<Dispute|DisputeShape>,
  *   metadata: array<string,string>,
  *   paymentID: string,
- *   refunds: list<Refund|RefundShape>,
+ *   refunds: list<RefundListItem|RefundListItemShape>,
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
@@ -54,8 +50,8 @@ use Dodopayments\Payments\Payment\RefundStatus;
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
- *   productCart?: list<ProductCart|ProductCartShape>|null,
- *   refundStatus?: null|RefundStatus|value-of<RefundStatus>,
+ *   productCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
+ *   refundStatus?: null|PaymentRefundStatus|value-of<PaymentRefundStatus>,
  *   settlementTax?: int|null,
  *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
@@ -137,9 +133,9 @@ final class Payment implements BaseModel
     /**
      * List of refunds issued for this payment.
      *
-     * @var list<Refund> $refunds
+     * @var list<RefundListItem> $refunds
      */
-    #[Required(list: Refund::class)]
+    #[Required(list: RefundListItem::class)]
     public array $refunds;
 
     /**
@@ -266,17 +262,21 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @var list<ProductCart>|null $productCart
+     * @var list<OneTimeProductCartItem>|null $productCart
      */
-    #[Optional('product_cart', list: ProductCart::class, nullable: true)]
+    #[Optional(
+        'product_cart',
+        list: OneTimeProductCartItem::class,
+        nullable: true
+    )]
     public ?array $productCart;
 
     /**
      * Summary of the refund status for this payment. None if no succeeded refunds exist.
      *
-     * @var value-of<RefundStatus>|null $refundStatus
+     * @var value-of<PaymentRefundStatus>|null $refundStatus
      */
-    #[Optional('refund_status', enum: RefundStatus::class, nullable: true)]
+    #[Optional('refund_status', enum: PaymentRefundStatus::class, nullable: true)]
     public ?string $refundStatus;
 
     /**
@@ -371,12 +371,12 @@ final class Payment implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<Dispute|DisputeShape> $disputes
      * @param array<string,string> $metadata
-     * @param list<Refund|RefundShape> $refunds
+     * @param list<RefundListItem|RefundListItemShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
-     * @param list<ProductCart|ProductCartShape>|null $productCart
-     * @param RefundStatus|value-of<RefundStatus>|null $refundStatus
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
+     * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
     public static function with(
@@ -410,7 +410,7 @@ final class Payment implements BaseModel
         ?string $paymentMethod = null,
         ?string $paymentMethodType = null,
         ?array $productCart = null,
-        RefundStatus|string|null $refundStatus = null,
+        PaymentRefundStatus|string|null $refundStatus = null,
         ?int $settlementTax = null,
         IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
@@ -584,7 +584,7 @@ final class Payment implements BaseModel
     /**
      * List of refunds issued for this payment.
      *
-     * @param list<Refund|RefundShape> $refunds
+     * @param list<RefundListItem|RefundListItemShape> $refunds
      */
     public function withRefunds(array $refunds): self
     {
@@ -806,7 +806,7 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @param list<ProductCart|ProductCartShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {
@@ -819,10 +819,10 @@ final class Payment implements BaseModel
     /**
      * Summary of the refund status for this payment. None if no succeeded refunds exist.
      *
-     * @param RefundStatus|value-of<RefundStatus>|null $refundStatus
+     * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      */
     public function withRefundStatus(
-        RefundStatus|string|null $refundStatus
+        PaymentRefundStatus|string|null $refundStatus
     ): self {
         $self = clone $this;
         $self['refundStatus'] = $refundStatus;

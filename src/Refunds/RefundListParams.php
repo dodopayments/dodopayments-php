@@ -20,6 +20,7 @@ use Dodopayments\Refunds\RefundListParams\Status;
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
  *   status?: null|Status|value-of<Status>,
+ *   subscriptionID?: string|null,
  * }
  */
 final class RefundListParams implements BaseModel
@@ -66,6 +67,12 @@ final class RefundListParams implements BaseModel
     #[Optional(enum: Status::class)]
     public ?string $status;
 
+    /**
+     * Filter by subscription id.
+     */
+    #[Optional]
+    public ?string $subscriptionID;
+
     public function __construct()
     {
         $this->initialize();
@@ -85,6 +92,7 @@ final class RefundListParams implements BaseModel
         ?int $pageNumber = null,
         ?int $pageSize = null,
         Status|string|null $status = null,
+        ?string $subscriptionID = null,
     ): self {
         $self = new self;
 
@@ -94,6 +102,7 @@ final class RefundListParams implements BaseModel
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $status && $self['status'] = $status;
+        null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
 
         return $self;
     }
@@ -162,6 +171,17 @@ final class RefundListParams implements BaseModel
     {
         $self = clone $this;
         $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * Filter by subscription id.
+     */
+    public function withSubscriptionID(string $subscriptionID): self
+    {
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
 
         return $self;
     }

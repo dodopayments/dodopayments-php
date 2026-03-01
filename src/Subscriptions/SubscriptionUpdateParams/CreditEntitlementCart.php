@@ -17,7 +17,6 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   expiresAfterDays?: int|null,
  *   lowBalanceThresholdPercent?: int|null,
  *   maxRolloverCount?: int|null,
- *   overageChargeAtBilling?: bool|null,
  *   overageEnabled?: bool|null,
  *   overageLimit?: string|null,
  *   rolloverEnabled?: bool|null,
@@ -45,9 +44,6 @@ final class CreditEntitlementCart implements BaseModel
 
     #[Optional('max_rollover_count', nullable: true)]
     public ?int $maxRolloverCount;
-
-    #[Optional('overage_charge_at_billing', nullable: true)]
-    public ?bool $overageChargeAtBilling;
 
     #[Optional('overage_enabled', nullable: true)]
     public ?bool $overageEnabled;
@@ -104,7 +100,6 @@ final class CreditEntitlementCart implements BaseModel
         ?int $expiresAfterDays = null,
         ?int $lowBalanceThresholdPercent = null,
         ?int $maxRolloverCount = null,
-        ?bool $overageChargeAtBilling = null,
         ?bool $overageEnabled = null,
         ?string $overageLimit = null,
         ?bool $rolloverEnabled = null,
@@ -120,7 +115,6 @@ final class CreditEntitlementCart implements BaseModel
         null !== $expiresAfterDays && $self['expiresAfterDays'] = $expiresAfterDays;
         null !== $lowBalanceThresholdPercent && $self['lowBalanceThresholdPercent'] = $lowBalanceThresholdPercent;
         null !== $maxRolloverCount && $self['maxRolloverCount'] = $maxRolloverCount;
-        null !== $overageChargeAtBilling && $self['overageChargeAtBilling'] = $overageChargeAtBilling;
         null !== $overageEnabled && $self['overageEnabled'] = $overageEnabled;
         null !== $overageLimit && $self['overageLimit'] = $overageLimit;
         null !== $rolloverEnabled && $self['rolloverEnabled'] = $rolloverEnabled;
@@ -168,15 +162,6 @@ final class CreditEntitlementCart implements BaseModel
     {
         $self = clone $this;
         $self['maxRolloverCount'] = $maxRolloverCount;
-
-        return $self;
-    }
-
-    public function withOverageChargeAtBilling(
-        ?bool $overageChargeAtBilling
-    ): self {
-        $self = clone $this;
-        $self['overageChargeAtBilling'] = $overageChargeAtBilling;
 
         return $self;
     }
