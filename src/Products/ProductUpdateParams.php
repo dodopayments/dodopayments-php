@@ -28,7 +28,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *   brandID?: string|null,
  *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
- *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
+ *   digitalProductDelivery?: null|\Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape,
  *   imageID?: string|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
@@ -260,7 +260,7 @@ final class ProductUpdateParams implements BaseModel
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
-        DigitalProductDelivery|array|null $digitalProductDelivery
+        DigitalProductDelivery|array|null $digitalProductDelivery,
     ): self {
         $self = clone $this;
         $self['digitalProductDelivery'] = $digitalProductDelivery;

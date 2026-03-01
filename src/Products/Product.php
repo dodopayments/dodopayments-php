@@ -12,21 +12,19 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
-use Dodopayments\Products\Product\CreditEntitlement;
-use Dodopayments\Products\Product\DigitalProductDelivery;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
- * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\Product\CreditEntitlement
+ * @phpstan-import-type CreditEntitlementMappingResponseShape from \Dodopayments\Products\CreditEntitlementMappingResponse
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
- * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\Product\DigitalProductDelivery
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  *
  * @phpstan-type ProductShape = array{
  *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   creditEntitlements: list<CreditEntitlement|CreditEntitlementShape>,
+ *   creditEntitlements: list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape>,
  *   isRecurring: bool,
  *   licenseKeyEnabled: bool,
  *   metadata: array<string,string>,
@@ -68,9 +66,12 @@ final class Product implements BaseModel
     /**
      * Attached credit entitlements with settings.
      *
-     * @var list<CreditEntitlement> $creditEntitlements
+     * @var list<CreditEntitlementMappingResponse> $creditEntitlements
      */
-    #[Required('credit_entitlements', list: CreditEntitlement::class)]
+    #[Required(
+        'credit_entitlements',
+        list: CreditEntitlementMappingResponse::class
+    )]
     public array $creditEntitlements;
 
     /**
@@ -221,7 +222,7 @@ final class Product implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<CreditEntitlement|CreditEntitlementShape> $creditEntitlements
+     * @param list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape> $creditEntitlements
      * @param array<string,string> $metadata
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
@@ -311,7 +312,7 @@ final class Product implements BaseModel
     /**
      * Attached credit entitlements with settings.
      *
-     * @param list<CreditEntitlement|CreditEntitlementShape> $creditEntitlements
+     * @param list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape> $creditEntitlements
      */
     public function withCreditEntitlements(array $creditEntitlements): self
     {
