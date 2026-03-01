@@ -11,6 +11,7 @@ use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
+use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
@@ -163,6 +164,31 @@ final class CustomersRawService implements CustomersRawContract
             options: $options,
             convert: Customer::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * List all credit entitlements for a customer with their current balances
+     *
+     * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<CustomerListCreditEntitlementsResponse>
+     *
+     * @throws APIException
+     */
+    public function listCreditEntitlements(
+        string $customerID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['customers/%1$s/credit-entitlements', $customerID],
+            options: $requestOptions,
+            convert: CustomerListCreditEntitlementsResponse::class,
         );
     }
 

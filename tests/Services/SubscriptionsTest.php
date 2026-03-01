@@ -10,6 +10,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
+use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
@@ -225,6 +226,17 @@ final class SubscriptionsTest extends TestCase
             SubscriptionPreviewChangePlanResponse::class,
             $result
         );
+    }
+
+    #[Test]
+    public function testRetrieveCreditUsage(): void
+    {
+        $result = $this->client->subscriptions->retrieveCreditUsage(
+            'subscription_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SubscriptionGetCreditUsageResponse::class, $result);
     }
 
     #[Test]

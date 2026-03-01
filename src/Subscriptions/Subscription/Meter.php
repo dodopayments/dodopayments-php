@@ -19,8 +19,8 @@ use Dodopayments\Misc\Currency;
  *   measurementUnit: string,
  *   meterID: string,
  *   name: string,
- *   pricePerUnit: string,
  *   description?: string|null,
+ *   pricePerUnit?: string|null,
  * }
  */
 final class Meter implements BaseModel
@@ -44,11 +44,11 @@ final class Meter implements BaseModel
     #[Required]
     public string $name;
 
-    #[Required('price_per_unit')]
-    public string $pricePerUnit;
-
     #[Optional(nullable: true)]
     public ?string $description;
+
+    #[Optional('price_per_unit', nullable: true)]
+    public ?string $pricePerUnit;
 
     /**
      * `new Meter()` is missing required properties by the API.
@@ -61,7 +61,6 @@ final class Meter implements BaseModel
      *   measurementUnit: ...,
      *   meterID: ...,
      *   name: ...,
-     *   pricePerUnit: ...,
      * )
      * ```
      *
@@ -74,7 +73,6 @@ final class Meter implements BaseModel
      *   ->withMeasurementUnit(...)
      *   ->withMeterID(...)
      *   ->withName(...)
-     *   ->withPricePerUnit(...)
      * ```
      */
     public function __construct()
@@ -95,8 +93,8 @@ final class Meter implements BaseModel
         string $measurementUnit,
         string $meterID,
         string $name,
-        string $pricePerUnit,
         ?string $description = null,
+        ?string $pricePerUnit = null,
     ): self {
         $self = new self;
 
@@ -105,9 +103,9 @@ final class Meter implements BaseModel
         $self['measurementUnit'] = $measurementUnit;
         $self['meterID'] = $meterID;
         $self['name'] = $name;
-        $self['pricePerUnit'] = $pricePerUnit;
 
         null !== $description && $self['description'] = $description;
+        null !== $pricePerUnit && $self['pricePerUnit'] = $pricePerUnit;
 
         return $self;
     }
@@ -155,18 +153,18 @@ final class Meter implements BaseModel
         return $self;
     }
 
-    public function withPricePerUnit(string $pricePerUnit): self
-    {
-        $self = clone $this;
-        $self['pricePerUnit'] = $pricePerUnit;
-
-        return $self;
-    }
-
     public function withDescription(?string $description): self
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    public function withPricePerUnit(?string $pricePerUnit): self
+    {
+        $self = clone $this;
+        $self['pricePerUnit'] = $pricePerUnit;
 
         return $self;
     }

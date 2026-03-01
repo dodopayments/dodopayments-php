@@ -11,7 +11,6 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsRawContract;
@@ -25,6 +24,8 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionCreateParams;
+use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
+use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
@@ -44,7 +45,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 /**
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
@@ -77,7 +78,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>,
      *   onDemand?: OnDemandSubscription|OnDemandSubscriptionShape|null,
-     *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
+     *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
      *   paymentLink?: bool|null,
      *   paymentMethodID?: string|null,
      *   redirectImmediately?: bool,
@@ -337,6 +338,29 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
             body: (object) $parsed,
             options: $options,
             convert: SubscriptionPreviewChangePlanResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $subscriptionID Subscription ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<SubscriptionGetCreditUsageResponse>
+     *
+     * @throws APIException
+     */
+    public function retrieveCreditUsage(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['subscriptions/%1$s/credit-usage', $subscriptionID],
+            options: $requestOptions,
+            convert: SubscriptionGetCreditUsageResponse::class,
         );
     }
 

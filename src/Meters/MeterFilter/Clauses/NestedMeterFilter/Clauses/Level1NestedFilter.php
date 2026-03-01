@@ -7,8 +7,8 @@ namespace Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Meters\Conjunction;
 use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Clauses;
-use Dodopayments\Meters\MeterFilter\Clauses\NestedMeterFilter\Clauses\Level1NestedFilter\Conjunction;
 
 /**
  * Level 2 nested filter.

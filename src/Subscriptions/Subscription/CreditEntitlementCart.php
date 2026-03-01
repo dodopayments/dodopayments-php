@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\CreditEntitlements\CbbOverageBehavior;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
@@ -18,7 +19,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   creditEntitlementName: string,
  *   creditsAmount: string,
  *   overageBalance: string,
- *   overageChargeAtBilling: bool,
+ *   overageBehavior: CbbOverageBehavior|value-of<CbbOverageBehavior>,
  *   overageEnabled: bool,
  *   productID: string,
  *   remainingBalance: string,
@@ -53,8 +54,20 @@ final class CreditEntitlementCart implements BaseModel
     #[Required('overage_balance')]
     public string $overageBalance;
 
-    #[Required('overage_charge_at_billing')]
-    public bool $overageChargeAtBilling;
+    /**
+     * Controls how overage is handled at the end of a billing cycle.
+     *
+     * | Preset                  | Charge at billing | Credits reduce overage | Preserve overage at reset |
+     * |-------------------------|:-----------------:|:---------------------:|:-------------------------:|
+     * | `forgive_at_reset`      | No                | No                    | No                        |
+     * | `invoice_at_billing`    | Yes               | No                    | No                        |
+     * | `carry_deficit`         | No                | No                    | Yes                       |
+     * | `carry_deficit_auto_repay` | No             | Yes                   | Yes                       |
+     *
+     * @var value-of<CbbOverageBehavior> $overageBehavior
+     */
+    #[Required('overage_behavior', enum: CbbOverageBehavior::class)]
+    public string $overageBehavior;
 
     #[Required('overage_enabled')]
     public bool $overageEnabled;
@@ -113,7 +126,7 @@ final class CreditEntitlementCart implements BaseModel
      *   creditEntitlementName: ...,
      *   creditsAmount: ...,
      *   overageBalance: ...,
-     *   overageChargeAtBilling: ...,
+     *   overageBehavior: ...,
      *   overageEnabled: ...,
      *   productID: ...,
      *   remainingBalance: ...,
@@ -130,7 +143,7 @@ final class CreditEntitlementCart implements BaseModel
      *   ->withCreditEntitlementName(...)
      *   ->withCreditsAmount(...)
      *   ->withOverageBalance(...)
-     *   ->withOverageChargeAtBilling(...)
+     *   ->withOverageBehavior(...)
      *   ->withOverageEnabled(...)
      *   ->withProductID(...)
      *   ->withRemainingBalance(...)
@@ -148,6 +161,7 @@ final class CreditEntitlementCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param CbbOverageBehavior|value-of<CbbOverageBehavior> $overageBehavior
      * @param TimeInterval|value-of<TimeInterval>|null $rolloverTimeframeInterval
      */
     public static function with(
@@ -155,7 +169,7 @@ final class CreditEntitlementCart implements BaseModel
         string $creditEntitlementName,
         string $creditsAmount,
         string $overageBalance,
-        bool $overageChargeAtBilling,
+        CbbOverageBehavior|string $overageBehavior,
         bool $overageEnabled,
         string $productID,
         string $remainingBalance,
@@ -175,7 +189,7 @@ final class CreditEntitlementCart implements BaseModel
         $self['creditEntitlementName'] = $creditEntitlementName;
         $self['creditsAmount'] = $creditsAmount;
         $self['overageBalance'] = $overageBalance;
-        $self['overageChargeAtBilling'] = $overageChargeAtBilling;
+        $self['overageBehavior'] = $overageBehavior;
         $self['overageEnabled'] = $overageEnabled;
         $self['productID'] = $productID;
         $self['remainingBalance'] = $remainingBalance;
@@ -229,11 +243,23 @@ final class CreditEntitlementCart implements BaseModel
         return $self;
     }
 
-    public function withOverageChargeAtBilling(
-        bool $overageChargeAtBilling
+    /**
+     * Controls how overage is handled at the end of a billing cycle.
+     *
+     * | Preset                  | Charge at billing | Credits reduce overage | Preserve overage at reset |
+     * |-------------------------|:-----------------:|:---------------------:|:-------------------------:|
+     * | `forgive_at_reset`      | No                | No                    | No                        |
+     * | `invoice_at_billing`    | Yes               | No                    | No                        |
+     * | `carry_deficit`         | No                | No                    | Yes                       |
+     * | `carry_deficit_auto_repay` | No             | Yes                   | Yes                       |
+     *
+     * @param CbbOverageBehavior|value-of<CbbOverageBehavior> $overageBehavior
+     */
+    public function withOverageBehavior(
+        CbbOverageBehavior|string $overageBehavior
     ): self {
         $self = clone $this;
-        $self['overageChargeAtBilling'] = $overageChargeAtBilling;
+        $self['overageBehavior'] = $overageBehavior;
 
         return $self;
     }

@@ -11,9 +11,9 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentCreateParams;
+use Dodopayments\Payments\PaymentCreateParams\ProductCart;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListParams\Status;
@@ -26,7 +26,7 @@ use Dodopayments\ServiceContracts\PaymentsRawContract;
 /**
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\PaymentCreateParams\ProductCart
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class PaymentsRawService implements PaymentsRawContract
@@ -45,7 +45,7 @@ final class PaymentsRawService implements PaymentsRawContract
      * @param array{
      *   billing: BillingAddress|BillingAddressShape,
      *   customer: CustomerRequestShape,
-     *   productCart: list<OneTimeProductCartItem|OneTimeProductCartItemShape>,
+     *   productCart: list<ProductCart|ProductCartShape>,
      *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
      *   billingCurrency?: value-of<Currency>,
      *   discountCode?: string|null,

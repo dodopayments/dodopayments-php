@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Meters\MeterFilter\Clauses;
-use Dodopayments\Meters\MeterFilter\Conjunction;
 
 /**
  * A filter structure that combines multiple conditions with logical conjunctions (AND/OR).

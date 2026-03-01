@@ -13,7 +13,6 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
-use Dodopayments\Products\ProductCreateParams\CreditEntitlement;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 
 /**
@@ -21,7 +20,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
- * @phpstan-import-type CreditEntitlementShape from \Dodopayments\Products\ProductCreateParams\CreditEntitlement
+ * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  *
@@ -31,7 +30,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   addons?: list<string>|null,
  *   brandID?: string|null,
- *   creditEntitlements?: list<CreditEntitlement|CreditEntitlementShape>|null,
+ *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   licenseKeyActivationMessage?: string|null,
@@ -86,11 +85,11 @@ final class ProductCreateParams implements BaseModel
     /**
      * Optional credit entitlements to attach (max 3).
      *
-     * @var list<CreditEntitlement>|null $creditEntitlements
+     * @var list<AttachCreditEntitlement>|null $creditEntitlements
      */
     #[Optional(
         'credit_entitlements',
-        list: CreditEntitlement::class,
+        list: AttachCreditEntitlement::class,
         nullable: true
     )]
     public ?array $creditEntitlements;
@@ -170,7 +169,7 @@ final class ProductCreateParams implements BaseModel
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
-     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
+     * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
@@ -275,7 +274,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Optional credit entitlements to attach (max 3).
      *
-     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
+     * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      */
     public function withCreditEntitlements(?array $creditEntitlements): self
     {

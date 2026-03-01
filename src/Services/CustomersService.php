@@ -9,6 +9,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
+use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersContract;
@@ -162,6 +163,26 @@ final class CustomersService implements CustomersContract
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->list(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * List all credit entitlements for a customer with their current balances
+     *
+     * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function listCreditEntitlements(
+        string $customerID,
+        RequestOptions|array|null $requestOptions = null
+    ): CustomerListCreditEntitlementsResponse {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->listCreditEntitlements($customerID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

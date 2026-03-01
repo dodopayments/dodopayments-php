@@ -6,10 +6,10 @@ namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Payments\RefundListItem;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 use Dodopayments\Refunds\RefundListParams\Status;
-use Dodopayments\Refunds\RefundListResponse;
 use Dodopayments\RequestOptions;
 
 /**
@@ -59,9 +59,10 @@ interface RefundsContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param Status|value-of<Status> $status Filter by status
+     * @param string $subscriptionID Filter by subscription id
      * @param RequestOpts|null $requestOptions
      *
-     * @return DefaultPageNumberPagination<RefundListResponse>
+     * @return DefaultPageNumberPagination<RefundListItem>
      *
      * @throws APIException
      */
@@ -72,6 +73,7 @@ interface RefundsContract
         ?int $pageNumber = null,
         ?int $pageSize = null,
         Status|string|null $status = null,
+        ?string $subscriptionID = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
 }
