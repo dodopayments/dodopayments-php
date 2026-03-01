@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Subscriptions\Subscription;
+namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
@@ -13,7 +13,7 @@ use Dodopayments\Misc\Currency;
 /**
  * Response struct representing usage-based meter cart details for a subscription.
  *
- * @phpstan-type MeterShape = array{
+ * @phpstan-type MeterCartResponseItemShape = array{
  *   currency: Currency|value-of<Currency>,
  *   freeThreshold: int,
  *   measurementUnit: string,
@@ -23,9 +23,9 @@ use Dodopayments\Misc\Currency;
  *   pricePerUnit?: string|null,
  * }
  */
-final class Meter implements BaseModel
+final class MeterCartResponseItem implements BaseModel
 {
-    /** @use SdkModel<MeterShape> */
+    /** @use SdkModel<MeterCartResponseItemShape> */
     use SdkModel;
 
     /** @var value-of<Currency> $currency */
@@ -51,11 +51,11 @@ final class Meter implements BaseModel
     public ?string $pricePerUnit;
 
     /**
-     * `new Meter()` is missing required properties by the API.
+     * `new MeterCartResponseItem()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Meter::with(
+     * MeterCartResponseItem::with(
      *   currency: ...,
      *   freeThreshold: ...,
      *   measurementUnit: ...,
@@ -67,7 +67,7 @@ final class Meter implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Meter)
+     * (new MeterCartResponseItem)
      *   ->withCurrency(...)
      *   ->withFreeThreshold(...)
      *   ->withMeasurementUnit(...)

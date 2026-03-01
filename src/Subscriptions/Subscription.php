@@ -12,19 +12,16 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
-use Dodopayments\Subscriptions\Subscription\CreditEntitlementCart;
-use Dodopayments\Subscriptions\Subscription\Meter;
-use Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart;
 
 /**
  * Response struct representing subscription details.
  *
  * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
- * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\Subscription\CreditEntitlementCart
+ * @phpstan-import-type CreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\CreditEntitlementCartResponse
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
- * @phpstan-import-type MeterCreditEntitlementCartShape from \Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart
- * @phpstan-import-type MeterShape from \Dodopayments\Subscriptions\Subscription\Meter
+ * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
+ * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  *
  * @phpstan-type SubscriptionShape = array{
@@ -32,12 +29,12 @@ use Dodopayments\Subscriptions\Subscription\MeterCreditEntitlementCart;
  *   billing: BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
- *   creditEntitlementCart: list<CreditEntitlementCart|CreditEntitlementCartShape>,
+ *   creditEntitlementCart: list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape>,
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,string>,
- *   meterCreditEntitlementCart: list<MeterCreditEntitlementCart|MeterCreditEntitlementCartShape>,
- *   meters: list<Meter|MeterShape>,
+ *   meterCreditEntitlementCart: list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape>,
+ *   meters: list<MeterCartResponseItem|MeterCartResponseItemShape>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
  *   paymentFrequencyCount: int,
@@ -95,9 +92,12 @@ final class Subscription implements BaseModel
     /**
      * Credit entitlement cart settings for this subscription.
      *
-     * @var list<CreditEntitlementCart> $creditEntitlementCart
+     * @var list<CreditEntitlementCartResponse> $creditEntitlementCart
      */
-    #[Required('credit_entitlement_cart', list: CreditEntitlementCart::class)]
+    #[Required(
+        'credit_entitlement_cart',
+        list: CreditEntitlementCartResponse::class
+    )]
     public array $creditEntitlementCart;
 
     /**
@@ -125,20 +125,20 @@ final class Subscription implements BaseModel
     /**
      * Meter credit entitlement cart settings for this subscription.
      *
-     * @var list<MeterCreditEntitlementCart> $meterCreditEntitlementCart
+     * @var list<MeterCreditEntitlementCartResponse> $meterCreditEntitlementCart
      */
     #[Required(
         'meter_credit_entitlement_cart',
-        list: MeterCreditEntitlementCart::class
+        list: MeterCreditEntitlementCartResponse::class,
     )]
     public array $meterCreditEntitlementCart;
 
     /**
      * Meters associated with this subscription (for usage-based billing).
      *
-     * @var list<Meter> $meters
+     * @var list<MeterCartResponseItem> $meters
      */
-    #[Required(list: Meter::class)]
+    #[Required(list: MeterCartResponseItem::class)]
     public array $meters;
 
     /**
@@ -354,12 +354,12 @@ final class Subscription implements BaseModel
      *
      * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param BillingAddress|BillingAddressShape $billing
-     * @param list<CreditEntitlementCart|CreditEntitlementCartShape> $creditEntitlementCart
+     * @param list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape> $creditEntitlementCart
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
-     * @param list<MeterCreditEntitlementCart|MeterCreditEntitlementCartShape> $meterCreditEntitlementCart
-     * @param list<Meter|MeterShape> $meters
+     * @param list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape> $meterCreditEntitlementCart
+     * @param list<MeterCartResponseItem|MeterCartResponseItemShape> $meters
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
@@ -488,7 +488,7 @@ final class Subscription implements BaseModel
     /**
      * Credit entitlement cart settings for this subscription.
      *
-     * @param list<CreditEntitlementCart|CreditEntitlementCartShape> $creditEntitlementCart
+     * @param list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape> $creditEntitlementCart
      */
     public function withCreditEntitlementCart(
         array $creditEntitlementCart
@@ -541,7 +541,7 @@ final class Subscription implements BaseModel
     /**
      * Meter credit entitlement cart settings for this subscription.
      *
-     * @param list<MeterCreditEntitlementCart|MeterCreditEntitlementCartShape> $meterCreditEntitlementCart
+     * @param list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape> $meterCreditEntitlementCart
      */
     public function withMeterCreditEntitlementCart(
         array $meterCreditEntitlementCart
@@ -555,7 +555,7 @@ final class Subscription implements BaseModel
     /**
      * Meters associated with this subscription (for usage-based billing).
      *
-     * @param list<Meter|MeterShape> $meters
+     * @param list<MeterCartResponseItem|MeterCartResponseItemShape> $meters
      */
     public function withMeters(array $meters): self
     {

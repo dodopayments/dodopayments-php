@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Products\Product;
+namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
@@ -10,13 +10,12 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\CreditEntitlements\CbbOverageBehavior;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Products\CbbProrationBehavior;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * Response struct for credit entitlement mapping.
  *
- * @phpstan-type CreditEntitlementShape = array{
+ * @phpstan-type CreditEntitlementMappingResponseShape = array{
  *   id: string,
  *   creditEntitlementID: string,
  *   creditEntitlementName: string,
@@ -39,9 +38,9 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   trialCredits?: string|null,
  * }
  */
-final class CreditEntitlement implements BaseModel
+final class CreditEntitlementMappingResponse implements BaseModel
 {
-    /** @use SdkModel<CreditEntitlementShape> */
+    /** @use SdkModel<CreditEntitlementMappingResponseShape> */
     use SdkModel;
 
     /**
@@ -177,11 +176,11 @@ final class CreditEntitlement implements BaseModel
     public ?string $trialCredits;
 
     /**
-     * `new CreditEntitlement()` is missing required properties by the API.
+     * `new CreditEntitlementMappingResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CreditEntitlement::with(
+     * CreditEntitlementMappingResponse::with(
      *   id: ...,
      *   creditEntitlementID: ...,
      *   creditEntitlementName: ...,
@@ -198,7 +197,7 @@ final class CreditEntitlement implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CreditEntitlement)
+     * (new CreditEntitlementMappingResponse)
      *   ->withID(...)
      *   ->withCreditEntitlementID(...)
      *   ->withCreditEntitlementName(...)
