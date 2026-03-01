@@ -5,5 +5,5 @@ declare(strict_types=1);
 namespace Dodopayments;
 
 // x-release-please-start-version
-const VERSION = '5.7.1';
+const VERSION = '5.8.0';
 // x-release-please-end
