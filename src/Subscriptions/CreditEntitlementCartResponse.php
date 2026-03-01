@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Subscriptions\Subscription;
+namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\CreditEntitlements\CbbOverageBehavior;
-use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * Response struct representing credit entitlement cart details for a subscription.
  *
- * @phpstan-type CreditEntitlementCartShape = array{
+ * @phpstan-type CreditEntitlementCartResponseShape = array{
  *   creditEntitlementID: string,
  *   creditEntitlementName: string,
  *   creditsAmount: string,
@@ -34,9 +33,9 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   rolloverTimeframeInterval?: null|TimeInterval|value-of<TimeInterval>,
  * }
  */
-final class CreditEntitlementCart implements BaseModel
+final class CreditEntitlementCartResponse implements BaseModel
 {
-    /** @use SdkModel<CreditEntitlementCartShape> */
+    /** @use SdkModel<CreditEntitlementCartResponseShape> */
     use SdkModel;
 
     #[Required('credit_entitlement_id')]
@@ -117,11 +116,11 @@ final class CreditEntitlementCart implements BaseModel
     public ?string $rolloverTimeframeInterval;
 
     /**
-     * `new CreditEntitlementCart()` is missing required properties by the API.
+     * `new CreditEntitlementCartResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CreditEntitlementCart::with(
+     * CreditEntitlementCartResponse::with(
      *   creditEntitlementID: ...,
      *   creditEntitlementName: ...,
      *   creditsAmount: ...,
@@ -138,7 +137,7 @@ final class CreditEntitlementCart implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new CreditEntitlementCart)
+     * (new CreditEntitlementCartResponse)
      *   ->withCreditEntitlementID(...)
      *   ->withCreditEntitlementName(...)
      *   ->withCreditsAmount(...)

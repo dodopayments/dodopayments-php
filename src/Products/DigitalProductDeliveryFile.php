@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Products\Product\DigitalProductDelivery;
+namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type FileShape = array{fileID: string, fileName: string, url: string}
+ * @phpstan-type DigitalProductDeliveryFileShape = array{
+ *   fileID: string, fileName: string, url: string
+ * }
  */
-final class File implements BaseModel
+final class DigitalProductDeliveryFile implements BaseModel
 {
-    /** @use SdkModel<FileShape> */
+    /** @use SdkModel<DigitalProductDeliveryFileShape> */
     use SdkModel;
 
     #[Required('file_id')]
@@ -26,17 +28,20 @@ final class File implements BaseModel
     public string $url;
 
     /**
-     * `new File()` is missing required properties by the API.
+     * `new DigitalProductDeliveryFile()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * File::with(fileID: ..., fileName: ..., url: ...)
+     * DigitalProductDeliveryFile::with(fileID: ..., fileName: ..., url: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new File)->withFileID(...)->withFileName(...)->withURL(...)
+     * (new DigitalProductDeliveryFile)
+     *   ->withFileID(...)
+     *   ->withFileName(...)
+     *   ->withURL(...)
      * ```
      */
     public function __construct()

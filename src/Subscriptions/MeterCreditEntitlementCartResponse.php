@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Subscriptions\Subscription;
+namespace Dodopayments\Subscriptions;
 
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -11,7 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Response struct representing meter-credit entitlement mapping cart details for a subscription.
  *
- * @phpstan-type MeterCreditEntitlementCartShape = array{
+ * @phpstan-type MeterCreditEntitlementCartResponseShape = array{
  *   creditEntitlementID: string,
  *   meterID: string,
  *   meterName: string,
@@ -19,9 +19,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   productID: string,
  * }
  */
-final class MeterCreditEntitlementCart implements BaseModel
+final class MeterCreditEntitlementCartResponse implements BaseModel
 {
-    /** @use SdkModel<MeterCreditEntitlementCartShape> */
+    /** @use SdkModel<MeterCreditEntitlementCartResponseShape> */
     use SdkModel;
 
     #[Required('credit_entitlement_id')]
@@ -40,11 +40,11 @@ final class MeterCreditEntitlementCart implements BaseModel
     public string $productID;
 
     /**
-     * `new MeterCreditEntitlementCart()` is missing required properties by the API.
+     * `new MeterCreditEntitlementCartResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * MeterCreditEntitlementCart::with(
+     * MeterCreditEntitlementCartResponse::with(
      *   creditEntitlementID: ...,
      *   meterID: ...,
      *   meterName: ...,
@@ -56,7 +56,7 @@ final class MeterCreditEntitlementCart implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new MeterCreditEntitlementCart)
+     * (new MeterCreditEntitlementCartResponse)
      *   ->withCreditEntitlementID(...)
      *   ->withMeterID(...)
      *   ->withMeterName(...)
