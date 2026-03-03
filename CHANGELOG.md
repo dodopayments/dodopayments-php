@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.8.1 (2026-03-03)
+
+Full Changelog: [v5.8.0...v5.8.1](https://github.com/dodopayments/dodopayments-php/compare/v5.8.0...v5.8.1)
+
+### Chores
+
+* **internal:** codegen related update ([b30329a](https://github.com/dodopayments/dodopayments-php/commit/b30329a3abb4a1a3d49aa6f38cc90f38215f0c3a))
+
 ## 5.8.0 (2026-03-01)
 
 Full Changelog: [v5.7.1...v5.8.0](https://github.com/dodopayments/dodopayments-php/compare/v5.7.1...v5.8.0)
