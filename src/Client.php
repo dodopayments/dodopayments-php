@@ -39,6 +39,8 @@ class Client extends BaseClient
 {
     public string $bearerToken;
 
+    public string $webhookKey;
+
     /**
      * @api
      */
@@ -154,10 +156,15 @@ class Client extends BaseClient
      */
     public function __construct(
         ?string $bearerToken = null,
+        ?string $webhookKey = null,
         ?string $baseUrl = null,
     ) {
-        $this->bearerToken
-            = (string) ($bearerToken ?? getenv('DODO_PAYMENTS_API_KEY'));
+        $this->bearerToken = (string) ($bearerToken ?? Util::getenv(
+            'DODO_PAYMENTS_API_KEY'
+        ));
+        $this->webhookKey = (string) ($webhookKey ?? Util::getenv(
+            'DODO_PAYMENTS_WEBHOOK_KEY'
+        ));
 
         $baseUrl ??=
             getenv('DODO_PAYMENTS_BASE_URL') ?: 'https://live.dodopayments.com';

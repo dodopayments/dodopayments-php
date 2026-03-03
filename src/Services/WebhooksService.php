@@ -5,15 +5,51 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Conversion;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Exceptions\WebhookException;
 use Dodopayments\Core\Util;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\WebhooksContract;
 use Dodopayments\Services\Webhooks\HeadersService;
 use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\Webhooks\CreditAddedWebhookEvent;
+use Dodopayments\Webhooks\CreditBalanceLowWebhookEvent;
+use Dodopayments\Webhooks\CreditDeductedWebhookEvent;
+use Dodopayments\Webhooks\CreditExpiredWebhookEvent;
+use Dodopayments\Webhooks\CreditManualAdjustmentWebhookEvent;
+use Dodopayments\Webhooks\CreditOverageChargedWebhookEvent;
+use Dodopayments\Webhooks\CreditRolledOverWebhookEvent;
+use Dodopayments\Webhooks\CreditRolloverForfeitedWebhookEvent;
+use Dodopayments\Webhooks\DisputeAcceptedWebhookEvent;
+use Dodopayments\Webhooks\DisputeCancelledWebhookEvent;
+use Dodopayments\Webhooks\DisputeChallengedWebhookEvent;
+use Dodopayments\Webhooks\DisputeExpiredWebhookEvent;
+use Dodopayments\Webhooks\DisputeLostWebhookEvent;
+use Dodopayments\Webhooks\DisputeOpenedWebhookEvent;
+use Dodopayments\Webhooks\DisputeWonWebhookEvent;
+use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent;
+use Dodopayments\Webhooks\PaymentCancelledWebhookEvent;
+use Dodopayments\Webhooks\PaymentFailedWebhookEvent;
+use Dodopayments\Webhooks\PaymentProcessingWebhookEvent;
+use Dodopayments\Webhooks\PaymentSucceededWebhookEvent;
+use Dodopayments\Webhooks\RefundFailedWebhookEvent;
+use Dodopayments\Webhooks\RefundSucceededWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionActiveWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionExpiredWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionFailedWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionOnHoldWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionPlanChangedWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionUpdatedWebhookEvent;
+use Dodopayments\Webhooks\UnsafeUnwrapWebhookEvent;
+use Dodopayments\Webhooks\UnwrapWebhookEvent;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
+use StandardWebhooks\Exception\WebhookVerificationException;
+use StandardWebhooks\Webhook;
 
 /**
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
@@ -214,5 +250,68 @@ final class WebhooksService implements WebhooksContract
         $response = $this->raw->retrieveSecret($webhookID, requestOptions: $requestOptions);
 
         return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @param array<string,string|list<string>>|null $headers
+     *
+     * @throws WebhookException
+     */
+    public function unsafeUnwrap(
+        string $body,
+        ?array $headers = null,
+        ?string $secret = null
+    ): CreditAddedWebhookEvent|CreditBalanceLowWebhookEvent|CreditDeductedWebhookEvent|CreditExpiredWebhookEvent|CreditManualAdjustmentWebhookEvent|CreditOverageChargedWebhookEvent|CreditRolledOverWebhookEvent|CreditRolloverForfeitedWebhookEvent|DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent {
+        try {
+            $decoded = Util::decodeJson($body);
+
+            // @phpstan-ignore return.type
+            return Conversion::coerce(UnsafeUnwrapWebhookEvent::class, value: $decoded);
+        } catch (\Throwable $e) {
+            throw new WebhookException('Error parsing webhook body', previous: $e);
+        }
+    }
+
+    /**
+     * @api
+     *
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @param array<string,string|list<string>>|null $headers
+     *
+     * @throws WebhookException
+     */
+    public function unwrap(
+        string $body,
+        ?array $headers = null,
+        ?string $secret = null
+    ): CreditAddedWebhookEvent|CreditBalanceLowWebhookEvent|CreditDeductedWebhookEvent|CreditExpiredWebhookEvent|CreditManualAdjustmentWebhookEvent|CreditOverageChargedWebhookEvent|CreditRolledOverWebhookEvent|CreditRolloverForfeitedWebhookEvent|DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent {
+        if (null !== $headers) {
+            $secret = $secret ?? ($this->client->webhookKey ?: null);
+            if (null === $secret) {
+                throw new WebhookException('Webhook key must not be null in order to unwrap');
+            }
+
+            try {
+                $flatHeaders = array_map(fn (string|array $v): string => is_array($v) ? $v[0] : $v, $headers);
+                $webhook = new Webhook($secret);
+                $webhook->verify($body, $flatHeaders);
+            } catch (WebhookVerificationException $e) {
+                throw new WebhookException('Could not verify webhook event signature', previous: $e);
+            }
+        }
+
+        try {
+            $decoded = Util::decodeJson($body);
+
+            // @phpstan-ignore return.type
+            return Conversion::coerce(UnwrapWebhookEvent::class, value: $decoded);
+        } catch (\Throwable $e) {
+            throw new WebhookException('Error parsing webhook body', previous: $e);
+        }
     }
 }
