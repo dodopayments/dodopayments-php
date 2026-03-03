@@ -5,9 +5,40 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Exceptions\WebhookException;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\WebhookEvents\WebhookEventType;
+use Dodopayments\Webhooks\CreditAddedWebhookEvent;
+use Dodopayments\Webhooks\CreditBalanceLowWebhookEvent;
+use Dodopayments\Webhooks\CreditDeductedWebhookEvent;
+use Dodopayments\Webhooks\CreditExpiredWebhookEvent;
+use Dodopayments\Webhooks\CreditManualAdjustmentWebhookEvent;
+use Dodopayments\Webhooks\CreditOverageChargedWebhookEvent;
+use Dodopayments\Webhooks\CreditRolledOverWebhookEvent;
+use Dodopayments\Webhooks\CreditRolloverForfeitedWebhookEvent;
+use Dodopayments\Webhooks\DisputeAcceptedWebhookEvent;
+use Dodopayments\Webhooks\DisputeCancelledWebhookEvent;
+use Dodopayments\Webhooks\DisputeChallengedWebhookEvent;
+use Dodopayments\Webhooks\DisputeExpiredWebhookEvent;
+use Dodopayments\Webhooks\DisputeLostWebhookEvent;
+use Dodopayments\Webhooks\DisputeOpenedWebhookEvent;
+use Dodopayments\Webhooks\DisputeWonWebhookEvent;
+use Dodopayments\Webhooks\LicenseKeyCreatedWebhookEvent;
+use Dodopayments\Webhooks\PaymentCancelledWebhookEvent;
+use Dodopayments\Webhooks\PaymentFailedWebhookEvent;
+use Dodopayments\Webhooks\PaymentProcessingWebhookEvent;
+use Dodopayments\Webhooks\PaymentSucceededWebhookEvent;
+use Dodopayments\Webhooks\RefundFailedWebhookEvent;
+use Dodopayments\Webhooks\RefundSucceededWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionActiveWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionExpiredWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionFailedWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionOnHoldWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionPlanChangedWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionRenewedWebhookEvent;
+use Dodopayments\Webhooks\SubscriptionUpdatedWebhookEvent;
 use Dodopayments\Webhooks\WebhookDetails;
 use Dodopayments\Webhooks\WebhookGetSecretResponse;
 
@@ -124,4 +155,34 @@ interface WebhooksContract
         string $webhookID,
         RequestOptions|array|null $requestOptions = null
     ): WebhookGetSecretResponse;
+
+    /**
+     * @api
+     *
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @param array<string,string|list<string>>|null $headers
+     *
+     * @throws WebhookException
+     */
+    public function unsafeUnwrap(
+        string $body,
+        ?array $headers = null,
+        ?string $secret = null
+    ): CreditAddedWebhookEvent|CreditBalanceLowWebhookEvent|CreditDeductedWebhookEvent|CreditExpiredWebhookEvent|CreditManualAdjustmentWebhookEvent|CreditOverageChargedWebhookEvent|CreditRolledOverWebhookEvent|CreditRolloverForfeitedWebhookEvent|DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent;
+
+    /**
+     * @api
+     *
+     * Unwraps a webhook event from its JSON representation.
+     *
+     * @param array<string,string|list<string>>|null $headers
+     *
+     * @throws WebhookException
+     */
+    public function unwrap(
+        string $body,
+        ?array $headers = null,
+        ?string $secret = null
+    ): CreditAddedWebhookEvent|CreditBalanceLowWebhookEvent|CreditDeductedWebhookEvent|CreditExpiredWebhookEvent|CreditManualAdjustmentWebhookEvent|CreditOverageChargedWebhookEvent|CreditRolledOverWebhookEvent|CreditRolloverForfeitedWebhookEvent|DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent;
 }
