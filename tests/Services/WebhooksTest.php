@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use Dodopayments\Client;
+use Dodopayments\Core\Exceptions\WebhookException;
 use Dodopayments\Core\Util;
 use Dodopayments\CursorPagePagination;
 use Dodopayments\WebhookEvents\WebhookEventType;
@@ -11,6 +12,7 @@ use Dodopayments\Webhooks\WebhookGetSecretResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use StandardWebhooks\Webhook;
 
 /**
  * @internal
@@ -105,5 +107,147 @@ final class WebhooksTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookGetSecretResponse::class, $result);
+    }
+
+    #[Test]
+    public function testUnsafeUnwrap(): void
+    {
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $this->client->webhooks->unsafeUnwrap($payload);
+        // unwrap successful if not error thrown, increment assertion count to avoid risky test warning
+        $this->addToAssertionCount(1);
+    }
+
+    #[Test]
+    public function testUnsafeUnwrapBadJson(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $badPayload = 'not a json string';
+        $this->client->webhooks->unsafeUnwrap($badPayload);
+    }
+
+    #[Test]
+    public function testUnwrap(): void
+    {
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $this->client->webhooks->unwrap($payload);
+        // unwrap successful if not error thrown, increment assertion count to avoid risky test warning
+        $this->addToAssertionCount(1);
+    }
+
+    #[Test]
+    public function testUnwrapBadJson(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $badPayload = 'not a json string';
+        $this->client->webhooks->unwrap($badPayload);
+    }
+
+    #[Test]
+    public function testUnwrapWithVerification(): void
+    {
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $secret = 'whsec_c2VjcmV0Cg==';
+        $webhook = new Webhook($secret);
+        $messageId = '1';
+        $timestamp = time();
+        $signature = $webhook->sign($messageId, $timestamp, $payload);
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$signature],
+            'webhook-id' => [$messageId],
+            'webhook-timestamp' => [(string) $timestamp],
+        ];
+        $this->client->webhooks->unwrap($payload, $headers, $secret);
+        // unwrap successful if not error thrown, increment assertion count to avoid risky test warning
+        $this->addToAssertionCount(1);
+    }
+
+    #[Test]
+    public function testUnwrapWrongKey(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $secret = 'whsec_c2VjcmV0Cg==';
+        $webhook = new Webhook($secret);
+        $messageId = '1';
+        $timestamp = time();
+        $signature = $webhook->sign($messageId, $timestamp, $payload);
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$signature],
+            'webhook-id' => [$messageId],
+            'webhook-timestamp' => [(string) $timestamp],
+        ];
+        $wrongKey = 'whsec_aaaaaaaaaa';
+        $this->client->webhooks->unwrap($payload, $headers, $wrongKey);
+    }
+
+    #[Test]
+    public function testUnwrapBadSignature(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $secret = 'whsec_c2VjcmV0Cg==';
+        $webhook = new Webhook($secret);
+        $messageId = '1';
+        $timestamp = time();
+        $badSig = $webhook->sign($messageId, $timestamp, 'some other payload');
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$badSig],
+            'webhook-id' => [$messageId],
+            'webhook-timestamp' => [(string) $timestamp],
+        ];
+        $this->client->webhooks->unwrap($payload, $headers, $secret);
+    }
+
+    #[Test]
+    public function testUnwrapOldTimestamp(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $secret = 'whsec_c2VjcmV0Cg==';
+        $webhook = new Webhook($secret);
+        $messageId = '1';
+        $timestamp = time();
+        $signature = $webhook->sign($messageId, $timestamp, $payload);
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$signature],
+            'webhook-id' => [$messageId],
+            'webhook-timestamp' => ['5'],
+        ];
+        $this->client->webhooks->unwrap($payload, $headers, $secret);
+    }
+
+    #[Test]
+    public function testUnwrapWrongMessageID(): void
+    {
+        $this->expectException(WebhookException::class);
+
+        $payload = '{"business_id":"business_id","data":{"id":"id","amount":"amount","balance_after":"balance_after","balance_before":"balance_before","business_id":"business_id","created_at":"2019-12-27T18:11:19.117Z","credit_entitlement_id":"credit_entitlement_id","customer_id":"customer_id","is_credit":true,"overage_after":"overage_after","overage_before":"overage_before","transaction_type":"credit_added","description":"description","grant_id":"grant_id","reference_id":"reference_id","reference_type":"reference_type"},"timestamp":"2019-12-27T18:11:19.117Z","type":"credit.added"}';
+        $secret = 'whsec_c2VjcmV0Cg==';
+        $webhook = new Webhook($secret);
+        $messageId = '1';
+        $timestamp = time();
+        $signature = $webhook->sign($messageId, $timestamp, $payload);
+
+        /** @var array<string, list<string>> $headers */
+        $headers = [
+            'webhook-signature' => [$signature],
+            'webhook-id' => ['wrong'],
+            'webhook-timestamp' => [(string) $timestamp],
+        ];
+        $this->client->webhooks->unwrap($payload, $headers, $secret);
     }
 }
