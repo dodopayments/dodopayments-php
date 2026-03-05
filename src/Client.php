@@ -187,7 +187,7 @@ class Client extends BaseClient
                 'Accept' => 'application/json',
                 'User-Agent' => sprintf('Dodo Payments/PHP %s', VERSION),
                 'X-Stainless-Lang' => 'php',
-                'X-Stainless-Package-Version' => '5.8.1',
+                'X-Stainless-Package-Version' => '5.9.0',
                 'X-Stainless-Arch' => Util::machtype(),
                 'X-Stainless-OS' => Util::ostype(),
                 'X-Stainless-Runtime' => php_sapi_name(),
