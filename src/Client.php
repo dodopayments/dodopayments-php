@@ -158,6 +158,7 @@ class Client extends BaseClient
         ?string $bearerToken = null,
         ?string $webhookKey = null,
         ?string $baseUrl = null,
+        RequestOptions|array|null $requestOptions = null,
     ) {
         $this->bearerToken = (string) ($bearerToken ?? Util::getenv(
             'DODO_PAYMENTS_API_KEY'
@@ -169,11 +170,14 @@ class Client extends BaseClient
         $baseUrl ??=
             getenv('DODO_PAYMENTS_BASE_URL') ?: 'https://live.dodopayments.com';
 
-        $options = RequestOptions::with(
-            uriFactory: Psr17FactoryDiscovery::findUriFactory(),
-            streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
-            requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
-            transporter: Psr18ClientDiscovery::find(),
+        $options = RequestOptions::parse(
+            RequestOptions::with(
+                uriFactory: Psr17FactoryDiscovery::findUriFactory(),
+                streamFactory: Psr17FactoryDiscovery::findStreamFactory(),
+                requestFactory: Psr17FactoryDiscovery::findRequestFactory(),
+                transporter: Psr18ClientDiscovery::find(),
+            ),
+            $requestOptions,
         );
 
         parent::__construct(
