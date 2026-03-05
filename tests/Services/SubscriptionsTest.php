@@ -151,6 +151,7 @@ final class SubscriptionsTest extends TestCase
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            discountCode: 'discount_code',
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
         );
@@ -217,6 +218,7 @@ final class SubscriptionsTest extends TestCase
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            discountCode: 'discount_code',
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
         );

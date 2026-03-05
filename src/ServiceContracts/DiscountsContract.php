@@ -30,6 +30,8 @@ interface DiscountsContract
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
      * @param \DateTimeInterface|null $expiresAt when the discount expires, if ever
+     * @param bool $preserveOnPlanChange Whether this discount should be preserved when a subscription changes plans.
+     * Default: false (discount is removed on plan change)
      * @param list<string>|null $restrictedTo list of product IDs to restrict usage (if any)
      * @param int|null $subscriptionCycles Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
@@ -46,6 +48,7 @@ interface DiscountsContract
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
+        ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
         ?int $subscriptionCycles = null,
         ?int $usageLimit = null,
@@ -75,6 +78,8 @@ interface DiscountsContract
      *
      * Must be at least 1 if provided.
      * @param string|null $code if present, update the discount code (uppercase)
+     * @param bool|null $preserveOnPlanChange Whether this discount should be preserved when a subscription changes plans.
+     * If not provided, the existing value is kept.
      * @param list<string>|null $restrictedTo If present, replaces all restricted product IDs with this new set.
      * To remove all restrictions, send empty array
      * @param int|null $subscriptionCycles Number of subscription billing cycles this discount is valid for.
@@ -91,6 +96,7 @@ interface DiscountsContract
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
+        ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
         ?int $subscriptionCycles = null,
         DiscountType|string|null $type = null,

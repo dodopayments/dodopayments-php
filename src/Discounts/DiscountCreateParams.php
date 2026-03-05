@@ -22,6 +22,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   code?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   name?: string|null,
+ *   preserveOnPlanChange?: bool|null,
  *   restrictedTo?: list<string>|null,
  *   subscriptionCycles?: int|null,
  *   usageLimit?: int|null,
@@ -69,6 +70,13 @@ final class DiscountCreateParams implements BaseModel
 
     #[Optional(nullable: true)]
     public ?string $name;
+
+    /**
+     * Whether this discount should be preserved when a subscription changes plans.
+     * Default: false (discount is removed on plan change).
+     */
+    #[Optional('preserve_on_plan_change')]
+    public ?bool $preserveOnPlanChange;
 
     /**
      * List of product IDs to restrict usage (if any).
@@ -126,6 +134,7 @@ final class DiscountCreateParams implements BaseModel
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $name = null,
+        ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
         ?int $subscriptionCycles = null,
         ?int $usageLimit = null,
@@ -138,6 +147,7 @@ final class DiscountCreateParams implements BaseModel
         null !== $code && $self['code'] = $code;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $name && $self['name'] = $name;
+        null !== $preserveOnPlanChange && $self['preserveOnPlanChange'] = $preserveOnPlanChange;
         null !== $restrictedTo && $self['restrictedTo'] = $restrictedTo;
         null !== $subscriptionCycles && $self['subscriptionCycles'] = $subscriptionCycles;
         null !== $usageLimit && $self['usageLimit'] = $usageLimit;
@@ -203,6 +213,18 @@ final class DiscountCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * Whether this discount should be preserved when a subscription changes plans.
+     * Default: false (discount is removed on plan change).
+     */
+    public function withPreserveOnPlanChange(bool $preserveOnPlanChange): self
+    {
+        $self = clone $this;
+        $self['preserveOnPlanChange'] = $preserveOnPlanChange;
 
         return $self;
     }
