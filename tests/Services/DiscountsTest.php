@@ -50,6 +50,7 @@ final class DiscountsTest extends TestCase
             code: 'code',
             expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             name: 'name',
+            preserveOnPlanChange: true,
             restrictedTo: ['string'],
             subscriptionCycles: 0,
             usageLimit: 0,

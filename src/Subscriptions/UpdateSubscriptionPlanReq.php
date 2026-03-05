@@ -19,6 +19,7 @@ use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\ProrationBillingMode;
  *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
+ *   discountCode?: string|null,
  *   metadata?: array<string,string>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
  * }
@@ -56,6 +57,15 @@ final class UpdateSubscriptionPlanReq implements BaseModel
      */
     #[Optional(list: AttachAddon::class, nullable: true)]
     public ?array $addons;
+
+    /**
+     * Optional discount code to apply to the new plan.
+     * If provided, validates and applies the discount to the plan change.
+     * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
+     * the existing discount will be preserved (if applicable to the new product).
+     */
+    #[Optional('discount_code', nullable: true)]
+    public ?string $discountCode;
 
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
@@ -120,6 +130,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?string $discountCode = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
     ): self {
@@ -130,6 +141,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
         $self['quantity'] = $quantity;
 
         null !== $addons && $self['addons'] = $addons;
+        null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onPaymentFailure && $self['onPaymentFailure'] = $onPaymentFailure;
 
@@ -182,6 +194,20 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     {
         $self = clone $this;
         $self['addons'] = $addons;
+
+        return $self;
+    }
+
+    /**
+     * Optional discount code to apply to the new plan.
+     * If provided, validates and applies the discount to the plan change.
+     * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
+     * the existing discount will be preserved (if applicable to the new product).
+     */
+    public function withDiscountCode(?string $discountCode): self
+    {
+        $self = clone $this;
+        $self['discountCode'] = $discountCode;
 
         return $self;
     }

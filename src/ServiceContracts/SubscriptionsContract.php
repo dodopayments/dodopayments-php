@@ -191,6 +191,10 @@ interface SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param string|null $discountCode Optional discount code to apply to the new plan.
+     * If provided, validates and applies the discount to the plan change.
+     * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
+     * the existing discount will be preserved (if applicable to the new product).
      * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
@@ -207,6 +211,7 @@ interface SubscriptionsContract
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?string $discountCode = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,
@@ -249,6 +254,10 @@ interface SubscriptionsContract
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param string|null $discountCode Optional discount code to apply to the new plan.
+     * If provided, validates and applies the discount to the plan change.
+     * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
+     * the existing discount will be preserved (if applicable to the new product).
      * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
@@ -265,6 +274,7 @@ interface SubscriptionsContract
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
         ?array $addons = null,
+        ?string $discountCode = null,
         ?array $metadata = null,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,

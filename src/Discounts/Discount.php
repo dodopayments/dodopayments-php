@@ -16,6 +16,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   code: string,
  *   createdAt: \DateTimeInterface,
  *   discountID: string,
+ *   preserveOnPlanChange: bool,
  *   restrictedTo: list<string>,
  *   timesUsed: int,
  *   type: DiscountType|value-of<DiscountType>,
@@ -63,6 +64,13 @@ final class Discount implements BaseModel
      */
     #[Required('discount_id')]
     public string $discountID;
+
+    /**
+     * Whether this discount should be preserved when a subscription changes plans.
+     * Default: false (discount is removed on plan change).
+     */
+    #[Required('preserve_on_plan_change')]
+    public bool $preserveOnPlanChange;
 
     /**
      * List of product IDs to which this discount is restricted.
@@ -123,6 +131,7 @@ final class Discount implements BaseModel
      *   code: ...,
      *   createdAt: ...,
      *   discountID: ...,
+     *   preserveOnPlanChange: ...,
      *   restrictedTo: ...,
      *   timesUsed: ...,
      *   type: ...,
@@ -138,6 +147,7 @@ final class Discount implements BaseModel
      *   ->withCode(...)
      *   ->withCreatedAt(...)
      *   ->withDiscountID(...)
+     *   ->withPreserveOnPlanChange(...)
      *   ->withRestrictedTo(...)
      *   ->withTimesUsed(...)
      *   ->withType(...)
@@ -162,6 +172,7 @@ final class Discount implements BaseModel
         string $code,
         \DateTimeInterface $createdAt,
         string $discountID,
+        bool $preserveOnPlanChange,
         array $restrictedTo,
         int $timesUsed,
         DiscountType|string $type,
@@ -177,6 +188,7 @@ final class Discount implements BaseModel
         $self['code'] = $code;
         $self['createdAt'] = $createdAt;
         $self['discountID'] = $discountID;
+        $self['preserveOnPlanChange'] = $preserveOnPlanChange;
         $self['restrictedTo'] = $restrictedTo;
         $self['timesUsed'] = $timesUsed;
         $self['type'] = $type;
@@ -244,6 +256,18 @@ final class Discount implements BaseModel
     {
         $self = clone $this;
         $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * Whether this discount should be preserved when a subscription changes plans.
+     * Default: false (discount is removed on plan change).
+     */
+    public function withPreserveOnPlanChange(bool $preserveOnPlanChange): self
+    {
+        $self = clone $this;
+        $self['preserveOnPlanChange'] = $preserveOnPlanChange;
 
         return $self;
     }
