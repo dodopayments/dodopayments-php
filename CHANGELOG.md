@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.9.1 (2026-03-05)
+
+Full Changelog: [v5.9.0...v5.9.1](https://github.com/dodopayments/dodopayments-php/compare/v5.9.0...v5.9.1)
+
+### Bug Fixes
+
+* add missing requestOptions parameter to Client constructor ([268e803](https://github.com/dodopayments/dodopayments-php/commit/268e80310aba46d052c27613ea908e989fe59c7c))
+
 ## 5.9.0 (2026-03-05)
 
 Full Changelog: [v5.8.1...v5.9.0](https://github.com/dodopayments/dodopayments-php/compare/v5.8.1...v5.9.0)
