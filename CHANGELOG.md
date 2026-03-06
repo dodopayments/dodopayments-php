@@ -1,5 +1,13 @@
 # Changelog
 
+## 5.9.2 (2026-03-06)
+
+Full Changelog: [v5.9.1...v5.9.2](https://github.com/dodopayments/dodopayments-php/compare/v5.9.1...v5.9.2)
+
+### Chores
+
+* **test:** do not count install time for mock server timeout ([5ab71af](https://github.com/dodopayments/dodopayments-php/commit/5ab71af05aa1519dc54c03704c482e46aec2a924))
+
 ## 5.9.1 (2026-03-05)
 
 Full Changelog: [v5.9.0...v5.9.1](https://github.com/dodopayments/dodopayments-php/compare/v5.9.0...v5.9.1)
