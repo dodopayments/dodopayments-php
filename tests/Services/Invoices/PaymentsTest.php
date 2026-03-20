@@ -7,7 +7,6 @@ use Dodopayments\Core\Util;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Tests\UnsupportedMockTests;
 
 /**
  * @internal
@@ -30,10 +29,6 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Mock server doesn\'t support application/pdf responses');
-        }
-
         $result = $this->client->invoices->payments->retrieve('payment_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -43,10 +38,6 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrieveRefund(): void
     {
-        if (UnsupportedMockTests::$skip) {
-            $this->markTestSkipped('Mock server doesn\'t support application/pdf responses');
-        }
-
         $result = $this->client->invoices->payments->retrieveRefund('refund_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
