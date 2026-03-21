@@ -1,5 +1,29 @@
 # Changelog
 
+## 6.0.0 (2026-03-21)
+
+Full Changelog: [v5.9.2...v6.0.0](https://github.com/dodopayments/dodopayments-php/compare/v5.9.2...v6.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* remove unused webhook params
+
+### Bug Fixes
+
+* remove unused webhook params ([6aee4e4](https://github.com/dodopayments/dodopayments-php/commit/6aee4e4c078380b63524fa58e9c64179c6ffb215))
+
+
+### Chores
+
+* **internal:** tweak CI branches ([145fd54](https://github.com/dodopayments/dodopayments-php/commit/145fd54ccc52ab1e5913ff738ac9c4879713d508))
+* **tests:** bump steady to v0.19.4 ([cf92857](https://github.com/dodopayments/dodopayments-php/commit/cf92857aa289e1ba3ac26eb77fa0305c869e070e))
+* **tests:** bump steady to v0.19.5 ([07614e4](https://github.com/dodopayments/dodopayments-php/commit/07614e44c836eda8987e6081773e1addc1ba3701))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([7f8e403](https://github.com/dodopayments/dodopayments-php/commit/7f8e403a8c16738a27fd8f64b50f15fa809435ee))
+
 ## 5.9.2 (2026-03-06)
 
 Full Changelog: [v5.9.1...v5.9.2](https://github.com/dodopayments/dodopayments-php/compare/v5.9.1...v5.9.2)
