@@ -51,23 +51,6 @@ final class PaymentsService implements PaymentsContract
      *
      * @throws APIException
      */
-    public function retrievePayout(
-        string $payoutID,
-        RequestOptions|array|null $requestOptions = null
-    ): string {
-        // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrievePayout($payoutID, requestOptions: $requestOptions);
-
-        return $response->parse();
-    }
-
-    /**
-     * @api
-     *
-     * @param RequestOpts|null $requestOptions
-     *
-     * @throws APIException
-     */
     public function retrieveRefund(
         string $refundID,
         RequestOptions|array|null $requestOptions = null
