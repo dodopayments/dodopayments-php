@@ -1,5 +1,22 @@
 # Changelog
 
+## 6.1.0 (2026-03-25)
+
+Full Changelog: [v6.0.0...v6.1.0](https://github.com/dodopayments/dodopayments-php/compare/v6.0.0...v6.1.0)
+
+### Features
+
+* **api:** added cancel change plan endpoint ([afa7f4b](https://github.com/dodopayments/dodopayments-php/commit/afa7f4b44785d792d16796277886775ab1008dd2))
+* **api:** manual updates ([52311f7](https://github.com/dodopayments/dodopayments-php/commit/52311f7c05708a6a5fedd4883c26e45ed2adb509))
+* **api:** updated openapi spec to 1.92.1 ([cd93f53](https://github.com/dodopayments/dodopayments-php/commit/cd93f5322555b18f359eb8de5d9cfc64e670e1e4))
+* **api:** updated openapi spec to v1.92.3 ([a0643e7](https://github.com/dodopayments/dodopayments-php/commit/a0643e72ade3427073ed9c2ad18c5f3b95082a3e))
+
+
+### Chores
+
+* **tests:** bump steady to v0.19.6 ([b412cc7](https://github.com/dodopayments/dodopayments-php/commit/b412cc7a9ec3eaa7f0423d60e14d25d2dd4cfc3f))
+* **tests:** bump steady to v0.19.7 ([8c748d1](https://github.com/dodopayments/dodopayments-php/commit/8c748d1adbcff1bac566ea66462347f15cfef379))
+
 ## 6.0.0 (2026-03-21)
 
 Full Changelog: [v5.9.2...v6.0.0](https://github.com/dodopayments/dodopayments-php/compare/v5.9.2...v6.0.0)
