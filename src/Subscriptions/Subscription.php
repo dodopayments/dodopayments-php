@@ -12,6 +12,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
+use Dodopayments\Subscriptions\Subscription\ScheduledChange;
 
 /**
  * Response struct representing subscription details.
@@ -23,6 +24,7 @@ use Dodopayments\Payments\CustomFieldResponse;
  * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
  * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
+ * @phpstan-import-type ScheduledChangeShape from \Dodopayments\Subscriptions\Subscription\ScheduledChange
  *
  * @phpstan-type SubscriptionShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
@@ -55,6 +57,7 @@ use Dodopayments\Payments\CustomFieldResponse;
  *   discountID?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   paymentMethodID?: string|null,
+ *   scheduledChange?: null|ScheduledChange|ScheduledChangeShape,
  *   taxID?: string|null,
  * }
  */
@@ -274,6 +277,12 @@ final class Subscription implements BaseModel
     public ?string $paymentMethodID;
 
     /**
+     * Scheduled plan change details, if any.
+     */
+    #[Optional('scheduled_change', nullable: true)]
+    public ?ScheduledChange $scheduledChange;
+
+    /**
      * Tax identifier provided for this subscription (if applicable).
      */
     #[Optional('tax_id', nullable: true)]
@@ -364,6 +373,7 @@ final class Subscription implements BaseModel
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     * @param ScheduledChange|ScheduledChangeShape|null $scheduledChange
      */
     public static function with(
         array $addons,
@@ -396,6 +406,7 @@ final class Subscription implements BaseModel
         ?string $discountID = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $paymentMethodID = null,
+        ScheduledChange|array|null $scheduledChange = null,
         ?string $taxID = null,
     ): self {
         $self = new self;
@@ -431,6 +442,7 @@ final class Subscription implements BaseModel
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
+        null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
 
         return $self;
@@ -795,6 +807,20 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethodID'] = $paymentMethodID;
+
+        return $self;
+    }
+
+    /**
+     * Scheduled plan change details, if any.
+     *
+     * @param ScheduledChange|ScheduledChangeShape|null $scheduledChange
+     */
+    public function withScheduledChange(
+        ScheduledChange|array|null $scheduledChange
+    ): self {
+        $self = clone $this;
+        $self['scheduledChange'] = $scheduledChange;
 
         return $self;
     }

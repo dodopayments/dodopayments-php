@@ -7,7 +7,7 @@ namespace Dodopayments\CheckoutSessions\CheckoutSessionCustomization;
 /**
  * Theme of the page (determines which mode - light/dark/system - to use).
  *
- * Default is `System`.
+ * If not provided, uses the business-configured theme from business_themes table.
  */
 enum Theme: string
 {

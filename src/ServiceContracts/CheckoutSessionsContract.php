@@ -44,6 +44,8 @@ interface CheckoutSessionsContract
      * If all payment methods are unavailable, checkout session will fail.
      * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress Billing address information for the session
      * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
+     * @param string|null $cancelURL The URL to redirect the customer if they cancel or go back from the checkout.
+     * If not provided, the back button will not be displayed.
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
      * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
@@ -71,6 +73,7 @@ interface CheckoutSessionsContract
         ?array $allowedPaymentMethodTypes = null,
         CheckoutSessionBillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
+        ?string $cancelURL = null,
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
@@ -114,6 +117,8 @@ interface CheckoutSessionsContract
      * If all payment methods are unavailable, checkout session will fail.
      * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress Billing address information for the session
      * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
+     * @param string|null $cancelURL The URL to redirect the customer if they cancel or go back from the checkout.
+     * If not provided, the back button will not be displayed.
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
      * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
@@ -141,6 +146,7 @@ interface CheckoutSessionsContract
         ?array $allowedPaymentMethodTypes = null,
         CheckoutSessionBillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
+        ?string $cancelURL = null,
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,

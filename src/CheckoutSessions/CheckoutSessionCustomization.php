@@ -50,11 +50,11 @@ final class CheckoutSessionCustomization implements BaseModel
     /**
      * Theme of the page (determines which mode - light/dark/system - to use).
      *
-     * Default is `System`.
+     * If not provided, uses the business-configured theme from business_themes table.
      *
      * @var value-of<Theme>|null $theme
      */
-    #[Optional(enum: Theme::class)]
+    #[Optional(enum: Theme::class, nullable: true)]
     public ?string $theme;
 
     /**
@@ -134,11 +134,11 @@ final class CheckoutSessionCustomization implements BaseModel
     /**
      * Theme of the page (determines which mode - light/dark/system - to use).
      *
-     * Default is `System`.
+     * If not provided, uses the business-configured theme from business_themes table.
      *
-     * @param Theme|value-of<Theme> $theme
+     * @param Theme|value-of<Theme>|null $theme
      */
-    public function withTheme(Theme|string $theme): self
+    public function withTheme(Theme|string|null $theme): self
     {
         $self = clone $this;
         $self['theme'] = $theme;

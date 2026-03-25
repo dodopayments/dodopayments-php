@@ -18,6 +18,7 @@ use Dodopayments\Subscriptions\AttachAddon;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
@@ -233,10 +234,11 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param string $subscriptionID Subscription Id
      * @param array{
      *   productID: string,
-     *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
+     *   prorationBillingMode: value-of<ProrationBillingMode>,
      *   quantity: int,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
      *   discountCode?: string|null,
+     *   effectiveAt?: EffectiveAt|value-of<EffectiveAt>,
      *   metadata?: array<string,string>|null,
      *   onPaymentFailure?: OnPaymentFailure|value-of<OnPaymentFailure>|null,
      * }|SubscriptionChangePlanParams $params
@@ -310,10 +312,11 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param string $subscriptionID Subscription Id
      * @param array{
      *   productID: string,
-     *   prorationBillingMode: SubscriptionPreviewChangePlanParams\ProrationBillingMode|value-of<SubscriptionPreviewChangePlanParams\ProrationBillingMode>,
+     *   prorationBillingMode: value-of<SubscriptionPreviewChangePlanParams\ProrationBillingMode>,
      *   quantity: int,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
      *   discountCode?: string|null,
+     *   effectiveAt?: SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<SubscriptionPreviewChangePlanParams\EffectiveAt>,
      *   metadata?: array<string,string>|null,
      *   onPaymentFailure?: SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null,
      * }|SubscriptionPreviewChangePlanParams $params

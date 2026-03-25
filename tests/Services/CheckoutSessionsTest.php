@@ -64,6 +64,7 @@ final class CheckoutSessionsTest extends TestCase
                 'zipcode' => 'zipcode',
             ],
             billingCurrency: Currency::AED,
+            cancelURL: 'cancel_url',
             confirm: true,
             customFields: [
                 [
@@ -209,6 +210,7 @@ final class CheckoutSessionsTest extends TestCase
                 'zipcode' => 'zipcode',
             ],
             billingCurrency: Currency::AED,
+            cancelURL: 'cancel_url',
             confirm: true,
             customFields: [
                 [

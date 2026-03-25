@@ -152,6 +152,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
             discountCode: 'discount_code',
+            effectiveAt: 'immediately',
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
         );
@@ -219,6 +220,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
             discountCode: 'discount_code',
+            effectiveAt: 'immediately',
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
         );
