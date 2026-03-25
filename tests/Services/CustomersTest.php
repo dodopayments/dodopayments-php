@@ -86,6 +86,30 @@ final class CustomersTest extends TestCase
     }
 
     #[Test]
+    public function testDeletePaymentMethod(): void
+    {
+        $result = $this->client->customers->deletePaymentMethod(
+            'payment_method_id',
+            customerID: 'customer_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
+    }
+
+    #[Test]
+    public function testDeletePaymentMethodWithOptionalParams(): void
+    {
+        $result = $this->client->customers->deletePaymentMethod(
+            'payment_method_id',
+            customerID: 'customer_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
+    }
+
+    #[Test]
     public function testListCreditEntitlements(): void
     {
         $result = $this->client->customers->listCreditEntitlements('customer_id');

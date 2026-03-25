@@ -23,6 +23,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   disputeStage: DisputeStage|value-of<DisputeStage>,
  *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
+ *   isResolvedByRdr?: bool|null,
  *   reason?: string|null,
  *   remarks?: string|null,
  * }
@@ -89,6 +90,12 @@ final class GetDispute implements BaseModel
      */
     #[Required('payment_id')]
     public string $paymentID;
+
+    /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    #[Optional('is_resolved_by_rdr', nullable: true)]
+    public ?bool $isResolvedByRdr;
 
     /**
      * Reason for the dispute.
@@ -159,6 +166,7 @@ final class GetDispute implements BaseModel
         DisputeStage|string $disputeStage,
         DisputeStatus|string $disputeStatus,
         string $paymentID,
+        ?bool $isResolvedByRdr = null,
         ?string $reason = null,
         ?string $remarks = null,
     ): self {
@@ -174,6 +182,7 @@ final class GetDispute implements BaseModel
         $self['disputeStatus'] = $disputeStatus;
         $self['paymentID'] = $paymentID;
 
+        null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
         null !== $reason && $self['reason'] = $reason;
         null !== $remarks && $self['remarks'] = $remarks;
 
@@ -281,6 +290,17 @@ final class GetDispute implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    public function withIsResolvedByRdr(?bool $isResolvedByRdr): self
+    {
+        $self = clone $this;
+        $self['isResolvedByRdr'] = $isResolvedByRdr;
 
         return $self;
     }

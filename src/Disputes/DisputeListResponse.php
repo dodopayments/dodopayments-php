@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\Disputes;
 
+use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
@@ -18,6 +19,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   disputeStage: DisputeStage|value-of<DisputeStage>,
  *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
+ *   isResolvedByRdr?: bool|null,
  * }
  */
 final class DisputeListResponse implements BaseModel
@@ -78,6 +80,12 @@ final class DisputeListResponse implements BaseModel
     public string $paymentID;
 
     /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    #[Optional('is_resolved_by_rdr', nullable: true)]
+    public ?bool $isResolvedByRdr;
+
+    /**
      * `new DisputeListResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -130,6 +138,7 @@ final class DisputeListResponse implements BaseModel
         DisputeStage|string $disputeStage,
         DisputeStatus|string $disputeStatus,
         string $paymentID,
+        ?bool $isResolvedByRdr = null,
     ): self {
         $self = new self;
 
@@ -141,6 +150,8 @@ final class DisputeListResponse implements BaseModel
         $self['disputeStage'] = $disputeStage;
         $self['disputeStatus'] = $disputeStatus;
         $self['paymentID'] = $paymentID;
+
+        null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
 
         return $self;
     }
@@ -233,6 +244,17 @@ final class DisputeListResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    public function withIsResolvedByRdr(?bool $isResolvedByRdr): self
+    {
+        $self = clone $this;
+        $self['isResolvedByRdr'] = $isResolvedByRdr;
 
         return $self;
     }
