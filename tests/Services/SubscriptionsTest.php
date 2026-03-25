@@ -129,6 +129,15 @@ final class SubscriptionsTest extends TestCase
     }
 
     #[Test]
+    public function testCancelChangePlan(): void
+    {
+        $result = $this->client->subscriptions->cancelChangePlan('subscription_id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
+    }
+
+    #[Test]
     public function testChangePlan(): void
     {
         $result = $this->client->subscriptions->changePlan(

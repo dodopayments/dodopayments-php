@@ -22,12 +22,14 @@ use Dodopayments\Services\MetersService;
 use Dodopayments\Services\MiscService;
 use Dodopayments\Services\PaymentsService;
 use Dodopayments\Services\PayoutsService;
+use Dodopayments\Services\ProductCollectionsService;
 use Dodopayments\Services\ProductsService;
 use Dodopayments\Services\RefundsService;
 use Dodopayments\Services\SubscriptionsService;
 use Dodopayments\Services\UsageEventsService;
 use Dodopayments\Services\WebhookEventsService;
 use Dodopayments\Services\WebhooksService;
+use Dodopayments\Services\YourWebhookURLService;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 
@@ -152,6 +154,16 @@ class Client extends BaseClient
     public CreditEntitlementsService $creditEntitlements;
 
     /**
+     * @api
+     */
+    public ProductCollectionsService $productCollections;
+
+    /**
+     * @api
+     */
+    public YourWebhookURLService $yourWebhookURL;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -218,6 +230,8 @@ class Client extends BaseClient
         $this->meters = new MetersService($this);
         $this->balances = new BalancesService($this);
         $this->creditEntitlements = new CreditEntitlementsService($this);
+        $this->productCollections = new ProductCollectionsService($this);
+        $this->yourWebhookURL = new YourWebhookURLService($this);
     }
 
     /** @return array<string,string> */
