@@ -8,6 +8,7 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
+use Dodopayments\Customers\CustomerDeletePaymentMethodParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
@@ -79,6 +80,23 @@ interface CustomersRawContract
      */
     public function list(
         array|CustomerListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $paymentMethodID Payment Method Id
+     * @param array<string,mixed>|CustomerDeletePaymentMethodParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function deletePaymentMethod(
+        string $paymentMethodID,
+        array|CustomerDeletePaymentMethodParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 

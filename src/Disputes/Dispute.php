@@ -19,6 +19,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   disputeStage: DisputeStage|value-of<DisputeStage>,
  *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
+ *   isResolvedByRdr?: bool|null,
  *   remarks?: string|null,
  * }
  */
@@ -80,6 +81,12 @@ final class Dispute implements BaseModel
     public string $paymentID;
 
     /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    #[Optional('is_resolved_by_rdr', nullable: true)]
+    public ?bool $isResolvedByRdr;
+
+    /**
      * Remarks.
      */
     #[Optional(nullable: true)]
@@ -138,6 +145,7 @@ final class Dispute implements BaseModel
         DisputeStage|string $disputeStage,
         DisputeStatus|string $disputeStatus,
         string $paymentID,
+        ?bool $isResolvedByRdr = null,
         ?string $remarks = null,
     ): self {
         $self = new self;
@@ -151,6 +159,7 @@ final class Dispute implements BaseModel
         $self['disputeStatus'] = $disputeStatus;
         $self['paymentID'] = $paymentID;
 
+        null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
         null !== $remarks && $self['remarks'] = $remarks;
 
         return $self;
@@ -244,6 +253,17 @@ final class Dispute implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    public function withIsResolvedByRdr(?bool $isResolvedByRdr): self
+    {
+        $self = clone $this;
+        $self['isResolvedByRdr'] = $isResolvedByRdr;
 
         return $self;
     }

@@ -26,6 +26,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
  *   disputeStage: DisputeStage|value-of<DisputeStage>,
  *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
+ *   isResolvedByRdr?: bool|null,
  *   reason?: string|null,
  *   remarks?: string|null,
  *   payloadType: PayloadType|value-of<PayloadType>,
@@ -82,6 +83,12 @@ final class Dispute implements BaseModel
      */
     #[Required('payment_id')]
     public string $paymentID;
+
+    /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    #[Optional('is_resolved_by_rdr', nullable: true)]
+    public ?bool $isResolvedByRdr;
 
     /**
      * Reason for the dispute.
@@ -160,6 +167,7 @@ final class Dispute implements BaseModel
         DisputeStatus|string $disputeStatus,
         string $paymentID,
         PayloadType|string $payloadType,
+        ?bool $isResolvedByRdr = null,
         ?string $reason = null,
         ?string $remarks = null,
     ): self {
@@ -176,6 +184,7 @@ final class Dispute implements BaseModel
         $self['paymentID'] = $paymentID;
         $self['payloadType'] = $payloadType;
 
+        null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
         null !== $reason && $self['reason'] = $reason;
         null !== $remarks && $self['remarks'] = $remarks;
 
@@ -277,6 +286,17 @@ final class Dispute implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Whether the dispute was resolved by Rapid Dispute Resolution.
+     */
+    public function withIsResolvedByRdr(?bool $isResolvedByRdr): self
+    {
+        $self = clone $this;
+        $self['isResolvedByRdr'] = $isResolvedByRdr;
 
         return $self;
     }
