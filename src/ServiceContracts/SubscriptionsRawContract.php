@@ -98,6 +98,21 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function cancelChangePlan(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $subscriptionID Subscription Id
      * @param array<string,mixed>|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
