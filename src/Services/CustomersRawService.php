@@ -10,6 +10,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerCreateParams;
+use Dodopayments\Customers\CustomerDeletePaymentMethodParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
@@ -164,6 +165,40 @@ final class CustomersRawService implements CustomersRawContract
             options: $options,
             convert: Customer::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $paymentMethodID Payment Method Id
+     * @param array{customerID: string}|CustomerDeletePaymentMethodParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function deletePaymentMethod(
+        string $paymentMethodID,
+        array|CustomerDeletePaymentMethodParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CustomerDeletePaymentMethodParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $customerID = $parsed['customerID'];
+        unset($parsed['customerID']);
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'delete',
+            path: [
+                'customers/%1$s/payment-methods/%2$s', $customerID, $paymentMethodID,
+            ],
+            options: $options,
+            convert: null,
         );
     }
 

@@ -170,6 +170,28 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
+     * @param string $paymentMethodID Payment Method Id
+     * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function deletePaymentMethod(
+        string $paymentMethodID,
+        string $customerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): mixed {
+        $params = Util::removeNulls(['customerID' => $customerID]);
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->deletePaymentMethod($paymentMethodID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
      * List all credit entitlements for a customer with their current balances
      *
      * @param string $customerID Customer ID

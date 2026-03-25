@@ -91,6 +91,21 @@ interface CustomersContract
     /**
      * @api
      *
+     * @param string $paymentMethodID Payment Method Id
+     * @param string $customerID Customer Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function deletePaymentMethod(
+        string $paymentMethodID,
+        string $customerID,
+        RequestOptions|array|null $requestOptions = null,
+    ): mixed;
+
+    /**
+     * @api
+     *
      * @param string $customerID Customer ID
      * @param RequestOpts|null $requestOptions
      *
