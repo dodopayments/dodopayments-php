@@ -275,6 +275,24 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function cancelChangePlan(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): mixed {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->cancelChangePlan($subscriptionID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $subscriptionID Subscription Id
      * @param string $productID Unique identifier of the product to subscribe to
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode Proration Billing Mode
      * @param int $quantity Number of units to subscribe for. Must be at least 1.

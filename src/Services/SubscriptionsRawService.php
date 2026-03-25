@@ -232,6 +232,29 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function cancelChangePlan(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'delete',
+            path: ['subscriptions/%1$s/change-plan/scheduled', $subscriptionID],
+            options: $requestOptions,
+            convert: null,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $subscriptionID Subscription Id
      * @param array{
      *   productID: string,
      *   prorationBillingMode: value-of<ProrationBillingMode>,
