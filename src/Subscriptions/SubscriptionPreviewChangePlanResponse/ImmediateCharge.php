@@ -16,13 +16,21 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  * @phpstan-import-type SummaryShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\Summary
  *
  * @phpstan-type ImmediateChargeShape = array{
- *   lineItems: list<LineItemShape>, summary: Summary|SummaryShape
+ *   effectiveAt: \DateTimeInterface,
+ *   lineItems: list<LineItemShape>,
+ *   summary: Summary|SummaryShape,
  * }
  */
 final class ImmediateCharge implements BaseModel
 {
     /** @use SdkModel<ImmediateChargeShape> */
     use SdkModel;
+
+    /**
+     * When the plan change will be effective.
+     */
+    #[Required('effective_at')]
+    public \DateTimeInterface $effectiveAt;
 
     /** @var list<LineItemVariants> $lineItems */
     #[Required('line_items', list: LineItem::class)]
@@ -36,13 +44,16 @@ final class ImmediateCharge implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * ImmediateCharge::with(lineItems: ..., summary: ...)
+     * ImmediateCharge::with(effectiveAt: ..., lineItems: ..., summary: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new ImmediateCharge)->withLineItems(...)->withSummary(...)
+     * (new ImmediateCharge)
+     *   ->withEffectiveAt(...)
+     *   ->withLineItems(...)
+     *   ->withSummary(...)
      * ```
      */
     public function __construct()
@@ -58,12 +69,27 @@ final class ImmediateCharge implements BaseModel
      * @param list<LineItemShape> $lineItems
      * @param Summary|SummaryShape $summary
      */
-    public static function with(array $lineItems, Summary|array $summary): self
-    {
+    public static function with(
+        \DateTimeInterface $effectiveAt,
+        array $lineItems,
+        Summary|array $summary
+    ): self {
         $self = new self;
 
+        $self['effectiveAt'] = $effectiveAt;
         $self['lineItems'] = $lineItems;
         $self['summary'] = $summary;
+
+        return $self;
+    }
+
+    /**
+     * When the plan change will be effective.
+     */
+    public function withEffectiveAt(\DateTimeInterface $effectiveAt): self
+    {
+        $self = clone $this;
+        $self['effectiveAt'] = $effectiveAt;
 
         return $self;
     }

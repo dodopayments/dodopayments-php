@@ -14,4 +14,6 @@ enum ProrationBillingMode: string
     case FULL_IMMEDIATELY = 'full_immediately';
 
     case DIFFERENCE_IMMEDIATELY = 'difference_immediately';
+
+    case DO_NOT_BILL = 'do_not_bill';
 }

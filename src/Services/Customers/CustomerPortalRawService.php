@@ -28,7 +28,9 @@ final class CustomerPortalRawService implements CustomerPortalRawContract
      * @api
      *
      * @param string $customerID Customer Id
-     * @param array{sendEmail?: bool}|CustomerPortalCreateParams $params
+     * @param array{
+     *   returnURL?: string, sendEmail?: bool
+     * }|CustomerPortalCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerPortalSession>
@@ -49,7 +51,10 @@ final class CustomerPortalRawService implements CustomerPortalRawContract
         return $this->client->request(
             method: 'post',
             path: ['customers/%1$s/customer-portal/session', $customerID],
-            query: Util::array_transform_keys($parsed, ['sendEmail' => 'send_email']),
+            query: Util::array_transform_keys(
+                $parsed,
+                ['returnURL' => 'return_url', 'sendEmail' => 'send_email']
+            ),
             options: $options,
             convert: CustomerPortalSession::class,
         );

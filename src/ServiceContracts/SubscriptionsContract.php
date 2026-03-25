@@ -15,6 +15,7 @@ use Dodopayments\RequestOptions;
 use Dodopayments\Subscriptions\AttachAddon;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
@@ -195,6 +196,9 @@ interface SubscriptionsContract
      * If provided, validates and applies the discount to the plan change.
      * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
      * the existing discount will be preserved (if applicable to the new product).
+     * @param EffectiveAt|value-of<EffectiveAt> $effectiveAt When to apply the plan change.
+     * - `immediately` (default): Apply the plan change right away
+     * - `next_billing_date`: Schedule the change for the next billing date
      * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
@@ -212,6 +216,7 @@ interface SubscriptionsContract
         int $quantity,
         ?array $addons = null,
         ?string $discountCode = null,
+        EffectiveAt|string|null $effectiveAt = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,
@@ -258,6 +263,9 @@ interface SubscriptionsContract
      * If provided, validates and applies the discount to the plan change.
      * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
      * the existing discount will be preserved (if applicable to the new product).
+     * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt> $effectiveAt When to apply the plan change.
+     * - `immediately` (default): Apply the plan change right away
+     * - `next_billing_date`: Schedule the change for the next billing date
      * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
@@ -275,6 +283,7 @@ interface SubscriptionsContract
         int $quantity,
         ?array $addons = null,
         ?string $discountCode = null,
+        \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|string|null $effectiveAt = null,
         ?array $metadata = null,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,

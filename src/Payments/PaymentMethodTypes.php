@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Dodopayments\Payments;
 
+/**
+ * All supported payment method types (from Hyperswitch).
+ *
+ * Used for disabled-payment-methods filtering and validation.
+ */
 enum PaymentMethodTypes: string
 {
     case ACH = 'ach';
