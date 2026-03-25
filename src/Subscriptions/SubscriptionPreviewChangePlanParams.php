@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode;
 
@@ -23,6 +24,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
  *   quantity: int,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   discountCode?: string|null,
+ *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
  *   metadata?: array<string,string>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
  * }
@@ -70,6 +72,16 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      */
     #[Optional('discount_code', nullable: true)]
     public ?string $discountCode;
+
+    /**
+     * When to apply the plan change.
+     * - `immediately` (default): Apply the plan change right away
+     * - `next_billing_date`: Schedule the change for the next billing date.
+     *
+     * @var value-of<EffectiveAt>|null $effectiveAt
+     */
+    #[Optional('effective_at', enum: EffectiveAt::class)]
+    public ?string $effectiveAt;
 
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
@@ -126,6 +138,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      * @param list<AttachAddon|AttachAddonShape>|null $addons
+     * @param EffectiveAt|value-of<EffectiveAt>|null $effectiveAt
      * @param array<string,string>|null $metadata
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
      */
@@ -135,6 +148,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         int $quantity,
         ?array $addons = null,
         ?string $discountCode = null,
+        EffectiveAt|string|null $effectiveAt = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
     ): self {
@@ -146,6 +160,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
 
         null !== $addons && $self['addons'] = $addons;
         null !== $discountCode && $self['discountCode'] = $discountCode;
+        null !== $effectiveAt && $self['effectiveAt'] = $effectiveAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onPaymentFailure && $self['onPaymentFailure'] = $onPaymentFailure;
 
@@ -212,6 +227,21 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     {
         $self = clone $this;
         $self['discountCode'] = $discountCode;
+
+        return $self;
+    }
+
+    /**
+     * When to apply the plan change.
+     * - `immediately` (default): Apply the plan change right away
+     * - `next_billing_date`: Schedule the change for the next billing date.
+     *
+     * @param EffectiveAt|value-of<EffectiveAt> $effectiveAt
+     */
+    public function withEffectiveAt(EffectiveAt|string $effectiveAt): self
+    {
+        $self = clone $this;
+        $self['effectiveAt'] = $effectiveAt;
 
         return $self;
     }

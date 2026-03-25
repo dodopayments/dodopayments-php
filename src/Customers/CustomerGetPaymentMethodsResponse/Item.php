@@ -42,7 +42,13 @@ final class Item implements BaseModel
     #[Optional('last_used_at', nullable: true)]
     public ?\DateTimeInterface $lastUsedAt;
 
-    /** @var value-of<PaymentMethodTypes>|null $paymentMethodType */
+    /**
+     * All supported payment method types (from Hyperswitch).
+     *
+     * Used for disabled-payment-methods filtering and validation.
+     *
+     * @var value-of<PaymentMethodTypes>|null $paymentMethodType
+     */
     #[Optional(
         'payment_method_type',
         enum: PaymentMethodTypes::class,
@@ -141,6 +147,10 @@ final class Item implements BaseModel
     }
 
     /**
+     * All supported payment method types (from Hyperswitch).
+     *
+     * Used for disabled-payment-methods filtering and validation.
+     *
      * @param PaymentMethodTypes|value-of<PaymentMethodTypes>|null $paymentMethodType
      */
     public function withPaymentMethodType(

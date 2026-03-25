@@ -28,6 +28,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: null|CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape,
  *   billingCurrency?: null|Currency|value-of<Currency>,
+ *   cancelURL?: string|null,
  *   confirm?: bool|null,
  *   customFields?: list<CustomField|CustomFieldShape>|null,
  *   customer?: CustomerRequestShape|null,
@@ -85,6 +86,13 @@ final class CheckoutSessionRequest implements BaseModel
      */
     #[Optional('billing_currency', enum: Currency::class, nullable: true)]
     public ?string $billingCurrency;
+
+    /**
+     * The URL to redirect the customer if they cancel or go back from the checkout.
+     * If not provided, the back button will not be displayed.
+     */
+    #[Optional('cancel_url', nullable: true)]
+    public ?string $cancelURL;
 
     /**
      * If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
@@ -222,6 +230,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?array $allowedPaymentMethodTypes = null,
         CheckoutSessionBillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
+        ?string $cancelURL = null,
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
@@ -246,6 +255,7 @@ final class CheckoutSessionRequest implements BaseModel
         null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
+        null !== $cancelURL && $self['cancelURL'] = $cancelURL;
         null !== $confirm && $self['confirm'] = $confirm;
         null !== $customFields && $self['customFields'] = $customFields;
         null !== $customer && $self['customer'] = $customer;
@@ -320,6 +330,18 @@ final class CheckoutSessionRequest implements BaseModel
     ): self {
         $self = clone $this;
         $self['billingCurrency'] = $billingCurrency;
+
+        return $self;
+    }
+
+    /**
+     * The URL to redirect the customer if they cancel or go back from the checkout.
+     * If not provided, the back button will not be displayed.
+     */
+    public function withCancelURL(?string $cancelURL): self
+    {
+        $self = clone $this;
+        $self['cancelURL'] = $cancelURL;
 
         return $self;
     }
