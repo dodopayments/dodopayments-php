@@ -36,15 +36,6 @@ final class PaymentsTest extends TestCase
     }
 
     #[Test]
-    public function testRetrievePayout(): void
-    {
-        $result = $this->client->invoices->payments->retrievePayout('payout_id');
-
-        // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertIsString($result);
-    }
-
-    #[Test]
     public function testRetrieveRefund(): void
     {
         $result = $this->client->invoices->payments->retrieveRefund('refund_id');

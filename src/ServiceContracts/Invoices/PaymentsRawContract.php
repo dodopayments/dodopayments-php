@@ -36,20 +36,6 @@ interface PaymentsRawContract
      *
      * @throws APIException
      */
-    public function retrievePayout(
-        string $payoutID,
-        RequestOptions|array|null $requestOptions = null
-    ): BaseResponse;
-
-    /**
-     * @api
-     *
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<string>
-     *
-     * @throws APIException
-     */
     public function retrieveRefund(
         string $refundID,
         RequestOptions|array|null $requestOptions = null

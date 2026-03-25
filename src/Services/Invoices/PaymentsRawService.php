@@ -53,29 +53,6 @@ final class PaymentsRawService implements PaymentsRawContract
      *
      * @throws APIException
      */
-    public function retrievePayout(
-        string $payoutID,
-        RequestOptions|array|null $requestOptions = null
-    ): BaseResponse {
-        // @phpstan-ignore-next-line return.type
-        return $this->client->request(
-            method: 'get',
-            path: ['invoices/payouts/%1$s', $payoutID],
-            headers: ['Accept' => 'application/pdf'],
-            options: $requestOptions,
-            convert: 'string',
-        );
-    }
-
-    /**
-     * @api
-     *
-     * @param RequestOpts|null $requestOptions
-     *
-     * @return BaseResponse<string>
-     *
-     * @throws APIException
-     */
     public function retrieveRefund(
         string $refundID,
         RequestOptions|array|null $requestOptions = null
