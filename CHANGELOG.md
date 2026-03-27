@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.1.1 (2026-03-27)
+
+Full Changelog: [v6.1.0...v6.1.1](https://github.com/dodopayments/dodopayments-php/compare/v6.1.0...v6.1.1)
+
+### Chores
+
+* **internal:** update multipart form array serialization ([81ef760](https://github.com/dodopayments/dodopayments-php/commit/81ef760621886dcc6a99264713124b7afa87c1f6))
+
 ## 6.1.0 (2026-03-25)
 
 Full Changelog: [v6.0.0...v6.1.0](https://github.com/dodopayments/dodopayments-php/compare/v6.0.0...v6.1.0)
