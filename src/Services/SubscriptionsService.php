@@ -31,6 +31,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionStatus;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
@@ -183,6 +184,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param string $subscriptionID Subscription Id
      * @param BillingAddress|BillingAddressShape|null $billing
      * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
+     * @param CancelReason|value-of<CancelReason>|null $cancelReason
      * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart Update credit entitlement cart settings
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
@@ -195,6 +197,7 @@ final class SubscriptionsService implements SubscriptionsContract
         string $subscriptionID,
         BillingAddress|array|null $billing = null,
         ?bool $cancelAtNextBillingDate = null,
+        CancelReason|string|null $cancelReason = null,
         ?array $creditEntitlementCart = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
@@ -208,6 +211,7 @@ final class SubscriptionsService implements SubscriptionsContract
             [
                 'billing' => $billing,
                 'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
+                'cancelReason' => $cancelReason,
                 'creditEntitlementCart' => $creditEntitlementCart,
                 'customerName' => $customerName,
                 'disableOnDemand' => $disableOnDemand,

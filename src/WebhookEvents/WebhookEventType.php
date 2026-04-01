@@ -78,4 +78,16 @@ enum WebhookEventType: string
     case CREDIT_MANUAL_ADJUSTMENT = 'credit.manual_adjustment';
 
     case CREDIT_BALANCE_LOW = 'credit.balance_low';
+
+    case ABANDONED_CHECKOUT_DETECTED = 'abandoned_checkout.detected';
+
+    case ABANDONED_CHECKOUT_RECOVERED = 'abandoned_checkout.recovered';
+
+    case DUNNING_STARTED = 'dunning.started';
+
+    case DUNNING_RECOVERED = 'dunning.recovered';
+
+    case ACR_EMAIL = 'acr.email';
+
+    case DUNNING_EMAIL = 'dunning.email';
 }

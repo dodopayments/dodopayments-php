@@ -7,9 +7,11 @@ namespace Dodopayments\WebhookEvents\WebhookPayload;
 use Dodopayments\Core\Concerns\SdkUnion;
 use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund;
@@ -25,9 +27,11 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey
  * @phpstan-import-type CreditLedgerEntryShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry
  * @phpstan-import-type CreditBalanceLowShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow
+ * @phpstan-import-type AbandonedCheckoutShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout
+ * @phpstan-import-type DunningAttemptShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt
  *
- * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow
- * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|CreditLedgerEntryShape|CreditBalanceLowShape
+ * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt
+ * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|CreditLedgerEntryShape|CreditBalanceLowShape|AbandonedCheckoutShape|DunningAttemptShape
  */
 final class Data implements ConverterSource
 {
@@ -46,6 +50,8 @@ final class Data implements ConverterSource
             LicenseKey::class,
             CreditLedgerEntry::class,
             CreditBalanceLow::class,
+            AbandonedCheckout::class,
+            DunningAttempt::class,
         ];
     }
 }
