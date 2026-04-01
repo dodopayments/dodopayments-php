@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 
@@ -22,6 +23,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  * @phpstan-type SubscriptionUpdateParamsShape = array{
  *   billing?: null|BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate?: bool|null,
+ *   cancelReason?: null|CancelReason|value-of<CancelReason>,
  *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
  *   customerName?: string|null,
  *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
@@ -45,6 +47,10 @@ final class SubscriptionUpdateParams implements BaseModel
      */
     #[Optional('cancel_at_next_billing_date', nullable: true)]
     public ?bool $cancelAtNextBillingDate;
+
+    /** @var value-of<CancelReason>|null $cancelReason */
+    #[Optional('cancel_reason', enum: CancelReason::class, nullable: true)]
+    public ?string $cancelReason;
 
     /**
      * Update credit entitlement cart settings.
@@ -89,6 +95,7 @@ final class SubscriptionUpdateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BillingAddress|BillingAddressShape|null $billing
+     * @param CancelReason|value-of<CancelReason>|null $cancelReason
      * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
@@ -97,6 +104,7 @@ final class SubscriptionUpdateParams implements BaseModel
     public static function with(
         BillingAddress|array|null $billing = null,
         ?bool $cancelAtNextBillingDate = null,
+        CancelReason|string|null $cancelReason = null,
         ?array $creditEntitlementCart = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
@@ -109,6 +117,7 @@ final class SubscriptionUpdateParams implements BaseModel
 
         null !== $billing && $self['billing'] = $billing;
         null !== $cancelAtNextBillingDate && $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+        null !== $cancelReason && $self['cancelReason'] = $cancelReason;
         null !== $creditEntitlementCart && $self['creditEntitlementCart'] = $creditEntitlementCart;
         null !== $customerName && $self['customerName'] = $customerName;
         null !== $disableOnDemand && $self['disableOnDemand'] = $disableOnDemand;
@@ -139,6 +148,18 @@ final class SubscriptionUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+
+        return $self;
+    }
+
+    /**
+     * @param CancelReason|value-of<CancelReason>|null $cancelReason
+     */
+    public function withCancelReason(
+        CancelReason|string|null $cancelReason
+    ): self {
+        $self = clone $this;
+        $self['cancelReason'] = $cancelReason;
 
         return $self;
     }

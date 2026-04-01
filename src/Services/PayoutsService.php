@@ -11,6 +11,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Payouts\PayoutListResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\PayoutsContract;
+use Dodopayments\Services\Payouts\BreakupService;
 
 /**
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
@@ -23,11 +24,17 @@ final class PayoutsService implements PayoutsContract
     public PayoutsRawService $raw;
 
     /**
+     * @api
+     */
+    public BreakupService $breakup;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
     {
         $this->raw = new PayoutsRawService($client);
+        $this->breakup = new BreakupService($client);
     }
 
     /**
