@@ -44,4 +44,8 @@ enum EventType: string
     case ADJUSTMENT = 'adjustment';
 
     case CURRENCY_CONVERSION = 'currency_conversion';
+
+    case ABANDONED_CART_RECOVERY_FEE = 'abandoned_cart_recovery_fee';
+
+    case DUNNING_FEES = 'dunning_fees';
 }

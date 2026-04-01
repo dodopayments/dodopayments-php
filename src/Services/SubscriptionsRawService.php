@@ -37,6 +37,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
@@ -144,6 +145,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @param array{
      *   billing?: BillingAddress|BillingAddressShape|null,
      *   cancelAtNextBillingDate?: bool|null,
+     *   cancelReason?: value-of<CancelReason>,
      *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
      *   customerName?: string|null,
      *   disableOnDemand?: DisableOnDemand|DisableOnDemandShape|null,
