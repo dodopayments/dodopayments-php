@@ -18,6 +18,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   amount?: int|null,
  *   code?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
+ *   metadata?: array<string,string>|null,
  *   name?: string|null,
  *   preserveOnPlanChange?: bool|null,
  *   restrictedTo?: list<string>|null,
@@ -50,6 +51,14 @@ final class DiscountUpdateParams implements BaseModel
 
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
+
+    /**
+     * Additional metadata for the discount.
+     *
+     * @var array<string,string>|null $metadata
+     */
+    #[Optional(map: 'string', nullable: true)]
+    public ?array $metadata;
 
     #[Optional(nullable: true)]
     public ?string $name;
@@ -99,6 +108,7 @@ final class DiscountUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string,string>|null $metadata
      * @param list<string>|null $restrictedTo
      * @param DiscountType|value-of<DiscountType>|null $type
      */
@@ -106,6 +116,7 @@ final class DiscountUpdateParams implements BaseModel
         ?int $amount = null,
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
+        ?array $metadata = null,
         ?string $name = null,
         ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
@@ -118,6 +129,7 @@ final class DiscountUpdateParams implements BaseModel
         null !== $amount && $self['amount'] = $amount;
         null !== $code && $self['code'] = $code;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
+        null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
         null !== $preserveOnPlanChange && $self['preserveOnPlanChange'] = $preserveOnPlanChange;
         null !== $restrictedTo && $self['restrictedTo'] = $restrictedTo;
@@ -158,6 +170,19 @@ final class DiscountUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['expiresAt'] = $expiresAt;
+
+        return $self;
+    }
+
+    /**
+     * Additional metadata for the discount.
+     *
+     * @param array<string,string>|null $metadata
+     */
+    public function withMetadata(?array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
         return $self;
     }
