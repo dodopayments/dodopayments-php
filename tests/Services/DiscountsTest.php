@@ -49,6 +49,7 @@ final class DiscountsTest extends TestCase
             type: DiscountType::PERCENTAGE,
             code: 'code',
             expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+            metadata: ['foo' => 'string'],
             name: 'name',
             preserveOnPlanChange: true,
             restrictedTo: ['string'],

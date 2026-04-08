@@ -49,6 +49,7 @@ final class DiscountsService implements DiscountsContract
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
      * @param \DateTimeInterface|null $expiresAt when the discount expires, if ever
+     * @param array<string,string> $metadata Additional metadata for the discount
      * @param bool $preserveOnPlanChange Whether this discount should be preserved when a subscription changes plans.
      * Default: false (discount is removed on plan change)
      * @param list<string>|null $restrictedTo list of product IDs to restrict usage (if any)
@@ -66,6 +67,7 @@ final class DiscountsService implements DiscountsContract
         DiscountType|string $type,
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
+        ?array $metadata = null,
         ?string $name = null,
         ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
@@ -79,6 +81,7 @@ final class DiscountsService implements DiscountsContract
                 'type' => $type,
                 'code' => $code,
                 'expiresAt' => $expiresAt,
+                'metadata' => $metadata,
                 'name' => $name,
                 'preserveOnPlanChange' => $preserveOnPlanChange,
                 'restrictedTo' => $restrictedTo,
@@ -125,6 +128,7 @@ final class DiscountsService implements DiscountsContract
      *
      * Must be at least 1 if provided.
      * @param string|null $code if present, update the discount code (uppercase)
+     * @param array<string,string>|null $metadata Additional metadata for the discount
      * @param bool|null $preserveOnPlanChange Whether this discount should be preserved when a subscription changes plans.
      * If not provided, the existing value is kept.
      * @param list<string>|null $restrictedTo If present, replaces all restricted product IDs with this new set.
@@ -142,6 +146,7 @@ final class DiscountsService implements DiscountsContract
         ?int $amount = null,
         ?string $code = null,
         ?\DateTimeInterface $expiresAt = null,
+        ?array $metadata = null,
         ?string $name = null,
         ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
@@ -155,6 +160,7 @@ final class DiscountsService implements DiscountsContract
                 'amount' => $amount,
                 'code' => $code,
                 'expiresAt' => $expiresAt,
+                'metadata' => $metadata,
                 'name' => $name,
                 'preserveOnPlanChange' => $preserveOnPlanChange,
                 'restrictedTo' => $restrictedTo,
