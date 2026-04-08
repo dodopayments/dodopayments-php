@@ -16,6 +16,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   code: string,
  *   createdAt: \DateTimeInterface,
  *   discountID: string,
+ *   metadata: array<string,string>,
  *   preserveOnPlanChange: bool,
  *   restrictedTo: list<string>,
  *   timesUsed: int,
@@ -64,6 +65,10 @@ final class Discount implements BaseModel
      */
     #[Required('discount_id')]
     public string $discountID;
+
+    /** @var array<string,string> $metadata */
+    #[Required(map: 'string')]
+    public array $metadata;
 
     /**
      * Whether this discount should be preserved when a subscription changes plans.
@@ -131,6 +136,7 @@ final class Discount implements BaseModel
      *   code: ...,
      *   createdAt: ...,
      *   discountID: ...,
+     *   metadata: ...,
      *   preserveOnPlanChange: ...,
      *   restrictedTo: ...,
      *   timesUsed: ...,
@@ -147,6 +153,7 @@ final class Discount implements BaseModel
      *   ->withCode(...)
      *   ->withCreatedAt(...)
      *   ->withDiscountID(...)
+     *   ->withMetadata(...)
      *   ->withPreserveOnPlanChange(...)
      *   ->withRestrictedTo(...)
      *   ->withTimesUsed(...)
@@ -163,6 +170,7 @@ final class Discount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string,string> $metadata
      * @param list<string> $restrictedTo
      * @param DiscountType|value-of<DiscountType> $type
      */
@@ -172,6 +180,7 @@ final class Discount implements BaseModel
         string $code,
         \DateTimeInterface $createdAt,
         string $discountID,
+        array $metadata,
         bool $preserveOnPlanChange,
         array $restrictedTo,
         int $timesUsed,
@@ -188,6 +197,7 @@ final class Discount implements BaseModel
         $self['code'] = $code;
         $self['createdAt'] = $createdAt;
         $self['discountID'] = $discountID;
+        $self['metadata'] = $metadata;
         $self['preserveOnPlanChange'] = $preserveOnPlanChange;
         $self['restrictedTo'] = $restrictedTo;
         $self['timesUsed'] = $timesUsed;
@@ -256,6 +266,17 @@ final class Discount implements BaseModel
     {
         $self = clone $this;
         $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
         return $self;
     }
