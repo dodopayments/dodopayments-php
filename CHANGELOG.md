@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.3.1 (2026-04-11)
+
+Full Changelog: [v6.3.0...v6.3.1](https://github.com/dodopayments/dodopayments-php/compare/v6.3.0...v6.3.1)
+
+### Bug Fixes
+
+* **client:** properly generate file params ([69b58a0](https://github.com/dodopayments/dodopayments-php/commit/69b58a098999a0655610f824f3ab87251077387a))
+
 ## 6.3.0 (2026-04-08)
 
 Full Changelog: [v6.2.0...v6.3.0](https://github.com/dodopayments/dodopayments-php/compare/v6.2.0...v6.3.0)
