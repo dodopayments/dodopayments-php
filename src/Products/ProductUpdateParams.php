@@ -29,6 +29,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|\Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape,
+ *   entitlementIDs?: list<string>|null,
  *   imageID?: string|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
@@ -83,12 +84,23 @@ final class ProductUpdateParams implements BaseModel
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
+     * Entitlement IDs to attach (replaces all existing when present)
+     * Send empty array to remove all, omit field to leave unchanged.
+     *
+     * @var list<string>|null $entitlementIDs
+     */
+    #[Optional('entitlement_ids', list: 'string', nullable: true)]
+    public ?array $entitlementIDs;
+
+    /**
      * Product image id after its uploaded to S3.
      */
     #[Optional('image_id', nullable: true)]
     public ?string $imageID;
 
     /**
+     * @deprecated
+     *
      * Message sent to the customer upon license key activation.
      *
      * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
@@ -98,6 +110,8 @@ final class ProductUpdateParams implements BaseModel
     public ?string $licenseKeyActivationMessage;
 
     /**
+     * @deprecated
+     *
      * Limit for the number of activations for the license key.
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
@@ -116,6 +130,8 @@ final class ProductUpdateParams implements BaseModel
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
+     * @deprecated
+     *
      * Whether the product requires a license key.
      *
      * If `true`, additional fields related to license key (duration, activations limit, activation message)
@@ -167,6 +183,7 @@ final class ProductUpdateParams implements BaseModel
      * @param list<string>|null $addons
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param list<string>|null $entitlementIDs
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      * @param PriceShape|null $price
@@ -178,6 +195,7 @@ final class ProductUpdateParams implements BaseModel
         ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
+        ?array $entitlementIDs = null,
         ?string $imageID = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
@@ -195,6 +213,7 @@ final class ProductUpdateParams implements BaseModel
         null !== $creditEntitlements && $self['creditEntitlements'] = $creditEntitlements;
         null !== $description && $self['description'] = $description;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
+        null !== $entitlementIDs && $self['entitlementIDs'] = $entitlementIDs;
         null !== $imageID && $self['imageID'] = $imageID;
         null !== $licenseKeyActivationMessage && $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
         null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
@@ -264,6 +283,20 @@ final class ProductUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['digitalProductDelivery'] = $digitalProductDelivery;
+
+        return $self;
+    }
+
+    /**
+     * Entitlement IDs to attach (replaces all existing when present)
+     * Send empty array to remove all, omit field to leave unchanged.
+     *
+     * @param list<string>|null $entitlementIDs
+     */
+    public function withEntitlementIDs(?array $entitlementIDs): self
+    {
+        $self = clone $this;
+        $self['entitlementIDs'] = $entitlementIDs;
 
         return $self;
     }

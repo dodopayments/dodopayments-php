@@ -33,6 +33,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|\Dodopayments\Products\ProductCreateParams\DigitalProductDelivery|DigitalProductDeliveryShape,
+ *   entitlementIDs?: list<string>|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
@@ -107,14 +108,26 @@ final class ProductCreateParams implements BaseModel
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
-     * Optional message displayed during license key activation.
+     * Optional entitlement IDs to attach to this product (max 20).
+     *
+     * @var list<string>|null $entitlementIDs
+     */
+    #[Optional('entitlement_ids', list: 'string', nullable: true)]
+    public ?array $entitlementIDs;
+
+    /**
+     * @deprecated
+     *
+     * Optional message displayed during license key activation
      */
     #[Optional('license_key_activation_message', nullable: true)]
     public ?string $licenseKeyActivationMessage;
 
     /**
+     * @deprecated
+     *
      * The number of times the license key can be activated.
-     * Must be 0 or greater.
+     * Must be 0 or greater
      */
     #[Optional('license_key_activations_limit', nullable: true)]
     public ?int $licenseKeyActivationsLimit;
@@ -128,8 +141,10 @@ final class ProductCreateParams implements BaseModel
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
+     * @deprecated
+     *
      * When true, generates and sends a license key to your customer.
-     * Defaults to false.
+     * Defaults to false
      */
     #[Optional('license_key_enabled', nullable: true)]
     public ?bool $licenseKeyEnabled;
@@ -171,6 +186,7 @@ final class ProductCreateParams implements BaseModel
      * @param list<string>|null $addons
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param list<string>|null $entitlementIDs
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      */
@@ -183,6 +199,7 @@ final class ProductCreateParams implements BaseModel
         ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
+        ?array $entitlementIDs = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
@@ -200,6 +217,7 @@ final class ProductCreateParams implements BaseModel
         null !== $creditEntitlements && $self['creditEntitlements'] = $creditEntitlements;
         null !== $description && $self['description'] = $description;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
+        null !== $entitlementIDs && $self['entitlementIDs'] = $entitlementIDs;
         null !== $licenseKeyActivationMessage && $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
         null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
         null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
@@ -305,6 +323,19 @@ final class ProductCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['digitalProductDelivery'] = $digitalProductDelivery;
+
+        return $self;
+    }
+
+    /**
+     * Optional entitlement IDs to attach to this product (max 20).
+     *
+     * @param list<string>|null $entitlementIDs
+     */
+    public function withEntitlementIDs(?array $entitlementIDs): self
+    {
+        $self = clone $this;
+        $self['entitlementIDs'] = $entitlementIDs;
 
         return $self;
     }

@@ -39,6 +39,7 @@ interface ProductsContract
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements Optional credit entitlements to attach (max 3)
      * @param string|null $description Optional description of the product
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param list<string>|null $entitlementIDs Optional entitlement IDs to attach to this product (max 20)
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
      * @param int|null $licenseKeyActivationsLimit The number of times the license key can be activated.
      * Must be 0 or greater
@@ -61,6 +62,7 @@ interface ProductsContract
         ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
+        ?array $entitlementIDs = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
@@ -90,6 +92,8 @@ interface ProductsContract
      * Send empty array to remove all, omit field to leave unchanged
      * @param string|null $description description of the product, optional and must be at most 1000 characters
      * @param \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null $digitalProductDelivery Choose how you would like you digital product delivered
+     * @param list<string>|null $entitlementIDs Entitlement IDs to attach (replaces all existing when present)
+     * Send empty array to remove all, omit field to leave unchanged
      * @param string|null $imageID Product image id after its uploaded to S3
      * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.
      *
@@ -122,6 +126,7 @@ interface ProductsContract
         ?array $creditEntitlements = null,
         ?string $description = null,
         \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|array|null $digitalProductDelivery = null,
+        ?array $entitlementIDs = null,
         ?string $imageID = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,

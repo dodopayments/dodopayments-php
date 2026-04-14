@@ -90,4 +90,12 @@ enum WebhookEventType: string
     case ACR_EMAIL = 'acr.email';
 
     case DUNNING_EMAIL = 'dunning.email';
+
+    case ENTITLEMENT_GRANT_CREATED = 'entitlement_grant.created';
+
+    case ENTITLEMENT_GRANT_DELIVERED = 'entitlement_grant.delivered';
+
+    case ENTITLEMENT_GRANT_FAILED = 'entitlement_grant.failed';
+
+    case ENTITLEMENT_GRANT_REVOKED = 'entitlement_grant.revoked';
 }

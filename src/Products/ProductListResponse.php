@@ -13,14 +13,17 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\ProductListResponse\Entitlement;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductListResponse\Entitlement
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  *
  * @phpstan-type ProductListResponseShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
+ *   entitlements: list<Entitlement|EntitlementShape>,
  *   isRecurring: bool,
  *   metadata: array<string,string>,
  *   productID: string,
@@ -51,6 +54,14 @@ final class ProductListResponse implements BaseModel
      */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
+
+    /**
+     * Entitlements linked to this product.
+     *
+     * @var list<Entitlement> $entitlements
+     */
+    #[Required(list: Entitlement::class)]
+    public array $entitlements;
 
     /**
      * Indicates if the product is recurring (e.g., subscriptions).
@@ -148,6 +159,7 @@ final class ProductListResponse implements BaseModel
      * ProductListResponse::with(
      *   businessID: ...,
      *   createdAt: ...,
+     *   entitlements: ...,
      *   isRecurring: ...,
      *   metadata: ...,
      *   productID: ...,
@@ -162,6 +174,7 @@ final class ProductListResponse implements BaseModel
      * (new ProductListResponse)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
+     *   ->withEntitlements(...)
      *   ->withIsRecurring(...)
      *   ->withMetadata(...)
      *   ->withProductID(...)
@@ -179,6 +192,7 @@ final class ProductListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<Entitlement|EntitlementShape> $entitlements
      * @param array<string,string> $metadata
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Currency|value-of<Currency>|null $currency
@@ -187,6 +201,7 @@ final class ProductListResponse implements BaseModel
     public static function with(
         string $businessID,
         \DateTimeInterface $createdAt,
+        array $entitlements,
         bool $isRecurring,
         array $metadata,
         string $productID,
@@ -204,6 +219,7 @@ final class ProductListResponse implements BaseModel
 
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
+        $self['entitlements'] = $entitlements;
         $self['isRecurring'] = $isRecurring;
         $self['metadata'] = $metadata;
         $self['productID'] = $productID;
@@ -239,6 +255,19 @@ final class ProductListResponse implements BaseModel
     {
         $self = clone $this;
         $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Entitlements linked to this product.
+     *
+     * @param list<Entitlement|EntitlementShape> $entitlements
+     */
+    public function withEntitlements(array $entitlements): self
+    {
+        $self = clone $this;
+        $self['entitlements'] = $entitlements;
 
         return $self;
     }

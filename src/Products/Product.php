@@ -12,10 +12,12 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\Product\Entitlement;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type CreditEntitlementMappingResponseShape from \Dodopayments\Products\CreditEntitlementMappingResponse
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\Product\Entitlement
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -25,6 +27,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   creditEntitlements: list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape>,
+ *   entitlements: list<Entitlement|EntitlementShape>,
  *   isRecurring: bool,
  *   licenseKeyEnabled: bool,
  *   metadata: array<string,string>,
@@ -75,13 +78,23 @@ final class Product implements BaseModel
     public array $creditEntitlements;
 
     /**
+     * Attached entitlements (integration-based access grants).
+     *
+     * @var list<Entitlement> $entitlements
+     */
+    #[Required(list: Entitlement::class)]
+    public array $entitlements;
+
+    /**
      * Indicates if the product is recurring (e.g., subscriptions).
      */
     #[Required('is_recurring')]
     public bool $isRecurring;
 
     /**
-     * Indicates whether the product requires a license key.
+     * @deprecated
+     *
+     * Indicates whether the product requires a license key
      */
     #[Required('license_key_enabled')]
     public bool $licenseKeyEnabled;
@@ -146,13 +159,17 @@ final class Product implements BaseModel
     public ?string $image;
 
     /**
-     * Message sent upon license key activation, if applicable.
+     * @deprecated
+     *
+     * Message sent upon license key activation, if applicable
      */
     #[Optional('license_key_activation_message', nullable: true)]
     public ?string $licenseKeyActivationMessage;
 
     /**
-     * Limit on the number of activations for the license key, if enabled.
+     * @deprecated
+     *
+     * Limit on the number of activations for the license key, if enabled
      */
     #[Optional('license_key_activations_limit', nullable: true)]
     public ?int $licenseKeyActivationsLimit;
@@ -185,6 +202,7 @@ final class Product implements BaseModel
      *   businessID: ...,
      *   createdAt: ...,
      *   creditEntitlements: ...,
+     *   entitlements: ...,
      *   isRecurring: ...,
      *   licenseKeyEnabled: ...,
      *   metadata: ...,
@@ -203,6 +221,7 @@ final class Product implements BaseModel
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCreditEntitlements(...)
+     *   ->withEntitlements(...)
      *   ->withIsRecurring(...)
      *   ->withLicenseKeyEnabled(...)
      *   ->withMetadata(...)
@@ -223,6 +242,7 @@ final class Product implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape> $creditEntitlements
+     * @param list<Entitlement|EntitlementShape> $entitlements
      * @param array<string,string> $metadata
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
@@ -235,6 +255,7 @@ final class Product implements BaseModel
         string $businessID,
         \DateTimeInterface $createdAt,
         array $creditEntitlements,
+        array $entitlements,
         bool $isRecurring,
         bool $licenseKeyEnabled,
         array $metadata,
@@ -258,6 +279,7 @@ final class Product implements BaseModel
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
         $self['creditEntitlements'] = $creditEntitlements;
+        $self['entitlements'] = $entitlements;
         $self['isRecurring'] = $isRecurring;
         $self['licenseKeyEnabled'] = $licenseKeyEnabled;
         $self['metadata'] = $metadata;
@@ -318,6 +340,19 @@ final class Product implements BaseModel
     {
         $self = clone $this;
         $self['creditEntitlements'] = $creditEntitlements;
+
+        return $self;
+    }
+
+    /**
+     * Attached entitlements (integration-based access grants).
+     *
+     * @param list<Entitlement|EntitlementShape> $entitlements
+     */
+    public function withEntitlements(array $entitlements): self
+    {
+        $self = clone $this;
+        $self['entitlements'] = $entitlements;
 
         return $self;
     }
