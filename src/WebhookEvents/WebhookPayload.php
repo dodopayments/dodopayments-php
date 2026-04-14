@@ -12,6 +12,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund;
@@ -42,7 +43,7 @@ final class WebhookPayload implements BaseModel
      * @var DataVariants $data
      */
     #[Required]
-    public Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt $data;
+    public Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant $data;
 
     /**
      * The timestamp of when the event occurred (not necessarily the same of when it was delivered).
@@ -91,7 +92,7 @@ final class WebhookPayload implements BaseModel
      */
     public static function with(
         string $businessID,
-        Payment|array|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt $data,
+        Payment|array|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant $data,
         \DateTimeInterface $timestamp,
         WebhookEventType|string $type,
     ): self {
@@ -119,7 +120,7 @@ final class WebhookPayload implements BaseModel
      * @param DataShape $data
      */
     public function withData(
-        Payment|array|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt $data,
+        Payment|array|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant $data,
     ): self {
         $self = clone $this;
         $self['data'] = $data;

@@ -29,6 +29,34 @@ final class LicenseKeysTest extends TestCase
     }
 
     #[Test]
+    public function testCreate(): void
+    {
+        $result = $this->client->licenseKeys->create(
+            customerID: 'customer_id',
+            key: 'key',
+            productID: 'product_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseKey::class, $result);
+    }
+
+    #[Test]
+    public function testCreateWithOptionalParams(): void
+    {
+        $result = $this->client->licenseKeys->create(
+            customerID: 'customer_id',
+            key: 'key',
+            productID: 'product_id',
+            activationsLimit: 0,
+            expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(LicenseKey::class, $result);
+    }
+
+    #[Test]
     public function testRetrieve(): void
     {
         $result = $this->client->licenseKeys->retrieve('lic_123');

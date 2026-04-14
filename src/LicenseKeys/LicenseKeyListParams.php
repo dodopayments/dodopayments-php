@@ -8,9 +8,11 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\LicenseKeys\LicenseKeyListParams\Source;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 
 /**
+ * @deprecated
  * @see Dodopayments\Services\LicenseKeysService::list()
  *
  * @phpstan-type LicenseKeyListParamsShape = array{
@@ -20,6 +22,7 @@ use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
  *   productID?: string|null,
+ *   source?: null|Source|value-of<Source>,
  *   status?: null|Status|value-of<Status>,
  * }
  */
@@ -66,6 +69,14 @@ final class LicenseKeyListParams implements BaseModel
     public ?string $productID;
 
     /**
+     * Filter by license key source.
+     *
+     * @var value-of<Source>|null $source
+     */
+    #[Optional(enum: Source::class)]
+    public ?string $source;
+
+    /**
      * Filter by license key status.
      *
      * @var value-of<Status>|null $status
@@ -83,6 +94,7 @@ final class LicenseKeyListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Source|value-of<Source>|null $source
      * @param Status|value-of<Status>|null $status
      */
     public static function with(
@@ -92,6 +104,7 @@ final class LicenseKeyListParams implements BaseModel
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
+        Source|string|null $source = null,
         Status|string|null $status = null,
     ): self {
         $self = new self;
@@ -102,6 +115,7 @@ final class LicenseKeyListParams implements BaseModel
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $productID && $self['productID'] = $productID;
+        null !== $source && $self['source'] = $source;
         null !== $status && $self['status'] = $status;
 
         return $self;
@@ -169,6 +183,19 @@ final class LicenseKeyListParams implements BaseModel
     {
         $self = clone $this;
         $self['productID'] = $productID;
+
+        return $self;
+    }
+
+    /**
+     * Filter by license key source.
+     *
+     * @param Source|value-of<Source> $source
+     */
+    public function withSource(Source|string $source): self
+    {
+        $self = clone $this;
+        $self['source'] = $source;
 
         return $self;
     }

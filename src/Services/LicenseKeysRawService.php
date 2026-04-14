@@ -10,7 +10,9 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
+use Dodopayments\LicenseKeys\LicenseKeyCreateParams;
 use Dodopayments\LicenseKeys\LicenseKeyListParams;
+use Dodopayments\LicenseKeys\LicenseKeyListParams\Source;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\LicenseKeys\LicenseKeyUpdateParams;
 use Dodopayments\RequestOptions;
@@ -28,6 +30,43 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
     public function __construct(private Client $client) {}
 
     /**
+     * @api
+     *
+     * @param array{
+     *   customerID: string,
+     *   key: string,
+     *   productID: string,
+     *   activationsLimit?: int|null,
+     *   expiresAt?: \DateTimeInterface|null,
+     * }|LicenseKeyCreateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<LicenseKey>
+     *
+     * @throws APIException
+     */
+    public function create(
+        array|LicenseKeyCreateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = LicenseKeyCreateParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: 'license_keys',
+            body: (object) $parsed,
+            options: $options,
+            convert: LicenseKey::class,
+        );
+    }
+
+    /**
+     * @deprecated
+     *
      * @api
      *
      * @param string $id License key ID
@@ -51,6 +90,8 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param string $id License key ID
@@ -86,6 +127,8 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param array{
@@ -95,6 +138,7 @@ final class LicenseKeysRawService implements LicenseKeysRawContract
      *   pageNumber?: int,
      *   pageSize?: int,
      *   productID?: string,
+     *   source?: Source|value-of<Source>,
      *   status?: Status|value-of<Status>,
      * }|LicenseKeyListParams $params
      * @param RequestOpts|null $requestOptions
