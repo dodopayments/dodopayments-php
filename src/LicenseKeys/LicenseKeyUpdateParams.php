@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * @deprecated
  * @see Dodopayments\Services\LicenseKeysService::update()
  *
  * @phpstan-type LicenseKeyUpdateParamsShape = array{

@@ -9,6 +9,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\LicenseKeys\LicenseKey;
+use Dodopayments\LicenseKeys\LicenseKeyListParams\Source;
 use Dodopayments\LicenseKeys\LicenseKeyListParams\Status;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\LicenseKeysContract;
@@ -34,6 +35,44 @@ final class LicenseKeysService implements LicenseKeysContract
     /**
      * @api
      *
+     * @param string $customerID the customer this license key belongs to
+     * @param string $key the license key string to import
+     * @param string $productID the product this license key is for
+     * @param int|null $activationsLimit Maximum number of activations allowed. Null means unlimited.
+     * @param \DateTimeInterface|null $expiresAt Expiration timestamp. Null means the key never expires.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function create(
+        string $customerID,
+        string $key,
+        string $productID,
+        ?int $activationsLimit = null,
+        ?\DateTimeInterface $expiresAt = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): LicenseKey {
+        $params = Util::removeNulls(
+            [
+                'customerID' => $customerID,
+                'key' => $key,
+                'productID' => $productID,
+                'activationsLimit' => $activationsLimit,
+                'expiresAt' => $expiresAt,
+            ],
+        );
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->create(params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @deprecated
+     *
+     * @api
+     *
      * @param string $id License key ID
      * @param RequestOpts|null $requestOptions
      *
@@ -50,6 +89,8 @@ final class LicenseKeysService implements LicenseKeysContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param string $id License key ID
@@ -85,6 +126,8 @@ final class LicenseKeysService implements LicenseKeysContract
     }
 
     /**
+     * @deprecated
+     *
      * @api
      *
      * @param \DateTimeInterface $createdAtGte Filter license keys created on or after this timestamp
@@ -93,6 +136,7 @@ final class LicenseKeysService implements LicenseKeysContract
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product ID
+     * @param Source|value-of<Source> $source Filter by license key source
      * @param Status|value-of<Status> $status Filter by license key status
      * @param RequestOpts|null $requestOptions
      *
@@ -107,6 +151,7 @@ final class LicenseKeysService implements LicenseKeysContract
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
+        Source|string|null $source = null,
         Status|string|null $status = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination {
@@ -118,6 +163,7 @@ final class LicenseKeysService implements LicenseKeysContract
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
                 'productID' => $productID,
+                'source' => $source,
                 'status' => $status,
             ],
         );
