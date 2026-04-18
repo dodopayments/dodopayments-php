@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.4.1 (2026-04-18)
+
+Full Changelog: [v6.4.0...v6.4.1](https://github.com/dodopayments/dodopayments-php/compare/v6.4.0...v6.4.1)
+
+### Bug Fixes
+
+* **client:** resolve serialization issue with unions and enums ([e81bf7a](https://github.com/dodopayments/dodopayments-php/commit/e81bf7a1e28aad642fb63317bbeb86e80b27e33c))
+* populate enum-typed properties with enum instances ([f790f22](https://github.com/dodopayments/dodopayments-php/commit/f790f22482808614eb6ee11f740bc9b524e7aea9))
+
+
+### Chores
+
+* **tests:** bump steady to v0.22.1 ([45b9e67](https://github.com/dodopayments/dodopayments-php/commit/45b9e67bb63c2db700d40c10b62b4abe13c6978d))
+
 ## 6.4.0 (2026-04-14)
 
 Full Changelog: [v6.3.0...v6.4.0](https://github.com/dodopayments/dodopayments-php/compare/v6.3.0...v6.4.0)
