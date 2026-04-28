@@ -1,5 +1,18 @@
 # Changelog
 
+## 6.5.0 (2026-04-28)
+
+Full Changelog: [v6.4.1...v6.5.0](https://github.com/dodopayments/dodopayments-php/compare/v6.4.1...v6.5.0)
+
+### Features
+
+* support setting headers via env ([f2eac9b](https://github.com/dodopayments/dodopayments-php/commit/f2eac9b23c950ac949c59f8aa3ffabda50422538))
+
+
+### Bug Fixes
+
+* revert enum parsing change that lead to unconditional failure ([9208ff5](https://github.com/dodopayments/dodopayments-php/commit/9208ff579a0122e72a4c9466109c30b30d07d31c))
+
 ## 6.4.1 (2026-04-18)
 
 Full Changelog: [v6.4.0...v6.4.1](https://github.com/dodopayments/dodopayments-php/compare/v6.4.0...v6.4.1)
