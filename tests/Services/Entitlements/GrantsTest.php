@@ -5,8 +5,7 @@ namespace Tests\Services\Entitlements;
 use Dodopayments\Client;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Entitlements\Grants\GrantListResponse;
-use Dodopayments\Entitlements\Grants\GrantRevokeResponse;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +38,7 @@ final class GrantsTest extends TestCase
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(GrantListResponse::class, $item);
+            $this->assertInstanceOf(EntitlementGrant::class, $item);
         }
     }
 
@@ -49,7 +48,7 @@ final class GrantsTest extends TestCase
         $result = $this->client->entitlements->grants->revoke('grant_id', id: 'id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(GrantRevokeResponse::class, $result);
+        $this->assertInstanceOf(EntitlementGrant::class, $result);
     }
 
     #[Test]
@@ -58,6 +57,6 @@ final class GrantsTest extends TestCase
         $result = $this->client->entitlements->grants->revoke('grant_id', id: 'id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(GrantRevokeResponse::class, $result);
+        $this->assertInstanceOf(EntitlementGrant::class, $result);
     }
 }

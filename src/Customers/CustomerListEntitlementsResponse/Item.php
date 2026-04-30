@@ -8,8 +8,8 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Customers\CustomerListEntitlementsResponse\Item\IntegrationType;
 use Dodopayments\Customers\CustomerListEntitlementsResponse\Item\Status;
+use Dodopayments\Entitlements\EntitlementIntegrationType;
 
 /**
  * @phpstan-type ItemShape = array{
@@ -17,7 +17,7 @@ use Dodopayments\Customers\CustomerListEntitlementsResponse\Item\Status;
  *   entitlementID: string,
  *   entitlementName: string,
  *   grantID: string,
- *   integrationType: IntegrationType|value-of<IntegrationType>,
+ *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
  *   deliveredAt?: \DateTimeInterface|null,
@@ -48,8 +48,8 @@ final class Item implements BaseModel
     #[Required('grant_id')]
     public string $grantID;
 
-    /** @var value-of<IntegrationType> $integrationType */
-    #[Required('integration_type', enum: IntegrationType::class)]
+    /** @var value-of<EntitlementIntegrationType> $integrationType */
+    #[Required('integration_type', enum: EntitlementIntegrationType::class)]
     public string $integrationType;
 
     /** @var value-of<Status> $status */
@@ -107,7 +107,7 @@ final class Item implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param IntegrationType|value-of<IntegrationType> $integrationType
+     * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
      * @param Status|value-of<Status> $status
      */
     public static function with(
@@ -115,7 +115,7 @@ final class Item implements BaseModel
         string $entitlementID,
         string $entitlementName,
         string $grantID,
-        IntegrationType|string $integrationType,
+        EntitlementIntegrationType|string $integrationType,
         Status|string $status,
         \DateTimeInterface $updatedAt,
         ?\DateTimeInterface $deliveredAt = null,
@@ -178,10 +178,10 @@ final class Item implements BaseModel
     }
 
     /**
-     * @param IntegrationType|value-of<IntegrationType> $integrationType
+     * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
      */
     public function withIntegrationType(
-        IntegrationType|string $integrationType
+        EntitlementIntegrationType|string $integrationType
     ): self {
         $self = clone $this;
         $self['integrationType'] = $integrationType;

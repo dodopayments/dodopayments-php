@@ -9,11 +9,10 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Entitlements\Grants\GrantListParams;
 use Dodopayments\Entitlements\Grants\GrantListParams\Status;
-use Dodopayments\Entitlements\Grants\GrantListResponse;
 use Dodopayments\Entitlements\Grants\GrantRevokeParams;
-use Dodopayments\Entitlements\Grants\GrantRevokeResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Entitlements\GrantsRawContract;
 
@@ -42,7 +41,7 @@ final class GrantsRawService implements GrantsRawContract
      * }|GrantListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DefaultPageNumberPagination<GrantListResponse>>
+     * @return BaseResponse<DefaultPageNumberPagination<EntitlementGrant>>
      *
      * @throws APIException
      */
@@ -69,7 +68,7 @@ final class GrantsRawService implements GrantsRawContract
                 ],
             ),
             options: $options,
-            convert: GrantListResponse::class,
+            convert: EntitlementGrant::class,
             page: DefaultPageNumberPagination::class,
         );
     }
@@ -86,7 +85,7 @@ final class GrantsRawService implements GrantsRawContract
      * @param array{id: string}|GrantRevokeParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<GrantRevokeResponse>
+     * @return BaseResponse<EntitlementGrant>
      *
      * @throws APIException
      */
@@ -107,7 +106,7 @@ final class GrantsRawService implements GrantsRawContract
             method: 'delete',
             path: ['entitlements/%1$s/grants/%2$s', $id, $grantID],
             options: $options,
-            convert: GrantRevokeResponse::class,
+            convert: EntitlementGrant::class,
         );
     }
 }

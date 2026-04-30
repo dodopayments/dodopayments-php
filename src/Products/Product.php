@@ -12,12 +12,11 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
-use Dodopayments\Products\Product\Entitlement;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type CreditEntitlementMappingResponseShape from \Dodopayments\Products\CreditEntitlementMappingResponse
- * @phpstan-import-type EntitlementShape from \Dodopayments\Products\Product\Entitlement
+ * @phpstan-import-type ProductEntitlementSummaryShape from \Dodopayments\Products\ProductEntitlementSummary
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -27,7 +26,7 @@ use Dodopayments\Products\Product\Entitlement;
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   creditEntitlements: list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape>,
- *   entitlements: list<Entitlement|EntitlementShape>,
+ *   entitlements: list<ProductEntitlementSummary|ProductEntitlementSummaryShape>,
  *   isRecurring: bool,
  *   licenseKeyEnabled: bool,
  *   metadata: array<string,string>,
@@ -80,9 +79,9 @@ final class Product implements BaseModel
     /**
      * Attached entitlements (integration-based access grants).
      *
-     * @var list<Entitlement> $entitlements
+     * @var list<ProductEntitlementSummary> $entitlements
      */
-    #[Required(list: Entitlement::class)]
+    #[Required(list: ProductEntitlementSummary::class)]
     public array $entitlements;
 
     /**
@@ -248,7 +247,7 @@ final class Product implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape> $creditEntitlements
-     * @param list<Entitlement|EntitlementShape> $entitlements
+     * @param list<ProductEntitlementSummary|ProductEntitlementSummaryShape> $entitlements
      * @param array<string,string> $metadata
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
@@ -353,7 +352,7 @@ final class Product implements BaseModel
     /**
      * Attached entitlements (integration-based access grants).
      *
-     * @param list<Entitlement|EntitlementShape> $entitlements
+     * @param list<ProductEntitlementSummary|ProductEntitlementSummaryShape> $entitlements
      */
     public function withEntitlements(array $entitlements): self
     {

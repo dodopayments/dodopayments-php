@@ -6,9 +6,8 @@ namespace Dodopayments\ServiceContracts\Entitlements;
 
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Entitlements\Grants\GrantListParams\Status;
-use Dodopayments\Entitlements\Grants\GrantListResponse;
-use Dodopayments\Entitlements\Grants\GrantRevokeResponse;
 use Dodopayments\RequestOptions;
 
 /**
@@ -26,7 +25,7 @@ interface GrantsContract
      * @param Status|value-of<Status> $status Filter by grant status
      * @param RequestOpts|null $requestOptions
      *
-     * @return DefaultPageNumberPagination<GrantListResponse>
+     * @return DefaultPageNumberPagination<EntitlementGrant>
      *
      * @throws APIException
      */
@@ -52,5 +51,5 @@ interface GrantsContract
         string $grantID,
         string $id,
         RequestOptions|array|null $requestOptions = null,
-    ): GrantRevokeResponse;
+    ): EntitlementGrant;
 }

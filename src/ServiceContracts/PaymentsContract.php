@@ -10,8 +10,8 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
-use Dodopayments\Payments\PaymentCreateParams\ProductCart;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams\Status;
 use Dodopayments\Payments\PaymentListResponse;
@@ -22,7 +22,7 @@ use Dodopayments\RequestOptions;
 /**
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\PaymentCreateParams\ProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 interface PaymentsContract
@@ -34,7 +34,7 @@ interface PaymentsContract
      *
      * @param BillingAddress|BillingAddressShape $billing Billing address details for the payment
      * @param CustomerRequestShape $customer Customer information for the payment
-     * @param list<ProductCart|ProductCartShape> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
      * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the price (true) or added on top (false).
      * If not specified, defaults to the business-level setting.
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.

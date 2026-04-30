@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\EntitlementGrantFailedWebhookEvent\Data;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Webhooks\EntitlementGrantFailedWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\EntitlementGrantFailedWebhookEvent\Data
+ * @phpstan-import-type EntitlementGrantShape from \Dodopayments\Entitlements\Grants\EntitlementGrant
  *
  * @phpstan-type EntitlementGrantFailedWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: EntitlementGrant|EntitlementGrantShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -32,7 +32,7 @@ final class EntitlementGrantFailedWebhookEvent implements BaseModel
     public string $businessID;
 
     #[Required]
-    public Data $data;
+    public EntitlementGrant $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -78,12 +78,12 @@ final class EntitlementGrantFailedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param EntitlementGrant|EntitlementGrantShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        EntitlementGrant|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -109,9 +109,9 @@ final class EntitlementGrantFailedWebhookEvent implements BaseModel
     }
 
     /**
-     * @param Data|DataShape $data
+     * @param EntitlementGrant|EntitlementGrantShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(EntitlementGrant|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

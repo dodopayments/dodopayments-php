@@ -13,17 +13,16 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
-use Dodopayments\Products\ProductListResponse\Entitlement;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
- * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductListResponse\Entitlement
+ * @phpstan-import-type ProductEntitlementSummaryShape from \Dodopayments\Products\ProductEntitlementSummary
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  *
  * @phpstan-type ProductListResponseShape = array{
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
- *   entitlements: list<Entitlement|EntitlementShape>,
+ *   entitlements: list<ProductEntitlementSummary|ProductEntitlementSummaryShape>,
  *   isRecurring: bool,
  *   metadata: array<string,string>,
  *   productID: string,
@@ -58,9 +57,9 @@ final class ProductListResponse implements BaseModel
     /**
      * Entitlements linked to this product.
      *
-     * @var list<Entitlement> $entitlements
+     * @var list<ProductEntitlementSummary> $entitlements
      */
-    #[Required(list: Entitlement::class)]
+    #[Required(list: ProductEntitlementSummary::class)]
     public array $entitlements;
 
     /**
@@ -192,7 +191,7 @@ final class ProductListResponse implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<Entitlement|EntitlementShape> $entitlements
+     * @param list<ProductEntitlementSummary|ProductEntitlementSummaryShape> $entitlements
      * @param array<string,string> $metadata
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Currency|value-of<Currency>|null $currency
@@ -262,7 +261,7 @@ final class ProductListResponse implements BaseModel
     /**
      * Entitlements linked to this product.
      *
-     * @param list<Entitlement|EntitlementShape> $entitlements
+     * @param list<ProductEntitlementSummary|ProductEntitlementSummaryShape> $entitlements
      */
     public function withEntitlements(array $entitlements): self
     {

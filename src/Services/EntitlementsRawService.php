@@ -9,20 +9,17 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Entitlement;
 use Dodopayments\Entitlements\EntitlementCreateParams;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationType;
-use Dodopayments\Entitlements\EntitlementGetResponse;
+use Dodopayments\Entitlements\EntitlementIntegrationType;
 use Dodopayments\Entitlements\EntitlementListParams;
-use Dodopayments\Entitlements\EntitlementListResponse;
-use Dodopayments\Entitlements\EntitlementNewResponse;
+use Dodopayments\Entitlements\EntitlementListParams\IntegrationType;
 use Dodopayments\Entitlements\EntitlementUpdateParams;
-use Dodopayments\Entitlements\EntitlementUpdateResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\EntitlementsRawContract;
 
 /**
- * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig
- * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig as IntegrationConfigShape1
+ * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class EntitlementsRawService implements EntitlementsRawContract
@@ -40,14 +37,14 @@ final class EntitlementsRawService implements EntitlementsRawContract
      *
      * @param array{
      *   integrationConfig: IntegrationConfigShape,
-     *   integrationType: value-of<IntegrationType>,
+     *   integrationType: value-of<EntitlementIntegrationType>,
      *   name: string,
      *   description?: string|null,
      *   metadata?: array<string,string>|null,
      * }|EntitlementCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<EntitlementNewResponse>
+     * @return BaseResponse<Entitlement>
      *
      * @throws APIException
      */
@@ -66,7 +63,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
             path: 'entitlements',
             body: (object) $parsed,
             options: $options,
-            convert: EntitlementNewResponse::class,
+            convert: Entitlement::class,
         );
     }
 
@@ -78,7 +75,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
      * @param string $id Entitlement ID
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<EntitlementGetResponse>
+     * @return BaseResponse<Entitlement>
      *
      * @throws APIException
      */
@@ -91,7 +88,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
             method: 'get',
             path: ['entitlements/%1$s', $id],
             options: $requestOptions,
-            convert: EntitlementGetResponse::class,
+            convert: Entitlement::class,
         );
     }
 
@@ -103,13 +100,13 @@ final class EntitlementsRawService implements EntitlementsRawContract
      * @param string $id Entitlement ID
      * @param array{
      *   description?: string|null,
-     *   integrationConfig?: IntegrationConfigShape1|null,
+     *   integrationConfig?: IntegrationConfigShape|null,
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
      * }|EntitlementUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<EntitlementUpdateResponse>
+     * @return BaseResponse<Entitlement>
      *
      * @throws APIException
      */
@@ -129,7 +126,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
             path: ['entitlements/%1$s', $id],
             body: (object) $parsed,
             options: $options,
-            convert: EntitlementUpdateResponse::class,
+            convert: Entitlement::class,
         );
     }
 
@@ -139,13 +136,11 @@ final class EntitlementsRawService implements EntitlementsRawContract
      * GET /entitlements
      *
      * @param array{
-     *   integrationType?: value-of<EntitlementListParams\IntegrationType>,
-     *   pageNumber?: int,
-     *   pageSize?: int,
+     *   integrationType?: value-of<IntegrationType>, pageNumber?: int, pageSize?: int
      * }|EntitlementListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DefaultPageNumberPagination<EntitlementListResponse>>
+     * @return BaseResponse<DefaultPageNumberPagination<Entitlement>>
      *
      * @throws APIException
      */
@@ -171,7 +166,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
                 ],
             ),
             options: $options,
-            convert: EntitlementListResponse::class,
+            convert: Entitlement::class,
             page: DefaultPageNumberPagination::class,
         );
     }
