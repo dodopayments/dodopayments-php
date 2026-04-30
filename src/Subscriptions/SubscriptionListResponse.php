@@ -11,14 +11,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\Subscriptions\SubscriptionListResponse\ScheduledChange;
 
 /**
  * Response struct representing subscription details.
  *
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
- * @phpstan-import-type ScheduledChangeShape from \Dodopayments\Subscriptions\SubscriptionListResponse\ScheduledChange
+ * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
  *
  * @phpstan-type SubscriptionListResponseShape = array{
  *   billing: BillingAddress|BillingAddressShape,
@@ -46,7 +45,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\ScheduledChange;
  *   discountID?: string|null,
  *   paymentMethodID?: string|null,
  *   productName?: string|null,
- *   scheduledChange?: null|ScheduledChange|ScheduledChangeShape,
+ *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
  * }
  */
@@ -219,7 +218,7 @@ final class SubscriptionListResponse implements BaseModel
      * Scheduled plan change details, if any.
      */
     #[Optional('scheduled_change', nullable: true)]
-    public ?ScheduledChange $scheduledChange;
+    public ?ScheduledPlanChange $scheduledChange;
 
     /**
      * Tax identifier provided for this subscription (if applicable).
@@ -299,7 +298,7 @@ final class SubscriptionListResponse implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
-     * @param ScheduledChange|ScheduledChangeShape|null $scheduledChange
+     * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
      */
     public static function with(
         BillingAddress|array $billing,
@@ -327,7 +326,7 @@ final class SubscriptionListResponse implements BaseModel
         ?string $discountID = null,
         ?string $paymentMethodID = null,
         ?string $productName = null,
-        ScheduledChange|array|null $scheduledChange = null,
+        ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
     ): self {
         $self = new self;
@@ -663,10 +662,10 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Scheduled plan change details, if any.
      *
-     * @param ScheduledChange|ScheduledChangeShape|null $scheduledChange
+     * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
      */
     public function withScheduledChange(
-        ScheduledChange|array|null $scheduledChange
+        ScheduledPlanChange|array|null $scheduledChange
     ): self {
         $self = clone $this;
         $self['scheduledChange'] = $scheduledChange;

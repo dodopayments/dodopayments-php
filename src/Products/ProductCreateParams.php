@@ -14,7 +14,6 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
-use Dodopayments\Products\ProductCreateParams\Entitlement;
 
 /**
  * @see Dodopayments\Services\ProductsService::create()
@@ -23,7 +22,7 @@ use Dodopayments\Products\ProductCreateParams\Entitlement;
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
- * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductCreateParams\Entitlement
+ * @phpstan-import-type AttachProductEntitlementShape from \Dodopayments\Products\AttachProductEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  *
  * @phpstan-type ProductCreateParamsShape = array{
@@ -35,7 +34,7 @@ use Dodopayments\Products\ProductCreateParams\Entitlement;
  *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|\Dodopayments\Products\ProductCreateParams\DigitalProductDelivery|DigitalProductDeliveryShape,
- *   entitlements?: list<Entitlement|EntitlementShape>|null,
+ *   entitlements?: list<AttachProductEntitlement|AttachProductEntitlementShape>|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
@@ -114,9 +113,9 @@ final class ProductCreateParams implements BaseModel
     /**
      * Optional entitlements to attach to this product (max 20).
      *
-     * @var list<Entitlement>|null $entitlements
+     * @var list<AttachProductEntitlement>|null $entitlements
      */
-    #[Optional(list: Entitlement::class, nullable: true)]
+    #[Optional(list: AttachProductEntitlement::class, nullable: true)]
     public ?array $entitlements;
 
     /**
@@ -204,7 +203,7 @@ final class ProductCreateParams implements BaseModel
      * @param list<string>|null $addons
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
-     * @param list<Entitlement|EntitlementShape>|null $entitlements
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      */
@@ -350,7 +349,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Optional entitlements to attach to this product (max 20).
      *
-     * @param list<Entitlement|EntitlementShape>|null $entitlements
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      */
     public function withEntitlements(?array $entitlements): self
     {

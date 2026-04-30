@@ -5,10 +5,8 @@ namespace Tests\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Entitlements\EntitlementGetResponse;
-use Dodopayments\Entitlements\EntitlementListResponse;
-use Dodopayments\Entitlements\EntitlementNewResponse;
-use Dodopayments\Entitlements\EntitlementUpdateResponse;
+use Dodopayments\Entitlements\Entitlement;
+use Dodopayments\Entitlements\EntitlementIntegrationType;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -38,12 +36,12 @@ final class EntitlementsTest extends TestCase
             integrationConfig: [
                 'permission' => 'permission', 'targetID' => 'target_id',
             ],
-            integrationType: 'discord',
+            integrationType: EntitlementIntegrationType::DISCORD,
             name: 'name',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(EntitlementNewResponse::class, $result);
+        $this->assertInstanceOf(Entitlement::class, $result);
     }
 
     #[Test]
@@ -53,14 +51,14 @@ final class EntitlementsTest extends TestCase
             integrationConfig: [
                 'permission' => 'permission', 'targetID' => 'target_id',
             ],
-            integrationType: 'discord',
+            integrationType: EntitlementIntegrationType::DISCORD,
             name: 'name',
             description: 'description',
             metadata: ['foo' => 'string'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(EntitlementNewResponse::class, $result);
+        $this->assertInstanceOf(Entitlement::class, $result);
     }
 
     #[Test]
@@ -69,7 +67,7 @@ final class EntitlementsTest extends TestCase
         $result = $this->client->entitlements->retrieve('id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(EntitlementGetResponse::class, $result);
+        $this->assertInstanceOf(Entitlement::class, $result);
     }
 
     #[Test]
@@ -78,7 +76,7 @@ final class EntitlementsTest extends TestCase
         $result = $this->client->entitlements->update('id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertInstanceOf(EntitlementUpdateResponse::class, $result);
+        $this->assertInstanceOf(Entitlement::class, $result);
     }
 
     #[Test]
@@ -91,7 +89,7 @@ final class EntitlementsTest extends TestCase
 
         if ($item = $page->getItems()[0] ?? null) {
             // @phpstan-ignore-next-line method.alreadyNarrowedType
-            $this->assertInstanceOf(EntitlementListResponse::class, $item);
+            $this->assertInstanceOf(Entitlement::class, $item);
         }
     }
 

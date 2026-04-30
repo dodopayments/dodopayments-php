@@ -11,10 +11,12 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsRawContract;
 use Dodopayments\Subscriptions\AttachAddon;
+use Dodopayments\Subscriptions\CancellationFeedback;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
@@ -25,7 +27,6 @@ use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionCreateParams;
-use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
 use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams;
@@ -37,7 +38,6 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
-use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancellationFeedback;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
@@ -48,7 +48,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 /**
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
- * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
@@ -82,7 +82,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   mandateMinAmountInrPaise?: int|null,
      *   metadata?: array<string,string>,
      *   onDemand?: OnDemandSubscription|OnDemandSubscriptionShape|null,
-     *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
+     *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
      *   paymentLink?: bool|null,
      *   paymentMethodID?: string|null,
      *   redirectImmediately?: bool,

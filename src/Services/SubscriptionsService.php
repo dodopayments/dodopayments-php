@@ -12,10 +12,12 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsContract;
 use Dodopayments\Subscriptions\AttachAddon;
+use Dodopayments\Subscriptions\CancellationFeedback;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
@@ -23,7 +25,6 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
-use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
 use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
@@ -31,7 +32,6 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionStatus;
-use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancellationFeedback;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
@@ -41,7 +41,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 /**
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
- * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
@@ -92,7 +92,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param array<string,string> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
-     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
      * @param string|null $paymentMethodID Optional payment method ID to use for this subscription.

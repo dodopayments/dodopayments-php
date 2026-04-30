@@ -7,13 +7,10 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Entitlement;
 use Dodopayments\Entitlements\EntitlementCreateParams;
-use Dodopayments\Entitlements\EntitlementGetResponse;
 use Dodopayments\Entitlements\EntitlementListParams;
-use Dodopayments\Entitlements\EntitlementListResponse;
-use Dodopayments\Entitlements\EntitlementNewResponse;
 use Dodopayments\Entitlements\EntitlementUpdateParams;
-use Dodopayments\Entitlements\EntitlementUpdateResponse;
 use Dodopayments\RequestOptions;
 
 /**
@@ -27,7 +24,7 @@ interface EntitlementsRawContract
      * @param array<string,mixed>|EntitlementCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<EntitlementNewResponse>
+     * @return BaseResponse<Entitlement>
      *
      * @throws APIException
      */
@@ -42,7 +39,7 @@ interface EntitlementsRawContract
      * @param string $id Entitlement ID
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<EntitlementGetResponse>
+     * @return BaseResponse<Entitlement>
      *
      * @throws APIException
      */
@@ -58,7 +55,7 @@ interface EntitlementsRawContract
      * @param array<string,mixed>|EntitlementUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<EntitlementUpdateResponse>
+     * @return BaseResponse<Entitlement>
      *
      * @throws APIException
      */
@@ -74,7 +71,7 @@ interface EntitlementsRawContract
      * @param array<string,mixed>|EntitlementListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DefaultPageNumberPagination<EntitlementListResponse>>
+     * @return BaseResponse<DefaultPageNumberPagination<Entitlement>>
      *
      * @throws APIException
      */

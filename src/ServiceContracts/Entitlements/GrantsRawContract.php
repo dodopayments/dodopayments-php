@@ -7,10 +7,9 @@ namespace Dodopayments\ServiceContracts\Entitlements;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Entitlements\Grants\GrantListParams;
-use Dodopayments\Entitlements\Grants\GrantListResponse;
 use Dodopayments\Entitlements\Grants\GrantRevokeParams;
-use Dodopayments\Entitlements\Grants\GrantRevokeResponse;
 use Dodopayments\RequestOptions;
 
 /**
@@ -25,7 +24,7 @@ interface GrantsRawContract
      * @param array<string,mixed>|GrantListParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<DefaultPageNumberPagination<GrantListResponse>>
+     * @return BaseResponse<DefaultPageNumberPagination<EntitlementGrant>>
      *
      * @throws APIException
      */
@@ -42,7 +41,7 @@ interface GrantsRawContract
      * @param array<string,mixed>|GrantRevokeParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<GrantRevokeResponse>
+     * @return BaseResponse<EntitlementGrant>
      *
      * @throws APIException
      */
