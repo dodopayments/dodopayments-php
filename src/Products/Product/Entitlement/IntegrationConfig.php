@@ -17,8 +17,11 @@ use Dodopayments\Products\Product\Entitlement\IntegrationConfig\NotionConfig;
 use Dodopayments\Products\Product\Entitlement\IntegrationConfig\TelegramConfig;
 
 /**
- * Platform-specific configuration for an entitlement.
- * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+ * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
+ * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
+ * hydrated `digital_files` object (resolved download URLs etc.).  The
+ * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
+ * response-only.
  *
  * @phpstan-import-type GitHubConfigShape from \Dodopayments\Products\Product\Entitlement\IntegrationConfig\GitHubConfig
  * @phpstan-import-type DiscordConfigShape from \Dodopayments\Products\Product\Entitlement\IntegrationConfig\DiscordConfig

@@ -14,6 +14,7 @@ use Dodopayments\Services\CreditEntitlementsService;
 use Dodopayments\Services\CustomersService;
 use Dodopayments\Services\DiscountsService;
 use Dodopayments\Services\DisputesService;
+use Dodopayments\Services\EntitlementsService;
 use Dodopayments\Services\InvoicesService;
 use Dodopayments\Services\LicenseKeyInstancesService;
 use Dodopayments\Services\LicenseKeysService;
@@ -152,6 +153,11 @@ class Client extends BaseClient
     public CreditEntitlementsService $creditEntitlements;
 
     /**
+     * @api
+     */
+    public EntitlementsService $entitlements;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -232,6 +238,7 @@ class Client extends BaseClient
         $this->meters = new MetersService($this);
         $this->balances = new BalancesService($this);
         $this->creditEntitlements = new CreditEntitlementsService($this);
+        $this->entitlements = new EntitlementsService($this);
     }
 
     /** @return array<string,string> */

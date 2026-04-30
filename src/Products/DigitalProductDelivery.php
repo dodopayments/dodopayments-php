@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace Dodopayments\Products;
 
 use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * Digital-product-delivery payload for a grant. Populated for grants whose
+ * entitlement has `integration_type = 'digital_files'`. `files` carries
+ * presigned download URLs; the source (EE service or legacy in-process S3
+ * presigning) is opaque to the caller.
+ *
  * @phpstan-import-type DigitalProductDeliveryFileShape from \Dodopayments\Products\DigitalProductDeliveryFile
  *
  * @phpstan-type DigitalProductDeliveryShape = array{
+ *   files: list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape>,
  *   externalURL?: string|null,
- *   files?: list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape>|null,
  *   instructions?: string|null,
  * }
  */
@@ -22,26 +28,30 @@ final class DigitalProductDelivery implements BaseModel
     /** @use SdkModel<DigitalProductDeliveryShape> */
     use SdkModel;
 
-    /**
-     * External URL to digital product.
-     */
+    /** @var list<DigitalProductDeliveryFile> $files */
+    #[Required(list: DigitalProductDeliveryFile::class)]
+    public array $files;
+
     #[Optional('external_url', nullable: true)]
     public ?string $externalURL;
 
-    /**
-     * Uploaded files ids of digital product.
-     *
-     * @var list<DigitalProductDeliveryFile>|null $files
-     */
-    #[Optional(list: DigitalProductDeliveryFile::class, nullable: true)]
-    public ?array $files;
-
-    /**
-     * Instructions to download and use the digital product.
-     */
     #[Optional(nullable: true)]
     public ?string $instructions;
 
+    /**
+     * `new DigitalProductDelivery()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * DigitalProductDelivery::with(files: ...)
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new DigitalProductDelivery)->withFiles(...)
+     * ```
+     */
     public function __construct()
     {
         $this->initialize();
@@ -52,25 +62,34 @@ final class DigitalProductDelivery implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape>|null $files
+     * @param list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape> $files
      */
     public static function with(
+        array $files,
         ?string $externalURL = null,
-        ?array $files = null,
-        ?string $instructions = null,
+        ?string $instructions = null
     ): self {
         $self = new self;
 
+        $self['files'] = $files;
+
         null !== $externalURL && $self['externalURL'] = $externalURL;
-        null !== $files && $self['files'] = $files;
         null !== $instructions && $self['instructions'] = $instructions;
 
         return $self;
     }
 
     /**
-     * External URL to digital product.
+     * @param list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape> $files
      */
+    public function withFiles(array $files): self
+    {
+        $self = clone $this;
+        $self['files'] = $files;
+
+        return $self;
+    }
+
     public function withExternalURL(?string $externalURL): self
     {
         $self = clone $this;
@@ -79,22 +98,6 @@ final class DigitalProductDelivery implements BaseModel
         return $self;
     }
 
-    /**
-     * Uploaded files ids of digital product.
-     *
-     * @param list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape>|null $files
-     */
-    public function withFiles(?array $files): self
-    {
-        $self = clone $this;
-        $self['files'] = $files;
-
-        return $self;
-    }
-
-    /**
-     * Instructions to download and use the digital product.
-     */
     public function withInstructions(?string $instructions): self
     {
         $self = clone $this;

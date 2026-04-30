@@ -16,6 +16,7 @@ use Dodopayments\Subscriptions\AddonCartResponseItem;
 use Dodopayments\Subscriptions\CreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\MeterCartResponseItem;
 use Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse;
+use Dodopayments\Subscriptions\Subscription\CancellationFeedback;
 use Dodopayments\Subscriptions\Subscription\ScheduledChange;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
@@ -58,6 +59,8 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   taxInclusive: bool,
  *   trialPeriodDays: int,
+ *   cancellationComment?: string|null,
+ *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
  *   cancelledAt?: \DateTimeInterface|null,
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountCyclesRemaining?: int|null,
@@ -221,6 +224,24 @@ final class Subscription implements BaseModel
     public int $trialPeriodDays;
 
     /**
+     * Free-text cancellation comment, if any.
+     */
+    #[Optional('cancellation_comment', nullable: true)]
+    public ?string $cancellationComment;
+
+    /**
+     * Customer-supplied churn reason, if any.
+     *
+     * @var value-of<CancellationFeedback>|null $cancellationFeedback
+     */
+    #[Optional(
+        'cancellation_feedback',
+        enum: CancellationFeedback::class,
+        nullable: true
+    )]
+    public ?string $cancellationFeedback;
+
+    /**
      * Cancelled timestamp if the subscription is cancelled.
      */
     #[Optional('cancelled_at', nullable: true)]
@@ -365,6 +386,7 @@ final class Subscription implements BaseModel
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param ScheduledChange|ScheduledChangeShape|null $scheduledChange
      */
@@ -394,6 +416,8 @@ final class Subscription implements BaseModel
         bool $taxInclusive,
         int $trialPeriodDays,
         PayloadType|string $payloadType,
+        ?string $cancellationComment = null,
+        CancellationFeedback|string|null $cancellationFeedback = null,
         ?\DateTimeInterface $cancelledAt = null,
         ?array $customFieldResponses = null,
         ?int $discountCyclesRemaining = null,
@@ -431,6 +455,8 @@ final class Subscription implements BaseModel
         $self['trialPeriodDays'] = $trialPeriodDays;
         $self['payloadType'] = $payloadType;
 
+        null !== $cancellationComment && $self['cancellationComment'] = $cancellationComment;
+        null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
         null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
@@ -721,6 +747,31 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['trialPeriodDays'] = $trialPeriodDays;
+
+        return $self;
+    }
+
+    /**
+     * Free-text cancellation comment, if any.
+     */
+    public function withCancellationComment(?string $cancellationComment): self
+    {
+        $self = clone $this;
+        $self['cancellationComment'] = $cancellationComment;
+
+        return $self;
+    }
+
+    /**
+     * Customer-supplied churn reason, if any.
+     *
+     * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
+     */
+    public function withCancellationFeedback(
+        CancellationFeedback|string|null $cancellationFeedback
+    ): self {
+        $self = clone $this;
+        $self['cancellationFeedback'] = $cancellationFeedback;
 
         return $self;
     }

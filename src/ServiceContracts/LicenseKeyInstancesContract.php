@@ -44,6 +44,7 @@ interface LicenseKeyInstancesContract
     /**
      * @api
      *
+     * @param string|null $grantID Filter instances by entitlement grant ID
      * @param string|null $licenseKeyID Filter by license key ID
      * @param int|null $pageNumber Page number default is 0
      * @param int|null $pageSize Page size default is 10 max is 100
@@ -54,6 +55,7 @@ interface LicenseKeyInstancesContract
      * @throws APIException
      */
     public function list(
+        ?string $grantID = null,
         ?string $licenseKeyID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,

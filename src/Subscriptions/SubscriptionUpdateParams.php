@@ -9,6 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancellationFeedback;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
@@ -24,6 +25,8 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *   billing?: null|BillingAddress|BillingAddressShape,
  *   cancelAtNextBillingDate?: bool|null,
  *   cancelReason?: null|CancelReason|value-of<CancelReason>,
+ *   cancellationComment?: string|null,
+ *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
  *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
  *   customerName?: string|null,
  *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
@@ -51,6 +54,24 @@ final class SubscriptionUpdateParams implements BaseModel
     /** @var value-of<CancelReason>|null $cancelReason */
     #[Optional('cancel_reason', enum: CancelReason::class, nullable: true)]
     public ?string $cancelReason;
+
+    /**
+     * Free-text cancellation comment (only valid when cancelling or scheduling cancellation).
+     */
+    #[Optional('cancellation_comment', nullable: true)]
+    public ?string $cancellationComment;
+
+    /**
+     * Customer-supplied churn reason (only valid when cancelling or scheduling cancellation).
+     *
+     * @var value-of<CancellationFeedback>|null $cancellationFeedback
+     */
+    #[Optional(
+        'cancellation_feedback',
+        enum: CancellationFeedback::class,
+        nullable: true
+    )]
+    public ?string $cancellationFeedback;
 
     /**
      * Update credit entitlement cart settings.
@@ -96,6 +117,7 @@ final class SubscriptionUpdateParams implements BaseModel
      *
      * @param BillingAddress|BillingAddressShape|null $billing
      * @param CancelReason|value-of<CancelReason>|null $cancelReason
+     * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
@@ -105,6 +127,8 @@ final class SubscriptionUpdateParams implements BaseModel
         BillingAddress|array|null $billing = null,
         ?bool $cancelAtNextBillingDate = null,
         CancelReason|string|null $cancelReason = null,
+        ?string $cancellationComment = null,
+        CancellationFeedback|string|null $cancellationFeedback = null,
         ?array $creditEntitlementCart = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
@@ -118,6 +142,8 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $billing && $self['billing'] = $billing;
         null !== $cancelAtNextBillingDate && $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
         null !== $cancelReason && $self['cancelReason'] = $cancelReason;
+        null !== $cancellationComment && $self['cancellationComment'] = $cancellationComment;
+        null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
         null !== $creditEntitlementCart && $self['creditEntitlementCart'] = $creditEntitlementCart;
         null !== $customerName && $self['customerName'] = $customerName;
         null !== $disableOnDemand && $self['disableOnDemand'] = $disableOnDemand;
@@ -160,6 +186,31 @@ final class SubscriptionUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['cancelReason'] = $cancelReason;
+
+        return $self;
+    }
+
+    /**
+     * Free-text cancellation comment (only valid when cancelling or scheduling cancellation).
+     */
+    public function withCancellationComment(?string $cancellationComment): self
+    {
+        $self = clone $this;
+        $self['cancellationComment'] = $cancellationComment;
+
+        return $self;
+    }
+
+    /**
+     * Customer-supplied churn reason (only valid when cancelling or scheduling cancellation).
+     *
+     * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
+     */
+    public function withCancellationFeedback(
+        CancellationFeedback|string|null $cancellationFeedback
+    ): self {
+        $self = clone $this;
+        $self['cancellationFeedback'] = $cancellationFeedback;
 
         return $self;
     }

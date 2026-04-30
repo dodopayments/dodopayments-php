@@ -22,6 +22,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  *   productID: string,
  *   prorationBillingMode: ProrationBillingMode|value-of<ProrationBillingMode>,
  *   quantity: int,
+ *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   discountCode?: string|null,
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
@@ -54,6 +55,13 @@ final class SubscriptionChangePlanParams implements BaseModel
      */
     #[Required]
     public int $quantity;
+
+    /**
+     * Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, uses the subscription's stored setting.
+     */
+    #[Optional('adaptive_currency_fees_inclusive', nullable: true)]
+    public ?bool $adaptiveCurrencyFeesInclusive;
 
     /**
      * Addons for the new plan.
@@ -146,6 +154,7 @@ final class SubscriptionChangePlanParams implements BaseModel
         string $productID,
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
+        ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
         ?string $discountCode = null,
         EffectiveAt|string|null $effectiveAt = null,
@@ -158,6 +167,7 @@ final class SubscriptionChangePlanParams implements BaseModel
         $self['prorationBillingMode'] = $prorationBillingMode;
         $self['quantity'] = $quantity;
 
+        null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
         null !== $addons && $self['addons'] = $addons;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $effectiveAt && $self['effectiveAt'] = $effectiveAt;
@@ -199,6 +209,19 @@ final class SubscriptionChangePlanParams implements BaseModel
     {
         $self = clone $this;
         $self['quantity'] = $quantity;
+
+        return $self;
+    }
+
+    /**
+     * Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, uses the subscription's stored setting.
+     */
+    public function withAdaptiveCurrencyFeesInclusive(
+        ?bool $adaptiveCurrencyFeesInclusive
+    ): self {
+        $self = clone $this;
+        $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
 
         return $self;
     }

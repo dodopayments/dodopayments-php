@@ -16,9 +16,6 @@ final class GitHubConfig implements BaseModel
     /** @use SdkModel<GitHubConfigShape> */
     use SdkModel;
 
-    /**
-     * One of: pull, push, admin, maintain, triage.
-     */
     #[Required]
     public string $permission;
 
@@ -59,9 +56,6 @@ final class GitHubConfig implements BaseModel
         return $self;
     }
 
-    /**
-     * One of: pull, push, admin, maintain, triage.
-     */
     public function withPermission(string $permission): self
     {
         $self = clone $this;
