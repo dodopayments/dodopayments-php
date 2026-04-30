@@ -21,6 +21,12 @@ use Dodopayments\Products\ProductListResponse\Entitlement\IntegrationType;
 /**
  * Summary of an entitlement attached to a product.
  *
+ * `integration_config` uses [`IntegrationConfigResponse`] (NOT the
+ * persisted [`IntegrationConfig`]) so digital_files entitlements embed the
+ * resolved `digital_files` object — matching what `GET /entitlements/{id}`
+ * returns. All other variants pass through unchanged via
+ * `#[serde(untagged)]`.
+ *
  * @phpstan-import-type IntegrationConfigVariants from \Dodopayments\Products\ProductListResponse\Entitlement\IntegrationConfig
  * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Products\ProductListResponse\Entitlement\IntegrationConfig
  *
@@ -41,8 +47,11 @@ final class Entitlement implements BaseModel
     public string $id;
 
     /**
-     * Platform-specific configuration for an entitlement.
-     * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+     * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
+     * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
+     * hydrated `digital_files` object (resolved download URLs etc.).  The
+     * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
+     * response-only.
      *
      * @var IntegrationConfigVariants $integrationConfig
      */
@@ -120,8 +129,11 @@ final class Entitlement implements BaseModel
     }
 
     /**
-     * Platform-specific configuration for an entitlement.
-     * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+     * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
+     * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
+     * hydrated `digital_files` object (resolved download URLs etc.).  The
+     * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
+     * response-only.
      *
      * @param IntegrationConfigShape $integrationConfig
      */

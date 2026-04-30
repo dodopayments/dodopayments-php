@@ -37,6 +37,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancellationFeedback;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
@@ -78,12 +79,14 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   billingCurrency?: value-of<Currency>,
      *   discountCode?: string|null,
      *   force3DS?: bool|null,
+     *   mandateMinAmountInrPaise?: int|null,
      *   metadata?: array<string,string>,
      *   onDemand?: OnDemandSubscription|OnDemandSubscriptionShape|null,
      *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
      *   paymentLink?: bool|null,
      *   paymentMethodID?: string|null,
      *   redirectImmediately?: bool,
+     *   requirePhoneNumber?: bool,
      *   returnURL?: string|null,
      *   shortLink?: bool|null,
      *   showSavedPaymentMethods?: bool,
@@ -146,6 +149,8 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   billing?: BillingAddress|BillingAddressShape|null,
      *   cancelAtNextBillingDate?: bool|null,
      *   cancelReason?: value-of<CancelReason>,
+     *   cancellationComment?: string|null,
+     *   cancellationFeedback?: value-of<CancellationFeedback>,
      *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
      *   customerName?: string|null,
      *   disableOnDemand?: DisableOnDemand|DisableOnDemandShape|null,
@@ -261,6 +266,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   productID: string,
      *   prorationBillingMode: value-of<ProrationBillingMode>,
      *   quantity: int,
+     *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
      *   discountCode?: string|null,
      *   effectiveAt?: EffectiveAt|value-of<EffectiveAt>,
@@ -339,6 +345,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   productID: string,
      *   prorationBillingMode: value-of<SubscriptionPreviewChangePlanParams\ProrationBillingMode>,
      *   quantity: int,
+     *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
      *   discountCode?: string|null,
      *   effectiveAt?: SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<SubscriptionPreviewChangePlanParams\EffectiveAt>,

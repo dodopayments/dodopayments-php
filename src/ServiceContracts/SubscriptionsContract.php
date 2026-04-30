@@ -28,6 +28,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionStatus;
+use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancellationFeedback;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
@@ -66,6 +67,12 @@ interface SubscriptionsContract
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
      * @param string|null $discountCode Discount Code to apply to the subscription
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this subscription
+     * @param int|null $mandateMinAmountInrPaise Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
      * @param array<string,string> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
@@ -77,6 +84,9 @@ interface SubscriptionsContract
      * The payment method will be validated for eligibility with the subscription's currency.
      * @param bool $redirectImmediately If true, redirects the customer immediately after payment completion
      * False by default
+     * @param bool $requirePhoneNumber If true, the customer's phone number is required to create this subscription.
+     * Typically set alongside `payment_link=true` so merchants can enforce phone
+     * collection on the hosted payment page. Defaults to false.
      * @param string|null $returnURL Optional URL to redirect after successful subscription creation
      * @param bool|null $shortLink If true, returns a shortened payment link.
      * Defaults to false if not specified.
@@ -100,12 +110,14 @@ interface SubscriptionsContract
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
         ?bool $force3DS = null,
+        ?int $mandateMinAmountInrPaise = null,
         ?array $metadata = null,
         OnDemandSubscription|array|null $onDemand = null,
         ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
         ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
+        ?bool $requirePhoneNumber = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
@@ -134,6 +146,8 @@ interface SubscriptionsContract
      * @param BillingAddress|BillingAddressShape|null $billing
      * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
      * @param CancelReason|value-of<CancelReason>|null $cancelReason
+     * @param string|null $cancellationComment free-text cancellation comment (only valid when cancelling or scheduling cancellation)
+     * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback customer-supplied churn reason (only valid when cancelling or scheduling cancellation)
      * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart Update credit entitlement cart settings
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
@@ -147,6 +161,8 @@ interface SubscriptionsContract
         BillingAddress|array|null $billing = null,
         ?bool $cancelAtNextBillingDate = null,
         CancelReason|string|null $cancelReason = null,
+        ?string $cancellationComment = null,
+        CancellationFeedback|string|null $cancellationFeedback = null,
         ?array $creditEntitlementCart = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
@@ -206,6 +222,8 @@ interface SubscriptionsContract
      * @param string $productID Unique identifier of the product to subscribe to
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode Proration Billing Mode
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
+     * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, uses the subscription's stored setting.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
      * @param string|null $discountCode Optional discount code to apply to the new plan.
@@ -230,6 +248,7 @@ interface SubscriptionsContract
         string $productID,
         ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
+        ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
         ?string $discountCode = null,
         EffectiveAt|string|null $effectiveAt = null,
@@ -273,6 +292,8 @@ interface SubscriptionsContract
      * @param string $productID Unique identifier of the product to subscribe to
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode> $prorationBillingMode Proration Billing Mode
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
+     * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, uses the subscription's stored setting.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
      * @param string|null $discountCode Optional discount code to apply to the new plan.
@@ -297,6 +318,7 @@ interface SubscriptionsContract
         string $productID,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode|string $prorationBillingMode,
         int $quantity,
+        ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
         ?string $discountCode = null,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|string|null $effectiveAt = null,

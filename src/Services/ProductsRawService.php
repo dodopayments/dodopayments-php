@@ -15,6 +15,7 @@ use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductCreateParams\Entitlement;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesParams;
@@ -25,7 +26,9 @@ use Dodopayments\ServiceContracts\ProductsRawContract;
 
 /**
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductCreateParams\Entitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductUpdateParams\Entitlement as EntitlementShape1
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -51,7 +54,7 @@ final class ProductsRawService implements ProductsRawContract
      *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
      *   description?: string|null,
      *   digitalProductDelivery?: DigitalProductDelivery|DigitalProductDeliveryShape|null,
-     *   entitlementIDs?: list<string>|null,
+     *   entitlements?: list<Entitlement|EntitlementShape>|null,
      *   licenseKeyActivationMessage?: string|null,
      *   licenseKeyActivationsLimit?: int|null,
      *   licenseKeyDuration?: LicenseKeyDuration|LicenseKeyDurationShape|null,
@@ -115,7 +118,7 @@ final class ProductsRawService implements ProductsRawContract
      *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
      *   description?: string|null,
      *   digitalProductDelivery?: ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null,
-     *   entitlementIDs?: list<string>|null,
+     *   entitlements?: list<ProductUpdateParams\Entitlement|EntitlementShape1>|null,
      *   imageID?: string|null,
      *   licenseKeyActivationMessage?: string|null,
      *   licenseKeyActivationsLimit?: int|null,

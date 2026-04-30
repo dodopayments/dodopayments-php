@@ -62,6 +62,7 @@ final class PaymentsTest extends TestCase
             productCart: [
                 ['productID' => 'product_id', 'quantity' => 0, 'amount' => 0],
             ],
+            adaptiveCurrencyFeesInclusive: true,
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingCurrency: Currency::AED,
             discountCode: 'discount_code',
@@ -70,6 +71,7 @@ final class PaymentsTest extends TestCase
             paymentLink: true,
             paymentMethodID: 'payment_method_id',
             redirectImmediately: true,
+            requirePhoneNumber: true,
             returnURL: 'return_url',
             shortLink: true,
             showSavedPaymentMethods: true,

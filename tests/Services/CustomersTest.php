@@ -7,6 +7,7 @@ use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
+use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -119,6 +120,15 @@ final class CustomersTest extends TestCase
             CustomerListCreditEntitlementsResponse::class,
             $result
         );
+    }
+
+    #[Test]
+    public function testListEntitlements(): void
+    {
+        $result = $this->client->customers->listEntitlements('customer_id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(CustomerListEntitlementsResponse::class, $result);
     }
 
     #[Test]

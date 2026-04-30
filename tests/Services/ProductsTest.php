@@ -97,7 +97,7 @@ final class ProductsTest extends TestCase
             digitalProductDelivery: [
                 'externalURL' => 'external_url', 'instructions' => 'instructions',
             ],
-            entitlementIDs: ['string'],
+            entitlements: [['entitlementID' => 'entitlement_id']],
             licenseKeyActivationMessage: 'license_key_activation_message',
             licenseKeyActivationsLimit: 0,
             licenseKeyDuration: ['count' => 0, 'interval' => TimeInterval::DAY],

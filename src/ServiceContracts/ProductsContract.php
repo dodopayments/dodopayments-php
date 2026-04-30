@@ -14,13 +14,16 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductCreateParams\Entitlement;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\RequestOptions;
 
 /**
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductCreateParams\Entitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductUpdateParams\Entitlement as EntitlementShape1
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -39,15 +42,31 @@ interface ProductsContract
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements Optional credit entitlements to attach (max 3)
      * @param string|null $description Optional description of the product
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery Choose how you would like you digital product delivered
-     * @param list<string>|null $entitlementIDs Optional entitlement IDs to attach to this product (max 20)
+     *
+     * deprecated: use entitlements instead
+     * @param list<Entitlement|EntitlementShape>|null $entitlements Optional entitlements to attach to this product (max 20)
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      * @param int|null $licenseKeyActivationsLimit The number of times the license key can be activated.
      * Must be 0 or greater
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration Duration configuration for the license key.
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      * @param bool|null $licenseKeyEnabled When true, generates and sends a license key to your customer.
      * Defaults to false
+     *
+     * deprecated: use entitlements instead. If a `license_key` entitlement is
+     * also attached via the `entitlements` field, the `license_key_*` config
+     * fields below are ignored — the attached entitlement's config is the
+     * source of truth.
      * @param array<string,string> $metadata Additional metadata for the product
      * @param RequestOpts|null $requestOptions
      *
@@ -62,7 +81,7 @@ interface ProductsContract
         ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
-        ?array $entitlementIDs = null,
+        ?array $entitlements = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
@@ -92,25 +111,35 @@ interface ProductsContract
      * Send empty array to remove all, omit field to leave unchanged
      * @param string|null $description description of the product, optional and must be at most 1000 characters
      * @param \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null $digitalProductDelivery Choose how you would like you digital product delivered
-     * @param list<string>|null $entitlementIDs Entitlement IDs to attach (replaces all existing when present)
+     *
+     * deprecated: use entitlements instead
+     * @param list<\Dodopayments\Products\ProductUpdateParams\Entitlement|EntitlementShape1>|null $entitlements Entitlements to attach (replaces all existing when present)
      * Send empty array to remove all, omit field to leave unchanged
      * @param string|null $imageID Product image id after its uploaded to S3
      * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.
      *
      * Only applicable if `license_key_enabled` is `true`. This message contains instructions for
      * activating the license key.
+     *
+     * deprecated: use entitlements instead
      * @param int|null $licenseKeyActivationsLimit Limit for the number of activations for the license key.
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the maximum number of times
      * the license key can be activated.
+     *
+     * deprecated: use entitlements instead
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration Duration of the license key if enabled.
      *
      * Only applicable if `license_key_enabled` is `true`. Represents the duration in days for which
      * the license key is valid.
+     *
+     * deprecated: use entitlements instead
      * @param bool|null $licenseKeyEnabled Whether the product requires a license key.
      *
      * If `true`, additional fields related to license key (duration, activations limit, activation message)
      * become applicable.
+     *
+     * deprecated: use entitlements instead
      * @param array<string,string>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
      * @param PriceShape|null $price price details of the product
@@ -126,7 +155,7 @@ interface ProductsContract
         ?array $creditEntitlements = null,
         ?string $description = null,
         \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|array|null $digitalProductDelivery = null,
-        ?array $entitlementIDs = null,
+        ?array $entitlements = null,
         ?string $imageID = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,

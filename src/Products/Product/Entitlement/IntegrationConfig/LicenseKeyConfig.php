@@ -7,13 +7,14 @@ namespace Dodopayments\Products\Product\Entitlement\IntegrationConfig;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-type LicenseKeyConfigShape = array{
  *   activationMessage?: string|null,
  *   activationsLimit?: int|null,
  *   durationCount?: int|null,
- *   durationInterval?: string|null,
+ *   durationInterval?: null|TimeInterval|value-of<TimeInterval>,
  * }
  */
 final class LicenseKeyConfig implements BaseModel
@@ -30,7 +31,8 @@ final class LicenseKeyConfig implements BaseModel
     #[Optional('duration_count', nullable: true)]
     public ?int $durationCount;
 
-    #[Optional('duration_interval', nullable: true)]
+    /** @var value-of<TimeInterval>|null $durationInterval */
+    #[Optional('duration_interval', enum: TimeInterval::class, nullable: true)]
     public ?string $durationInterval;
 
     public function __construct()
@@ -42,12 +44,14 @@ final class LicenseKeyConfig implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param TimeInterval|value-of<TimeInterval>|null $durationInterval
      */
     public static function with(
         ?string $activationMessage = null,
         ?int $activationsLimit = null,
         ?int $durationCount = null,
-        ?string $durationInterval = null,
+        TimeInterval|string|null $durationInterval = null,
     ): self {
         $self = new self;
 
@@ -83,8 +87,12 @@ final class LicenseKeyConfig implements BaseModel
         return $self;
     }
 
-    public function withDurationInterval(?string $durationInterval): self
-    {
+    /**
+     * @param TimeInterval|value-of<TimeInterval>|null $durationInterval
+     */
+    public function withDurationInterval(
+        TimeInterval|string|null $durationInterval
+    ): self {
         $self = clone $this;
         $self['durationInterval'] = $durationInterval;
 

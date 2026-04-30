@@ -75,6 +75,8 @@ enum WebhookEventType: string
 
     case CREDIT_OVERAGE_CHARGED = 'credit.overage_charged';
 
+    case CREDIT_OVERAGE_RESET = 'credit.overage_reset';
+
     case CREDIT_MANUAL_ADJUSTMENT = 'credit.manual_adjustment';
 
     case CREDIT_BALANCE_LOW = 'credit.balance_low';

@@ -84,7 +84,10 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
      * @api
      *
      * @param array{
-     *   licenseKeyID?: string|null, pageNumber?: int|null, pageSize?: int|null
+     *   grantID?: string|null,
+     *   licenseKeyID?: string|null,
+     *   pageNumber?: int|null,
+     *   pageSize?: int|null,
      * }|LicenseKeyInstanceListParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -108,6 +111,7 @@ final class LicenseKeyInstancesRawService implements LicenseKeyInstancesRawContr
             query: Util::array_transform_keys(
                 $parsed,
                 [
+                    'grantID' => 'grant_id',
                     'licenseKeyID' => 'license_key_id',
                     'pageNumber' => 'page_number',
                     'pageSize' => 'page_size',

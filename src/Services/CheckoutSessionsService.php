@@ -68,6 +68,12 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
      * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
+     * @param int|null $mandateMinAmountInrPaise Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
      * @param array<string,string>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
      * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
@@ -97,6 +103,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         ?string $discountCode = null,
         CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
+        ?int $mandateMinAmountInrPaise = null,
         ?array $metadata = null,
         ?bool $minimalAddress = null,
         ?string $paymentMethodID = null,
@@ -122,6 +129,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'discountCode' => $discountCode,
                 'featureFlags' => $featureFlags,
                 'force3DS' => $force3DS,
+                'mandateMinAmountInrPaise' => $mandateMinAmountInrPaise,
                 'metadata' => $metadata,
                 'minimalAddress' => $minimalAddress,
                 'paymentMethodID' => $paymentMethodID,
@@ -177,6 +185,12 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
      * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
+     * @param int|null $mandateMinAmountInrPaise Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
      * @param array<string,string>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
      * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
@@ -206,6 +220,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         ?string $discountCode = null,
         CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
+        ?int $mandateMinAmountInrPaise = null,
         ?array $metadata = null,
         ?bool $minimalAddress = null,
         ?string $paymentMethodID = null,
@@ -231,6 +246,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'discountCode' => $discountCode,
                 'featureFlags' => $featureFlags,
                 'force3DS' => $force3DS,
+                'mandateMinAmountInrPaise' => $mandateMinAmountInrPaise,
                 'metadata' => $metadata,
                 'minimalAddress' => $minimalAddress,
                 'paymentMethodID' => $paymentMethodID,
