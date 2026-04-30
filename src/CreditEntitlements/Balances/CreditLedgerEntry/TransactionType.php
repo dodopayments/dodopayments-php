@@ -18,6 +18,8 @@ enum TransactionType: string
 
     case OVERAGE_CHARGED = 'overage_charged';
 
+    case OVERAGE_RESET = 'overage_reset';
+
     case AUTO_TOP_UP = 'auto_top_up';
 
     case MANUAL_ADJUSTMENT = 'manual_adjustment';

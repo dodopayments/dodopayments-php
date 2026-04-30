@@ -24,6 +24,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   allowTaxID?: bool|null,
  *   alwaysCreateNewCustomer?: bool|null,
  *   redirectImmediately?: bool|null,
+ *   requirePhoneNumber?: bool|null,
  * }
  */
 final class CheckoutSessionFlags implements BaseModel
@@ -104,6 +105,15 @@ final class CheckoutSessionFlags implements BaseModel
     #[Optional('redirect_immediately')]
     public ?bool $redirectImmediately;
 
+    /**
+     * If true, the customer must provide a phone number to complete checkout.
+     * Requires `allow_phone_number_collection` to also be true.
+     *
+     * Default is false
+     */
+    #[Optional('require_phone_number')]
+    public ?bool $requirePhoneNumber;
+
     public function __construct()
     {
         $this->initialize();
@@ -129,6 +139,7 @@ final class CheckoutSessionFlags implements BaseModel
         ?bool $allowTaxID = null,
         ?bool $alwaysCreateNewCustomer = null,
         ?bool $redirectImmediately = null,
+        ?bool $requirePhoneNumber = null,
     ): self {
         $self = new self;
 
@@ -146,6 +157,7 @@ final class CheckoutSessionFlags implements BaseModel
         null !== $allowTaxID && $self['allowTaxID'] = $allowTaxID;
         null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
+        null !== $requirePhoneNumber && $self['requirePhoneNumber'] = $requirePhoneNumber;
 
         return $self;
     }
@@ -300,6 +312,20 @@ final class CheckoutSessionFlags implements BaseModel
     {
         $self = clone $this;
         $self['redirectImmediately'] = $redirectImmediately;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer must provide a phone number to complete checkout.
+     * Requires `allow_phone_number_collection` to also be true.
+     *
+     * Default is false
+     */
+    public function withRequirePhoneNumber(bool $requirePhoneNumber): self
+    {
+        $self = clone $this;
+        $self['requirePhoneNumber'] = $requirePhoneNumber;
 
         return $self;
     }

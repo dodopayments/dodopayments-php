@@ -51,6 +51,8 @@ final class PaymentsService implements PaymentsContract
      * @param BillingAddress|BillingAddressShape $billing Billing address details for the payment
      * @param CustomerRequestShape $customer Customer information for the payment
      * @param list<ProductCart|ProductCartShape> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
+     * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, defaults to the business-level setting.
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
      *
      * Customers will **never** see payment methods that are **not** in this list.
@@ -68,6 +70,9 @@ final class PaymentsService implements PaymentsContract
      * The payment method will be validated for eligibility with the payment's currency.
      * @param bool $redirectImmediately If true, redirects the customer immediately after payment completion
      * False by default
+     * @param bool $requirePhoneNumber If true, the customer's phone number is required to create this payment.
+     * Typically set alongside `payment_link=true` so merchants can enforce phone
+     * collection on the hosted payment page. Defaults to false.
      * @param string|null $returnURL Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      * @param bool|null $shortLink If true, returns a shortened payment link.
@@ -83,6 +88,7 @@ final class PaymentsService implements PaymentsContract
         BillingAddress|array $billing,
         AttachExistingCustomer|array|NewCustomer $customer,
         array $productCart,
+        ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
@@ -91,6 +97,7 @@ final class PaymentsService implements PaymentsContract
         ?bool $paymentLink = null,
         ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
+        ?bool $requirePhoneNumber = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
@@ -102,6 +109,7 @@ final class PaymentsService implements PaymentsContract
                 'billing' => $billing,
                 'customer' => $customer,
                 'productCart' => $productCart,
+                'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
                 'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
                 'billingCurrency' => $billingCurrency,
                 'discountCode' => $discountCode,
@@ -110,6 +118,7 @@ final class PaymentsService implements PaymentsContract
                 'paymentLink' => $paymentLink,
                 'paymentMethodID' => $paymentMethodID,
                 'redirectImmediately' => $redirectImmediately,
+                'requirePhoneNumber' => $requirePhoneNumber,
                 'returnURL' => $returnURL,
                 'shortLink' => $shortLink,
                 'showSavedPaymentMethods' => $showSavedPaymentMethods,

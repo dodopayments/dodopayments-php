@@ -149,6 +149,12 @@ final class Product implements BaseModel
     #[Optional(nullable: true)]
     public ?string $description;
 
+    /**
+     * Digital-product-delivery payload for a grant. Populated for grants whose
+     * entitlement has `integration_type = 'digital_files'`. `files` carries
+     * presigned download URLs; the source (EE service or legacy in-process S3
+     * presigning) is opaque to the caller.
+     */
     #[Optional('digital_product_delivery', nullable: true)]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
@@ -466,6 +472,11 @@ final class Product implements BaseModel
     }
 
     /**
+     * Digital-product-delivery payload for a grant. Populated for grants whose
+     * entitlement has `integration_type = 'digital_files'`. `files` carries
+     * presigned download URLs; the source (EE service or legacy in-process S3
+     * presigning) is opaque to the caller.
+     *
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(

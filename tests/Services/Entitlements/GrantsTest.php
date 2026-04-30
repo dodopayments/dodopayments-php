@@ -1,0 +1,63 @@
+<?php
+
+namespace Tests\Services\Entitlements;
+
+use Dodopayments\Client;
+use Dodopayments\Core\Util;
+use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\GrantListResponse;
+use Dodopayments\Entitlements\Grants\GrantRevokeResponse;
+use PHPUnit\Framework\Attributes\CoversNothing;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @internal
+ */
+#[CoversNothing]
+final class GrantsTest extends TestCase
+{
+    protected Client $client;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $testUrl = Util::getenv('TEST_API_BASE_URL') ?: 'http://127.0.0.1:4010';
+        $client = new Client(bearerToken: 'My Bearer Token', baseUrl: $testUrl);
+
+        $this->client = $client;
+    }
+
+    #[Test]
+    public function testList(): void
+    {
+        $page = $this->client->entitlements->grants->list('id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(GrantListResponse::class, $item);
+        }
+    }
+
+    #[Test]
+    public function testRevoke(): void
+    {
+        $result = $this->client->entitlements->grants->revoke('grant_id', id: 'id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(GrantRevokeResponse::class, $result);
+    }
+
+    #[Test]
+    public function testRevokeWithOptionalParams(): void
+    {
+        $result = $this->client->entitlements->grants->revoke('grant_id', id: 'id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(GrantRevokeResponse::class, $result);
+    }
+}

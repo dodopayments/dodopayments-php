@@ -14,6 +14,7 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductCreateParams\Entitlement;
 
 /**
  * @see Dodopayments\Services\ProductsService::create()
@@ -22,6 +23,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
+ * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductCreateParams\Entitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  *
  * @phpstan-type ProductCreateParamsShape = array{
@@ -33,7 +35,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|\Dodopayments\Products\ProductCreateParams\DigitalProductDelivery|DigitalProductDeliveryShape,
- *   entitlementIDs?: list<string>|null,
+ *   entitlements?: list<Entitlement|EntitlementShape>|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
@@ -103,22 +105,27 @@ final class ProductCreateParams implements BaseModel
 
     /**
      * Choose how you would like you digital product delivered.
+     *
+     * deprecated: use entitlements instead
      */
     #[Optional('digital_product_delivery', nullable: true)]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
-     * Optional entitlement IDs to attach to this product (max 20).
+     * Optional entitlements to attach to this product (max 20).
      *
-     * @var list<string>|null $entitlementIDs
+     * @var list<Entitlement>|null $entitlements
      */
-    #[Optional('entitlement_ids', list: 'string', nullable: true)]
-    public ?array $entitlementIDs;
+    #[Optional(list: Entitlement::class, nullable: true)]
+    public ?array $entitlements;
 
     /**
      * @deprecated
      *
      * Optional message displayed during license key activation
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      */
     #[Optional('license_key_activation_message', nullable: true)]
     public ?string $licenseKeyActivationMessage;
@@ -128,6 +135,9 @@ final class ProductCreateParams implements BaseModel
      *
      * The number of times the license key can be activated.
      * Must be 0 or greater
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      */
     #[Optional('license_key_activations_limit', nullable: true)]
     public ?int $licenseKeyActivationsLimit;
@@ -136,6 +146,9 @@ final class ProductCreateParams implements BaseModel
      * Duration configuration for the license key.
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      */
     #[Optional('license_key_duration', nullable: true)]
     public ?LicenseKeyDuration $licenseKeyDuration;
@@ -145,6 +158,11 @@ final class ProductCreateParams implements BaseModel
      *
      * When true, generates and sends a license key to your customer.
      * Defaults to false
+     *
+     * deprecated: use entitlements instead. If a `license_key` entitlement is
+     * also attached via the `entitlements` field, the `license_key_*` config
+     * fields below are ignored — the attached entitlement's config is the
+     * source of truth.
      */
     #[Optional('license_key_enabled', nullable: true)]
     public ?bool $licenseKeyEnabled;
@@ -186,7 +204,7 @@ final class ProductCreateParams implements BaseModel
      * @param list<string>|null $addons
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
-     * @param list<string>|null $entitlementIDs
+     * @param list<Entitlement|EntitlementShape>|null $entitlements
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      */
@@ -199,7 +217,7 @@ final class ProductCreateParams implements BaseModel
         ?array $creditEntitlements = null,
         ?string $description = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
-        ?array $entitlementIDs = null,
+        ?array $entitlements = null,
         ?string $licenseKeyActivationMessage = null,
         ?int $licenseKeyActivationsLimit = null,
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
@@ -217,7 +235,7 @@ final class ProductCreateParams implements BaseModel
         null !== $creditEntitlements && $self['creditEntitlements'] = $creditEntitlements;
         null !== $description && $self['description'] = $description;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
-        null !== $entitlementIDs && $self['entitlementIDs'] = $entitlementIDs;
+        null !== $entitlements && $self['entitlements'] = $entitlements;
         null !== $licenseKeyActivationMessage && $self['licenseKeyActivationMessage'] = $licenseKeyActivationMessage;
         null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
         null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
@@ -316,6 +334,8 @@ final class ProductCreateParams implements BaseModel
     /**
      * Choose how you would like you digital product delivered.
      *
+     * deprecated: use entitlements instead
+     *
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
@@ -328,20 +348,23 @@ final class ProductCreateParams implements BaseModel
     }
 
     /**
-     * Optional entitlement IDs to attach to this product (max 20).
+     * Optional entitlements to attach to this product (max 20).
      *
-     * @param list<string>|null $entitlementIDs
+     * @param list<Entitlement|EntitlementShape>|null $entitlements
      */
-    public function withEntitlementIDs(?array $entitlementIDs): self
+    public function withEntitlements(?array $entitlements): self
     {
         $self = clone $this;
-        $self['entitlementIDs'] = $entitlementIDs;
+        $self['entitlements'] = $entitlements;
 
         return $self;
     }
 
     /**
      * Optional message displayed during license key activation.
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      */
     public function withLicenseKeyActivationMessage(
         ?string $licenseKeyActivationMessage
@@ -355,6 +378,9 @@ final class ProductCreateParams implements BaseModel
     /**
      * The number of times the license key can be activated.
      * Must be 0 or greater.
+     *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
      */
     public function withLicenseKeyActivationsLimit(
         ?int $licenseKeyActivationsLimit
@@ -370,6 +396,9 @@ final class ProductCreateParams implements BaseModel
      * Set to null if you don't want the license key to expire.
      * For subscriptions, the lifetime of the license key is tied to the subscription period.
      *
+     * deprecated: use entitlements instead. Ignored when a `license_key`
+     * entitlement is attached via the `entitlements` field.
+     *
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      */
     public function withLicenseKeyDuration(
@@ -384,6 +413,11 @@ final class ProductCreateParams implements BaseModel
     /**
      * When true, generates and sends a license key to your customer.
      * Defaults to false.
+     *
+     * deprecated: use entitlements instead. If a `license_key` entitlement is
+     * also attached via the `entitlements` field, the `license_key_*` config
+     * fields below are ignored — the attached entitlement's config is the
+     * source of truth.
      */
     public function withLicenseKeyEnabled(?bool $licenseKeyEnabled): self
     {

@@ -37,12 +37,14 @@ use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
  *   force3DS?: bool|null,
+ *   mandateMinAmountInrPaise?: int|null,
  *   metadata?: array<string,string>|null,
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
  *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
  *   paymentLink?: bool|null,
  *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
+ *   requirePhoneNumber?: bool|null,
  *   returnURL?: string|null,
  *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
@@ -128,6 +130,17 @@ final class SubscriptionCreateParams implements BaseModel
     public ?bool $force3DS;
 
     /**
+     * Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
+     */
+    #[Optional('mandate_min_amount_inr_paise', nullable: true)]
+    public ?int $mandateMinAmountInrPaise;
+
+    /**
      * Additional metadata for the subscription
      * Defaults to empty if not specified.
      *
@@ -172,6 +185,14 @@ final class SubscriptionCreateParams implements BaseModel
      */
     #[Optional('redirect_immediately')]
     public ?bool $redirectImmediately;
+
+    /**
+     * If true, the customer's phone number is required to create this subscription.
+     * Typically set alongside `payment_link=true` so merchants can enforce phone
+     * collection on the hosted payment page. Defaults to false.
+     */
+    #[Optional('require_phone_number')]
+    public ?bool $requirePhoneNumber;
 
     /**
      * Optional URL to redirect after successful subscription creation.
@@ -256,12 +277,14 @@ final class SubscriptionCreateParams implements BaseModel
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
         ?bool $force3DS = null,
+        ?int $mandateMinAmountInrPaise = null,
         ?array $metadata = null,
         OnDemandSubscription|array|null $onDemand = null,
         ?array $oneTimeProductCart = null,
         ?bool $paymentLink = null,
         ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
+        ?bool $requirePhoneNumber = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
@@ -280,12 +303,14 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $force3DS && $self['force3DS'] = $force3DS;
+        null !== $mandateMinAmountInrPaise && $self['mandateMinAmountInrPaise'] = $mandateMinAmountInrPaise;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onDemand && $self['onDemand'] = $onDemand;
         null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
+        null !== $requirePhoneNumber && $self['requirePhoneNumber'] = $requirePhoneNumber;
         null !== $returnURL && $self['returnURL'] = $returnURL;
         null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
@@ -413,6 +438,23 @@ final class SubscriptionCreateParams implements BaseModel
     }
 
     /**
+     * Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
+     */
+    public function withMandateMinAmountInrPaise(
+        ?int $mandateMinAmountInrPaise
+    ): self {
+        $self = clone $this;
+        $self['mandateMinAmountInrPaise'] = $mandateMinAmountInrPaise;
+
+        return $self;
+    }
+
+    /**
      * Additional metadata for the subscription
      * Defaults to empty if not specified.
      *
@@ -484,6 +526,19 @@ final class SubscriptionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['redirectImmediately'] = $redirectImmediately;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer's phone number is required to create this subscription.
+     * Typically set alongside `payment_link=true` so merchants can enforce phone
+     * collection on the hosted payment page. Defaults to false.
+     */
+    public function withRequirePhoneNumber(bool $requirePhoneNumber): self
+    {
+        $self = clone $this;
+        $self['requirePhoneNumber'] = $requirePhoneNumber;
 
         return $self;
     }

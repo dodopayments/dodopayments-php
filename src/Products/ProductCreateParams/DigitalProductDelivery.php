@@ -11,6 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * Choose how you would like you digital product delivered.
  *
+ * deprecated: use entitlements instead
+ *
  * @phpstan-type DigitalProductDeliveryShape = array{
  *   externalURL?: string|null, instructions?: string|null
  * }

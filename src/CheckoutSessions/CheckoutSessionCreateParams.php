@@ -39,6 +39,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   discountCode?: string|null,
  *   featureFlags?: null|CheckoutSessionFlags|CheckoutSessionFlagsShape,
  *   force3DS?: bool|null,
+ *   mandateMinAmountInrPaise?: int|null,
  *   metadata?: array<string,string>|null,
  *   minimalAddress?: bool|null,
  *   paymentMethodID?: string|null,
@@ -137,6 +138,17 @@ final class CheckoutSessionCreateParams implements BaseModel
      */
     #[Optional('force_3ds', nullable: true)]
     public ?bool $force3DS;
+
+    /**
+     * Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
+     */
+    #[Optional('mandate_min_amount_inr_paise', nullable: true)]
+    public ?int $mandateMinAmountInrPaise;
 
     /**
      * Additional metadata associated with the payment. Defaults to empty if not provided.
@@ -242,6 +254,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         ?string $discountCode = null,
         CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
+        ?int $mandateMinAmountInrPaise = null,
         ?array $metadata = null,
         ?bool $minimalAddress = null,
         ?string $paymentMethodID = null,
@@ -267,6 +280,7 @@ final class CheckoutSessionCreateParams implements BaseModel
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $featureFlags && $self['featureFlags'] = $featureFlags;
         null !== $force3DS && $self['force3DS'] = $force3DS;
+        null !== $mandateMinAmountInrPaise && $self['mandateMinAmountInrPaise'] = $mandateMinAmountInrPaise;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $minimalAddress && $self['minimalAddress'] = $minimalAddress;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
@@ -429,6 +443,23 @@ final class CheckoutSessionCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['force3DS'] = $force3DS;
+
+        return $self;
+    }
+
+    /**
+     * Override the merchant-level mandate floor (in INR paise) for INR
+     * e-mandates on Indian-card recurring payments. The mandate amount sent to
+     * the processor is `max(this_floor, actual_billing_amount)`, so this is
+     * effectively the customer-facing authorization ceiling whenever billing is
+     * lower. When unset, the merchant setting applies; when that's also unset,
+     * the system default of ₹15,000 applies.
+     */
+    public function withMandateMinAmountInrPaise(
+        ?int $mandateMinAmountInrPaise
+    ): self {
+        $self = clone $this;
+        $self['mandateMinAmountInrPaise'] = $mandateMinAmountInrPaise;
 
         return $self;
     }

@@ -11,4 +11,6 @@ enum CancelReason: string
     case CANCELLED_BY_MERCHANT = 'cancelled_by_merchant';
 
     case CANCELLED_BY_MERCHANT_SEND_DUNNING = 'cancelled_by_merchant_send_dunning';
+
+    case DODO_TEAM = 'dodo_team';
 }

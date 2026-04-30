@@ -25,6 +25,7 @@ use Dodopayments\Payments\PaymentCreateParams\ProductCart;
  *   billing: BillingAddress|BillingAddressShape,
  *   customer: CustomerRequestShape,
  *   productCart: list<ProductCart|ProductCartShape>,
+ *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
@@ -33,6 +34,7 @@ use Dodopayments\Payments\PaymentCreateParams\ProductCart;
  *   paymentLink?: bool|null,
  *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
+ *   requirePhoneNumber?: bool|null,
  *   returnURL?: string|null,
  *   shortLink?: bool|null,
  *   showSavedPaymentMethods?: bool|null,
@@ -66,6 +68,13 @@ final class PaymentCreateParams implements BaseModel
      */
     #[Required('product_cart', list: ProductCart::class)]
     public array $productCart;
+
+    /**
+     * Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, defaults to the business-level setting.
+     */
+    #[Optional('adaptive_currency_fees_inclusive', nullable: true)]
+    public ?bool $adaptiveCurrencyFeesInclusive;
 
     /**
      * List of payment methods allowed during checkout.
@@ -135,6 +144,14 @@ final class PaymentCreateParams implements BaseModel
     public ?bool $redirectImmediately;
 
     /**
+     * If true, the customer's phone number is required to create this payment.
+     * Typically set alongside `payment_link=true` so merchants can enforce phone
+     * collection on the hosted payment page. Defaults to false.
+     */
+    #[Optional('require_phone_number')]
+    public ?bool $requirePhoneNumber;
+
+    /**
      * Optional URL to redirect the customer after payment.
      * Must be a valid URL if provided.
      */
@@ -199,6 +216,7 @@ final class PaymentCreateParams implements BaseModel
         BillingAddress|array $billing,
         AttachExistingCustomer|array|NewCustomer $customer,
         array $productCart,
+        ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
@@ -207,6 +225,7 @@ final class PaymentCreateParams implements BaseModel
         ?bool $paymentLink = null,
         ?string $paymentMethodID = null,
         ?bool $redirectImmediately = null,
+        ?bool $requirePhoneNumber = null,
         ?string $returnURL = null,
         ?bool $shortLink = null,
         ?bool $showSavedPaymentMethods = null,
@@ -218,6 +237,7 @@ final class PaymentCreateParams implements BaseModel
         $self['customer'] = $customer;
         $self['productCart'] = $productCart;
 
+        null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
         null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
         null !== $discountCode && $self['discountCode'] = $discountCode;
@@ -226,6 +246,7 @@ final class PaymentCreateParams implements BaseModel
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
+        null !== $requirePhoneNumber && $self['requirePhoneNumber'] = $requirePhoneNumber;
         null !== $returnURL && $self['returnURL'] = $returnURL;
         null !== $shortLink && $self['shortLink'] = $shortLink;
         null !== $showSavedPaymentMethods && $self['showSavedPaymentMethods'] = $showSavedPaymentMethods;
@@ -270,6 +291,19 @@ final class PaymentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['productCart'] = $productCart;
+
+        return $self;
+    }
+
+    /**
+     * Whether adaptive currency fees should be included in the price (true) or added on top (false).
+     * If not specified, defaults to the business-level setting.
+     */
+    public function withAdaptiveCurrencyFeesInclusive(
+        ?bool $adaptiveCurrencyFeesInclusive
+    ): self {
+        $self = clone $this;
+        $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
 
         return $self;
     }
@@ -375,6 +409,19 @@ final class PaymentCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['redirectImmediately'] = $redirectImmediately;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer's phone number is required to create this payment.
+     * Typically set alongside `payment_link=true` so merchants can enforce phone
+     * collection on the hosted payment page. Defaults to false.
+     */
+    public function withRequirePhoneNumber(bool $requirePhoneNumber): self
+    {
+        $self = clone $this;
+        $self['requirePhoneNumber'] = $requirePhoneNumber;
 
         return $self;
     }

@@ -8,10 +8,15 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Products\DigitalProductDelivery;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\PayloadType;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\Status;
 
 /**
+ * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
+ * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\LicenseKey
+ *
  * @phpstan-type EntitlementGrantShape = array{
  *   id: string,
  *   businessID: string,
@@ -23,13 +28,10 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\Status;
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
  *   deliveredAt?: \DateTimeInterface|null,
+ *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
- *   licenseKey?: string|null,
- *   licenseKeyActivationsLimit?: int|null,
- *   licenseKeyActivationsUsed?: int|null,
- *   licenseKeyExpiresAt?: \DateTimeInterface|null,
- *   licenseKeyStatus?: string|null,
+ *   licenseKey?: null|\Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\LicenseKey|LicenseKeyShape,
  *   metadata?: mixed,
  *   oauthExpiresAt?: \DateTimeInterface|null,
  *   oauthURL?: string|null,
@@ -76,26 +78,24 @@ final class EntitlementGrant implements BaseModel
     #[Optional('delivered_at', nullable: true)]
     public ?\DateTimeInterface $deliveredAt;
 
+    /**
+     * Present only when the entitlement integration_type is `digital_files`.
+     * Populated eagerly on every list and single-record endpoint.
+     */
+    #[Optional('digital_product_delivery', nullable: true)]
+    public ?DigitalProductDelivery $digitalProductDelivery;
+
     #[Optional('error_code', nullable: true)]
     public ?string $errorCode;
 
     #[Optional('error_message', nullable: true)]
     public ?string $errorMessage;
 
+    /**
+     * Present only when the entitlement integration_type is `license_key`.
+     */
     #[Optional('license_key', nullable: true)]
-    public ?string $licenseKey;
-
-    #[Optional('license_key_activations_limit', nullable: true)]
-    public ?int $licenseKeyActivationsLimit;
-
-    #[Optional('license_key_activations_used', nullable: true)]
-    public ?int $licenseKeyActivationsUsed;
-
-    #[Optional('license_key_expires_at', nullable: true)]
-    public ?\DateTimeInterface $licenseKeyExpiresAt;
-
-    #[Optional('license_key_status', nullable: true)]
-    public ?string $licenseKeyStatus;
+    public ?LicenseKey $licenseKey;
 
     #[Optional]
     public mixed $metadata;
@@ -163,6 +163,8 @@ final class EntitlementGrant implements BaseModel
      *
      * @param PayloadType|value-of<PayloadType> $payloadType
      * @param Status|value-of<Status> $status
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param LicenseKey|LicenseKeyShape|null $licenseKey
      */
     public static function with(
         string $id,
@@ -175,13 +177,10 @@ final class EntitlementGrant implements BaseModel
         Status|string $status,
         \DateTimeInterface $updatedAt,
         ?\DateTimeInterface $deliveredAt = null,
+        DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
-        ?string $licenseKey = null,
-        ?int $licenseKeyActivationsLimit = null,
-        ?int $licenseKeyActivationsUsed = null,
-        ?\DateTimeInterface $licenseKeyExpiresAt = null,
-        ?string $licenseKeyStatus = null,
+        LicenseKey|array|null $licenseKey = null,
         mixed $metadata = null,
         ?\DateTimeInterface $oauthExpiresAt = null,
         ?string $oauthURL = null,
@@ -203,13 +202,10 @@ final class EntitlementGrant implements BaseModel
         $self['updatedAt'] = $updatedAt;
 
         null !== $deliveredAt && $self['deliveredAt'] = $deliveredAt;
+        null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
         null !== $licenseKey && $self['licenseKey'] = $licenseKey;
-        null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
-        null !== $licenseKeyActivationsUsed && $self['licenseKeyActivationsUsed'] = $licenseKeyActivationsUsed;
-        null !== $licenseKeyExpiresAt && $self['licenseKeyExpiresAt'] = $licenseKeyExpiresAt;
-        null !== $licenseKeyStatus && $self['licenseKeyStatus'] = $licenseKeyStatus;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $oauthExpiresAt && $self['oauthExpiresAt'] = $oauthExpiresAt;
         null !== $oauthURL && $self['oauthURL'] = $oauthURL;
@@ -307,6 +303,21 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Present only when the entitlement integration_type is `digital_files`.
+     * Populated eagerly on every list and single-record endpoint.
+     *
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     */
+    public function withDigitalProductDelivery(
+        DigitalProductDelivery|array|null $digitalProductDelivery
+    ): self {
+        $self = clone $this;
+        $self['digitalProductDelivery'] = $digitalProductDelivery;
+
+        return $self;
+    }
+
     public function withErrorCode(?string $errorCode): self
     {
         $self = clone $this;
@@ -323,45 +334,16 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
-    public function withLicenseKey(?string $licenseKey): self
-    {
+    /**
+     * Present only when the entitlement integration_type is `license_key`.
+     *
+     * @param LicenseKey|LicenseKeyShape|null $licenseKey
+     */
+    public function withLicenseKey(
+        LicenseKey|array|null $licenseKey,
+    ): self {
         $self = clone $this;
         $self['licenseKey'] = $licenseKey;
-
-        return $self;
-    }
-
-    public function withLicenseKeyActivationsLimit(
-        ?int $licenseKeyActivationsLimit
-    ): self {
-        $self = clone $this;
-        $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
-
-        return $self;
-    }
-
-    public function withLicenseKeyActivationsUsed(
-        ?int $licenseKeyActivationsUsed
-    ): self {
-        $self = clone $this;
-        $self['licenseKeyActivationsUsed'] = $licenseKeyActivationsUsed;
-
-        return $self;
-    }
-
-    public function withLicenseKeyExpiresAt(
-        ?\DateTimeInterface $licenseKeyExpiresAt
-    ): self {
-        $self = clone $this;
-        $self['licenseKeyExpiresAt'] = $licenseKeyExpiresAt;
-
-        return $self;
-    }
-
-    public function withLicenseKeyStatus(?string $licenseKeyStatus): self
-    {
-        $self = clone $this;
-        $self['licenseKeyStatus'] = $licenseKeyStatus;
 
         return $self;
     }

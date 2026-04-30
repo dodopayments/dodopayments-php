@@ -13,7 +13,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\LicenseKeyInstancesService::list()
  *
  * @phpstan-type LicenseKeyInstanceListParamsShape = array{
- *   licenseKeyID?: string|null, pageNumber?: int|null, pageSize?: int|null
+ *   grantID?: string|null,
+ *   licenseKeyID?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class LicenseKeyInstanceListParams implements BaseModel
@@ -21,6 +24,12 @@ final class LicenseKeyInstanceListParams implements BaseModel
     /** @use SdkModel<LicenseKeyInstanceListParamsShape> */
     use SdkModel;
     use SdkParams;
+
+    /**
+     * Filter instances by entitlement grant ID.
+     */
+    #[Optional(nullable: true)]
+    public ?string $grantID;
 
     /**
      * Filter by license key ID.
@@ -51,15 +60,28 @@ final class LicenseKeyInstanceListParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      */
     public static function with(
+        ?string $grantID = null,
         ?string $licenseKeyID = null,
         ?int $pageNumber = null,
-        ?int $pageSize = null
+        ?int $pageSize = null,
     ): self {
         $self = new self;
 
+        null !== $grantID && $self['grantID'] = $grantID;
         null !== $licenseKeyID && $self['licenseKeyID'] = $licenseKeyID;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
+
+        return $self;
+    }
+
+    /**
+     * Filter instances by entitlement grant ID.
+     */
+    public function withGrantID(?string $grantID): self
+    {
+        $self = clone $this;
+        $self['grantID'] = $grantID;
 
         return $self;
     }

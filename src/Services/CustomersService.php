@@ -10,6 +10,7 @@ use Dodopayments\Core\Util;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
+use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersContract;
@@ -205,6 +206,26 @@ final class CustomersService implements CustomersContract
     ): CustomerListCreditEntitlementsResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->listCreditEntitlements($customerID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * List all entitlement grants delivered (or in flight) to a customer.
+     *
+     * @param string $customerID Customer ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function listEntitlements(
+        string $customerID,
+        RequestOptions|array|null $requestOptions = null
+    ): CustomerListEntitlementsResponse {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->listEntitlements($customerID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
