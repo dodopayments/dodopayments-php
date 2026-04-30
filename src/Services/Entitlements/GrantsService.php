@@ -8,9 +8,8 @@ use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Entitlements\Grants\GrantListParams\Status;
-use Dodopayments\Entitlements\Grants\GrantListResponse;
-use Dodopayments\Entitlements\Grants\GrantRevokeResponse;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Entitlements\GrantsContract;
 
@@ -44,7 +43,7 @@ final class GrantsService implements GrantsContract
      * @param Status|value-of<Status> $status Filter by grant status
      * @param RequestOpts|null $requestOptions
      *
-     * @return DefaultPageNumberPagination<GrantListResponse>
+     * @return DefaultPageNumberPagination<EntitlementGrant>
      *
      * @throws APIException
      */
@@ -89,7 +88,7 @@ final class GrantsService implements GrantsContract
         string $grantID,
         string $id,
         RequestOptions|array|null $requestOptions = null,
-    ): GrantRevokeResponse {
+    ): EntitlementGrant {
         $params = Util::removeNulls(['id' => $id]);
 
         // @phpstan-ignore-next-line argument.type

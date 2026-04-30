@@ -8,14 +8,14 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Entitlements\Grants\EntitlementGrant\Status;
+use Dodopayments\Entitlements\Grants\LicenseKeyGrant;
 use Dodopayments\Products\DigitalProductDelivery;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\PayloadType;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\Status;
 
 /**
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
- * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\LicenseKey
+ * @phpstan-import-type LicenseKeyGrantShape from \Dodopayments\Entitlements\Grants\LicenseKeyGrant
  *
  * @phpstan-type EntitlementGrantShape = array{
  *   id: string,
@@ -24,14 +24,13 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\Status;
  *   customerID: string,
  *   entitlementID: string,
  *   externalID: string,
- *   payloadType: PayloadType|value-of<PayloadType>,
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
  *   deliveredAt?: \DateTimeInterface|null,
  *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
- *   licenseKey?: null|\Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\LicenseKey|LicenseKeyShape,
+ *   licenseKey?: null|LicenseKeyGrant|LicenseKeyGrantShape,
  *   metadata?: mixed,
  *   oauthExpiresAt?: \DateTimeInterface|null,
  *   oauthURL?: string|null,
@@ -39,6 +38,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\Status;
  *   revocationReason?: string|null,
  *   revokedAt?: \DateTimeInterface|null,
  *   subscriptionID?: string|null,
+ *   payloadType: PayloadType|value-of<PayloadType>,
  * }
  */
 final class EntitlementGrant implements BaseModel
@@ -64,10 +64,6 @@ final class EntitlementGrant implements BaseModel
     #[Required('external_id')]
     public string $externalID;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /** @var value-of<Status> $status */
     #[Required(enum: Status::class)]
     public string $status;
@@ -79,10 +75,12 @@ final class EntitlementGrant implements BaseModel
     public ?\DateTimeInterface $deliveredAt;
 
     /**
-     * Present only when the entitlement integration_type is `digital_files`.
-     * Populated eagerly on every list and single-record endpoint.
+     * Digital-product-delivery payload for a grant. Populated for grants whose
+     * entitlement has `integration_type = 'digital_files'`. `files` carries
+     * presigned download URLs; the source (EE service or legacy in-process S3
+     * presigning) is opaque to the caller.
      */
-    #[Optional('digital_product_delivery', nullable: true)]
+    #[Optional('digital_product_delivery')]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     #[Optional('error_code', nullable: true)]
@@ -92,10 +90,13 @@ final class EntitlementGrant implements BaseModel
     public ?string $errorMessage;
 
     /**
-     * Present only when the entitlement integration_type is `license_key`.
+     * Nested representation of license-key grant fields. Present only when the
+     * grant's entitlement has `integration_type = 'license_key'` and a row exists
+     * in `license_keys`. The grant's top-level `status` is the source of truth
+     * for the grant's lifecycle — no per-license-key status is exposed here.
      */
-    #[Optional('license_key', nullable: true)]
-    public ?LicenseKey $licenseKey;
+    #[Optional('license_key')]
+    public ?LicenseKeyGrant $licenseKey;
 
     #[Optional]
     public mixed $metadata;
@@ -118,6 +119,10 @@ final class EntitlementGrant implements BaseModel
     #[Optional('subscription_id', nullable: true)]
     public ?string $subscriptionID;
 
+    /** @var value-of<PayloadType> $payloadType */
+    #[Required('payload_type', enum: PayloadType::class)]
+    public string $payloadType;
+
     /**
      * `new EntitlementGrant()` is missing required properties by the API.
      *
@@ -130,9 +135,9 @@ final class EntitlementGrant implements BaseModel
      *   customerID: ...,
      *   entitlementID: ...,
      *   externalID: ...,
-     *   payloadType: ...,
      *   status: ...,
      *   updatedAt: ...,
+     *   payloadType: ...,
      * )
      * ```
      *
@@ -146,9 +151,9 @@ final class EntitlementGrant implements BaseModel
      *   ->withCustomerID(...)
      *   ->withEntitlementID(...)
      *   ->withExternalID(...)
-     *   ->withPayloadType(...)
      *   ->withStatus(...)
      *   ->withUpdatedAt(...)
+     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -161,10 +166,10 @@ final class EntitlementGrant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param Status|value-of<Status> $status
+     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
-     * @param LicenseKey|LicenseKeyShape|null $licenseKey
+     * @param LicenseKeyGrant|LicenseKeyGrantShape|null $licenseKey
      */
     public static function with(
         string $id,
@@ -173,14 +178,14 @@ final class EntitlementGrant implements BaseModel
         string $customerID,
         string $entitlementID,
         string $externalID,
-        PayloadType|string $payloadType,
         Status|string $status,
         \DateTimeInterface $updatedAt,
+        PayloadType|string $payloadType,
         ?\DateTimeInterface $deliveredAt = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
-        LicenseKey|array|null $licenseKey = null,
+        LicenseKeyGrant|array|null $licenseKey = null,
         mixed $metadata = null,
         ?\DateTimeInterface $oauthExpiresAt = null,
         ?string $oauthURL = null,
@@ -197,9 +202,9 @@ final class EntitlementGrant implements BaseModel
         $self['customerID'] = $customerID;
         $self['entitlementID'] = $entitlementID;
         $self['externalID'] = $externalID;
-        $self['payloadType'] = $payloadType;
         $self['status'] = $status;
         $self['updatedAt'] = $updatedAt;
+        $self['payloadType'] = $payloadType;
 
         null !== $deliveredAt && $self['deliveredAt'] = $deliveredAt;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
@@ -266,17 +271,6 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
-     */
-    public function withPayloadType(PayloadType|string $payloadType): self
-    {
-        $self = clone $this;
-        $self['payloadType'] = $payloadType;
-
-        return $self;
-    }
-
-    /**
      * @param Status|value-of<Status> $status
      */
     public function withStatus(Status|string $status): self
@@ -304,13 +298,15 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * Present only when the entitlement integration_type is `digital_files`.
-     * Populated eagerly on every list and single-record endpoint.
+     * Digital-product-delivery payload for a grant. Populated for grants whose
+     * entitlement has `integration_type = 'digital_files'`. `files` carries
+     * presigned download URLs; the source (EE service or legacy in-process S3
+     * presigning) is opaque to the caller.
      *
-     * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param DigitalProductDelivery|DigitalProductDeliveryShape $digitalProductDelivery
      */
     public function withDigitalProductDelivery(
-        DigitalProductDelivery|array|null $digitalProductDelivery
+        DigitalProductDelivery|array $digitalProductDelivery
     ): self {
         $self = clone $this;
         $self['digitalProductDelivery'] = $digitalProductDelivery;
@@ -335,13 +331,15 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * Present only when the entitlement integration_type is `license_key`.
+     * Nested representation of license-key grant fields. Present only when the
+     * grant's entitlement has `integration_type = 'license_key'` and a row exists
+     * in `license_keys`. The grant's top-level `status` is the source of truth
+     * for the grant's lifecycle — no per-license-key status is exposed here.
      *
-     * @param LicenseKey|LicenseKeyShape|null $licenseKey
+     * @param LicenseKeyGrant|LicenseKeyGrantShape $licenseKey
      */
-    public function withLicenseKey(
-        LicenseKey|array|null $licenseKey,
-    ): self {
+    public function withLicenseKey(LicenseKeyGrant|array $licenseKey): self
+    {
         $self = clone $this;
         $self['licenseKey'] = $licenseKey;
 
@@ -401,6 +399,17 @@ final class EntitlementGrant implements BaseModel
     {
         $self = clone $this;
         $self['subscriptionID'] = $subscriptionID;
+
+        return $self;
+    }
+
+    /**
+     * @param PayloadType|value-of<PayloadType> $payloadType
+     */
+    public function withPayloadType(PayloadType|string $payloadType): self
+    {
+        $self = clone $this;
+        $self['payloadType'] = $payloadType;
 
         return $self;
     }

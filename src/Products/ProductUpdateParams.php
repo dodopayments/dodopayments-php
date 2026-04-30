@@ -13,7 +13,6 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
-use Dodopayments\Products\ProductUpdateParams\Entitlement;
 
 /**
  * @see Dodopayments\Services\ProductsService::update()
@@ -21,7 +20,7 @@ use Dodopayments\Products\ProductUpdateParams\Entitlement;
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery
- * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductUpdateParams\Entitlement
+ * @phpstan-import-type AttachProductEntitlementShape from \Dodopayments\Products\AttachProductEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  *
@@ -31,7 +30,7 @@ use Dodopayments\Products\ProductUpdateParams\Entitlement;
  *   creditEntitlements?: list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null,
  *   description?: string|null,
  *   digitalProductDelivery?: null|\Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape,
- *   entitlements?: list<Entitlement|EntitlementShape>|null,
+ *   entitlements?: list<AttachProductEntitlement|AttachProductEntitlementShape>|null,
  *   imageID?: string|null,
  *   licenseKeyActivationMessage?: string|null,
  *   licenseKeyActivationsLimit?: int|null,
@@ -91,9 +90,9 @@ final class ProductUpdateParams implements BaseModel
      * Entitlements to attach (replaces all existing when present)
      * Send empty array to remove all, omit field to leave unchanged.
      *
-     * @var list<Entitlement>|null $entitlements
+     * @var list<AttachProductEntitlement>|null $entitlements
      */
-    #[Optional(list: Entitlement::class, nullable: true)]
+    #[Optional(list: AttachProductEntitlement::class, nullable: true)]
     public ?array $entitlements;
 
     /**
@@ -195,7 +194,7 @@ final class ProductUpdateParams implements BaseModel
      * @param list<string>|null $addons
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
-     * @param list<Entitlement|EntitlementShape>|null $entitlements
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      * @param PriceShape|null $price
@@ -305,7 +304,7 @@ final class ProductUpdateParams implements BaseModel
      * Entitlements to attach (replaces all existing when present)
      * Send empty array to remove all, omit field to leave unchanged.
      *
-     * @param list<Entitlement|EntitlementShape>|null $entitlements
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      */
     public function withEntitlements(?array $entitlements): self
     {

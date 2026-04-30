@@ -7,15 +7,15 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Webhooks\EntitlementGrantRevokedWebhookEvent\Data;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Webhooks\EntitlementGrantRevokedWebhookEvent\Type;
 
 /**
- * @phpstan-import-type DataShape from \Dodopayments\Webhooks\EntitlementGrantRevokedWebhookEvent\Data
+ * @phpstan-import-type EntitlementGrantShape from \Dodopayments\Entitlements\Grants\EntitlementGrant
  *
  * @phpstan-type EntitlementGrantRevokedWebhookEventShape = array{
  *   businessID: string,
- *   data: Data|DataShape,
+ *   data: EntitlementGrant|EntitlementGrantShape,
  *   timestamp: \DateTimeInterface,
  *   type: Type|value-of<Type>,
  * }
@@ -32,7 +32,7 @@ final class EntitlementGrantRevokedWebhookEvent implements BaseModel
     public string $businessID;
 
     #[Required]
-    public Data $data;
+    public EntitlementGrant $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -78,12 +78,12 @@ final class EntitlementGrantRevokedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Data|DataShape $data
+     * @param EntitlementGrant|EntitlementGrantShape $data
      * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
-        Data|array $data,
+        EntitlementGrant|array $data,
         \DateTimeInterface $timestamp,
         Type|string $type,
     ): self {
@@ -109,9 +109,9 @@ final class EntitlementGrantRevokedWebhookEvent implements BaseModel
     }
 
     /**
-     * @param Data|DataShape $data
+     * @param EntitlementGrant|EntitlementGrantShape $data
      */
-    public function withData(Data|array $data): self
+    public function withData(EntitlementGrant|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

@@ -13,8 +13,8 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
-use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
 
 /**
  * @deprecated
@@ -25,7 +25,7 @@ use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
- * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type SubscriptionCreateParamsShape = array{
  *   billing: BillingAddress|BillingAddressShape,
@@ -40,7 +40,7 @@ use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
  *   mandateMinAmountInrPaise?: int|null,
  *   metadata?: array<string,string>|null,
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
- *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
+ *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
  *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
@@ -155,11 +155,11 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * List of one time products that will be bundled with the first payment for this subscription.
      *
-     * @var list<OneTimeProductCart>|null $oneTimeProductCart
+     * @var list<OneTimeProductCartItem>|null $oneTimeProductCart
      */
     #[Optional(
         'one_time_product_cart',
-        list: OneTimeProductCart::class,
+        list: OneTimeProductCartItem::class,
         nullable: true
     )]
     public ?array $oneTimeProductCart;
@@ -265,7 +265,7 @@ final class SubscriptionCreateParams implements BaseModel
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param array<string,string>|null $metadata
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
-     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public static function with(
         BillingAddress|array $billing,
@@ -483,7 +483,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * List of one time products that will be bundled with the first payment for this subscription.
      *
-     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

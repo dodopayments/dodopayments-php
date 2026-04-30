@@ -10,13 +10,13 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\AttachCreditEntitlement;
+use Dodopayments\Products\AttachProductEntitlement;
 use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
-use Dodopayments\Products\ProductCreateParams\Entitlement;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\RequestOptions;
@@ -26,11 +26,10 @@ use Dodopayments\Services\Products\ShortLinksService;
 
 /**
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
- * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductCreateParams\Entitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery as DigitalProductDeliveryShape1
- * @phpstan-import-type EntitlementShape from \Dodopayments\Products\ProductUpdateParams\Entitlement as EntitlementShape1
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
+ * @phpstan-import-type AttachProductEntitlementShape from \Dodopayments\Products\AttachProductEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
@@ -74,7 +73,7 @@ final class ProductsService implements ProductsContract
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery Choose how you would like you digital product delivered
      *
      * deprecated: use entitlements instead
-     * @param list<Entitlement|EntitlementShape>|null $entitlements Optional entitlements to attach to this product (max 20)
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements Optional entitlements to attach to this product (max 20)
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
      *
      * deprecated: use entitlements instead. Ignored when a `license_key`
@@ -172,7 +171,7 @@ final class ProductsService implements ProductsContract
      * @param \Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery|DigitalProductDeliveryShape1|null $digitalProductDelivery Choose how you would like you digital product delivered
      *
      * deprecated: use entitlements instead
-     * @param list<\Dodopayments\Products\ProductUpdateParams\Entitlement|EntitlementShape1>|null $entitlements Entitlements to attach (replaces all existing when present)
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements Entitlements to attach (replaces all existing when present)
      * Send empty array to remove all, omit field to leave unchanged
      * @param string|null $imageID Product image id after its uploaded to S3
      * @param string|null $licenseKeyActivationMessage Message sent to the customer upon license key activation.

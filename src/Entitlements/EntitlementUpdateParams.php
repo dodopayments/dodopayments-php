@@ -8,22 +8,22 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\DigitalFilesConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\DiscordConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\FigmaConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\FramerConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\GitHubConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\LicenseKeyConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\NotionConfig;
-use Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig\TelegramConfig;
+use Dodopayments\Entitlements\IntegrationConfig\DigitalFilesConfig;
+use Dodopayments\Entitlements\IntegrationConfig\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfig\FigmaConfig;
+use Dodopayments\Entitlements\IntegrationConfig\FramerConfig;
+use Dodopayments\Entitlements\IntegrationConfig\GitHubConfig;
+use Dodopayments\Entitlements\IntegrationConfig\LicenseKeyConfig;
+use Dodopayments\Entitlements\IntegrationConfig\NotionConfig;
+use Dodopayments\Entitlements\IntegrationConfig\TelegramConfig;
 
 /**
  * PATCH /entitlements/{id}.
  *
  * @see Dodopayments\Services\EntitlementsService::update()
  *
- * @phpstan-import-type IntegrationConfigVariants from \Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig
- * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\EntitlementUpdateParams\IntegrationConfig
+ * @phpstan-import-type IntegrationConfigVariants from \Dodopayments\Entitlements\IntegrationConfig
+ * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
  *
  * @phpstan-type EntitlementUpdateParamsShape = array{
  *   description?: string|null,

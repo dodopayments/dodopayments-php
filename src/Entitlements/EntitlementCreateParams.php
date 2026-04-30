@@ -9,27 +9,26 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\DigitalFilesConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\DiscordConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\FigmaConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\FramerConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\GitHubConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\LicenseKeyConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\NotionConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig\TelegramConfig;
-use Dodopayments\Entitlements\EntitlementCreateParams\IntegrationType;
+use Dodopayments\Entitlements\IntegrationConfig\DigitalFilesConfig;
+use Dodopayments\Entitlements\IntegrationConfig\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfig\FigmaConfig;
+use Dodopayments\Entitlements\IntegrationConfig\FramerConfig;
+use Dodopayments\Entitlements\IntegrationConfig\GitHubConfig;
+use Dodopayments\Entitlements\IntegrationConfig\LicenseKeyConfig;
+use Dodopayments\Entitlements\IntegrationConfig\NotionConfig;
+use Dodopayments\Entitlements\IntegrationConfig\TelegramConfig;
 
 /**
  * POST /entitlements.
  *
  * @see Dodopayments\Services\EntitlementsService::create()
  *
- * @phpstan-import-type IntegrationConfigVariants from \Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig
- * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\EntitlementCreateParams\IntegrationConfig
+ * @phpstan-import-type IntegrationConfigVariants from \Dodopayments\Entitlements\IntegrationConfig
+ * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
  *
  * @phpstan-type EntitlementCreateParamsShape = array{
  *   integrationConfig: IntegrationConfigShape,
- *   integrationType: IntegrationType|value-of<IntegrationType>,
+ *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
  *   name: string,
  *   description?: string|null,
  *   metadata?: array<string,string>|null,
@@ -52,9 +51,9 @@ final class EntitlementCreateParams implements BaseModel
     /**
      * Which platform integration this entitlement uses.
      *
-     * @var value-of<IntegrationType> $integrationType
+     * @var value-of<EntitlementIntegrationType> $integrationType
      */
-    #[Required('integration_type', enum: IntegrationType::class)]
+    #[Required('integration_type', enum: EntitlementIntegrationType::class)]
     public string $integrationType;
 
     /**
@@ -107,12 +106,12 @@ final class EntitlementCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param IntegrationConfigShape $integrationConfig
-     * @param IntegrationType|value-of<IntegrationType> $integrationType
+     * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
      * @param array<string,string>|null $metadata
      */
     public static function with(
         GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
-        IntegrationType|string $integrationType,
+        EntitlementIntegrationType|string $integrationType,
         string $name,
         ?string $description = null,
         ?array $metadata = null,
@@ -146,10 +145,10 @@ final class EntitlementCreateParams implements BaseModel
     /**
      * Which platform integration this entitlement uses.
      *
-     * @param IntegrationType|value-of<IntegrationType> $integrationType
+     * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
      */
     public function withIntegrationType(
-        IntegrationType|string $integrationType
+        EntitlementIntegrationType|string $integrationType
     ): self {
         $self = clone $this;
         $self['integrationType'] = $integrationType;
