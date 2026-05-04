@@ -33,9 +33,7 @@ final class EntitlementsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->entitlements->create(
-            integrationConfig: [
-                'permission' => 'permission', 'targetID' => 'target_id',
-            ],
+            integrationConfig: ['permission' => 'pull', 'targetID' => 'target_id'],
             integrationType: EntitlementIntegrationType::DISCORD,
             name: 'name',
         );
@@ -48,9 +46,7 @@ final class EntitlementsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->entitlements->create(
-            integrationConfig: [
-                'permission' => 'permission', 'targetID' => 'target_id',
-            ],
+            integrationConfig: ['permission' => 'pull', 'targetID' => 'target_id'],
             integrationType: EntitlementIntegrationType::DISCORD,
             name: 'name',
             description: 'description',

@@ -10,6 +10,8 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * One file in a digital-product delivery payload.
+ *
  * @phpstan-type DigitalProductDeliveryFileShape = array{
  *   downloadURL: string,
  *   expiresIn: int,
@@ -24,6 +26,9 @@ final class DigitalProductDeliveryFile implements BaseModel
     /** @use SdkModel<DigitalProductDeliveryFileShape> */
     use SdkModel;
 
+    /**
+     * Short-lived presigned URL for downloading the file.
+     */
     #[Required('download_url')]
     public string $downloadURL;
 
@@ -33,15 +38,27 @@ final class DigitalProductDeliveryFile implements BaseModel
     #[Required('expires_in')]
     public int $expiresIn;
 
+    /**
+     * Identifier of the attached file.
+     */
     #[Required('file_id')]
     public string $fileID;
 
+    /**
+     * Original filename of the attached file.
+     */
     #[Required]
     public string $filename;
 
+    /**
+     * Optional content-type declared at upload.
+     */
     #[Optional('content_type', nullable: true)]
     public ?string $contentType;
 
+    /**
+     * Optional size of the file in bytes.
+     */
     #[Optional('file_size', nullable: true)]
     public ?int $fileSize;
 
@@ -96,6 +113,9 @@ final class DigitalProductDeliveryFile implements BaseModel
         return $self;
     }
 
+    /**
+     * Short-lived presigned URL for downloading the file.
+     */
     public function withDownloadURL(string $downloadURL): self
     {
         $self = clone $this;
@@ -115,6 +135,9 @@ final class DigitalProductDeliveryFile implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the attached file.
+     */
     public function withFileID(string $fileID): self
     {
         $self = clone $this;
@@ -123,6 +146,9 @@ final class DigitalProductDeliveryFile implements BaseModel
         return $self;
     }
 
+    /**
+     * Original filename of the attached file.
+     */
     public function withFilename(string $filename): self
     {
         $self = clone $this;
@@ -131,6 +157,9 @@ final class DigitalProductDeliveryFile implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional content-type declared at upload.
+     */
     public function withContentType(?string $contentType): self
     {
         $self = clone $this;
@@ -139,6 +168,9 @@ final class DigitalProductDeliveryFile implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional size of the file in bytes.
+     */
     public function withFileSize(?int $fileSize): self
     {
         $self = clone $this;

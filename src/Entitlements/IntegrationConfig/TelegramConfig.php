@@ -16,6 +16,9 @@ final class TelegramConfig implements BaseModel
     /** @use SdkModel<TelegramConfigShape> */
     use SdkModel;
 
+    /**
+     * Telegram chat ID. For groups this is typically a negative integer.
+     */
     #[Required('chat_id')]
     public string $chatID;
 
@@ -52,6 +55,9 @@ final class TelegramConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Telegram chat ID. For groups this is typically a negative integer.
+     */
     public function withChatID(string $chatID): self
     {
         $self = clone $this;

@@ -12,6 +12,9 @@ use Dodopayments\Entitlements\Grants\EntitlementGrant\Status;
 use Dodopayments\Products\DigitalProductDelivery;
 
 /**
+ * Detailed view of a single entitlement grant: who it's for, its
+ * lifecycle state, and any integration-specific delivery payload.
+ *
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyGrantShape from \Dodopayments\Entitlements\Grants\LicenseKeyGrant
  *
@@ -21,7 +24,7 @@ use Dodopayments\Products\DigitalProductDelivery;
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
  *   entitlementID: string,
- *   externalID: string,
+ *   metadata: array<string,string>,
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
  *   deliveredAt?: \DateTimeInterface|null,
@@ -29,7 +32,6 @@ use Dodopayments\Products\DigitalProductDelivery;
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
  *   licenseKey?: null|LicenseKeyGrant|LicenseKeyGrantShape,
- *   metadata?: mixed,
  *   oauthExpiresAt?: \DateTimeInterface|null,
  *   oauthURL?: string|null,
  *   paymentID?: string|null,
@@ -43,71 +45,125 @@ final class EntitlementGrant implements BaseModel
     /** @use SdkModel<EntitlementGrantShape> */
     use SdkModel;
 
+    /**
+     * Unique identifier of the grant.
+     */
     #[Required]
     public string $id;
 
+    /**
+     * Identifier of the business that owns the grant.
+     */
     #[Required('business_id')]
     public string $businessID;
 
+    /**
+     * Timestamp when the grant was created.
+     */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
+    /**
+     * Identifier of the customer the grant was issued to.
+     */
     #[Required('customer_id')]
     public string $customerID;
 
+    /**
+     * Identifier of the entitlement this grant was issued from.
+     */
     #[Required('entitlement_id')]
     public string $entitlementID;
 
-    #[Required('external_id')]
-    public string $externalID;
+    /**
+     * Arbitrary key-value metadata recorded on the grant.
+     *
+     * @var array<string,string> $metadata
+     */
+    #[Required(map: 'string')]
+    public array $metadata;
 
-    /** @var value-of<Status> $status */
+    /**
+     * Lifecycle status of the grant.
+     *
+     * @var value-of<Status> $status
+     */
     #[Required(enum: Status::class)]
     public string $status;
 
+    /**
+     * Timestamp when the grant was last modified.
+     */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
 
+    /**
+     * Timestamp when the grant transitioned to `delivered`, when applicable.
+     */
     #[Optional('delivered_at', nullable: true)]
     public ?\DateTimeInterface $deliveredAt;
 
     /**
-     * Present only when the entitlement integration_type is `digital_files`.
-     * Populated eagerly on every list and single-record endpoint.
+     * Digital-product-delivery payload, present when the entitlement
+     * integration is `digital_files`.
      */
     #[Optional('digital_product_delivery', nullable: true)]
     public ?DigitalProductDelivery $digitalProductDelivery;
 
+    /**
+     * Machine-readable code reported when delivery failed, when applicable.
+     */
     #[Optional('error_code', nullable: true)]
     public ?string $errorCode;
 
+    /**
+     * Human-readable message reported when delivery failed, when applicable.
+     */
     #[Optional('error_message', nullable: true)]
     public ?string $errorMessage;
 
     /**
-     * Present only when the entitlement integration_type is `license_key`.
+     * License-key delivery payload, present when the entitlement integration
+     * is `license_key`.
      */
     #[Optional('license_key', nullable: true)]
     public ?LicenseKeyGrant $licenseKey;
 
-    #[Optional]
-    public mixed $metadata;
-
+    /**
+     * Timestamp when `oauth_url` stops being valid, when applicable.
+     */
     #[Optional('oauth_expires_at', nullable: true)]
     public ?\DateTimeInterface $oauthExpiresAt;
 
+    /**
+     * Customer-facing OAuth URL for OAuth-style integrations. Populated
+     * during the customer-portal accept flow; `null` until the customer
+     * completes that step, and on grants for non-OAuth integrations.
+     */
     #[Optional('oauth_url', nullable: true)]
     public ?string $oauthURL;
 
+    /**
+     * Identifier of the payment that triggered this grant, when applicable.
+     */
     #[Optional('payment_id', nullable: true)]
     public ?string $paymentID;
 
+    /**
+     * Reason recorded when the grant was revoked, when applicable.
+     */
     #[Optional('revocation_reason', nullable: true)]
     public ?string $revocationReason;
 
+    /**
+     * Timestamp when the grant transitioned to `revoked`, when applicable.
+     */
     #[Optional('revoked_at', nullable: true)]
     public ?\DateTimeInterface $revokedAt;
 
+    /**
+     * Identifier of the subscription that triggered this grant, when applicable.
+     */
     #[Optional('subscription_id', nullable: true)]
     public ?string $subscriptionID;
 
@@ -122,7 +178,7 @@ final class EntitlementGrant implements BaseModel
      *   createdAt: ...,
      *   customerID: ...,
      *   entitlementID: ...,
-     *   externalID: ...,
+     *   metadata: ...,
      *   status: ...,
      *   updatedAt: ...,
      * )
@@ -137,7 +193,7 @@ final class EntitlementGrant implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
      *   ->withEntitlementID(...)
-     *   ->withExternalID(...)
+     *   ->withMetadata(...)
      *   ->withStatus(...)
      *   ->withUpdatedAt(...)
      * ```
@@ -152,6 +208,7 @@ final class EntitlementGrant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string,string> $metadata
      * @param Status|value-of<Status> $status
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param LicenseKeyGrant|LicenseKeyGrantShape|null $licenseKey
@@ -162,7 +219,7 @@ final class EntitlementGrant implements BaseModel
         \DateTimeInterface $createdAt,
         string $customerID,
         string $entitlementID,
-        string $externalID,
+        array $metadata,
         Status|string $status,
         \DateTimeInterface $updatedAt,
         ?\DateTimeInterface $deliveredAt = null,
@@ -170,7 +227,6 @@ final class EntitlementGrant implements BaseModel
         ?string $errorCode = null,
         ?string $errorMessage = null,
         LicenseKeyGrant|array|null $licenseKey = null,
-        mixed $metadata = null,
         ?\DateTimeInterface $oauthExpiresAt = null,
         ?string $oauthURL = null,
         ?string $paymentID = null,
@@ -185,7 +241,7 @@ final class EntitlementGrant implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
         $self['entitlementID'] = $entitlementID;
-        $self['externalID'] = $externalID;
+        $self['metadata'] = $metadata;
         $self['status'] = $status;
         $self['updatedAt'] = $updatedAt;
 
@@ -194,7 +250,6 @@ final class EntitlementGrant implements BaseModel
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
         null !== $licenseKey && $self['licenseKey'] = $licenseKey;
-        null !== $metadata && $self['metadata'] = $metadata;
         null !== $oauthExpiresAt && $self['oauthExpiresAt'] = $oauthExpiresAt;
         null !== $oauthURL && $self['oauthURL'] = $oauthURL;
         null !== $paymentID && $self['paymentID'] = $paymentID;
@@ -205,6 +260,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Unique identifier of the grant.
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
@@ -213,6 +271,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the business that owns the grant.
+     */
     public function withBusinessID(string $businessID): self
     {
         $self = clone $this;
@@ -221,6 +282,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Timestamp when the grant was created.
+     */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $self = clone $this;
@@ -229,6 +293,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the customer the grant was issued to.
+     */
     public function withCustomerID(string $customerID): self
     {
         $self = clone $this;
@@ -237,6 +304,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the entitlement this grant was issued from.
+     */
     public function withEntitlementID(string $entitlementID): self
     {
         $self = clone $this;
@@ -245,15 +315,22 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
-    public function withExternalID(string $externalID): self
+    /**
+     * Arbitrary key-value metadata recorded on the grant.
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
     {
         $self = clone $this;
-        $self['externalID'] = $externalID;
+        $self['metadata'] = $metadata;
 
         return $self;
     }
 
     /**
+     * Lifecycle status of the grant.
+     *
      * @param Status|value-of<Status> $status
      */
     public function withStatus(Status|string $status): self
@@ -264,6 +341,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Timestamp when the grant was last modified.
+     */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $self = clone $this;
@@ -272,6 +352,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Timestamp when the grant transitioned to `delivered`, when applicable.
+     */
     public function withDeliveredAt(?\DateTimeInterface $deliveredAt): self
     {
         $self = clone $this;
@@ -281,8 +364,8 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * Present only when the entitlement integration_type is `digital_files`.
-     * Populated eagerly on every list and single-record endpoint.
+     * Digital-product-delivery payload, present when the entitlement
+     * integration is `digital_files`.
      *
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      */
@@ -295,6 +378,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Machine-readable code reported when delivery failed, when applicable.
+     */
     public function withErrorCode(?string $errorCode): self
     {
         $self = clone $this;
@@ -303,6 +389,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Human-readable message reported when delivery failed, when applicable.
+     */
     public function withErrorMessage(?string $errorMessage): self
     {
         $self = clone $this;
@@ -312,7 +401,8 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * Present only when the entitlement integration_type is `license_key`.
+     * License-key delivery payload, present when the entitlement integration
+     * is `license_key`.
      *
      * @param LicenseKeyGrant|LicenseKeyGrantShape|null $licenseKey
      */
@@ -324,14 +414,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
-    public function withMetadata(mixed $metadata): self
-    {
-        $self = clone $this;
-        $self['metadata'] = $metadata;
-
-        return $self;
-    }
-
+    /**
+     * Timestamp when `oauth_url` stops being valid, when applicable.
+     */
     public function withOAuthExpiresAt(
         ?\DateTimeInterface $oauthExpiresAt
     ): self {
@@ -341,6 +426,11 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Customer-facing OAuth URL for OAuth-style integrations. Populated
+     * during the customer-portal accept flow; `null` until the customer
+     * completes that step, and on grants for non-OAuth integrations.
+     */
     public function withOAuthURL(?string $oauthURL): self
     {
         $self = clone $this;
@@ -349,6 +439,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the payment that triggered this grant, when applicable.
+     */
     public function withPaymentID(?string $paymentID): self
     {
         $self = clone $this;
@@ -357,6 +450,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Reason recorded when the grant was revoked, when applicable.
+     */
     public function withRevocationReason(?string $revocationReason): self
     {
         $self = clone $this;
@@ -365,6 +461,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Timestamp when the grant transitioned to `revoked`, when applicable.
+     */
     public function withRevokedAt(?\DateTimeInterface $revokedAt): self
     {
         $self = clone $this;
@@ -373,6 +472,9 @@ final class EntitlementGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the subscription that triggered this grant, when applicable.
+     */
     public function withSubscriptionID(?string $subscriptionID): self
     {
         $self = clone $this;

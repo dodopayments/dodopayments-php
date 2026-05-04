@@ -17,9 +17,15 @@ final class DiscordConfig implements BaseModel
     /** @use SdkModel<DiscordConfigShape> */
     use SdkModel;
 
+    /**
+     * Discord guild (server) ID.
+     */
     #[Required('guild_id')]
     public string $guildID;
 
+    /**
+     * Optional Discord role to assign within the guild.
+     */
     #[Optional('role_id', nullable: true)]
     public ?string $roleID;
 
@@ -58,6 +64,9 @@ final class DiscordConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Discord guild (server) ID.
+     */
     public function withGuildID(string $guildID): self
     {
         $self = clone $this;
@@ -66,6 +75,9 @@ final class DiscordConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional Discord role to assign within the guild.
+     */
     public function withRoleID(?string $roleID): self
     {
         $self = clone $this;

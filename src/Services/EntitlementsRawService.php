@@ -40,7 +40,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
      *   integrationType: value-of<EntitlementIntegrationType>,
      *   name: string,
      *   description?: string|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,string>,
      * }|EntitlementCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
