@@ -69,11 +69,11 @@ final class EntitlementCreateParams implements BaseModel
     public ?string $description;
 
     /**
-     * Optional user-facing metadata.
+     * Additional metadata for the entitlement.
      *
      * @var array<string,string>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: 'string')]
     public ?array $metadata;
 
     /**
@@ -179,11 +179,11 @@ final class EntitlementCreateParams implements BaseModel
     }
 
     /**
-     * Optional user-facing metadata.
+     * Additional metadata for the entitlement.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,string> $metadata
      */
-    public function withMetadata(?array $metadata): self
+    public function withMetadata(array $metadata): self
     {
         $self = clone $this;
         $self['metadata'] = $metadata;

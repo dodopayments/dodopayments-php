@@ -42,8 +42,9 @@ final class EntitlementUpdateParams implements BaseModel
     public ?string $description;
 
     /**
-     * Platform-specific configuration for an entitlement.
-     * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+     * Integration-specific configuration supplied when creating or updating
+     * an entitlement. The shape required matches the entitlement's
+     * `integration_type`.
      *
      * @var IntegrationConfigVariants|null $integrationConfig
      */
@@ -95,8 +96,9 @@ final class EntitlementUpdateParams implements BaseModel
     }
 
     /**
-     * Platform-specific configuration for an entitlement.
-     * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+     * Integration-specific configuration supplied when creating or updating
+     * an entitlement. The shape required matches the entitlement's
+     * `integration_type`.
      *
      * @param IntegrationConfigShape|null $integrationConfig
      */

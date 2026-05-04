@@ -31,6 +31,10 @@ final class EntitlementGrantFailedWebhookEvent implements BaseModel
     #[Required('business_id')]
     public string $businessID;
 
+    /**
+     * Detailed view of a single entitlement grant: who it's for, its
+     * lifecycle state, and any integration-specific delivery payload.
+     */
     #[Required]
     public EntitlementGrant $data;
 
@@ -109,6 +113,9 @@ final class EntitlementGrantFailedWebhookEvent implements BaseModel
     }
 
     /**
+     * Detailed view of a single entitlement grant: who it's for, its
+     * lifecycle state, and any integration-specific delivery payload.
+     *
      * @param EntitlementGrant|EntitlementGrantShape $data
      */
     public function withData(EntitlementGrant|array $data): self

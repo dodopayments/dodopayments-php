@@ -22,25 +22,38 @@ final class DigitalFilesConfig implements BaseModel
     /** @use SdkModel<DigitalFilesConfigShape> */
     use SdkModel;
 
-    /** @var list<string> $digitalFileIDs */
+    /**
+     * Files attached to this entitlement. Add files via
+     * `POST /entitlements/{id}/files` and remove them via
+     * `DELETE /entitlements/{id}/files/{file_id}`.
+     *
+     * @var list<string> $digitalFileIDs
+     */
     #[Required('digital_file_ids', list: 'string')]
     public array $digitalFileIDs;
 
+    /**
+     * Optional external URL shown to the customer alongside the files.
+     */
     #[Optional('external_url', nullable: true)]
     public ?string $externalURL;
 
+    /**
+     * Optional human-readable delivery instructions shown to the customer
+     * alongside the files.
+     */
     #[Optional(nullable: true)]
     public ?string $instructions;
 
     /**
-     * Three-way patchable field (mirrors the credit_entitlements pattern):
+     * Three-way patchable list of legacy file identifiers:
      *
-     * * omitted → preserve persisted (`None`)
-     * * `null`  → clear              (`Some(None)`)
-     * * `[...]` → replace            (`Some(Some(...))`)
+     * * omitted → preserve the current value
+     * * `null`  → clear
+     * * `[...]` → replace
      *
-     * On Create / storage we collapse "clear" and empty-array to `None`
-     * so the persisted JSONB never carries a `null` legacy_file_ids key.
+     * On create, an omitted field, an explicit `null`, or an empty
+     * array all result in no legacy files attached.
      *
      * @var list<string>|null $legacyFileIDs
      */
@@ -92,6 +105,10 @@ final class DigitalFilesConfig implements BaseModel
     }
 
     /**
+     * Files attached to this entitlement. Add files via
+     * `POST /entitlements/{id}/files` and remove them via
+     * `DELETE /entitlements/{id}/files/{file_id}`.
+     *
      * @param list<string> $digitalFileIDs
      */
     public function withDigitalFileIDs(array $digitalFileIDs): self
@@ -102,6 +119,9 @@ final class DigitalFilesConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional external URL shown to the customer alongside the files.
+     */
     public function withExternalURL(?string $externalURL): self
     {
         $self = clone $this;
@@ -110,6 +130,10 @@ final class DigitalFilesConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional human-readable delivery instructions shown to the customer
+     * alongside the files.
+     */
     public function withInstructions(?string $instructions): self
     {
         $self = clone $this;
@@ -119,14 +143,14 @@ final class DigitalFilesConfig implements BaseModel
     }
 
     /**
-     * Three-way patchable field (mirrors the credit_entitlements pattern):
+     * Three-way patchable list of legacy file identifiers:
      *
-     * * omitted → preserve persisted (`None`)
-     * * `null`  → clear              (`Some(None)`)
-     * * `[...]` → replace            (`Some(Some(...))`)
+     * * omitted → preserve the current value
+     * * `null`  → clear
+     * * `[...]` → replace
      *
-     * On Create / storage we collapse "clear" and empty-array to `None`
-     * so the persisted JSONB never carries a `null` legacy_file_ids key.
+     * On create, an omitted field, an explicit `null`, or an empty
+     * array all result in no legacy files attached.
      *
      * @param list<string>|null $legacyFileIDs
      */

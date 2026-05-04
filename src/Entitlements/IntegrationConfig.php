@@ -17,8 +17,9 @@ use Dodopayments\Entitlements\IntegrationConfig\NotionConfig;
 use Dodopayments\Entitlements\IntegrationConfig\TelegramConfig;
 
 /**
- * Platform-specific configuration for an entitlement.
- * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+ * Integration-specific configuration supplied when creating or updating
+ * an entitlement. The shape required matches the entitlement's
+ * `integration_type`.
  *
  * @phpstan-import-type GitHubConfigShape from \Dodopayments\Entitlements\IntegrationConfig\GitHubConfig
  * @phpstan-import-type DiscordConfigShape from \Dodopayments\Entitlements\IntegrationConfig\DiscordConfig

@@ -16,6 +16,9 @@ final class NotionConfig implements BaseModel
     /** @use SdkModel<NotionConfigShape> */
     use SdkModel;
 
+    /**
+     * Notion template identifier to grant access to.
+     */
     #[Required('notion_template_id')]
     public string $notionTemplateID;
 
@@ -52,6 +55,9 @@ final class NotionConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Notion template identifier to grant access to.
+     */
     public function withNotionTemplateID(string $notionTemplateID): self
     {
         $self = clone $this;

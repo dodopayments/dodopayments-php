@@ -16,7 +16,7 @@ interface FilesContract
     /**
      * @api
      *
-     * @param string $fileID Digital file Id from EE
+     * @param string $fileID Identifier of the attached file
      * @param string $id Entitlement Id
      * @param RequestOpts|null $requestOptions
      *

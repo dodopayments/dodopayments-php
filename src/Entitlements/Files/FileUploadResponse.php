@@ -17,8 +17,8 @@ final class FileUploadResponse implements BaseModel
     use SdkModel;
 
     /**
-     * EE-issued digital file id; appended to
-     * `entitlements.integration_config.digital_file_ids`.
+     * Identifier of the attached file. Pass it to
+     * `DELETE /entitlements/{id}/files/{file_id}` to detach the file later.
      */
     #[Required('file_id')]
     public string $fileID;
@@ -57,8 +57,8 @@ final class FileUploadResponse implements BaseModel
     }
 
     /**
-     * EE-issued digital file id; appended to
-     * `entitlements.integration_config.digital_file_ids`.
+     * Identifier of the attached file. Pass it to
+     * `DELETE /entitlements/{id}/files/{file_id}` to detach the file later.
      */
     public function withFileID(string $fileID): self
     {

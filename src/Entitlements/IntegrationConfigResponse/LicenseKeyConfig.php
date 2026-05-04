@@ -22,16 +22,32 @@ final class LicenseKeyConfig implements BaseModel
     /** @use SdkModel<LicenseKeyConfigShape> */
     use SdkModel;
 
+    /**
+     * Optional message displayed when a customer activates the license
+     * key (≤ 2500 characters).
+     */
     #[Optional('activation_message', nullable: true)]
     public ?string $activationMessage;
 
+    /**
+     * Maximum activations allowed per issued license key. Omit for unlimited.
+     */
     #[Optional('activations_limit', nullable: true)]
     public ?int $activationsLimit;
 
+    /**
+     * Validity duration of issued license keys. Provide both
+     * `duration_count` and `duration_interval` together for a fixed
+     * duration; omit both for non-expiring keys.
+     */
     #[Optional('duration_count', nullable: true)]
     public ?int $durationCount;
 
-    /** @var value-of<TimeInterval>|null $durationInterval */
+    /**
+     * Unit of `duration_count`.
+     *
+     * @var value-of<TimeInterval>|null $durationInterval
+     */
     #[Optional('duration_interval', enum: TimeInterval::class, nullable: true)]
     public ?string $durationInterval;
 
@@ -63,6 +79,10 @@ final class LicenseKeyConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional message displayed when a customer activates the license
+     * key (≤ 2500 characters).
+     */
     public function withActivationMessage(?string $activationMessage): self
     {
         $self = clone $this;
@@ -71,6 +91,9 @@ final class LicenseKeyConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Maximum activations allowed per issued license key. Omit for unlimited.
+     */
     public function withActivationsLimit(?int $activationsLimit): self
     {
         $self = clone $this;
@@ -79,6 +102,11 @@ final class LicenseKeyConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Validity duration of issued license keys. Provide both
+     * `duration_count` and `duration_interval` together for a fixed
+     * duration; omit both for non-expiring keys.
+     */
     public function withDurationCount(?int $durationCount): self
     {
         $self = clone $this;
@@ -88,6 +116,8 @@ final class LicenseKeyConfig implements BaseModel
     }
 
     /**
+     * Unit of `duration_count`.
+     *
      * @param TimeInterval|value-of<TimeInterval>|null $durationInterval
      */
     public function withDurationInterval(

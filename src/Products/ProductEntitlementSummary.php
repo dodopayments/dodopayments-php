@@ -47,11 +47,11 @@ final class ProductEntitlementSummary implements BaseModel
     public string $id;
 
     /**
-     * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
-     * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
-     * hydrated `digital_files` object (resolved download URLs etc.).  The
-     * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
-     * response-only.
+     * Integration-specific configuration on an entitlement read response.
+     *
+     * For `digital_files` entitlements the response includes presigned
+     * download URLs for each attached file; other integrations match the
+     * shape supplied at creation.
      *
      * @var IntegrationConfigResponseVariants $integrationConfig
      */
@@ -129,11 +129,11 @@ final class ProductEntitlementSummary implements BaseModel
     }
 
     /**
-     * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
-     * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
-     * hydrated `digital_files` object (resolved download URLs etc.).  The
-     * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
-     * response-only.
+     * Integration-specific configuration on an entitlement read response.
+     *
+     * For `digital_files` entitlements the response includes presigned
+     * download URLs for each attached file; other integrations match the
+     * shape supplied at creation.
      *
      * @param IntegrationConfigResponseShape $integrationConfig
      */

@@ -11,10 +11,8 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DigitalFilesConfig\DigitalFiles\File;
 
 /**
- * Populated digital-files payload for entitlement read surfaces. Mirrors
- * `DigitalProductDelivery` but is sourced from an entitlement's
- * `integration_config` (not a grant) and tags each file with its origin
- * (`legacy` vs `ee`).
+ * Populated digital-files payload with each file's metadata and a
+ * short-lived presigned download URL.
  *
  * @phpstan-import-type FileShape from \Dodopayments\Entitlements\IntegrationConfigResponse\DigitalFilesConfig\DigitalFiles\File
  *
@@ -29,13 +27,25 @@ final class DigitalFiles implements BaseModel
     /** @use SdkModel<DigitalFilesShape> */
     use SdkModel;
 
-    /** @var list<File> $files */
+    /**
+     * One entry per attached file.
+     *
+     * @var list<File> $files
+     */
     #[Required(list: File::class)]
     public array $files;
 
+    /**
+     * Optional external URL, passed through from the entitlement
+     * configuration.
+     */
     #[Optional('external_url', nullable: true)]
     public ?string $externalURL;
 
+    /**
+     * Optional human-readable delivery instructions, passed through from
+     * the entitlement configuration.
+     */
     #[Optional(nullable: true)]
     public ?string $instructions;
 
@@ -81,6 +91,8 @@ final class DigitalFiles implements BaseModel
     }
 
     /**
+     * One entry per attached file.
+     *
      * @param list<File|FileShape> $files
      */
     public function withFiles(array $files): self
@@ -91,6 +103,10 @@ final class DigitalFiles implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional external URL, passed through from the entitlement
+     * configuration.
+     */
     public function withExternalURL(?string $externalURL): self
     {
         $self = clone $this;
@@ -99,6 +115,10 @@ final class DigitalFiles implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional human-readable delivery instructions, passed through from
+     * the entitlement configuration.
+     */
     public function withInstructions(?string $instructions): self
     {
         $self = clone $this;

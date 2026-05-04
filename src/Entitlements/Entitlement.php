@@ -18,6 +18,9 @@ use Dodopayments\Entitlements\IntegrationConfigResponse\NotionConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig;
 
 /**
+ * Detailed view of a single entitlement: identity, integration type,
+ * integration-specific configuration, and metadata.
+ *
  * @phpstan-import-type IntegrationConfigResponseVariants from \Dodopayments\Entitlements\IntegrationConfigResponse
  * @phpstan-import-type IntegrationConfigResponseShape from \Dodopayments\Entitlements\IntegrationConfigResponse
  *
@@ -28,10 +31,10 @@ use Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig;
  *   integrationConfig: IntegrationConfigResponseShape,
  *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
  *   isActive: bool,
+ *   metadata: array<string,string>,
  *   name: string,
  *   updatedAt: \DateTimeInterface,
  *   description?: string|null,
- *   metadata?: mixed,
  * }
  */
 final class Entitlement implements BaseModel
@@ -39,45 +42,73 @@ final class Entitlement implements BaseModel
     /** @use SdkModel<EntitlementShape> */
     use SdkModel;
 
+    /**
+     * Unique identifier of the entitlement.
+     */
     #[Required]
     public string $id;
 
+    /**
+     * Identifier of the business that owns this entitlement.
+     */
     #[Required('business_id')]
     public string $businessID;
 
+    /**
+     * Timestamp when the entitlement was created.
+     */
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
     /**
-     * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
-     * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
-     * hydrated `digital_files` object (resolved download URLs etc.).  The
-     * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
-     * response-only.
+     * Integration-specific configuration. For `digital_files` entitlements
+     * this includes presigned download URLs for each attached file.
      *
      * @var IntegrationConfigResponseVariants $integrationConfig
      */
     #[Required('integration_config')]
     public GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
 
-    /** @var value-of<EntitlementIntegrationType> $integrationType */
+    /**
+     * Platform integration this entitlement uses.
+     *
+     * @var value-of<EntitlementIntegrationType> $integrationType
+     */
     #[Required('integration_type', enum: EntitlementIntegrationType::class)]
     public string $integrationType;
 
+    /**
+     * Always `true` for entitlements returned by the public API;
+     * soft-deleted entitlements are not returned.
+     */
     #[Required('is_active')]
     public bool $isActive;
 
+    /**
+     * Arbitrary key-value metadata supplied at creation or via PATCH.
+     *
+     * @var array<string,string> $metadata
+     */
+    #[Required(map: 'string')]
+    public array $metadata;
+
+    /**
+     * Display name supplied at creation.
+     */
     #[Required]
     public string $name;
 
+    /**
+     * Timestamp when the entitlement was last modified.
+     */
     #[Required('updated_at')]
     public \DateTimeInterface $updatedAt;
 
+    /**
+     * Optional description supplied at creation.
+     */
     #[Optional(nullable: true)]
     public ?string $description;
-
-    #[Optional]
-    public mixed $metadata;
 
     /**
      * `new Entitlement()` is missing required properties by the API.
@@ -91,6 +122,7 @@ final class Entitlement implements BaseModel
      *   integrationConfig: ...,
      *   integrationType: ...,
      *   isActive: ...,
+     *   metadata: ...,
      *   name: ...,
      *   updatedAt: ...,
      * )
@@ -106,6 +138,7 @@ final class Entitlement implements BaseModel
      *   ->withIntegrationConfig(...)
      *   ->withIntegrationType(...)
      *   ->withIsActive(...)
+     *   ->withMetadata(...)
      *   ->withName(...)
      *   ->withUpdatedAt(...)
      * ```
@@ -122,6 +155,7 @@ final class Entitlement implements BaseModel
      *
      * @param IntegrationConfigResponseShape $integrationConfig
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
+     * @param array<string,string> $metadata
      */
     public static function with(
         string $id,
@@ -130,10 +164,10 @@ final class Entitlement implements BaseModel
         GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
         EntitlementIntegrationType|string $integrationType,
         bool $isActive,
+        array $metadata,
         string $name,
         \DateTimeInterface $updatedAt,
         ?string $description = null,
-        mixed $metadata = null,
     ): self {
         $self = new self;
 
@@ -143,15 +177,18 @@ final class Entitlement implements BaseModel
         $self['integrationConfig'] = $integrationConfig;
         $self['integrationType'] = $integrationType;
         $self['isActive'] = $isActive;
+        $self['metadata'] = $metadata;
         $self['name'] = $name;
         $self['updatedAt'] = $updatedAt;
 
         null !== $description && $self['description'] = $description;
-        null !== $metadata && $self['metadata'] = $metadata;
 
         return $self;
     }
 
+    /**
+     * Unique identifier of the entitlement.
+     */
     public function withID(string $id): self
     {
         $self = clone $this;
@@ -160,6 +197,9 @@ final class Entitlement implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the business that owns this entitlement.
+     */
     public function withBusinessID(string $businessID): self
     {
         $self = clone $this;
@@ -168,6 +208,9 @@ final class Entitlement implements BaseModel
         return $self;
     }
 
+    /**
+     * Timestamp when the entitlement was created.
+     */
     public function withCreatedAt(\DateTimeInterface $createdAt): self
     {
         $self = clone $this;
@@ -177,11 +220,8 @@ final class Entitlement implements BaseModel
     }
 
     /**
-     * Public-facing variant of [`IntegrationConfig`].  Mirrors every variant
-     * shape on the wire EXCEPT `DigitalFiles`, which is replaced with a
-     * hydrated `digital_files` object (resolved download URLs etc.).  The
-     * persisted JSONB stays ID-only via [`IntegrationConfig`]; this enum is
-     * response-only.
+     * Integration-specific configuration. For `digital_files` entitlements
+     * this includes presigned download URLs for each attached file.
      *
      * @param IntegrationConfigResponseShape $integrationConfig
      */
@@ -195,6 +235,8 @@ final class Entitlement implements BaseModel
     }
 
     /**
+     * Platform integration this entitlement uses.
+     *
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
      */
     public function withIntegrationType(
@@ -206,6 +248,10 @@ final class Entitlement implements BaseModel
         return $self;
     }
 
+    /**
+     * Always `true` for entitlements returned by the public API;
+     * soft-deleted entitlements are not returned.
+     */
     public function withIsActive(bool $isActive): self
     {
         $self = clone $this;
@@ -214,6 +260,22 @@ final class Entitlement implements BaseModel
         return $self;
     }
 
+    /**
+     * Arbitrary key-value metadata supplied at creation or via PATCH.
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Display name supplied at creation.
+     */
     public function withName(string $name): self
     {
         $self = clone $this;
@@ -222,6 +284,9 @@ final class Entitlement implements BaseModel
         return $self;
     }
 
+    /**
+     * Timestamp when the entitlement was last modified.
+     */
     public function withUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $self = clone $this;
@@ -230,18 +295,13 @@ final class Entitlement implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional description supplied at creation.
+     */
     public function withDescription(?string $description): self
     {
         $self = clone $this;
         $self['description'] = $description;
-
-        return $self;
-    }
-
-    public function withMetadata(mixed $metadata): self
-    {
-        $self = clone $this;
-        $self['metadata'] = $metadata;
 
         return $self;
     }
