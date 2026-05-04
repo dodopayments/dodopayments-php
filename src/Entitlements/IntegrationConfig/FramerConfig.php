@@ -16,6 +16,9 @@ final class FramerConfig implements BaseModel
     /** @use SdkModel<FramerConfigShape> */
     use SdkModel;
 
+    /**
+     * Framer template identifier to grant access to.
+     */
     #[Required('framer_template_id')]
     public string $framerTemplateID;
 
@@ -52,6 +55,9 @@ final class FramerConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Framer template identifier to grant access to.
+     */
     public function withFramerTemplateID(string $framerTemplateID): self
     {
         $self = clone $this;

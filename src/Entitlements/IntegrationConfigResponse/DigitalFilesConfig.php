@@ -22,10 +22,8 @@ final class DigitalFilesConfig implements BaseModel
     use SdkModel;
 
     /**
-     * Populated digital-files payload for entitlement read surfaces. Mirrors
-     * `DigitalProductDelivery` but is sourced from an entitlement's
-     * `integration_config` (not a grant) and tags each file with its origin
-     * (`legacy` vs `ee`).
+     * Populated digital-files payload with each file's metadata and a
+     * short-lived presigned download URL.
      */
     #[Required('digital_files')]
     public DigitalFiles $digitalFiles;
@@ -66,10 +64,8 @@ final class DigitalFilesConfig implements BaseModel
     }
 
     /**
-     * Populated digital-files payload for entitlement read surfaces. Mirrors
-     * `DigitalProductDelivery` but is sourced from an entitlement's
-     * `integration_config` (not a grant) and tags each file with its origin
-     * (`legacy` vs `ee`).
+     * Populated digital-files payload with each file's metadata and a
+     * short-lived presigned download URL.
      *
      * @param DigitalFiles|DigitalFilesShape $digitalFiles
      */

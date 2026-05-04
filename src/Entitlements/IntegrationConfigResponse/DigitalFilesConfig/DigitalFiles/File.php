@@ -10,12 +10,13 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
+ * One file in a resolved digital-files payload.
+ *
  * @phpstan-type FileShape = array{
  *   downloadURL: string,
  *   expiresIn: int,
  *   fileID: string,
  *   filename: string,
- *   source: string,
  *   contentType?: string|null,
  *   fileSize?: int|null,
  * }
@@ -25,6 +26,9 @@ final class File implements BaseModel
     /** @use SdkModel<FileShape> */
     use SdkModel;
 
+    /**
+     * Short-lived presigned URL for downloading the file.
+     */
     #[Required('download_url')]
     public string $downloadURL;
 
@@ -34,22 +38,27 @@ final class File implements BaseModel
     #[Required('expires_in')]
     public int $expiresIn;
 
+    /**
+     * Identifier of the attached file.
+     */
     #[Required('file_id')]
     public string $fileID;
 
+    /**
+     * Original filename of the attached file.
+     */
     #[Required]
     public string $filename;
 
     /**
-     * `"legacy"` for files in `product_files`, `"ee"` for files managed by the
-     * Entitlements Engine.
+     * Optional content-type declared at upload.
      */
-    #[Required]
-    public string $source;
-
     #[Optional('content_type', nullable: true)]
     public ?string $contentType;
 
+    /**
+     * Optional size of the file in bytes.
+     */
     #[Optional('file_size', nullable: true)]
     public ?int $fileSize;
 
@@ -58,9 +67,7 @@ final class File implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * File::with(
-     *   downloadURL: ..., expiresIn: ..., fileID: ..., filename: ..., source: ...
-     * )
+     * File::with(downloadURL: ..., expiresIn: ..., fileID: ..., filename: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -71,7 +78,6 @@ final class File implements BaseModel
      *   ->withExpiresIn(...)
      *   ->withFileID(...)
      *   ->withFilename(...)
-     *   ->withSource(...)
      * ```
      */
     public function __construct()
@@ -89,7 +95,6 @@ final class File implements BaseModel
         int $expiresIn,
         string $fileID,
         string $filename,
-        string $source,
         ?string $contentType = null,
         ?int $fileSize = null,
     ): self {
@@ -99,7 +104,6 @@ final class File implements BaseModel
         $self['expiresIn'] = $expiresIn;
         $self['fileID'] = $fileID;
         $self['filename'] = $filename;
-        $self['source'] = $source;
 
         null !== $contentType && $self['contentType'] = $contentType;
         null !== $fileSize && $self['fileSize'] = $fileSize;
@@ -107,6 +111,9 @@ final class File implements BaseModel
         return $self;
     }
 
+    /**
+     * Short-lived presigned URL for downloading the file.
+     */
     public function withDownloadURL(string $downloadURL): self
     {
         $self = clone $this;
@@ -126,6 +133,9 @@ final class File implements BaseModel
         return $self;
     }
 
+    /**
+     * Identifier of the attached file.
+     */
     public function withFileID(string $fileID): self
     {
         $self = clone $this;
@@ -134,6 +144,9 @@ final class File implements BaseModel
         return $self;
     }
 
+    /**
+     * Original filename of the attached file.
+     */
     public function withFilename(string $filename): self
     {
         $self = clone $this;
@@ -143,17 +156,8 @@ final class File implements BaseModel
     }
 
     /**
-     * `"legacy"` for files in `product_files`, `"ee"` for files managed by the
-     * Entitlements Engine.
+     * Optional content-type declared at upload.
      */
-    public function withSource(string $source): self
-    {
-        $self = clone $this;
-        $self['source'] = $source;
-
-        return $self;
-    }
-
     public function withContentType(?string $contentType): self
     {
         $self = clone $this;
@@ -162,6 +166,9 @@ final class File implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional size of the file in bytes.
+     */
     public function withFileSize(?int $fileSize): self
     {
         $self = clone $this;

@@ -18,7 +18,7 @@ interface FilesRawContract
     /**
      * @api
      *
-     * @param string $fileID Digital file Id from EE
+     * @param string $fileID Identifier of the attached file
      * @param array<string,mixed>|FileDeleteParams $params
      * @param RequestOpts|null $requestOptions
      *

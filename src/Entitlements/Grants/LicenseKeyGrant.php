@@ -10,10 +10,9 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * Nested representation of license-key grant fields. Present only when the
- * grant's entitlement has `integration_type = 'license_key'` and a row exists
- * in `license_keys`. The grant's top-level `status` is the source of truth
- * for the grant's lifecycle — no per-license-key status is exposed here.
+ * License-key delivery payload, present on grants for `license_key`
+ * entitlements. The grant's top-level `status` is the source of truth
+ * for the grant's lifecycle.
  *
  * @phpstan-type LicenseKeyGrantShape = array{
  *   activationsUsed: int,
@@ -27,15 +26,27 @@ final class LicenseKeyGrant implements BaseModel
     /** @use SdkModel<LicenseKeyGrantShape> */
     use SdkModel;
 
+    /**
+     * Number of activations consumed so far.
+     */
     #[Required('activations_used')]
     public int $activationsUsed;
 
+    /**
+     * Issued license key.
+     */
     #[Required]
     public string $key;
 
+    /**
+     * Maximum activations allowed by the entitlement, when set.
+     */
     #[Optional('activations_limit', nullable: true)]
     public ?int $activationsLimit;
 
+    /**
+     * When the license key expires, when applicable.
+     */
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
 
@@ -80,6 +91,9 @@ final class LicenseKeyGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Number of activations consumed so far.
+     */
     public function withActivationsUsed(int $activationsUsed): self
     {
         $self = clone $this;
@@ -88,6 +102,9 @@ final class LicenseKeyGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Issued license key.
+     */
     public function withKey(string $key): self
     {
         $self = clone $this;
@@ -96,6 +113,9 @@ final class LicenseKeyGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * Maximum activations allowed by the entitlement, when set.
+     */
     public function withActivationsLimit(?int $activationsLimit): self
     {
         $self = clone $this;
@@ -104,6 +124,9 @@ final class LicenseKeyGrant implements BaseModel
         return $self;
     }
 
+    /**
+     * When the license key expires, when applicable.
+     */
     public function withExpiresAt(?\DateTimeInterface $expiresAt): self
     {
         $self = clone $this;

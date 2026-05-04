@@ -7,9 +7,12 @@ namespace Dodopayments\Entitlements\IntegrationConfig;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Entitlements\IntegrationConfig\GitHubConfig\Permission;
 
 /**
- * @phpstan-type GitHubConfigShape = array{permission: string, targetID: string}
+ * @phpstan-type GitHubConfigShape = array{
+ *   permission: Permission|value-of<Permission>, targetID: string
+ * }
  */
 final class GitHubConfig implements BaseModel
 {
@@ -17,11 +20,16 @@ final class GitHubConfig implements BaseModel
     use SdkModel;
 
     /**
-     * One of: pull, push, admin, maintain, triage.
+     * Permission to grant on the repository.
+     *
+     * @var value-of<Permission> $permission
      */
-    #[Required]
+    #[Required(enum: Permission::class)]
     public string $permission;
 
+    /**
+     * Repository or organisation slug to grant access to.
+     */
     #[Required('target_id')]
     public string $targetID;
 
@@ -48,9 +56,13 @@ final class GitHubConfig implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param Permission|value-of<Permission> $permission
      */
-    public static function with(string $permission, string $targetID): self
-    {
+    public static function with(
+        Permission|string $permission,
+        string $targetID
+    ): self {
         $self = new self;
 
         $self['permission'] = $permission;
@@ -60,9 +72,11 @@ final class GitHubConfig implements BaseModel
     }
 
     /**
-     * One of: pull, push, admin, maintain, triage.
+     * Permission to grant on the repository.
+     *
+     * @param Permission|value-of<Permission> $permission
      */
-    public function withPermission(string $permission): self
+    public function withPermission(Permission|string $permission): self
     {
         $self = clone $this;
         $self['permission'] = $permission;
@@ -70,6 +84,9 @@ final class GitHubConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Repository or organisation slug to grant access to.
+     */
     public function withTargetID(string $targetID): self
     {
         $self = clone $this;

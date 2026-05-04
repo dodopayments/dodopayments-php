@@ -10,10 +10,8 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * Digital-product-delivery payload for a grant. Populated for grants whose
- * entitlement has `integration_type = 'digital_files'`. `files` carries
- * presigned download URLs; the source (EE service or legacy in-process S3
- * presigning) is opaque to the caller.
+ * Digital-product-delivery payload, present on grants for `digital_files`
+ * entitlements. Each file carries a short-lived presigned download URL.
  *
  * @phpstan-import-type DigitalProductDeliveryFileShape from \Dodopayments\Products\DigitalProductDeliveryFile
  *
@@ -28,13 +26,25 @@ final class DigitalProductDelivery implements BaseModel
     /** @use SdkModel<DigitalProductDeliveryShape> */
     use SdkModel;
 
-    /** @var list<DigitalProductDeliveryFile> $files */
+    /**
+     * One entry per attached file.
+     *
+     * @var list<DigitalProductDeliveryFile> $files
+     */
     #[Required(list: DigitalProductDeliveryFile::class)]
     public array $files;
 
+    /**
+     * Optional external URL, passed through from the entitlement
+     * configuration.
+     */
     #[Optional('external_url', nullable: true)]
     public ?string $externalURL;
 
+    /**
+     * Optional human-readable delivery instructions, passed through from
+     * the entitlement configuration.
+     */
     #[Optional(nullable: true)]
     public ?string $instructions;
 
@@ -80,6 +90,8 @@ final class DigitalProductDelivery implements BaseModel
     }
 
     /**
+     * One entry per attached file.
+     *
      * @param list<DigitalProductDeliveryFile|DigitalProductDeliveryFileShape> $files
      */
     public function withFiles(array $files): self
@@ -90,6 +102,10 @@ final class DigitalProductDelivery implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional external URL, passed through from the entitlement
+     * configuration.
+     */
     public function withExternalURL(?string $externalURL): self
     {
         $self = clone $this;
@@ -98,6 +114,10 @@ final class DigitalProductDelivery implements BaseModel
         return $self;
     }
 
+    /**
+     * Optional human-readable delivery instructions, passed through from
+     * the entitlement configuration.
+     */
     public function withInstructions(?string $instructions): self
     {
         $self = clone $this;

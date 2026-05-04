@@ -64,7 +64,7 @@ final class EntitlementsService implements EntitlementsContract
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType Which platform integration this entitlement uses
      * @param string $name Display name for this entitlement
      * @param string|null $description Optional description
-     * @param array<string,string>|null $metadata Optional user-facing metadata
+     * @param array<string,string> $metadata Additional metadata for the entitlement
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -119,8 +119,9 @@ final class EntitlementsService implements EntitlementsContract
      * PATCH /entitlements/{id}
      *
      * @param string $id Entitlement ID
-     * @param IntegrationConfigShape|null $integrationConfig Platform-specific configuration for an entitlement.
-     * Each variant uses unique field names so `#[serde(untagged)]` can disambiguate correctly.
+     * @param IntegrationConfigShape|null $integrationConfig Integration-specific configuration supplied when creating or updating
+     * an entitlement. The shape required matches the entitlement's
+     * `integration_type`.
      * @param array<string,string>|null $metadata
      * @param RequestOpts|null $requestOptions
      *

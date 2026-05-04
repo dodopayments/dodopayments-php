@@ -16,6 +16,9 @@ final class FigmaConfig implements BaseModel
     /** @use SdkModel<FigmaConfigShape> */
     use SdkModel;
 
+    /**
+     * Figma file identifier to grant access to.
+     */
     #[Required('figma_file_id')]
     public string $figmaFileID;
 
@@ -52,6 +55,9 @@ final class FigmaConfig implements BaseModel
         return $self;
     }
 
+    /**
+     * Figma file identifier to grant access to.
+     */
     public function withFigmaFileID(string $figmaFileID): self
     {
         $self = clone $this;
