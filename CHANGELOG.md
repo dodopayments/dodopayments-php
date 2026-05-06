@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.7.1 (2026-05-06)
+
+Full Changelog: [v6.7.0...v6.7.1](https://github.com/dodopayments/dodopayments-php/compare/v6.7.0...v6.7.1)
+
+### Bug Fixes
+
+* **release:** use canonical GitHub URL in Packagist publish script ([c9cc869](https://github.com/dodopayments/dodopayments-php/commit/c9cc869610b118b42a4e908e8a34b62a202c924e))
+
 ## 6.7.0 (2026-05-04)
 
 Full Changelog: [v6.6.0...v6.7.0](https://github.com/dodopayments/dodopayments-php/compare/v6.6.0...v6.7.0)
