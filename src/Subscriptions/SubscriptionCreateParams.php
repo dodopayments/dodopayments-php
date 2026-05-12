@@ -36,6 +36,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
  *   discountCode?: string|null,
+ *   discountCodes?: list<string>|null,
  *   force3DS?: bool|null,
  *   mandateMinAmountInrPaise?: int|null,
  *   metadata?: array<string,string>|null,
@@ -118,10 +119,21 @@ final class SubscriptionCreateParams implements BaseModel
     public ?string $billingCurrency;
 
     /**
-     * Discount Code to apply to the subscription.
+     * @deprecated
+     *
+     * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
     #[Optional('discount_code', nullable: true)]
     public ?string $discountCode;
+
+    /**
+     * Stacked discount codes to apply, in order of application. Max 20.
+     * Cannot be used together with discount_code.
+     *
+     * @var list<string>|null $discountCodes
+     */
+    #[Optional('discount_codes', list: 'string', nullable: true)]
+    public ?array $discountCodes;
 
     /**
      * Override merchant default 3DS behaviour for this subscription.
@@ -263,6 +275,7 @@ final class SubscriptionCreateParams implements BaseModel
      * @param list<AttachAddon|AttachAddonShape>|null $addons
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
+     * @param list<string>|null $discountCodes
      * @param array<string,string>|null $metadata
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
@@ -276,6 +289,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
+        ?array $discountCodes = null,
         ?bool $force3DS = null,
         ?int $mandateMinAmountInrPaise = null,
         ?array $metadata = null,
@@ -302,6 +316,7 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
         null !== $discountCode && $self['discountCode'] = $discountCode;
+        null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $force3DS && $self['force3DS'] = $force3DS;
         null !== $mandateMinAmountInrPaise && $self['mandateMinAmountInrPaise'] = $mandateMinAmountInrPaise;
         null !== $metadata && $self['metadata'] = $metadata;
@@ -416,12 +431,26 @@ final class SubscriptionCreateParams implements BaseModel
     }
 
     /**
-     * Discount Code to apply to the subscription.
+     * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
     public function withDiscountCode(?string $discountCode): self
     {
         $self = clone $this;
         $self['discountCode'] = $discountCode;
+
+        return $self;
+    }
+
+    /**
+     * Stacked discount codes to apply, in order of application. Max 20.
+     * Cannot be used together with discount_code.
+     *
+     * @param list<string>|null $discountCodes
+     */
+    public function withDiscountCodes(?array $discountCodes): self
+    {
+        $self = clone $this;
+        $self['discountCodes'] = $discountCodes;
 
         return $self;
     }

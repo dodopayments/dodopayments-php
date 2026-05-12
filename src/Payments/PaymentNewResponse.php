@@ -20,6 +20,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   paymentID: string,
  *   totalAmount: int,
  *   discountID?: string|null,
+ *   discountIDs?: list<string>|null,
  *   expiresOn?: \DateTimeInterface|null,
  *   paymentLink?: string|null,
  *   productCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
@@ -64,10 +65,20 @@ final class PaymentNewResponse implements BaseModel
     public int $totalAmount;
 
     /**
-     * The discount id if discount is applied.
+     * @deprecated
+     *
+     * DEPRECATED: Use discount_ids instead. Returns the first discount's ID if present.
      */
     #[Optional('discount_id', nullable: true)]
     public ?string $discountID;
+
+    /**
+     * All stacked discount IDs applied, in order of application.
+     *
+     * @var list<string>|null $discountIDs
+     */
+    #[Optional('discount_ids', list: 'string', nullable: true)]
+    public ?array $discountIDs;
 
     /**
      * Expiry timestamp of the payment link.
@@ -130,6 +141,7 @@ final class PaymentNewResponse implements BaseModel
      *
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
+     * @param list<string>|null $discountIDs
      * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public static function with(
@@ -139,6 +151,7 @@ final class PaymentNewResponse implements BaseModel
         string $paymentID,
         int $totalAmount,
         ?string $discountID = null,
+        ?array $discountIDs = null,
         ?\DateTimeInterface $expiresOn = null,
         ?string $paymentLink = null,
         ?array $productCart = null,
@@ -152,6 +165,7 @@ final class PaymentNewResponse implements BaseModel
         $self['totalAmount'] = $totalAmount;
 
         null !== $discountID && $self['discountID'] = $discountID;
+        null !== $discountIDs && $self['discountIDs'] = $discountIDs;
         null !== $expiresOn && $self['expiresOn'] = $expiresOn;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $productCart && $self['productCart'] = $productCart;
@@ -220,12 +234,25 @@ final class PaymentNewResponse implements BaseModel
     }
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discount_ids instead. Returns the first discount's ID if present.
      */
     public function withDiscountID(?string $discountID): self
     {
         $self = clone $this;
         $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * All stacked discount IDs applied, in order of application.
+     *
+     * @param list<string>|null $discountIDs
+     */
+    public function withDiscountIDs(?array $discountIDs): self
+    {
+        $self = clone $this;
+        $self['discountIDs'] = $discountIDs;
 
         return $self;
     }

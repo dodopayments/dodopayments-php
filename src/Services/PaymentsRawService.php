@@ -50,6 +50,7 @@ final class PaymentsRawService implements PaymentsRawContract
      *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
      *   billingCurrency?: value-of<Currency>,
      *   discountCode?: string|null,
+     *   discountCodes?: list<string>|null,
      *   force3DS?: bool|null,
      *   metadata?: array<string,string>,
      *   paymentLink?: bool|null,

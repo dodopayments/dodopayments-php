@@ -34,6 +34,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   customer?: CustomerRequestShape|null,
  *   customization?: null|CheckoutSessionCustomization|CheckoutSessionCustomizationShape,
  *   discountCode?: string|null,
+ *   discountCodes?: list<string>|null,
  *   featureFlags?: null|CheckoutSessionFlags|CheckoutSessionFlagsShape,
  *   force3DS?: bool|null,
  *   mandateMinAmountInrPaise?: int|null,
@@ -123,8 +124,22 @@ final class CheckoutSessionRequest implements BaseModel
     #[Optional]
     public ?CheckoutSessionCustomization $customization;
 
+    /**
+     * @deprecated
+     *
+     * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
+     */
     #[Optional('discount_code', nullable: true)]
     public ?string $discountCode;
+
+    /**
+     * Stacked discount codes to apply, in order. Max 20.
+     * Cannot be used together with discount_code.
+     *
+     * @var list<string>|null $discountCodes
+     */
+    #[Optional('discount_codes', list: 'string', nullable: true)]
+    public ?array $discountCodes;
 
     #[Optional('feature_flags')]
     public ?CheckoutSessionFlags $featureFlags;
@@ -233,6 +248,7 @@ final class CheckoutSessionRequest implements BaseModel
      * @param list<CustomField|CustomFieldShape>|null $customFields
      * @param CustomerRequestShape|null $customer
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape|null $customization
+     * @param list<string>|null $discountCodes
      * @param CheckoutSessionFlags|CheckoutSessionFlagsShape|null $featureFlags
      * @param array<string,string>|null $metadata
      * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
@@ -248,6 +264,7 @@ final class CheckoutSessionRequest implements BaseModel
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
         CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
+        ?array $discountCodes = null,
         CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
         ?int $mandateMinAmountInrPaise = null,
@@ -274,6 +291,7 @@ final class CheckoutSessionRequest implements BaseModel
         null !== $customer && $self['customer'] = $customer;
         null !== $customization && $self['customization'] = $customization;
         null !== $discountCode && $self['discountCode'] = $discountCode;
+        null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $featureFlags && $self['featureFlags'] = $featureFlags;
         null !== $force3DS && $self['force3DS'] = $force3DS;
         null !== $mandateMinAmountInrPaise && $self['mandateMinAmountInrPaise'] = $mandateMinAmountInrPaise;
@@ -412,10 +430,27 @@ final class CheckoutSessionRequest implements BaseModel
         return $self;
     }
 
+    /**
+     * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
+     */
     public function withDiscountCode(?string $discountCode): self
     {
         $self = clone $this;
         $self['discountCode'] = $discountCode;
+
+        return $self;
+    }
+
+    /**
+     * Stacked discount codes to apply, in order. Max 20.
+     * Cannot be used together with discount_code.
+     *
+     * @param list<string>|null $discountCodes
+     */
+    public function withDiscountCodes(?array $discountCodes): self
+    {
+        $self = clone $this;
+        $self['discountCodes'] = $discountCodes;
 
         return $self;
     }

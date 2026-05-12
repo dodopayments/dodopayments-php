@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
+use Dodopayments\CheckoutSessions\ProductItemReq\CreditEntitlement;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -12,12 +13,14 @@ use Dodopayments\Subscriptions\AttachAddon;
 
 /**
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type CreditEntitlementShape from \Dodopayments\CheckoutSessions\ProductItemReq\CreditEntitlement
  *
  * @phpstan-type ProductItemReqShape = array{
  *   productID: string,
  *   quantity: int,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   amount?: int|null,
+ *   creditEntitlements?: list<CreditEntitlement|CreditEntitlementShape>|null,
  * }
  */
 final class ProductItemReq implements BaseModel
@@ -55,6 +58,21 @@ final class ProductItemReq implements BaseModel
     public ?int $amount;
 
     /**
+     * Per-checkout-session overrides for credit entitlements already attached
+     * to this product. Each entry overrides the `credits_amount` granted by the
+     * referenced credit entitlement when this checkout session is fulfilled.
+     * The credit_entitlement_id must already be attached to the product.
+     *
+     * @var list<CreditEntitlement>|null $creditEntitlements
+     */
+    #[Optional(
+        'credit_entitlements',
+        list: CreditEntitlement::class,
+        nullable: true
+    )]
+    public ?array $creditEntitlements;
+
+    /**
      * `new ProductItemReq()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -79,12 +97,14 @@ final class ProductItemReq implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<AttachAddon|AttachAddonShape>|null $addons
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
      */
     public static function with(
         string $productID,
         int $quantity,
         ?array $addons = null,
-        ?int $amount = null
+        ?int $amount = null,
+        ?array $creditEntitlements = null,
     ): self {
         $self = new self;
 
@@ -93,6 +113,7 @@ final class ProductItemReq implements BaseModel
 
         null !== $addons && $self['addons'] = $addons;
         null !== $amount && $self['amount'] = $amount;
+        null !== $creditEntitlements && $self['creditEntitlements'] = $creditEntitlements;
 
         return $self;
     }
@@ -142,6 +163,22 @@ final class ProductItemReq implements BaseModel
     {
         $self = clone $this;
         $self['amount'] = $amount;
+
+        return $self;
+    }
+
+    /**
+     * Per-checkout-session overrides for credit entitlements already attached
+     * to this product. Each entry overrides the `credits_amount` granted by the
+     * referenced credit entitlement when this checkout session is fulfilled.
+     * The credit_entitlement_id must already be attached to the product.
+     *
+     * @param list<CreditEntitlement|CreditEntitlementShape>|null $creditEntitlements
+     */
+    public function withCreditEntitlements(?array $creditEntitlements): self
+    {
+        $self = clone $this;
+        $self['creditEntitlements'] = $creditEntitlements;
 
         return $self;
     }
