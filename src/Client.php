@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments;
 
 use Dodopayments\Core\BaseClient;
+use Dodopayments\Core\Implementation\StreamingHttpClient;
 use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BalancesService;
@@ -186,6 +187,11 @@ class Client extends BaseClient
             ),
             $requestOptions,
         );
+
+        if (is_null($options->streamingTransporter)) {
+            assert(!is_null($options->transporter));
+            $options->streamingTransporter = new StreamingHttpClient($options->transporter);
+        }
 
         /** @var array<string, string|null> $headers */
         $headers = [
