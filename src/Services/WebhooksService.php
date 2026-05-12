@@ -295,9 +295,9 @@ final class WebhooksService implements WebhooksContract
         ?array $headers = null,
         ?string $secret = null
     ): AbandonedCheckoutDetectedWebhookEvent|AbandonedCheckoutRecoveredWebhookEvent|CreditAddedWebhookEvent|CreditBalanceLowWebhookEvent|CreditDeductedWebhookEvent|CreditExpiredWebhookEvent|CreditManualAdjustmentWebhookEvent|CreditOverageChargedWebhookEvent|CreditOverageResetWebhookEvent|CreditRolledOverWebhookEvent|CreditRolloverForfeitedWebhookEvent|DisputeAcceptedWebhookEvent|DisputeCancelledWebhookEvent|DisputeChallengedWebhookEvent|DisputeExpiredWebhookEvent|DisputeLostWebhookEvent|DisputeOpenedWebhookEvent|DisputeWonWebhookEvent|DunningRecoveredWebhookEvent|DunningStartedWebhookEvent|EntitlementGrantCreatedWebhookEvent|EntitlementGrantDeliveredWebhookEvent|EntitlementGrantFailedWebhookEvent|EntitlementGrantRevokedWebhookEvent|LicenseKeyCreatedWebhookEvent|PaymentCancelledWebhookEvent|PaymentFailedWebhookEvent|PaymentProcessingWebhookEvent|PaymentSucceededWebhookEvent|RefundFailedWebhookEvent|RefundSucceededWebhookEvent|SubscriptionActiveWebhookEvent|SubscriptionCancelledWebhookEvent|SubscriptionExpiredWebhookEvent|SubscriptionFailedWebhookEvent|SubscriptionOnHoldWebhookEvent|SubscriptionPlanChangedWebhookEvent|SubscriptionRenewedWebhookEvent|SubscriptionUpdatedWebhookEvent {
-        if (null !== $headers) {
+        if (!is_null($headers)) {
             $secret = $secret ?? ($this->client->webhookKey ?: null);
-            if (null === $secret) {
+            if (is_null($secret)) {
                 throw new WebhookException('Webhook key must not be null in order to unwrap');
             }
 
