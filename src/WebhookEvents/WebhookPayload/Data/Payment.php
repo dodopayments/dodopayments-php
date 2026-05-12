@@ -15,6 +15,7 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
 use Dodopayments\Payments\IntentStatus;
+use Dodopayments\Payments\Payment\Discount;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\PaymentRefundStatus;
 use Dodopayments\Payments\RefundListItem;
@@ -26,6 +27,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
+ * @phpstan-import-type DiscountShape from \Dodopayments\Payments\Payment\Discount
  * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
  *
  * @phpstan-type PaymentShape = array{
@@ -51,6 +53,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
  *   checkoutSessionID?: string|null,
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountID?: string|null,
+ *   discounts?: list<Discount|DiscountShape>|null,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
  *   invoiceID?: string|null,
@@ -206,10 +209,20 @@ final class Payment implements BaseModel
     public ?array $customFieldResponses;
 
     /**
-     * The discount id if discount is applied.
+     * @deprecated
+     *
+     * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
      */
     #[Optional('discount_id', nullable: true)]
     public ?string $discountID;
+
+    /**
+     * All stacked discounts applied, ordered by position.
+     *
+     * @var list<Discount>|null $discounts
+     */
+    #[Optional(list: Discount::class, nullable: true)]
+    public ?array $discounts;
 
     /**
      * An error code if the payment failed.
@@ -364,6 +377,7 @@ final class Payment implements BaseModel
      * @param PayloadType|value-of<PayloadType> $payloadType
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     * @param list<Discount|DiscountShape>|null $discounts
      * @param list<ProductCart|ProductCartShape>|null $productCart
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
@@ -392,6 +406,7 @@ final class Payment implements BaseModel
         ?string $checkoutSessionID = null,
         ?array $customFieldResponses = null,
         ?string $discountID = null,
+        ?array $discounts = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
         ?string $invoiceID = null,
@@ -433,6 +448,7 @@ final class Payment implements BaseModel
         null !== $checkoutSessionID && $self['checkoutSessionID'] = $checkoutSessionID;
         null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $discountID && $self['discountID'] = $discountID;
+        null !== $discounts && $self['discounts'] = $discounts;
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
@@ -698,12 +714,25 @@ final class Payment implements BaseModel
     }
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
      */
     public function withDiscountID(?string $discountID): self
     {
         $self = clone $this;
         $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * All stacked discounts applied, ordered by position.
+     *
+     * @param list<Discount|DiscountShape>|null $discounts
+     */
+    public function withDiscounts(?array $discounts): self
+    {
+        $self = clone $this;
+        $self['discounts'] = $discounts;
 
         return $self;
     }

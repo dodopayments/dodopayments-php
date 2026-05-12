@@ -25,6 +25,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   discountCode?: string|null,
+ *   discountCodes?: list<string>|null,
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
  *   metadata?: array<string,string>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
@@ -73,13 +74,24 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     public ?array $addons;
 
     /**
-     * Optional discount code to apply to the new plan.
-     * If provided, validates and applies the discount to the plan change.
-     * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
-     * the existing discount will be preserved (if applicable to the new product).
+     * @deprecated
+     *
+     * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
     #[Optional('discount_code', nullable: true)]
     public ?string $discountCode;
+
+    /**
+     * Stacked discount codes to apply to the new plan. Max 20.
+     * Cannot be used together with discount_code.
+     * If provided, replaces any existing discount codes.
+     * Empty array removes all discounts.
+     * If not provided (None), existing discounts with preserve_on_plan_change=true are preserved.
+     *
+     * @var list<string>|null $discountCodes
+     */
+    #[Optional('discount_codes', list: 'string', nullable: true)]
+    public ?array $discountCodes;
 
     /**
      * When to apply the plan change.
@@ -146,6 +158,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      * @param list<AttachAddon|AttachAddonShape>|null $addons
+     * @param list<string>|null $discountCodes
      * @param EffectiveAt|value-of<EffectiveAt>|null $effectiveAt
      * @param array<string,string>|null $metadata
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
@@ -157,6 +170,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
         ?string $discountCode = null,
+        ?array $discountCodes = null,
         EffectiveAt|string|null $effectiveAt = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
@@ -170,6 +184,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
         null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
         null !== $addons && $self['addons'] = $addons;
         null !== $discountCode && $self['discountCode'] = $discountCode;
+        null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $effectiveAt && $self['effectiveAt'] = $effectiveAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onPaymentFailure && $self['onPaymentFailure'] = $onPaymentFailure;
@@ -241,15 +256,29 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     }
 
     /**
-     * Optional discount code to apply to the new plan.
-     * If provided, validates and applies the discount to the plan change.
-     * If not provided and the subscription has an existing discount with `preserve_on_plan_change=true`,
-     * the existing discount will be preserved (if applicable to the new product).
+     * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
     public function withDiscountCode(?string $discountCode): self
     {
         $self = clone $this;
         $self['discountCode'] = $discountCode;
+
+        return $self;
+    }
+
+    /**
+     * Stacked discount codes to apply to the new plan. Max 20.
+     * Cannot be used together with discount_code.
+     * If provided, replaces any existing discount codes.
+     * Empty array removes all discounts.
+     * If not provided (None), existing discounts with preserve_on_plan_change=true are preserved.
+     *
+     * @param list<string>|null $discountCodes
+     */
+    public function withDiscountCodes(?array $discountCodes): self
+    {
+        $self = clone $this;
+        $self['discountCodes'] = $discountCodes;
 
         return $self;
     }

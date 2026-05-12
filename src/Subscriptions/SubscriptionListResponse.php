@@ -11,12 +11,14 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
 
 /**
  * Response struct representing subscription details.
  *
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type DiscountShape from \Dodopayments\Subscriptions\SubscriptionListResponse\Discount
  * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
  *
  * @phpstan-type SubscriptionListResponseShape = array{
@@ -25,6 +27,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   createdAt: \DateTimeInterface,
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
+ *   discounts: list<Discount|DiscountShape>,
  *   metadata: array<string,string>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
@@ -85,6 +88,14 @@ final class SubscriptionListResponse implements BaseModel
      */
     #[Required]
     public CustomerLimitedDetails $customer;
+
+    /**
+     * All stacked discounts applied, in order of application.
+     *
+     * @var list<Discount> $discounts
+     */
+    #[Required(list: Discount::class)]
+    public array $discounts;
 
     /**
      * Additional custom data associated with the subscription.
@@ -191,13 +202,13 @@ final class SubscriptionListResponse implements BaseModel
     public ?\DateTimeInterface $cancelledAt;
 
     /**
-     * Number of remaining discount cycles if discount is applied.
+     * DEPRECATED: Use discounts[].cycles_remaining instead.
      */
     #[Optional('discount_cycles_remaining', nullable: true)]
     public ?int $discountCyclesRemaining;
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discounts instead.
      */
     #[Optional('discount_id', nullable: true)]
     public ?string $discountID;
@@ -237,6 +248,7 @@ final class SubscriptionListResponse implements BaseModel
      *   createdAt: ...,
      *   currency: ...,
      *   customer: ...,
+     *   discounts: ...,
      *   metadata: ...,
      *   nextBillingDate: ...,
      *   onDemand: ...,
@@ -264,6 +276,7 @@ final class SubscriptionListResponse implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withCurrency(...)
      *   ->withCustomer(...)
+     *   ->withDiscounts(...)
      *   ->withMetadata(...)
      *   ->withNextBillingDate(...)
      *   ->withOnDemand(...)
@@ -294,6 +307,7 @@ final class SubscriptionListResponse implements BaseModel
      * @param BillingAddress|BillingAddressShape $billing
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
+     * @param list<Discount|DiscountShape> $discounts
      * @param array<string,string> $metadata
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
@@ -306,6 +320,7 @@ final class SubscriptionListResponse implements BaseModel
         \DateTimeInterface $createdAt,
         Currency|string $currency,
         CustomerLimitedDetails|array $customer,
+        array $discounts,
         array $metadata,
         \DateTimeInterface $nextBillingDate,
         bool $onDemand,
@@ -336,6 +351,7 @@ final class SubscriptionListResponse implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['currency'] = $currency;
         $self['customer'] = $customer;
+        $self['discounts'] = $discounts;
         $self['metadata'] = $metadata;
         $self['nextBillingDate'] = $nextBillingDate;
         $self['onDemand'] = $onDemand;
@@ -421,6 +437,19 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['customer'] = $customer;
+
+        return $self;
+    }
+
+    /**
+     * All stacked discounts applied, in order of application.
+     *
+     * @param list<Discount|DiscountShape> $discounts
+     */
+    public function withDiscounts(array $discounts): self
+    {
+        $self = clone $this;
+        $self['discounts'] = $discounts;
 
         return $self;
     }
@@ -615,7 +644,7 @@ final class SubscriptionListResponse implements BaseModel
     }
 
     /**
-     * Number of remaining discount cycles if discount is applied.
+     * DEPRECATED: Use discounts[].cycles_remaining instead.
      */
     public function withDiscountCyclesRemaining(
         ?int $discountCyclesRemaining
@@ -627,7 +656,7 @@ final class SubscriptionListResponse implements BaseModel
     }
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discounts instead.
      */
     public function withDiscountID(?string $discountID): self
     {

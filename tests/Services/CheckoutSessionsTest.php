@@ -53,6 +53,12 @@ final class CheckoutSessionsTest extends TestCase
                     'quantity' => 0,
                     'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
                     'amount' => 0,
+                    'creditEntitlements' => [
+                        [
+                            'creditEntitlementID' => 'credit_entitlement_id',
+                            'creditsAmount' => 'credits_amount',
+                        ],
+                    ],
                 ],
             ],
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
@@ -128,6 +134,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
             ],
             discountCode: 'discount_code',
+            discountCodes: ['string'],
             featureFlags: [
                 'allowCurrencySelection' => true,
                 'allowCustomerEditingCity' => true,
@@ -201,6 +208,12 @@ final class CheckoutSessionsTest extends TestCase
                     'quantity' => 0,
                     'addons' => [['addonID' => 'addon_id', 'quantity' => 0]],
                     'amount' => 0,
+                    'creditEntitlements' => [
+                        [
+                            'creditEntitlementID' => 'credit_entitlement_id',
+                            'creditsAmount' => 'credits_amount',
+                        ],
+                    ],
                 ],
             ],
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
@@ -276,6 +289,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
             ],
             discountCode: 'discount_code',
+            discountCodes: ['string'],
             featureFlags: [
                 'allowCurrencySelection' => true,
                 'allowCustomerEditingCity' => true,

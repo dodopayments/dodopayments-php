@@ -66,6 +66,9 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
+     * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
+     * @param list<string>|null $discountCodes Stacked discount codes to apply, in order. Max 20.
+     * Cannot be used together with discount_code.
      * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
      * @param int|null $mandateMinAmountInrPaise Override the merchant-level mandate floor (in INR paise) for INR
@@ -101,6 +104,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
         CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
+        ?array $discountCodes = null,
         CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
         ?int $mandateMinAmountInrPaise = null,
@@ -127,6 +131,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'customer' => $customer,
                 'customization' => $customization,
                 'discountCode' => $discountCode,
+                'discountCodes' => $discountCodes,
                 'featureFlags' => $featureFlags,
                 'force3DS' => $force3DS,
                 'mandateMinAmountInrPaise' => $mandateMinAmountInrPaise,
@@ -183,6 +188,9 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
+     * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
+     * @param list<string>|null $discountCodes Stacked discount codes to apply, in order. Max 20.
+     * Cannot be used together with discount_code.
      * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
      * @param int|null $mandateMinAmountInrPaise Override the merchant-level mandate floor (in INR paise) for INR
@@ -218,6 +226,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
         CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
+        ?array $discountCodes = null,
         CheckoutSessionFlags|array|null $featureFlags = null,
         ?bool $force3DS = null,
         ?int $mandateMinAmountInrPaise = null,
@@ -244,6 +253,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
                 'customer' => $customer,
                 'customization' => $customization,
                 'discountCode' => $discountCode,
+                'discountCodes' => $discountCodes,
                 'featureFlags' => $featureFlags,
                 'force3DS' => $force3DS,
                 'mandateMinAmountInrPaise' => $mandateMinAmountInrPaise,
