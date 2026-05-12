@@ -18,6 +18,7 @@ use Dodopayments\Subscriptions\CreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\MeterCartResponseItem;
 use Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\ScheduledPlanChange;
+use Dodopayments\Subscriptions\Subscription\Discount;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
@@ -32,6 +33,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
  * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
+ * @phpstan-import-type DiscountShape from \Dodopayments\Subscriptions\Subscription\Discount
  * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
  *
  * @phpstan-type SubscriptionShape = array{
@@ -65,6 +67,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
+ *   discounts?: list<Discount|DiscountShape>|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   paymentMethodID?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
@@ -252,16 +255,24 @@ final class Subscription implements BaseModel
     public ?array $customFieldResponses;
 
     /**
-     * Number of remaining discount cycles if discount is applied.
+     * DEPRECATED: Use discounts[].cycles_remaining instead.
      */
     #[Optional('discount_cycles_remaining', nullable: true)]
     public ?int $discountCyclesRemaining;
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
      */
     #[Optional('discount_id', nullable: true)]
     public ?string $discountID;
+
+    /**
+     * All stacked discounts applied, ordered by position.
+     *
+     * @var list<Discount>|null $discounts
+     */
+    #[Optional(list: Discount::class, nullable: true)]
+    public ?array $discounts;
 
     /**
      * Timestamp when the subscription will expire.
@@ -377,6 +388,7 @@ final class Subscription implements BaseModel
      * @param PayloadType|value-of<PayloadType> $payloadType
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     * @param list<Discount|DiscountShape>|null $discounts
      * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
      */
     public static function with(
@@ -411,6 +423,7 @@ final class Subscription implements BaseModel
         ?array $customFieldResponses = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
+        ?array $discounts = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $paymentMethodID = null,
         ScheduledPlanChange|array|null $scheduledChange = null,
@@ -450,6 +463,7 @@ final class Subscription implements BaseModel
         null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
         null !== $discountID && $self['discountID'] = $discountID;
+        null !== $discounts && $self['discounts'] = $discounts;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
@@ -788,7 +802,7 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * Number of remaining discount cycles if discount is applied.
+     * DEPRECATED: Use discounts[].cycles_remaining instead.
      */
     public function withDiscountCyclesRemaining(
         ?int $discountCyclesRemaining
@@ -800,12 +814,25 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
      */
     public function withDiscountID(?string $discountID): self
     {
         $self = clone $this;
         $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * All stacked discounts applied, ordered by position.
+     *
+     * @param list<Discount|DiscountShape>|null $discounts
+     */
+    public function withDiscounts(?array $discounts): self
+    {
+        $self = clone $this;
+        $self['discounts'] = $discounts;
 
         return $self;
     }

@@ -25,6 +25,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  *   subscriptionID: string,
  *   clientSecret?: string|null,
  *   discountID?: string|null,
+ *   discountIDs?: list<string>|null,
  *   expiresOn?: \DateTimeInterface|null,
  *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
  *   paymentLink?: string|null,
@@ -83,10 +84,20 @@ final class SubscriptionNewResponse implements BaseModel
     public ?string $clientSecret;
 
     /**
-     * The discount id if discount is applied.
+     * @deprecated
+     *
+     * DEPRECATED: Use discount_ids instead. Returns the first discount's ID if present.
      */
     #[Optional('discount_id', nullable: true)]
     public ?string $discountID;
+
+    /**
+     * All stacked discount IDs applied, in order of application.
+     *
+     * @var list<string>|null $discountIDs
+     */
+    #[Optional('discount_ids', list: 'string', nullable: true)]
+    public ?array $discountIDs;
 
     /**
      * Expiry timestamp of the payment link.
@@ -152,6 +163,7 @@ final class SubscriptionNewResponse implements BaseModel
      * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
+     * @param list<string>|null $discountIDs
      * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public static function with(
@@ -163,6 +175,7 @@ final class SubscriptionNewResponse implements BaseModel
         string $subscriptionID,
         ?string $clientSecret = null,
         ?string $discountID = null,
+        ?array $discountIDs = null,
         ?\DateTimeInterface $expiresOn = null,
         ?array $oneTimeProductCart = null,
         ?string $paymentLink = null,
@@ -178,6 +191,7 @@ final class SubscriptionNewResponse implements BaseModel
 
         null !== $clientSecret && $self['clientSecret'] = $clientSecret;
         null !== $discountID && $self['discountID'] = $discountID;
+        null !== $discountIDs && $self['discountIDs'] = $discountIDs;
         null !== $expiresOn && $self['expiresOn'] = $expiresOn;
         null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
@@ -270,12 +284,25 @@ final class SubscriptionNewResponse implements BaseModel
     }
 
     /**
-     * The discount id if discount is applied.
+     * DEPRECATED: Use discount_ids instead. Returns the first discount's ID if present.
      */
     public function withDiscountID(?string $discountID): self
     {
         $self = clone $this;
         $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * All stacked discount IDs applied, in order of application.
+     *
+     * @param list<string>|null $discountIDs
+     */
+    public function withDiscountIDs(?array $discountIDs): self
+    {
+        $self = clone $this;
+        $self['discountIDs'] = $discountIDs;
 
         return $self;
     }

@@ -44,7 +44,9 @@ interface PaymentsContract
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
-     * @param string|null $discountCode Discount Code to apply to the transaction
+     * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
+     * @param list<string>|null $discountCodes Stacked discount codes to apply, in order of application. Max 20.
+     * Cannot be used together with discount_code.
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this payment
      * @param array<string,string> $metadata Additional metadata associated with the payment.
      * Defaults to empty if not provided.
@@ -76,6 +78,7 @@ interface PaymentsContract
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
         ?string $discountCode = null,
+        ?array $discountCodes = null,
         ?bool $force3DS = null,
         ?array $metadata = null,
         ?bool $paymentLink = null,

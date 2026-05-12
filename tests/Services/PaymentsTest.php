@@ -66,6 +66,7 @@ final class PaymentsTest extends TestCase
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingCurrency: Currency::AED,
             discountCode: 'discount_code',
+            discountCodes: ['string'],
             force3DS: true,
             metadata: ['foo' => 'string'],
             paymentLink: true,
