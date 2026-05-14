@@ -59,7 +59,7 @@ final class ProductCreateParams implements BaseModel
      *
      * @var PriceVariants $price
      */
-    #[Required]
+    #[Required(union: Price::class)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice $price;
 
     /**
@@ -119,7 +119,7 @@ final class ProductCreateParams implements BaseModel
     public ?array $entitlements;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
      * Optional message displayed during license key activation
      *
@@ -130,7 +130,7 @@ final class ProductCreateParams implements BaseModel
     public ?string $licenseKeyActivationMessage;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
      * The number of times the license key can be activated.
      * Must be 0 or greater
@@ -153,7 +153,7 @@ final class ProductCreateParams implements BaseModel
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
      * When true, generates and sends a license key to your customer.
      * Defaults to false

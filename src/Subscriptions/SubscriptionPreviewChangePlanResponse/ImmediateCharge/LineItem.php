@@ -23,11 +23,20 @@ final class LineItem implements ConverterSource
 {
     use SdkUnion;
 
+    public static function discriminator(): string
+    {
+        return 'type';
+    }
+
     /**
      * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
     public static function variants(): array
     {
-        return [Subscription::class, Addon::class, Meter::class];
+        return [
+            'subscription' => Subscription::class,
+            'addon' => Addon::class,
+            'meter' => Meter::class,
+        ];
     }
 }

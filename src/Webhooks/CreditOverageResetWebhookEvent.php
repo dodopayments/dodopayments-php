@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry;
-use Dodopayments\Webhooks\CreditOverageResetWebhookEvent\Type;
 
 /**
  * @phpstan-import-type CreditLedgerEntryShape from \Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\CreditOverageResetWebhookEvent\Type;
  *   businessID: string,
  *   data: CreditLedgerEntry|CreditLedgerEntryShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'credit.overage_reset',
  * }
  */
 final class CreditOverageResetWebhookEvent implements BaseModel
 {
     /** @use SdkModel<CreditOverageResetWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'credit.overage_reset' $type
+     */
+    #[Required]
+    public string $type = 'credit.overage_reset';
 
     /**
      * The business identifier.
@@ -44,21 +51,11 @@ final class CreditOverageResetWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new CreditOverageResetWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CreditOverageResetWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
-     * )
+     * CreditOverageResetWebhookEvent::with(businessID: ..., data: ..., timestamp: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,7 +65,6 @@ final class CreditOverageResetWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -82,20 +78,17 @@ final class CreditOverageResetWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CreditLedgerEntry|CreditLedgerEntryShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         CreditLedgerEntry|array $data,
         \DateTimeInterface $timestamp,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -138,9 +131,9 @@ final class CreditOverageResetWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'credit.overage_reset' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -70,7 +70,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     public ?array $addons;
 
     /**
-     * @deprecated
+     * @deprecated Use `discount_id` instead.
      *
      * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */

@@ -7,6 +7,7 @@ namespace Dodopayments\WebhookEvents;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\WebhookEvents\WebhookPayload\Data;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry;
@@ -42,7 +43,7 @@ final class WebhookPayload implements BaseModel
      *
      * @var DataVariants $data
      */
-    #[Required]
+    #[Required(union: Data::class)]
     public Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant $data;
 
     /**

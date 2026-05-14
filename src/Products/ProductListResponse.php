@@ -141,7 +141,7 @@ final class ProductListResponse implements BaseModel
      *
      * @var PriceVariants|null $priceDetail
      */
-    #[Optional('price_detail', nullable: true)]
+    #[Optional('price_detail', union: Price::class, nullable: true)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail;
 
     /**

@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Webhooks\AbandonedCheckoutDetectedWebhookEvent\Data;
-use Dodopayments\Webhooks\AbandonedCheckoutDetectedWebhookEvent\Type;
 
 /**
  * @phpstan-import-type DataShape from \Dodopayments\Webhooks\AbandonedCheckoutDetectedWebhookEvent\Data
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\AbandonedCheckoutDetectedWebhookEvent\Type;
  *   businessID: string,
  *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'abandoned_checkout.detected',
  * }
  */
 final class AbandonedCheckoutDetectedWebhookEvent implements BaseModel
 {
     /** @use SdkModel<AbandonedCheckoutDetectedWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'abandoned_checkout.detected' $type
+     */
+    #[Required]
+    public string $type = 'abandoned_checkout.detected';
 
     /**
      * The business identifier.
@@ -44,20 +51,12 @@ final class AbandonedCheckoutDetectedWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new AbandonedCheckoutDetectedWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * AbandonedCheckoutDetectedWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ...
      * )
      * ```
      *
@@ -68,7 +67,6 @@ final class AbandonedCheckoutDetectedWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -82,20 +80,17 @@ final class AbandonedCheckoutDetectedWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Data|DataShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         Data|array $data,
-        \DateTimeInterface $timestamp,
-        Type|string $type,
+        \DateTimeInterface $timestamp
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -138,9 +133,9 @@ final class AbandonedCheckoutDetectedWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'abandoned_checkout.detected' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

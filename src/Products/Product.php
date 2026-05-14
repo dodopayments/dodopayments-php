@@ -91,9 +91,9 @@ final class Product implements BaseModel
     public bool $isRecurring;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
-     * Indicates whether the product requires a license key
+     * Indicates whether the product requires a license key.
      */
     #[Required('license_key_enabled')]
     public bool $licenseKeyEnabled;
@@ -111,7 +111,7 @@ final class Product implements BaseModel
      *
      * @var PriceVariants $price
      */
-    #[Required]
+    #[Required(union: Price::class)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice $price;
 
     /**
@@ -162,17 +162,17 @@ final class Product implements BaseModel
     public ?string $image;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
-     * Message sent upon license key activation, if applicable
+     * Message sent upon license key activation, if applicable.
      */
     #[Optional('license_key_activation_message', nullable: true)]
     public ?string $licenseKeyActivationMessage;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
-     * Limit on the number of activations for the license key, if enabled
+     * Limit on the number of activations for the license key, if enabled.
      */
     #[Optional('license_key_activations_limit', nullable: true)]
     public ?int $licenseKeyActivationsLimit;

@@ -21,7 +21,6 @@ use Dodopayments\Subscriptions\ScheduledPlanChange;
 use Dodopayments\Subscriptions\Subscription\Discount;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
 
 /**
  * Response struct representing subscription details.
@@ -72,13 +71,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription\PayloadType;
  *   paymentMethodID?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'Subscription',
  * }
  */
 final class Subscription implements BaseModel
 {
     /** @use SdkModel<SubscriptionShape> */
     use SdkModel;
+
+    /** @var 'Subscription' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'Subscription';
 
     /**
      * Addons associated with this subscription.
@@ -295,10 +298,6 @@ final class Subscription implements BaseModel
     #[Optional('tax_id', nullable: true)]
     public ?string $taxID;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new Subscription()` is missing required properties by the API.
      *
@@ -329,7 +328,6 @@ final class Subscription implements BaseModel
      *   subscriptionPeriodInterval: ...,
      *   taxInclusive: ...,
      *   trialPeriodDays: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -361,7 +359,6 @@ final class Subscription implements BaseModel
      *   ->withSubscriptionPeriodInterval(...)
      *   ->withTaxInclusive(...)
      *   ->withTrialPeriodDays(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -385,7 +382,6 @@ final class Subscription implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<Discount|DiscountShape>|null $discounts
@@ -416,7 +412,6 @@ final class Subscription implements BaseModel
         TimeInterval|string $subscriptionPeriodInterval,
         bool $taxInclusive,
         int $trialPeriodDays,
-        PayloadType|string $payloadType,
         ?string $cancellationComment = null,
         CancellationFeedback|string|null $cancellationFeedback = null,
         ?\DateTimeInterface $cancelledAt = null,
@@ -455,7 +450,6 @@ final class Subscription implements BaseModel
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
         $self['taxInclusive'] = $taxInclusive;
         $self['trialPeriodDays'] = $trialPeriodDays;
-        $self['payloadType'] = $payloadType;
 
         null !== $cancellationComment && $self['cancellationComment'] = $cancellationComment;
         null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
@@ -883,9 +877,9 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'Subscription' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

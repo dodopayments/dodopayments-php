@@ -42,7 +42,6 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
-use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 /**
@@ -488,7 +487,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array{
-     *   type: Type|value-of<Type>, returnURL?: string|null, paymentMethodID: string
+     *   type?: 'existing', returnURL?: string|null, paymentMethodID: string
      * }|SubscriptionUpdatePaymentMethodParams $params
      * @param RequestOpts|null $requestOptions
      *

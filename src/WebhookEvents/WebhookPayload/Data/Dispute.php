@@ -11,7 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeStage;
 use Dodopayments\Disputes\DisputeStatus;
 use Dodopayments\Payments\CustomerLimitedDetails;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
 
 /**
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
@@ -29,13 +28,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute\PayloadType;
  *   isResolvedByRdr?: bool|null,
  *   reason?: string|null,
  *   remarks?: string|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'Dispute',
  * }
  */
 final class Dispute implements BaseModel
 {
     /** @use SdkModel<DisputeShape> */
     use SdkModel;
+
+    /** @var 'Dispute' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'Dispute';
 
     /**
      * The amount involved in the dispute, represented as a string to accommodate precision.
@@ -102,10 +105,6 @@ final class Dispute implements BaseModel
     #[Optional(nullable: true)]
     public ?string $remarks;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new Dispute()` is missing required properties by the API.
      *
@@ -121,7 +120,6 @@ final class Dispute implements BaseModel
      *   disputeStage: ...,
      *   disputeStatus: ...,
      *   paymentID: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -138,7 +136,6 @@ final class Dispute implements BaseModel
      *   ->withDisputeStage(...)
      *   ->withDisputeStatus(...)
      *   ->withPaymentID(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -154,7 +151,6 @@ final class Dispute implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
-     * @param PayloadType|value-of<PayloadType> $payloadType
      */
     public static function with(
         string $amount,
@@ -166,7 +162,6 @@ final class Dispute implements BaseModel
         DisputeStage|string $disputeStage,
         DisputeStatus|string $disputeStatus,
         string $paymentID,
-        PayloadType|string $payloadType,
         ?bool $isResolvedByRdr = null,
         ?string $reason = null,
         ?string $remarks = null,
@@ -182,7 +177,6 @@ final class Dispute implements BaseModel
         $self['disputeStage'] = $disputeStage;
         $self['disputeStatus'] = $disputeStatus;
         $self['paymentID'] = $paymentID;
-        $self['payloadType'] = $payloadType;
 
         null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
         null !== $reason && $self['reason'] = $reason;
@@ -324,9 +318,9 @@ final class Dispute implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'Dispute' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

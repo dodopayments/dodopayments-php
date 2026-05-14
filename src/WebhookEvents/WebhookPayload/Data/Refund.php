@@ -11,7 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Refunds\RefundStatus;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
 
 /**
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
@@ -28,13 +27,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund\PayloadType;
  *   amount?: int|null,
  *   currency?: null|Currency|value-of<Currency>,
  *   reason?: string|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'Refund',
  * }
  */
 final class Refund implements BaseModel
 {
     /** @use SdkModel<RefundShape> */
     use SdkModel;
+
+    /** @var 'Refund' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'Refund';
 
     /**
      * The unique identifier of the business issuing the refund.
@@ -97,10 +100,6 @@ final class Refund implements BaseModel
     #[Optional(nullable: true)]
     public ?string $reason;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new Refund()` is missing required properties by the API.
      *
@@ -115,7 +114,6 @@ final class Refund implements BaseModel
      *   paymentID: ...,
      *   refundID: ...,
      *   status: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -131,7 +129,6 @@ final class Refund implements BaseModel
      *   ->withPaymentID(...)
      *   ->withRefundID(...)
      *   ->withStatus(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -147,7 +144,6 @@ final class Refund implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
@@ -159,7 +155,6 @@ final class Refund implements BaseModel
         string $paymentID,
         string $refundID,
         RefundStatus|string $status,
-        PayloadType|string $payloadType,
         ?int $amount = null,
         Currency|string|null $currency = null,
         ?string $reason = null,
@@ -174,7 +169,6 @@ final class Refund implements BaseModel
         $self['paymentID'] = $paymentID;
         $self['refundID'] = $refundID;
         $self['status'] = $status;
-        $self['payloadType'] = $payloadType;
 
         null !== $amount && $self['amount'] = $amount;
         null !== $currency && $self['currency'] = $currency;
@@ -307,9 +301,9 @@ final class Refund implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'Refund' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;
