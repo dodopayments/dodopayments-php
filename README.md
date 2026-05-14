@@ -13,7 +13,7 @@ The REST API documentation can be found on [docs.dodopayments.com](https://docs.
 <!-- x-release-please-start-version -->
 
 ```
-composer require "dodopayments/client 6.7.2"
+composer require "dodopayments/client 6.8.0"
 ```
 
 <!-- x-release-please-end -->
@@ -34,7 +34,7 @@ $client = new Client(
 );
 
 $checkoutSessionResponse = $client->checkoutSessions->create(
-  productCart: [['productID' => 'product_id', 'quantity' => 0]]
+  productCart: [['productID' => 'pdt_example', 'quantity' => 1]]
 );
 
 var_dump($checkoutSessionResponse->session_id);
@@ -90,7 +90,7 @@ use Dodopayments\Core\Exceptions\APIStatusException;
 
 try {
   $checkoutSessionResponse = $client->checkoutSessions->create(
-    productCart: [['productID' => 'product_id', 'quantity' => 0]]
+    productCart: [['productID' => 'pdt_example', 'quantity' => 1]]
   );
 } catch (APIConnectionException $e) {
   echo "The server could not be reached", PHP_EOL;
@@ -137,7 +137,7 @@ $client = new Client(requestOptions: ['maxRetries' => 0]);
 
 // Or, configure per-request:
 $result = $client->checkoutSessions->create(
-  productCart: [['productID' => 'product_id', 'quantity' => 0]],
+  productCart: [['productID' => 'pdt_example', 'quantity' => 1]],
   requestOptions: ['maxRetries' => 5],
 );
 ```
@@ -156,7 +156,7 @@ Note: the `extra*` parameters of the same name overrides the documented paramete
 <?php
 
 $checkoutSessionResponse = $client->checkoutSessions->create(
-  productCart: [['productID' => 'product_id', 'quantity' => 0]],
+  productCart: [['productID' => 'pdt_example', 'quantity' => 1]],
   requestOptions: [
     'extraQueryParams' => ['my_query_parameter' => 'value'],
     'extraBodyParams' => ['my_body_parameter' => 'value'],

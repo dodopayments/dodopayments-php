@@ -35,6 +35,8 @@ use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod\Existing;
+use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod\New_;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 /**
@@ -44,6 +46,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
@@ -584,25 +587,17 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param 'existing' $type
+     * @param PaymentMethodShape $paymentMethod
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function updatePaymentMethod(
         string $subscriptionID,
-        string $paymentMethodID,
-        string $type = 'existing',
-        ?string $returnURL = null,
+        New_|array|Existing $paymentMethod,
         RequestOptions|array|null $requestOptions = null,
     ): SubscriptionUpdatePaymentMethodResponse {
-        $params = Util::removeNulls(
-            [
-                'type' => $type,
-                'returnURL' => $returnURL,
-                'paymentMethodID' => $paymentMethodID,
-            ],
-        );
+        $params = Util::removeNulls(['paymentMethod' => $paymentMethod]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->updatePaymentMethod($subscriptionID, params: $params, requestOptions: $requestOptions);

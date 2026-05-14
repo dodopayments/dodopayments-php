@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.8.0 (2026-05-14)
+
+Full Changelog: [v6.7.2...v6.8.0](https://github.com/dodopayments/dodopayments-php/compare/v6.7.2...v6.8.0)
+
+### Features
+
+* **api:** stainless fixes ([7bff48f](https://github.com/dodopayments/dodopayments-php/commit/7bff48f8ef0e9da6c3d3394b133751584c1ece8b))
+
 ## 6.7.2 (2026-05-14)
 
 Full Changelog: [v6.7.1...v6.7.2](https://github.com/dodopayments/dodopayments-php/compare/v6.7.1...v6.7.2)

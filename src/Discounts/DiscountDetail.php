@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Payments\Payment;
+namespace Dodopayments\Discounts;
 
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Discounts\DiscountType;
 
 /**
  * Response struct for a discount with its position in a stack and optional
  * cycle-tracking information (for subscriptions).
  *
- * @phpstan-type DiscountShape = array{
+ * @phpstan-type DiscountDetailShape = array{
  *   amount: int,
  *   businessID: string,
  *   code: string,
@@ -33,9 +32,9 @@ use Dodopayments\Discounts\DiscountType;
  *   usageLimit?: int|null,
  * }
  */
-final class Discount implements BaseModel
+final class DiscountDetail implements BaseModel
 {
-    /** @use SdkModel<DiscountShape> */
+    /** @use SdkModel<DiscountDetailShape> */
     use SdkModel;
 
     /**
@@ -141,11 +140,11 @@ final class Discount implements BaseModel
     public ?int $usageLimit;
 
     /**
-     * `new Discount()` is missing required properties by the API.
+     * `new DiscountDetail()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * Discount::with(
+     * DiscountDetail::with(
      *   amount: ...,
      *   businessID: ...,
      *   code: ...,
@@ -163,7 +162,7 @@ final class Discount implements BaseModel
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new Discount)
+     * (new DiscountDetail)
      *   ->withAmount(...)
      *   ->withBusinessID(...)
      *   ->withCode(...)
