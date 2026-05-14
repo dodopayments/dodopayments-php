@@ -8,10 +8,10 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Discounts\DiscountDetail;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\Payment\Discount;
 use Dodopayments\Payments\Payment\ProductCart;
 
 /**
@@ -20,7 +20,7 @@ use Dodopayments\Payments\Payment\ProductCart;
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
- * @phpstan-import-type DiscountShape from \Dodopayments\Payments\Payment\Discount
+ * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
  * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
  *
  * @phpstan-type PaymentShape = array{
@@ -46,7 +46,7 @@ use Dodopayments\Payments\Payment\ProductCart;
  *   checkoutSessionID?: string|null,
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountID?: string|null,
- *   discounts?: list<Discount|DiscountShape>|null,
+ *   discounts?: list<DiscountDetail|DiscountDetailShape>|null,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
  *   invoiceID?: string|null,
@@ -226,9 +226,9 @@ final class Payment implements BaseModel
     /**
      * All stacked discounts applied, ordered by position.
      *
-     * @var list<Discount>|null $discounts
+     * @var list<DiscountDetail>|null $discounts
      */
-    #[Optional(list: Discount::class, nullable: true)]
+    #[Optional(list: DiscountDetail::class, nullable: true)]
     public ?array $discounts;
 
     /**
@@ -385,7 +385,7 @@ final class Payment implements BaseModel
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
-     * @param list<Discount|DiscountShape>|null $discounts
+     * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
      * @param list<ProductCart|ProductCartShape>|null $productCart
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
@@ -742,7 +742,7 @@ final class Payment implements BaseModel
     /**
      * All stacked discounts applied, ordered by position.
      *
-     * @param list<Discount|DiscountShape>|null $discounts
+     * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
      */
     public function withDiscounts(?array $discounts): self
     {
