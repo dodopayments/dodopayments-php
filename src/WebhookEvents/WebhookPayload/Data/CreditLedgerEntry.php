@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry\TransactionType;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry\PayloadType;
 
 /**
  * Response for a ledger entry.
@@ -31,13 +30,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry\PayloadType
  *   grantID?: string|null,
  *   referenceID?: string|null,
  *   referenceType?: string|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'CreditLedgerEntry',
  * }
  */
 final class CreditLedgerEntry implements BaseModel
 {
     /** @use SdkModel<CreditLedgerEntryShape> */
     use SdkModel;
+
+    /** @var 'CreditLedgerEntry' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'CreditLedgerEntry';
 
     #[Required]
     public string $id;
@@ -88,10 +91,6 @@ final class CreditLedgerEntry implements BaseModel
     #[Optional('reference_type', nullable: true)]
     public ?string $referenceType;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new CreditLedgerEntry()` is missing required properties by the API.
      *
@@ -110,7 +109,6 @@ final class CreditLedgerEntry implements BaseModel
      *   overageAfter: ...,
      *   overageBefore: ...,
      *   transactionType: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -130,7 +128,6 @@ final class CreditLedgerEntry implements BaseModel
      *   ->withOverageAfter(...)
      *   ->withOverageBefore(...)
      *   ->withTransactionType(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -144,7 +141,6 @@ final class CreditLedgerEntry implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param TransactionType|value-of<TransactionType> $transactionType
-     * @param PayloadType|value-of<PayloadType> $payloadType
      */
     public static function with(
         string $id,
@@ -159,7 +155,6 @@ final class CreditLedgerEntry implements BaseModel
         string $overageAfter,
         string $overageBefore,
         TransactionType|string $transactionType,
-        PayloadType|string $payloadType,
         ?string $description = null,
         ?string $grantID = null,
         ?string $referenceID = null,
@@ -179,7 +174,6 @@ final class CreditLedgerEntry implements BaseModel
         $self['overageAfter'] = $overageAfter;
         $self['overageBefore'] = $overageBefore;
         $self['transactionType'] = $transactionType;
-        $self['payloadType'] = $payloadType;
 
         null !== $description && $self['description'] = $description;
         null !== $grantID && $self['grantID'] = $grantID;
@@ -322,9 +316,9 @@ final class CreditLedgerEntry implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'CreditLedgerEntry' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

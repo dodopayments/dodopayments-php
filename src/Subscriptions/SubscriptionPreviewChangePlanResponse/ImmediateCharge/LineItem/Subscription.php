@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Subscription\Type;
 
 /**
  * @phpstan-type SubscriptionShape = array{
@@ -19,7 +18,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  *   prorationFactor: float,
  *   quantity: int,
  *   taxInclusive: bool,
- *   type: Type|value-of<Type>,
+ *   type: 'subscription',
  *   unitPrice: int,
  *   description?: string|null,
  *   name?: string|null,
@@ -31,6 +30,10 @@ final class Subscription implements BaseModel
 {
     /** @use SdkModel<SubscriptionShape> */
     use SdkModel;
+
+    /** @var 'subscription' $type */
+    #[Required]
+    public string $type = 'subscription';
 
     #[Required]
     public string $id;
@@ -50,10 +53,6 @@ final class Subscription implements BaseModel
 
     #[Required('tax_inclusive')]
     public bool $taxInclusive;
-
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
 
     #[Required('unit_price')]
     public int $unitPrice;
@@ -82,7 +81,6 @@ final class Subscription implements BaseModel
      *   prorationFactor: ...,
      *   quantity: ...,
      *   taxInclusive: ...,
-     *   type: ...,
      *   unitPrice: ...,
      * )
      * ```
@@ -97,7 +95,6 @@ final class Subscription implements BaseModel
      *   ->withProrationFactor(...)
      *   ->withQuantity(...)
      *   ->withTaxInclusive(...)
-     *   ->withType(...)
      *   ->withUnitPrice(...)
      * ```
      */
@@ -112,7 +109,6 @@ final class Subscription implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -121,7 +117,6 @@ final class Subscription implements BaseModel
         float $prorationFactor,
         int $quantity,
         bool $taxInclusive,
-        Type|string $type,
         int $unitPrice,
         ?string $description = null,
         ?string $name = null,
@@ -136,7 +131,6 @@ final class Subscription implements BaseModel
         $self['prorationFactor'] = $prorationFactor;
         $self['quantity'] = $quantity;
         $self['taxInclusive'] = $taxInclusive;
-        $self['type'] = $type;
         $self['unitPrice'] = $unitPrice;
 
         null !== $description && $self['description'] = $description;
@@ -199,9 +193,9 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'subscription' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

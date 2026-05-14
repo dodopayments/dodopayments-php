@@ -11,7 +11,6 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\Grants\EntitlementGrant\Status;
 use Dodopayments\Entitlements\Grants\LicenseKeyGrant;
 use Dodopayments\Products\DigitalProductDelivery;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\PayloadType;
 
 /**
  * Detailed view of a single entitlement grant: who it's for, its
@@ -40,13 +39,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant\PayloadType;
  *   revocationReason?: string|null,
  *   revokedAt?: \DateTimeInterface|null,
  *   subscriptionID?: string|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'EntitlementGrant',
  * }
  */
 final class EntitlementGrant implements BaseModel
 {
     /** @use SdkModel<EntitlementGrantShape> */
     use SdkModel;
+
+    /** @var 'EntitlementGrant' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'EntitlementGrant';
 
     /**
      * Unique identifier of the grant.
@@ -171,10 +174,6 @@ final class EntitlementGrant implements BaseModel
     #[Optional('subscription_id', nullable: true)]
     public ?string $subscriptionID;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new EntitlementGrant()` is missing required properties by the API.
      *
@@ -189,7 +188,6 @@ final class EntitlementGrant implements BaseModel
      *   metadata: ...,
      *   status: ...,
      *   updatedAt: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -205,7 +203,6 @@ final class EntitlementGrant implements BaseModel
      *   ->withMetadata(...)
      *   ->withStatus(...)
      *   ->withUpdatedAt(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -220,7 +217,6 @@ final class EntitlementGrant implements BaseModel
      *
      * @param array<string,string> $metadata
      * @param Status|value-of<Status> $status
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param LicenseKeyGrant|LicenseKeyGrantShape|null $licenseKey
      */
@@ -233,7 +229,6 @@ final class EntitlementGrant implements BaseModel
         array $metadata,
         Status|string $status,
         \DateTimeInterface $updatedAt,
-        PayloadType|string $payloadType,
         ?\DateTimeInterface $deliveredAt = null,
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $errorCode = null,
@@ -256,7 +251,6 @@ final class EntitlementGrant implements BaseModel
         $self['metadata'] = $metadata;
         $self['status'] = $status;
         $self['updatedAt'] = $updatedAt;
-        $self['payloadType'] = $payloadType;
 
         null !== $deliveredAt && $self['deliveredAt'] = $deliveredAt;
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
@@ -498,9 +492,9 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'EntitlementGrant' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

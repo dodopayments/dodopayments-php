@@ -102,7 +102,7 @@ final class ProductUpdateParams implements BaseModel
     public ?string $imageID;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
      * Message sent to the customer upon license key activation.
      *
@@ -115,7 +115,7 @@ final class ProductUpdateParams implements BaseModel
     public ?string $licenseKeyActivationMessage;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
      * Limit for the number of activations for the license key.
      *
@@ -139,7 +139,7 @@ final class ProductUpdateParams implements BaseModel
     public ?LicenseKeyDuration $licenseKeyDuration;
 
     /**
-     * @deprecated
+     * @deprecated Use the dedicated entitlements API to configure license-key delivery.
      *
      * Whether the product requires a license key.
      *
@@ -170,7 +170,7 @@ final class ProductUpdateParams implements BaseModel
      *
      * @var PriceVariants|null $price
      */
-    #[Optional(nullable: true)]
+    #[Optional(union: Price::class, nullable: true)]
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price;
 
     /**

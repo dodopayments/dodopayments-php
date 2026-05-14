@@ -84,7 +84,7 @@ final class SubscriptionNewResponse implements BaseModel
     public ?string $clientSecret;
 
     /**
-     * @deprecated
+     * @deprecated Use `discounts` instead.
      *
      * DEPRECATED: Use discount_ids instead. Returns the first discount's ID if present.
      */

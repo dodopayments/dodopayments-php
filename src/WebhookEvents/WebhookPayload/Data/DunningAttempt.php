@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt\PayloadType;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt\Status;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt\TriggerState;
 
@@ -16,7 +15,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt\TriggerState;
  * @phpstan-type DunningAttemptShape = array{
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'DunningAttempt',
  *   status: Status|value-of<Status>,
  *   subscriptionID: string,
  *   triggerState: TriggerState|value-of<TriggerState>,
@@ -28,15 +27,15 @@ final class DunningAttempt implements BaseModel
     /** @use SdkModel<DunningAttemptShape> */
     use SdkModel;
 
+    /** @var 'DunningAttempt' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'DunningAttempt';
+
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
 
     #[Required('customer_id')]
     public string $customerID;
-
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
 
     /** @var value-of<Status> $status */
     #[Required(enum: Status::class)]
@@ -60,7 +59,6 @@ final class DunningAttempt implements BaseModel
      * DunningAttempt::with(
      *   createdAt: ...,
      *   customerID: ...,
-     *   payloadType: ...,
      *   status: ...,
      *   subscriptionID: ...,
      *   triggerState: ...,
@@ -73,7 +71,6 @@ final class DunningAttempt implements BaseModel
      * (new DunningAttempt)
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
-     *   ->withPayloadType(...)
      *   ->withStatus(...)
      *   ->withSubscriptionID(...)
      *   ->withTriggerState(...)
@@ -89,14 +86,12 @@ final class DunningAttempt implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param Status|value-of<Status> $status
      * @param TriggerState|value-of<TriggerState> $triggerState
      */
     public static function with(
         \DateTimeInterface $createdAt,
         string $customerID,
-        PayloadType|string $payloadType,
         Status|string $status,
         string $subscriptionID,
         TriggerState|string $triggerState,
@@ -106,7 +101,6 @@ final class DunningAttempt implements BaseModel
 
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
-        $self['payloadType'] = $payloadType;
         $self['status'] = $status;
         $self['subscriptionID'] = $subscriptionID;
         $self['triggerState'] = $triggerState;
@@ -133,9 +127,9 @@ final class DunningAttempt implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'DunningAttempt' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

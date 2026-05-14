@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Products\Price\OneTimePrice\Type;
 
 /**
  * One-time price details.
@@ -19,7 +18,7 @@ use Dodopayments\Products\Price\OneTimePrice\Type;
  *   discount: int,
  *   price: int,
  *   purchasingPowerParity: bool,
- *   type: Type|value-of<Type>,
+ *   type: 'one_time_price',
  *   payWhatYouWant?: bool|null,
  *   suggestedPrice?: int|null,
  *   taxInclusive?: bool|null,
@@ -29,6 +28,10 @@ final class OneTimePrice implements BaseModel
 {
     /** @use SdkModel<OneTimePriceShape> */
     use SdkModel;
+
+    /** @var 'one_time_price' $type */
+    #[Required]
+    public string $type = 'one_time_price';
 
     /**
      * The currency in which the payment is made.
@@ -61,10 +64,6 @@ final class OneTimePrice implements BaseModel
     #[Required('purchasing_power_parity')]
     public bool $purchasingPowerParity;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Indicates whether the customer can pay any amount they choose.
      * If set to `true`, the [`price`](Self::price) field is the minimum amount.
@@ -91,11 +90,7 @@ final class OneTimePrice implements BaseModel
      * To enforce required parameters use
      * ```
      * OneTimePrice::with(
-     *   currency: ...,
-     *   discount: ...,
-     *   price: ...,
-     *   purchasingPowerParity: ...,
-     *   type: ...,
+     *   currency: ..., discount: ..., price: ..., purchasingPowerParity: ...
      * )
      * ```
      *
@@ -107,7 +102,6 @@ final class OneTimePrice implements BaseModel
      *   ->withDiscount(...)
      *   ->withPrice(...)
      *   ->withPurchasingPowerParity(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -121,14 +115,12 @@ final class OneTimePrice implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         Currency|string $currency,
         int $discount,
         int $price,
         bool $purchasingPowerParity,
-        Type|string $type,
         ?bool $payWhatYouWant = null,
         ?int $suggestedPrice = null,
         ?bool $taxInclusive = null,
@@ -139,7 +131,6 @@ final class OneTimePrice implements BaseModel
         $self['discount'] = $discount;
         $self['price'] = $price;
         $self['purchasingPowerParity'] = $purchasingPowerParity;
-        $self['type'] = $type;
 
         null !== $payWhatYouWant && $self['payWhatYouWant'] = $payWhatYouWant;
         null !== $suggestedPrice && $self['suggestedPrice'] = $suggestedPrice;
@@ -200,9 +191,9 @@ final class OneTimePrice implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'one_time_price' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

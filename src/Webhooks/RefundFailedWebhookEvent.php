@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Refunds\Refund;
-use Dodopayments\Webhooks\RefundFailedWebhookEvent\Type;
 
 /**
  * @phpstan-import-type RefundShape from \Dodopayments\Refunds\Refund
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\RefundFailedWebhookEvent\Type;
  *   businessID: string,
  *   data: Refund|RefundShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'refund.failed',
  * }
  */
 final class RefundFailedWebhookEvent implements BaseModel
 {
     /** @use SdkModel<RefundFailedWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'refund.failed' $type
+     */
+    #[Required]
+    public string $type = 'refund.failed';
 
     /**
      * The business identifier.
@@ -41,21 +48,11 @@ final class RefundFailedWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new RefundFailedWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * RefundFailedWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
-     * )
+     * RefundFailedWebhookEvent::with(businessID: ..., data: ..., timestamp: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,7 +62,6 @@ final class RefundFailedWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -79,20 +75,17 @@ final class RefundFailedWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Refund|RefundShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         Refund|array $data,
-        \DateTimeInterface $timestamp,
-        Type|string $type,
+        \DateTimeInterface $timestamp
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -133,9 +126,9 @@ final class RefundFailedWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'refund.failed' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

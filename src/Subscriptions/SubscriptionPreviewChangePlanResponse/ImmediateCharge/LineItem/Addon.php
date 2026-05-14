@@ -10,7 +10,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Addon\Type;
 
 /**
  * @phpstan-type AddonShape = array{
@@ -22,7 +21,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   taxInclusive: bool,
  *   taxRate: float,
- *   type: Type|value-of<Type>,
+ *   type: 'addon',
  *   unitPrice: int,
  *   description?: string|null,
  *   tax?: int|null,
@@ -32,6 +31,10 @@ final class Addon implements BaseModel
 {
     /** @use SdkModel<AddonShape> */
     use SdkModel;
+
+    /** @var 'addon' $type */
+    #[Required]
+    public string $type = 'addon';
 
     #[Required]
     public string $id;
@@ -63,10 +66,6 @@ final class Addon implements BaseModel
     #[Required('tax_rate')]
     public float $taxRate;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     #[Required('unit_price')]
     public int $unitPrice;
 
@@ -90,7 +89,6 @@ final class Addon implements BaseModel
      *   taxCategory: ...,
      *   taxInclusive: ...,
      *   taxRate: ...,
-     *   type: ...,
      *   unitPrice: ...,
      * )
      * ```
@@ -107,7 +105,6 @@ final class Addon implements BaseModel
      *   ->withTaxCategory(...)
      *   ->withTaxInclusive(...)
      *   ->withTaxRate(...)
-     *   ->withType(...)
      *   ->withUnitPrice(...)
      * ```
      */
@@ -123,7 +120,6 @@ final class Addon implements BaseModel
      *
      * @param Currency|value-of<Currency> $currency
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -134,7 +130,6 @@ final class Addon implements BaseModel
         TaxCategory|string $taxCategory,
         bool $taxInclusive,
         float $taxRate,
-        Type|string $type,
         int $unitPrice,
         ?string $description = null,
         ?int $tax = null,
@@ -149,7 +144,6 @@ final class Addon implements BaseModel
         $self['taxCategory'] = $taxCategory;
         $self['taxInclusive'] = $taxInclusive;
         $self['taxRate'] = $taxRate;
-        $self['type'] = $type;
         $self['unitPrice'] = $unitPrice;
 
         null !== $description && $self['description'] = $description;
@@ -231,9 +225,9 @@ final class Addon implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'addon' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

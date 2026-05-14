@@ -10,7 +10,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\LicenseKeys\LicenseKey\Source;
 use Dodopayments\LicenseKeys\LicenseKeyStatus;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey\PayloadType;
 
 /**
  * @phpstan-type LicenseKeyShape = array{
@@ -27,13 +26,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey\PayloadType;
  *   expiresAt?: \DateTimeInterface|null,
  *   paymentID?: string|null,
  *   subscriptionID?: string|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'LicenseKey',
  * }
  */
 final class LicenseKey implements BaseModel
 {
     /** @use SdkModel<LicenseKeyShape> */
     use SdkModel;
+
+    /** @var 'LicenseKey' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'LicenseKey';
 
     /**
      * The unique identifier of the license key.
@@ -113,10 +116,6 @@ final class LicenseKey implements BaseModel
     #[Optional('subscription_id', nullable: true)]
     public ?string $subscriptionID;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new LicenseKey()` is missing required properties by the API.
      *
@@ -132,7 +131,6 @@ final class LicenseKey implements BaseModel
      *   productID: ...,
      *   source: ...,
      *   status: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -149,7 +147,6 @@ final class LicenseKey implements BaseModel
      *   ->withProductID(...)
      *   ->withSource(...)
      *   ->withStatus(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -164,7 +161,6 @@ final class LicenseKey implements BaseModel
      *
      * @param Source|value-of<Source> $source
      * @param LicenseKeyStatus|value-of<LicenseKeyStatus> $status
-     * @param PayloadType|value-of<PayloadType> $payloadType
      */
     public static function with(
         string $id,
@@ -176,7 +172,6 @@ final class LicenseKey implements BaseModel
         string $productID,
         Source|string $source,
         LicenseKeyStatus|string $status,
-        PayloadType|string $payloadType,
         ?int $activationsLimit = null,
         ?\DateTimeInterface $expiresAt = null,
         ?string $paymentID = null,
@@ -193,7 +188,6 @@ final class LicenseKey implements BaseModel
         $self['productID'] = $productID;
         $self['source'] = $source;
         $self['status'] = $status;
-        $self['payloadType'] = $payloadType;
 
         null !== $activationsLimit && $self['activationsLimit'] = $activationsLimit;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
@@ -349,9 +343,9 @@ final class LicenseKey implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'LicenseKey' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

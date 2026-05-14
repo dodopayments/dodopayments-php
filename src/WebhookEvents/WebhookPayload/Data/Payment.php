@@ -19,7 +19,6 @@ use Dodopayments\Payments\Payment\Discount;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\PaymentRefundStatus;
 use Dodopayments\Payments\RefundListItem;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
 
 /**
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
@@ -68,13 +67,17 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment\PayloadType;
  *   subscriptionID?: string|null,
  *   tax?: int|null,
  *   updatedAt?: \DateTimeInterface|null,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'Payment',
  * }
  */
 final class Payment implements BaseModel
 {
     /** @use SdkModel<PaymentShape> */
     use SdkModel;
+
+    /** @var 'Payment' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'Payment';
 
     #[Required]
     public BillingAddress $billing;
@@ -209,7 +212,7 @@ final class Payment implements BaseModel
     public ?array $customFieldResponses;
 
     /**
-     * @deprecated
+     * @deprecated Use `discounts` instead.
      *
      * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
      */
@@ -308,10 +311,6 @@ final class Payment implements BaseModel
     #[Optional('updated_at', nullable: true)]
     public ?\DateTimeInterface $updatedAt;
 
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
-
     /**
      * `new Payment()` is missing required properties by the API.
      *
@@ -332,7 +331,6 @@ final class Payment implements BaseModel
      *   settlementAmount: ...,
      *   settlementCurrency: ...,
      *   totalAmount: ...,
-     *   payloadType: ...,
      * )
      * ```
      *
@@ -354,7 +352,6 @@ final class Payment implements BaseModel
      *   ->withSettlementAmount(...)
      *   ->withSettlementCurrency(...)
      *   ->withTotalAmount(...)
-     *   ->withPayloadType(...)
      * ```
      */
     public function __construct()
@@ -374,7 +371,6 @@ final class Payment implements BaseModel
      * @param array<string,string> $metadata
      * @param list<RefundListItem|RefundListItemShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<Discount|DiscountShape>|null $discounts
@@ -397,7 +393,6 @@ final class Payment implements BaseModel
         int $settlementAmount,
         Currency|string $settlementCurrency,
         int $totalAmount,
-        PayloadType|string $payloadType,
         ?string $cardHolderName = null,
         CountryCode|string|null $cardIssuingCountry = null,
         ?string $cardLastFour = null,
@@ -438,7 +433,6 @@ final class Payment implements BaseModel
         $self['settlementAmount'] = $settlementAmount;
         $self['settlementCurrency'] = $settlementCurrency;
         $self['totalAmount'] = $totalAmount;
-        $self['payloadType'] = $payloadType;
 
         null !== $cardHolderName && $self['cardHolderName'] = $cardHolderName;
         null !== $cardIssuingCountry && $self['cardIssuingCountry'] = $cardIssuingCountry;
@@ -897,9 +891,9 @@ final class Payment implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'Payment' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCharge\LineItem\Meter\Type;
 
 /**
  * @phpstan-type MeterShape = array{
@@ -22,7 +21,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse\ImmediateCh
  *   subtotal: int,
  *   taxInclusive: bool,
  *   taxRate: float,
- *   type: Type|value-of<Type>,
+ *   type: 'meter',
  *   unitsConsumed: string,
  *   description?: string|null,
  *   tax?: int|null,
@@ -32,6 +31,10 @@ final class Meter implements BaseModel
 {
     /** @use SdkModel<MeterShape> */
     use SdkModel;
+
+    /** @var 'meter' $type */
+    #[Required]
+    public string $type = 'meter';
 
     #[Required]
     public string $id;
@@ -61,10 +64,6 @@ final class Meter implements BaseModel
     #[Required('tax_rate')]
     public float $taxRate;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     #[Required('units_consumed')]
     public string $unitsConsumed;
 
@@ -89,7 +88,6 @@ final class Meter implements BaseModel
      *   subtotal: ...,
      *   taxInclusive: ...,
      *   taxRate: ...,
-     *   type: ...,
      *   unitsConsumed: ...,
      * )
      * ```
@@ -107,7 +105,6 @@ final class Meter implements BaseModel
      *   ->withSubtotal(...)
      *   ->withTaxInclusive(...)
      *   ->withTaxRate(...)
-     *   ->withType(...)
      *   ->withUnitsConsumed(...)
      * ```
      */
@@ -122,7 +119,6 @@ final class Meter implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $id,
@@ -134,7 +130,6 @@ final class Meter implements BaseModel
         int $subtotal,
         bool $taxInclusive,
         float $taxRate,
-        Type|string $type,
         string $unitsConsumed,
         ?string $description = null,
         ?int $tax = null,
@@ -150,7 +145,6 @@ final class Meter implements BaseModel
         $self['subtotal'] = $subtotal;
         $self['taxInclusive'] = $taxInclusive;
         $self['taxRate'] = $taxRate;
-        $self['type'] = $type;
         $self['unitsConsumed'] = $unitsConsumed;
 
         null !== $description && $self['description'] = $description;
@@ -235,9 +229,9 @@ final class Meter implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'meter' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

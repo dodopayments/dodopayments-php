@@ -48,9 +48,9 @@ final class PayoutListResponse implements BaseModel
     public string $businessID;
 
     /**
-     * @deprecated
+     * @deprecated Use the v3 payout breakup endpoints instead. Will be removed in a future release.
      *
-     * The total value of chargebacks associated with the payout
+     * The total value of chargebacks associated with the payout.
      */
     #[Required]
     public int $chargebacks;
@@ -88,9 +88,9 @@ final class PayoutListResponse implements BaseModel
     public string $payoutID;
 
     /**
-     * @deprecated
+     * @deprecated Use the v3 payout breakup endpoints instead. Will be removed in a future release.
      *
-     * The total value of refunds associated with the payout
+     * The total value of refunds associated with the payout.
      */
     #[Required]
     public int $refunds;
@@ -104,9 +104,9 @@ final class PayoutListResponse implements BaseModel
     public string $status;
 
     /**
-     * @deprecated
+     * @deprecated Use the v3 payout breakup endpoints instead. Will be removed in a future release.
      *
-     * The tax applied to the payout
+     * The tax applied to the payout.
      */
     #[Required]
     public int $tax;

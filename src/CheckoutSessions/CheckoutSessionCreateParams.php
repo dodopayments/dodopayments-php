@@ -129,7 +129,7 @@ final class CheckoutSessionCreateParams implements BaseModel
     public ?CheckoutSessionCustomization $customization;
 
     /**
-     * @deprecated
+     * @deprecated Use `discount_id` instead.
      *
      * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
