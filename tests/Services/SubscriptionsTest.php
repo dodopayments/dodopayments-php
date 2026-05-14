@@ -283,7 +283,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            paymentMethodID: 'payment_method_id'
+            paymentMethod: ['type' => 'new']
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -298,9 +298,7 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            type: 'existing',
-            returnURL: 'return_url',
-            paymentMethodID: 'payment_method_id',
+            paymentMethod: ['type' => 'new', 'returnURL' => 'return_url'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
