@@ -51,6 +51,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
@@ -487,7 +488,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array{
-     *   type?: 'existing', returnURL?: string|null, paymentMethodID: string
+     *   paymentMethod: PaymentMethodShape
      * }|SubscriptionUpdatePaymentMethodParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -509,7 +510,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
         return $this->client->request(
             method: 'post',
             path: ['subscriptions/%1$s/update-payment-method', $subscriptionID],
-            body: (object) $parsed,
+            body: (object) $parsed['paymentMethod'],
             options: $options,
             convert: SubscriptionUpdatePaymentMethodResponse::class,
         );

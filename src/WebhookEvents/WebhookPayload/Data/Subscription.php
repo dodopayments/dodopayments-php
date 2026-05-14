@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Discounts\DiscountDetail;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
@@ -18,7 +19,6 @@ use Dodopayments\Subscriptions\CreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\MeterCartResponseItem;
 use Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\ScheduledPlanChange;
-use Dodopayments\Subscriptions\Subscription\Discount;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
 
@@ -32,7 +32,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
  * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
- * @phpstan-import-type DiscountShape from \Dodopayments\Subscriptions\Subscription\Discount
+ * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
  * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
  *
  * @phpstan-type SubscriptionShape = array{
@@ -66,7 +66,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
- *   discounts?: list<Discount|DiscountShape>|null,
+ *   discounts?: list<DiscountDetail|DiscountDetailShape>|null,
  *   expiresAt?: \DateTimeInterface|null,
  *   paymentMethodID?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
@@ -272,9 +272,9 @@ final class Subscription implements BaseModel
     /**
      * All stacked discounts applied, ordered by position.
      *
-     * @var list<Discount>|null $discounts
+     * @var list<DiscountDetail>|null $discounts
      */
-    #[Optional(list: Discount::class, nullable: true)]
+    #[Optional(list: DiscountDetail::class, nullable: true)]
     public ?array $discounts;
 
     /**
@@ -384,7 +384,7 @@ final class Subscription implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
-     * @param list<Discount|DiscountShape>|null $discounts
+     * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
      * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
      */
     public static function with(
@@ -821,7 +821,7 @@ final class Subscription implements BaseModel
     /**
      * All stacked discounts applied, ordered by position.
      *
-     * @param list<Discount|DiscountShape>|null $discounts
+     * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
      */
     public function withDiscounts(?array $discounts): self
     {
