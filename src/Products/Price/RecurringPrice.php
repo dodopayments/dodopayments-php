@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Products\Price\RecurringPrice\Type;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
@@ -24,7 +23,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   purchasingPowerParity: bool,
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
- *   type: Type|value-of<Type>,
+ *   type: 'recurring_price',
  *   taxInclusive?: bool|null,
  *   trialPeriodDays?: int|null,
  * }
@@ -33,6 +32,10 @@ final class RecurringPrice implements BaseModel
 {
     /** @use SdkModel<RecurringPriceShape> */
     use SdkModel;
+
+    /** @var 'recurring_price' $type */
+    #[Required]
+    public string $type = 'recurring_price';
 
     /**
      * The currency in which the payment is made.
@@ -92,10 +95,6 @@ final class RecurringPrice implements BaseModel
     #[Required('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /**
      * Indicates if the price is tax inclusive.
      */
@@ -122,7 +121,6 @@ final class RecurringPrice implements BaseModel
      *   purchasingPowerParity: ...,
      *   subscriptionPeriodCount: ...,
      *   subscriptionPeriodInterval: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -138,7 +136,6 @@ final class RecurringPrice implements BaseModel
      *   ->withPurchasingPowerParity(...)
      *   ->withSubscriptionPeriodCount(...)
      *   ->withSubscriptionPeriodInterval(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -154,7 +151,6 @@ final class RecurringPrice implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         Currency|string $currency,
@@ -165,7 +161,6 @@ final class RecurringPrice implements BaseModel
         bool $purchasingPowerParity,
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
-        Type|string $type,
         ?bool $taxInclusive = null,
         ?int $trialPeriodDays = null,
     ): self {
@@ -179,7 +174,6 @@ final class RecurringPrice implements BaseModel
         $self['purchasingPowerParity'] = $purchasingPowerParity;
         $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
-        $self['type'] = $type;
 
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
         null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
@@ -289,9 +283,9 @@ final class RecurringPrice implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'recurring_price' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

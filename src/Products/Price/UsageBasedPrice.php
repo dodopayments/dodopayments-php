@@ -10,7 +10,6 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Products\AddMeterToPrice;
-use Dodopayments\Products\Price\UsageBasedPrice\Type;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
@@ -27,7 +26,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   purchasingPowerParity: bool,
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
- *   type: Type|value-of<Type>,
+ *   type: 'usage_based_price',
  *   meters?: list<AddMeterToPrice|AddMeterToPriceShape>|null,
  *   taxInclusive?: bool|null,
  * }
@@ -36,6 +35,10 @@ final class UsageBasedPrice implements BaseModel
 {
     /** @use SdkModel<UsageBasedPriceShape> */
     use SdkModel;
+
+    /** @var 'usage_based_price' $type */
+    #[Required]
+    public string $type = 'usage_based_price';
 
     /**
      * The currency in which the payment is made.
@@ -95,10 +98,6 @@ final class UsageBasedPrice implements BaseModel
     #[Required('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
 
-    /** @var value-of<Type> $type */
-    #[Required(enum: Type::class)]
-    public string $type;
-
     /** @var list<AddMeterToPrice>|null $meters */
     #[Optional(list: AddMeterToPrice::class, nullable: true)]
     public ?array $meters;
@@ -123,7 +122,6 @@ final class UsageBasedPrice implements BaseModel
      *   purchasingPowerParity: ...,
      *   subscriptionPeriodCount: ...,
      *   subscriptionPeriodInterval: ...,
-     *   type: ...,
      * )
      * ```
      *
@@ -139,7 +137,6 @@ final class UsageBasedPrice implements BaseModel
      *   ->withPurchasingPowerParity(...)
      *   ->withSubscriptionPeriodCount(...)
      *   ->withSubscriptionPeriodInterval(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -155,7 +152,6 @@ final class UsageBasedPrice implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
-     * @param Type|value-of<Type> $type
      * @param list<AddMeterToPrice|AddMeterToPriceShape>|null $meters
      */
     public static function with(
@@ -167,7 +163,6 @@ final class UsageBasedPrice implements BaseModel
         bool $purchasingPowerParity,
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
-        Type|string $type,
         ?array $meters = null,
         ?bool $taxInclusive = null,
     ): self {
@@ -181,7 +176,6 @@ final class UsageBasedPrice implements BaseModel
         $self['purchasingPowerParity'] = $purchasingPowerParity;
         $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
-        $self['type'] = $type;
 
         null !== $meters && $self['meters'] = $meters;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
@@ -291,9 +285,9 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * @param Type|value-of<Type> $type
+     * @param 'usage_based_price' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

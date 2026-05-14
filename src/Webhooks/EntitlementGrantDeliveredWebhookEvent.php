@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
-use Dodopayments\Webhooks\EntitlementGrantDeliveredWebhookEvent\Type;
 
 /**
  * @phpstan-import-type EntitlementGrantShape from \Dodopayments\Entitlements\Grants\EntitlementGrant
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\EntitlementGrantDeliveredWebhookEvent\Type;
  *   businessID: string,
  *   data: EntitlementGrant|EntitlementGrantShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'entitlement_grant.delivered',
  * }
  */
 final class EntitlementGrantDeliveredWebhookEvent implements BaseModel
 {
     /** @use SdkModel<EntitlementGrantDeliveredWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'entitlement_grant.delivered' $type
+     */
+    #[Required]
+    public string $type = 'entitlement_grant.delivered';
 
     /**
      * The business identifier.
@@ -45,20 +52,12 @@ final class EntitlementGrantDeliveredWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new EntitlementGrantDeliveredWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * EntitlementGrantDeliveredWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ...
      * )
      * ```
      *
@@ -69,7 +68,6 @@ final class EntitlementGrantDeliveredWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -83,20 +81,17 @@ final class EntitlementGrantDeliveredWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param EntitlementGrant|EntitlementGrantShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         EntitlementGrant|array $data,
         \DateTimeInterface $timestamp,
-        Type|string $type,
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -140,9 +135,9 @@ final class EntitlementGrantDeliveredWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'entitlement_grant.delivered' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

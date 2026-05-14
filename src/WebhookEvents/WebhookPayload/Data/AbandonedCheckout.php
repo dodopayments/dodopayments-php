@@ -9,7 +9,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout\AbandonmentReason;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout\PayloadType;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout\Status;
 
 /**
@@ -17,7 +16,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout\Status;
  *   abandonedAt: \DateTimeInterface,
  *   abandonmentReason: AbandonmentReason|value-of<AbandonmentReason>,
  *   customerID: string,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'AbandonedCheckout',
  *   paymentID: string,
  *   status: Status|value-of<Status>,
  *   recoveredPaymentID?: string|null,
@@ -28,6 +27,10 @@ final class AbandonedCheckout implements BaseModel
     /** @use SdkModel<AbandonedCheckoutShape> */
     use SdkModel;
 
+    /** @var 'AbandonedCheckout' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'AbandonedCheckout';
+
     #[Required('abandoned_at')]
     public \DateTimeInterface $abandonedAt;
 
@@ -37,10 +40,6 @@ final class AbandonedCheckout implements BaseModel
 
     #[Required('customer_id')]
     public string $customerID;
-
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
 
     #[Required('payment_id')]
     public string $paymentID;
@@ -61,7 +60,6 @@ final class AbandonedCheckout implements BaseModel
      *   abandonedAt: ...,
      *   abandonmentReason: ...,
      *   customerID: ...,
-     *   payloadType: ...,
      *   paymentID: ...,
      *   status: ...,
      * )
@@ -74,7 +72,6 @@ final class AbandonedCheckout implements BaseModel
      *   ->withAbandonedAt(...)
      *   ->withAbandonmentReason(...)
      *   ->withCustomerID(...)
-     *   ->withPayloadType(...)
      *   ->withPaymentID(...)
      *   ->withStatus(...)
      * ```
@@ -90,14 +87,12 @@ final class AbandonedCheckout implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param AbandonmentReason|value-of<AbandonmentReason> $abandonmentReason
-     * @param PayloadType|value-of<PayloadType> $payloadType
      * @param Status|value-of<Status> $status
      */
     public static function with(
         \DateTimeInterface $abandonedAt,
         AbandonmentReason|string $abandonmentReason,
         string $customerID,
-        PayloadType|string $payloadType,
         string $paymentID,
         Status|string $status,
         ?string $recoveredPaymentID = null,
@@ -107,7 +102,6 @@ final class AbandonedCheckout implements BaseModel
         $self['abandonedAt'] = $abandonedAt;
         $self['abandonmentReason'] = $abandonmentReason;
         $self['customerID'] = $customerID;
-        $self['payloadType'] = $payloadType;
         $self['paymentID'] = $paymentID;
         $self['status'] = $status;
 
@@ -145,9 +139,9 @@ final class AbandonedCheckout implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'AbandonedCheckout' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

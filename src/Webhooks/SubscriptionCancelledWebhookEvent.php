@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\Subscription;
-use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent\Type;
 
 /**
  * @phpstan-import-type SubscriptionShape from \Dodopayments\Subscriptions\Subscription
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\SubscriptionCancelledWebhookEvent\Type;
  *   businessID: string,
  *   data: Subscription|SubscriptionShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'subscription.cancelled',
  * }
  */
 final class SubscriptionCancelledWebhookEvent implements BaseModel
 {
     /** @use SdkModel<SubscriptionCancelledWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'subscription.cancelled' $type
+     */
+    #[Required]
+    public string $type = 'subscription.cancelled';
 
     /**
      * The business identifier.
@@ -44,20 +51,12 @@ final class SubscriptionCancelledWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new SubscriptionCancelledWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
      * SubscriptionCancelledWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
+     *   businessID: ..., data: ..., timestamp: ...
      * )
      * ```
      *
@@ -68,7 +67,6 @@ final class SubscriptionCancelledWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -82,20 +80,17 @@ final class SubscriptionCancelledWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Subscription|SubscriptionShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         Subscription|array $data,
-        \DateTimeInterface $timestamp,
-        Type|string $type,
+        \DateTimeInterface $timestamp
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -138,9 +133,9 @@ final class SubscriptionCancelledWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'subscription.cancelled' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

@@ -283,7 +283,6 @@ final class SubscriptionsTest extends TestCase
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
             'subscription_id',
-            type: 'existing',
             paymentMethodID: 'payment_method_id'
         );
 

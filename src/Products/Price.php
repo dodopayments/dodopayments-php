@@ -25,11 +25,20 @@ final class Price implements ConverterSource
 {
     use SdkUnion;
 
+    public static function discriminator(): string
+    {
+        return 'type';
+    }
+
     /**
      * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
     public static function variants(): array
     {
-        return [OneTimePrice::class, RecurringPrice::class, UsageBasedPrice::class];
+        return [
+            'one_time_price' => OneTimePrice::class,
+            'recurring_price' => RecurringPrice::class,
+            'usage_based_price' => UsageBasedPrice::class,
+        ];
     }
 }

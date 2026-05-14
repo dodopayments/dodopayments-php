@@ -7,7 +7,6 @@ namespace Dodopayments\WebhookEvents\WebhookPayload\Data;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow\PayloadType;
 
 /**
  * @phpstan-type CreditBalanceLowShape = array{
@@ -15,7 +14,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow\PayloadType;
  *   creditEntitlementID: string,
  *   creditEntitlementName: string,
  *   customerID: string,
- *   payloadType: PayloadType|value-of<PayloadType>,
+ *   payloadType: 'CreditBalanceLow',
  *   subscriptionCreditsAmount: string,
  *   subscriptionID: string,
  *   thresholdAmount: string,
@@ -26,6 +25,10 @@ final class CreditBalanceLow implements BaseModel
 {
     /** @use SdkModel<CreditBalanceLowShape> */
     use SdkModel;
+
+    /** @var 'CreditBalanceLow' $payloadType */
+    #[Required('payload_type')]
+    public string $payloadType = 'CreditBalanceLow';
 
     #[Required('available_balance')]
     public string $availableBalance;
@@ -38,10 +41,6 @@ final class CreditBalanceLow implements BaseModel
 
     #[Required('customer_id')]
     public string $customerID;
-
-    /** @var value-of<PayloadType> $payloadType */
-    #[Required('payload_type', enum: PayloadType::class)]
-    public string $payloadType;
 
     #[Required('subscription_credits_amount')]
     public string $subscriptionCreditsAmount;
@@ -65,7 +64,6 @@ final class CreditBalanceLow implements BaseModel
      *   creditEntitlementID: ...,
      *   creditEntitlementName: ...,
      *   customerID: ...,
-     *   payloadType: ...,
      *   subscriptionCreditsAmount: ...,
      *   subscriptionID: ...,
      *   thresholdAmount: ...,
@@ -81,7 +79,6 @@ final class CreditBalanceLow implements BaseModel
      *   ->withCreditEntitlementID(...)
      *   ->withCreditEntitlementName(...)
      *   ->withCustomerID(...)
-     *   ->withPayloadType(...)
      *   ->withSubscriptionCreditsAmount(...)
      *   ->withSubscriptionID(...)
      *   ->withThresholdAmount(...)
@@ -97,15 +94,12 @@ final class CreditBalanceLow implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param PayloadType|value-of<PayloadType> $payloadType
      */
     public static function with(
         string $availableBalance,
         string $creditEntitlementID,
         string $creditEntitlementName,
         string $customerID,
-        PayloadType|string $payloadType,
         string $subscriptionCreditsAmount,
         string $subscriptionID,
         string $thresholdAmount,
@@ -117,7 +111,6 @@ final class CreditBalanceLow implements BaseModel
         $self['creditEntitlementID'] = $creditEntitlementID;
         $self['creditEntitlementName'] = $creditEntitlementName;
         $self['customerID'] = $customerID;
-        $self['payloadType'] = $payloadType;
         $self['subscriptionCreditsAmount'] = $subscriptionCreditsAmount;
         $self['subscriptionID'] = $subscriptionID;
         $self['thresholdAmount'] = $thresholdAmount;
@@ -160,9 +153,9 @@ final class CreditBalanceLow implements BaseModel
     }
 
     /**
-     * @param PayloadType|value-of<PayloadType> $payloadType
+     * @param 'CreditBalanceLow' $payloadType
      */
-    public function withPayloadType(PayloadType|string $payloadType): self
+    public function withPayloadType(string $payloadType): self
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;

@@ -39,22 +39,27 @@ final class Data implements ConverterSource
 {
     use SdkUnion;
 
+    public static function discriminator(): string
+    {
+        return 'payloadType';
+    }
+
     /**
      * @return list<string|Converter|ConverterSource>|array<string,string|Converter|ConverterSource>
      */
     public static function variants(): array
     {
         return [
-            Payment::class,
-            Subscription::class,
-            Refund::class,
-            Dispute::class,
-            LicenseKey::class,
-            CreditLedgerEntry::class,
-            CreditBalanceLow::class,
-            AbandonedCheckout::class,
-            DunningAttempt::class,
-            EntitlementGrant::class,
+            'Payment' => Payment::class,
+            'Subscription' => Subscription::class,
+            'Refund' => Refund::class,
+            'Dispute' => Dispute::class,
+            'LicenseKey' => LicenseKey::class,
+            'CreditLedgerEntry' => CreditLedgerEntry::class,
+            'CreditBalanceLow' => CreditBalanceLow::class,
+            'AbandonedCheckout' => AbandonedCheckout::class,
+            'DunningAttempt' => DunningAttempt::class,
+            'EntitlementGrant' => EntitlementGrant::class,
         ];
     }
 }

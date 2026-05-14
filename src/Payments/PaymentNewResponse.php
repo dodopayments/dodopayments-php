@@ -65,7 +65,7 @@ final class PaymentNewResponse implements BaseModel
     public int $totalAmount;
 
     /**
-     * @deprecated
+     * @deprecated Use `discounts` instead.
      *
      * DEPRECATED: Use discount_ids instead. Returns the first discount's ID if present.
      */

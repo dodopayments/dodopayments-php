@@ -216,7 +216,7 @@ final class Payment implements BaseModel
     public ?array $customFieldResponses;
 
     /**
-     * @deprecated
+     * @deprecated Use `discounts` instead.
      *
      * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
      */

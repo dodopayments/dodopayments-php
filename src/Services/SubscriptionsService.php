@@ -35,7 +35,6 @@ use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
-use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\Type;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 
 /**
@@ -585,15 +584,15 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param Type|value-of<Type> $type
+     * @param 'existing' $type
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function updatePaymentMethod(
         string $subscriptionID,
-        Type|string $type,
         string $paymentMethodID,
+        string $type = 'existing',
         ?string $returnURL = null,
         RequestOptions|array|null $requestOptions = null,
     ): SubscriptionUpdatePaymentMethodResponse {

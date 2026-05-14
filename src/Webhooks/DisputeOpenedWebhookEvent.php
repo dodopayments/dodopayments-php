@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\Dispute;
-use Dodopayments\Webhooks\DisputeOpenedWebhookEvent\Type;
 
 /**
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\DisputeOpenedWebhookEvent\Type;
  *   businessID: string,
  *   data: Dispute|DisputeShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'dispute.opened',
  * }
  */
 final class DisputeOpenedWebhookEvent implements BaseModel
 {
     /** @use SdkModel<DisputeOpenedWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'dispute.opened' $type
+     */
+    #[Required]
+    public string $type = 'dispute.opened';
 
     /**
      * The business identifier.
@@ -41,21 +48,11 @@ final class DisputeOpenedWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new DisputeOpenedWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * DisputeOpenedWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
-     * )
+     * DisputeOpenedWebhookEvent::with(businessID: ..., data: ..., timestamp: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -65,7 +62,6 @@ final class DisputeOpenedWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -79,20 +75,17 @@ final class DisputeOpenedWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Dispute|DisputeShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         Dispute|array $data,
-        \DateTimeInterface $timestamp,
-        Type|string $type,
+        \DateTimeInterface $timestamp
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -133,9 +126,9 @@ final class DisputeOpenedWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'dispute.opened' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;

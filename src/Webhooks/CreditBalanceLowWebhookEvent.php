@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Webhooks\CreditBalanceLowWebhookEvent\Data;
-use Dodopayments\Webhooks\CreditBalanceLowWebhookEvent\Type;
 
 /**
  * @phpstan-import-type DataShape from \Dodopayments\Webhooks\CreditBalanceLowWebhookEvent\Data
@@ -17,13 +16,21 @@ use Dodopayments\Webhooks\CreditBalanceLowWebhookEvent\Type;
  *   businessID: string,
  *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
- *   type: Type|value-of<Type>,
+ *   type: 'credit.balance_low',
  * }
  */
 final class CreditBalanceLowWebhookEvent implements BaseModel
 {
     /** @use SdkModel<CreditBalanceLowWebhookEventShape> */
     use SdkModel;
+
+    /**
+     * The event type.
+     *
+     * @var 'credit.balance_low' $type
+     */
+    #[Required]
+    public string $type = 'credit.balance_low';
 
     /**
      * The business identifier.
@@ -44,21 +51,11 @@ final class CreditBalanceLowWebhookEvent implements BaseModel
     public \DateTimeInterface $timestamp;
 
     /**
-     * The event type.
-     *
-     * @var value-of<Type> $type
-     */
-    #[Required(enum: Type::class)]
-    public string $type;
-
-    /**
      * `new CreditBalanceLowWebhookEvent()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * CreditBalanceLowWebhookEvent::with(
-     *   businessID: ..., data: ..., timestamp: ..., type: ...
-     * )
+     * CreditBalanceLowWebhookEvent::with(businessID: ..., data: ..., timestamp: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -68,7 +65,6 @@ final class CreditBalanceLowWebhookEvent implements BaseModel
      *   ->withBusinessID(...)
      *   ->withData(...)
      *   ->withTimestamp(...)
-     *   ->withType(...)
      * ```
      */
     public function __construct()
@@ -82,20 +78,17 @@ final class CreditBalanceLowWebhookEvent implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Data|DataShape $data
-     * @param Type|value-of<Type> $type
      */
     public static function with(
         string $businessID,
         Data|array $data,
-        \DateTimeInterface $timestamp,
-        Type|string $type,
+        \DateTimeInterface $timestamp
     ): self {
         $self = new self;
 
         $self['businessID'] = $businessID;
         $self['data'] = $data;
         $self['timestamp'] = $timestamp;
-        $self['type'] = $type;
 
         return $self;
     }
@@ -138,9 +131,9 @@ final class CreditBalanceLowWebhookEvent implements BaseModel
     /**
      * The event type.
      *
-     * @param Type|value-of<Type> $type
+     * @param 'credit.balance_low' $type
      */
-    public function withType(Type|string $type): self
+    public function withType(string $type): self
     {
         $self = clone $this;
         $self['type'] = $type;
