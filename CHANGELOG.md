@@ -1,5 +1,20 @@
 # Changelog
 
+## 6.7.2 (2026-05-14)
+
+Full Changelog: [v6.7.1...v6.7.2](https://github.com/dodopayments/dodopayments-php/compare/v6.7.1...v6.7.2)
+
+### Features
+
+* **api:** manual updates ([46713eb](https://github.com/dodopayments/dodopayments-php/commit/46713eba1bfad9e2446ba0e9ac39888000e05ad4))
+* **api:** updated openapi spec to 1.98.0 ([44e2a52](https://github.com/dodopayments/dodopayments-php/commit/44e2a52e1c9f8bb25f3a598bd3f2f2eeb69acab8))
+* **api:** updated openapi spec to v1.97.10 ([2bc6df5](https://github.com/dodopayments/dodopayments-php/commit/2bc6df5cfdac02fb89579768197dd544cf628116))
+
+
+### Bug Fixes
+
+* guzzle requires special handling to enable streaming ([21d11ad](https://github.com/dodopayments/dodopayments-php/commit/21d11adfc8e958c6678b414ddb9b909093ce7730))
+
 ## 6.7.1 (2026-05-06)
 
 Full Changelog: [v6.7.0...v6.7.1](https://github.com/dodopayments/dodopayments-php/compare/v6.7.0...v6.7.1)
