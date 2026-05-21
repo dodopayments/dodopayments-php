@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Subscriptions\SubscriptionCreateParams;
+namespace Dodopayments\Subscriptions\SubscriptionNewResponse;
 
-use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type OneTimeProductCartShape = array{
- *   productID: string, quantity: int, amount?: int|null
- * }
+ * @phpstan-type OneTimeProductCartShape = array{productID: string, quantity: int}
  */
 final class OneTimeProductCart implements BaseModel
 {
@@ -24,14 +21,6 @@ final class OneTimeProductCart implements BaseModel
 
     #[Required]
     public int $quantity;
-
-    /**
-     * Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored
-     * Represented in the lowest denomination of the currency (e.g., cents for USD).
-     * For example, to charge $1.00, pass `100`.
-     */
-    #[Optional(nullable: true)]
-    public ?int $amount;
 
     /**
      * `new OneTimeProductCart()` is missing required properties by the API.
@@ -57,17 +46,12 @@ final class OneTimeProductCart implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(
-        string $productID,
-        int $quantity,
-        ?int $amount = null
-    ): self {
+    public static function with(string $productID, int $quantity): self
+    {
         $self = new self;
 
         $self['productID'] = $productID;
         $self['quantity'] = $quantity;
-
-        null !== $amount && $self['amount'] = $amount;
 
         return $self;
     }
@@ -84,19 +68,6 @@ final class OneTimeProductCart implements BaseModel
     {
         $self = clone $this;
         $self['quantity'] = $quantity;
-
-        return $self;
-    }
-
-    /**
-     * Amount the customer pays if pay_what_you_want is enabled. If disabled then amount will be ignored
-     * Represented in the lowest denomination of the currency (e.g., cents for USD).
-     * For example, to charge $1.00, pass `100`.
-     */
-    public function withAmount(?int $amount): self
-    {
-        $self = clone $this;
-        $self['amount'] = $amount;
 
         return $self;
     }
