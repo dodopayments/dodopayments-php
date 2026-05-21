@@ -13,8 +13,8 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
+use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
 
 /**
  * @deprecated
@@ -25,7 +25,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart
  *
  * @phpstan-type SubscriptionCreateParamsShape = array{
  *   billing: BillingAddress|BillingAddressShape,
@@ -35,13 +35,14 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
+ *   customerBusinessName?: string|null,
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   force3DS?: bool|null,
  *   mandateMinAmountInrPaise?: int|null,
  *   metadata?: array<string,string>|null,
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
- *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
+ *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
  *   paymentLink?: bool|null,
  *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
@@ -119,6 +120,14 @@ final class SubscriptionCreateParams implements BaseModel
     public ?string $billingCurrency;
 
     /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
+     */
+    #[Optional('customer_business_name', nullable: true)]
+    public ?string $customerBusinessName;
+
+    /**
      * @deprecated Use `discount_id` instead.
      *
      * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
@@ -167,11 +176,11 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * List of one time products that will be bundled with the first payment for this subscription.
      *
-     * @var list<OneTimeProductCartItem>|null $oneTimeProductCart
+     * @var list<OneTimeProductCart>|null $oneTimeProductCart
      */
     #[Optional(
         'one_time_product_cart',
-        list: OneTimeProductCartItem::class,
+        list: OneTimeProductCart::class,
         nullable: true
     )]
     public ?array $oneTimeProductCart;
@@ -278,7 +287,7 @@ final class SubscriptionCreateParams implements BaseModel
      * @param list<string>|null $discountCodes
      * @param array<string,string>|null $metadata
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public static function with(
         BillingAddress|array $billing,
@@ -288,6 +297,7 @@ final class SubscriptionCreateParams implements BaseModel
         ?array $addons = null,
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
+        ?string $customerBusinessName = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         ?bool $force3DS = null,
@@ -315,6 +325,7 @@ final class SubscriptionCreateParams implements BaseModel
         null !== $addons && $self['addons'] = $addons;
         null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
+        null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $force3DS && $self['force3DS'] = $force3DS;
@@ -431,6 +442,20 @@ final class SubscriptionCreateParams implements BaseModel
     }
 
     /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
+     */
+    public function withCustomerBusinessName(
+        ?string $customerBusinessName
+    ): self {
+        $self = clone $this;
+        $self['customerBusinessName'] = $customerBusinessName;
+
+        return $self;
+    }
+
+    /**
      * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
     public function withDiscountCode(?string $discountCode): self
@@ -512,7 +537,7 @@ final class SubscriptionCreateParams implements BaseModel
     /**
      * List of one time products that will be bundled with the first payment for this subscription.
      *
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
+     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
      */
     public function withOneTimeProductCart(?array $oneTimeProductCart): self
     {

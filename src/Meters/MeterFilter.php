@@ -7,7 +7,6 @@ namespace Dodopayments\Meters;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Meters\MeterFilter\Clauses;
 
 /**
  * A filter structure that combines multiple conditions with logical conjunctions (AND/OR).
@@ -15,11 +14,8 @@ use Dodopayments\Meters\MeterFilter\Clauses;
  * Supports up to 3 levels of nesting to create complex filter expressions.
  * Each filter has a conjunction (and/or) and clauses that can be either direct conditions or nested filters.
  *
- * @phpstan-import-type ClausesVariants from \Dodopayments\Meters\MeterFilter\Clauses
- * @phpstan-import-type ClausesShape from \Dodopayments\Meters\MeterFilter\Clauses
- *
  * @phpstan-type MeterFilterShape = array{
- *   clauses: ClausesShape, conjunction: Conjunction|value-of<Conjunction>
+ *   clauses: mixed, conjunction: Conjunction|value-of<Conjunction>
  * }
  */
 final class MeterFilter implements BaseModel
@@ -29,11 +25,9 @@ final class MeterFilter implements BaseModel
 
     /**
      * Filter clauses - can be direct conditions or nested filters (up to 3 levels deep).
-     *
-     * @var ClausesVariants $clauses
      */
-    #[Required(union: Clauses::class)]
-    public array $clauses;
+    #[Required(union: FilterType::class)]
+    public mixed $clauses;
 
     /**
      * Logical conjunction to apply between clauses (and/or).
@@ -67,11 +61,10 @@ final class MeterFilter implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param ClausesShape $clauses
      * @param Conjunction|value-of<Conjunction> $conjunction
      */
     public static function with(
-        array $clauses,
+        mixed $clauses,
         Conjunction|string $conjunction
     ): self {
         $self = new self;
@@ -84,10 +77,8 @@ final class MeterFilter implements BaseModel
 
     /**
      * Filter clauses - can be direct conditions or nested filters (up to 3 levels deep).
-     *
-     * @param ClausesShape $clauses
      */
-    public function withClauses(array $clauses): self
+    public function withClauses(mixed $clauses): self
     {
         $self = clone $this;
         $self['clauses'] = $clauses;

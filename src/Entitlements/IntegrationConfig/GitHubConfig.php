@@ -7,11 +7,11 @@ namespace Dodopayments\Entitlements\IntegrationConfig;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Entitlements\IntegrationConfig\GitHubConfig\Permission;
+use Dodopayments\Entitlements\GitHubPermission;
 
 /**
  * @phpstan-type GitHubConfigShape = array{
- *   permission: Permission|value-of<Permission>, targetID: string
+ *   permission: GitHubPermission|value-of<GitHubPermission>, targetID: string
  * }
  */
 final class GitHubConfig implements BaseModel
@@ -22,9 +22,9 @@ final class GitHubConfig implements BaseModel
     /**
      * Permission to grant on the repository.
      *
-     * @var value-of<Permission> $permission
+     * @var value-of<GitHubPermission> $permission
      */
-    #[Required(enum: Permission::class)]
+    #[Required(enum: GitHubPermission::class)]
     public string $permission;
 
     /**
@@ -57,10 +57,10 @@ final class GitHubConfig implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Permission|value-of<Permission> $permission
+     * @param GitHubPermission|value-of<GitHubPermission> $permission
      */
     public static function with(
-        Permission|string $permission,
+        GitHubPermission|string $permission,
         string $targetID
     ): self {
         $self = new self;
@@ -74,9 +74,9 @@ final class GitHubConfig implements BaseModel
     /**
      * Permission to grant on the repository.
      *
-     * @param Permission|value-of<Permission> $permission
+     * @param GitHubPermission|value-of<GitHubPermission> $permission
      */
-    public function withPermission(Permission|string $permission): self
+    public function withPermission(GitHubPermission|string $permission): self
     {
         $self = clone $this;
         $self['permission'] = $permission;

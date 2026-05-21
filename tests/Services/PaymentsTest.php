@@ -65,6 +65,7 @@ final class PaymentsTest extends TestCase
             adaptiveCurrencyFeesInclusive: true,
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingCurrency: Currency::AED,
+            customerBusinessName: 'customer_business_name',
             discountCode: 'discount_code',
             discountCodes: ['string'],
             force3DS: true,

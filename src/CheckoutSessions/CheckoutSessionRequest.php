@@ -32,6 +32,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   confirm?: bool|null,
  *   customFields?: list<CustomField|CustomFieldShape>|null,
  *   customer?: CustomerRequestShape|null,
+ *   customerBusinessName?: string|null,
  *   customization?: null|CheckoutSessionCustomization|CheckoutSessionCustomizationShape,
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
@@ -117,6 +118,14 @@ final class CheckoutSessionRequest implements BaseModel
      */
     #[Optional(nullable: true)]
     public AttachExistingCustomer|NewCustomer|null $customer;
+
+    /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
+     */
+    #[Optional('customer_business_name', nullable: true)]
+    public ?string $customerBusinessName;
 
     /**
      * Customization for the checkout session page.
@@ -262,6 +271,7 @@ final class CheckoutSessionRequest implements BaseModel
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
+        ?string $customerBusinessName = null,
         CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
@@ -289,6 +299,7 @@ final class CheckoutSessionRequest implements BaseModel
         null !== $confirm && $self['confirm'] = $confirm;
         null !== $customFields && $self['customFields'] = $customFields;
         null !== $customer && $self['customer'] = $customer;
+        null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $customization && $self['customization'] = $customization;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $discountCodes && $self['discountCodes'] = $discountCodes;
@@ -412,6 +423,20 @@ final class CheckoutSessionRequest implements BaseModel
     ): self {
         $self = clone $this;
         $self['customer'] = $customer;
+
+        return $self;
+    }
+
+    /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
+     */
+    public function withCustomerBusinessName(
+        ?string $customerBusinessName
+    ): self {
+        $self = clone $this;
+        $self['customerBusinessName'] = $customerBusinessName;
 
         return $self;
     }
