@@ -12,7 +12,6 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\SubscriptionsContract;
@@ -25,6 +24,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
+use Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart;
 use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListParams\Status;
@@ -42,7 +42,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 /**
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionCreateParams\OneTimeProductCart
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
@@ -83,6 +83,9 @@ final class SubscriptionsService implements SubscriptionsContract
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
+     * @param string|null $customerBusinessName Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply, in order of application. Max 20.
      * Cannot be used together with discount_code.
@@ -96,7 +99,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param array<string,string> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
+     * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
      * @param bool|null $paymentLink If true, generates a payment link.
      * Defaults to false if not specified.
      * @param string|null $paymentMethodID Optional payment method ID to use for this subscription.
@@ -128,6 +131,7 @@ final class SubscriptionsService implements SubscriptionsContract
         ?array $addons = null,
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
+        ?string $customerBusinessName = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         ?bool $force3DS = null,
@@ -155,6 +159,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'addons' => $addons,
                 'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
                 'billingCurrency' => $billingCurrency,
+                'customerBusinessName' => $customerBusinessName,
                 'discountCode' => $discountCode,
                 'discountCodes' => $discountCodes,
                 'force3DS' => $force3DS,
@@ -208,6 +213,10 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param string|null $cancellationComment free-text cancellation comment (only valid when cancelling or scheduling cancellation)
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback customer-supplied churn reason (only valid when cancelling or scheduling cancellation)
      * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart Update credit entitlement cart settings
+     * @param string|null $customerBusinessName Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B subscription, this name is rendered
+     * on the invoice instead of the customer's personal name. Send `null` to
+     * explicitly clear the business name.
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,string>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
@@ -223,6 +232,7 @@ final class SubscriptionsService implements SubscriptionsContract
         ?string $cancellationComment = null,
         CancellationFeedback|string|null $cancellationFeedback = null,
         ?array $creditEntitlementCart = null,
+        ?string $customerBusinessName = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
         ?array $metadata = null,
@@ -239,6 +249,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'cancellationComment' => $cancellationComment,
                 'cancellationFeedback' => $cancellationFeedback,
                 'creditEntitlementCart' => $creditEntitlementCart,
+                'customerBusinessName' => $customerBusinessName,
                 'customerName' => $customerName,
                 'disableOnDemand' => $disableOnDemand,
                 'metadata' => $metadata,

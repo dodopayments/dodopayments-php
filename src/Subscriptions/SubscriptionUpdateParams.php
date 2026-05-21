@@ -27,6 +27,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *   cancellationComment?: string|null,
  *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
  *   creditEntitlementCart?: list<CreditEntitlementCart|CreditEntitlementCartShape>|null,
+ *   customerBusinessName?: string|null,
  *   customerName?: string|null,
  *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
  *   metadata?: array<string,string>|null,
@@ -84,6 +85,15 @@ final class SubscriptionUpdateParams implements BaseModel
     )]
     public ?array $creditEntitlementCart;
 
+    /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B subscription, this name is rendered
+     * on the invoice instead of the customer's personal name. Send `null` to
+     * explicitly clear the business name.
+     */
+    #[Optional('customer_business_name', nullable: true)]
+    public ?string $customerBusinessName;
+
     #[Optional('customer_name', nullable: true)]
     public ?string $customerName;
 
@@ -129,6 +139,7 @@ final class SubscriptionUpdateParams implements BaseModel
         ?string $cancellationComment = null,
         CancellationFeedback|string|null $cancellationFeedback = null,
         ?array $creditEntitlementCart = null,
+        ?string $customerBusinessName = null,
         ?string $customerName = null,
         DisableOnDemand|array|null $disableOnDemand = null,
         ?array $metadata = null,
@@ -144,6 +155,7 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $cancellationComment && $self['cancellationComment'] = $cancellationComment;
         null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
         null !== $creditEntitlementCart && $self['creditEntitlementCart'] = $creditEntitlementCart;
+        null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $customerName && $self['customerName'] = $customerName;
         null !== $disableOnDemand && $self['disableOnDemand'] = $disableOnDemand;
         null !== $metadata && $self['metadata'] = $metadata;
@@ -224,6 +236,21 @@ final class SubscriptionUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['creditEntitlementCart'] = $creditEntitlementCart;
+
+        return $self;
+    }
+
+    /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B subscription, this name is rendered
+     * on the invoice instead of the customer's personal name. Send `null` to
+     * explicitly clear the business name.
+     */
+    public function withCustomerBusinessName(
+        ?string $customerBusinessName
+    ): self {
+        $self = clone $this;
+        $self['customerBusinessName'] = $customerBusinessName;
 
         return $self;
     }

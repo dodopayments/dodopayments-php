@@ -41,13 +41,9 @@ enum WebhookEventType: string
 
     case SUBSCRIPTION_ON_HOLD = 'subscription.on_hold';
 
+    case SUBSCRIPTION_PAUSED = 'subscription.paused';
+
     case SUBSCRIPTION_CANCELLED = 'subscription.cancelled';
-
-    case SUBSCRIPTION_CANCELLATION_SCHEDULED = 'subscription.cancellation_scheduled';
-
-    case SUBSCRIPTION_TRIAL_ENDING = 'subscription.trial_ending';
-
-    case SUBSCRIPTION_UPCOMING_RENEWAL = 'subscription.upcoming_renewal';
 
     case SUBSCRIPTION_FAILED = 'subscription.failed';
 
@@ -94,10 +90,6 @@ enum WebhookEventType: string
     case DUNNING_STARTED = 'dunning.started';
 
     case DUNNING_RECOVERED = 'dunning.recovered';
-
-    case ACR_EMAIL = 'acr.email';
-
-    case DUNNING_EMAIL = 'dunning.email';
 
     case ENTITLEMENT_GRANT_CREATED = 'entitlement_grant.created';
 

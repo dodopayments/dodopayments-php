@@ -49,6 +49,9 @@ interface CheckoutSessionsContract
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
      * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
+     * @param string|null $customerBusinessName Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply, in order. Max 20.
@@ -86,6 +89,7 @@ interface CheckoutSessionsContract
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
+        ?string $customerBusinessName = null,
         CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
@@ -133,6 +137,9 @@ interface CheckoutSessionsContract
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
      * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
      * @param CustomerRequestShape|null $customer Customer details for the session
+     * @param string|null $customerBusinessName Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply, in order. Max 20.
@@ -170,6 +177,7 @@ interface CheckoutSessionsContract
         ?bool $confirm = null,
         ?array $customFields = null,
         AttachExistingCustomer|array|NewCustomer|null $customer = null,
+        ?string $customerBusinessName = null,
         CheckoutSessionCustomization|array|null $customization = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,

@@ -83,6 +83,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
             ],
             customer: ['customerID' => 'customer_id'],
+            customerBusinessName: 'customer_business_name',
             customization: [
                 'forceLanguage' => 'force_language',
                 'showOnDemandTag' => true,
@@ -137,6 +138,7 @@ final class CheckoutSessionsTest extends TestCase
             discountCodes: ['string'],
             featureFlags: [
                 'allowCurrencySelection' => true,
+                'allowCustomerEditingBusinessName' => true,
                 'allowCustomerEditingCity' => true,
                 'allowCustomerEditingCountry' => true,
                 'allowCustomerEditingEmail' => true,
@@ -238,6 +240,7 @@ final class CheckoutSessionsTest extends TestCase
                 ],
             ],
             customer: ['customerID' => 'customer_id'],
+            customerBusinessName: 'customer_business_name',
             customization: [
                 'forceLanguage' => 'force_language',
                 'showOnDemandTag' => true,
@@ -292,6 +295,7 @@ final class CheckoutSessionsTest extends TestCase
             discountCodes: ['string'],
             featureFlags: [
                 'allowCurrencySelection' => true,
+                'allowCustomerEditingBusinessName' => true,
                 'allowCustomerEditingCity' => true,
                 'allowCustomerEditingCountry' => true,
                 'allowCustomerEditingEmail' => true,

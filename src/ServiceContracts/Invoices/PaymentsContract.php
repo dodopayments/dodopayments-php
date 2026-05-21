@@ -31,6 +31,18 @@ interface PaymentsContract
      *
      * @throws APIException
      */
+    public function retrievePayout(
+        string $payoutID,
+        RequestOptions|array|null $requestOptions = null
+    ): string;
+
+    /**
+     * @api
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
     public function retrieveRefund(
         string $refundID,
         RequestOptions|array|null $requestOptions = null

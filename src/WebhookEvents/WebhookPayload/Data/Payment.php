@@ -16,7 +16,7 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
 use Dodopayments\Payments\IntentStatus;
-use Dodopayments\Payments\Payment\ProductCart;
+use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentRefundStatus;
 use Dodopayments\Payments\RefundListItem;
 
@@ -27,7 +27,7 @@ use Dodopayments\Payments\RefundListItem;
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
- * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type PaymentShape = array{
  *   billing: BillingAddress|BillingAddressShape,
@@ -60,7 +60,7 @@ use Dodopayments\Payments\RefundListItem;
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
  *   paymentMethodType?: string|null,
- *   productCart?: list<ProductCart|ProductCartShape>|null,
+ *   productCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  *   refundStatus?: null|PaymentRefundStatus|value-of<PaymentRefundStatus>,
  *   settlementTax?: int|null,
  *   status?: null|IntentStatus|value-of<IntentStatus>,
@@ -272,9 +272,13 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @var list<ProductCart>|null $productCart
+     * @var list<OneTimeProductCartItem>|null $productCart
      */
-    #[Optional('product_cart', list: ProductCart::class, nullable: true)]
+    #[Optional(
+        'product_cart',
+        list: OneTimeProductCartItem::class,
+        nullable: true
+    )]
     public ?array $productCart;
 
     /** @var value-of<PaymentRefundStatus>|null $refundStatus */
@@ -374,7 +378,7 @@ final class Payment implements BaseModel
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
-     * @param list<ProductCart|ProductCartShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
      */
@@ -811,7 +815,7 @@ final class Payment implements BaseModel
     /**
      * List of products purchased in a one-time payment.
      *
-     * @param list<ProductCart|ProductCartShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {

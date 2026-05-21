@@ -24,6 +24,7 @@ use Dodopayments\Services\MetersService;
 use Dodopayments\Services\MiscService;
 use Dodopayments\Services\PaymentsService;
 use Dodopayments\Services\PayoutsService;
+use Dodopayments\Services\ProductCollectionsService;
 use Dodopayments\Services\ProductsService;
 use Dodopayments\Services\RefundsService;
 use Dodopayments\Services\SubscriptionsService;
@@ -159,6 +160,11 @@ class Client extends BaseClient
     public EntitlementsService $entitlements;
 
     /**
+     * @api
+     */
+    public ProductCollectionsService $productCollections;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -244,6 +250,7 @@ class Client extends BaseClient
         $this->balances = new BalancesService($this);
         $this->creditEntitlements = new CreditEntitlementsService($this);
         $this->entitlements = new EntitlementsService($this);
+        $this->productCollections = new ProductCollectionsService($this);
     }
 
     /** @return array<string,string> */
