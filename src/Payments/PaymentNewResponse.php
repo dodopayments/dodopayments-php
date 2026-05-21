@@ -8,11 +8,10 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Payments\PaymentNewResponse\ProductCart;
 
 /**
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
- * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\PaymentNewResponse\ProductCart
+ * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type PaymentNewResponseShape = array{
  *   clientSecret: string,
@@ -24,7 +23,7 @@ use Dodopayments\Payments\PaymentNewResponse\ProductCart;
  *   discountIDs?: list<string>|null,
  *   expiresOn?: \DateTimeInterface|null,
  *   paymentLink?: string|null,
- *   productCart?: list<ProductCart|ProductCartShape>|null,
+ *   productCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  * }
  */
 final class PaymentNewResponse implements BaseModel
@@ -96,9 +95,13 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Optional list of products included in the payment.
      *
-     * @var list<ProductCart>|null $productCart
+     * @var list<OneTimeProductCartItem>|null $productCart
      */
-    #[Optional('product_cart', list: ProductCart::class, nullable: true)]
+    #[Optional(
+        'product_cart',
+        list: OneTimeProductCartItem::class,
+        nullable: true
+    )]
     public ?array $productCart;
 
     /**
@@ -139,7 +142,7 @@ final class PaymentNewResponse implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
      * @param list<string>|null $discountIDs
-     * @param list<ProductCart|ProductCartShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public static function with(
         string $clientSecret,
@@ -279,7 +282,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Optional list of products included in the payment.
      *
-     * @param list<ProductCart|ProductCartShape>|null $productCart
+     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
     public function withProductCart(?array $productCart): self
     {
