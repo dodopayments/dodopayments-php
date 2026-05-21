@@ -1,5 +1,15 @@
 # Changelog
 
+## 6.8.0 (2026-05-21)
+
+Full Changelog: [v6.7.2...v6.8.0](https://github.com/dodopayments/dodopayments-php/compare/v6.7.2...v6.8.0)
+
+### Features
+
+* **api:** fixed a breaking modal change ([e405dc1](https://github.com/dodopayments/dodopayments-php/commit/e405dc17c3968f16d82e2ab0f962aecbda2f2e90))
+* **api:** stainless fixes ([7bff48f](https://github.com/dodopayments/dodopayments-php/commit/7bff48f8ef0e9da6c3d3394b133751584c1ece8b))
+* **api:** updated openapi spec to v1.99.0 and added missing endpoints as well ([441b415](https://github.com/dodopayments/dodopayments-php/commit/441b415af5c0c0765bdd11028375dc433d3129c6))
+
 ## 6.7.2 (2026-05-14)
 
 Full Changelog: [v6.7.1...v6.7.2](https://github.com/dodopayments/dodopayments-php/compare/v6.7.1...v6.7.2)
