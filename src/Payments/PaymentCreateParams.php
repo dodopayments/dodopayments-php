@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\PaymentCreateParams\ProductCart;
 
 /**
  * @deprecated
@@ -18,15 +19,16 @@ use Dodopayments\Misc\Currency;
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\PaymentCreateParams\ProductCart
  *
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress|BillingAddressShape,
  *   customer: CustomerRequestShape,
- *   productCart: list<OneTimeProductCartItem|OneTimeProductCartItemShape>,
+ *   productCart: list<ProductCart|ProductCartShape>,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingCurrency?: null|Currency|value-of<Currency>,
+ *   customerBusinessName?: string|null,
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   force3DS?: bool|null,
@@ -64,9 +66,9 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @var list<OneTimeProductCartItem> $productCart
+     * @var list<ProductCart> $productCart
      */
-    #[Required('product_cart', list: OneTimeProductCartItem::class)]
+    #[Required('product_cart', list: ProductCart::class)]
     public array $productCart;
 
     /**
@@ -100,6 +102,14 @@ final class PaymentCreateParams implements BaseModel
      */
     #[Optional('billing_currency', enum: Currency::class, nullable: true)]
     public ?string $billingCurrency;
+
+    /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
+     */
+    #[Optional('customer_business_name', nullable: true)]
+    public ?string $customerBusinessName;
 
     /**
      * @deprecated Use `discount_id` instead.
@@ -218,7 +228,7 @@ final class PaymentCreateParams implements BaseModel
      *
      * @param BillingAddress|BillingAddressShape $billing
      * @param CustomerRequestShape $customer
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart
+     * @param list<ProductCart|ProductCartShape> $productCart
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param list<string>|null $discountCodes
@@ -231,6 +241,7 @@ final class PaymentCreateParams implements BaseModel
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
+        ?string $customerBusinessName = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         ?bool $force3DS = null,
@@ -253,6 +264,7 @@ final class PaymentCreateParams implements BaseModel
         null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
         null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
+        null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $force3DS && $self['force3DS'] = $force3DS;
@@ -299,7 +311,7 @@ final class PaymentCreateParams implements BaseModel
     /**
      * List of products in the cart. Must contain at least 1 and at most 100 items.
      *
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart
+     * @param list<ProductCart|ProductCartShape> $productCart
      */
     public function withProductCart(array $productCart): self
     {
@@ -351,6 +363,20 @@ final class PaymentCreateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['billingCurrency'] = $billingCurrency;
+
+        return $self;
+    }
+
+    /**
+     * Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
+     */
+    public function withCustomerBusinessName(
+        ?string $customerBusinessName
+    ): self {
+        $self = clone $this;
+        $self['customerBusinessName'] = $customerBusinessName;
 
         return $self;
     }

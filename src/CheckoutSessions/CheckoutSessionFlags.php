@@ -11,6 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @phpstan-type CheckoutSessionFlagsShape = array{
  *   allowCurrencySelection?: bool|null,
+ *   allowCustomerEditingBusinessName?: bool|null,
  *   allowCustomerEditingCity?: bool|null,
  *   allowCustomerEditingCountry?: bool|null,
  *   allowCustomerEditingEmail?: bool|null,
@@ -39,6 +40,18 @@ final class CheckoutSessionFlags implements BaseModel
      */
     #[Optional('allow_currency_selection')]
     public ?bool $allowCurrencySelection;
+
+    /**
+     * If true, the customer can supply or edit the business name associated
+     * with the tax id during checkout. Works independently of
+     * `allow_customer_editing_tax_id` — either flag (or `allow_tax_id`) is
+     * sufficient to let the customer override the session's business name.
+     * Typically set together with `allow_customer_editing_tax_id`.
+     *
+     * Default is false
+     */
+    #[Optional('allow_customer_editing_business_name')]
+    public ?bool $allowCustomerEditingBusinessName;
 
     #[Optional('allow_customer_editing_city')]
     public ?bool $allowCustomerEditingCity;
@@ -126,6 +139,7 @@ final class CheckoutSessionFlags implements BaseModel
      */
     public static function with(
         ?bool $allowCurrencySelection = null,
+        ?bool $allowCustomerEditingBusinessName = null,
         ?bool $allowCustomerEditingCity = null,
         ?bool $allowCustomerEditingCountry = null,
         ?bool $allowCustomerEditingEmail = null,
@@ -144,6 +158,7 @@ final class CheckoutSessionFlags implements BaseModel
         $self = new self;
 
         null !== $allowCurrencySelection && $self['allowCurrencySelection'] = $allowCurrencySelection;
+        null !== $allowCustomerEditingBusinessName && $self['allowCustomerEditingBusinessName'] = $allowCustomerEditingBusinessName;
         null !== $allowCustomerEditingCity && $self['allowCustomerEditingCity'] = $allowCustomerEditingCity;
         null !== $allowCustomerEditingCountry && $self['allowCustomerEditingCountry'] = $allowCustomerEditingCountry;
         null !== $allowCustomerEditingEmail && $self['allowCustomerEditingEmail'] = $allowCustomerEditingEmail;
@@ -172,6 +187,24 @@ final class CheckoutSessionFlags implements BaseModel
     ): self {
         $self = clone $this;
         $self['allowCurrencySelection'] = $allowCurrencySelection;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer can supply or edit the business name associated
+     * with the tax id during checkout. Works independently of
+     * `allow_customer_editing_tax_id` — either flag (or `allow_tax_id`) is
+     * sufficient to let the customer override the session's business name.
+     * Typically set together with `allow_customer_editing_tax_id`.
+     *
+     * Default is false
+     */
+    public function withAllowCustomerEditingBusinessName(
+        bool $allowCustomerEditingBusinessName
+    ): self {
+        $self = clone $this;
+        $self['allowCustomerEditingBusinessName'] = $allowCustomerEditingBusinessName;
 
         return $self;
     }

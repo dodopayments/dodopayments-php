@@ -12,8 +12,8 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
-use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
+use Dodopayments\Payments\PaymentCreateParams\ProductCart;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams\Status;
 use Dodopayments\Payments\PaymentListResponse;
@@ -25,7 +25,7 @@ use Dodopayments\ServiceContracts\PaymentsContract;
 /**
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
- * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\PaymentCreateParams\ProductCart
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class PaymentsService implements PaymentsContract
@@ -50,7 +50,7 @@ final class PaymentsService implements PaymentsContract
      *
      * @param BillingAddress|BillingAddressShape $billing Billing address details for the payment
      * @param CustomerRequestShape $customer Customer information for the payment
-     * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
+     * @param list<ProductCart|ProductCartShape> $productCart List of products in the cart. Must contain at least 1 and at most 100 items.
      * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the price (true) or added on top (false).
      * If not specified, defaults to the business-level setting.
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes List of payment methods allowed during checkout.
@@ -60,6 +60,9 @@ final class PaymentsService implements PaymentsContract
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      * @param Currency|value-of<Currency>|null $billingCurrency Fix the currency in which the end customer is billed.
      * If Dodo Payments cannot support that currency for this transaction, it will not proceed
+     * @param string|null $customerBusinessName Optional business / legal name associated with the tax id. When provided
+     * together with a valid tax id for a B2B purchase, this name is rendered
+     * on the invoice instead of the customer's personal name.
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply, in order of application. Max 20.
      * Cannot be used together with discount_code.
@@ -93,6 +96,7 @@ final class PaymentsService implements PaymentsContract
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $allowedPaymentMethodTypes = null,
         Currency|string|null $billingCurrency = null,
+        ?string $customerBusinessName = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         ?bool $force3DS = null,
@@ -115,6 +119,7 @@ final class PaymentsService implements PaymentsContract
                 'adaptiveCurrencyFeesInclusive' => $adaptiveCurrencyFeesInclusive,
                 'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
                 'billingCurrency' => $billingCurrency,
+                'customerBusinessName' => $customerBusinessName,
                 'discountCode' => $discountCode,
                 'discountCodes' => $discountCodes,
                 'force3DS' => $force3DS,

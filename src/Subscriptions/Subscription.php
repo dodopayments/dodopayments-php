@@ -56,6 +56,7 @@ use Dodopayments\Payments\CustomFieldResponse;
  *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
  *   cancelledAt?: \DateTimeInterface|null,
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
+ *   customerBusinessName?: string|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
  *   discounts?: list<DiscountDetail|DiscountDetailShape>|null,
@@ -275,6 +276,13 @@ final class Subscription implements BaseModel
     public ?array $customFieldResponses;
 
     /**
+     * Business / legal name associated with the tax id (B2B). When set this is
+     * used on the invoice in place of the customer's personal name.
+     */
+    #[Optional('customer_business_name', nullable: true)]
+    public ?string $customerBusinessName;
+
+    /**
      * DEPRECATED: Use discounts[].cycles_remaining instead.
      */
     #[Optional('discount_cycles_remaining', nullable: true)]
@@ -436,6 +444,7 @@ final class Subscription implements BaseModel
         CancellationFeedback|string|null $cancellationFeedback = null,
         ?\DateTimeInterface $cancelledAt = null,
         ?array $customFieldResponses = null,
+        ?string $customerBusinessName = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
         ?array $discounts = null,
@@ -475,6 +484,7 @@ final class Subscription implements BaseModel
         null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
         null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
+        null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $discounts && $self['discounts'] = $discounts;
@@ -825,6 +835,19 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['customFieldResponses'] = $customFieldResponses;
+
+        return $self;
+    }
+
+    /**
+     * Business / legal name associated with the tax id (B2B). When set this is
+     * used on the invoice in place of the customer's personal name.
+     */
+    public function withCustomerBusinessName(
+        ?string $customerBusinessName
+    ): self {
+        $self = clone $this;
+        $self['customerBusinessName'] = $customerBusinessName;
 
         return $self;
     }
