@@ -45,4 +45,6 @@ enum EventType: string
     case ABANDONED_CART_RECOVERY_FEE = 'abandoned_cart_recovery_fee';
 
     case DUNNING_FEES = 'dunning_fees';
+
+    case PAYMENT_RETRY_FEE = 'payment_retry_fee';
 }

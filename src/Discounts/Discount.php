@@ -33,11 +33,7 @@ final class Discount implements BaseModel
     use SdkModel;
 
     /**
-     * The discount amount.
-     *
-     * - If `discount_type` is `percentage`, this is in **basis points**
-     *   (e.g., 540 => 5.4%).
-     * - Otherwise, this is **USD cents** (e.g., 100 => `$1.00`).
+     * The discount amount in **basis points** (e.g., 540 => 5.4%).
      */
     #[Required]
     public int $amount;
@@ -92,7 +88,7 @@ final class Discount implements BaseModel
     public int $timesUsed;
 
     /**
-     * The type of discount, e.g. `percentage`, `flat`, or `flat_per_unit`.
+     * The type of discount. Currently only `percentage` is supported.
      *
      * @var value-of<DiscountType> $type
      */
@@ -212,11 +208,7 @@ final class Discount implements BaseModel
     }
 
     /**
-     * The discount amount.
-     *
-     * - If `discount_type` is `percentage`, this is in **basis points**
-     *   (e.g., 540 => 5.4%).
-     * - Otherwise, this is **USD cents** (e.g., 100 => `$1.00`).
+     * The discount amount in **basis points** (e.g., 540 => 5.4%).
      */
     public function withAmount(int $amount): self
     {
@@ -318,7 +310,7 @@ final class Discount implements BaseModel
     }
 
     /**
-     * The type of discount, e.g. `percentage`, `flat`, or `flat_per_unit`.
+     * The type of discount. Currently only `percentage` is supported.
      *
      * @param DiscountType|value-of<DiscountType> $type
      */

@@ -18,14 +18,10 @@ interface DiscountsContract
     /**
      * @api
      *
-     * @param int $amount The discount amount.
-     *
-     * - If `discount_type` is **not** `percentage`, `amount` is in **USD cents**. For example, `100` means `$1.00`.
-     *   Only USD is allowed.
-     * - If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
+     * @param int $amount The discount amount in **basis points** (e.g. `540` means `5.4%`, `10000` means `100%`).
      *
      * Must be at least 1.
-     * @param DiscountType|value-of<DiscountType> $type The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
+     * @param DiscountType|value-of<DiscountType> $type The discount type. Currently only `percentage` is supported.
      * @param string|null $code Optionally supply a code (will be uppercased).
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
@@ -74,9 +70,7 @@ interface DiscountsContract
      * @api
      *
      * @param string $discountID Discount Id
-     * @param int|null $amount If present, update the discount amount:
-     * - If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
-     * - Otherwise, this represents **USD cents** (e.g., `100` = `$1.00`).
+     * @param int|null $amount If present, update the discount amount in **basis points** (e.g., `540` = `5.4%`, `10000` = `100%`).
      *
      * Must be at least 1 if provided.
      * @param string|null $code if present, update the discount code (uppercase)
@@ -88,7 +82,7 @@ interface DiscountsContract
      * @param int|null $subscriptionCycles Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
-     * @param DiscountType|value-of<DiscountType>|null $type if present, update the discount type
+     * @param DiscountType|value-of<DiscountType>|null $type If present, update the discount type. Currently only `percentage` is supported.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -113,7 +107,7 @@ interface DiscountsContract
      *
      * @param bool $active Filter by active status (true = not expired, false = expired)
      * @param string $code Filter by discount code (partial match, case-insensitive)
-     * @param DiscountType|value-of<DiscountType> $discountType Filter by discount type (percentage)
+     * @param DiscountType|value-of<DiscountType> $discountType Filter by discount type
      * @param int $pageNumber page number (default = 0)
      * @param int $pageSize page size (default = 10, max = 100)
      * @param string $productID Filter by product restriction (only discounts that apply to this product)

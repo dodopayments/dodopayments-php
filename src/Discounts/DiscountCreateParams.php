@@ -36,11 +36,7 @@ final class DiscountCreateParams implements BaseModel
     use SdkParams;
 
     /**
-     * The discount amount.
-     *
-     * - If `discount_type` is **not** `percentage`, `amount` is in **USD cents**. For example, `100` means `$1.00`.
-     *   Only USD is allowed.
-     * - If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
+     * The discount amount in **basis points** (e.g. `540` means `5.4%`, `10000` means `100%`).
      *
      * Must be at least 1.
      */
@@ -48,7 +44,7 @@ final class DiscountCreateParams implements BaseModel
     public int $amount;
 
     /**
-     * The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
+     * The discount type. Currently only `percentage` is supported.
      *
      * @var value-of<DiscountType> $type
      */
@@ -168,11 +164,7 @@ final class DiscountCreateParams implements BaseModel
     }
 
     /**
-     * The discount amount.
-     *
-     * - If `discount_type` is **not** `percentage`, `amount` is in **USD cents**. For example, `100` means `$1.00`.
-     *   Only USD is allowed.
-     * - If `discount_type` **is** `percentage`, `amount` is in **basis points**. For example, `540` means `5.4%`.
+     * The discount amount in **basis points** (e.g. `540` means `5.4%`, `10000` means `100%`).
      *
      * Must be at least 1.
      */
@@ -185,7 +177,7 @@ final class DiscountCreateParams implements BaseModel
     }
 
     /**
-     * The discount type (e.g. `percentage`, `flat`, or `flat_per_unit`).
+     * The discount type. Currently only `percentage` is supported.
      *
      * @param DiscountType|value-of<DiscountType> $type
      */
