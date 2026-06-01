@@ -1,18 +1,5 @@
 # Changelog
 
-## [6.9.0](https://github.com/dodopayments/dodopayments-php/compare/v6.8.1...v6.9.0) (2026-06-01)
-
-
-### Features
-
-* **api:** regenerate SDK from latest OpenAPI spec (1.101.0) ([76e6e57](https://github.com/dodopayments/dodopayments-php/commit/76e6e57064717599d116dcf0c059311b9aac0000))
-
-
-### Chores
-
-* re-seal custom code for 1.101.0 spec (python/go/typescript/kotlin/ruby/php) ([2eb1d9c](https://github.com/dodopayments/dodopayments-php/commit/2eb1d9c44bffcae81c26e0a91139c095c6f5a360))
-* release 6.9.0 ([3d5861e](https://github.com/dodopayments/dodopayments-php/commit/3d5861ed27fb8441ef9bf3736fb8bb8e4603a472))
-
 ## [6.8.1](https://github.com/dodopayments/dodopayments-php/compare/v6.8.0...v6.8.1) (2026-06-01)
 
 
