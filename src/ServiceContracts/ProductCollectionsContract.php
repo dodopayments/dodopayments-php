@@ -8,6 +8,11 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\ProductCollections\Groups\ProductCollectionGroupDetails;
 use Dodopayments\ProductCollections\ProductCollection;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\EffectiveAtOnDowngrade;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\EffectiveAtOnUpgrade;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\OnPaymentFailure;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\ProrationBillingModeOnDowngrade;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\ProrationBillingModeOnUpgrade;
 use Dodopayments\ProductCollections\ProductCollectionListResponse;
 use Dodopayments\ProductCollections\ProductCollectionUnarchiveResponse;
 use Dodopayments\ProductCollections\ProductCollectionUpdateImagesResponse;
@@ -26,6 +31,11 @@ interface ProductCollectionsContract
      * @param string $name Name of the product collection
      * @param string|null $brandID Brand id for the collection, if not provided will default to primary brand
      * @param string|null $description Optional description of the product collection
+     * @param EffectiveAtOnDowngrade|value-of<EffectiveAtOnDowngrade>|null $effectiveAtOnDowngrade Default effective_at setting for subscription plan downgrades (NULL = inherit from business)
+     * @param EffectiveAtOnUpgrade|value-of<EffectiveAtOnUpgrade>|null $effectiveAtOnUpgrade Default effective_at setting for subscription plan upgrades (NULL = inherit from business)
+     * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Default behavior for subscription plan changes on payment failure (NULL = inherit from business)
+     * @param ProrationBillingModeOnDowngrade|value-of<ProrationBillingModeOnDowngrade>|null $prorationBillingModeOnDowngrade Default proration billing mode for subscription plan downgrades (NULL = inherit from business)
+     * @param ProrationBillingModeOnUpgrade|value-of<ProrationBillingModeOnUpgrade>|null $prorationBillingModeOnUpgrade Default proration billing mode for subscription plan upgrades (NULL = inherit from business)
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -35,6 +45,11 @@ interface ProductCollectionsContract
         string $name,
         ?string $brandID = null,
         ?string $description = null,
+        EffectiveAtOnDowngrade|string|null $effectiveAtOnDowngrade = null,
+        EffectiveAtOnUpgrade|string|null $effectiveAtOnUpgrade = null,
+        OnPaymentFailure|string|null $onPaymentFailure = null,
+        ProrationBillingModeOnDowngrade|string|null $prorationBillingModeOnDowngrade = null,
+        ProrationBillingModeOnUpgrade|string|null $prorationBillingModeOnUpgrade = null,
         RequestOptions|array|null $requestOptions = null,
     ): ProductCollection;
 
@@ -57,9 +72,14 @@ interface ProductCollectionsContract
      * @param string $id Product Collection Id
      * @param string|null $brandID Optional brand_id update
      * @param string|null $description Optional description update - pass null to remove, omit to keep unchanged
+     * @param \Dodopayments\ProductCollections\ProductCollectionUpdateParams\EffectiveAtOnDowngrade|value-of<\Dodopayments\ProductCollections\ProductCollectionUpdateParams\EffectiveAtOnDowngrade>|null $effectiveAtOnDowngrade Effective_at setting for downgrades: Some(Some(val)) = set, Some(None) = clear (inherit), None = no change
+     * @param \Dodopayments\ProductCollections\ProductCollectionUpdateParams\EffectiveAtOnUpgrade|value-of<\Dodopayments\ProductCollections\ProductCollectionUpdateParams\EffectiveAtOnUpgrade>|null $effectiveAtOnUpgrade Effective_at setting for upgrades: Some(Some(val)) = set, Some(None) = clear (inherit), None = no change
      * @param list<string>|null $groupOrder Optional new order for groups (array of group UUIDs in desired order)
      * @param string|null $imageID Optional image update - pass null to remove, omit to keep unchanged
      * @param string|null $name Optional new name for the collection
+     * @param \Dodopayments\ProductCollections\ProductCollectionUpdateParams\OnPaymentFailure|value-of<\Dodopayments\ProductCollections\ProductCollectionUpdateParams\OnPaymentFailure>|null $onPaymentFailure On payment failure behavior: Some(Some(val)) = set, Some(None) = clear (inherit), None = no change
+     * @param \Dodopayments\ProductCollections\ProductCollectionUpdateParams\ProrationBillingModeOnDowngrade|value-of<\Dodopayments\ProductCollections\ProductCollectionUpdateParams\ProrationBillingModeOnDowngrade>|null $prorationBillingModeOnDowngrade Proration billing mode for downgrades: Some(Some(val)) = set, Some(None) = clear (inherit), None = no change
+     * @param \Dodopayments\ProductCollections\ProductCollectionUpdateParams\ProrationBillingModeOnUpgrade|value-of<\Dodopayments\ProductCollections\ProductCollectionUpdateParams\ProrationBillingModeOnUpgrade>|null $prorationBillingModeOnUpgrade Proration billing mode for upgrades: Some(Some(val)) = set, Some(None) = clear (inherit), None = no change
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -68,9 +88,14 @@ interface ProductCollectionsContract
         string $id,
         ?string $brandID = null,
         ?string $description = null,
+        \Dodopayments\ProductCollections\ProductCollectionUpdateParams\EffectiveAtOnDowngrade|string|null $effectiveAtOnDowngrade = null,
+        \Dodopayments\ProductCollections\ProductCollectionUpdateParams\EffectiveAtOnUpgrade|string|null $effectiveAtOnUpgrade = null,
         ?array $groupOrder = null,
         ?string $imageID = null,
         ?string $name = null,
+        \Dodopayments\ProductCollections\ProductCollectionUpdateParams\OnPaymentFailure|string|null $onPaymentFailure = null,
+        \Dodopayments\ProductCollections\ProductCollectionUpdateParams\ProrationBillingModeOnDowngrade|string|null $prorationBillingModeOnDowngrade = null,
+        \Dodopayments\ProductCollections\ProductCollectionUpdateParams\ProrationBillingModeOnUpgrade|string|null $prorationBillingModeOnUpgrade = null,
         RequestOptions|array|null $requestOptions = null,
     ): mixed;
 

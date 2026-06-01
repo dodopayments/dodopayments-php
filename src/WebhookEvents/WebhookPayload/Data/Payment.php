@@ -41,6 +41,7 @@ use Dodopayments\Payments\RefundListItem;
  *   metadata: array<string,string>,
  *   paymentID: string,
  *   refunds: list<RefundListItem|RefundListItemShape>,
+ *   retryAttempt: int,
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
@@ -142,6 +143,14 @@ final class Payment implements BaseModel
      */
     #[Required(list: RefundListItem::class)]
     public array $refunds;
+
+    /**
+     * Retry attempt number for subscription renewal payments.
+     * `0` for the original payment, `1`+ for each scheduled off-session
+     * retry after a failed renewal. Always `0` for non-subscription payments.
+     */
+    #[Required('retry_attempt')]
+    public int $retryAttempt;
 
     /**
      * The amount that will be credited to your Dodo balance after currency conversion and processing.
@@ -328,6 +337,7 @@ final class Payment implements BaseModel
      *   metadata: ...,
      *   paymentID: ...,
      *   refunds: ...,
+     *   retryAttempt: ...,
      *   settlementAmount: ...,
      *   settlementCurrency: ...,
      *   totalAmount: ...,
@@ -349,6 +359,7 @@ final class Payment implements BaseModel
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
      *   ->withRefunds(...)
+     *   ->withRetryAttempt(...)
      *   ->withSettlementAmount(...)
      *   ->withSettlementCurrency(...)
      *   ->withTotalAmount(...)
@@ -390,6 +401,7 @@ final class Payment implements BaseModel
         array $metadata,
         string $paymentID,
         array $refunds,
+        int $retryAttempt,
         int $settlementAmount,
         Currency|string $settlementCurrency,
         int $totalAmount,
@@ -430,6 +442,7 @@ final class Payment implements BaseModel
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
         $self['refunds'] = $refunds;
+        $self['retryAttempt'] = $retryAttempt;
         $self['settlementAmount'] = $settlementAmount;
         $self['settlementCurrency'] = $settlementCurrency;
         $self['totalAmount'] = $totalAmount;
@@ -585,6 +598,19 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['refunds'] = $refunds;
+
+        return $self;
+    }
+
+    /**
+     * Retry attempt number for subscription renewal payments.
+     * `0` for the original payment, `1`+ for each scheduled off-session
+     * retry after a failed renewal. Always `0` for non-subscription payments.
+     */
+    public function withRetryAttempt(int $retryAttempt): self
+    {
+        $self = clone $this;
+        $self['retryAttempt'] = $retryAttempt;
 
         return $self;
     }

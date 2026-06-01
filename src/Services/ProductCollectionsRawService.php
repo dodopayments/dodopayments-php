@@ -12,6 +12,11 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\ProductCollections\Groups\ProductCollectionGroupDetails;
 use Dodopayments\ProductCollections\ProductCollection;
 use Dodopayments\ProductCollections\ProductCollectionCreateParams;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\EffectiveAtOnDowngrade;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\EffectiveAtOnUpgrade;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\OnPaymentFailure;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\ProrationBillingModeOnDowngrade;
+use Dodopayments\ProductCollections\ProductCollectionCreateParams\ProrationBillingModeOnUpgrade;
 use Dodopayments\ProductCollections\ProductCollectionListParams;
 use Dodopayments\ProductCollections\ProductCollectionListResponse;
 use Dodopayments\ProductCollections\ProductCollectionUnarchiveResponse;
@@ -41,6 +46,11 @@ final class ProductCollectionsRawService implements ProductCollectionsRawContrac
      *   name: string,
      *   brandID?: string|null,
      *   description?: string|null,
+     *   effectiveAtOnDowngrade?: EffectiveAtOnDowngrade|value-of<EffectiveAtOnDowngrade>|null,
+     *   effectiveAtOnUpgrade?: EffectiveAtOnUpgrade|value-of<EffectiveAtOnUpgrade>|null,
+     *   onPaymentFailure?: OnPaymentFailure|value-of<OnPaymentFailure>|null,
+     *   prorationBillingModeOnDowngrade?: value-of<ProrationBillingModeOnDowngrade>,
+     *   prorationBillingModeOnUpgrade?: value-of<ProrationBillingModeOnUpgrade>,
      * }|ProductCollectionCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -97,9 +107,14 @@ final class ProductCollectionsRawService implements ProductCollectionsRawContrac
      * @param array{
      *   brandID?: string|null,
      *   description?: string|null,
+     *   effectiveAtOnDowngrade?: ProductCollectionUpdateParams\EffectiveAtOnDowngrade|value-of<ProductCollectionUpdateParams\EffectiveAtOnDowngrade>|null,
+     *   effectiveAtOnUpgrade?: ProductCollectionUpdateParams\EffectiveAtOnUpgrade|value-of<ProductCollectionUpdateParams\EffectiveAtOnUpgrade>|null,
      *   groupOrder?: list<string>|null,
      *   imageID?: string|null,
      *   name?: string|null,
+     *   onPaymentFailure?: ProductCollectionUpdateParams\OnPaymentFailure|value-of<ProductCollectionUpdateParams\OnPaymentFailure>|null,
+     *   prorationBillingModeOnDowngrade?: value-of<ProductCollectionUpdateParams\ProrationBillingModeOnDowngrade>,
+     *   prorationBillingModeOnUpgrade?: value-of<ProductCollectionUpdateParams\ProrationBillingModeOnUpgrade>,
      * }|ProductCollectionUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
