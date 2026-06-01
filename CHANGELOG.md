@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.10.0](https://github.com/dodopayments/dodopayments-php/compare/v6.9.0...v6.10.0) (2026-06-01)
+
+
+### Features
+
+* **readme:** drop 'generated with Stainless' attribution from SDK READMEs ([834c2a5](https://github.com/dodopayments/dodopayments-php/commit/834c2a58502757d9266146631309068f3d885be1))
+* **readme:** drop 'generated with Stainless' attribution from SDK READMEs ([4a2388b](https://github.com/dodopayments/dodopayments-php/commit/4a2388b6f718fcc101e083cff74748211868e884))
+
 ## [6.8.1](https://github.com/dodopayments/dodopayments-php/compare/v6.8.0...v6.8.1) (2026-06-01)
 
 
