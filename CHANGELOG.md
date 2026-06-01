@@ -1,5 +1,13 @@
 # Changelog
 
+## 6.8.2 (2026-06-01)
+
+Full Changelog: [v6.8.1...v6.8.2](https://github.com/dodopayments/dodopayments-php/compare/v6.8.1...v6.8.2)
+
+### Chores
+
+* sync repo ([446ec37](https://github.com/dodopayments/dodopayments-php/commit/446ec37b941bcb95e2a03c2933324a51c7a7ff3c))
+
 ## [6.8.1](https://github.com/dodopayments/dodopayments-php/compare/v6.8.0...v6.8.1) (2026-06-01)
 
 
