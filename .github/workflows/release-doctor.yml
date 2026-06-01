@@ -18,6 +18,5 @@ jobs:
         run: |
           bash ./bin/check-release-environment
         env:
-          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
           PACKAGIST_USERNAME: ${{ secrets.DODO_PAYMENTS_PACKAGIST_USERNAME || secrets.PACKAGIST_USERNAME }}
           PACKAGIST_SAFE_KEY: ${{ secrets.DODO_PAYMENTS_PACKAGIST_SAFE_KEY || secrets.PACKAGIST_SAFE_KEY }}
