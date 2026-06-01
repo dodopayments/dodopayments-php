@@ -42,7 +42,7 @@ final class DiscountListParams implements BaseModel
     public ?string $code;
 
     /**
-     * Filter by discount type (percentage).
+     * Filter by discount type.
      *
      * @var value-of<DiscountType>|null $discountType
      */
@@ -122,7 +122,7 @@ final class DiscountListParams implements BaseModel
     }
 
     /**
-     * Filter by discount type (percentage).
+     * Filter by discount type.
      *
      * @param DiscountType|value-of<DiscountType> $discountType
      */
