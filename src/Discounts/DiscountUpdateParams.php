@@ -34,9 +34,7 @@ final class DiscountUpdateParams implements BaseModel
     use SdkParams;
 
     /**
-     * If present, update the discount amount:
-     * - If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
-     * - Otherwise, this represents **USD cents** (e.g., `100` = `$1.00`).
+     * If present, update the discount amount in **basis points** (e.g., `540` = `5.4%`, `10000` = `100%`).
      *
      * Must be at least 1 if provided.
      */
@@ -88,7 +86,7 @@ final class DiscountUpdateParams implements BaseModel
     public ?int $subscriptionCycles;
 
     /**
-     * If present, update the discount type.
+     * If present, update the discount type. Currently only `percentage` is supported.
      *
      * @var value-of<DiscountType>|null $type
      */
@@ -141,9 +139,7 @@ final class DiscountUpdateParams implements BaseModel
     }
 
     /**
-     * If present, update the discount amount:
-     * - If `discount_type` is `percentage`, this represents **basis points** (e.g., `540` = `5.4%`).
-     * - Otherwise, this represents **USD cents** (e.g., `100` = `$1.00`).
+     * If present, update the discount amount in **basis points** (e.g., `540` = `5.4%`, `10000` = `100%`).
      *
      * Must be at least 1 if provided.
      */
@@ -235,7 +231,7 @@ final class DiscountUpdateParams implements BaseModel
     }
 
     /**
-     * If present, update the discount type.
+     * If present, update the discount type. Currently only `percentage` is supported.
      *
      * @param DiscountType|value-of<DiscountType>|null $type
      */

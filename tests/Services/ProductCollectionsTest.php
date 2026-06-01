@@ -57,6 +57,11 @@ final class ProductCollectionsTest extends TestCase
             name: 'name',
             brandID: 'brand_id',
             description: 'description',
+            effectiveAtOnDowngrade: 'immediately',
+            effectiveAtOnUpgrade: 'immediately',
+            onPaymentFailure: 'prevent_change',
+            prorationBillingModeOnDowngrade: 'prorated_immediately',
+            prorationBillingModeOnUpgrade: 'prorated_immediately',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
