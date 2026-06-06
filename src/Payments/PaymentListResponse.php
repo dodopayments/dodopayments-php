@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Disputes\DisputeStatus;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\PaymentListResponse\PaymentProvider;
 
 /**
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
@@ -23,7 +24,10 @@ use Dodopayments\Misc\Currency;
  *   hasLicenseKey: bool,
  *   metadata: array<string,string>,
  *   paymentID: string,
+ *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   totalAmount: int,
+ *   cardLastFour?: string|null,
+ *   cardNetwork?: string|null,
  *   disputeStatus?: null|DisputeStatus|value-of<DisputeStatus>,
  *   invoiceID?: string|null,
  *   invoiceURL?: string|null,
@@ -65,8 +69,30 @@ final class PaymentListResponse implements BaseModel
     #[Required('payment_id')]
     public string $paymentID;
 
+    /**
+     * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
+     * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+     * processed itself.
+     *
+     * @var value-of<PaymentProvider> $paymentProvider
+     */
+    #[Required('payment_provider', enum: PaymentProvider::class)]
+    public string $paymentProvider;
+
     #[Required('total_amount')]
     public int $totalAmount;
+
+    /**
+     * The last four digits of the card.
+     */
+    #[Optional('card_last_four', nullable: true)]
+    public ?string $cardLastFour;
+
+    /**
+     * Card network like VISA, MASTERCARD etc.
+     */
+    #[Optional('card_network', nullable: true)]
+    public ?string $cardNetwork;
 
     /**
      * The most recent dispute status for this payment. None if no disputes exist.
@@ -123,6 +149,7 @@ final class PaymentListResponse implements BaseModel
      *   hasLicenseKey: ...,
      *   metadata: ...,
      *   paymentID: ...,
+     *   paymentProvider: ...,
      *   totalAmount: ...,
      * )
      * ```
@@ -139,6 +166,7 @@ final class PaymentListResponse implements BaseModel
      *   ->withHasLicenseKey(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
+     *   ->withPaymentProvider(...)
      *   ->withTotalAmount(...)
      * ```
      */
@@ -155,6 +183,7 @@ final class PaymentListResponse implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,string> $metadata
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param DisputeStatus|value-of<DisputeStatus>|null $disputeStatus
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
@@ -168,7 +197,10 @@ final class PaymentListResponse implements BaseModel
         bool $hasLicenseKey,
         array $metadata,
         string $paymentID,
+        PaymentProvider|string $paymentProvider,
         int $totalAmount,
+        ?string $cardLastFour = null,
+        ?string $cardNetwork = null,
         DisputeStatus|string|null $disputeStatus = null,
         ?string $invoiceID = null,
         ?string $invoiceURL = null,
@@ -188,8 +220,11 @@ final class PaymentListResponse implements BaseModel
         $self['hasLicenseKey'] = $hasLicenseKey;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
+        $self['paymentProvider'] = $paymentProvider;
         $self['totalAmount'] = $totalAmount;
 
+        null !== $cardLastFour && $self['cardLastFour'] = $cardLastFour;
+        null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
         null !== $disputeStatus && $self['disputeStatus'] = $disputeStatus;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
@@ -276,10 +311,48 @@ final class PaymentListResponse implements BaseModel
         return $self;
     }
 
+    /**
+     * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
+     * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+     * processed itself.
+     *
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
+     */
+    public function withPaymentProvider(
+        PaymentProvider|string $paymentProvider
+    ): self {
+        $self = clone $this;
+        $self['paymentProvider'] = $paymentProvider;
+
+        return $self;
+    }
+
     public function withTotalAmount(int $totalAmount): self
     {
         $self = clone $this;
         $self['totalAmount'] = $totalAmount;
+
+        return $self;
+    }
+
+    /**
+     * The last four digits of the card.
+     */
+    public function withCardLastFour(?string $cardLastFour): self
+    {
+        $self = clone $this;
+        $self['cardLastFour'] = $cardLastFour;
+
+        return $self;
+    }
+
+    /**
+     * Card network like VISA, MASTERCARD etc.
+     */
+    public function withCardNetwork(?string $cardNetwork): self
+    {
+        $self = clone $this;
+        $self['cardNetwork'] = $cardNetwork;
 
         return $self;
     }

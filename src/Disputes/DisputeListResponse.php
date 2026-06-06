@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Disputes\DisputeListResponse\PaymentProvider;
 
 /**
  * @phpstan-type DisputeListResponseShape = array{
@@ -19,6 +20,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   disputeStage: DisputeStage|value-of<DisputeStage>,
  *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
+ *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   isResolvedByRdr?: bool|null,
  * }
  */
@@ -80,6 +82,16 @@ final class DisputeListResponse implements BaseModel
     public string $paymentID;
 
     /**
+     * Which processor handled the underlying payment. `stripe` / `adyen` for
+     * BYOP routes (the merchant's own Hyperswitch connector); `dodo` for
+     * everything Dodo processed itself.
+     *
+     * @var value-of<PaymentProvider> $paymentProvider
+     */
+    #[Required('payment_provider', enum: PaymentProvider::class)]
+    public string $paymentProvider;
+
+    /**
      * Whether the dispute was resolved by Rapid Dispute Resolution.
      */
     #[Optional('is_resolved_by_rdr', nullable: true)]
@@ -99,6 +111,7 @@ final class DisputeListResponse implements BaseModel
      *   disputeStage: ...,
      *   disputeStatus: ...,
      *   paymentID: ...,
+     *   paymentProvider: ...,
      * )
      * ```
      *
@@ -114,6 +127,7 @@ final class DisputeListResponse implements BaseModel
      *   ->withDisputeStage(...)
      *   ->withDisputeStatus(...)
      *   ->withPaymentID(...)
+     *   ->withPaymentProvider(...)
      * ```
      */
     public function __construct()
@@ -128,6 +142,7 @@ final class DisputeListResponse implements BaseModel
      *
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      */
     public static function with(
         string $amount,
@@ -138,6 +153,7 @@ final class DisputeListResponse implements BaseModel
         DisputeStage|string $disputeStage,
         DisputeStatus|string $disputeStatus,
         string $paymentID,
+        PaymentProvider|string $paymentProvider,
         ?bool $isResolvedByRdr = null,
     ): self {
         $self = new self;
@@ -150,6 +166,7 @@ final class DisputeListResponse implements BaseModel
         $self['disputeStage'] = $disputeStage;
         $self['disputeStatus'] = $disputeStatus;
         $self['paymentID'] = $paymentID;
+        $self['paymentProvider'] = $paymentProvider;
 
         null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
 
@@ -244,6 +261,22 @@ final class DisputeListResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Which processor handled the underlying payment. `stripe` / `adyen` for
+     * BYOP routes (the merchant's own Hyperswitch connector); `dodo` for
+     * everything Dodo processed itself.
+     *
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
+     */
+    public function withPaymentProvider(
+        PaymentProvider|string $paymentProvider
+    ): self {
+        $self = clone $this;
+        $self['paymentProvider'] = $paymentProvider;
 
         return $self;
     }
