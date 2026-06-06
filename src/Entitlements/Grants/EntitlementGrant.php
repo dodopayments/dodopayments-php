@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Entitlements\EntitlementIntegrationType;
 use Dodopayments\Entitlements\Grants\EntitlementGrant\Status;
 use Dodopayments\Products\DigitalProductDelivery;
 
@@ -24,6 +25,7 @@ use Dodopayments\Products\DigitalProductDelivery;
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
  *   entitlementID: string,
+ *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
  *   metadata: array<string,string>,
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
@@ -74,6 +76,14 @@ final class EntitlementGrant implements BaseModel
      */
     #[Required('entitlement_id')]
     public string $entitlementID;
+
+    /**
+     * The integration type of the grant's entitlement (e.g. `license_key`).
+     *
+     * @var value-of<EntitlementIntegrationType> $integrationType
+     */
+    #[Required('integration_type', enum: EntitlementIntegrationType::class)]
+    public string $integrationType;
 
     /**
      * Arbitrary key-value metadata recorded on the grant.
@@ -178,6 +188,7 @@ final class EntitlementGrant implements BaseModel
      *   createdAt: ...,
      *   customerID: ...,
      *   entitlementID: ...,
+     *   integrationType: ...,
      *   metadata: ...,
      *   status: ...,
      *   updatedAt: ...,
@@ -193,6 +204,7 @@ final class EntitlementGrant implements BaseModel
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
      *   ->withEntitlementID(...)
+     *   ->withIntegrationType(...)
      *   ->withMetadata(...)
      *   ->withStatus(...)
      *   ->withUpdatedAt(...)
@@ -208,6 +220,7 @@ final class EntitlementGrant implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
      * @param array<string,string> $metadata
      * @param Status|value-of<Status> $status
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
@@ -219,6 +232,7 @@ final class EntitlementGrant implements BaseModel
         \DateTimeInterface $createdAt,
         string $customerID,
         string $entitlementID,
+        EntitlementIntegrationType|string $integrationType,
         array $metadata,
         Status|string $status,
         \DateTimeInterface $updatedAt,
@@ -241,6 +255,7 @@ final class EntitlementGrant implements BaseModel
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
         $self['entitlementID'] = $entitlementID;
+        $self['integrationType'] = $integrationType;
         $self['metadata'] = $metadata;
         $self['status'] = $status;
         $self['updatedAt'] = $updatedAt;
@@ -311,6 +326,20 @@ final class EntitlementGrant implements BaseModel
     {
         $self = clone $this;
         $self['entitlementID'] = $entitlementID;
+
+        return $self;
+    }
+
+    /**
+     * The integration type of the grant's entitlement (e.g. `license_key`).
+     *
+     * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
+     */
+    public function withIntegrationType(
+        EntitlementIntegrationType|string $integrationType
+    ): self {
+        $self = clone $this;
+        $self['integrationType'] = $integrationType;
 
         return $self;
     }

@@ -7,6 +7,7 @@ namespace Dodopayments\Entitlements\IntegrationConfig;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Entitlements\IntegrationConfig\LicenseKeyConfig\FulfillmentMode;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
@@ -15,6 +16,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   activationsLimit?: int|null,
  *   durationCount?: int|null,
  *   durationInterval?: null|TimeInterval|value-of<TimeInterval>,
+ *   fulfillmentMode?: null|FulfillmentMode|value-of<FulfillmentMode>,
  * }
  */
 final class LicenseKeyConfig implements BaseModel
@@ -51,6 +53,15 @@ final class LicenseKeyConfig implements BaseModel
     #[Optional('duration_interval', enum: TimeInterval::class, nullable: true)]
     public ?string $durationInterval;
 
+    /**
+     * Fulfillment mode: `auto` (default) generates keys automatically; `manual`
+     * creates pending grants the merchant fulfills via the `POST /grants/{id}/license-key` endpoint.
+     *
+     * @var value-of<FulfillmentMode>|null $fulfillmentMode
+     */
+    #[Optional('fulfillment_mode', enum: FulfillmentMode::class, nullable: true)]
+    public ?string $fulfillmentMode;
+
     public function __construct()
     {
         $this->initialize();
@@ -62,12 +73,14 @@ final class LicenseKeyConfig implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param TimeInterval|value-of<TimeInterval>|null $durationInterval
+     * @param FulfillmentMode|value-of<FulfillmentMode>|null $fulfillmentMode
      */
     public static function with(
         ?string $activationMessage = null,
         ?int $activationsLimit = null,
         ?int $durationCount = null,
         TimeInterval|string|null $durationInterval = null,
+        FulfillmentMode|string|null $fulfillmentMode = null,
     ): self {
         $self = new self;
 
@@ -75,6 +88,7 @@ final class LicenseKeyConfig implements BaseModel
         null !== $activationsLimit && $self['activationsLimit'] = $activationsLimit;
         null !== $durationCount && $self['durationCount'] = $durationCount;
         null !== $durationInterval && $self['durationInterval'] = $durationInterval;
+        null !== $fulfillmentMode && $self['fulfillmentMode'] = $fulfillmentMode;
 
         return $self;
     }
@@ -125,6 +139,21 @@ final class LicenseKeyConfig implements BaseModel
     ): self {
         $self = clone $this;
         $self['durationInterval'] = $durationInterval;
+
+        return $self;
+    }
+
+    /**
+     * Fulfillment mode: `auto` (default) generates keys automatically; `manual`
+     * creates pending grants the merchant fulfills via the `POST /grants/{id}/license-key` endpoint.
+     *
+     * @param FulfillmentMode|value-of<FulfillmentMode>|null $fulfillmentMode
+     */
+    public function withFulfillmentMode(
+        FulfillmentMode|string|null $fulfillmentMode
+    ): self {
+        $self = clone $this;
+        $self['fulfillmentMode'] = $fulfillmentMode;
 
         return $self;
     }
