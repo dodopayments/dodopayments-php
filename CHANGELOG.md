@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.11.0](https://github.com/dodopayments/dodopayments-php/compare/v6.10.0...v6.11.0) (2026-06-06)
+
+
+### Features
+
+* **api:** regenerate SDK from latest OpenAPI spec ([9dec550](https://github.com/dodopayments/dodopayments-php/commit/9dec550414a5003ea8abcf303ee1368adee97abc))
+* **api:** regenerate SDK from latest OpenAPI spec ([0b62edb](https://github.com/dodopayments/dodopayments-php/commit/0b62edb937e27f5ce8bb2965af3c86c00412ad2b))
+
 ## [6.8.1](https://github.com/dodopayments/dodopayments-php/compare/v6.8.0...v6.8.1) (2026-06-01)
 
 
