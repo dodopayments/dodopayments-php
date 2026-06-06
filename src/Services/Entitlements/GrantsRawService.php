@@ -11,6 +11,7 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\Entitlements\Grants\GrantListParams;
+use Dodopayments\Entitlements\Grants\GrantListParams\IntegrationType;
 use Dodopayments\Entitlements\Grants\GrantListParams\Status;
 use Dodopayments\Entitlements\Grants\GrantRevokeParams;
 use Dodopayments\RequestOptions;
@@ -35,6 +36,7 @@ final class GrantsRawService implements GrantsRawContract
      * @param string $id Entitlement ID
      * @param array{
      *   customerID?: string,
+     *   integrationType?: value-of<IntegrationType>,
      *   pageNumber?: int,
      *   pageSize?: int,
      *   status?: Status|value-of<Status>,
@@ -63,6 +65,7 @@ final class GrantsRawService implements GrantsRawContract
                 $parsed,
                 [
                     'customerID' => 'customer_id',
+                    'integrationType' => 'integration_type',
                     'pageNumber' => 'page_number',
                     'pageSize' => 'page_size',
                 ],
