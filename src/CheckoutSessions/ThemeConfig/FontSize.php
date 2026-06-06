@@ -19,5 +19,5 @@ enum FontSize: string
 
     case XL = 'xl';
 
-    case _2XL = '2xl';
+    case SIZE2_XL = '2xl';
 }
