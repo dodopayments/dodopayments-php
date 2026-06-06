@@ -12,4 +12,6 @@ enum Source: string
     case AUTO = 'auto';
 
     case IMPORT = 'import';
+
+    case MANUAL = 'manual';
 }
