@@ -15,6 +15,7 @@ use Dodopayments\Webhooks\DunningRecoveredWebhookEvent\Data\TriggerState;
  * Webhook payload for dunning.started and dunning.recovered events.
  *
  * @phpstan-type DataShape = array{
+ *   brandID: string,
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
  *   status: Status|value-of<Status>,
@@ -27,6 +28,12 @@ final class Data implements BaseModel
 {
     /** @use SdkModel<DataShape> */
     use SdkModel;
+
+    /**
+     * Brand id this dunning attempt belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -54,6 +61,7 @@ final class Data implements BaseModel
      * To enforce required parameters use
      * ```
      * Data::with(
+     *   brandID: ...,
      *   createdAt: ...,
      *   customerID: ...,
      *   status: ...,
@@ -66,6 +74,7 @@ final class Data implements BaseModel
      *
      * ```
      * (new Data)
+     *   ->withBrandID(...)
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
      *   ->withStatus(...)
@@ -87,6 +96,7 @@ final class Data implements BaseModel
      * @param TriggerState|value-of<TriggerState> $triggerState
      */
     public static function with(
+        string $brandID,
         \DateTimeInterface $createdAt,
         string $customerID,
         Status|string $status,
@@ -96,6 +106,7 @@ final class Data implements BaseModel
     ): self {
         $self = new self;
 
+        $self['brandID'] = $brandID;
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
         $self['status'] = $status;
@@ -103,6 +114,17 @@ final class Data implements BaseModel
         $self['triggerState'] = $triggerState;
 
         null !== $paymentID && $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this dunning attempt belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

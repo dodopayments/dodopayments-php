@@ -25,7 +25,8 @@ final class BreakupGetResponseItem implements BaseModel
     public string $eventType;
 
     /**
-     * Total amount for this event type in the payout's currency (in smallest currency unit, e.g., cents).
+     * Total amount for this event type in the payout's currency, in that currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     #[Required]
     public int $total;
@@ -76,7 +77,8 @@ final class BreakupGetResponseItem implements BaseModel
     }
 
     /**
-     * Total amount for this event type in the payout's currency (in smallest currency unit, e.g., cents).
+     * Total amount for this event type in the payout's currency, in that currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     public function withTotal(int $total): self
     {

@@ -9,7 +9,6 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
-use Dodopayments\Entitlements\Grants\GrantListParams\IntegrationType;
 use Dodopayments\Entitlements\Grants\GrantListParams\Status;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Entitlements\GrantsContract;
@@ -39,7 +38,6 @@ final class GrantsService implements GrantsContract
      *
      * @param string $id Entitlement ID
      * @param string $customerID Filter by customer ID
-     * @param IntegrationType|value-of<IntegrationType> $integrationType Filter by integration type
      * @param int $pageNumber Page number (default 0)
      * @param int $pageSize Page size (default 10, max 100)
      * @param Status|value-of<Status> $status Filter by grant status
@@ -52,7 +50,6 @@ final class GrantsService implements GrantsContract
     public function list(
         string $id,
         ?string $customerID = null,
-        IntegrationType|string|null $integrationType = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         Status|string|null $status = null,
@@ -61,7 +58,6 @@ final class GrantsService implements GrantsContract
         $params = Util::removeNulls(
             [
                 'customerID' => $customerID,
-                'integrationType' => $integrationType,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
                 'status' => $status,

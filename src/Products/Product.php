@@ -12,6 +12,7 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\Product\PricingMode;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
@@ -42,6 +43,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   licenseKeyActivationsLimit?: int|null,
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
  *   name?: string|null,
+ *   pricingMode?: null|PricingMode|value-of<PricingMode>,
  *   productCollectionID?: string|null,
  * }
  */
@@ -190,6 +192,14 @@ final class Product implements BaseModel
     public ?string $name;
 
     /**
+     * Pricing mode for localized pricing. NULL means base-only (no localized rules apply).
+     *
+     * @var value-of<PricingMode>|null $pricingMode
+     */
+    #[Optional('pricing_mode', enum: PricingMode::class, nullable: true)]
+    public ?string $pricingMode;
+
+    /**
      * The product collection ID this product belongs to, if any.
      */
     #[Optional('product_collection_id', nullable: true)]
@@ -252,6 +262,7 @@ final class Product implements BaseModel
      * @param list<string>|null $addons
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
      */
     public static function with(
         string $brandID,
@@ -274,6 +285,7 @@ final class Product implements BaseModel
         ?int $licenseKeyActivationsLimit = null,
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?string $name = null,
+        PricingMode|string|null $pricingMode = null,
         ?string $productCollectionID = null,
     ): self {
         $self = new self;
@@ -299,6 +311,7 @@ final class Product implements BaseModel
         null !== $licenseKeyActivationsLimit && $self['licenseKeyActivationsLimit'] = $licenseKeyActivationsLimit;
         null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
         null !== $name && $self['name'] = $name;
+        null !== $pricingMode && $self['pricingMode'] = $pricingMode;
         null !== $productCollectionID && $self['productCollectionID'] = $productCollectionID;
 
         return $self;
@@ -539,6 +552,19 @@ final class Product implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * Pricing mode for localized pricing. NULL means base-only (no localized rules apply).
+     *
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
+     */
+    public function withPricingMode(PricingMode|string|null $pricingMode): self
+    {
+        $self = clone $this;
+        $self['pricingMode'] = $pricingMode;
 
         return $self;
     }

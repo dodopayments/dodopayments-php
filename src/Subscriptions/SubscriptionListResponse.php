@@ -151,7 +151,8 @@ final class SubscriptionListResponse implements BaseModel
     public int $quantity;
 
     /**
-     * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
+     * Amount charged before tax for each recurring payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     #[Required('recurring_pre_tax_amount')]
     public int $recurringPreTaxAmount;
@@ -560,7 +561,8 @@ final class SubscriptionListResponse implements BaseModel
     }
 
     /**
-     * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
+     * Amount charged before tax for each recurring payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {

@@ -21,6 +21,7 @@ use Dodopayments\Products\DigitalProductDelivery;
  *
  * @phpstan-type EntitlementGrantShape = array{
  *   id: string,
+ *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
@@ -52,6 +53,12 @@ final class EntitlementGrant implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * Brand id this grant belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     /**
      * Identifier of the business that owns the grant.
@@ -184,6 +191,7 @@ final class EntitlementGrant implements BaseModel
      * ```
      * EntitlementGrant::with(
      *   id: ...,
+     *   brandID: ...,
      *   businessID: ...,
      *   createdAt: ...,
      *   customerID: ...,
@@ -200,6 +208,7 @@ final class EntitlementGrant implements BaseModel
      * ```
      * (new EntitlementGrant)
      *   ->withID(...)
+     *   ->withBrandID(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
@@ -228,6 +237,7 @@ final class EntitlementGrant implements BaseModel
      */
     public static function with(
         string $id,
+        string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
         string $customerID,
@@ -251,6 +261,7 @@ final class EntitlementGrant implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['brandID'] = $brandID;
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
@@ -282,6 +293,17 @@ final class EntitlementGrant implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this grant belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

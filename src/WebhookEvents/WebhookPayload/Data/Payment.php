@@ -176,7 +176,8 @@ final class Payment implements BaseModel
     public string $settlementCurrency;
 
     /**
-     * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
+     * Total amount charged to the customer including tax, in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD — see the currency's decimal places).
      */
     #[Required('total_amount')]
     public int $totalAmount;
@@ -321,7 +322,8 @@ final class Payment implements BaseModel
     public ?string $subscriptionID;
 
     /**
-     * Amount of tax collected in smallest currency unit (e.g. cents).
+     * Amount of tax collected in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD).
      */
     #[Optional(nullable: true)]
     public ?int $tax;
@@ -673,7 +675,8 @@ final class Payment implements BaseModel
     }
 
     /**
-     * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
+     * Total amount charged to the customer including tax, in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD — see the currency's decimal places).
      */
     public function withTotalAmount(int $totalAmount): self
     {
@@ -928,7 +931,8 @@ final class Payment implements BaseModel
     }
 
     /**
-     * Amount of tax collected in smallest currency unit (e.g. cents).
+     * Amount of tax collected in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD).
      */
     public function withTax(?int $tax): self
     {

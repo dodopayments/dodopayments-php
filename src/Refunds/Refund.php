@@ -15,6 +15,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  *
  * @phpstan-type RefundShape = array{
+ *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
@@ -32,6 +33,12 @@ final class Refund implements BaseModel
 {
     /** @use SdkModel<RefundShape> */
     use SdkModel;
+
+    /**
+     * Brand id this refund belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     /**
      * The unique identifier of the business issuing the refund.
@@ -111,6 +118,7 @@ final class Refund implements BaseModel
      * To enforce required parameters use
      * ```
      * Refund::with(
+     *   brandID: ...,
      *   businessID: ...,
      *   createdAt: ...,
      *   customer: ...,
@@ -126,6 +134,7 @@ final class Refund implements BaseModel
      *
      * ```
      * (new Refund)
+     *   ->withBrandID(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCustomer(...)
@@ -152,6 +161,7 @@ final class Refund implements BaseModel
      * @param Currency|value-of<Currency>|null $currency
      */
     public static function with(
+        string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
         CustomerLimitedDetails|array $customer,
@@ -166,6 +176,7 @@ final class Refund implements BaseModel
     ): self {
         $self = new self;
 
+        $self['brandID'] = $brandID;
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
         $self['customer'] = $customer;
@@ -178,6 +189,17 @@ final class Refund implements BaseModel
         null !== $amount && $self['amount'] = $amount;
         null !== $currency && $self['currency'] = $currency;
         null !== $reason && $self['reason'] = $reason;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this refund belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

@@ -54,8 +54,9 @@ final class LicenseKeyConfig implements BaseModel
     public ?string $durationInterval;
 
     /**
-     * Fulfillment mode: `auto` (default) generates keys automatically; `manual`
-     * creates pending grants the merchant fulfills via the `POST /grants/{id}/license-key` endpoint.
+     * How license keys are fulfilled. `auto` (default) generates and delivers
+     * keys to customers automatically; `manual` creates pending grants that you
+     * fulfill with the supplied key via `POST /grants/{grant_id}/license-key`.
      *
      * @var value-of<FulfillmentMode>|null $fulfillmentMode
      */
@@ -144,8 +145,9 @@ final class LicenseKeyConfig implements BaseModel
     }
 
     /**
-     * Fulfillment mode: `auto` (default) generates keys automatically; `manual`
-     * creates pending grants the merchant fulfills via the `POST /grants/{id}/license-key` endpoint.
+     * How license keys are fulfilled. `auto` (default) generates and delivers
+     * keys to customers automatically; `manual` creates pending grants that you
+     * fulfill with the supplied key via `POST /grants/{grant_id}/license-key`.
      *
      * @param FulfillmentMode|value-of<FulfillmentMode>|null $fulfillmentMode
      */
