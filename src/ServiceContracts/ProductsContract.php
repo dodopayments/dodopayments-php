@@ -15,6 +15,7 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductCreateParams\PricingMode;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\RequestOptions;
@@ -38,12 +39,12 @@ interface ProductsContract
      * @param TaxCategory|value-of<TaxCategory> $taxCategory Tax category applied to this product
      * @param list<string>|null $addons Addons available for subscription product
      * @param string|null $brandID Brand id for the product, if not provided will default to primary brand
-     * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements Optional credit entitlements to attach (max 3)
+     * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements Optional credit entitlements to attach (max 5)
      * @param string|null $description Optional description of the product
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery Choose how you would like you digital product delivered
      *
      * deprecated: use entitlements instead
-     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements Optional entitlements to attach to this product (max 20)
+     * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements Optional entitlements to attach to this product (max 50)
      * @param string|null $licenseKeyActivationMessage Optional message displayed during license key activation
      *
      * deprecated: use entitlements instead. Ignored when a `license_key`
@@ -67,6 +68,9 @@ interface ProductsContract
      * fields below are ignored — the attached entitlement's config is the
      * source of truth.
      * @param array<string,string> $metadata Additional metadata for the product
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode Pricing mode for localized pricing. When set, rules from
+     * /products/{id}/localized-prices apply at checkout. NULL means base-only
+     * (existing behavior).
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -86,6 +90,7 @@ interface ProductsContract
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
+        PricingMode|string|null $pricingMode = null,
         RequestOptions|array|null $requestOptions = null,
     ): Product;
 
@@ -142,6 +147,10 @@ interface ProductsContract
      * @param array<string,string>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
      * @param PriceShape|null $price price details of the product
+     * @param \Dodopayments\Products\ProductUpdateParams\PricingMode|value-of<\Dodopayments\Products\ProductUpdateParams\PricingMode>|null $pricingMode Update the pricing mode. Omit to leave unchanged; set to null to clear
+     * (which archives all active localized rules for this product). Changing
+     * to a different non-null mode also archives any rules whose mode doesn't
+     * match the new mode.
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the product
      * @param RequestOpts|null $requestOptions
      *
@@ -163,6 +172,7 @@ interface ProductsContract
         ?array $metadata = null,
         ?string $name = null,
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price = null,
+        \Dodopayments\Products\ProductUpdateParams\PricingMode|string|null $pricingMode = null,
         TaxCategory|string|null $taxCategory = null,
         RequestOptions|array|null $requestOptions = null,
     ): mixed;

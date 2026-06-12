@@ -25,6 +25,7 @@ use Dodopayments\Misc\Currency;
  *   billingCountry: CountryCode|value-of<CountryCode>,
  *   currency: Currency|value-of<Currency>,
  *   currentBreakup: CurrentBreakup|CurrentBreakupShape,
+ *   isByop: bool,
  *   productCart: list<ProductCart|ProductCartShape>,
  *   totalPrice: int,
  *   recurringBreakup?: null|RecurringBreakup|RecurringBreakupShape,
@@ -58,6 +59,15 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      */
     #[Required('current_breakup')]
     public CurrentBreakup $currentBreakup;
+
+    /**
+     * Whether the payment will be routed through the merchant's own
+     * processor (BYOP). True when the session's business has a BYOP route
+     * configured for the billing country; in that case the quoted amounts
+     * exclude Dodo-computed tax because the merchant is MoR and owns tax.
+     */
+    #[Required('is_byop')]
+    public bool $isByop;
 
     /**
      * The total product cart.
@@ -100,6 +110,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      *   billingCountry: ...,
      *   currency: ...,
      *   currentBreakup: ...,
+     *   isByop: ...,
      *   productCart: ...,
      *   totalPrice: ...,
      * )
@@ -112,6 +123,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      *   ->withBillingCountry(...)
      *   ->withCurrency(...)
      *   ->withCurrentBreakup(...)
+     *   ->withIsByop(...)
      *   ->withProductCart(...)
      *   ->withTotalPrice(...)
      * ```
@@ -136,6 +148,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         CountryCode|string $billingCountry,
         Currency|string $currency,
         CurrentBreakup|array $currentBreakup,
+        bool $isByop,
         array $productCart,
         int $totalPrice,
         RecurringBreakup|array|null $recurringBreakup = null,
@@ -147,6 +160,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         $self['billingCountry'] = $billingCountry;
         $self['currency'] = $currency;
         $self['currentBreakup'] = $currentBreakup;
+        $self['isByop'] = $isByop;
         $self['productCart'] = $productCart;
         $self['totalPrice'] = $totalPrice;
 
@@ -193,6 +207,20 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['currentBreakup'] = $currentBreakup;
+
+        return $self;
+    }
+
+    /**
+     * Whether the payment will be routed through the merchant's own
+     * processor (BYOP). True when the session's business has a BYOP route
+     * configured for the billing country; in that case the quoted amounts
+     * exclude Dodo-computed tax because the merchant is MoR and owns tax.
+     */
+    public function withIsByop(bool $isByop): self
+    {
+        $self = clone $this;
+        $self['isByop'] = $isByop;
 
         return $self;
     }

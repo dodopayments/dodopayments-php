@@ -13,6 +13,7 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductUpdateParams\PricingMode;
 
 /**
  * @see Dodopayments\Services\ProductsService::update()
@@ -39,6 +40,7 @@ use Dodopayments\Products\ProductUpdateParams\DigitalProductDelivery;
  *   metadata?: array<string,string>|null,
  *   name?: string|null,
  *   price?: PriceShape|null,
+ *   pricingMode?: null|PricingMode|value-of<PricingMode>,
  *   taxCategory?: null|TaxCategory|value-of<TaxCategory>,
  * }
  */
@@ -174,6 +176,17 @@ final class ProductUpdateParams implements BaseModel
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $price;
 
     /**
+     * Update the pricing mode. Omit to leave unchanged; set to null to clear
+     * (which archives all active localized rules for this product). Changing
+     * to a different non-null mode also archives any rules whose mode doesn't
+     * match the new mode.
+     *
+     * @var value-of<PricingMode>|null $pricingMode
+     */
+    #[Optional('pricing_mode', enum: PricingMode::class, nullable: true)]
+    public ?string $pricingMode;
+
+    /**
      * Tax category of the product.
      *
      * @var value-of<TaxCategory>|null $taxCategory
@@ -198,6 +211,7 @@ final class ProductUpdateParams implements BaseModel
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
      * @param PriceShape|null $price
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory
      */
     public static function with(
@@ -215,6 +229,7 @@ final class ProductUpdateParams implements BaseModel
         ?array $metadata = null,
         ?string $name = null,
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price = null,
+        PricingMode|string|null $pricingMode = null,
         TaxCategory|string|null $taxCategory = null,
     ): self {
         $self = new self;
@@ -233,6 +248,7 @@ final class ProductUpdateParams implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
         null !== $price && $self['price'] = $price;
+        null !== $pricingMode && $self['pricingMode'] = $pricingMode;
         null !== $taxCategory && $self['taxCategory'] = $taxCategory;
 
         return $self;
@@ -428,6 +444,22 @@ final class ProductUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['price'] = $price;
+
+        return $self;
+    }
+
+    /**
+     * Update the pricing mode. Omit to leave unchanged; set to null to clear
+     * (which archives all active localized rules for this product). Changing
+     * to a different non-null mode also archives any rules whose mode doesn't
+     * match the new mode.
+     *
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
+     */
+    public function withPricingMode(PricingMode|string|null $pricingMode): self
+    {
+        $self = clone $this;
+        $self['pricingMode'] = $pricingMode;
 
         return $self;
     }

@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Disputes\GetDispute\PaymentProvider;
 use Dodopayments\Payments\CustomerLimitedDetails;
 
 /**
@@ -15,6 +16,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *
  * @phpstan-type GetDisputeShape = array{
  *   amount: string,
+ *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   currency: string,
@@ -23,6 +25,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   disputeStage: DisputeStage|value-of<DisputeStage>,
  *   disputeStatus: DisputeStatus|value-of<DisputeStatus>,
  *   paymentID: string,
+ *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   isResolvedByRdr?: bool|null,
  *   reason?: string|null,
  *   remarks?: string|null,
@@ -38,6 +41,12 @@ final class GetDispute implements BaseModel
      */
     #[Required]
     public string $amount;
+
+    /**
+     * Brand id this dispute belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     /**
      * The unique identifier of the business involved in the dispute.
@@ -92,6 +101,16 @@ final class GetDispute implements BaseModel
     public string $paymentID;
 
     /**
+     * Which processor handled the underlying payment. `stripe` / `adyen` for
+     * BYOP routes (the merchant's own Hyperswitch connector); `dodo` for
+     * everything Dodo processed itself.
+     *
+     * @var value-of<PaymentProvider> $paymentProvider
+     */
+    #[Required('payment_provider', enum: PaymentProvider::class)]
+    public string $paymentProvider;
+
+    /**
      * Whether the dispute was resolved by Rapid Dispute Resolution.
      */
     #[Optional('is_resolved_by_rdr', nullable: true)]
@@ -116,6 +135,7 @@ final class GetDispute implements BaseModel
      * ```
      * GetDispute::with(
      *   amount: ...,
+     *   brandID: ...,
      *   businessID: ...,
      *   createdAt: ...,
      *   currency: ...,
@@ -124,6 +144,7 @@ final class GetDispute implements BaseModel
      *   disputeStage: ...,
      *   disputeStatus: ...,
      *   paymentID: ...,
+     *   paymentProvider: ...,
      * )
      * ```
      *
@@ -132,6 +153,7 @@ final class GetDispute implements BaseModel
      * ```
      * (new GetDispute)
      *   ->withAmount(...)
+     *   ->withBrandID(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCurrency(...)
@@ -140,6 +162,7 @@ final class GetDispute implements BaseModel
      *   ->withDisputeStage(...)
      *   ->withDisputeStatus(...)
      *   ->withPaymentID(...)
+     *   ->withPaymentProvider(...)
      * ```
      */
     public function __construct()
@@ -155,9 +178,11 @@ final class GetDispute implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param DisputeStage|value-of<DisputeStage> $disputeStage
      * @param DisputeStatus|value-of<DisputeStatus> $disputeStatus
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      */
     public static function with(
         string $amount,
+        string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
         string $currency,
@@ -166,6 +191,7 @@ final class GetDispute implements BaseModel
         DisputeStage|string $disputeStage,
         DisputeStatus|string $disputeStatus,
         string $paymentID,
+        PaymentProvider|string $paymentProvider,
         ?bool $isResolvedByRdr = null,
         ?string $reason = null,
         ?string $remarks = null,
@@ -173,6 +199,7 @@ final class GetDispute implements BaseModel
         $self = new self;
 
         $self['amount'] = $amount;
+        $self['brandID'] = $brandID;
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
         $self['currency'] = $currency;
@@ -181,6 +208,7 @@ final class GetDispute implements BaseModel
         $self['disputeStage'] = $disputeStage;
         $self['disputeStatus'] = $disputeStatus;
         $self['paymentID'] = $paymentID;
+        $self['paymentProvider'] = $paymentProvider;
 
         null !== $isResolvedByRdr && $self['isResolvedByRdr'] = $isResolvedByRdr;
         null !== $reason && $self['reason'] = $reason;
@@ -196,6 +224,17 @@ final class GetDispute implements BaseModel
     {
         $self = clone $this;
         $self['amount'] = $amount;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this dispute belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }
@@ -290,6 +329,22 @@ final class GetDispute implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Which processor handled the underlying payment. `stripe` / `adyen` for
+     * BYOP routes (the merchant's own Hyperswitch connector); `dodo` for
+     * everything Dodo processed itself.
+     *
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
+     */
+    public function withPaymentProvider(
+        PaymentProvider|string $paymentProvider
+    ): self {
+        $self = clone $this;
+        $self['paymentProvider'] = $paymentProvider;
 
         return $self;
     }

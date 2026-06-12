@@ -38,6 +38,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-type SubscriptionShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
  *   billing: BillingAddress|BillingAddressShape,
+ *   brandID: string,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
  *   creditEntitlementCart: list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape>,
@@ -94,6 +95,12 @@ final class Subscription implements BaseModel
 
     #[Required]
     public BillingAddress $billing;
+
+    /**
+     * Brand id this subscription belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     /**
      * Indicates if the subscription will cancel at the next billing date.
@@ -193,7 +200,8 @@ final class Subscription implements BaseModel
     public int $quantity;
 
     /**
-     * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
+     * Amount charged before tax for each recurring payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     #[Required('recurring_pre_tax_amount')]
     public int $recurringPreTaxAmount;
@@ -314,6 +322,7 @@ final class Subscription implements BaseModel
      * Subscription::with(
      *   addons: ...,
      *   billing: ...,
+     *   brandID: ...,
      *   cancelAtNextBillingDate: ...,
      *   createdAt: ...,
      *   creditEntitlementCart: ...,
@@ -345,6 +354,7 @@ final class Subscription implements BaseModel
      * (new Subscription)
      *   ->withAddons(...)
      *   ->withBilling(...)
+     *   ->withBrandID(...)
      *   ->withCancelAtNextBillingDate(...)
      *   ->withCreatedAt(...)
      *   ->withCreditEntitlementCart(...)
@@ -398,6 +408,7 @@ final class Subscription implements BaseModel
     public static function with(
         array $addons,
         BillingAddress|array $billing,
+        string $brandID,
         bool $cancelAtNextBillingDate,
         \DateTimeInterface $createdAt,
         array $creditEntitlementCart,
@@ -437,6 +448,7 @@ final class Subscription implements BaseModel
 
         $self['addons'] = $addons;
         $self['billing'] = $billing;
+        $self['brandID'] = $brandID;
         $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
         $self['createdAt'] = $createdAt;
         $self['creditEntitlementCart'] = $creditEntitlementCart;
@@ -496,6 +508,17 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['billing'] = $billing;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this subscription belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }
@@ -680,7 +703,8 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * Amount charged before tax for each recurring payment in smallest currency unit (e.g. cents).
+     * Amount charged before tax for each recurring payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
     {

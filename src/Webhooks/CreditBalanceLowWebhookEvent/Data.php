@@ -13,6 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type DataShape = array{
  *   availableBalance: string,
+ *   brandID: string,
  *   creditEntitlementID: string,
  *   creditEntitlementName: string,
  *   customerID: string,
@@ -29,6 +30,12 @@ final class Data implements BaseModel
 
     #[Required('available_balance')]
     public string $availableBalance;
+
+    /**
+     * Brand id this credit entitlement belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     #[Required('credit_entitlement_id')]
     public string $creditEntitlementID;
@@ -58,6 +65,7 @@ final class Data implements BaseModel
      * ```
      * Data::with(
      *   availableBalance: ...,
+     *   brandID: ...,
      *   creditEntitlementID: ...,
      *   creditEntitlementName: ...,
      *   customerID: ...,
@@ -73,6 +81,7 @@ final class Data implements BaseModel
      * ```
      * (new Data)
      *   ->withAvailableBalance(...)
+     *   ->withBrandID(...)
      *   ->withCreditEntitlementID(...)
      *   ->withCreditEntitlementName(...)
      *   ->withCustomerID(...)
@@ -94,6 +103,7 @@ final class Data implements BaseModel
      */
     public static function with(
         string $availableBalance,
+        string $brandID,
         string $creditEntitlementID,
         string $creditEntitlementName,
         string $customerID,
@@ -105,6 +115,7 @@ final class Data implements BaseModel
         $self = new self;
 
         $self['availableBalance'] = $availableBalance;
+        $self['brandID'] = $brandID;
         $self['creditEntitlementID'] = $creditEntitlementID;
         $self['creditEntitlementName'] = $creditEntitlementName;
         $self['customerID'] = $customerID;
@@ -120,6 +131,17 @@ final class Data implements BaseModel
     {
         $self = clone $this;
         $self['availableBalance'] = $availableBalance;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this credit entitlement belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

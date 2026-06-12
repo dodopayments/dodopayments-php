@@ -2,8 +2,6 @@
 
 The Dodo Payments PHP library provides convenient access to the Dodo Payments REST API from any PHP 8.1.0+ application.
 
-It is generated with [Stainless](https://www.stainless.com/).
-
 ## Documentation
 
 The REST API documentation can be found on [docs.dodopayments.com](https://docs.dodopayments.com/api-reference/introduction).
@@ -13,7 +11,7 @@ The REST API documentation can be found on [docs.dodopayments.com](https://docs.
 <!-- x-release-please-start-version -->
 
 ```
-composer require "dodopayments/client 6.8.1"
+composer require "dodopayments/client 6.11.0"
 ```
 
 <!-- x-release-please-end -->

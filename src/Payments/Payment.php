@@ -12,6 +12,7 @@ use Dodopayments\Discounts\DiscountDetail;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\Payment\PaymentProvider;
 use Dodopayments\Payments\Payment\ProductCart;
 
 /**
@@ -34,6 +35,7 @@ use Dodopayments\Payments\Payment\ProductCart;
  *   disputes: list<Dispute|DisputeShape>,
  *   metadata: array<string,string>,
  *   paymentID: string,
+ *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   refunds: list<RefundListItem|RefundListItemShape>,
  *   retryAttempt: int,
  *   settlementAmount: int,
@@ -136,6 +138,16 @@ final class Payment implements BaseModel
     public string $paymentID;
 
     /**
+     * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
+     * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+     * processed itself.
+     *
+     * @var value-of<PaymentProvider> $paymentProvider
+     */
+    #[Required('payment_provider', enum: PaymentProvider::class)]
+    public string $paymentProvider;
+
+    /**
      * List of refunds issued for this payment.
      *
      * @var list<RefundListItem> $refunds
@@ -168,7 +180,8 @@ final class Payment implements BaseModel
     public string $settlementCurrency;
 
     /**
-     * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
+     * Total amount charged to the customer including tax, in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD — see the currency's decimal places).
      */
     #[Required('total_amount')]
     public int $totalAmount;
@@ -321,7 +334,8 @@ final class Payment implements BaseModel
     public ?string $subscriptionID;
 
     /**
-     * Amount of tax collected in smallest currency unit (e.g. cents).
+     * Amount of tax collected in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD).
      */
     #[Optional(nullable: true)]
     public ?int $tax;
@@ -348,6 +362,7 @@ final class Payment implements BaseModel
      *   disputes: ...,
      *   metadata: ...,
      *   paymentID: ...,
+     *   paymentProvider: ...,
      *   refunds: ...,
      *   retryAttempt: ...,
      *   settlementAmount: ...,
@@ -370,6 +385,7 @@ final class Payment implements BaseModel
      *   ->withDisputes(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
+     *   ->withPaymentProvider(...)
      *   ->withRefunds(...)
      *   ->withRetryAttempt(...)
      *   ->withSettlementAmount(...)
@@ -392,6 +408,7 @@ final class Payment implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<Dispute|DisputeShape> $disputes
      * @param array<string,string> $metadata
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param list<RefundListItem|RefundListItemShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
@@ -412,6 +429,7 @@ final class Payment implements BaseModel
         array $disputes,
         array $metadata,
         string $paymentID,
+        PaymentProvider|string $paymentProvider,
         array $refunds,
         int $retryAttempt,
         int $settlementAmount,
@@ -453,6 +471,7 @@ final class Payment implements BaseModel
         $self['disputes'] = $disputes;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
+        $self['paymentProvider'] = $paymentProvider;
         $self['refunds'] = $refunds;
         $self['retryAttempt'] = $retryAttempt;
         $self['settlementAmount'] = $settlementAmount;
@@ -608,6 +627,22 @@ final class Payment implements BaseModel
     }
 
     /**
+     * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
+     * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+     * processed itself.
+     *
+     * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
+     */
+    public function withPaymentProvider(
+        PaymentProvider|string $paymentProvider
+    ): self {
+        $self = clone $this;
+        $self['paymentProvider'] = $paymentProvider;
+
+        return $self;
+    }
+
+    /**
      * List of refunds issued for this payment.
      *
      * @param list<RefundListItem|RefundListItemShape> $refunds
@@ -661,7 +696,8 @@ final class Payment implements BaseModel
     }
 
     /**
-     * Total amount charged to the customer including tax, in smallest currency unit (e.g. cents).
+     * Total amount charged to the customer including tax, in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD — see the currency's decimal places).
      */
     public function withTotalAmount(int $totalAmount): self
     {
@@ -920,7 +956,8 @@ final class Payment implements BaseModel
     }
 
     /**
-     * Amount of tax collected in smallest currency unit (e.g. cents).
+     * Amount of tax collected in the currency's smallest unit
+     * (e.g. cents for USD, yen for JPY, fils for KWD).
      */
     public function withTax(?int $tax): self
     {
