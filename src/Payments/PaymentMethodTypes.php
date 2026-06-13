@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dodopayments\Payments;
 
 /**
- * All supported payment method types (from Hyperswitch).
+ * All supported payment method types.
  *
  * Used for disabled-payment-methods filtering and validation.
  */
