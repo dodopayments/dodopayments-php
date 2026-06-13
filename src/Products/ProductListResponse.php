@@ -13,6 +13,7 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
+use Dodopayments\Products\ProductListResponse\PricingMode;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
@@ -34,6 +35,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   name?: string|null,
  *   price?: int|null,
  *   priceDetail?: PriceShape|null,
+ *   pricingMode?: null|PricingMode|value-of<PricingMode>,
  *   taxInclusive?: bool|null,
  * }
  */
@@ -145,6 +147,14 @@ final class ProductListResponse implements BaseModel
     public OneTimePrice|RecurringPrice|UsageBasedPrice|null $priceDetail;
 
     /**
+     * Pricing mode for localized pricing. NULL means base-only (no localized rules apply).
+     *
+     * @var value-of<PricingMode>|null $pricingMode
+     */
+    #[Optional('pricing_mode', enum: PricingMode::class, nullable: true)]
+    public ?string $pricingMode;
+
+    /**
      * Indicates if the price is tax inclusive.
      */
     #[Optional('tax_inclusive', nullable: true)]
@@ -196,6 +206,7 @@ final class ProductListResponse implements BaseModel
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Currency|value-of<Currency>|null $currency
      * @param PriceShape|null $priceDetail
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
      */
     public static function with(
         string $businessID,
@@ -212,6 +223,7 @@ final class ProductListResponse implements BaseModel
         ?string $name = null,
         ?int $price = null,
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $priceDetail = null,
+        PricingMode|string|null $pricingMode = null,
         ?bool $taxInclusive = null,
     ): self {
         $self = new self;
@@ -231,6 +243,7 @@ final class ProductListResponse implements BaseModel
         null !== $name && $self['name'] = $name;
         null !== $price && $self['price'] = $price;
         null !== $priceDetail && $self['priceDetail'] = $priceDetail;
+        null !== $pricingMode && $self['pricingMode'] = $pricingMode;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
         return $self;
@@ -405,6 +418,19 @@ final class ProductListResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['priceDetail'] = $priceDetail;
+
+        return $self;
+    }
+
+    /**
+     * Pricing mode for localized pricing. NULL means base-only (no localized rules apply).
+     *
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
+     */
+    public function withPricingMode(PricingMode|string|null $pricingMode): self
+    {
+        $self = clone $this;
+        $self['pricingMode'] = $pricingMode;
 
         return $self;
     }
