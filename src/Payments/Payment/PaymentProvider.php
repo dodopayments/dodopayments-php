@@ -6,7 +6,7 @@ namespace Dodopayments\Payments\Payment;
 
 /**
  * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
- * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+ * (the merchant's own payment connector); `dodo` for everything Dodo
  * processed itself.
  */
 enum PaymentProvider: string
