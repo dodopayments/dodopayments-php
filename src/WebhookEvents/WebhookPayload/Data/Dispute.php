@@ -98,7 +98,7 @@ final class Dispute implements BaseModel
 
     /**
      * Which processor handled the underlying payment. `stripe` / `adyen` for
-     * BYOP routes (the merchant's own Hyperswitch connector); `dodo` for
+     * BYOP routes (the merchant's own payment connector); `dodo` for
      * everything Dodo processed itself.
      *
      * @var value-of<PaymentProvider> $paymentProvider
@@ -325,7 +325,7 @@ final class Dispute implements BaseModel
 
     /**
      * Which processor handled the underlying payment. `stripe` / `adyen` for
-     * BYOP routes (the merchant's own Hyperswitch connector); `dodo` for
+     * BYOP routes (the merchant's own payment connector); `dodo` for
      * everything Dodo processed itself.
      *
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
