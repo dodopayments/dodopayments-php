@@ -13,6 +13,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt\TriggerState;
 
 /**
  * @phpstan-type DunningAttemptShape = array{
+ *   brandID: string,
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
  *   payloadType: 'DunningAttempt',
@@ -30,6 +31,12 @@ final class DunningAttempt implements BaseModel
     /** @var 'DunningAttempt' $payloadType */
     #[Required('payload_type')]
     public string $payloadType = 'DunningAttempt';
+
+    /**
+     * Brand id this dunning attempt belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     #[Required('created_at')]
     public \DateTimeInterface $createdAt;
@@ -57,6 +64,7 @@ final class DunningAttempt implements BaseModel
      * To enforce required parameters use
      * ```
      * DunningAttempt::with(
+     *   brandID: ...,
      *   createdAt: ...,
      *   customerID: ...,
      *   status: ...,
@@ -69,6 +77,7 @@ final class DunningAttempt implements BaseModel
      *
      * ```
      * (new DunningAttempt)
+     *   ->withBrandID(...)
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
      *   ->withStatus(...)
@@ -90,6 +99,7 @@ final class DunningAttempt implements BaseModel
      * @param TriggerState|value-of<TriggerState> $triggerState
      */
     public static function with(
+        string $brandID,
         \DateTimeInterface $createdAt,
         string $customerID,
         Status|string $status,
@@ -99,6 +109,7 @@ final class DunningAttempt implements BaseModel
     ): self {
         $self = new self;
 
+        $self['brandID'] = $brandID;
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
         $self['status'] = $status;
@@ -106,6 +117,17 @@ final class DunningAttempt implements BaseModel
         $self['triggerState'] = $triggerState;
 
         null !== $paymentID && $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this dunning attempt belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

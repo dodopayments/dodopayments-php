@@ -48,7 +48,8 @@ final class DetailListResponse implements BaseModel
     public string $eventType;
 
     /**
-     * Original amount in the original currency (in smallest currency unit, e.g., cents).
+     * Original amount in the original currency, in that currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     #[Required('original_amount')]
     public int $originalAmount;
@@ -60,7 +61,8 @@ final class DetailListResponse implements BaseModel
     public string $originalCurrency;
 
     /**
-     * Amount in the payout's currency (in smallest currency unit). Uses cumulative rounding to ensure sum matches payout total exactly.
+     * Amount in the payout's currency, in that currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD). Uses cumulative rounding to ensure sum matches payout total exactly.
      */
     #[Required('payout_currency_amount')]
     public int $payoutCurrencyAmount;
@@ -183,7 +185,8 @@ final class DetailListResponse implements BaseModel
     }
 
     /**
-     * Original amount in the original currency (in smallest currency unit, e.g., cents).
+     * Original amount in the original currency, in that currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     public function withOriginalAmount(int $originalAmount): self
     {
@@ -205,7 +208,8 @@ final class DetailListResponse implements BaseModel
     }
 
     /**
-     * Amount in the payout's currency (in smallest currency unit). Uses cumulative rounding to ensure sum matches payout total exactly.
+     * Amount in the payout's currency, in that currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD). Uses cumulative rounding to ensure sum matches payout total exactly.
      */
     public function withPayoutCurrencyAmount(int $payoutCurrencyAmount): self
     {

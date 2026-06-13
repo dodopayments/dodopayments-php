@@ -16,6 +16,7 @@ use Dodopayments\Products\LicenseKeyDuration;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductCreateParams\PricingMode;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesParams;
@@ -59,6 +60,7 @@ final class ProductsRawService implements ProductsRawContract
      *   licenseKeyDuration?: LicenseKeyDuration|LicenseKeyDurationShape|null,
      *   licenseKeyEnabled?: bool|null,
      *   metadata?: array<string,string>,
+     *   pricingMode?: PricingMode|value-of<PricingMode>|null,
      * }|ProductCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -126,6 +128,7 @@ final class ProductsRawService implements ProductsRawContract
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
      *   price?: PriceShape|null,
+     *   pricingMode?: ProductUpdateParams\PricingMode|value-of<ProductUpdateParams\PricingMode>|null,
      *   taxCategory?: TaxCategory|value-of<TaxCategory>|null,
      * }|ProductUpdateParams $params
      * @param RequestOpts|null $requestOptions

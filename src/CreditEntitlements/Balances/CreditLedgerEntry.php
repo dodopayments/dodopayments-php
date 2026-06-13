@@ -18,6 +18,7 @@ use Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry\TransactionType;
  *   amount: string,
  *   balanceAfter: string,
  *   balanceBefore: string,
+ *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   creditEntitlementID: string,
@@ -48,6 +49,12 @@ final class CreditLedgerEntry implements BaseModel
 
     #[Required('balance_before')]
     public string $balanceBefore;
+
+    /**
+     * Brand id this credit ledger entry belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     #[Required('business_id')]
     public string $businessID;
@@ -96,6 +103,7 @@ final class CreditLedgerEntry implements BaseModel
      *   amount: ...,
      *   balanceAfter: ...,
      *   balanceBefore: ...,
+     *   brandID: ...,
      *   businessID: ...,
      *   createdAt: ...,
      *   creditEntitlementID: ...,
@@ -115,6 +123,7 @@ final class CreditLedgerEntry implements BaseModel
      *   ->withAmount(...)
      *   ->withBalanceAfter(...)
      *   ->withBalanceBefore(...)
+     *   ->withBrandID(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCreditEntitlementID(...)
@@ -142,6 +151,7 @@ final class CreditLedgerEntry implements BaseModel
         string $amount,
         string $balanceAfter,
         string $balanceBefore,
+        string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
         string $creditEntitlementID,
@@ -161,6 +171,7 @@ final class CreditLedgerEntry implements BaseModel
         $self['amount'] = $amount;
         $self['balanceAfter'] = $balanceAfter;
         $self['balanceBefore'] = $balanceBefore;
+        $self['brandID'] = $brandID;
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
         $self['creditEntitlementID'] = $creditEntitlementID;
@@ -206,6 +217,17 @@ final class CreditLedgerEntry implements BaseModel
     {
         $self = clone $this;
         $self['balanceBefore'] = $balanceBefore;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this credit ledger entry belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

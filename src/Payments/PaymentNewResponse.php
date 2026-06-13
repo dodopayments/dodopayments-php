@@ -59,7 +59,8 @@ final class PaymentNewResponse implements BaseModel
     public string $paymentID;
 
     /**
-     * Total amount of the payment in smallest currency unit (e.g. cents).
+     * Total amount of the payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     #[Required('total_amount')]
     public int $totalAmount;
@@ -223,7 +224,8 @@ final class PaymentNewResponse implements BaseModel
     }
 
     /**
-     * Total amount of the payment in smallest currency unit (e.g. cents).
+     * Total amount of the payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     public function withTotalAmount(int $totalAmount): self
     {

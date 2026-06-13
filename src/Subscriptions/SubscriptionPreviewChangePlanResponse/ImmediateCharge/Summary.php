@@ -30,6 +30,15 @@ final class Summary implements BaseModel
     #[Required(enum: Currency::class)]
     public string $currency;
 
+    /**
+     * Net credit movement in the smallest currency unit (e.g. cents).
+     * **Negative** – credits were deducted from the customer's balance to offset
+     * the charge (typical on upgrades).
+     * **Positive** – credits were added to the customer's balance, either from a
+     * downgrade proration refund or from topping-up the wallet to meet a
+     * gateway minimum-charge threshold.
+     * **Zero** – no credit movement occurred.
+     */
     #[Required('customer_credits')]
     public int $customerCredits;
 
@@ -121,6 +130,15 @@ final class Summary implements BaseModel
         return $self;
     }
 
+    /**
+     * Net credit movement in the smallest currency unit (e.g. cents).
+     * **Negative** – credits were deducted from the customer's balance to offset
+     * the charge (typical on upgrades).
+     * **Positive** – credits were added to the customer's balance, either from a
+     * downgrade proration refund or from topping-up the wallet to meet a
+     * gateway minimum-charge threshold.
+     * **Zero** – no credit movement occurred.
+     */
     public function withCustomerCredits(int $customerCredits): self
     {
         $self = clone $this;

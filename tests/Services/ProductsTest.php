@@ -103,6 +103,7 @@ final class ProductsTest extends TestCase
             licenseKeyDuration: ['count' => 0, 'interval' => TimeInterval::DAY],
             licenseKeyEnabled: true,
             metadata: ['foo' => 'string'],
+            pricingMode: 'by_currency',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

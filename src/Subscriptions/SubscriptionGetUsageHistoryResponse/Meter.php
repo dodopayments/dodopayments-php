@@ -71,7 +71,8 @@ final class Meter implements BaseModel
     public string $pricePerUnit;
 
     /**
-     * Total price charged for this meter in smallest currency unit (cents).
+     * Total price charged for this meter in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     #[Required('total_price')]
     public int $totalPrice;
@@ -223,7 +224,8 @@ final class Meter implements BaseModel
     }
 
     /**
-     * Total price charged for this meter in smallest currency unit (cents).
+     * Total price charged for this meter in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
      */
     public function withTotalPrice(int $totalPrice): self
     {
