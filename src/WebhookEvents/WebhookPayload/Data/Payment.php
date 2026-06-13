@@ -140,7 +140,7 @@ final class Payment implements BaseModel
 
     /**
      * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
-     * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+     * (the merchant's own payment connector); `dodo` for everything Dodo
      * processed itself.
      *
      * @var value-of<PaymentProvider> $paymentProvider
@@ -610,7 +610,7 @@ final class Payment implements BaseModel
 
     /**
      * Which processor handled this payment. `stripe` / `adyen` for BYOP routes
-     * (the merchant's own Hyperswitch connector); `dodo` for everything Dodo
+     * (the merchant's own payment connector); `dodo` for everything Dodo
      * processed itself.
      *
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
