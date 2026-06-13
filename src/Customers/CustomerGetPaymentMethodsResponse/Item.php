@@ -43,7 +43,7 @@ final class Item implements BaseModel
     public ?\DateTimeInterface $lastUsedAt;
 
     /**
-     * All supported payment method types (from Hyperswitch).
+     * All supported payment method types.
      *
      * Used for disabled-payment-methods filtering and validation.
      *
@@ -147,7 +147,7 @@ final class Item implements BaseModel
     }
 
     /**
-     * All supported payment method types (from Hyperswitch).
+     * All supported payment method types.
      *
      * Used for disabled-payment-methods filtering and validation.
      *
