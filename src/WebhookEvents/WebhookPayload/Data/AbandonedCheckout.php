@@ -15,6 +15,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout\Status;
  * @phpstan-type AbandonedCheckoutShape = array{
  *   abandonedAt: \DateTimeInterface,
  *   abandonmentReason: AbandonmentReason|value-of<AbandonmentReason>,
+ *   brandID: string,
  *   customerID: string,
  *   payloadType: 'AbandonedCheckout',
  *   paymentID: string,
@@ -38,6 +39,12 @@ final class AbandonedCheckout implements BaseModel
     #[Required('abandonment_reason', enum: AbandonmentReason::class)]
     public string $abandonmentReason;
 
+    /**
+     * Brand id this abandoned checkout belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
+
     #[Required('customer_id')]
     public string $customerID;
 
@@ -59,6 +66,7 @@ final class AbandonedCheckout implements BaseModel
      * AbandonedCheckout::with(
      *   abandonedAt: ...,
      *   abandonmentReason: ...,
+     *   brandID: ...,
      *   customerID: ...,
      *   paymentID: ...,
      *   status: ...,
@@ -71,6 +79,7 @@ final class AbandonedCheckout implements BaseModel
      * (new AbandonedCheckout)
      *   ->withAbandonedAt(...)
      *   ->withAbandonmentReason(...)
+     *   ->withBrandID(...)
      *   ->withCustomerID(...)
      *   ->withPaymentID(...)
      *   ->withStatus(...)
@@ -92,6 +101,7 @@ final class AbandonedCheckout implements BaseModel
     public static function with(
         \DateTimeInterface $abandonedAt,
         AbandonmentReason|string $abandonmentReason,
+        string $brandID,
         string $customerID,
         string $paymentID,
         Status|string $status,
@@ -101,6 +111,7 @@ final class AbandonedCheckout implements BaseModel
 
         $self['abandonedAt'] = $abandonedAt;
         $self['abandonmentReason'] = $abandonmentReason;
+        $self['brandID'] = $brandID;
         $self['customerID'] = $customerID;
         $self['paymentID'] = $paymentID;
         $self['status'] = $status;
@@ -126,6 +137,17 @@ final class AbandonedCheckout implements BaseModel
     ): self {
         $self = clone $this;
         $self['abandonmentReason'] = $abandonmentReason;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this abandoned checkout belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

@@ -13,6 +13,7 @@ use Dodopayments\LicenseKeys\LicenseKey\Source;
 /**
  * @phpstan-type LicenseKeyShape = array{
  *   id: string,
+ *   brandID: string,
  *   businessID: string,
  *   createdAt: \DateTimeInterface,
  *   customerID: string,
@@ -37,6 +38,12 @@ final class LicenseKey implements BaseModel
      */
     #[Required]
     public string $id;
+
+    /**
+     * Brand id this license key belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
 
     /**
      * The unique identifier of the business associated with the license key.
@@ -121,6 +128,7 @@ final class LicenseKey implements BaseModel
      * ```
      * LicenseKey::with(
      *   id: ...,
+     *   brandID: ...,
      *   businessID: ...,
      *   createdAt: ...,
      *   customerID: ...,
@@ -137,6 +145,7 @@ final class LicenseKey implements BaseModel
      * ```
      * (new LicenseKey)
      *   ->withID(...)
+     *   ->withBrandID(...)
      *   ->withBusinessID(...)
      *   ->withCreatedAt(...)
      *   ->withCustomerID(...)
@@ -162,6 +171,7 @@ final class LicenseKey implements BaseModel
      */
     public static function with(
         string $id,
+        string $brandID,
         string $businessID,
         \DateTimeInterface $createdAt,
         string $customerID,
@@ -178,6 +188,7 @@ final class LicenseKey implements BaseModel
         $self = new self;
 
         $self['id'] = $id;
+        $self['brandID'] = $brandID;
         $self['businessID'] = $businessID;
         $self['createdAt'] = $createdAt;
         $self['customerID'] = $customerID;
@@ -202,6 +213,17 @@ final class LicenseKey implements BaseModel
     {
         $self = clone $this;
         $self['id'] = $id;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this license key belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
 
         return $self;
     }

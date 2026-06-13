@@ -14,6 +14,7 @@ use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
+use Dodopayments\Products\ProductCreateParams\PricingMode;
 
 /**
  * @see Dodopayments\Services\ProductsService::create()
@@ -40,6 +41,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
  *   licenseKeyEnabled?: bool|null,
  *   metadata?: array<string,string>|null,
+ *   pricingMode?: null|PricingMode|value-of<PricingMode>,
  * }
  */
 final class ProductCreateParams implements BaseModel
@@ -85,7 +87,7 @@ final class ProductCreateParams implements BaseModel
     public ?string $brandID;
 
     /**
-     * Optional credit entitlements to attach (max 3).
+     * Optional credit entitlements to attach (max 5).
      *
      * @var list<AttachCreditEntitlement>|null $creditEntitlements
      */
@@ -111,7 +113,7 @@ final class ProductCreateParams implements BaseModel
     public ?DigitalProductDelivery $digitalProductDelivery;
 
     /**
-     * Optional entitlements to attach to this product (max 20).
+     * Optional entitlements to attach to this product (max 50).
      *
      * @var list<AttachProductEntitlement>|null $entitlements
      */
@@ -175,6 +177,16 @@ final class ProductCreateParams implements BaseModel
     public ?array $metadata;
 
     /**
+     * Pricing mode for localized pricing. When set, rules from
+     * /products/{id}/localized-prices apply at checkout. NULL means base-only
+     * (existing behavior).
+     *
+     * @var value-of<PricingMode>|null $pricingMode
+     */
+    #[Optional('pricing_mode', enum: PricingMode::class, nullable: true)]
+    public ?string $pricingMode;
+
+    /**
      * `new ProductCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -206,6 +218,7 @@ final class ProductCreateParams implements BaseModel
      * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
      * @param array<string,string>|null $metadata
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
      */
     public static function with(
         string $name,
@@ -222,6 +235,7 @@ final class ProductCreateParams implements BaseModel
         LicenseKeyDuration|array|null $licenseKeyDuration = null,
         ?bool $licenseKeyEnabled = null,
         ?array $metadata = null,
+        PricingMode|string|null $pricingMode = null,
     ): self {
         $self = new self;
 
@@ -240,6 +254,7 @@ final class ProductCreateParams implements BaseModel
         null !== $licenseKeyDuration && $self['licenseKeyDuration'] = $licenseKeyDuration;
         null !== $licenseKeyEnabled && $self['licenseKeyEnabled'] = $licenseKeyEnabled;
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $pricingMode && $self['pricingMode'] = $pricingMode;
 
         return $self;
     }
@@ -307,7 +322,7 @@ final class ProductCreateParams implements BaseModel
     }
 
     /**
-     * Optional credit entitlements to attach (max 3).
+     * Optional credit entitlements to attach (max 5).
      *
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements
      */
@@ -347,7 +362,7 @@ final class ProductCreateParams implements BaseModel
     }
 
     /**
-     * Optional entitlements to attach to this product (max 20).
+     * Optional entitlements to attach to this product (max 50).
      *
      * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      */
@@ -435,6 +450,21 @@ final class ProductCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Pricing mode for localized pricing. When set, rules from
+     * /products/{id}/localized-prices apply at checkout. NULL means base-only
+     * (existing behavior).
+     *
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode
+     */
+    public function withPricingMode(PricingMode|string|null $pricingMode): self
+    {
+        $self = clone $this;
+        $self['pricingMode'] = $pricingMode;
 
         return $self;
     }
