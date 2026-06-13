@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.12.0](https://github.com/dodopayments/dodopayments-php/compare/v6.11.0...v6.12.0) (2026-06-13)
+
+
+### Features
+
+* **spec:** update OpenAPI to 1.104.0 — product localized prices ([5b0cfc7](https://github.com/dodopayments/dodopayments-php/commit/5b0cfc7e281c48341bf8e246bf315990f74efece))
+* **spec:** update OpenAPI to 1.104.0 — product localized prices ([9fa62ef](https://github.com/dodopayments/dodopayments-php/commit/9fa62ef8b0060554b465d4da63f1314d881aaaa4))
+* **spec:** update OpenAPI to 1.104.0 — product localized prices ([#112](https://github.com/dodopayments/dodopayments-php/issues/112)) ([5b0cfc7](https://github.com/dodopayments/dodopayments-php/commit/5b0cfc7e281c48341bf8e246bf315990f74efece))
+
 ## [6.8.1](https://github.com/dodopayments/dodopayments-php/compare/v6.8.0...v6.8.1) (2026-06-01)
 
 
