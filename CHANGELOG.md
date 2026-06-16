@@ -1,13 +1,5 @@
 # Changelog
 
-## [6.13.0](https://github.com/dodopayments/dodopayments-php/compare/v6.12.0...v6.13.0) (2026-06-13)
-
-
-### Features
-
-* **spec:** update OpenAPI to 1.105.0 — localized prices ([9d08a74](https://github.com/dodopayments/dodopayments-php/commit/9d08a74ec2d9362d75088dc5402692e0f13de905))
-* **spec:** update OpenAPI to 1.105.0 — localized prices ([6003a90](https://github.com/dodopayments/dodopayments-php/commit/6003a9071bbcd0ab5ec11959a304e24ece858807))
-
 ## [6.12.0](https://github.com/dodopayments/dodopayments-php/compare/v6.11.0...v6.12.0) (2026-06-13)
 
 
