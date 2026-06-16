@@ -29,7 +29,9 @@ use Dodopayments\Misc\Currency;
  *   productCart: list<ProductCart|ProductCartShape>,
  *   totalPrice: int,
  *   recurringBreakup?: null|RecurringBreakup|RecurringBreakupShape,
+ *   taxIDBusinessName?: string|null,
  *   taxIDErrMsg?: string|null,
+ *   taxIDFormatName?: string|null,
  *   totalTax?: int|null,
  * }
  */
@@ -90,10 +92,22 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     public ?RecurringBreakup $recurringBreakup;
 
     /**
+     * Registered business name from the official registry (EU/GB/AU) when found.
+     */
+    #[Optional('tax_id_business_name', nullable: true)]
+    public ?string $taxIDBusinessName;
+
+    /**
      * Error message if tax ID validation failed.
      */
     #[Optional('tax_id_err_msg', nullable: true)]
     public ?string $taxIDErrMsg;
+
+    /**
+     * The matched tax ID notation (e.g. "VAT Number", "GSTIN") when valid.
+     */
+    #[Optional('tax_id_format_name', nullable: true)]
+    public ?string $taxIDFormatName;
 
     /**
      * Total tax.
@@ -152,7 +166,9 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         array $productCart,
         int $totalPrice,
         RecurringBreakup|array|null $recurringBreakup = null,
+        ?string $taxIDBusinessName = null,
         ?string $taxIDErrMsg = null,
+        ?string $taxIDFormatName = null,
         ?int $totalTax = null,
     ): self {
         $self = new self;
@@ -165,7 +181,9 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         $self['totalPrice'] = $totalPrice;
 
         null !== $recurringBreakup && $self['recurringBreakup'] = $recurringBreakup;
+        null !== $taxIDBusinessName && $self['taxIDBusinessName'] = $taxIDBusinessName;
         null !== $taxIDErrMsg && $self['taxIDErrMsg'] = $taxIDErrMsg;
+        null !== $taxIDFormatName && $self['taxIDFormatName'] = $taxIDFormatName;
         null !== $totalTax && $self['totalTax'] = $totalTax;
 
         return $self;
@@ -264,12 +282,34 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     }
 
     /**
+     * Registered business name from the official registry (EU/GB/AU) when found.
+     */
+    public function withTaxIDBusinessName(?string $taxIDBusinessName): self
+    {
+        $self = clone $this;
+        $self['taxIDBusinessName'] = $taxIDBusinessName;
+
+        return $self;
+    }
+
+    /**
      * Error message if tax ID validation failed.
      */
     public function withTaxIDErrMsg(?string $taxIDErrMsg): self
     {
         $self = clone $this;
         $self['taxIDErrMsg'] = $taxIDErrMsg;
+
+        return $self;
+    }
+
+    /**
+     * The matched tax ID notation (e.g. "VAT Number", "GSTIN") when valid.
+     */
+    public function withTaxIDFormatName(?string $taxIDFormatName): self
+    {
+        $self = clone $this;
+        $self['taxIDFormatName'] = $taxIDFormatName;
 
         return $self;
     }
