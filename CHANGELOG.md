@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.14.0](https://github.com/dodopayments/dodopayments-php/compare/v6.13.0...v6.14.0) (2026-06-16)
+
+
+### Features
+
+* **api:** add tax_id_business_name and tax_id_format_name to CalculateSessionResponse ([96dece0](https://github.com/dodopayments/dodopayments-php/commit/96dece0b34d56044e876302eb5d8f90664b2e9bb))
+
 ## [6.12.0](https://github.com/dodopayments/dodopayments-php/compare/v6.11.0...v6.12.0) (2026-06-13)
 
 
