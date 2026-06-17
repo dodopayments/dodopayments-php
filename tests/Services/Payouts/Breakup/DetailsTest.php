@@ -31,7 +31,9 @@ final class DetailsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->payouts->breakup->details->list('payout_id');
+        $page = $this->client->payouts->breakup->details->list(
+            'pyt_zFTrrn4sk3x3y2vjDBW3T'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
@@ -46,7 +48,7 @@ final class DetailsTest extends TestCase
     public function testDownloadCsv(): void
     {
         $result = $this->client->payouts->breakup->details->downloadCsv(
-            'payout_id'
+            'pyt_zFTrrn4sk3x3y2vjDBW3T'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

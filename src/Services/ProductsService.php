@@ -170,6 +170,7 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
+     * @param string $id Product Id
      * @param list<string>|null $addons Available Addons for subscription products
      * @param list<AttachCreditEntitlement|AttachCreditEntitlementShape>|null $creditEntitlements Credit entitlements to update (replaces all existing when present)
      * Send empty array to remove all, omit field to leave unchanged
@@ -307,6 +308,7 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
+     * @param string $id Product Id
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -324,6 +326,7 @@ final class ProductsService implements ProductsContract
     /**
      * @api
      *
+     * @param string $id Product Id
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

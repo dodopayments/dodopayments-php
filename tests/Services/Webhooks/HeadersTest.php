@@ -30,7 +30,9 @@ final class HeadersTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->webhooks->headers->retrieve('webhook_id');
+        $result = $this->client->webhooks->headers->retrieve(
+            'whk_YdWqVEGKmSYKbsIyDxEab'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(HeaderGetResponse::class, $result);
@@ -40,7 +42,7 @@ final class HeadersTest extends TestCase
     public function testUpdate(): void
     {
         $result = $this->client->webhooks->headers->update(
-            'webhook_id',
+            'whk_YdWqVEGKmSYKbsIyDxEab',
             headers: ['foo' => 'string']
         );
 
@@ -52,7 +54,7 @@ final class HeadersTest extends TestCase
     public function testUpdateWithOptionalParams(): void
     {
         $result = $this->client->webhooks->headers->update(
-            'webhook_id',
+            'whk_YdWqVEGKmSYKbsIyDxEab',
             headers: ['foo' => 'string']
         );
 
