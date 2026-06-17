@@ -30,7 +30,9 @@ final class ImagesTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->products->images->update('id');
+        $result = $this->client->products->images->update(
+            'pdt_R8AWMPiV8RyJElcCKvAID'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ImageUpdateResponse::class, $result);

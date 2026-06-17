@@ -113,6 +113,7 @@ final class ProductsRawService implements ProductsRawContract
     /**
      * @api
      *
+     * @param string $id Product Id
      * @param array{
      *   addons?: list<string>|null,
      *   brandID?: string|null,
@@ -203,6 +204,7 @@ final class ProductsRawService implements ProductsRawContract
     /**
      * @api
      *
+     * @param string $id Product Id
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
@@ -225,6 +227,7 @@ final class ProductsRawService implements ProductsRawContract
     /**
      * @api
      *
+     * @param string $id Product Id
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>

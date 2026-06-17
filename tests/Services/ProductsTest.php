@@ -113,7 +113,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->products->retrieve('id');
+        $result = $this->client->products->retrieve('pdt_R8AWMPiV8RyJElcCKvAID');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Product::class, $result);
@@ -122,7 +122,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->products->update('id');
+        $result = $this->client->products->update('pdt_R8AWMPiV8RyJElcCKvAID');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -145,7 +145,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testArchive(): void
     {
-        $result = $this->client->products->archive('id');
+        $result = $this->client->products->archive('pdt_R8AWMPiV8RyJElcCKvAID');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -154,7 +154,7 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUnarchive(): void
     {
-        $result = $this->client->products->unarchive('id');
+        $result = $this->client->products->unarchive('pdt_R8AWMPiV8RyJElcCKvAID');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -163,7 +163,10 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFiles(): void
     {
-        $result = $this->client->products->updateFiles('id', fileName: 'file_name');
+        $result = $this->client->products->updateFiles(
+            'pdt_R8AWMPiV8RyJElcCKvAID',
+            fileName: 'file_name'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ProductUpdateFilesResponse::class, $result);
@@ -172,7 +175,10 @@ final class ProductsTest extends TestCase
     #[Test]
     public function testUpdateFilesWithOptionalParams(): void
     {
-        $result = $this->client->products->updateFiles('id', fileName: 'file_name');
+        $result = $this->client->products->updateFiles(
+            'pdt_R8AWMPiV8RyJElcCKvAID',
+            fileName: 'file_name'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ProductUpdateFilesResponse::class, $result);

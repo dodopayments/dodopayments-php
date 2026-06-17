@@ -71,7 +71,9 @@ final class ProductCollectionsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->productCollections->retrieve('id');
+        $result = $this->client->productCollections->retrieve(
+            'pdc_8BWv0hojwUH7iCDabr0NI'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ProductCollection::class, $result);
@@ -80,7 +82,9 @@ final class ProductCollectionsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->productCollections->update('id');
+        $result = $this->client->productCollections->update(
+            'pdc_8BWv0hojwUH7iCDabr0NI'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -103,7 +107,9 @@ final class ProductCollectionsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->productCollections->delete('id');
+        $result = $this->client->productCollections->delete(
+            'pdc_8BWv0hojwUH7iCDabr0NI'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -112,7 +118,9 @@ final class ProductCollectionsTest extends TestCase
     #[Test]
     public function testUnarchive(): void
     {
-        $result = $this->client->productCollections->unarchive('id');
+        $result = $this->client->productCollections->unarchive(
+            'pdc_8BWv0hojwUH7iCDabr0NI'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ProductCollectionUnarchiveResponse::class, $result);
@@ -121,7 +129,9 @@ final class ProductCollectionsTest extends TestCase
     #[Test]
     public function testUpdateImages(): void
     {
-        $result = $this->client->productCollections->updateImages('id');
+        $result = $this->client->productCollections->updateImages(
+            'pdc_8BWv0hojwUH7iCDabr0NI'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(
