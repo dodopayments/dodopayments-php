@@ -89,6 +89,7 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -101,6 +102,7 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param string|null $description Description of the webhook
      * @param bool|null $disabled to Disable the endpoint, set it to true
      * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes Filter events to the endpoint.
@@ -144,6 +146,7 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -156,6 +159,7 @@ interface WebhooksContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

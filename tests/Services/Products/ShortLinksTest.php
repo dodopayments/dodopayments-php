@@ -32,7 +32,10 @@ final class ShortLinksTest extends TestCase
     #[Test]
     public function testCreate(): void
     {
-        $result = $this->client->products->shortLinks->create('id', slug: 'slug');
+        $result = $this->client->products->shortLinks->create(
+            'pdt_R8AWMPiV8RyJElcCKvAID',
+            slug: 'slug'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(ShortLinkNewResponse::class, $result);
@@ -42,9 +45,9 @@ final class ShortLinksTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->products->shortLinks->create(
-            'id',
+            'pdt_R8AWMPiV8RyJElcCKvAID',
             slug: 'slug',
-            staticCheckoutParams: ['foo' => 'string']
+            staticCheckoutParams: ['foo' => 'string'],
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

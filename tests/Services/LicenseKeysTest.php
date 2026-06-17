@@ -59,7 +59,7 @@ final class LicenseKeysTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->licenseKeys->retrieve('lic_123');
+        $result = $this->client->licenseKeys->retrieve('lic_7namTC0VcgrnzrF3GTSwB');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LicenseKey::class, $result);
@@ -68,7 +68,7 @@ final class LicenseKeysTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->licenseKeys->update('lic_123');
+        $result = $this->client->licenseKeys->update('lic_7namTC0VcgrnzrF3GTSwB');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(LicenseKey::class, $result);

@@ -28,6 +28,7 @@ final class HeadersRawService implements HeadersRawContract
      *
      * Get a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<HeaderGetResponse>
@@ -52,6 +53,7 @@ final class HeadersRawService implements HeadersRawContract
      *
      * Patch a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param array{headers: array<string,string>}|HeaderUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
