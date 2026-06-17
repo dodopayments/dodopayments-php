@@ -87,7 +87,7 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->payments->retrieve('payment_id');
+        $result = $this->client->payments->retrieve('pay_gr4RizvMOXFJ6xca3y2tU');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Payment::class, $result);
@@ -110,7 +110,9 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrieveLineItems(): void
     {
-        $result = $this->client->payments->retrieveLineItems('payment_id');
+        $result = $this->client->payments->retrieveLineItems(
+            'pay_gr4RizvMOXFJ6xca3y2tU'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PaymentGetLineItemsResponse::class, $result);

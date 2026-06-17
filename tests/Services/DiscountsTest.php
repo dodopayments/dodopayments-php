@@ -64,7 +64,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->discounts->retrieve('discount_id');
+        $result = $this->client->discounts->retrieve('dsc_qxxEmg5PuM1uNTE0LgkP9');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Discount::class, $result);
@@ -73,7 +73,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->discounts->update('discount_id');
+        $result = $this->client->discounts->update('dsc_qxxEmg5PuM1uNTE0LgkP9');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Discount::class, $result);
@@ -96,7 +96,7 @@ final class DiscountsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->discounts->delete('discount_id');
+        $result = $this->client->discounts->delete('dsc_qxxEmg5PuM1uNTE0LgkP9');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);

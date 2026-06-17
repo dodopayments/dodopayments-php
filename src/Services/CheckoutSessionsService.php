@@ -161,6 +161,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
     /**
      * @api
      *
+     * @param string $id Checkout Session ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

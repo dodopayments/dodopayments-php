@@ -74,7 +74,9 @@ final class CreditEntitlementsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->creditEntitlements->retrieve('id');
+        $result = $this->client->creditEntitlements->retrieve(
+            'cde_ztxm5XJsKxWucRWA3rjdM'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CreditEntitlement::class, $result);
@@ -83,7 +85,9 @@ final class CreditEntitlementsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->creditEntitlements->update('id');
+        $result = $this->client->creditEntitlements->update(
+            'cde_ztxm5XJsKxWucRWA3rjdM'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -106,7 +110,9 @@ final class CreditEntitlementsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->creditEntitlements->delete('id');
+        $result = $this->client->creditEntitlements->delete(
+            'cde_ztxm5XJsKxWucRWA3rjdM'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -115,7 +121,9 @@ final class CreditEntitlementsTest extends TestCase
     #[Test]
     public function testUndelete(): void
     {
-        $result = $this->client->creditEntitlements->undelete('id');
+        $result = $this->client->creditEntitlements->undelete(
+            'cde_ztxm5XJsKxWucRWA3rjdM'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);

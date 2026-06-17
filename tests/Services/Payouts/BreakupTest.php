@@ -29,7 +29,9 @@ final class BreakupTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->payouts->breakup->retrieve('payout_id');
+        $result = $this->client->payouts->breakup->retrieve(
+            'pyt_zFTrrn4sk3x3y2vjDBW3T'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertIsList($result);

@@ -30,7 +30,10 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->entitlements->files->delete('file_id', id: 'id');
+        $result = $this->client->entitlements->files->delete(
+            'file_id',
+            id: 'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -39,7 +42,10 @@ final class FilesTest extends TestCase
     #[Test]
     public function testDeleteWithOptionalParams(): void
     {
-        $result = $this->client->entitlements->files->delete('file_id', id: 'id');
+        $result = $this->client->entitlements->files->delete(
+            'file_id',
+            id: 'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -48,7 +54,9 @@ final class FilesTest extends TestCase
     #[Test]
     public function testUpload(): void
     {
-        $result = $this->client->entitlements->files->upload('id');
+        $result = $this->client->entitlements->files->upload(
+            'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(FileUploadResponse::class, $result);
