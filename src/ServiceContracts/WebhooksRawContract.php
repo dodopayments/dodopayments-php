@@ -37,6 +37,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
@@ -51,6 +52,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param array<string,mixed>|WebhookUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -82,6 +84,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
@@ -96,6 +99,7 @@ interface WebhooksRawContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookGetSecretResponse>

@@ -62,7 +62,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->webhooks->retrieve('webhook_id');
+        $result = $this->client->webhooks->retrieve('whk_YdWqVEGKmSYKbsIyDxEab');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookDetails::class, $result);
@@ -71,7 +71,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->webhooks->update('webhook_id');
+        $result = $this->client->webhooks->update('whk_YdWqVEGKmSYKbsIyDxEab');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookDetails::class, $result);
@@ -94,7 +94,7 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->webhooks->delete('webhook_id');
+        $result = $this->client->webhooks->delete('whk_YdWqVEGKmSYKbsIyDxEab');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -103,7 +103,9 @@ final class WebhooksTest extends TestCase
     #[Test]
     public function testRetrieveSecret(): void
     {
-        $result = $this->client->webhooks->retrieveSecret('webhook_id');
+        $result = $this->client->webhooks->retrieveSecret(
+            'whk_YdWqVEGKmSYKbsIyDxEab'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WebhookGetSecretResponse::class, $result);

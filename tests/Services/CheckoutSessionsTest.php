@@ -183,7 +183,9 @@ final class CheckoutSessionsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->checkoutSessions->retrieve('id');
+        $result = $this->client->checkoutSessions->retrieve(
+            'cks_n010SZaY4NXc7F1ck3Tq1'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CheckoutSessionStatus::class, $result);

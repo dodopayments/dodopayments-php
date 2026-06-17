@@ -65,7 +65,9 @@ final class EntitlementsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->entitlements->retrieve('id');
+        $result = $this->client->entitlements->retrieve(
+            'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Entitlement::class, $result);
@@ -74,7 +76,7 @@ final class EntitlementsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->entitlements->update('id');
+        $result = $this->client->entitlements->update('ent_jt7jcvI79Xh8eehqgWdcm');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Entitlement::class, $result);
@@ -97,7 +99,7 @@ final class EntitlementsTest extends TestCase
     #[Test]
     public function testDelete(): void
     {
-        $result = $this->client->entitlements->delete('id');
+        $result = $this->client->entitlements->delete('ent_jt7jcvI79Xh8eehqgWdcm');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);

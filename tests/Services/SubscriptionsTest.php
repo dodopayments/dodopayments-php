@@ -103,7 +103,9 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->subscriptions->retrieve('subscription_id');
+        $result = $this->client->subscriptions->retrieve(
+            'sub_Iuaq622bbmmfOGrVTqdXv'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Subscription::class, $result);
@@ -112,7 +114,7 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->subscriptions->update('subscription_id');
+        $result = $this->client->subscriptions->update('sub_Iuaq622bbmmfOGrVTqdXv');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Subscription::class, $result);
@@ -135,7 +137,9 @@ final class SubscriptionsTest extends TestCase
     #[Test]
     public function testCancelChangePlan(): void
     {
-        $result = $this->client->subscriptions->cancelChangePlan('subscription_id');
+        $result = $this->client->subscriptions->cancelChangePlan(
+            'sub_Iuaq622bbmmfOGrVTqdXv'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -145,7 +149,7 @@ final class SubscriptionsTest extends TestCase
     public function testChangePlan(): void
     {
         $result = $this->client->subscriptions->changePlan(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
@@ -159,7 +163,7 @@ final class SubscriptionsTest extends TestCase
     public function testChangePlanWithOptionalParams(): void
     {
         $result = $this->client->subscriptions->changePlan(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
@@ -180,7 +184,7 @@ final class SubscriptionsTest extends TestCase
     public function testCharge(): void
     {
         $result = $this->client->subscriptions->charge(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             productPrice: 0
         );
 
@@ -192,7 +196,7 @@ final class SubscriptionsTest extends TestCase
     public function testChargeWithOptionalParams(): void
     {
         $result = $this->client->subscriptions->charge(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             productPrice: 0,
             adaptiveCurrencyFeesInclusive: true,
             customerBalanceConfig: [
@@ -212,7 +216,7 @@ final class SubscriptionsTest extends TestCase
     public function testPreviewChangePlan(): void
     {
         $result = $this->client->subscriptions->previewChangePlan(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
@@ -229,7 +233,7 @@ final class SubscriptionsTest extends TestCase
     public function testPreviewChangePlanWithOptionalParams(): void
     {
         $result = $this->client->subscriptions->previewChangePlan(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             productID: 'product_id',
             prorationBillingMode: 'prorated_immediately',
             quantity: 0,
@@ -253,7 +257,7 @@ final class SubscriptionsTest extends TestCase
     public function testRetrieveCreditUsage(): void
     {
         $result = $this->client->subscriptions->retrieveCreditUsage(
-            'subscription_id'
+            'sub_Iuaq622bbmmfOGrVTqdXv'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -264,7 +268,7 @@ final class SubscriptionsTest extends TestCase
     public function testRetrieveUsageHistory(): void
     {
         $page = $this->client->subscriptions->retrieveUsageHistory(
-            'subscription_id'
+            'sub_Iuaq622bbmmfOGrVTqdXv'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -283,7 +287,7 @@ final class SubscriptionsTest extends TestCase
     public function testUpdatePaymentMethod(): void
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             paymentMethod: ['type' => 'new']
         );
 
@@ -298,7 +302,7 @@ final class SubscriptionsTest extends TestCase
     public function testUpdatePaymentMethodWithOptionalParams(): void
     {
         $result = $this->client->subscriptions->updatePaymentMethod(
-            'subscription_id',
+            'sub_Iuaq622bbmmfOGrVTqdXv',
             paymentMethod: [
                 'type' => 'new',
                 'allowedPaymentMethodTypes' => [PaymentMethodTypes::ACH],

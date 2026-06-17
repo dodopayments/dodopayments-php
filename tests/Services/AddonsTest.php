@@ -63,7 +63,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->addons->retrieve('id');
+        $result = $this->client->addons->retrieve('adn_NX1zdqW4Hbivsqz8vI9dc');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(AddonResponse::class, $result);
@@ -72,7 +72,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->addons->update('id');
+        $result = $this->client->addons->update('adn_NX1zdqW4Hbivsqz8vI9dc');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(AddonResponse::class, $result);
@@ -95,7 +95,7 @@ final class AddonsTest extends TestCase
     #[Test]
     public function testUpdateImages(): void
     {
-        $result = $this->client->addons->updateImages('id');
+        $result = $this->client->addons->updateImages('adn_NX1zdqW4Hbivsqz8vI9dc');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(AddonUpdateImagesResponse::class, $result);

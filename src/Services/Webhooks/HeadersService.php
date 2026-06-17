@@ -34,6 +34,7 @@ final class HeadersService implements HeadersContract
      *
      * Get a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -53,6 +54,7 @@ final class HeadersService implements HeadersContract
      *
      * Patch a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param array<string,string> $headers Object of header-value pair to update or add
      * @param RequestOpts|null $requestOptions
      *

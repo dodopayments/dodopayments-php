@@ -57,7 +57,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->customers->retrieve('customer_id');
+        $result = $this->client->customers->retrieve('cus_TV52uJWWXt2yIoBBxpjaa');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Customer::class, $result);
@@ -66,7 +66,7 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->customers->update('customer_id');
+        $result = $this->client->customers->update('cus_TV52uJWWXt2yIoBBxpjaa');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Customer::class, $result);
@@ -91,7 +91,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->deletePaymentMethod(
             'payment_method_id',
-            customerID: 'customer_id'
+            customerID: 'cus_TV52uJWWXt2yIoBBxpjaa'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -103,7 +103,7 @@ final class CustomersTest extends TestCase
     {
         $result = $this->client->customers->deletePaymentMethod(
             'payment_method_id',
-            customerID: 'customer_id'
+            customerID: 'cus_TV52uJWWXt2yIoBBxpjaa'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -113,7 +113,9 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testListCreditEntitlements(): void
     {
-        $result = $this->client->customers->listCreditEntitlements('customer_id');
+        $result = $this->client->customers->listCreditEntitlements(
+            'cus_TV52uJWWXt2yIoBBxpjaa'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(
@@ -125,7 +127,9 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testListEntitlements(): void
     {
-        $result = $this->client->customers->listEntitlements('customer_id');
+        $result = $this->client->customers->listEntitlements(
+            'cus_TV52uJWWXt2yIoBBxpjaa'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CustomerListEntitlementsResponse::class, $result);
@@ -134,7 +138,9 @@ final class CustomersTest extends TestCase
     #[Test]
     public function testRetrievePaymentMethods(): void
     {
-        $result = $this->client->customers->retrievePaymentMethods('customer_id');
+        $result = $this->client->customers->retrievePaymentMethods(
+            'cus_TV52uJWWXt2yIoBBxpjaa'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(CustomerGetPaymentMethodsResponse::class, $result);

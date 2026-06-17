@@ -31,7 +31,7 @@ final class ItemsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->items->create(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             products: [['productID' => 'product_id']],
         );
 
@@ -44,7 +44,7 @@ final class ItemsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->items->create(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             products: [['productID' => 'product_id', 'status' => true]],
         );
 
@@ -57,7 +57,7 @@ final class ItemsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->items->update(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             groupID: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
             status: true,
         );
@@ -71,7 +71,7 @@ final class ItemsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->items->update(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             groupID: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
             status: true,
         );
@@ -85,7 +85,7 @@ final class ItemsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->items->delete(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             groupID: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         );
 
@@ -98,7 +98,7 @@ final class ItemsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->items->delete(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             groupID: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
         );
 
