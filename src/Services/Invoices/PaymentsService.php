@@ -30,6 +30,7 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
+     * @param string $paymentID Payment ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -47,6 +48,7 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
+     * @param string $payoutID Payout ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -64,6 +66,7 @@ final class PaymentsService implements PaymentsContract
     /**
      * @api
      *
+     * @param string $refundID Refund ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

@@ -31,7 +31,7 @@ final class GroupsTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->productCollections->groups->create(
-            'id',
+            'pdc_8BWv0hojwUH7iCDabr0NI',
             products: [['productID' => 'product_id']]
         );
 
@@ -43,7 +43,7 @@ final class GroupsTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->productCollections->groups->create(
-            'id',
+            'pdc_8BWv0hojwUH7iCDabr0NI',
             products: [['productID' => 'product_id', 'status' => true]],
             groupName: 'group_name',
             status: true,
@@ -58,7 +58,7 @@ final class GroupsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->update(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id'
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -70,7 +70,7 @@ final class GroupsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->update(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id',
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI',
             groupName: 'group_name',
             productOrder: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
             status: true,
@@ -85,7 +85,7 @@ final class GroupsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->delete(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id'
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -97,7 +97,7 @@ final class GroupsTest extends TestCase
     {
         $result = $this->client->productCollections->groups->delete(
             '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-            id: 'id'
+            id: 'pdc_8BWv0hojwUH7iCDabr0NI'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

@@ -29,7 +29,9 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->invoices->payments->retrieve('payment_id');
+        $result = $this->client->invoices->payments->retrieve(
+            'pay_gr4RizvMOXFJ6xca3y2tU'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertIsString($result);
@@ -38,7 +40,9 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrievePayout(): void
     {
-        $result = $this->client->invoices->payments->retrievePayout('payout_id');
+        $result = $this->client->invoices->payments->retrievePayout(
+            'pyt_zFTrrn4sk3x3y2vjDBW3T'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertIsString($result);
@@ -47,7 +51,9 @@ final class PaymentsTest extends TestCase
     #[Test]
     public function testRetrieveRefund(): void
     {
-        $result = $this->client->invoices->payments->retrieveRefund('refund_id');
+        $result = $this->client->invoices->payments->retrieveRefund(
+            'ref_F0gZetLvTxxBrMU2CZcmy'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertIsString($result);
