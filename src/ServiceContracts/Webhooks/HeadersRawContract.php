@@ -18,6 +18,7 @@ interface HeadersRawContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<HeaderGetResponse>
@@ -32,6 +33,7 @@ interface HeadersRawContract
     /**
      * @api
      *
+     * @param string $webhookID Webhook ID
      * @param array<string,mixed>|HeaderUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

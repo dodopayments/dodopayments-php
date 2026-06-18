@@ -73,6 +73,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Get a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookDetails>
@@ -97,6 +98,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Patch a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param array{
      *   description?: string|null,
      *   disabled?: bool|null,
@@ -168,6 +170,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Delete a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<mixed>
@@ -192,6 +195,7 @@ final class WebhooksRawService implements WebhooksRawContract
      *
      * Get webhook secret by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<WebhookGetSecretResponse>

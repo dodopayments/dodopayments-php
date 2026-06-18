@@ -41,7 +41,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->brands->retrieve('id');
+        $result = $this->client->brands->retrieve('brnd_8dFiAW42v28JzhlVSocjq');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Brand::class, $result);
@@ -50,7 +50,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testUpdate(): void
     {
-        $result = $this->client->brands->update('id');
+        $result = $this->client->brands->update('brnd_8dFiAW42v28JzhlVSocjq');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Brand::class, $result);
@@ -68,7 +68,7 @@ final class BrandsTest extends TestCase
     #[Test]
     public function testUpdateImages(): void
     {
-        $result = $this->client->brands->updateImages('id');
+        $result = $this->client->brands->updateImages('brnd_8dFiAW42v28JzhlVSocjq');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BrandUpdateImagesResponse::class, $result);

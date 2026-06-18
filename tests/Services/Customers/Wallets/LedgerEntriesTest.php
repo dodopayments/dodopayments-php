@@ -34,10 +34,10 @@ final class LedgerEntriesTest extends TestCase
     public function testCreate(): void
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
-            'customer_id',
+            'cus_TV52uJWWXt2yIoBBxpjaa',
             amount: 0,
             currency: Currency::AED,
-            entryType: 'credit'
+            entryType: 'credit',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -48,7 +48,7 @@ final class LedgerEntriesTest extends TestCase
     public function testCreateWithOptionalParams(): void
     {
         $result = $this->client->customers->wallets->ledgerEntries->create(
-            'customer_id',
+            'cus_TV52uJWWXt2yIoBBxpjaa',
             amount: 0,
             currency: Currency::AED,
             entryType: 'credit',
@@ -64,7 +64,7 @@ final class LedgerEntriesTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->customers->wallets->ledgerEntries->list(
-            'customer_id'
+            'cus_TV52uJWWXt2yIoBBxpjaa'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
