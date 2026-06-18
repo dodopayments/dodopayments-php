@@ -98,7 +98,7 @@ final class CursorPagePagination implements BaseModel, BasePage
      */
     public function nextRequest(): ?array
     {
-        if (!($this->done ?? null) || !count($this->getItems())) {
+        if (!count($this->getItems())) {
             return null;
         }
 
