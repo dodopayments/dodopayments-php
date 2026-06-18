@@ -98,6 +98,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
     /**
      * @api
      *
+     * @param string $id Checkout Session ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CheckoutSessionStatus>

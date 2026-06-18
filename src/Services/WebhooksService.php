@@ -139,6 +139,7 @@ final class WebhooksService implements WebhooksContract
      *
      * Get a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -158,6 +159,7 @@ final class WebhooksService implements WebhooksContract
      *
      * Patch a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param string|null $description Description of the webhook
      * @param bool|null $disabled to Disable the endpoint, set it to true
      * @param list<WebhookEventType|value-of<WebhookEventType>>|null $filterTypes Filter events to the endpoint.
@@ -228,6 +230,7 @@ final class WebhooksService implements WebhooksContract
      *
      * Delete a webhook by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -247,6 +250,7 @@ final class WebhooksService implements WebhooksContract
      *
      * Get webhook secret by id
      *
+     * @param string $webhookID Webhook ID
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

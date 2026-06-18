@@ -31,7 +31,9 @@ final class GrantsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $page = $this->client->entitlements->grants->list('id');
+        $page = $this->client->entitlements->grants->list(
+            'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
@@ -45,7 +47,10 @@ final class GrantsTest extends TestCase
     #[Test]
     public function testRevoke(): void
     {
-        $result = $this->client->entitlements->grants->revoke('grant_id', id: 'id');
+        $result = $this->client->entitlements->grants->revoke(
+            'entg_w0ZCJZgNXuNDdMVzvja6p',
+            id: 'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(EntitlementGrant::class, $result);
@@ -54,7 +59,10 @@ final class GrantsTest extends TestCase
     #[Test]
     public function testRevokeWithOptionalParams(): void
     {
-        $result = $this->client->entitlements->grants->revoke('grant_id', id: 'id');
+        $result = $this->client->entitlements->grants->revoke(
+            'entg_w0ZCJZgNXuNDdMVzvja6p',
+            id: 'ent_jt7jcvI79Xh8eehqgWdcm'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(EntitlementGrant::class, $result);

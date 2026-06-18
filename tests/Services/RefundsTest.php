@@ -55,7 +55,7 @@ final class RefundsTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->refunds->retrieve('refund_id');
+        $result = $this->client->refunds->retrieve('ref_F0gZetLvTxxBrMU2CZcmy');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Refund::class, $result);

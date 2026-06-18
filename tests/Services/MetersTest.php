@@ -77,7 +77,7 @@ final class MetersTest extends TestCase
     #[Test]
     public function testRetrieve(): void
     {
-        $result = $this->client->meters->retrieve('id');
+        $result = $this->client->meters->retrieve('mtr_h5tgTWL55OyMO0L2Q9w9v');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(Meter::class, $result);
@@ -100,7 +100,7 @@ final class MetersTest extends TestCase
     #[Test]
     public function testArchive(): void
     {
-        $result = $this->client->meters->archive('id');
+        $result = $this->client->meters->archive('mtr_h5tgTWL55OyMO0L2Q9w9v');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
@@ -109,7 +109,7 @@ final class MetersTest extends TestCase
     #[Test]
     public function testUnarchive(): void
     {
-        $result = $this->client->meters->unarchive('id');
+        $result = $this->client->meters->unarchive('mtr_h5tgTWL55OyMO0L2Q9w9v');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertNull($result);
