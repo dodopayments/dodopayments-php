@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.14.1](https://github.com/dodopayments/dodopayments-php/compare/v6.14.0...v6.14.1) (2026-06-18)
+
+
+### Bug Fixes
+
+* **pagination:** stop cursor auto-pagination dropping pages ([705c589](https://github.com/dodopayments/dodopayments-php/commit/705c5896fbded800c4a71c8d7069a7757f9833c2))
+* **pagination:** stop cursor auto-pagination dropping pages ([ba22bd7](https://github.com/dodopayments/dodopayments-php/commit/ba22bd7c4b8ad118cdd12d755a6fee77f2273a7a))
+
+
+### Chores
+
+* restore release-please-owned files from main ([7c6132f](https://github.com/dodopayments/dodopayments-php/commit/7c6132fdf8783d4e333b869f45fd722b235c949e))
+
 ## [6.14.0](https://github.com/dodopayments/dodopayments-php/compare/v6.13.0...v6.14.0) (2026-06-16)
 
 
