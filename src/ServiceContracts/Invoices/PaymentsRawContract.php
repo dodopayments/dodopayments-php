@@ -16,6 +16,7 @@ interface PaymentsRawContract
     /**
      * @api
      *
+     * @param string $paymentID Payment ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<string>
@@ -30,6 +31,7 @@ interface PaymentsRawContract
     /**
      * @api
      *
+     * @param string $payoutID Payout ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<string>
@@ -44,6 +46,7 @@ interface PaymentsRawContract
     /**
      * @api
      *
+     * @param string $refundID Refund ID
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<string>

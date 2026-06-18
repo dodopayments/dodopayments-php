@@ -30,7 +30,9 @@ final class WalletsTest extends TestCase
     #[Test]
     public function testList(): void
     {
-        $result = $this->client->customers->wallets->list('customer_id');
+        $result = $this->client->customers->wallets->list(
+            'cus_TV52uJWWXt2yIoBBxpjaa'
+        );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(WalletListResponse::class, $result);

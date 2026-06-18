@@ -36,8 +36,8 @@ final class BalancesTest extends TestCase
     public function testRetrieve(): void
     {
         $result = $this->client->creditEntitlements->balances->retrieve(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id'
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -48,8 +48,8 @@ final class BalancesTest extends TestCase
     public function testRetrieveWithOptionalParams(): void
     {
         $result = $this->client->creditEntitlements->balances->retrieve(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id'
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -60,7 +60,7 @@ final class BalancesTest extends TestCase
     public function testList(): void
     {
         $page = $this->client->creditEntitlements->balances->list(
-            'credit_entitlement_id'
+            'cde_ztxm5XJsKxWucRWA3rjdM'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -76,8 +76,8 @@ final class BalancesTest extends TestCase
     public function testCreateLedgerEntry(): void
     {
         $result = $this->client->creditEntitlements->balances->createLedgerEntry(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id',
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
             amount: 'amount',
             entryType: LedgerEntryType::CREDIT,
         );
@@ -90,8 +90,8 @@ final class BalancesTest extends TestCase
     public function testCreateLedgerEntryWithOptionalParams(): void
     {
         $result = $this->client->creditEntitlements->balances->createLedgerEntry(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id',
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
             amount: 'amount',
             entryType: LedgerEntryType::CREDIT,
             expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
@@ -108,8 +108,8 @@ final class BalancesTest extends TestCase
     public function testListGrants(): void
     {
         $page = $this->client->creditEntitlements->balances->listGrants(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id'
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -125,8 +125,8 @@ final class BalancesTest extends TestCase
     public function testListGrantsWithOptionalParams(): void
     {
         $page = $this->client->creditEntitlements->balances->listGrants(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id',
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
             pageNumber: 0,
             pageSize: 0,
             status: 'active',
@@ -145,8 +145,8 @@ final class BalancesTest extends TestCase
     public function testListLedger(): void
     {
         $page = $this->client->creditEntitlements->balances->listLedger(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id'
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -162,8 +162,8 @@ final class BalancesTest extends TestCase
     public function testListLedgerWithOptionalParams(): void
     {
         $page = $this->client->creditEntitlements->balances->listLedger(
-            'customer_id',
-            creditEntitlementID: 'credit_entitlement_id',
+            'cus_TV52uJWWXt2yIoBBxpjaa',
+            creditEntitlementID: 'cde_ztxm5XJsKxWucRWA3rjdM',
             endDate: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             pageNumber: 0,
             pageSize: 0,
