@@ -9,6 +9,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\CbbProrationBehavior;
+use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
@@ -103,7 +104,7 @@ final class ProductsTest extends TestCase
             licenseKeyDuration: ['count' => 0, 'interval' => TimeInterval::DAY],
             licenseKeyEnabled: true,
             metadata: ['foo' => 'string'],
-            pricingMode: 'by_currency',
+            pricingMode: PricingMode::BY_CURRENCY,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
