@@ -10,10 +10,10 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\TaxCategory;
+use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
-use Dodopayments\Products\ProductListResponse\PricingMode;
 
 /**
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price

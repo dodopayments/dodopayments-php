@@ -10,12 +10,12 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\AttachCreditEntitlement;
 use Dodopayments\Products\AttachProductEntitlement;
 use Dodopayments\Products\LicenseKeyDuration;
+use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Price\OneTimePrice;
 use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
-use Dodopayments\Products\ProductCreateParams\PricingMode;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\RequestOptions;
@@ -148,7 +148,7 @@ interface ProductsContract
      * @param array<string,string>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
      * @param PriceShape|null $price price details of the product
-     * @param \Dodopayments\Products\ProductUpdateParams\PricingMode|value-of<\Dodopayments\Products\ProductUpdateParams\PricingMode>|null $pricingMode Update the pricing mode. Omit to leave unchanged; set to null to clear
+     * @param PricingMode|value-of<PricingMode>|null $pricingMode Update the pricing mode. Omit to leave unchanged; set to null to clear
      * (which archives all active localized rules for this product). Changing
      * to a different non-null mode also archives any rules whose mode doesn't
      * match the new mode.
@@ -173,7 +173,7 @@ interface ProductsContract
         ?array $metadata = null,
         ?string $name = null,
         OneTimePrice|array|RecurringPrice|UsageBasedPrice|null $price = null,
-        \Dodopayments\Products\ProductUpdateParams\PricingMode|string|null $pricingMode = null,
+        PricingMode|string|null $pricingMode = null,
         TaxCategory|string|null $taxCategory = null,
         RequestOptions|array|null $requestOptions = null,
     ): mixed;

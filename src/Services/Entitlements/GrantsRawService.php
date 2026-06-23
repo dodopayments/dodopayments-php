@@ -10,6 +10,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Entitlements\Grants\GrantFulfillLicenseKeyParams;
 use Dodopayments\Entitlements\Grants\GrantListParams;
 use Dodopayments\Entitlements\Grants\GrantListParams\Status;
 use Dodopayments\Entitlements\Grants\GrantRevokeParams;
@@ -70,6 +71,45 @@ final class GrantsRawService implements GrantsRawContract
             options: $options,
             convert: EntitlementGrant::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * For entitlements whose license-key config uses `manual` fulfillment, grants
+     * are created in the `pending` state without a key. Call this endpoint to
+     * deliver the key: the grant moves to `delivered`, the customer is emailed the
+     * key, and the `license_key.created` and `entitlement_grant.delivered` webhook
+     * events are sent.
+     *
+     * @param string $grantID Grant ID
+     * @param array{
+     *   key: string, activationsLimit?: int|null, expiresAt?: \DateTimeInterface|null
+     * }|GrantFulfillLicenseKeyParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntitlementGrant>
+     *
+     * @throws APIException
+     */
+    public function fulfillLicenseKey(
+        string $grantID,
+        array|GrantFulfillLicenseKeyParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = GrantFulfillLicenseKeyParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['grants/%1$s/license-key', $grantID],
+            body: (object) $parsed,
+            options: $options,
+            convert: EntitlementGrant::class,
         );
     }
 

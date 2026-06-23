@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Products\Product;
+namespace Dodopayments\Products\LocalizedPrices;
 
-/**
- * Pricing mode for localized pricing. NULL means base-only (no localized rules apply).
- */
 enum PricingMode: string
 {
     case BY_CURRENCY = 'by_currency';

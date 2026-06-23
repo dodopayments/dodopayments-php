@@ -132,11 +132,7 @@ final class Subscription implements BaseModel
     #[Required]
     public CustomerLimitedDetails $customer;
 
-    /**
-     * Additional custom data associated with the subscription.
-     *
-     * @var array<string,string> $metadata
-     */
+    /** @var array<string,string> $metadata */
     #[Required(map: 'string')]
     public array $metadata;
 
@@ -583,8 +579,6 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * Additional custom data associated with the subscription.
-     *
      * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self

@@ -67,11 +67,7 @@ final class Refund implements BaseModel
     #[Required('is_partial')]
     public bool $isPartial;
 
-    /**
-     * Additional metadata stored with the refund.
-     *
-     * @var array<string,string> $metadata
-     */
+    /** @var array<string,string> $metadata */
     #[Required(map: 'string')]
     public array $metadata;
 
@@ -244,8 +240,6 @@ final class Refund implements BaseModel
     }
 
     /**
-     * Additional metadata stored with the refund.
-     *
      * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
