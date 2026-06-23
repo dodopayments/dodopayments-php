@@ -8,6 +8,7 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Entitlements\Grants\GrantFulfillLicenseKeyParams;
 use Dodopayments\Entitlements\Grants\GrantListParams;
 use Dodopayments\Entitlements\Grants\GrantRevokeParams;
 use Dodopayments\RequestOptions;
@@ -31,6 +32,23 @@ interface GrantsRawContract
     public function list(
         string $id,
         array|GrantListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $grantID Grant ID
+     * @param array<string,mixed>|GrantFulfillLicenseKeyParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<EntitlementGrant>
+     *
+     * @throws APIException
+     */
+    public function fulfillLicenseKey(
+        string $grantID,
+        array|GrantFulfillLicenseKeyParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
