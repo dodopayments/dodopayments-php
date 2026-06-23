@@ -24,6 +24,7 @@ use Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry\TransactionType;
  *   creditEntitlementID: string,
  *   customerID: string,
  *   isCredit: bool,
+ *   metadata: array<string,string>,
  *   overageAfter: string,
  *   overageBefore: string,
  *   transactionType: TransactionType|value-of<TransactionType>,
@@ -71,6 +72,16 @@ final class CreditLedgerEntry implements BaseModel
     #[Required('is_credit')]
     public bool $isCredit;
 
+    /**
+     * Metadata associated with the credit grant's source (the subscription or
+     * payment created at checkout). Empty when the grant has no resolvable
+     * source (e.g. credits granted directly via the API).
+     *
+     * @var array<string,string> $metadata
+     */
+    #[Required(map: 'string')]
+    public array $metadata;
+
     #[Required('overage_after')]
     public string $overageAfter;
 
@@ -109,6 +120,7 @@ final class CreditLedgerEntry implements BaseModel
      *   creditEntitlementID: ...,
      *   customerID: ...,
      *   isCredit: ...,
+     *   metadata: ...,
      *   overageAfter: ...,
      *   overageBefore: ...,
      *   transactionType: ...,
@@ -129,6 +141,7 @@ final class CreditLedgerEntry implements BaseModel
      *   ->withCreditEntitlementID(...)
      *   ->withCustomerID(...)
      *   ->withIsCredit(...)
+     *   ->withMetadata(...)
      *   ->withOverageAfter(...)
      *   ->withOverageBefore(...)
      *   ->withTransactionType(...)
@@ -144,6 +157,7 @@ final class CreditLedgerEntry implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param array<string,string> $metadata
      * @param TransactionType|value-of<TransactionType> $transactionType
      */
     public static function with(
@@ -157,6 +171,7 @@ final class CreditLedgerEntry implements BaseModel
         string $creditEntitlementID,
         string $customerID,
         bool $isCredit,
+        array $metadata,
         string $overageAfter,
         string $overageBefore,
         TransactionType|string $transactionType,
@@ -177,6 +192,7 @@ final class CreditLedgerEntry implements BaseModel
         $self['creditEntitlementID'] = $creditEntitlementID;
         $self['customerID'] = $customerID;
         $self['isCredit'] = $isCredit;
+        $self['metadata'] = $metadata;
         $self['overageAfter'] = $overageAfter;
         $self['overageBefore'] = $overageBefore;
         $self['transactionType'] = $transactionType;
@@ -268,6 +284,21 @@ final class CreditLedgerEntry implements BaseModel
     {
         $self = clone $this;
         $self['isCredit'] = $isCredit;
+
+        return $self;
+    }
+
+    /**
+     * Metadata associated with the credit grant's source (the subscription or
+     * payment created at checkout). Empty when the grant has no resolvable
+     * source (e.g. credits granted directly via the API).
+     *
+     * @param array<string,string> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
         return $self;
     }
