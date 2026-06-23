@@ -124,11 +124,7 @@ final class Payment implements BaseModel
     #[Required(list: Dispute::class)]
     public array $disputes;
 
-    /**
-     * Additional custom data associated with the payment.
-     *
-     * @var array<string,string> $metadata
-     */
+    /** @var array<string,string> $metadata */
     #[Required(map: 'string')]
     public array $metadata;
 
@@ -585,8 +581,6 @@ final class Payment implements BaseModel
     }
 
     /**
-     * Additional custom data associated with the payment.
-     *
      * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self

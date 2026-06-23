@@ -13,10 +13,10 @@ use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\AttachCreditEntitlement;
 use Dodopayments\Products\AttachProductEntitlement;
 use Dodopayments\Products\LicenseKeyDuration;
+use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
-use Dodopayments\Products\ProductCreateParams\PricingMode;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
 use Dodopayments\Products\ProductUpdateFilesParams;
@@ -129,7 +129,7 @@ final class ProductsRawService implements ProductsRawContract
      *   metadata?: array<string,string>|null,
      *   name?: string|null,
      *   price?: PriceShape|null,
-     *   pricingMode?: ProductUpdateParams\PricingMode|value-of<ProductUpdateParams\PricingMode>|null,
+     *   pricingMode?: PricingMode|value-of<PricingMode>|null,
      *   taxCategory?: TaxCategory|value-of<TaxCategory>|null,
      * }|ProductUpdateParams $params
      * @param RequestOpts|null $requestOptions

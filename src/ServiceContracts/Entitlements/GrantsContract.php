@@ -42,6 +42,25 @@ interface GrantsContract
      * @api
      *
      * @param string $grantID Grant ID
+     * @param string $key the license key value to deliver to the customer
+     * @param int|null $activationsLimit Per-key activation limit. Defaults to the entitlement's license-key configuration.
+     * @param \DateTimeInterface|null $expiresAt When the key expires. Defaults to the duration in the entitlement's license-key configuration.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function fulfillLicenseKey(
+        string $grantID,
+        string $key,
+        ?int $activationsLimit = null,
+        ?\DateTimeInterface $expiresAt = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntitlementGrant;
+
+    /**
+     * @api
+     *
+     * @param string $grantID Grant ID
      * @param string $id Entitlement ID
      * @param RequestOpts|null $requestOptions
      *

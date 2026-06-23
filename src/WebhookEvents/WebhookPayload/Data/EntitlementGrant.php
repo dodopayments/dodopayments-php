@@ -94,11 +94,7 @@ final class EntitlementGrant implements BaseModel
     #[Required('integration_type', enum: EntitlementIntegrationType::class)]
     public string $integrationType;
 
-    /**
-     * Arbitrary key-value metadata recorded on the grant.
-     *
-     * @var array<string,string> $metadata
-     */
+    /** @var array<string,string> $metadata */
     #[Required(map: 'string')]
     public array $metadata;
 
@@ -368,8 +364,6 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * Arbitrary key-value metadata recorded on the grant.
-     *
      * @param array<string,string> $metadata
      */
     public function withMetadata(array $metadata): self
