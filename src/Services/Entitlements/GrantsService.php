@@ -73,6 +73,44 @@ final class GrantsService implements GrantsContract
     /**
      * @api
      *
+     * For entitlements whose license-key config uses `manual` fulfillment, grants
+     * are created in the `pending` state without a key. Call this endpoint to
+     * deliver the key: the grant moves to `delivered`, the customer is emailed the
+     * key, and the `license_key.created` and `entitlement_grant.delivered` webhook
+     * events are sent.
+     *
+     * @param string $grantID Grant ID
+     * @param string $key the license key value to deliver to the customer
+     * @param int|null $activationsLimit Per-key activation limit. Defaults to the entitlement's license-key configuration.
+     * @param \DateTimeInterface|null $expiresAt When the key expires. Defaults to the duration in the entitlement's license-key configuration.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function fulfillLicenseKey(
+        string $grantID,
+        string $key,
+        ?int $activationsLimit = null,
+        ?\DateTimeInterface $expiresAt = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): EntitlementGrant {
+        $params = Util::removeNulls(
+            [
+                'key' => $key,
+                'activationsLimit' => $activationsLimit,
+                'expiresAt' => $expiresAt,
+            ],
+        );
+
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->fulfillLicenseKey($grantID, params: $params, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
      * Revoke a single grant. Idempotent: re-revoking an already-revoked
      * grant returns the grant in its current state.
      *
