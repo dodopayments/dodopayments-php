@@ -45,6 +45,32 @@ final class GrantsTest extends TestCase
     }
 
     #[Test]
+    public function testFulfillLicenseKey(): void
+    {
+        $result = $this->client->entitlements->grants->fulfillLicenseKey(
+            'entg_w0ZCJZgNXuNDdMVzvja6p',
+            key: 'key'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(EntitlementGrant::class, $result);
+    }
+
+    #[Test]
+    public function testFulfillLicenseKeyWithOptionalParams(): void
+    {
+        $result = $this->client->entitlements->grants->fulfillLicenseKey(
+            'entg_w0ZCJZgNXuNDdMVzvja6p',
+            key: 'key',
+            activationsLimit: 0,
+            expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(EntitlementGrant::class, $result);
+    }
+
+    #[Test]
     public function testRevoke(): void
     {
         $result = $this->client->entitlements->grants->revoke(

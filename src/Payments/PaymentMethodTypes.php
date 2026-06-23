@@ -220,4 +220,6 @@ enum PaymentMethodTypes: string
     case NAVER_PAY = 'naver_pay';
 
     case PAYCO = 'payco';
+
+    case SATISPAY = 'satispay';
 }
