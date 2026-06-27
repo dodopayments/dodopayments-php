@@ -19,6 +19,9 @@ final class AttachAddon implements BaseModel
     #[Required('addon_id')]
     public string $addonID;
 
+    /**
+     * Number of units of this addon.
+     */
     #[Required]
     public int $quantity;
 
@@ -64,6 +67,9 @@ final class AttachAddon implements BaseModel
         return $self;
     }
 
+    /**
+     * Number of units of this addon.
+     */
     public function withQuantity(int $quantity): self
     {
         $self = clone $this;

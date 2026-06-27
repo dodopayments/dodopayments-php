@@ -110,7 +110,7 @@ final class Payment implements BaseModel
     public CustomerLimitedDetails $customer;
 
     /**
-     * brand id this payment belongs to.
+     * Whether the digital products purchased in this payment have been delivered.
      */
     #[Required('digital_products_delivered')]
     public bool $digitalProductsDelivered;
@@ -578,7 +578,7 @@ final class Payment implements BaseModel
     }
 
     /**
-     * brand id this payment belongs to.
+     * Whether the digital products purchased in this payment have been delivered.
      */
     public function withDigitalProductsDelivered(
         bool $digitalProductsDelivered
