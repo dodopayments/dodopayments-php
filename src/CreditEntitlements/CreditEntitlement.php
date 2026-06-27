@@ -102,7 +102,11 @@ final class CreditEntitlement implements BaseModel
     #[Optional('rollover_timeframe_count', nullable: true)]
     public ?int $rolloverTimeframeCount;
 
-    /** @var value-of<TimeInterval>|null $rolloverTimeframeInterval */
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @var value-of<TimeInterval>|null $rolloverTimeframeInterval
+     */
     #[Optional(
         'rollover_timeframe_interval',
         enum: TimeInterval::class,
@@ -364,6 +368,8 @@ final class CreditEntitlement implements BaseModel
     }
 
     /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
      * @param TimeInterval|value-of<TimeInterval>|null $rolloverTimeframeInterval
      */
     public function withRolloverTimeframeInterval(

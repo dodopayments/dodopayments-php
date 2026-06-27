@@ -22,7 +22,11 @@ final class LicenseKeyDuration implements BaseModel
     #[Required]
     public int $count;
 
-    /** @var value-of<TimeInterval> $interval */
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @var value-of<TimeInterval> $interval
+     */
     #[Required(enum: TimeInterval::class)]
     public string $interval;
 
@@ -71,6 +75,8 @@ final class LicenseKeyDuration implements BaseModel
     }
 
     /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
      * @param TimeInterval|value-of<TimeInterval> $interval
      */
     public function withInterval(TimeInterval|string $interval): self
