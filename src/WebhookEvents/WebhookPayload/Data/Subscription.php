@@ -173,7 +173,11 @@ final class Subscription implements BaseModel
     #[Required('payment_frequency_count')]
     public int $paymentFrequencyCount;
 
-    /** @var value-of<TimeInterval> $paymentFrequencyInterval */
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @var value-of<TimeInterval> $paymentFrequencyInterval
+     */
     #[Required('payment_frequency_interval', enum: TimeInterval::class)]
     public string $paymentFrequencyInterval;
 
@@ -218,7 +222,11 @@ final class Subscription implements BaseModel
     #[Required('subscription_period_count')]
     public int $subscriptionPeriodCount;
 
-    /** @var value-of<TimeInterval> $subscriptionPeriodInterval */
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @var value-of<TimeInterval> $subscriptionPeriodInterval
+     */
     #[Required('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
 
@@ -651,6 +659,8 @@ final class Subscription implements BaseModel
     }
 
     /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      */
     public function withPaymentFrequencyInterval(
@@ -743,6 +753,8 @@ final class Subscription implements BaseModel
     }
 
     /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      */
     public function withSubscriptionPeriodInterval(
