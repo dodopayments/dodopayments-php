@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.15.1](https://github.com/dodopayments/dodopayments-php/compare/v6.15.0...v6.15.1) (2026-06-27)
+
+
+### Bug Fixes
+
+* **api:** add allow_editing_addons checkout flag and refine schema descriptions ([53d9593](https://github.com/dodopayments/dodopayments-php/commit/53d9593fe7badd4c3e2e4aadc05990e14356a64e))
+* **api:** add allow_editing_addons checkout flag and refine schema descriptions ([bf36271](https://github.com/dodopayments/dodopayments-php/commit/bf36271c03fad51f27c981934ec6bc94c921b6ab))
+
 ## [6.15.0](https://github.com/dodopayments/dodopayments-php/compare/v6.14.1...v6.15.0) (2026-06-23)
 
 
