@@ -21,6 +21,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   allowCustomerEditingTaxID?: bool|null,
  *   allowCustomerEditingZipcode?: bool|null,
  *   allowDiscountCode?: bool|null,
+ *   allowEditingAddons?: bool|null,
  *   allowPhoneNumberCollection?: bool|null,
  *   allowTaxID?: bool|null,
  *   alwaysCreateNewCustomer?: bool|null,
@@ -86,6 +87,15 @@ final class CheckoutSessionFlags implements BaseModel
     public ?bool $allowDiscountCode;
 
     /**
+     * If true, the customer can add or remove addons on a subscription product
+     * during checkout.
+     *
+     * Default is false
+     */
+    #[Optional('allow_editing_addons')]
+    public ?bool $allowEditingAddons;
+
+    /**
      * If phone number is collected from customer, set it to rue.
      *
      * Default is true
@@ -149,6 +159,7 @@ final class CheckoutSessionFlags implements BaseModel
         ?bool $allowCustomerEditingTaxID = null,
         ?bool $allowCustomerEditingZipcode = null,
         ?bool $allowDiscountCode = null,
+        ?bool $allowEditingAddons = null,
         ?bool $allowPhoneNumberCollection = null,
         ?bool $allowTaxID = null,
         ?bool $alwaysCreateNewCustomer = null,
@@ -168,6 +179,7 @@ final class CheckoutSessionFlags implements BaseModel
         null !== $allowCustomerEditingTaxID && $self['allowCustomerEditingTaxID'] = $allowCustomerEditingTaxID;
         null !== $allowCustomerEditingZipcode && $self['allowCustomerEditingZipcode'] = $allowCustomerEditingZipcode;
         null !== $allowDiscountCode && $self['allowDiscountCode'] = $allowDiscountCode;
+        null !== $allowEditingAddons && $self['allowEditingAddons'] = $allowEditingAddons;
         null !== $allowPhoneNumberCollection && $self['allowPhoneNumberCollection'] = $allowPhoneNumberCollection;
         null !== $allowTaxID && $self['allowTaxID'] = $allowTaxID;
         null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
@@ -290,6 +302,20 @@ final class CheckoutSessionFlags implements BaseModel
     {
         $self = clone $this;
         $self['allowDiscountCode'] = $allowDiscountCode;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer can add or remove addons on a subscription product
+     * during checkout.
+     *
+     * Default is false
+     */
+    public function withAllowEditingAddons(bool $allowEditingAddons): self
+    {
+        $self = clone $this;
+        $self['allowEditingAddons'] = $allowEditingAddons;
 
         return $self;
     }
