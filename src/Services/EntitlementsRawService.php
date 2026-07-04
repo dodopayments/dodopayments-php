@@ -20,6 +20,7 @@ use Dodopayments\ServiceContracts\EntitlementsRawContract;
 
 /**
  * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class EntitlementsRawService implements EntitlementsRawContract
@@ -40,7 +41,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
      *   integrationType: value-of<EntitlementIntegrationType>,
      *   name: string,
      *   description?: string|null,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      * }|EntitlementCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -101,7 +102,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
      * @param array{
      *   description?: string|null,
      *   integrationConfig?: IntegrationConfigShape|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
      * }|EntitlementUpdateParams $params
      * @param RequestOpts|null $requestOptions

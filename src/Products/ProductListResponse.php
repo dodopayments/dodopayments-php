@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -16,8 +17,10 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type ProductEntitlementSummaryShape from \Dodopayments\Products\ProductEntitlementSummary
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  *
  * @phpstan-type ProductListResponseShape = array{
@@ -25,7 +28,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   createdAt: \DateTimeInterface,
  *   entitlements: list<ProductEntitlementSummary|ProductEntitlementSummaryShape>,
  *   isRecurring: bool,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   productID: string,
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   updatedAt: \DateTimeInterface,
@@ -73,9 +76,9 @@ final class ProductListResponse implements BaseModel
     /**
      * Additional custom data associated with the product.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -202,7 +205,7 @@ final class ProductListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<ProductEntitlementSummary|ProductEntitlementSummaryShape> $entitlements
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param Currency|value-of<Currency>|null $currency
      * @param PriceShape|null $priceDetail
@@ -298,7 +301,7 @@ final class ProductListResponse implements BaseModel
     /**
      * Additional custom data associated with the product.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

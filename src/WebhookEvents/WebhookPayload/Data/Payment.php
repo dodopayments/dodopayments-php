@@ -12,6 +12,7 @@ use Dodopayments\Discounts\DiscountDetail;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
@@ -22,9 +23,11 @@ use Dodopayments\Payments\PaymentRefundStatus;
 use Dodopayments\Payments\RefundListItem;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
@@ -39,7 +42,7 @@ use Dodopayments\Payments\RefundListItem;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   disputes: list<\Dodopayments\Disputes\Dispute|DisputeShape>,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   refunds: list<RefundListItem|RefundListItemShape>,
@@ -124,8 +127,12 @@ final class Payment implements BaseModel
     #[Required(list: Dispute::class)]
     public array $disputes;
 
-    /** @var array<string,string> $metadata */
-    #[Required(map: 'string')]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -391,7 +398,7 @@ final class Payment implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<Dispute|DisputeShape> $disputes
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param list<RefundListItem|RefundListItemShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
@@ -581,7 +588,9 @@ final class Payment implements BaseModel
     }
 
     /**
-     * @param array<string,string> $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

@@ -7,7 +7,6 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Entitlement;
 use Dodopayments\Entitlements\EntitlementIntegrationType;
-use Dodopayments\Entitlements\GitHubPermission;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +34,7 @@ final class EntitlementsTest extends TestCase
     {
         $result = $this->client->entitlements->create(
             integrationConfig: [
-                'permission' => GitHubPermission::PULL, 'targetID' => 'target_id',
+                'featureID' => 'feature_id', 'featureType' => 'boolean',
             ],
             integrationType: EntitlementIntegrationType::DISCORD,
             name: 'name',
@@ -50,7 +49,7 @@ final class EntitlementsTest extends TestCase
     {
         $result = $this->client->entitlements->create(
             integrationConfig: [
-                'permission' => GitHubPermission::PULL, 'targetID' => 'target_id',
+                'featureID' => 'feature_id', 'featureType' => 'boolean',
             ],
             integrationType: EntitlementIntegrationType::DISCORD,
             name: 'name',

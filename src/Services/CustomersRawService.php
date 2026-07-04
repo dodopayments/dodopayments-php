@@ -21,6 +21,7 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersRawContract;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class CustomersRawService implements CustomersRawContract
@@ -37,7 +38,7 @@ final class CustomersRawService implements CustomersRawContract
      * @param array{
      *   email: string,
      *   name: string,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   phoneNumber?: string|null,
      * }|CustomerCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -94,7 +95,7 @@ final class CustomersRawService implements CustomersRawContract
      * @param string $customerID Customer Id
      * @param array{
      *   email?: string|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
      *   phoneNumber?: string|null,
      * }|CustomerUpdateParams $params
