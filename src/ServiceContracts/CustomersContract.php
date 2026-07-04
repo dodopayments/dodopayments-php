@@ -8,11 +8,15 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Customers\Customer;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
+use Dodopayments\Customers\CustomerListEntitlementGrantsParams\IntegrationType;
+use Dodopayments\Customers\CustomerListEntitlementGrantsParams\Status;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\RequestOptions;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 interface CustomersContract
@@ -20,7 +24,7 @@ interface CustomersContract
     /**
      * @api
      *
-     * @param array<string,string> $metadata Additional metadata for the customer
+     * @param array<string,MetadataItemShape> $metadata Additional metadata for the customer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -50,7 +54,7 @@ interface CustomersContract
      * @api
      *
      * @param string $customerID Customer Id
-     * @param array<string,string>|null $metadata Additional metadata for the customer
+     * @param array<string,MetadataItemShape>|null $metadata Additional metadata for the customer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -116,6 +120,29 @@ interface CustomersContract
         string $customerID,
         RequestOptions|array|null $requestOptions = null
     ): CustomerListCreditEntitlementsResponse;
+
+    /**
+     * @api
+     *
+     * @param string $customerID Customer ID
+     * @param IntegrationType|value-of<IntegrationType> $integrationType Filter by integration type (e.g. `feature_flag`)
+     * @param int $pageNumber Page number (default 0)
+     * @param int $pageSize Page size (default 10, max 100)
+     * @param Status|value-of<Status> $status Filter by grant status
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return DefaultPageNumberPagination<EntitlementGrant>
+     *
+     * @throws APIException
+     */
+    public function listEntitlementGrants(
+        string $customerID,
+        IntegrationType|string|null $integrationType = null,
+        ?int $pageNumber = null,
+        ?int $pageSize = null,
+        Status|string|null $status = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): DefaultPageNumberPagination;
 
     /**
      * @api

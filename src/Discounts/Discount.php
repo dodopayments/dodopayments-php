@@ -8,15 +8,19 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ *
  * @phpstan-type DiscountShape = array{
  *   amount: int,
  *   businessID: string,
  *   code: string,
  *   createdAt: \DateTimeInterface,
  *   discountID: string,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   preserveOnPlanChange: bool,
  *   restrictedTo: list<string>,
  *   timesUsed: int,
@@ -62,8 +66,12 @@ final class Discount implements BaseModel
     #[Required('discount_id')]
     public string $discountID;
 
-    /** @var array<string,string> $metadata */
-    #[Required(map: 'string')]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -166,7 +174,7 @@ final class Discount implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param list<string> $restrictedTo
      * @param DiscountType|value-of<DiscountType> $type
      */
@@ -263,7 +271,9 @@ final class Discount implements BaseModel
     }
 
     /**
-     * @param array<string,string> $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

@@ -11,6 +11,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\EntitlementIntegrationType;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DigitalFilesConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfigResponse\FeatureFlagConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\FigmaConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\FramerConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\GitHubConfig;
@@ -56,7 +57,7 @@ final class ProductEntitlementSummary implements BaseModel
      * @var IntegrationConfigResponseVariants $integrationConfig
      */
     #[Required('integration_config')]
-    public GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
+    public FeatureFlagConfig|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
 
     /** @var value-of<EntitlementIntegrationType> $integrationType */
     #[Required('integration_type', enum: EntitlementIntegrationType::class)]
@@ -103,7 +104,7 @@ final class ProductEntitlementSummary implements BaseModel
      */
     public static function with(
         string $id,
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
         EntitlementIntegrationType|string $integrationType,
         string $name,
         ?string $description = null,
@@ -138,7 +139,7 @@ final class ProductEntitlementSummary implements BaseModel
      * @param IntegrationConfigResponseShape $integrationConfig
      */
     public function withIntegrationConfig(
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
     ): self {
         $self = clone $this;
         $self['integrationConfig'] = $integrationConfig;

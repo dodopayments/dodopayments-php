@@ -26,6 +26,7 @@ use Dodopayments\ServiceContracts\PaymentsContract;
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class PaymentsService implements PaymentsContract
@@ -67,7 +68,7 @@ final class PaymentsService implements PaymentsContract
      * @param list<string>|null $discountCodes Stacked discount codes to apply, in order of application. Max 20.
      * Cannot be used together with discount_code.
      * @param bool|null $force3DS Override merchant default 3DS behaviour for this payment
-     * @param array<string,string> $metadata Additional metadata associated with the payment.
+     * @param array<string,MetadataItemShape> $metadata Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      * @param bool|null $paymentLink Whether to generate a payment link. Defaults to false if not specified.
      * @param string|null $paymentMethodID Optional payment method ID to use for this payment.

@@ -8,18 +8,21 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type OneTimeProductCartShape from \Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart
  *
  * @phpstan-type SubscriptionNewResponseShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   recurringPreTaxAmount: int,
  *   subscriptionID: string,
@@ -53,9 +56,9 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Additional metadata associated with the subscription.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -162,7 +165,7 @@ final class SubscriptionNewResponse implements BaseModel
      *
      * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param list<string>|null $discountIDs
      * @param list<OneTimeProductCart|OneTimeProductCartShape>|null $oneTimeProductCart
      */
@@ -228,7 +231,7 @@ final class SubscriptionNewResponse implements BaseModel
     /**
      * Additional metadata associated with the subscription.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

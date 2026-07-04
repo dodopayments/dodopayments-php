@@ -9,17 +9,20 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
 /**
  * @see Dodopayments\Services\RefundsService::create()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type ItemShape from \Dodopayments\Refunds\RefundCreateParams\Item
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type RefundCreateParamsShape = array{
  *   paymentID: string,
  *   items?: list<Item|ItemShape>|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   reason?: string|null,
  * }
  */
@@ -46,9 +49,9 @@ final class RefundCreateParams implements BaseModel
     /**
      * Additional metadata associated with the refund.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     /**
@@ -82,7 +85,7 @@ final class RefundCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param list<Item|ItemShape>|null $items
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
         string $paymentID,
@@ -128,7 +131,7 @@ final class RefundCreateParams implements BaseModel
     /**
      * Additional metadata associated with the refund.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

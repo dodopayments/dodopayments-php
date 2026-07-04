@@ -24,4 +24,6 @@ enum IntegrationType: string
     case DIGITAL_FILES = 'digital_files';
 
     case LICENSE_KEY = 'license_key';
+
+    case FEATURE_FLAG = 'feature_flag';
 }

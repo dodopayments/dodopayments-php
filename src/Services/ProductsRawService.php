@@ -32,6 +32,7 @@ use Dodopayments\ServiceContracts\ProductsRawContract;
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type AttachProductEntitlementShape from \Dodopayments\Products\AttachProductEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class ProductsRawService implements ProductsRawContract
@@ -59,7 +60,7 @@ final class ProductsRawService implements ProductsRawContract
      *   licenseKeyActivationsLimit?: int|null,
      *   licenseKeyDuration?: LicenseKeyDuration|LicenseKeyDurationShape|null,
      *   licenseKeyEnabled?: bool|null,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   pricingMode?: PricingMode|value-of<PricingMode>|null,
      * }|ProductCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -126,7 +127,7 @@ final class ProductsRawService implements ProductsRawContract
      *   licenseKeyActivationsLimit?: int|null,
      *   licenseKeyDuration?: LicenseKeyDuration|LicenseKeyDurationShape|null,
      *   licenseKeyEnabled?: bool|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
      *   price?: PriceShape|null,
      *   pricingMode?: PricingMode|value-of<PricingMode>|null,
