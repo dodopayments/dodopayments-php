@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * POST /discounts
@@ -16,12 +17,15 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Services\DiscountsService::create()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ *
  * @phpstan-type DiscountCreateParamsShape = array{
  *   amount: int,
  *   type: DiscountType|value-of<DiscountType>,
  *   code?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   name?: string|null,
  *   preserveOnPlanChange?: bool|null,
  *   restrictedTo?: list<string>|null,
@@ -68,9 +72,9 @@ final class DiscountCreateParams implements BaseModel
     /**
      * Additional metadata for the discount.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     #[Optional(nullable: true)]
@@ -131,7 +135,7 @@ final class DiscountCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DiscountType|value-of<DiscountType> $type
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param list<string>|null $restrictedTo
      */
     public static function with(
@@ -216,7 +220,7 @@ final class DiscountCreateParams implements BaseModel
     /**
      * Additional metadata for the discount.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -20,11 +21,13 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  * @see Dodopayments\Services\ProductsService::create()
  *
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
  * @phpstan-import-type AttachProductEntitlementShape from \Dodopayments\Products\AttachProductEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type ProductCreateParamsShape = array{
  *   name: string,
@@ -40,7 +43,7 @@ use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
  *   licenseKeyActivationsLimit?: int|null,
  *   licenseKeyDuration?: null|LicenseKeyDuration|LicenseKeyDurationShape,
  *   licenseKeyEnabled?: bool|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   pricingMode?: null|PricingMode|value-of<PricingMode>,
  * }
  */
@@ -171,9 +174,9 @@ final class ProductCreateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     /**
@@ -217,7 +220,7 @@ final class ProductCreateParams implements BaseModel
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
      * @param list<AttachProductEntitlement|AttachProductEntitlementShape>|null $entitlements
      * @param LicenseKeyDuration|LicenseKeyDurationShape|null $licenseKeyDuration
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param PricingMode|value-of<PricingMode>|null $pricingMode
      */
     public static function with(
@@ -444,7 +447,7 @@ final class ProductCreateParams implements BaseModel
     /**
      * Additional metadata for the product.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

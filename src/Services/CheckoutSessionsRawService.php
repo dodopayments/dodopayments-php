@@ -30,6 +30,7 @@ use Dodopayments\ServiceContracts\CheckoutSessionsRawContract;
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type CheckoutSessionCustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCustomization
  * @phpstan-import-type CheckoutSessionFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionFlags
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\SubscriptionData
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
@@ -60,7 +61,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   featureFlags?: CheckoutSessionFlags|CheckoutSessionFlagsShape,
      *   force3DS?: bool|null,
      *   mandateMinAmountInrPaise?: int|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   minimalAddress?: bool,
      *   paymentMethodID?: string|null,
      *   productCollectionID?: string|null,
@@ -137,7 +138,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *   featureFlags?: CheckoutSessionFlags|CheckoutSessionFlagsShape,
      *   force3DS?: bool|null,
      *   mandateMinAmountInrPaise?: int|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   minimalAddress?: bool,
      *   paymentMethodID?: string|null,
      *   productCollectionID?: string|null,

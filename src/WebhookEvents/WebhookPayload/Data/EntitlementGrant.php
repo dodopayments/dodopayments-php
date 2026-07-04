@@ -9,15 +9,20 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\EntitlementIntegrationType;
+use Dodopayments\Entitlements\Feature;
 use Dodopayments\Entitlements\Grants\EntitlementGrant\Status;
 use Dodopayments\Entitlements\Grants\LicenseKeyGrant;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Products\DigitalProductDelivery;
 
 /**
  * Detailed view of a single entitlement grant: who it's for, its
  * lifecycle state, and any integration-specific delivery payload.
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
+ * @phpstan-import-type FeatureShape from \Dodopayments\Entitlements\Feature
  * @phpstan-import-type LicenseKeyGrantShape from \Dodopayments\Entitlements\Grants\LicenseKeyGrant
  *
  * @phpstan-type EntitlementGrantShape = array{
@@ -28,13 +33,14 @@ use Dodopayments\Products\DigitalProductDelivery;
  *   customerID: string,
  *   entitlementID: string,
  *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   status: Status|value-of<Status>,
  *   updatedAt: \DateTimeInterface,
  *   deliveredAt?: \DateTimeInterface|null,
  *   digitalProductDelivery?: null|DigitalProductDelivery|DigitalProductDeliveryShape,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
+ *   feature?: null|Feature|FeatureShape,
  *   licenseKey?: null|LicenseKeyGrant|LicenseKeyGrantShape,
  *   oauthExpiresAt?: \DateTimeInterface|null,
  *   oauthURL?: string|null,
@@ -94,8 +100,12 @@ final class EntitlementGrant implements BaseModel
     #[Required('integration_type', enum: EntitlementIntegrationType::class)]
     public string $integrationType;
 
-    /** @var array<string,string> $metadata */
-    #[Required(map: 'string')]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -136,6 +146,12 @@ final class EntitlementGrant implements BaseModel
      */
     #[Optional('error_message', nullable: true)]
     public ?string $errorMessage;
+
+    /**
+     * Capability conferred by a `feature_flag` grant.
+     */
+    #[Optional]
+    public ?Feature $feature;
 
     /**
      * License-key delivery payload, present on grants for `license_key`
@@ -229,9 +245,10 @@ final class EntitlementGrant implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param Status|value-of<Status> $status
      * @param DigitalProductDelivery|DigitalProductDeliveryShape|null $digitalProductDelivery
+     * @param Feature|FeatureShape|null $feature
      * @param LicenseKeyGrant|LicenseKeyGrantShape|null $licenseKey
      */
     public static function with(
@@ -249,6 +266,7 @@ final class EntitlementGrant implements BaseModel
         DigitalProductDelivery|array|null $digitalProductDelivery = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
+        Feature|array|null $feature = null,
         LicenseKeyGrant|array|null $licenseKey = null,
         ?\DateTimeInterface $oauthExpiresAt = null,
         ?string $oauthURL = null,
@@ -274,6 +292,7 @@ final class EntitlementGrant implements BaseModel
         null !== $digitalProductDelivery && $self['digitalProductDelivery'] = $digitalProductDelivery;
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
+        null !== $feature && $self['feature'] = $feature;
         null !== $licenseKey && $self['licenseKey'] = $licenseKey;
         null !== $oauthExpiresAt && $self['oauthExpiresAt'] = $oauthExpiresAt;
         null !== $oauthURL && $self['oauthURL'] = $oauthURL;
@@ -364,7 +383,9 @@ final class EntitlementGrant implements BaseModel
     }
 
     /**
-     * @param array<string,string> $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {
@@ -442,6 +463,19 @@ final class EntitlementGrant implements BaseModel
     {
         $self = clone $this;
         $self['errorMessage'] = $errorMessage;
+
+        return $self;
+    }
+
+    /**
+     * Capability conferred by a `feature_flag` grant.
+     *
+     * @param Feature|FeatureShape $feature
+     */
+    public function withFeature(Feature|array $feature): self
+    {
+        $self = clone $this;
+        $self['feature'] = $feature;
 
         return $self;
     }

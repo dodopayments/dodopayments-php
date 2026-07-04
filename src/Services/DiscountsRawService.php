@@ -18,6 +18,7 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\DiscountsRawContract;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class DiscountsRawService implements DiscountsRawContract
@@ -39,7 +40,7 @@ final class DiscountsRawService implements DiscountsRawContract
      *   type: DiscountType|value-of<DiscountType>,
      *   code?: string|null,
      *   expiresAt?: \DateTimeInterface|null,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   name?: string|null,
      *   preserveOnPlanChange?: bool,
      *   restrictedTo?: list<string>|null,
@@ -106,7 +107,7 @@ final class DiscountsRawService implements DiscountsRawContract
      *   amount?: int|null,
      *   code?: string|null,
      *   expiresAt?: \DateTimeInterface|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
      *   preserveOnPlanChange?: bool|null,
      *   restrictedTo?: list<string>|null,

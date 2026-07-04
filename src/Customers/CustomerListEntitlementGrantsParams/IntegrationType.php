@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Entitlements;
+namespace Dodopayments\Customers\CustomerListEntitlementGrantsParams;
 
-enum EntitlementIntegrationType: string
+/**
+ * Filter by integration type (e.g. `feature_flag`).
+ */
+enum IntegrationType: string
 {
     case DISCORD = 'discord';
 
