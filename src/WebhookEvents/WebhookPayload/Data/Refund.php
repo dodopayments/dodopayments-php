@@ -9,11 +9,14 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Refunds\RefundStatus;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type RefundShape = array{
  *   brandID: string,
@@ -21,7 +24,7 @@ use Dodopayments\Refunds\RefundStatus;
  *   createdAt: \DateTimeInterface,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   isPartial: bool,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   refundID: string,
  *   status: RefundStatus|value-of<RefundStatus>,
@@ -67,8 +70,12 @@ final class Refund implements BaseModel
     #[Required('is_partial')]
     public bool $isPartial;
 
-    /** @var array<string,string> $metadata */
-    #[Required(map: 'string')]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -147,7 +154,7 @@ final class Refund implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency>|null $currency
      */
@@ -240,7 +247,9 @@ final class Refund implements BaseModel
     }
 
     /**
-     * @param array<string,string> $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

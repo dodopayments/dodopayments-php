@@ -13,6 +13,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 interface CustomersContract
@@ -20,7 +21,7 @@ interface CustomersContract
     /**
      * @api
      *
-     * @param array<string,string> $metadata Additional metadata for the customer
+     * @param array<string,MetadataItemShape> $metadata Additional metadata for the customer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -50,7 +51,7 @@ interface CustomersContract
      * @api
      *
      * @param string $customerID Customer Id
-     * @param array<string,string>|null $metadata Additional metadata for the customer
+     * @param array<string,MetadataItemShape>|null $metadata Additional metadata for the customer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

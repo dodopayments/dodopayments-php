@@ -10,19 +10,23 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DigitalFilesConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfigResponse\FeatureFlagConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\FigmaConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\FramerConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\GitHubConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\LicenseKeyConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\NotionConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * Detailed view of a single entitlement: identity, integration type,
  * integration-specific configuration, and metadata.
  *
  * @phpstan-import-type IntegrationConfigResponseVariants from \Dodopayments\Entitlements\IntegrationConfigResponse
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type IntegrationConfigResponseShape from \Dodopayments\Entitlements\IntegrationConfigResponse
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type EntitlementShape = array{
  *   id: string,
@@ -31,7 +35,7 @@ use Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig;
  *   integrationConfig: IntegrationConfigResponseShape,
  *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
  *   isActive: bool,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   name: string,
  *   updatedAt: \DateTimeInterface,
  *   description?: string|null,
@@ -67,7 +71,7 @@ final class Entitlement implements BaseModel
      * @var IntegrationConfigResponseVariants $integrationConfig
      */
     #[Required('integration_config')]
-    public GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
+    public FeatureFlagConfig|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
 
     /**
      * Platform integration this entitlement uses.
@@ -87,9 +91,9 @@ final class Entitlement implements BaseModel
     /**
      * Arbitrary key-value metadata supplied at creation or via PATCH.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -155,13 +159,13 @@ final class Entitlement implements BaseModel
      *
      * @param IntegrationConfigResponseShape $integrationConfig
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public static function with(
         string $id,
         string $businessID,
         \DateTimeInterface $createdAt,
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
         EntitlementIntegrationType|string $integrationType,
         bool $isActive,
         array $metadata,
@@ -226,7 +230,7 @@ final class Entitlement implements BaseModel
      * @param IntegrationConfigResponseShape $integrationConfig
      */
     public function withIntegrationConfig(
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
     ): self {
         $self = clone $this;
         $self['integrationConfig'] = $integrationConfig;
@@ -263,7 +267,7 @@ final class Entitlement implements BaseModel
     /**
      * Arbitrary key-value metadata supplied at creation or via PATCH.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

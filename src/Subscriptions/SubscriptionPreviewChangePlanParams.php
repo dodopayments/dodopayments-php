@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBillingMode;
@@ -16,7 +17,9 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
 /**
  * @see Dodopayments\Services\SubscriptionsService::previewChangePlan()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type SubscriptionPreviewChangePlanParamsShape = array{
  *   productID: string,
@@ -27,7 +30,7 @@ use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\ProrationBill
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
  * }
  */
@@ -106,9 +109,9 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     /**
@@ -160,7 +163,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
      * @param list<AttachAddon|AttachAddonShape>|null $addons
      * @param list<string>|null $discountCodes
      * @param EffectiveAt|value-of<EffectiveAt>|null $effectiveAt
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
      */
     public static function with(
@@ -301,7 +304,7 @@ final class SubscriptionPreviewChangePlanParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

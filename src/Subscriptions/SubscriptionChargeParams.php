@@ -10,18 +10,21 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 
 /**
  * @see Dodopayments\Services\SubscriptionsService::charge()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type SubscriptionChargeParamsShape = array{
  *   productPrice: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   customerBalanceConfig?: null|CustomerBalanceConfig|CustomerBalanceConfigShape,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   productCurrency?: null|Currency|value-of<Currency>,
  *   productDescription?: string|null,
  * }
@@ -55,9 +58,9 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     /**
@@ -100,7 +103,7 @@ final class SubscriptionChargeParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CustomerBalanceConfig|CustomerBalanceConfigShape|null $customerBalanceConfig
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param Currency|value-of<Currency>|null $productCurrency
      */
     public static function with(
@@ -166,7 +169,7 @@ final class SubscriptionChargeParams implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

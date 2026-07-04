@@ -18,6 +18,7 @@ use Dodopayments\Services\Customers\CustomerPortalService;
 use Dodopayments\Services\Customers\WalletsService;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class CustomersService implements CustomersContract
@@ -50,7 +51,7 @@ final class CustomersService implements CustomersContract
     /**
      * @api
      *
-     * @param array<string,string> $metadata Additional metadata for the customer
+     * @param array<string,MetadataItemShape> $metadata Additional metadata for the customer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -99,7 +100,7 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param string $customerID Customer Id
-     * @param array<string,string>|null $metadata Additional metadata for the customer
+     * @param array<string,MetadataItemShape>|null $metadata Additional metadata for the customer
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

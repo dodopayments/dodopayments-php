@@ -9,14 +9,18 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * @see Dodopayments\Services\CustomersService::create()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ *
  * @phpstan-type CustomerCreateParamsShape = array{
  *   email: string,
  *   name: string,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   phoneNumber?: string|null,
  * }
  */
@@ -35,9 +39,9 @@ final class CustomerCreateParams implements BaseModel
     /**
      * Additional metadata for the customer.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     #[Optional('phone_number', nullable: true)]
@@ -67,7 +71,7 @@ final class CustomerCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
         string $email,
@@ -105,7 +109,7 @@ final class CustomerCreateParams implements BaseModel
     /**
      * Additional metadata for the customer.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

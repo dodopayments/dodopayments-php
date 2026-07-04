@@ -8,10 +8,14 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * Response struct for a discount with its position in a stack and optional
  * cycle-tracking information (for subscriptions).
+ *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type DiscountDetailShape = array{
  *   amount: int,
@@ -19,7 +23,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   code: string,
  *   createdAt: \DateTimeInterface,
  *   discountID: string,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   position: int,
  *   preserveOnPlanChange: bool,
  *   restrictedTo: list<string>,
@@ -70,9 +74,9 @@ final class DiscountDetail implements BaseModel
     /**
      * Additional metadata.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -186,7 +190,7 @@ final class DiscountDetail implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param list<string> $restrictedTo
      * @param DiscountType|value-of<DiscountType> $type
      */
@@ -289,7 +293,7 @@ final class DiscountDetail implements BaseModel
     /**
      * Additional metadata.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {
