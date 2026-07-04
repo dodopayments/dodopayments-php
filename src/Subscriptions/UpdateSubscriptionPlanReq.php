@@ -8,12 +8,15 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\EffectiveAt;
 use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\OnPaymentFailure;
 use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\ProrationBillingMode;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type UpdateSubscriptionPlanReqShape = array{
  *   productID: string,
@@ -24,7 +27,7 @@ use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\ProrationBillingMode;
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
  * }
  */
@@ -102,9 +105,9 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     /**
@@ -156,7 +159,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
      * @param list<AttachAddon|AttachAddonShape>|null $addons
      * @param list<string>|null $discountCodes
      * @param EffectiveAt|value-of<EffectiveAt>|null $effectiveAt
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
      */
     public static function with(
@@ -297,7 +300,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

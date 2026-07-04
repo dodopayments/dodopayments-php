@@ -8,15 +8,18 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
  * @phpstan-type PaymentNewResponseShape = array{
  *   clientSecret: string,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   totalAmount: int,
  *   discountID?: string|null,
@@ -47,9 +50,9 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Additional metadata associated with the payment.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -141,7 +144,7 @@ final class PaymentNewResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param list<string>|null $discountIDs
      * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $productCart
      */
@@ -202,7 +205,7 @@ final class PaymentNewResponse implements BaseModel
     /**
      * Additional metadata associated with the payment.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

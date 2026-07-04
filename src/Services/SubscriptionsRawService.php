@@ -54,6 +54,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
  * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class SubscriptionsRawService implements SubscriptionsRawContract
@@ -82,7 +83,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   discountCodes?: list<string>|null,
      *   force3DS?: bool|null,
      *   mandateMinAmountInrPaise?: int|null,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   onDemand?: OnDemandSubscription|OnDemandSubscriptionShape|null,
      *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
      *   paymentLink?: bool|null,
@@ -157,7 +158,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   customerBusinessName?: string|null,
      *   customerName?: string|null,
      *   disableOnDemand?: DisableOnDemand|DisableOnDemandShape|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   nextBillingDate?: \DateTimeInterface|null,
      *   status?: SubscriptionStatus|value-of<SubscriptionStatus>|null,
      *   taxID?: string|null,
@@ -274,7 +275,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   effectiveAt?: EffectiveAt|value-of<EffectiveAt>,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   onPaymentFailure?: OnPaymentFailure|value-of<OnPaymentFailure>|null,
      * }|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
@@ -311,7 +312,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   productPrice: int,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   customerBalanceConfig?: CustomerBalanceConfig|CustomerBalanceConfigShape|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   productCurrency?: value-of<Currency>,
      *   productDescription?: string|null,
      * }|SubscriptionChargeParams $params
@@ -354,7 +355,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   effectiveAt?: SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<SubscriptionPreviewChangePlanParams\EffectiveAt>,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   onPaymentFailure?: SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null,
      * }|SubscriptionPreviewChangePlanParams $params
      * @param RequestOpts|null $requestOptions

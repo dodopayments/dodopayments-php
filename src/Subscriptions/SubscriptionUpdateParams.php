@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
@@ -16,9 +17,11 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 /**
  * @see Dodopayments\Services\SubscriptionsService::update()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type SubscriptionUpdateParamsShape = array{
  *   billing?: null|BillingAddress|BillingAddressShape,
@@ -30,7 +33,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *   customerBusinessName?: string|null,
  *   customerName?: string|null,
  *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
  *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
  *   taxID?: string|null,
@@ -100,8 +103,12 @@ final class SubscriptionUpdateParams implements BaseModel
     #[Optional('disable_on_demand', nullable: true)]
     public ?DisableOnDemand $disableOnDemand;
 
-    /** @var array<string,string>|null $metadata */
-    #[Optional(map: 'string', nullable: true)]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants>|null $metadata
+     */
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     #[Optional('next_billing_date', nullable: true)]
@@ -129,7 +136,7 @@ final class SubscriptionUpdateParams implements BaseModel
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param list<CreditEntitlementCart|CreditEntitlementCartShape>|null $creditEntitlementCart
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
     public static function with(
@@ -276,7 +283,9 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * @param array<string,string>|null $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

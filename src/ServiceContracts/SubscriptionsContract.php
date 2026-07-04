@@ -46,6 +46,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
  * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 interface SubscriptionsContract
@@ -80,7 +81,7 @@ interface SubscriptionsContract
      * effectively the customer-facing authorization ceiling whenever billing is
      * lower. When unset, the merchant setting applies; when that's also unset,
      * the system default of ₹15,000 applies.
-     * @param array<string,string> $metadata Additional metadata for the subscription
+     * @param array<string,MetadataItemShape> $metadata Additional metadata for the subscription
      * Defaults to empty if not specified
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart List of one time products that will be bundled with the first payment for this subscription
@@ -163,7 +164,7 @@ interface SubscriptionsContract
      * on the invoice instead of the customer's personal name. Send `null` to
      * explicitly clear the business name.
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      * @param RequestOpts|null $requestOptions
      *
@@ -249,7 +250,7 @@ interface SubscriptionsContract
      * @param EffectiveAt|value-of<EffectiveAt> $effectiveAt When to apply the plan change.
      * - `immediately` (default): Apply the plan change right away
      * - `next_billing_date`: Schedule the change for the next billing date
-     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
+     * @param array<string,MetadataItemShape>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
      * - `apply_change` (default): Apply plan change immediately regardless of payment outcome
@@ -283,7 +284,7 @@ interface SubscriptionsContract
      * @param bool|null $adaptiveCurrencyFeesInclusive Whether adaptive currency fees should be included in the product_price (true) or added on top (false).
      * This field is ignored if adaptive pricing is not enabled for the business.
      * @param CustomerBalanceConfig|CustomerBalanceConfigShape|null $customerBalanceConfig Specify how customer balance is used for the payment
-     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
+     * @param array<string,MetadataItemShape>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param Currency|value-of<Currency>|null $productCurrency Optional currency of the product price. If not specified, defaults to the currency of the product.
      * @param string|null $productDescription Optional product description override for billing and line items.
      * If not specified, the stored description of the product will be used.
@@ -322,7 +323,7 @@ interface SubscriptionsContract
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt> $effectiveAt When to apply the plan change.
      * - `immediately` (default): Apply the plan change right away
      * - `next_billing_date`: Schedule the change for the next billing date
-     * @param array<string,string>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
+     * @param array<string,MetadataItemShape>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
      * - `apply_change` (default): Apply plan change immediately regardless of payment outcome

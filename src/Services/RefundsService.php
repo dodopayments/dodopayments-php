@@ -17,6 +17,7 @@ use Dodopayments\ServiceContracts\RefundsContract;
 
 /**
  * @phpstan-import-type ItemShape from \Dodopayments\Refunds\RefundCreateParams\Item
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class RefundsService implements RefundsContract
@@ -39,7 +40,7 @@ final class RefundsService implements RefundsContract
      *
      * @param string $paymentID the unique identifier of the payment to be refunded
      * @param list<Item|ItemShape>|null $items Partially Refund an Individual Item
-     * @param array<string,string> $metadata additional metadata associated with the refund
+     * @param array<string,MetadataItemShape> $metadata additional metadata associated with the refund
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
      * @param RequestOpts|null $requestOptions
      *

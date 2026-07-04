@@ -9,9 +9,13 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry\TransactionType;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * Response for a ledger entry.
+ *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type CreditLedgerEntryShape = array{
  *   id: string,
@@ -24,7 +28,7 @@ use Dodopayments\CreditEntitlements\Balances\CreditLedgerEntry\TransactionType;
  *   creditEntitlementID: string,
  *   customerID: string,
  *   isCredit: bool,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   overageAfter: string,
  *   overageBefore: string,
  *   transactionType: TransactionType|value-of<TransactionType>,
@@ -77,8 +81,12 @@ final class CreditLedgerEntry implements BaseModel
     #[Required('is_credit')]
     public bool $isCredit;
 
-    /** @var array<string,string> $metadata */
-    #[Required(map: 'string')]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     #[Required('overage_after')]
@@ -156,7 +164,7 @@ final class CreditLedgerEntry implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param TransactionType|value-of<TransactionType> $transactionType
      */
     public static function with(
@@ -288,7 +296,9 @@ final class CreditLedgerEntry implements BaseModel
     }
 
     /**
-     * @param array<string,string> $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

@@ -11,12 +11,14 @@ use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Entitlements\IntegrationConfig\DigitalFilesConfig;
 use Dodopayments\Entitlements\IntegrationConfig\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfig\FeatureFlagConfig;
 use Dodopayments\Entitlements\IntegrationConfig\FigmaConfig;
 use Dodopayments\Entitlements\IntegrationConfig\FramerConfig;
 use Dodopayments\Entitlements\IntegrationConfig\GitHubConfig;
 use Dodopayments\Entitlements\IntegrationConfig\LicenseKeyConfig;
 use Dodopayments\Entitlements\IntegrationConfig\NotionConfig;
 use Dodopayments\Entitlements\IntegrationConfig\TelegramConfig;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * POST /entitlements.
@@ -24,14 +26,16 @@ use Dodopayments\Entitlements\IntegrationConfig\TelegramConfig;
  * @see Dodopayments\Services\EntitlementsService::create()
  *
  * @phpstan-import-type IntegrationConfigVariants from \Dodopayments\Entitlements\IntegrationConfig
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type EntitlementCreateParamsShape = array{
  *   integrationConfig: IntegrationConfigShape,
  *   integrationType: EntitlementIntegrationType|value-of<EntitlementIntegrationType>,
  *   name: string,
  *   description?: string|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  * }
  */
 final class EntitlementCreateParams implements BaseModel
@@ -46,7 +50,7 @@ final class EntitlementCreateParams implements BaseModel
      * @var IntegrationConfigVariants $integrationConfig
      */
     #[Required('integration_config')]
-    public GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
+    public FeatureFlagConfig|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig;
 
     /**
      * Which platform integration this entitlement uses.
@@ -71,9 +75,9 @@ final class EntitlementCreateParams implements BaseModel
     /**
      * Additional metadata for the entitlement.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     /**
@@ -107,10 +111,10 @@ final class EntitlementCreateParams implements BaseModel
      *
      * @param IntegrationConfigShape $integrationConfig
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
         EntitlementIntegrationType|string $integrationType,
         string $name,
         ?string $description = null,
@@ -134,7 +138,7 @@ final class EntitlementCreateParams implements BaseModel
      * @param IntegrationConfigShape $integrationConfig
      */
     public function withIntegrationConfig(
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
     ): self {
         $self = clone $this;
         $self['integrationConfig'] = $integrationConfig;
@@ -181,7 +185,7 @@ final class EntitlementCreateParams implements BaseModel
     /**
      * Additional metadata for the entitlement.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

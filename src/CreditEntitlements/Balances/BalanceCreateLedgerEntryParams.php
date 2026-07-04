@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * For credit entries, a new grant is created. For debit entries, credits are
@@ -37,13 +38,16 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @see Dodopayments\Services\CreditEntitlements\BalancesService::createLedgerEntry()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ *
  * @phpstan-type BalanceCreateLedgerEntryParamsShape = array{
  *   creditEntitlementID: string,
  *   amount: string,
  *   entryType: LedgerEntryType|value-of<LedgerEntryType>,
  *   expiresAt?: \DateTimeInterface|null,
  *   idempotencyKey?: string|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   reason?: string|null,
  * }
  */
@@ -85,9 +89,9 @@ final class BalanceCreateLedgerEntryParams implements BaseModel
     /**
      * Optional metadata (max 50 key-value pairs, key max 40 chars, value max 500 chars).
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     /**
@@ -126,7 +130,7 @@ final class BalanceCreateLedgerEntryParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param LedgerEntryType|value-of<LedgerEntryType> $entryType
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
         string $creditEntitlementID,
@@ -208,7 +212,7 @@ final class BalanceCreateLedgerEntryParams implements BaseModel
     /**
      * Optional metadata (max 50 key-value pairs, key max 40 chars, value max 500 chars).
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

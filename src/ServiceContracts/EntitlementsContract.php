@@ -11,6 +11,7 @@ use Dodopayments\Entitlements\EntitlementIntegrationType;
 use Dodopayments\Entitlements\EntitlementListParams\IntegrationType;
 use Dodopayments\Entitlements\IntegrationConfig\DigitalFilesConfig;
 use Dodopayments\Entitlements\IntegrationConfig\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfig\FeatureFlagConfig;
 use Dodopayments\Entitlements\IntegrationConfig\FigmaConfig;
 use Dodopayments\Entitlements\IntegrationConfig\FramerConfig;
 use Dodopayments\Entitlements\IntegrationConfig\GitHubConfig;
@@ -21,6 +22,7 @@ use Dodopayments\RequestOptions;
 
 /**
  * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 interface EntitlementsContract
@@ -32,13 +34,13 @@ interface EntitlementsContract
      * @param EntitlementIntegrationType|value-of<EntitlementIntegrationType> $integrationType Which platform integration this entitlement uses
      * @param string $name Display name for this entitlement
      * @param string|null $description Optional description
-     * @param array<string,string> $metadata Additional metadata for the entitlement
+     * @param array<string,MetadataItemShape> $metadata Additional metadata for the entitlement
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function create(
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig $integrationConfig,
         EntitlementIntegrationType|string $integrationType,
         string $name,
         ?string $description = null,
@@ -66,7 +68,11 @@ interface EntitlementsContract
      * @param IntegrationConfigShape|null $integrationConfig Integration-specific configuration supplied when creating or updating
      * an entitlement. The shape required matches the entitlement's
      * `integration_type`.
-     * @param array<string,string>|null $metadata
+     *
+     * Untagged enum: variants are matched in order. `FeatureFlag` must precede
+     * `LicenseKey`, whose fields are all optional and would otherwise match a
+     * `feature_flag` config.
+     * @param array<string,MetadataItemShape>|null $metadata Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -74,7 +80,7 @@ interface EntitlementsContract
     public function update(
         string $id,
         ?string $description = null,
-        GitHubConfig|array|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig|null $integrationConfig = null,
+        FeatureFlagConfig|array|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig|null $integrationConfig = null,
         ?array $metadata = null,
         ?string $name = null,
         RequestOptions|array|null $requestOptions = null,

@@ -27,6 +27,7 @@ use Dodopayments\RequestOptions;
  * @phpstan-import-type AttachCreditEntitlementShape from \Dodopayments\Products\AttachCreditEntitlement
  * @phpstan-import-type AttachProductEntitlementShape from \Dodopayments\Products\AttachProductEntitlement
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 interface ProductsContract
@@ -67,7 +68,7 @@ interface ProductsContract
      * also attached via the `entitlements` field, the `license_key_*` config
      * fields below are ignored — the attached entitlement's config is the
      * source of truth.
-     * @param array<string,string> $metadata Additional metadata for the product
+     * @param array<string,MetadataItemShape> $metadata Additional metadata for the product
      * @param PricingMode|value-of<PricingMode>|null $pricingMode Pricing mode for localized pricing. When set, rules from
      * /products/{id}/localized-prices apply at checkout. NULL means base-only
      * (existing behavior).
@@ -145,7 +146,7 @@ interface ProductsContract
      * become applicable.
      *
      * deprecated: use entitlements instead
-     * @param array<string,string>|null $metadata Additional metadata for the product
+     * @param array<string,MetadataItemShape>|null $metadata Additional metadata for the product
      * @param string|null $name name of the product, optional and must be at most 100 characters
      * @param PriceShape|null $price price details of the product
      * @param PricingMode|value-of<PricingMode>|null $pricingMode Update the pricing mode. Omit to leave unchanged; set to null to clear

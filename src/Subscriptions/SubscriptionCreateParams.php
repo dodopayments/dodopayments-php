@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\NewCustomer;
@@ -21,9 +22,11 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @see Dodopayments\Services\SubscriptionsService::create()
  *
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type OnDemandSubscriptionShape from \Dodopayments\Subscriptions\OnDemandSubscription
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  *
@@ -40,7 +43,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   discountCodes?: list<string>|null,
  *   force3DS?: bool|null,
  *   mandateMinAmountInrPaise?: int|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   onDemand?: null|OnDemandSubscription|OnDemandSubscriptionShape,
  *   oneTimeProductCart?: list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null,
  *   paymentLink?: bool|null,
@@ -165,9 +168,9 @@ final class SubscriptionCreateParams implements BaseModel
      * Additional metadata for the subscription
      * Defaults to empty if not specified.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     #[Optional('on_demand', nullable: true)]
@@ -285,7 +288,7 @@ final class SubscriptionCreateParams implements BaseModel
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param list<string>|null $discountCodes
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param OnDemandSubscription|OnDemandSubscriptionShape|null $onDemand
      * @param list<OneTimeProductCartItem|OneTimeProductCartItemShape>|null $oneTimeProductCart
      */
@@ -512,7 +515,7 @@ final class SubscriptionCreateParams implements BaseModel
      * Additional metadata for the subscription
      * Defaults to empty if not specified.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

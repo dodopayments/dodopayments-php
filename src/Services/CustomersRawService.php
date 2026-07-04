@@ -13,14 +13,19 @@ use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerDeletePaymentMethodParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
+use Dodopayments\Customers\CustomerListEntitlementGrantsParams;
+use Dodopayments\Customers\CustomerListEntitlementGrantsParams\IntegrationType;
+use Dodopayments\Customers\CustomerListEntitlementGrantsParams\Status;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersRawContract;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class CustomersRawService implements CustomersRawContract
@@ -37,7 +42,7 @@ final class CustomersRawService implements CustomersRawContract
      * @param array{
      *   email: string,
      *   name: string,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   phoneNumber?: string|null,
      * }|CustomerCreateParams $params
      * @param RequestOpts|null $requestOptions
@@ -94,7 +99,7 @@ final class CustomersRawService implements CustomersRawContract
      * @param string $customerID Customer Id
      * @param array{
      *   email?: string|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
      *   phoneNumber?: string|null,
      * }|CustomerUpdateParams $params
@@ -225,6 +230,53 @@ final class CustomersRawService implements CustomersRawContract
             path: ['customers/%1$s/credit-entitlements', $customerID],
             options: $requestOptions,
             convert: CustomerListCreditEntitlementsResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * List all of a customer's entitlement grants across every entitlement.
+     * One row per grant.
+     *
+     * @param string $customerID Customer ID
+     * @param array{
+     *   integrationType?: value-of<IntegrationType>,
+     *   pageNumber?: int,
+     *   pageSize?: int,
+     *   status?: Status|value-of<Status>,
+     * }|CustomerListEntitlementGrantsParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<DefaultPageNumberPagination<EntitlementGrant>>
+     *
+     * @throws APIException
+     */
+    public function listEntitlementGrants(
+        string $customerID,
+        array|CustomerListEntitlementGrantsParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = CustomerListEntitlementGrantsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['customers/%1$s/entitlement-grants', $customerID],
+            query: Util::array_transform_keys(
+                $parsed,
+                [
+                    'integrationType' => 'integration_type',
+                    'pageNumber' => 'page_number',
+                    'pageSize' => 'page_size',
+                ],
+            ),
+            options: $options,
+            convert: EntitlementGrant::class,
+            page: DefaultPageNumberPagination::class,
         );
     }
 

@@ -11,10 +11,12 @@ use Dodopayments\Customers\CustomerCreateParams;
 use Dodopayments\Customers\CustomerDeletePaymentMethodParams;
 use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
+use Dodopayments\Customers\CustomerListEntitlementGrantsParams;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\RequestOptions;
 
 /**
@@ -114,6 +116,23 @@ interface CustomersRawContract
     public function listCreditEntitlements(
         string $customerID,
         RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $customerID Customer ID
+     * @param array<string,mixed>|CustomerListEntitlementGrantsParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<DefaultPageNumberPagination<EntitlementGrant>>
+     *
+     * @throws APIException
+     */
+    public function listEntitlementGrants(
+        string $customerID,
+        array|CustomerListEntitlementGrantsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

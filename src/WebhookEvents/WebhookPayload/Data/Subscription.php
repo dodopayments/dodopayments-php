@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Discounts\DiscountDetail;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
@@ -25,10 +26,12 @@ use Dodopayments\Subscriptions\TimeInterval;
 /**
  * Response struct representing subscription details.
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\CreditEntitlementCartResponse
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
  * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
@@ -44,7 +47,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   creditEntitlementCart: list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape>,
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   meterCreditEntitlementCart: list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape>,
  *   meters: list<MeterCartResponseItem|MeterCartResponseItemShape>,
  *   nextBillingDate: \DateTimeInterface,
@@ -132,8 +135,12 @@ final class Subscription implements BaseModel
     #[Required]
     public CustomerLimitedDetails $customer;
 
-    /** @var array<string,string> $metadata */
-    #[Required(map: 'string')]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -398,7 +405,7 @@ final class Subscription implements BaseModel
      * @param list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape> $creditEntitlementCart
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape> $meterCreditEntitlementCart
      * @param list<MeterCartResponseItem|MeterCartResponseItemShape> $meters
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
@@ -587,7 +594,9 @@ final class Subscription implements BaseModel
     }
 
     /**
-     * @param array<string,string> $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

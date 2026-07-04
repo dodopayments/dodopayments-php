@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
@@ -16,9 +17,11 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
 /**
  * Response struct representing subscription details.
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type DiscountShape from \Dodopayments\Subscriptions\SubscriptionListResponse\Discount
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
  *
  * @phpstan-type SubscriptionListResponseShape = array{
@@ -28,7 +31,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   discounts: list<Discount|DiscountShape>,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
  *   paymentFrequencyCount: int,
@@ -101,9 +104,9 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Additional custom data associated with the subscription.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -317,7 +320,7 @@ final class SubscriptionListResponse implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<Discount|DiscountShape> $discounts
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
@@ -468,7 +471,7 @@ final class SubscriptionListResponse implements BaseModel
     /**
      * Additional custom data associated with the subscription.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

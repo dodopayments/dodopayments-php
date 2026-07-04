@@ -30,6 +30,7 @@ use Dodopayments\ServiceContracts\CheckoutSessionsContract;
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type CheckoutSessionCustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCustomization
  * @phpstan-import-type CheckoutSessionFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionFlags
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\SubscriptionData
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
@@ -80,7 +81,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * effectively the customer-facing authorization ceiling whenever billing is
      * lower. When unset, the merchant setting applies; when that's also unset,
      * the system default of ₹15,000 applies.
-     * @param array<string,string>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
+     * @param array<string,MetadataItemShape>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
      * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
      * Only allowed when `confirm` is true.
@@ -208,7 +209,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * effectively the customer-facing authorization ceiling whenever billing is
      * lower. When unset, the merchant setting applies; when that's also unset,
      * the system default of ₹15,000 applies.
-     * @param array<string,string>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
+     * @param array<string,MetadataItemShape>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
      * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
      * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
      * Only allowed when `confirm` is true.
