@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.16.0](https://github.com/dodopayments/dodopayments-php/compare/v6.15.1...v6.16.0) (2026-07-04)
+
+
+### Features
+
+* **api:** register Feature/FeatureType models and expose customer entitlement-grants list endpoint ([f893155](https://github.com/dodopayments/dodopayments-php/commit/f8931555f9412548967eaace350bf98af35394d1))
+* **api:** register Feature/FeatureType models and expose customer entitlement-grants list endpoint ([d0fc90f](https://github.com/dodopayments/dodopayments-php/commit/d0fc90ff4ad8c7ad7684111035c658e5a558cfc2))
+
 ## [6.15.1](https://github.com/dodopayments/dodopayments-php/compare/v6.15.0...v6.15.1) (2026-06-27)
 
 
