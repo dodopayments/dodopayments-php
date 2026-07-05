@@ -27,6 +27,7 @@ use Dodopayments\ServiceContracts\PaymentsRawContract;
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class PaymentsRawService implements PaymentsRawContract
@@ -53,7 +54,7 @@ final class PaymentsRawService implements PaymentsRawContract
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   force3DS?: bool|null,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   paymentLink?: bool|null,
      *   paymentMethodID?: string|null,
      *   redirectImmediately?: bool,

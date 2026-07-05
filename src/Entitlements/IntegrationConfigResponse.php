@@ -9,6 +9,7 @@ use Dodopayments\Core\Conversion\Contracts\Converter;
 use Dodopayments\Core\Conversion\Contracts\ConverterSource;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DigitalFilesConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\DiscordConfig;
+use Dodopayments\Entitlements\IntegrationConfigResponse\FeatureFlagConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\FigmaConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\FramerConfig;
 use Dodopayments\Entitlements\IntegrationConfigResponse\GitHubConfig;
@@ -23,6 +24,7 @@ use Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig;
  * download URLs for each attached file; other integrations match the
  * shape supplied at creation.
  *
+ * @phpstan-import-type FeatureFlagConfigShape from \Dodopayments\Entitlements\IntegrationConfigResponse\FeatureFlagConfig
  * @phpstan-import-type GitHubConfigShape from \Dodopayments\Entitlements\IntegrationConfigResponse\GitHubConfig
  * @phpstan-import-type DiscordConfigShape from \Dodopayments\Entitlements\IntegrationConfigResponse\DiscordConfig
  * @phpstan-import-type TelegramConfigShape from \Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig
@@ -32,8 +34,8 @@ use Dodopayments\Entitlements\IntegrationConfigResponse\TelegramConfig;
  * @phpstan-import-type DigitalFilesConfigShape from \Dodopayments\Entitlements\IntegrationConfigResponse\DigitalFilesConfig
  * @phpstan-import-type LicenseKeyConfigShape from \Dodopayments\Entitlements\IntegrationConfigResponse\LicenseKeyConfig
  *
- * @phpstan-type IntegrationConfigResponseVariants = GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig
- * @phpstan-type IntegrationConfigResponseShape = IntegrationConfigResponseVariants|GitHubConfigShape|DiscordConfigShape|TelegramConfigShape|FigmaConfigShape|FramerConfigShape|NotionConfigShape|DigitalFilesConfigShape|LicenseKeyConfigShape
+ * @phpstan-type IntegrationConfigResponseVariants = FeatureFlagConfig|GitHubConfig|DiscordConfig|TelegramConfig|FigmaConfig|FramerConfig|NotionConfig|DigitalFilesConfig|LicenseKeyConfig
+ * @phpstan-type IntegrationConfigResponseShape = IntegrationConfigResponseVariants|FeatureFlagConfigShape|GitHubConfigShape|DiscordConfigShape|TelegramConfigShape|FigmaConfigShape|FramerConfigShape|NotionConfigShape|DigitalFilesConfigShape|LicenseKeyConfigShape
  */
 final class IntegrationConfigResponse implements ConverterSource
 {
@@ -45,6 +47,7 @@ final class IntegrationConfigResponse implements ConverterSource
     public static function variants(): array
     {
         return [
+            FeatureFlagConfig::class,
             GitHubConfig::class,
             DiscordConfig::class,
             TelegramConfig::class,

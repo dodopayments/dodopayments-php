@@ -9,6 +9,7 @@ use Dodopayments\Customers\CustomerGetPaymentMethodsResponse;
 use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -122,6 +123,22 @@ final class CustomersTest extends TestCase
             CustomerListCreditEntitlementsResponse::class,
             $result
         );
+    }
+
+    #[Test]
+    public function testListEntitlementGrants(): void
+    {
+        $page = $this->client->customers->listEntitlementGrants(
+            'cus_TV52uJWWXt2yIoBBxpjaa'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(DefaultPageNumberPagination::class, $page);
+
+        if ($item = $page->getItems()[0] ?? null) {
+            // @phpstan-ignore-next-line method.alreadyNarrowedType
+            $this->assertInstanceOf(EntitlementGrant::class, $item);
+        }
     }
 
     #[Test]

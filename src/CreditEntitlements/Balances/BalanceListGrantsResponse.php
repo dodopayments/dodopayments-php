@@ -9,9 +9,13 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\CreditEntitlements\Balances\BalanceListGrantsResponse\SourceType;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * Response for a credit grant.
+ *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type BalanceListGrantsResponseShape = array{
  *   id: string,
@@ -26,7 +30,7 @@ use Dodopayments\CreditEntitlements\Balances\BalanceListGrantsResponse\SourceTyp
  *   sourceType: SourceType|value-of<SourceType>,
  *   updatedAt: \DateTimeInterface,
  *   expiresAt?: \DateTimeInterface|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   parentGrantID?: string|null,
  *   sourceID?: string|null,
  * }
@@ -73,8 +77,12 @@ final class BalanceListGrantsResponse implements BaseModel
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
 
-    /** @var array<string,string>|null $metadata */
-    #[Optional(map: 'string', nullable: true)]
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants>|null $metadata
+     */
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     #[Optional('parent_grant_id', nullable: true)]
@@ -131,7 +139,7 @@ final class BalanceListGrantsResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param SourceType|value-of<SourceType> $sourceType
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
         string $id,
@@ -272,7 +280,9 @@ final class BalanceListGrantsResponse implements BaseModel
     }
 
     /**
-     * @param array<string,string>|null $metadata
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

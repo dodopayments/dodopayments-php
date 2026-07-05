@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Misc\TaxCategory;
 use Dodopayments\Products\LocalizedPrices\PricingMode;
 use Dodopayments\Products\Price\OneTimePrice;
@@ -15,9 +16,11 @@ use Dodopayments\Products\Price\RecurringPrice;
 use Dodopayments\Products\Price\UsageBasedPrice;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type PriceVariants from \Dodopayments\Products\Price
  * @phpstan-import-type CreditEntitlementMappingResponseShape from \Dodopayments\Products\CreditEntitlementMappingResponse
  * @phpstan-import-type ProductEntitlementSummaryShape from \Dodopayments\Products\ProductEntitlementSummary
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type PriceShape from \Dodopayments\Products\Price
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\DigitalProductDelivery
  * @phpstan-import-type LicenseKeyDurationShape from \Dodopayments\Products\LicenseKeyDuration
@@ -30,7 +33,7 @@ use Dodopayments\Products\Price\UsageBasedPrice;
  *   entitlements: list<ProductEntitlementSummary|ProductEntitlementSummaryShape>,
  *   isRecurring: bool,
  *   licenseKeyEnabled: bool,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   price: PriceShape,
  *   productID: string,
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
@@ -103,9 +106,9 @@ final class Product implements BaseModel
     /**
      * Additional custom data associated with the product.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -256,7 +259,7 @@ final class Product implements BaseModel
      *
      * @param list<CreditEntitlementMappingResponse|CreditEntitlementMappingResponseShape> $creditEntitlements
      * @param list<ProductEntitlementSummary|ProductEntitlementSummaryShape> $entitlements
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param PriceShape $price
      * @param TaxCategory|value-of<TaxCategory> $taxCategory
      * @param list<string>|null $addons
@@ -398,7 +401,7 @@ final class Product implements BaseModel
     /**
      * Additional custom data associated with the product.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

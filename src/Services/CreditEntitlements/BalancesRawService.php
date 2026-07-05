@@ -24,6 +24,7 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CreditEntitlements\BalancesRawContract;
 
 /**
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class BalancesRawService implements BalancesRawContract
@@ -177,7 +178,7 @@ final class BalancesRawService implements BalancesRawContract
      *   entryType: LedgerEntryType|value-of<LedgerEntryType>,
      *   expiresAt?: \DateTimeInterface|null,
      *   idempotencyKey?: string|null,
-     *   metadata?: array<string,string>|null,
+     *   metadata?: array<string,MetadataItemShape>|null,
      *   reason?: string|null,
      * }|BalanceCreateLedgerEntryParams $params
      * @param RequestOpts|null $requestOptions

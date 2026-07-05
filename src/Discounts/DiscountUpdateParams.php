@@ -8,17 +8,21 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * PATCH /discounts/{discount_id}.
  *
  * @see Dodopayments\Services\DiscountsService::update()
  *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ *
  * @phpstan-type DiscountUpdateParamsShape = array{
  *   amount?: int|null,
  *   code?: string|null,
  *   expiresAt?: \DateTimeInterface|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   name?: string|null,
  *   preserveOnPlanChange?: bool|null,
  *   restrictedTo?: list<string>|null,
@@ -53,9 +57,9 @@ final class DiscountUpdateParams implements BaseModel
     /**
      * Additional metadata for the discount.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     #[Optional(nullable: true)]
@@ -106,7 +110,7 @@ final class DiscountUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param list<string>|null $restrictedTo
      * @param DiscountType|value-of<DiscountType>|null $type
      */
@@ -173,7 +177,7 @@ final class DiscountUpdateParams implements BaseModel
     /**
      * Additional metadata for the discount.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

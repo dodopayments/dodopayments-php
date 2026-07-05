@@ -12,13 +12,16 @@ use Dodopayments\Discounts\DiscountDetail;
 use Dodopayments\Disputes\Dispute;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\Payment\PaymentProvider;
 use Dodopayments\Payments\Payment\ProductCart;
 
 /**
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
@@ -33,7 +36,7 @@ use Dodopayments\Payments\Payment\ProductCart;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   disputes: list<Dispute|DisputeShape>,
- *   metadata: array<string,string>,
+ *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   refunds: list<RefundListItem|RefundListItemShape>,
@@ -126,9 +129,9 @@ final class Payment implements BaseModel
     /**
      * Additional custom data associated with the payment.
      *
-     * @var array<string,string> $metadata
+     * @var array<string,MetadataItemVariants> $metadata
      */
-    #[Required(map: 'string')]
+    #[Required(map: MetadataItem::class)]
     public array $metadata;
 
     /**
@@ -407,7 +410,7 @@ final class Payment implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<Dispute|DisputeShape> $disputes
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param list<RefundListItem|RefundListItemShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
@@ -605,7 +608,7 @@ final class Payment implements BaseModel
     /**
      * Additional custom data associated with the payment.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

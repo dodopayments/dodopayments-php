@@ -10,6 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\PaymentMethodTypes;
@@ -18,12 +19,14 @@ use Dodopayments\Payments\PaymentMethodTypes;
  * @see Dodopayments\Services\CheckoutSessionsService::preview()
  *
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type ProductItemReqShape from \Dodopayments\CheckoutSessions\ProductItemReq
  * @phpstan-import-type CheckoutSessionBillingAddressShape from \Dodopayments\CheckoutSessions\CheckoutSessionBillingAddress
  * @phpstan-import-type CustomFieldShape from \Dodopayments\CheckoutSessions\CustomField
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type CheckoutSessionCustomizationShape from \Dodopayments\CheckoutSessions\CheckoutSessionCustomization
  * @phpstan-import-type CheckoutSessionFlagsShape from \Dodopayments\CheckoutSessions\CheckoutSessionFlags
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type SubscriptionDataShape from \Dodopayments\CheckoutSessions\SubscriptionData
  *
  * @phpstan-type CheckoutSessionPreviewParamsShape = array{
@@ -42,7 +45,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *   featureFlags?: null|CheckoutSessionFlags|CheckoutSessionFlagsShape,
  *   force3DS?: bool|null,
  *   mandateMinAmountInrPaise?: int|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   minimalAddress?: bool|null,
  *   paymentMethodID?: string|null,
  *   productCollectionID?: string|null,
@@ -177,9 +180,9 @@ final class CheckoutSessionPreviewParams implements BaseModel
     /**
      * Additional metadata associated with the payment. Defaults to empty if not provided.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string', nullable: true)]
+    #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
     /**
@@ -263,7 +266,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
      * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape|null $customization
      * @param list<string>|null $discountCodes
      * @param CheckoutSessionFlags|CheckoutSessionFlagsShape|null $featureFlags
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
      */
     public static function with(
@@ -527,7 +530,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
     /**
      * Additional metadata associated with the payment. Defaults to empty if not provided.
      *
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public function withMetadata(?array $metadata): self
     {

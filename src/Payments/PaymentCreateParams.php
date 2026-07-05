@@ -10,15 +10,18 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * @deprecated
  * @see Dodopayments\Services\PaymentsService::create()
  *
  * @phpstan-import-type CustomerRequestVariants from \Dodopayments\Payments\CustomerRequest
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type PaymentCreateParamsShape = array{
  *   billing: BillingAddress|BillingAddressShape,
@@ -31,7 +34,7 @@ use Dodopayments\Misc\Currency;
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   force3DS?: bool|null,
- *   metadata?: array<string,string>|null,
+ *   metadata?: array<string,MetadataItemShape>|null,
  *   paymentLink?: bool|null,
  *   paymentMethodID?: string|null,
  *   redirectImmediately?: bool|null,
@@ -137,9 +140,9 @@ final class PaymentCreateParams implements BaseModel
      * Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      *
-     * @var array<string,string>|null $metadata
+     * @var array<string,MetadataItemVariants>|null $metadata
      */
-    #[Optional(map: 'string')]
+    #[Optional(map: MetadataItem::class)]
     public ?array $metadata;
 
     /**
@@ -231,7 +234,7 @@ final class PaymentCreateParams implements BaseModel
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes
      * @param Currency|value-of<Currency>|null $billingCurrency
      * @param list<string>|null $discountCodes
-     * @param array<string,string>|null $metadata
+     * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
         BillingAddress|array $billing,
@@ -420,7 +423,7 @@ final class PaymentCreateParams implements BaseModel
      * Additional metadata associated with the payment.
      * Defaults to empty if not provided.
      *
-     * @param array<string,string> $metadata
+     * @param array<string,MetadataItemShape> $metadata
      */
     public function withMetadata(array $metadata): self
     {

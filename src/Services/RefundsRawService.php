@@ -20,6 +20,7 @@ use Dodopayments\ServiceContracts\RefundsRawContract;
 
 /**
  * @phpstan-import-type ItemShape from \Dodopayments\Refunds\RefundCreateParams\Item
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
 final class RefundsRawService implements RefundsRawContract
@@ -36,7 +37,7 @@ final class RefundsRawService implements RefundsRawContract
      * @param array{
      *   paymentID: string,
      *   items?: list<Item|ItemShape>|null,
-     *   metadata?: array<string,string>,
+     *   metadata?: array<string,MetadataItemShape>,
      *   reason?: string|null,
      * }|RefundCreateParams $params
      * @param RequestOpts|null $requestOptions
