@@ -93,7 +93,8 @@ final class AddonsService implements AddonsContract
      * @param string $id Addon Id
      * @param Currency|value-of<Currency>|null $currency The currency of the Addon
      * @param string|null $description description of the Addon, optional and must be at most 1000 characters
-     * @param string|null $imageID Addon image id after its uploaded to S3
+     * @param string|null $imageID Addon image id after its uploaded to S3.
+     * Pass `null` to remove the existing image, omit to keep it unchanged.
      * @param string|null $name name of the Addon, optional and must be at most 100 characters
      * @param int|null $price Amount of the addon
      * @param TaxCategory|value-of<TaxCategory>|null $taxCategory tax category of the Addon

@@ -43,6 +43,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
+use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
@@ -161,6 +162,8 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   metadata?: array<string,MetadataItemShape>|null,
      *   nextBillingDate?: \DateTimeInterface|null,
      *   status?: SubscriptionStatus|value-of<SubscriptionStatus>|null,
+     *   subscriptionPeriodCount?: int|null,
+     *   subscriptionPeriodInterval?: TimeInterval|value-of<TimeInterval>|null,
      *   taxID?: string|null,
      * }|SubscriptionUpdateParams $params
      * @param RequestOpts|null $requestOptions

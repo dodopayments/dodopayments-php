@@ -35,6 +35,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod\Existing;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod\New_;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
+use Dodopayments\Subscriptions\TimeInterval;
 
 /**
  * @phpstan-import-type CustomerRequestShape from \Dodopayments\Payments\CustomerRequest
@@ -166,6 +167,13 @@ interface SubscriptionsContract
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,MetadataItemShape>|null $metadata Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
+     * @param int|null $subscriptionPeriodCount New number of `subscription_period_interval` units the subscription
+     * entitlement should span. Used together with `subscription_period_interval`
+     * to extend the subscription period. The resulting period must not be
+     * shorter than the current one (this endpoint only extends).
+     * @param TimeInterval|value-of<TimeInterval>|null $subscriptionPeriodInterval New interval unit for the subscription period. When changing the period,
+     * this may be supplied alongside `subscription_period_count`; if omitted the
+     * existing interval is retained.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -184,6 +192,8 @@ interface SubscriptionsContract
         ?array $metadata = null,
         ?\DateTimeInterface $nextBillingDate = null,
         SubscriptionStatus|string|null $status = null,
+        ?int $subscriptionPeriodCount = null,
+        TimeInterval|string|null $subscriptionPeriodInterval = null,
         ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,
     ): Subscription;

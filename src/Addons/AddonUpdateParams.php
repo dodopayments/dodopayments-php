@@ -45,6 +45,7 @@ final class AddonUpdateParams implements BaseModel
 
     /**
      * Addon image id after its uploaded to S3.
+     * Pass `null` to remove the existing image, omit to keep it unchanged.
      */
     #[Optional('image_id', nullable: true)]
     public ?string $imageID;
@@ -128,6 +129,7 @@ final class AddonUpdateParams implements BaseModel
 
     /**
      * Addon image id after its uploaded to S3.
+     * Pass `null` to remove the existing image, omit to keep it unchanged.
      */
     public function withImageID(?string $imageID): self
     {
