@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.17.0](https://github.com/dodopayments/dodopayments-php/compare/v6.16.0...v6.17.0) (2026-07-06)
+
+
+### Features
+
+* **api:** add subscription period override fields to subscription update ([9dc01af](https://github.com/dodopayments/dodopayments-php/commit/9dc01af62bac15303a1d6c7856674ed5c85f8f92))
+* **api:** add subscription period override fields to subscription update ([3f25fd5](https://github.com/dodopayments/dodopayments-php/commit/3f25fd5f1259cd1e003851d18f928ead6a13dd9e))
+
 ## [6.16.0](https://github.com/dodopayments/dodopayments-php/compare/v6.15.1...v6.16.0) (2026-07-04)
 
 
