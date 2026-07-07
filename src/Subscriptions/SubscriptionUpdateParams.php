@@ -36,6 +36,8 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *   metadata?: array<string,MetadataItemShape>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
  *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
+ *   subscriptionPeriodCount?: int|null,
+ *   subscriptionPeriodInterval?: null|TimeInterval|value-of<TimeInterval>,
  *   taxID?: string|null,
  * }
  */
@@ -118,6 +120,29 @@ final class SubscriptionUpdateParams implements BaseModel
     #[Optional(enum: SubscriptionStatus::class, nullable: true)]
     public ?string $status;
 
+    /**
+     * New number of `subscription_period_interval` units the subscription
+     * entitlement should span. Used together with `subscription_period_interval`
+     * to extend the subscription period. The resulting period must not be
+     * shorter than the current one (this endpoint only extends).
+     */
+    #[Optional('subscription_period_count', nullable: true)]
+    public ?int $subscriptionPeriodCount;
+
+    /**
+     * New interval unit for the subscription period. When changing the period,
+     * this may be supplied alongside `subscription_period_count`; if omitted the
+     * existing interval is retained.
+     *
+     * @var value-of<TimeInterval>|null $subscriptionPeriodInterval
+     */
+    #[Optional(
+        'subscription_period_interval',
+        enum: TimeInterval::class,
+        nullable: true
+    )]
+    public ?string $subscriptionPeriodInterval;
+
     #[Optional('tax_id', nullable: true)]
     public ?string $taxID;
 
@@ -138,6 +163,7 @@ final class SubscriptionUpdateParams implements BaseModel
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,MetadataItemShape>|null $metadata
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
+     * @param TimeInterval|value-of<TimeInterval>|null $subscriptionPeriodInterval
      */
     public static function with(
         BillingAddress|array|null $billing = null,
@@ -152,6 +178,8 @@ final class SubscriptionUpdateParams implements BaseModel
         ?array $metadata = null,
         ?\DateTimeInterface $nextBillingDate = null,
         SubscriptionStatus|string|null $status = null,
+        ?int $subscriptionPeriodCount = null,
+        TimeInterval|string|null $subscriptionPeriodInterval = null,
         ?string $taxID = null,
     ): self {
         $self = new self;
@@ -168,6 +196,8 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $nextBillingDate && $self['nextBillingDate'] = $nextBillingDate;
         null !== $status && $self['status'] = $status;
+        null !== $subscriptionPeriodCount && $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+        null !== $subscriptionPeriodInterval && $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
         null !== $taxID && $self['taxID'] = $taxID;
 
         return $self;
@@ -311,6 +341,37 @@ final class SubscriptionUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * New number of `subscription_period_interval` units the subscription
+     * entitlement should span. Used together with `subscription_period_interval`
+     * to extend the subscription period. The resulting period must not be
+     * shorter than the current one (this endpoint only extends).
+     */
+    public function withSubscriptionPeriodCount(
+        ?int $subscriptionPeriodCount
+    ): self {
+        $self = clone $this;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+
+        return $self;
+    }
+
+    /**
+     * New interval unit for the subscription period. When changing the period,
+     * this may be supplied alongside `subscription_period_count`; if omitted the
+     * existing interval is retained.
+     *
+     * @param TimeInterval|value-of<TimeInterval>|null $subscriptionPeriodInterval
+     */
+    public function withSubscriptionPeriodInterval(
+        TimeInterval|string|null $subscriptionPeriodInterval
+    ): self {
+        $self = clone $this;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
         return $self;
     }
