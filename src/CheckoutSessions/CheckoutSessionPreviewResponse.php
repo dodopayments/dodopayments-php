@@ -28,6 +28,7 @@ use Dodopayments\Misc\Currency;
  *   isByop: bool,
  *   productCart: list<ProductCart|ProductCartShape>,
  *   totalPrice: int,
+ *   nextBillingDate?: \DateTimeInterface|null,
  *   recurringBreakup?: null|RecurringBreakup|RecurringBreakupShape,
  *   taxIDBusinessName?: string|null,
  *   taxIDErrMsg?: string|null,
@@ -84,6 +85,15 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      */
     #[Required('total_price')]
     public int $totalPrice;
+
+    /**
+     * The upcoming billing date for subscriptions, computed relative to now:
+     * with a trial it is `now + trial_period_days`, otherwise `now + payment
+     * frequency`. `None` for one-time-only carts. This is a preview estimate;
+     * the authoritative value is set when the subscription activates.
+     */
+    #[Optional('next_billing_date', nullable: true)]
+    public ?\DateTimeInterface $nextBillingDate;
 
     /**
      * Breakup of recurring payments (None for one-time only).
@@ -165,6 +175,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         bool $isByop,
         array $productCart,
         int $totalPrice,
+        ?\DateTimeInterface $nextBillingDate = null,
         RecurringBreakup|array|null $recurringBreakup = null,
         ?string $taxIDBusinessName = null,
         ?string $taxIDErrMsg = null,
@@ -180,6 +191,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         $self['productCart'] = $productCart;
         $self['totalPrice'] = $totalPrice;
 
+        null !== $nextBillingDate && $self['nextBillingDate'] = $nextBillingDate;
         null !== $recurringBreakup && $self['recurringBreakup'] = $recurringBreakup;
         null !== $taxIDBusinessName && $self['taxIDBusinessName'] = $taxIDBusinessName;
         null !== $taxIDErrMsg && $self['taxIDErrMsg'] = $taxIDErrMsg;
@@ -263,6 +275,21 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     {
         $self = clone $this;
         $self['totalPrice'] = $totalPrice;
+
+        return $self;
+    }
+
+    /**
+     * The upcoming billing date for subscriptions, computed relative to now:
+     * with a trial it is `now + trial_period_days`, otherwise `now + payment
+     * frequency`. `None` for one-time-only carts. This is a preview estimate;
+     * the authoritative value is set when the subscription activates.
+     */
+    public function withNextBillingDate(
+        ?\DateTimeInterface $nextBillingDate
+    ): self {
+        $self = clone $this;
+        $self['nextBillingDate'] = $nextBillingDate;
 
         return $self;
     }
