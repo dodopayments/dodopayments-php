@@ -36,6 +36,7 @@ use Dodopayments\Payments\Payment\ProductCart;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   disputes: list<Dispute|DisputeShape>,
+ *   isUpdatePaymentMethod: bool,
  *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
@@ -59,6 +60,7 @@ use Dodopayments\Payments\Payment\ProductCart;
  *   invoiceURL?: string|null,
  *   paymentLink?: string|null,
  *   paymentMethod?: string|null,
+ *   paymentMethodID?: string|null,
  *   paymentMethodType?: string|null,
  *   productCart?: list<ProductCart|ProductCartShape>|null,
  *   refundStatus?: null|PaymentRefundStatus|value-of<PaymentRefundStatus>,
@@ -125,6 +127,13 @@ final class Payment implements BaseModel
      */
     #[Required(list: Dispute::class)]
     public array $disputes;
+
+    /**
+     * Whether this payment was created solely to update a subscription's
+     * payment method (a zero-/setup-amount charge). `false` for normal charges.
+     */
+    #[Required('is_update_payment_method')]
+    public bool $isUpdatePaymentMethod;
 
     /**
      * Additional custom data associated with the payment.
@@ -293,6 +302,12 @@ final class Payment implements BaseModel
     public ?string $paymentMethod;
 
     /**
+     * Identifier of the saved payment method used for this payment, if any.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
+    /**
      * Specific type of payment method (e.g. "visa", "mastercard").
      */
     #[Optional('payment_method_type', nullable: true)]
@@ -363,6 +378,7 @@ final class Payment implements BaseModel
      *   customer: ...,
      *   digitalProductsDelivered: ...,
      *   disputes: ...,
+     *   isUpdatePaymentMethod: ...,
      *   metadata: ...,
      *   paymentID: ...,
      *   paymentProvider: ...,
@@ -386,6 +402,7 @@ final class Payment implements BaseModel
      *   ->withCustomer(...)
      *   ->withDigitalProductsDelivered(...)
      *   ->withDisputes(...)
+     *   ->withIsUpdatePaymentMethod(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
      *   ->withPaymentProvider(...)
@@ -430,6 +447,7 @@ final class Payment implements BaseModel
         CustomerLimitedDetails|array $customer,
         bool $digitalProductsDelivered,
         array $disputes,
+        bool $isUpdatePaymentMethod,
         array $metadata,
         string $paymentID,
         PaymentProvider|string $paymentProvider,
@@ -453,6 +471,7 @@ final class Payment implements BaseModel
         ?string $invoiceURL = null,
         ?string $paymentLink = null,
         ?string $paymentMethod = null,
+        ?string $paymentMethodID = null,
         ?string $paymentMethodType = null,
         ?array $productCart = null,
         PaymentRefundStatus|string|null $refundStatus = null,
@@ -472,6 +491,7 @@ final class Payment implements BaseModel
         $self['customer'] = $customer;
         $self['digitalProductsDelivered'] = $digitalProductsDelivered;
         $self['disputes'] = $disputes;
+        $self['isUpdatePaymentMethod'] = $isUpdatePaymentMethod;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
         $self['paymentProvider'] = $paymentProvider;
@@ -496,6 +516,7 @@ final class Payment implements BaseModel
         null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
         null !== $paymentMethod && $self['paymentMethod'] = $paymentMethod;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $paymentMethodType && $self['paymentMethodType'] = $paymentMethodType;
         null !== $productCart && $self['productCart'] = $productCart;
         null !== $refundStatus && $self['refundStatus'] = $refundStatus;
@@ -601,6 +622,18 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['disputes'] = $disputes;
+
+        return $self;
+    }
+
+    /**
+     * Whether this payment was created solely to update a subscription's
+     * payment method (a zero-/setup-amount charge). `false` for normal charges.
+     */
+    public function withIsUpdatePaymentMethod(bool $isUpdatePaymentMethod): self
+    {
+        $self = clone $this;
+        $self['isUpdatePaymentMethod'] = $isUpdatePaymentMethod;
 
         return $self;
     }
@@ -879,6 +912,17 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethod'] = $paymentMethod;
+
+        return $self;
+    }
+
+    /**
+     * Identifier of the saved payment method used for this payment, if any.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
         return $self;
     }

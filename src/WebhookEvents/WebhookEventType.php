@@ -53,6 +53,8 @@ enum WebhookEventType: string
 
     case SUBSCRIPTION_UPDATED = 'subscription.updated';
 
+    case SUBSCRIPTION_UPDATE_PAYMENT_METHOD = 'subscription.update_payment_method';
+
     case LICENSE_KEY_CREATED = 'license_key.created';
 
     case PAYOUT_NOT_INITIATED = 'payout.not_initiated';

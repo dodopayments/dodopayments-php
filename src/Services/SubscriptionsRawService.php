@@ -197,6 +197,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param array{
      *   brandID?: string,
+     *   cancelAtNextBillingDate?: bool,
      *   createdAtGte?: \DateTimeInterface,
      *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
@@ -228,6 +229,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
                 $parsed,
                 [
                     'brandID' => 'brand_id',
+                    'cancelAtNextBillingDate' => 'cancel_at_next_billing_date',
                     'createdAtGte' => 'created_at_gte',
                     'createdAtLte' => 'created_at_lte',
                     'customerID' => 'customer_id',
