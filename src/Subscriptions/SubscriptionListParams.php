@@ -15,6 +15,7 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
  *
  * @phpstan-type SubscriptionListParamsShape = array{
  *   brandID?: string|null,
+ *   cancelAtNextBillingDate?: bool|null,
  *   createdAtGte?: \DateTimeInterface|null,
  *   createdAtLte?: \DateTimeInterface|null,
  *   customerID?: string|null,
@@ -35,6 +36,12 @@ final class SubscriptionListParams implements BaseModel
      */
     #[Optional]
     public ?string $brandID;
+
+    /**
+     * Filter by cancel_at_next_billing_date (subscriptions scheduled for cancellation).
+     */
+    #[Optional]
+    public ?bool $cancelAtNextBillingDate;
 
     /**
      * Get events after this created time.
@@ -94,6 +101,7 @@ final class SubscriptionListParams implements BaseModel
      */
     public static function with(
         ?string $brandID = null,
+        ?bool $cancelAtNextBillingDate = null,
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
@@ -105,6 +113,7 @@ final class SubscriptionListParams implements BaseModel
         $self = new self;
 
         null !== $brandID && $self['brandID'] = $brandID;
+        null !== $cancelAtNextBillingDate && $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
         null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
         null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
         null !== $customerID && $self['customerID'] = $customerID;
@@ -123,6 +132,18 @@ final class SubscriptionListParams implements BaseModel
     {
         $self = clone $this;
         $self['brandID'] = $brandID;
+
+        return $self;
+    }
+
+    /**
+     * Filter by cancel_at_next_billing_date (subscriptions scheduled for cancellation).
+     */
+    public function withCancelAtNextBillingDate(
+        bool $cancelAtNextBillingDate
+    ): self {
+        $self = clone $this;
+        $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
 
         return $self;
     }

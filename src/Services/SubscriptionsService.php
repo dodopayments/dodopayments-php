@@ -282,6 +282,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $brandID filter by Brand id
+     * @param bool $cancelAtNextBillingDate Filter by cancel_at_next_billing_date (subscriptions scheduled for cancellation)
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer id
@@ -297,6 +298,7 @@ final class SubscriptionsService implements SubscriptionsContract
      */
     public function list(
         ?string $brandID = null,
+        ?bool $cancelAtNextBillingDate = null,
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
@@ -309,6 +311,7 @@ final class SubscriptionsService implements SubscriptionsContract
         $params = Util::removeNulls(
             [
                 'brandID' => $brandID,
+                'cancelAtNextBillingDate' => $cancelAtNextBillingDate,
                 'createdAtGte' => $createdAtGte,
                 'createdAtLte' => $createdAtLte,
                 'customerID' => $customerID,
