@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.17.1](https://github.com/dodopayments/dodopayments-php/compare/v6.17.0...v6.17.1) (2026-07-09)
+
+
+### Bug Fixes
+
+* **api:** add subscription.update_payment_method webhook and payment-method fields ([f09e27b](https://github.com/dodopayments/dodopayments-php/commit/f09e27befa67b2a727b8ac13debd555cf86f9bfe))
+* **api:** add subscription.update_payment_method webhook and payment-method fields ([ef569b4](https://github.com/dodopayments/dodopayments-php/commit/ef569b46771e6fc0c392f805bb65a57866cc6b12))
+
 ## [6.17.0](https://github.com/dodopayments/dodopayments-php/compare/v6.16.0...v6.17.0) (2026-07-06)
 
 
