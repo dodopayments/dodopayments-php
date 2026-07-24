@@ -7,6 +7,7 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountType;
+use Dodopayments\Misc\Currency;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -34,7 +35,7 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->create(
             amount: 0,
-            type: DiscountType::PERCENTAGE
+            type: DiscountType::FLAT
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -46,13 +47,24 @@ final class DiscountsTest extends TestCase
     {
         $result = $this->client->discounts->create(
             amount: 0,
-            type: DiscountType::PERCENTAGE,
+            type: DiscountType::FLAT,
             code: 'code',
+            currencyOptions: [
+                [
+                    'currency' => Currency::AED,
+                    'isDefault' => true,
+                    'maxAmountPossible' => 0,
+                    'minimumSubtotal' => 0,
+                ],
+            ],
+            customerEligibility: 'any',
             expiresAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             metadata: ['foo' => 'string'],
             name: 'name',
+            perCustomerUsageLimit: 0,
             preserveOnPlanChange: true,
             restrictedTo: ['string'],
+            startsAt: new \DateTimeImmutable('2019-12-27T18:11:19.117Z'),
             subscriptionCycles: 0,
             usageLimit: 0,
         );

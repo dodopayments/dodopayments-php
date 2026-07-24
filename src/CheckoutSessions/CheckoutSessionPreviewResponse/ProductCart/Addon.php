@@ -73,6 +73,10 @@ final class Addon implements BaseModel
     #[Optional(nullable: true)]
     public ?string $description;
 
+    /**
+     * Percentage rate (basis points) of the applicable percentage code; null
+     * for flat codes (their deduction is `og_price - discounted_price`).
+     */
     #[Optional('discount_amount', nullable: true)]
     public ?int $discountAmount;
 
@@ -262,6 +266,10 @@ final class Addon implements BaseModel
         return $self;
     }
 
+    /**
+     * Percentage rate (basis points) of the applicable percentage code; null
+     * for flat codes (their deduction is `og_price - discounted_price`).
+     */
     public function withDiscountAmount(?int $discountAmount): self
     {
         $self = clone $this;
