@@ -32,6 +32,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  *   expiresOn?: \DateTimeInterface|null,
  *   oneTimeProductCart?: list<OneTimeProductCart|OneTimeProductCartShape>|null,
  *   paymentLink?: string|null,
+ *   trialAmount?: int|null,
  * }
  */
 final class SubscriptionNewResponse implements BaseModel
@@ -127,6 +128,13 @@ final class SubscriptionNewResponse implements BaseModel
     public ?string $paymentLink;
 
     /**
+     * Per-unit trial amount after discounts, in the price currency's minor units
+     * (pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    #[Optional('trial_amount', nullable: true)]
+    public ?int $trialAmount;
+
+    /**
      * `new SubscriptionNewResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -182,6 +190,7 @@ final class SubscriptionNewResponse implements BaseModel
         ?\DateTimeInterface $expiresOn = null,
         ?array $oneTimeProductCart = null,
         ?string $paymentLink = null,
+        ?int $trialAmount = null,
     ): self {
         $self = new self;
 
@@ -198,6 +207,7 @@ final class SubscriptionNewResponse implements BaseModel
         null !== $expiresOn && $self['expiresOn'] = $expiresOn;
         null !== $oneTimeProductCart && $self['oneTimeProductCart'] = $oneTimeProductCart;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $trialAmount && $self['trialAmount'] = $trialAmount;
 
         return $self;
     }
@@ -341,6 +351,18 @@ final class SubscriptionNewResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentLink'] = $paymentLink;
+
+        return $self;
+    }
+
+    /**
+     * Per-unit trial amount after discounts, in the price currency's minor units
+     * (pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    public function withTrialAmount(?int $trialAmount): self
+    {
+        $self = clone $this;
+        $self['trialAmount'] = $trialAmount;
 
         return $self;
     }

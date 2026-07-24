@@ -8,6 +8,8 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Discounts\DiscountUpdateParams\CurrencyOption;
+use Dodopayments\Discounts\DiscountUpdateParams\CustomerEligibility;
 use Dodopayments\Misc\MetadataItem;
 
 /**
@@ -16,16 +18,21 @@ use Dodopayments\Misc\MetadataItem;
  * @see Dodopayments\Services\DiscountsService::update()
  *
  * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type CurrencyOptionShape from \Dodopayments\Discounts\DiscountUpdateParams\CurrencyOption
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type DiscountUpdateParamsShape = array{
  *   amount?: int|null,
  *   code?: string|null,
+ *   currencyOptions?: list<CurrencyOption|CurrencyOptionShape>|null,
+ *   customerEligibility?: null|CustomerEligibility|value-of<CustomerEligibility>,
  *   expiresAt?: \DateTimeInterface|null,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   name?: string|null,
+ *   perCustomerUsageLimit?: int|null,
  *   preserveOnPlanChange?: bool|null,
  *   restrictedTo?: list<string>|null,
+ *   startsAt?: \DateTimeInterface|null,
  *   subscriptionCycles?: int|null,
  *   type?: null|DiscountType|value-of<DiscountType>,
  *   usageLimit?: int|null,
@@ -51,6 +58,29 @@ final class DiscountUpdateParams implements BaseModel
     #[Optional(nullable: true)]
     public ?string $code;
 
+    /**
+     * If present, fully replaces the discount's currency options (replace-set
+     * semantics, like `restricted_to`). Send an empty array to clear them.
+     *
+     * @var list<CurrencyOption>|null $currencyOptions
+     */
+    #[Optional('currency_options', list: CurrencyOption::class, nullable: true)]
+    public ?array $currencyOptions;
+
+    /**
+     * If present, update who may redeem this discount. Plain field (not
+     * double-option): the DB column is `NOT NULL`, so it can never be cleared
+     * back to unset, only changed to another `CustomerEligibility` value.
+     *
+     * @var value-of<CustomerEligibility>|null $customerEligibility
+     */
+    #[Optional(
+        'customer_eligibility',
+        enum: CustomerEligibility::class,
+        nullable: true
+    )]
+    public ?string $customerEligibility;
+
     #[Optional('expires_at', nullable: true)]
     public ?\DateTimeInterface $expiresAt;
 
@@ -64,6 +94,14 @@ final class DiscountUpdateParams implements BaseModel
 
     #[Optional(nullable: true)]
     public ?string $name;
+
+    /**
+     * If present, update the per-customer usage limit (double-option: send
+     * `null` to clear it back to unlimited). Must be `<= usage_limit` (the
+     * value in effect after this patch) when both are set.
+     */
+    #[Optional('per_customer_usage_limit', nullable: true)]
+    public ?int $perCustomerUsageLimit;
 
     /**
      * Whether this discount should be preserved when a subscription changes plans.
@@ -82,6 +120,12 @@ final class DiscountUpdateParams implements BaseModel
     public ?array $restrictedTo;
 
     /**
+     * If present, update `starts_at` (double-option: send `null` to clear it).
+     */
+    #[Optional('starts_at', nullable: true)]
+    public ?\DateTimeInterface $startsAt;
+
+    /**
      * Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
@@ -90,7 +134,7 @@ final class DiscountUpdateParams implements BaseModel
     public ?int $subscriptionCycles;
 
     /**
-     * If present, update the discount type. Currently only `percentage` is supported.
+     * If present, update the discount type (`percentage` or `flat`).
      *
      * @var value-of<DiscountType>|null $type
      */
@@ -110,6 +154,8 @@ final class DiscountUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param list<CurrencyOption|CurrencyOptionShape>|null $currencyOptions
+     * @param CustomerEligibility|value-of<CustomerEligibility>|null $customerEligibility
      * @param array<string,MetadataItemShape>|null $metadata
      * @param list<string>|null $restrictedTo
      * @param DiscountType|value-of<DiscountType>|null $type
@@ -117,11 +163,15 @@ final class DiscountUpdateParams implements BaseModel
     public static function with(
         ?int $amount = null,
         ?string $code = null,
+        ?array $currencyOptions = null,
+        CustomerEligibility|string|null $customerEligibility = null,
         ?\DateTimeInterface $expiresAt = null,
         ?array $metadata = null,
         ?string $name = null,
+        ?int $perCustomerUsageLimit = null,
         ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
+        ?\DateTimeInterface $startsAt = null,
         ?int $subscriptionCycles = null,
         DiscountType|string|null $type = null,
         ?int $usageLimit = null,
@@ -130,11 +180,15 @@ final class DiscountUpdateParams implements BaseModel
 
         null !== $amount && $self['amount'] = $amount;
         null !== $code && $self['code'] = $code;
+        null !== $currencyOptions && $self['currencyOptions'] = $currencyOptions;
+        null !== $customerEligibility && $self['customerEligibility'] = $customerEligibility;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
+        null !== $perCustomerUsageLimit && $self['perCustomerUsageLimit'] = $perCustomerUsageLimit;
         null !== $preserveOnPlanChange && $self['preserveOnPlanChange'] = $preserveOnPlanChange;
         null !== $restrictedTo && $self['restrictedTo'] = $restrictedTo;
+        null !== $startsAt && $self['startsAt'] = $startsAt;
         null !== $subscriptionCycles && $self['subscriptionCycles'] = $subscriptionCycles;
         null !== $type && $self['type'] = $type;
         null !== $usageLimit && $self['usageLimit'] = $usageLimit;
@@ -162,6 +216,36 @@ final class DiscountUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['code'] = $code;
+
+        return $self;
+    }
+
+    /**
+     * If present, fully replaces the discount's currency options (replace-set
+     * semantics, like `restricted_to`). Send an empty array to clear them.
+     *
+     * @param list<CurrencyOption|CurrencyOptionShape>|null $currencyOptions
+     */
+    public function withCurrencyOptions(?array $currencyOptions): self
+    {
+        $self = clone $this;
+        $self['currencyOptions'] = $currencyOptions;
+
+        return $self;
+    }
+
+    /**
+     * If present, update who may redeem this discount. Plain field (not
+     * double-option): the DB column is `NOT NULL`, so it can never be cleared
+     * back to unset, only changed to another `CustomerEligibility` value.
+     *
+     * @param CustomerEligibility|value-of<CustomerEligibility>|null $customerEligibility
+     */
+    public function withCustomerEligibility(
+        CustomerEligibility|string|null $customerEligibility
+    ): self {
+        $self = clone $this;
+        $self['customerEligibility'] = $customerEligibility;
 
         return $self;
     }
@@ -196,6 +280,19 @@ final class DiscountUpdateParams implements BaseModel
     }
 
     /**
+     * If present, update the per-customer usage limit (double-option: send
+     * `null` to clear it back to unlimited). Must be `<= usage_limit` (the
+     * value in effect after this patch) when both are set.
+     */
+    public function withPerCustomerUsageLimit(?int $perCustomerUsageLimit): self
+    {
+        $self = clone $this;
+        $self['perCustomerUsageLimit'] = $perCustomerUsageLimit;
+
+        return $self;
+    }
+
+    /**
      * Whether this discount should be preserved when a subscription changes plans.
      * If not provided, the existing value is kept.
      */
@@ -222,6 +319,17 @@ final class DiscountUpdateParams implements BaseModel
     }
 
     /**
+     * If present, update `starts_at` (double-option: send `null` to clear it).
+     */
+    public function withStartsAt(?\DateTimeInterface $startsAt): self
+    {
+        $self = clone $this;
+        $self['startsAt'] = $startsAt;
+
+        return $self;
+    }
+
+    /**
      * Number of subscription billing cycles this discount is valid for.
      * If not provided, the discount will be applied indefinitely to
      * all recurring payments related to the subscription.
@@ -235,7 +343,7 @@ final class DiscountUpdateParams implements BaseModel
     }
 
     /**
-     * If present, update the discount type. Currently only `percentage` is supported.
+     * If present, update the discount type (`percentage` or `flat`).
      *
      * @param DiscountType|value-of<DiscountType>|null $type
      */
