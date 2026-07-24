@@ -135,7 +135,8 @@ final class ProductCart implements BaseModel
     public ?string $description;
 
     /**
-     * discount percentage.
+     * Percentage rate (basis points) of the applicable percentage code; null
+     * for flat codes (their deduction is `og_price - discounted_price`).
      */
     #[Optional('discount_amount', nullable: true)]
     public ?int $discountAmount;
@@ -431,7 +432,8 @@ final class ProductCart implements BaseModel
     }
 
     /**
-     * discount percentage.
+     * Percentage rate (basis points) of the applicable percentage code; null
+     * for flat codes (their deduction is `og_price - discounted_price`).
      */
     public function withDiscountAmount(?int $discountAmount): self
     {
