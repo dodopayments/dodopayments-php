@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Payments\PaymentListParams\Currency;
 use Dodopayments\Payments\PaymentListParams\Status;
 
 /**
@@ -17,6 +18,7 @@ use Dodopayments\Payments\PaymentListParams\Status;
  *   brandID?: string|null,
  *   createdAtGte?: \DateTimeInterface|null,
  *   createdAtLte?: \DateTimeInterface|null,
+ *   currency?: null|Currency|value-of<Currency>,
  *   customerID?: string|null,
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
@@ -48,6 +50,14 @@ final class PaymentListParams implements BaseModel
      */
     #[Optional]
     public ?\DateTimeInterface $createdAtLte;
+
+    /**
+     * Filter by currency.
+     *
+     * @var value-of<Currency>|null $currency
+     */
+    #[Optional(enum: Currency::class)]
+    public ?string $currency;
 
     /**
      * Filter by customer id.
@@ -97,12 +107,14 @@ final class PaymentListParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Currency|value-of<Currency>|null $currency
      * @param Status|value-of<Status>|null $status
      */
     public static function with(
         ?string $brandID = null,
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
+        Currency|string|null $currency = null,
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
@@ -115,6 +127,7 @@ final class PaymentListParams implements BaseModel
         null !== $brandID && $self['brandID'] = $brandID;
         null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
         null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
+        null !== $currency && $self['currency'] = $currency;
         null !== $customerID && $self['customerID'] = $customerID;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
@@ -154,6 +167,19 @@ final class PaymentListParams implements BaseModel
     {
         $self = clone $this;
         $self['createdAtLte'] = $createdAtLte;
+
+        return $self;
+    }
+
+    /**
+     * Filter by currency.
+     *
+     * @param Currency|value-of<Currency> $currency
+     */
+    public function withCurrency(Currency|string $currency): self
+    {
+        $self = clone $this;
+        $self['currency'] = $currency;
 
         return $self;
     }

@@ -166,6 +166,7 @@ final class PaymentsService implements PaymentsContract
      * @param string $brandID filter by Brand id
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
+     * @param \Dodopayments\Payments\PaymentListParams\Currency|value-of<\Dodopayments\Payments\PaymentListParams\Currency> $currency Filter by currency
      * @param string $customerID Filter by customer id
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
@@ -182,6 +183,7 @@ final class PaymentsService implements PaymentsContract
         ?string $brandID = null,
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
+        \Dodopayments\Payments\PaymentListParams\Currency|string|null $currency = null,
         ?string $customerID = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
@@ -195,6 +197,7 @@ final class PaymentsService implements PaymentsContract
                 'brandID' => $brandID,
                 'createdAtGte' => $createdAtGte,
                 'createdAtLte' => $createdAtLte,
+                'currency' => $currency,
                 'customerID' => $customerID,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,

@@ -9,6 +9,8 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Discounts\DiscountCreateParams\CurrencyOption;
+use Dodopayments\Discounts\DiscountCreateParams\CustomerEligibility;
 use Dodopayments\Misc\MetadataItem;
 
 /**
@@ -18,17 +20,22 @@ use Dodopayments\Misc\MetadataItem;
  * @see Dodopayments\Services\DiscountsService::create()
  *
  * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type CurrencyOptionShape from \Dodopayments\Discounts\DiscountCreateParams\CurrencyOption
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type DiscountCreateParamsShape = array{
  *   amount: int,
  *   type: DiscountType|value-of<DiscountType>,
  *   code?: string|null,
+ *   currencyOptions?: list<CurrencyOption|CurrencyOptionShape>|null,
+ *   customerEligibility?: null|CustomerEligibility|value-of<CustomerEligibility>,
  *   expiresAt?: \DateTimeInterface|null,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   name?: string|null,
+ *   perCustomerUsageLimit?: int|null,
  *   preserveOnPlanChange?: bool|null,
  *   restrictedTo?: list<string>|null,
+ *   startsAt?: \DateTimeInterface|null,
  *   subscriptionCycles?: int|null,
  *   usageLimit?: int|null,
  * }
@@ -48,7 +55,7 @@ final class DiscountCreateParams implements BaseModel
     public int $amount;
 
     /**
-     * The discount type. Currently only `percentage` is supported.
+     * The discount type: `percentage` or `flat` (`flat_per_unit` stays blocked).
      *
      * @var value-of<DiscountType> $type
      */
@@ -62,6 +69,31 @@ final class DiscountCreateParams implements BaseModel
      */
     #[Optional(nullable: true)]
     public ?string $code;
+
+    /**
+     * Per-currency options (flat deduction / percentage cap + minimum subtotal).
+     * Required for `flat` codes (must include a resolvable default); optional
+     * per-currency caps for `percentage` codes. Per-row invariants are checked
+     * in `normalize_currency_options`, not via `#[validate(nested)]`.
+     *
+     * @var list<CurrencyOption>|null $currencyOptions
+     */
+    #[Optional('currency_options', list: CurrencyOption::class, nullable: true)]
+    public ?array $currencyOptions;
+
+    /**
+     * Who may redeem this discount code. Defaults to `any` (unrestricted).
+     * `specific` starts with zero attached customers (fails closed) until
+     * customers are attached via `POST /discounts/{id}/customers`.
+     *
+     * @var value-of<CustomerEligibility>|null $customerEligibility
+     */
+    #[Optional(
+        'customer_eligibility',
+        enum: CustomerEligibility::class,
+        nullable: true
+    )]
+    public ?string $customerEligibility;
 
     /**
      * When the discount expires, if ever.
@@ -81,6 +113,13 @@ final class DiscountCreateParams implements BaseModel
     public ?string $name;
 
     /**
+     * Maximum number of times a single customer may redeem this discount.
+     * Must be `<= usage_limit` when both are set.
+     */
+    #[Optional('per_customer_usage_limit', nullable: true)]
+    public ?int $perCustomerUsageLimit;
+
+    /**
      * Whether this discount should be preserved when a subscription changes plans.
      * Default: false (discount is removed on plan change).
      */
@@ -94,6 +133,13 @@ final class DiscountCreateParams implements BaseModel
      */
     #[Optional('restricted_to', list: 'string', nullable: true)]
     public ?array $restrictedTo;
+
+    /**
+     * When the discount becomes active, if scheduled for the future.
+     * NULL = active immediately. Must be strictly before `expires_at` when both are set.
+     */
+    #[Optional('starts_at', nullable: true)]
+    public ?\DateTimeInterface $startsAt;
 
     /**
      * Number of subscription billing cycles this discount is valid for.
@@ -135,6 +181,8 @@ final class DiscountCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param DiscountType|value-of<DiscountType> $type
+     * @param list<CurrencyOption|CurrencyOptionShape>|null $currencyOptions
+     * @param CustomerEligibility|value-of<CustomerEligibility>|null $customerEligibility
      * @param array<string,MetadataItemShape>|null $metadata
      * @param list<string>|null $restrictedTo
      */
@@ -142,11 +190,15 @@ final class DiscountCreateParams implements BaseModel
         int $amount,
         DiscountType|string $type,
         ?string $code = null,
+        ?array $currencyOptions = null,
+        CustomerEligibility|string|null $customerEligibility = null,
         ?\DateTimeInterface $expiresAt = null,
         ?array $metadata = null,
         ?string $name = null,
+        ?int $perCustomerUsageLimit = null,
         ?bool $preserveOnPlanChange = null,
         ?array $restrictedTo = null,
+        ?\DateTimeInterface $startsAt = null,
         ?int $subscriptionCycles = null,
         ?int $usageLimit = null,
     ): self {
@@ -156,11 +208,15 @@ final class DiscountCreateParams implements BaseModel
         $self['type'] = $type;
 
         null !== $code && $self['code'] = $code;
+        null !== $currencyOptions && $self['currencyOptions'] = $currencyOptions;
+        null !== $customerEligibility && $self['customerEligibility'] = $customerEligibility;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $name && $self['name'] = $name;
+        null !== $perCustomerUsageLimit && $self['perCustomerUsageLimit'] = $perCustomerUsageLimit;
         null !== $preserveOnPlanChange && $self['preserveOnPlanChange'] = $preserveOnPlanChange;
         null !== $restrictedTo && $self['restrictedTo'] = $restrictedTo;
+        null !== $startsAt && $self['startsAt'] = $startsAt;
         null !== $subscriptionCycles && $self['subscriptionCycles'] = $subscriptionCycles;
         null !== $usageLimit && $self['usageLimit'] = $usageLimit;
 
@@ -181,7 +237,7 @@ final class DiscountCreateParams implements BaseModel
     }
 
     /**
-     * The discount type. Currently only `percentage` is supported.
+     * The discount type: `percentage` or `flat` (`flat_per_unit` stays blocked).
      *
      * @param DiscountType|value-of<DiscountType> $type
      */
@@ -202,6 +258,38 @@ final class DiscountCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['code'] = $code;
+
+        return $self;
+    }
+
+    /**
+     * Per-currency options (flat deduction / percentage cap + minimum subtotal).
+     * Required for `flat` codes (must include a resolvable default); optional
+     * per-currency caps for `percentage` codes. Per-row invariants are checked
+     * in `normalize_currency_options`, not via `#[validate(nested)]`.
+     *
+     * @param list<CurrencyOption|CurrencyOptionShape>|null $currencyOptions
+     */
+    public function withCurrencyOptions(?array $currencyOptions): self
+    {
+        $self = clone $this;
+        $self['currencyOptions'] = $currencyOptions;
+
+        return $self;
+    }
+
+    /**
+     * Who may redeem this discount code. Defaults to `any` (unrestricted).
+     * `specific` starts with zero attached customers (fails closed) until
+     * customers are attached via `POST /discounts/{id}/customers`.
+     *
+     * @param CustomerEligibility|value-of<CustomerEligibility>|null $customerEligibility
+     */
+    public function withCustomerEligibility(
+        CustomerEligibility|string|null $customerEligibility
+    ): self {
+        $self = clone $this;
+        $self['customerEligibility'] = $customerEligibility;
 
         return $self;
     }
@@ -239,6 +327,18 @@ final class DiscountCreateParams implements BaseModel
     }
 
     /**
+     * Maximum number of times a single customer may redeem this discount.
+     * Must be `<= usage_limit` when both are set.
+     */
+    public function withPerCustomerUsageLimit(?int $perCustomerUsageLimit): self
+    {
+        $self = clone $this;
+        $self['perCustomerUsageLimit'] = $perCustomerUsageLimit;
+
+        return $self;
+    }
+
+    /**
      * Whether this discount should be preserved when a subscription changes plans.
      * Default: false (discount is removed on plan change).
      */
@@ -259,6 +359,18 @@ final class DiscountCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['restrictedTo'] = $restrictedTo;
+
+        return $self;
+    }
+
+    /**
+     * When the discount becomes active, if scheduled for the future.
+     * NULL = active immediately. Must be strictly before `expires_at` when both are set.
+     */
+    public function withStartsAt(?\DateTimeInterface $startsAt): self
+    {
+        $self = clone $this;
+        $self['startsAt'] = $startsAt;
 
         return $self;
     }

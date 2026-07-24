@@ -54,6 +54,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  *   productName?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
+ *   trialAmount?: int|null,
  * }
  */
 final class SubscriptionListResponse implements BaseModel
@@ -250,6 +251,13 @@ final class SubscriptionListResponse implements BaseModel
     public ?string $taxID;
 
     /**
+     * Per-unit trial amount after discounts, snapshotted at subscription creation
+     * (price currency minor units, pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    #[Optional('trial_amount', nullable: true)]
+    public ?int $trialAmount;
+
+    /**
      * `new SubscriptionListResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -356,6 +364,7 @@ final class SubscriptionListResponse implements BaseModel
         ?string $productName = null,
         ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
+        ?int $trialAmount = null,
     ): self {
         $self = new self;
 
@@ -389,6 +398,7 @@ final class SubscriptionListResponse implements BaseModel
         null !== $productName && $self['productName'] = $productName;
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
+        null !== $trialAmount && $self['trialAmount'] = $trialAmount;
 
         return $self;
     }
@@ -737,6 +747,18 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['taxID'] = $taxID;
+
+        return $self;
+    }
+
+    /**
+     * Per-unit trial amount after discounts, snapshotted at subscription creation
+     * (price currency minor units, pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    public function withTrialAmount(?int $trialAmount): self
+    {
+        $self = clone $this;
+        $self['trialAmount'] = $trialAmount;
 
         return $self;
     }

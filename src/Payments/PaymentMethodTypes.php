@@ -165,8 +165,6 @@ enum PaymentMethodTypes: string
 
     case SOFORT = 'sofort';
 
-    case SUNBIT = 'sunbit';
-
     case SWISH = 'swish';
 
     case TOUCH_N_GO = 'touch_n_go';
