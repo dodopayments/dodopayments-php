@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.18.0](https://github.com/dodopayments/dodopayments-php/compare/v6.17.1...v6.18.0) (2026-07-24)
+
+
+### Features
+
+* **api:** add discount customers endpoints, trial support, currency options, and failure details ([d34c84d](https://github.com/dodopayments/dodopayments-php/commit/d34c84d3fa2dc86db856a738cfe5bb8bc5da6900))
+* **api:** add discount customers endpoints, trial support, currency options, and failure details ([1391fdb](https://github.com/dodopayments/dodopayments-php/commit/1391fdb0f4f63c5e3adc3f8c7521af1d3029555b))
+
 ## [6.17.1](https://github.com/dodopayments/dodopayments-php/compare/v6.17.0...v6.17.1) (2026-07-09)
 
 
