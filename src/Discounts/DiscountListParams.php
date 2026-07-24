@@ -30,7 +30,9 @@ final class DiscountListParams implements BaseModel
     use SdkParams;
 
     /**
-     * Filter by active status (true = not expired, false = expired).
+     * Filter by active status. `true` = currently redeemable (started, not
+     * expired, not usage-exhausted). `false` = not currently redeemable
+     * (expired, usage-exhausted, or pending a future `starts_at`).
      */
     #[Optional]
     public ?bool $active;
@@ -100,7 +102,9 @@ final class DiscountListParams implements BaseModel
     }
 
     /**
-     * Filter by active status (true = not expired, false = expired).
+     * Filter by active status. `true` = currently redeemable (started, not
+     * expired, not usage-exhausted). `false` = not currently redeemable
+     * (expired, usage-exhausted, or pending a future `starts_at`).
      */
     public function withActive(bool $active): self
     {

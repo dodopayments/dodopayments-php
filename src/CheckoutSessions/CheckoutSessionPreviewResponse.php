@@ -34,6 +34,8 @@ use Dodopayments\Misc\Currency;
  *   taxIDErrMsg?: string|null,
  *   taxIDFormatName?: string|null,
  *   totalTax?: int|null,
+ *   trialAmount?: int|null,
+ *   trialPeriodDays?: int|null,
  * }
  */
 final class CheckoutSessionPreviewResponse implements BaseModel
@@ -126,6 +128,21 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     public ?int $totalTax;
 
     /**
+     * Per-unit trial amount after discounts, in the price currency's minor units
+     * (pre-quantity, pre-tax; see `current_breakup` for the taxed total due today).
+     * Only present for a paid trial; `None` for a free trial or no trial.
+     */
+    #[Optional('trial_amount', nullable: true)]
+    public ?int $trialAmount;
+
+    /**
+     * Effective trial duration in days for the subscription line, when
+     * there's a trial (free or paid). `None` if no subscription or no trial.
+     */
+    #[Optional('trial_period_days', nullable: true)]
+    public ?int $trialPeriodDays;
+
+    /**
      * `new CheckoutSessionPreviewResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -181,6 +198,8 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         ?string $taxIDErrMsg = null,
         ?string $taxIDFormatName = null,
         ?int $totalTax = null,
+        ?int $trialAmount = null,
+        ?int $trialPeriodDays = null,
     ): self {
         $self = new self;
 
@@ -197,6 +216,8 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         null !== $taxIDErrMsg && $self['taxIDErrMsg'] = $taxIDErrMsg;
         null !== $taxIDFormatName && $self['taxIDFormatName'] = $taxIDFormatName;
         null !== $totalTax && $self['totalTax'] = $totalTax;
+        null !== $trialAmount && $self['trialAmount'] = $trialAmount;
+        null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
 
         return $self;
     }
@@ -348,6 +369,31 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     {
         $self = clone $this;
         $self['totalTax'] = $totalTax;
+
+        return $self;
+    }
+
+    /**
+     * Per-unit trial amount after discounts, in the price currency's minor units
+     * (pre-quantity, pre-tax; see `current_breakup` for the taxed total due today).
+     * Only present for a paid trial; `None` for a free trial or no trial.
+     */
+    public function withTrialAmount(?int $trialAmount): self
+    {
+        $self = clone $this;
+        $self['trialAmount'] = $trialAmount;
+
+        return $self;
+    }
+
+    /**
+     * Effective trial duration in days for the subscription line, when
+     * there's a trial (free or paid). `None` if no subscription or no trial.
+     */
+    public function withTrialPeriodDays(?int $trialPeriodDays): self
+    {
+        $self = clone $this;
+        $self['trialPeriodDays'] = $trialPeriodDays;
 
         return $self;
     }

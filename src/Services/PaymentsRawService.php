@@ -119,6 +119,7 @@ final class PaymentsRawService implements PaymentsRawContract
      *   brandID?: string,
      *   createdAtGte?: \DateTimeInterface,
      *   createdAtLte?: \DateTimeInterface,
+     *   currency?: value-of<PaymentListParams\Currency>,
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,

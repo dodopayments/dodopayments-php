@@ -25,6 +25,8 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   type: 'recurring_price',
  *   taxInclusive?: bool|null,
+ *   trialAmount?: int|null,
+ *   trialApplyDiscounts?: bool|null,
  *   trialPeriodDays?: int|null,
  * }
  */
@@ -102,6 +104,20 @@ final class RecurringPrice implements BaseModel
     public ?bool $taxInclusive;
 
     /**
+     * Amount charged today for a paid trial, in the price currency's minor units.
+     * Requires `trial_period_days > 0`. Omit or null for a free trial (the default).
+     */
+    #[Optional('trial_amount', nullable: true)]
+    public ?int $trialAmount;
+
+    /**
+     * Whether discount codes reduce the trial charge. Defaults to false. Only meaningful
+     * when a paid trial is configured.
+     */
+    #[Optional('trial_apply_discounts', nullable: true)]
+    public ?bool $trialApplyDiscounts;
+
+    /**
      * Number of days for the trial period. A value of `0` indicates no trial period.
      */
     #[Optional('trial_period_days')]
@@ -162,6 +178,8 @@ final class RecurringPrice implements BaseModel
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
         ?bool $taxInclusive = null,
+        ?int $trialAmount = null,
+        ?bool $trialApplyDiscounts = null,
         ?int $trialPeriodDays = null,
     ): self {
         $self = new self;
@@ -176,6 +194,8 @@ final class RecurringPrice implements BaseModel
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
+        null !== $trialAmount && $self['trialAmount'] = $trialAmount;
+        null !== $trialApplyDiscounts && $self['trialApplyDiscounts'] = $trialApplyDiscounts;
         null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
 
         return $self;
@@ -300,6 +320,30 @@ final class RecurringPrice implements BaseModel
     {
         $self = clone $this;
         $self['taxInclusive'] = $taxInclusive;
+
+        return $self;
+    }
+
+    /**
+     * Amount charged today for a paid trial, in the price currency's minor units.
+     * Requires `trial_period_days > 0`. Omit or null for a free trial (the default).
+     */
+    public function withTrialAmount(?int $trialAmount): self
+    {
+        $self = clone $this;
+        $self['trialAmount'] = $trialAmount;
+
+        return $self;
+    }
+
+    /**
+     * Whether discount codes reduce the trial charge. Defaults to false. Only meaningful
+     * when a paid trial is configured.
+     */
+    public function withTrialApplyDiscounts(?bool $trialApplyDiscounts): self
+    {
+        $self = clone $this;
+        $self['trialApplyDiscounts'] = $trialApplyDiscounts;
 
         return $self;
     }

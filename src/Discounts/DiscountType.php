@@ -6,5 +6,7 @@ namespace Dodopayments\Discounts;
 
 enum DiscountType: string
 {
+    case FLAT = 'flat';
+
     case PERCENTAGE = 'percentage';
 }
