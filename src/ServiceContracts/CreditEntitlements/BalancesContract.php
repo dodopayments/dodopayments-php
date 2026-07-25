@@ -61,7 +61,9 @@ interface BalancesContract
      *
      * @param string $customerID Path param: Customer ID
      * @param string $creditEntitlementID Path param: Credit Entitlement ID
-     * @param string $amount Body param: Amount to credit or debit
+     * @param string $amount Body param: Amount to credit or debit. Bounded to a `NUMERIC(38,28)` column, so the
+     * integer part must have fewer than 10 digits (< 10^10); larger values
+     * previously reached the DB and failed with a 22003 overflow surfaced as a 500.
      * @param LedgerEntryType|value-of<LedgerEntryType> $entryType Body param: Entry type: credit or debit
      * @param \DateTimeInterface|null $expiresAt Body param: Expiration for credited amount (only for credit type)
      * @param string|null $idempotencyKey Body param: Idempotency key to prevent duplicate entries

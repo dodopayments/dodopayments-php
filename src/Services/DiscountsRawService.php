@@ -11,6 +11,8 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Discounts\Discount;
 use Dodopayments\Discounts\DiscountCreateParams;
+use Dodopayments\Discounts\DiscountCreateParams\CurrencyOption;
+use Dodopayments\Discounts\DiscountCreateParams\CustomerEligibility;
 use Dodopayments\Discounts\DiscountListParams;
 use Dodopayments\Discounts\DiscountType;
 use Dodopayments\Discounts\DiscountUpdateParams;
@@ -18,6 +20,8 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\DiscountsRawContract;
 
 /**
+ * @phpstan-import-type CurrencyOptionShape from \Dodopayments\Discounts\DiscountCreateParams\CurrencyOption
+ * @phpstan-import-type CurrencyOptionShape from \Dodopayments\Discounts\DiscountUpdateParams\CurrencyOption as CurrencyOptionShape1
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
  */
@@ -39,11 +43,15 @@ final class DiscountsRawService implements DiscountsRawContract
      *   amount: int,
      *   type: DiscountType|value-of<DiscountType>,
      *   code?: string|null,
+     *   currencyOptions?: list<CurrencyOption|CurrencyOptionShape>|null,
+     *   customerEligibility?: CustomerEligibility|value-of<CustomerEligibility>|null,
      *   expiresAt?: \DateTimeInterface|null,
      *   metadata?: array<string,MetadataItemShape>,
      *   name?: string|null,
+     *   perCustomerUsageLimit?: int|null,
      *   preserveOnPlanChange?: bool,
      *   restrictedTo?: list<string>|null,
+     *   startsAt?: \DateTimeInterface|null,
      *   subscriptionCycles?: int|null,
      *   usageLimit?: int|null,
      * }|DiscountCreateParams $params
@@ -106,11 +114,15 @@ final class DiscountsRawService implements DiscountsRawContract
      * @param array{
      *   amount?: int|null,
      *   code?: string|null,
+     *   currencyOptions?: list<DiscountUpdateParams\CurrencyOption|CurrencyOptionShape1>|null,
+     *   customerEligibility?: DiscountUpdateParams\CustomerEligibility|value-of<DiscountUpdateParams\CustomerEligibility>|null,
      *   expiresAt?: \DateTimeInterface|null,
      *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
+     *   perCustomerUsageLimit?: int|null,
      *   preserveOnPlanChange?: bool|null,
      *   restrictedTo?: list<string>|null,
+     *   startsAt?: \DateTimeInterface|null,
      *   subscriptionCycles?: int|null,
      *   type?: DiscountType|value-of<DiscountType>|null,
      *   usageLimit?: int|null,

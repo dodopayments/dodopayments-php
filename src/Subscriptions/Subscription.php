@@ -68,6 +68,7 @@ use Dodopayments\Payments\CustomFieldResponse;
  *   paymentMethodID?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
+ *   trialAmount?: int|null,
  * }
  */
 final class Subscription implements BaseModel
@@ -338,6 +339,13 @@ final class Subscription implements BaseModel
     public ?string $taxID;
 
     /**
+     * Per-unit trial amount after discounts, snapshotted at subscription creation
+     * (price currency minor units, pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    #[Optional('trial_amount', nullable: true)]
+    public ?int $trialAmount;
+
+    /**
      * `new Subscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -466,6 +474,7 @@ final class Subscription implements BaseModel
         ?string $paymentMethodID = null,
         ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
+        ?int $trialAmount = null,
     ): self {
         $self = new self;
 
@@ -507,6 +516,7 @@ final class Subscription implements BaseModel
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
+        null !== $trialAmount && $self['trialAmount'] = $trialAmount;
 
         return $self;
     }
@@ -958,6 +968,18 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['taxID'] = $taxID;
+
+        return $self;
+    }
+
+    /**
+     * Per-unit trial amount after discounts, snapshotted at subscription creation
+     * (price currency minor units, pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    public function withTrialAmount(?int $trialAmount): self
+    {
+        $self = clone $this;
+        $self['trialAmount'] = $trialAmount;
 
         return $self;
     }
