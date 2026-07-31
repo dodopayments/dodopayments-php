@@ -17,7 +17,6 @@ use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
 use Dodopayments\Payments\CustomFieldResponse;
 use Dodopayments\Payments\IntentStatus;
-use Dodopayments\Payments\Payment\FailureDetails;
 use Dodopayments\Payments\Payment\PaymentProvider;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\PaymentRefundStatus;
@@ -32,7 +31,6 @@ use Dodopayments\Payments\RefundListItem;
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
- * @phpstan-import-type FailureDetailsShape from \Dodopayments\Payments\Payment\FailureDetails
  * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
  *
  * @phpstan-type PaymentShape = array{
@@ -64,7 +62,6 @@ use Dodopayments\Payments\RefundListItem;
  *   discounts?: list<DiscountDetail|DiscountDetailShape>|null,
  *   errorCode?: string|null,
  *   errorMessage?: string|null,
- *   failureDetails?: null|FailureDetails|FailureDetailsShape,
  *   invoiceID?: string|null,
  *   invoiceURL?: string|null,
  *   paymentLink?: string|null,
@@ -271,20 +268,12 @@ final class Payment implements BaseModel
     public ?string $errorCode;
 
     /**
-     * An error message if the payment failed.
+     * An error message if the payment failed. When `error_code` is a recognised
+     * unified code, this is the merchant-facing headline + recommended action
+     * (Payment Details copy) rather than the raw connector text.
      */
     #[Optional('error_message', nullable: true)]
     public ?string $errorMessage;
-
-    /**
-     * Purpose-built failure messaging for the merchant and the customer, derived
-     * from `error_code`. Present whenever `error_code` is set, regardless of payment
-     * status; unrecognised codes still resolve via a generic fallback rather than
-     * being omitted. The customer copy is always generic for fraud-sensitive
-     * declines (lost/stolen/pickup/fraudulent) so the true reason is never leaked.
-     */
-    #[Optional('failure_details', nullable: true)]
-    public ?FailureDetails $failureDetails;
 
     /**
      * Invoice ID for this payment. Uses India-specific invoice ID if available.
@@ -435,7 +424,6 @@ final class Payment implements BaseModel
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
-     * @param FailureDetails|FailureDetailsShape|null $failureDetails
      * @param list<ProductCart|ProductCartShape>|null $productCart
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
@@ -469,7 +457,6 @@ final class Payment implements BaseModel
         ?array $discounts = null,
         ?string $errorCode = null,
         ?string $errorMessage = null,
-        FailureDetails|array|null $failureDetails = null,
         ?string $invoiceID = null,
         ?string $invoiceURL = null,
         ?string $paymentLink = null,
@@ -515,7 +502,6 @@ final class Payment implements BaseModel
         null !== $discounts && $self['discounts'] = $discounts;
         null !== $errorCode && $self['errorCode'] = $errorCode;
         null !== $errorMessage && $self['errorMessage'] = $errorMessage;
-        null !== $failureDetails && $self['failureDetails'] = $failureDetails;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
@@ -857,30 +843,14 @@ final class Payment implements BaseModel
     }
 
     /**
-     * An error message if the payment failed.
+     * An error message if the payment failed. When `error_code` is a recognised
+     * unified code, this is the merchant-facing headline + recommended action
+     * (Payment Details copy) rather than the raw connector text.
      */
     public function withErrorMessage(?string $errorMessage): self
     {
         $self = clone $this;
         $self['errorMessage'] = $errorMessage;
-
-        return $self;
-    }
-
-    /**
-     * Purpose-built failure messaging for the merchant and the customer, derived
-     * from `error_code`. Present whenever `error_code` is set, regardless of payment
-     * status; unrecognised codes still resolve via a generic fallback rather than
-     * being omitted. The customer copy is always generic for fraud-sensitive
-     * declines (lost/stolen/pickup/fraudulent) so the true reason is never leaked.
-     *
-     * @param FailureDetails|FailureDetailsShape|null $failureDetails
-     */
-    public function withFailureDetails(
-        FailureDetails|array|null $failureDetails
-    ): self {
-        $self = clone $this;
-        $self['failureDetails'] = $failureDetails;
 
         return $self;
     }
