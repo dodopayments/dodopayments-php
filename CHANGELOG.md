@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.19.0](https://github.com/dodopayments/dodopayments-php/compare/v6.18.0...v6.19.0) (2026-07-31)
+
+
+### Features
+
+* **api:** add payout webhook events and remove payment failure_details ([bc81e4b](https://github.com/dodopayments/dodopayments-php/commit/bc81e4b23bee41ab65a44deb45c4af8e37878cdf))
+* **api:** add payout webhook events and remove payment failure_details ([4cf55f6](https://github.com/dodopayments/dodopayments-php/commit/4cf55f671943f6df752095da855a5b38f439ba84))
+
 ## [6.18.0](https://github.com/dodopayments/dodopayments-php/compare/v6.17.1...v6.18.0) (2026-07-24)
 
 
