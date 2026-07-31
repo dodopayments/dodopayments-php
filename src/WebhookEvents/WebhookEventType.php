@@ -57,7 +57,7 @@ enum WebhookEventType: string
 
     case LICENSE_KEY_CREATED = 'license_key.created';
 
-    case PAYOUT_NOT_INITIATED = 'payout.not_initiated';
+    case PAYOUT_CREATED = 'payout.created';
 
     case PAYOUT_ON_HOLD = 'payout.on_hold';
 
