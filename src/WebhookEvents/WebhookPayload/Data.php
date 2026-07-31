@@ -15,6 +15,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\Payout;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Refund;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
 
@@ -26,14 +27,15 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  * @phpstan-import-type RefundShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Refund
  * @phpstan-import-type DisputeShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute
  * @phpstan-import-type LicenseKeyShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey
+ * @phpstan-import-type PayoutShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Payout
  * @phpstan-import-type CreditLedgerEntryShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry
  * @phpstan-import-type CreditBalanceLowShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\CreditBalanceLow
  * @phpstan-import-type AbandonedCheckoutShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout
  * @phpstan-import-type DunningAttemptShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt
  * @phpstan-import-type EntitlementGrantShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant
  *
- * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant
- * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|CreditLedgerEntryShape|CreditBalanceLowShape|AbandonedCheckoutShape|DunningAttemptShape|EntitlementGrantShape
+ * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|Payout|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant
+ * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|PayoutShape|CreditLedgerEntryShape|CreditBalanceLowShape|AbandonedCheckoutShape|DunningAttemptShape|EntitlementGrantShape
  */
 final class Data implements ConverterSource
 {
@@ -55,6 +57,7 @@ final class Data implements ConverterSource
             'Refund' => Refund::class,
             'Dispute' => Dispute::class,
             'LicenseKey' => LicenseKey::class,
+            'Payout' => Payout::class,
             'CreditLedgerEntry' => CreditLedgerEntry::class,
             'CreditBalanceLow' => CreditBalanceLow::class,
             'AbandonedCheckout' => AbandonedCheckout::class,

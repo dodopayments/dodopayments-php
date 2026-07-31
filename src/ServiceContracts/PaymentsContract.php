@@ -118,7 +118,8 @@ interface PaymentsContract
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param \Dodopayments\Payments\PaymentListParams\Currency|value-of<\Dodopayments\Payments\PaymentListParams\Currency> $currency Filter by currency
      * @param string $customerID Filter by customer id
-     * @param int $pageNumber Page number default is 0
+     * @param int $pageNumber Page number default is 0. Capped to bound OFFSET-based deep pagination,
+     * which forces Postgres to scan and discard every preceding row.
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product id
      * @param Status|value-of<Status> $status Filter by status
