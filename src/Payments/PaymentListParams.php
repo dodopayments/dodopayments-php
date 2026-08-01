@@ -66,7 +66,8 @@ final class PaymentListParams implements BaseModel
     public ?string $customerID;
 
     /**
-     * Page number default is 0.
+     * Page number default is 0. Capped to bound OFFSET-based deep pagination,
+     * which forces Postgres to scan and discard every preceding row.
      */
     #[Optional]
     public ?int $pageNumber;
@@ -196,7 +197,8 @@ final class PaymentListParams implements BaseModel
     }
 
     /**
-     * Page number default is 0.
+     * Page number default is 0. Capped to bound OFFSET-based deep pagination,
+     * which forces Postgres to scan and discard every preceding row.
      */
     public function withPageNumber(int $pageNumber): self
     {
