@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.20.0](https://github.com/dodopayments/dodopayments-php/compare/v6.19.0...v6.20.0) (2026-08-05)
+
+
+### Features
+
+* **api:** add addon single_quantity_price and live_tutoring tax category ([c5934a3](https://github.com/dodopayments/dodopayments-php/commit/c5934a337f8142b8d5bf0089a3a9d699e9276cd3))
+* **api:** add addon single_quantity_price and live_tutoring tax category ([4f53ab8](https://github.com/dodopayments/dodopayments-php/commit/4f53ab8611c41cc4399dc9c7ae2f8c9e719a1b37))
+
 ## [6.19.0](https://github.com/dodopayments/dodopayments-php/compare/v6.18.0...v6.19.0) (2026-07-31)
 
 
