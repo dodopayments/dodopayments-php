@@ -20,6 +20,7 @@ use Dodopayments\Misc\TaxCategory;
  *   ogCurrency: Currency|value-of<Currency>,
  *   ogPrice: int,
  *   quantity: int,
+ *   singleQuantityPrice: int,
  *   taxCategory: TaxCategory|value-of<TaxCategory>,
  *   taxInclusive: bool,
  *   taxRate: int,
@@ -55,6 +56,15 @@ final class Addon implements BaseModel
 
     #[Required]
     public int $quantity;
+
+    /**
+     * Per-unit price in `currency`, converted and adaptive-priced but pre-tax
+     * and pre-discount (both depend on quantity and the rest of the cart).
+     * Set even when `quantity` is 0, so the checkout page can price the addon
+     * before the buyer has selected any.
+     */
+    #[Required('single_quantity_price')]
+    public int $singleQuantityPrice;
 
     /**
      * Represents the different categories of taxation applicable to various products and services.
@@ -96,6 +106,7 @@ final class Addon implements BaseModel
      *   ogCurrency: ...,
      *   ogPrice: ...,
      *   quantity: ...,
+     *   singleQuantityPrice: ...,
      *   taxCategory: ...,
      *   taxInclusive: ...,
      *   taxRate: ...,
@@ -113,6 +124,7 @@ final class Addon implements BaseModel
      *   ->withOgCurrency(...)
      *   ->withOgPrice(...)
      *   ->withQuantity(...)
+     *   ->withSingleQuantityPrice(...)
      *   ->withTaxCategory(...)
      *   ->withTaxInclusive(...)
      *   ->withTaxRate(...)
@@ -140,6 +152,7 @@ final class Addon implements BaseModel
         Currency|string $ogCurrency,
         int $ogPrice,
         int $quantity,
+        int $singleQuantityPrice,
         TaxCategory|string $taxCategory,
         bool $taxInclusive,
         int $taxRate,
@@ -156,6 +169,7 @@ final class Addon implements BaseModel
         $self['ogCurrency'] = $ogCurrency;
         $self['ogPrice'] = $ogPrice;
         $self['quantity'] = $quantity;
+        $self['singleQuantityPrice'] = $singleQuantityPrice;
         $self['taxCategory'] = $taxCategory;
         $self['taxInclusive'] = $taxInclusive;
         $self['taxRate'] = $taxRate;
@@ -225,6 +239,20 @@ final class Addon implements BaseModel
     {
         $self = clone $this;
         $self['quantity'] = $quantity;
+
+        return $self;
+    }
+
+    /**
+     * Per-unit price in `currency`, converted and adaptive-priced but pre-tax
+     * and pre-discount (both depend on quantity and the rest of the cart).
+     * Set even when `quantity` is 0, so the checkout page can price the addon
+     * before the buyer has selected any.
+     */
+    public function withSingleQuantityPrice(int $singleQuantityPrice): self
+    {
+        $self = clone $this;
+        $self['singleQuantityPrice'] = $singleQuantityPrice;
 
         return $self;
     }
