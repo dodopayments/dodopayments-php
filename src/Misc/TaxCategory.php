@@ -16,4 +16,6 @@ enum TaxCategory: string
     case E_BOOK = 'e_book';
 
     case EDTECH = 'edtech';
+
+    case LIVE_TUTORING = 'live_tutoring';
 }
