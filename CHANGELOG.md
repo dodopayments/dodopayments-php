@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.21.0](https://github.com/dodopayments/dodopayments-php/compare/v6.20.0...v6.21.0) (2026-08-13)
+
+
+### Features
+
+* **api:** add subscription pause/unpause ([75cb4e7](https://github.com/dodopayments/dodopayments-php/commit/75cb4e7914e488d9d3ce7d332aab7a616178d51d))
+* **api:** add subscription pause/unpause ([3f6633a](https://github.com/dodopayments/dodopayments-php/commit/3f6633aa89a46e03c4d784b3481189d4a985df13))
+
 ## [6.20.0](https://github.com/dodopayments/dodopayments-php/compare/v6.19.0...v6.20.0) (2026-08-05)
 
 
