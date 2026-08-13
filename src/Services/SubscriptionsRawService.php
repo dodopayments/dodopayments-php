@@ -161,6 +161,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   disableOnDemand?: DisableOnDemand|DisableOnDemandShape|null,
      *   metadata?: array<string,MetadataItemShape>|null,
      *   nextBillingDate?: \DateTimeInterface|null,
+     *   pause?: bool|null,
      *   status?: SubscriptionStatus|value-of<SubscriptionStatus>|null,
      *   subscriptionPeriodCount?: int|null,
      *   subscriptionPeriodInterval?: TimeInterval|value-of<TimeInterval>|null,
