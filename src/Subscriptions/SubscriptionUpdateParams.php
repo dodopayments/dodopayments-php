@@ -35,6 +35,7 @@ use Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand;
  *   disableOnDemand?: null|DisableOnDemand|DisableOnDemandShape,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   nextBillingDate?: \DateTimeInterface|null,
+ *   pause?: bool|null,
  *   status?: null|SubscriptionStatus|value-of<SubscriptionStatus>,
  *   subscriptionPeriodCount?: int|null,
  *   subscriptionPeriodInterval?: null|TimeInterval|value-of<TimeInterval>,
@@ -116,6 +117,13 @@ final class SubscriptionUpdateParams implements BaseModel
     #[Optional('next_billing_date', nullable: true)]
     public ?\DateTimeInterface $nextBillingDate;
 
+    /**
+     * `Some(true)` pauses an active subscription; `Some(false)` unpauses a
+     * `Paused` (or abandoned `OnHold`) subscription. Exclusive of every other field.
+     */
+    #[Optional(nullable: true)]
+    public ?bool $pause;
+
     /** @var value-of<SubscriptionStatus>|null $status */
     #[Optional(enum: SubscriptionStatus::class, nullable: true)]
     public ?string $status;
@@ -177,6 +185,7 @@ final class SubscriptionUpdateParams implements BaseModel
         DisableOnDemand|array|null $disableOnDemand = null,
         ?array $metadata = null,
         ?\DateTimeInterface $nextBillingDate = null,
+        ?bool $pause = null,
         SubscriptionStatus|string|null $status = null,
         ?int $subscriptionPeriodCount = null,
         TimeInterval|string|null $subscriptionPeriodInterval = null,
@@ -195,6 +204,7 @@ final class SubscriptionUpdateParams implements BaseModel
         null !== $disableOnDemand && $self['disableOnDemand'] = $disableOnDemand;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $nextBillingDate && $self['nextBillingDate'] = $nextBillingDate;
+        null !== $pause && $self['pause'] = $pause;
         null !== $status && $self['status'] = $status;
         null !== $subscriptionPeriodCount && $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         null !== $subscriptionPeriodInterval && $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
@@ -330,6 +340,18 @@ final class SubscriptionUpdateParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['nextBillingDate'] = $nextBillingDate;
+
+        return $self;
+    }
+
+    /**
+     * `Some(true)` pauses an active subscription; `Some(false)` unpauses a
+     * `Paused` (or abandoned `OnHold`) subscription. Exclusive of every other field.
+     */
+    public function withPause(?bool $pause): self
+    {
+        $self = clone $this;
+        $self['pause'] = $pause;
 
         return $self;
     }

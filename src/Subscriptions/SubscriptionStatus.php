@@ -12,6 +12,8 @@ enum SubscriptionStatus: string
 
     case ON_HOLD = 'on_hold';
 
+    case PAUSED = 'paused';
+
     case CANCELLED = 'cancelled';
 
     case FAILED = 'failed';

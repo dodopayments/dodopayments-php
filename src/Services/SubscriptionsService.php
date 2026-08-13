@@ -221,6 +221,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * explicitly clear the business name.
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,MetadataItemShape>|null $metadata Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     * @param bool|null $pause `Some(true)` pauses an active subscription; `Some(false)` unpauses a
+     * `Paused` (or abandoned `OnHold`) subscription. Exclusive of every other field.
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      * @param int|null $subscriptionPeriodCount New number of `subscription_period_interval` units the subscription
      * entitlement should span. Used together with `subscription_period_interval`
@@ -246,6 +248,7 @@ final class SubscriptionsService implements SubscriptionsContract
         DisableOnDemand|array|null $disableOnDemand = null,
         ?array $metadata = null,
         ?\DateTimeInterface $nextBillingDate = null,
+        ?bool $pause = null,
         SubscriptionStatus|string|null $status = null,
         ?int $subscriptionPeriodCount = null,
         TimeInterval|string|null $subscriptionPeriodInterval = null,
@@ -265,6 +268,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'disableOnDemand' => $disableOnDemand,
                 'metadata' => $metadata,
                 'nextBillingDate' => $nextBillingDate,
+                'pause' => $pause,
                 'status' => $status,
                 'subscriptionPeriodCount' => $subscriptionPeriodCount,
                 'subscriptionPeriodInterval' => $subscriptionPeriodInterval,

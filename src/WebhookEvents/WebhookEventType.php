@@ -43,6 +43,8 @@ enum WebhookEventType: string
 
     case SUBSCRIPTION_PAUSED = 'subscription.paused';
 
+    case SUBSCRIPTION_UNPAUSED = 'subscription.unpaused';
+
     case SUBSCRIPTION_CANCELLED = 'subscription.cancelled';
 
     case SUBSCRIPTION_FAILED = 'subscription.failed';
