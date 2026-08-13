@@ -65,6 +65,7 @@ use Dodopayments\Payments\CustomFieldResponse;
  *   discountID?: string|null,
  *   discounts?: list<DiscountDetail|DiscountDetailShape>|null,
  *   expiresAt?: \DateTimeInterface|null,
+ *   pausedAt?: \DateTimeInterface|null,
  *   paymentMethodID?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
@@ -321,6 +322,13 @@ final class Subscription implements BaseModel
     public ?\DateTimeInterface $expiresAt;
 
     /**
+     * Timestamp when the subscription was paused, if it currently is (or is
+     * `OnHold` due to an unresolved pause settlement). `null` otherwise.
+     */
+    #[Optional('paused_at', nullable: true)]
+    public ?\DateTimeInterface $pausedAt;
+
+    /**
      * Saved payment method id used for recurring charges.
      */
     #[Optional('payment_method_id', nullable: true)]
@@ -471,6 +479,7 @@ final class Subscription implements BaseModel
         ?string $discountID = null,
         ?array $discounts = null,
         ?\DateTimeInterface $expiresAt = null,
+        ?\DateTimeInterface $pausedAt = null,
         ?string $paymentMethodID = null,
         ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
@@ -513,6 +522,7 @@ final class Subscription implements BaseModel
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $discounts && $self['discounts'] = $discounts;
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
+        null !== $pausedAt && $self['pausedAt'] = $pausedAt;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
@@ -932,6 +942,18 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['expiresAt'] = $expiresAt;
+
+        return $self;
+    }
+
+    /**
+     * Timestamp when the subscription was paused, if it currently is (or is
+     * `OnHold` due to an unresolved pause settlement). `null` otherwise.
+     */
+    public function withPausedAt(?\DateTimeInterface $pausedAt): self
+    {
+        $self = clone $this;
+        $self['pausedAt'] = $pausedAt;
 
         return $self;
     }
