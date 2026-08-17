@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Dodopayments\Services;
 
 use Dodopayments\Brands\Brand;
+use Dodopayments\Brands\BrandArchiveParams;
+use Dodopayments\Brands\BrandArchiveResponse;
 use Dodopayments\Brands\BrandCreateParams;
+use Dodopayments\Brands\BrandListParams;
 use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Brands\BrandUpdateParams;
 use Dodopayments\Client;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\BrandsRawContract;
 
@@ -127,6 +131,7 @@ final class BrandsRawService implements BrandsRawContract
     /**
      * @api
      *
+     * @param array{includeArchived?: bool}|BrandListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BrandListResponse>
@@ -134,14 +139,58 @@ final class BrandsRawService implements BrandsRawContract
      * @throws APIException
      */
     public function list(
-        RequestOptions|array|null $requestOptions = null
+        array|BrandListParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = BrandListParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: 'brands',
-            options: $requestOptions,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['includeArchived' => 'include_archived']
+            ),
+            options: $options,
             convert: BrandListResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Archive a brand. Its products, live subscriptions, and product collections
+     * move to the `move_products_to` brand. Archive is permanent.
+     *
+     * @param string $id Brand Id
+     * @param array{moveProductsTo?: string|null}|BrandArchiveParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BrandArchiveResponse>
+     *
+     * @throws APIException
+     */
+    public function archive(
+        string $id,
+        array|BrandArchiveParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = BrandArchiveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['brands/%1$s/archive', $id],
+            body: (object) $parsed,
+            options: $options,
+            convert: BrandArchiveResponse::class,
         );
     }
 

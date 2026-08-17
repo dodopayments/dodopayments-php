@@ -27,6 +27,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   alwaysCreateNewCustomer?: bool|null,
  *   redirectImmediately?: bool|null,
  *   requirePhoneNumber?: bool|null,
+ *   singlePage?: bool|null,
  * }
  */
 final class CheckoutSessionFlags implements BaseModel
@@ -137,6 +138,16 @@ final class CheckoutSessionFlags implements BaseModel
     #[Optional('require_phone_number')]
     public ?bool $requirePhoneNumber;
 
+    /**
+     * If true, the session uses the single-page checkout flow: the page
+     * initializes the payment at load time and confirms it in
+     * place, with no separate payment page.
+     *
+     * Default is false
+     */
+    #[Optional('single_page')]
+    public ?bool $singlePage;
+
     public function __construct()
     {
         $this->initialize();
@@ -165,6 +176,7 @@ final class CheckoutSessionFlags implements BaseModel
         ?bool $alwaysCreateNewCustomer = null,
         ?bool $redirectImmediately = null,
         ?bool $requirePhoneNumber = null,
+        ?bool $singlePage = null,
     ): self {
         $self = new self;
 
@@ -185,6 +197,7 @@ final class CheckoutSessionFlags implements BaseModel
         null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
         null !== $requirePhoneNumber && $self['requirePhoneNumber'] = $requirePhoneNumber;
+        null !== $singlePage && $self['singlePage'] = $singlePage;
 
         return $self;
     }
@@ -385,6 +398,21 @@ final class CheckoutSessionFlags implements BaseModel
     {
         $self = clone $this;
         $self['requirePhoneNumber'] = $requirePhoneNumber;
+
+        return $self;
+    }
+
+    /**
+     * If true, the session uses the single-page checkout flow: the page
+     * initializes the payment at load time and confirms it in
+     * place, with no separate payment page.
+     *
+     * Default is false
+     */
+    public function withSinglePage(bool $singlePage): self
+    {
+        $self = clone $this;
+        $self['singlePage'] = $singlePage;
 
         return $self;
     }

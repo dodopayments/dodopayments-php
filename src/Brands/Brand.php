@@ -18,6 +18,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   statementDescriptor: string,
  *   verificationEnabled: bool,
  *   verificationStatus: VerificationStatus|value-of<VerificationStatus>,
+ *   archivedAt?: \DateTimeInterface|null,
  *   description?: string|null,
  *   image?: string|null,
  *   name?: string|null,
@@ -49,6 +50,12 @@ final class Brand implements BaseModel
     /** @var value-of<VerificationStatus> $verificationStatus */
     #[Required('verification_status', enum: VerificationStatus::class)]
     public string $verificationStatus;
+
+    /**
+     * Time the brand was archived. Null for an active brand.
+     */
+    #[Optional('archived_at', nullable: true)]
+    public ?\DateTimeInterface $archivedAt;
 
     #[Optional(nullable: true)]
     public ?string $description;
@@ -117,6 +124,7 @@ final class Brand implements BaseModel
         string $statementDescriptor,
         bool $verificationEnabled,
         VerificationStatus|string $verificationStatus,
+        ?\DateTimeInterface $archivedAt = null,
         ?string $description = null,
         ?string $image = null,
         ?string $name = null,
@@ -133,6 +141,7 @@ final class Brand implements BaseModel
         $self['verificationEnabled'] = $verificationEnabled;
         $self['verificationStatus'] = $verificationStatus;
 
+        null !== $archivedAt && $self['archivedAt'] = $archivedAt;
         null !== $description && $self['description'] = $description;
         null !== $image && $self['image'] = $image;
         null !== $name && $self['name'] = $name;
@@ -191,6 +200,17 @@ final class Brand implements BaseModel
     ): self {
         $self = clone $this;
         $self['verificationStatus'] = $verificationStatus;
+
+        return $self;
+    }
+
+    /**
+     * Time the brand was archived. Null for an active brand.
+     */
+    public function withArchivedAt(?\DateTimeInterface $archivedAt): self
+    {
+        $self = clone $this;
+        $self['archivedAt'] = $archivedAt;
 
         return $self;
     }

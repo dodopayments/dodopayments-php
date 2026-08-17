@@ -3,6 +3,7 @@
 namespace Tests\Services;
 
 use Dodopayments\Brands\Brand;
+use Dodopayments\Brands\BrandArchiveResponse;
 use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Client;
@@ -63,6 +64,15 @@ final class BrandsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(BrandListResponse::class, $result);
+    }
+
+    #[Test]
+    public function testArchive(): void
+    {
+        $result = $this->client->brands->archive('brnd_8dFiAW42v28JzhlVSocjq');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(BrandArchiveResponse::class, $result);
     }
 
     #[Test]
