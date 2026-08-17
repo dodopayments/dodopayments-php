@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.22.0](https://github.com/dodopayments/dodopayments-php/compare/v6.21.0...v6.22.0) (2026-08-17)
+
+
+### Features
+
+* **api:** add brand archive endpoint ([c589163](https://github.com/dodopayments/dodopayments-php/commit/c5891638e08c93854b193d7e8d9981331de9613f))
+* **api:** add brand archive endpoint ([30c1be3](https://github.com/dodopayments/dodopayments-php/commit/30c1be36aa138176447b797640946420c21ae6ac))
+
 ## [6.21.0](https://github.com/dodopayments/dodopayments-php/compare/v6.20.0...v6.21.0) (2026-08-13)
 
 
