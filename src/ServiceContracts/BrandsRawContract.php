@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Brands\Brand;
+use Dodopayments\Brands\BrandArchiveParams;
+use Dodopayments\Brands\BrandArchiveResponse;
 use Dodopayments\Brands\BrandCreateParams;
+use Dodopayments\Brands\BrandListParams;
 use Dodopayments\Brands\BrandListResponse;
 use Dodopayments\Brands\BrandUpdateImagesResponse;
 use Dodopayments\Brands\BrandUpdateParams;
@@ -68,6 +71,7 @@ interface BrandsRawContract
     /**
      * @api
      *
+     * @param array<string,mixed>|BrandListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BrandListResponse>
@@ -75,7 +79,25 @@ interface BrandsRawContract
      * @throws APIException
      */
     public function list(
-        RequestOptions|array|null $requestOptions = null
+        array|BrandListParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $id Brand Id
+     * @param array<string,mixed>|BrandArchiveParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<BrandArchiveResponse>
+     *
+     * @throws APIException
+     */
+    public function archive(
+        string $id,
+        array|BrandArchiveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
