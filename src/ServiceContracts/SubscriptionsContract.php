@@ -20,6 +20,7 @@ use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
+use Dodopayments\Subscriptions\SubscriptionChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
@@ -166,9 +167,21 @@ interface SubscriptionsContract
      * explicitly clear the business name.
      * @param DisableOnDemand|DisableOnDemandShape|null $disableOnDemand
      * @param array<string,MetadataItemShape>|null $metadata Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
-     * @param bool|null $pause `Some(true)` pauses an active subscription; `Some(false)` unpauses a
-     * `Paused` (or abandoned `OnHold`) subscription. Exclusive of every other field.
-     * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
+     * @param bool|null $pause Removed. Use `status: paused` to pause and `status: active` to resume.
+     * This field always fails with 422, so a caller still on it gets a loud
+     * error instead of a silent no-op.
+     * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status Set to `cancelled` to cancel the subscription. See `cancel_reason`,
+     * `cancellation_feedback`, `cancellation_comment`, and
+     * `cancel_at_next_billing_date` for cancellation options.
+     *
+     * Set to `paused` to pause an active subscription.
+     * Set to `active` to resume a `paused` subscription.
+     * `active` also resumes an `on_hold` subscription that has an unpaid pause invoice.
+     * This voids that invoice.
+     *
+     * Send `paused` or `active` alone. A request that combines either with any
+     * other field fails with 422. `cancelled` is not exclusive this way — see
+     * `cancel_reason` and friends below.
      * @param int|null $subscriptionPeriodCount New number of `subscription_period_interval` units the subscription
      * entitlement should span. Used together with `subscription_period_interval`
      * to extend the subscription period. The resulting period must not be
@@ -256,6 +269,26 @@ interface SubscriptionsContract
      * If not specified, uses the subscription's stored setting.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param bool $cancelScheduledChangePlan Replace a scheduled plan change with this one.
+     *
+     * The scheduled change is cancelled by the transaction that applies this
+     * change. A change that never applies leaves the schedule in place.
+     *
+     * `effective_at: next_billing_date` is allowed. The new schedule then
+     * replaces the old one in the request transaction.
+     *
+     * A pending plan change still gets a `409`. This field does not affect it.
+     *
+     * The preview route shares this request body, so a preview that sets this
+     * field also passes the scheduled-change `409`.
+     * @param bool $collectViaPaymentLink Collect the plan-change amount with a payment link. The customer then
+     * pays on a checkout page.
+     *
+     * The business needs the `allow_plan_change_via_payment_link` capability.
+     * The request needs `effective_at: immediately`. The request also needs
+     * `on_payment_failure: prevent_change`.
+     *
+     * The preview route shares this request body and ignores this field.
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply to the new plan. Max 20.
      * Cannot be used together with discount_code.
@@ -282,13 +315,15 @@ interface SubscriptionsContract
         int $quantity,
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
+        ?bool $cancelScheduledChangePlan = null,
+        ?bool $collectViaPaymentLink = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         EffectiveAt|string|null $effectiveAt = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
         RequestOptions|array|null $requestOptions = null,
-    ): mixed;
+    ): SubscriptionChangePlanResponse;
 
     /**
      * @api
@@ -329,6 +364,26 @@ interface SubscriptionsContract
      * If not specified, uses the subscription's stored setting.
      * @param list<AttachAddon|AttachAddonShape>|null $addons Addons for the new plan.
      * Note : Leaving this empty would remove any existing addons
+     * @param bool $cancelScheduledChangePlan Replace a scheduled plan change with this one.
+     *
+     * The scheduled change is cancelled by the transaction that applies this
+     * change. A change that never applies leaves the schedule in place.
+     *
+     * `effective_at: next_billing_date` is allowed. The new schedule then
+     * replaces the old one in the request transaction.
+     *
+     * A pending plan change still gets a `409`. This field does not affect it.
+     *
+     * The preview route shares this request body, so a preview that sets this
+     * field also passes the scheduled-change `409`.
+     * @param bool $collectViaPaymentLink Collect the plan-change amount with a payment link. The customer then
+     * pays on a checkout page.
+     *
+     * The business needs the `allow_plan_change_via_payment_link` capability.
+     * The request needs `effective_at: immediately`. The request also needs
+     * `on_payment_failure: prevent_change`.
+     *
+     * The preview route shares this request body and ignores this field.
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply to the new plan. Max 20.
      * Cannot be used together with discount_code.
@@ -355,6 +410,8 @@ interface SubscriptionsContract
         int $quantity,
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
+        ?bool $cancelScheduledChangePlan = null,
+        ?bool $collectViaPaymentLink = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|string|null $effectiveAt = null,
