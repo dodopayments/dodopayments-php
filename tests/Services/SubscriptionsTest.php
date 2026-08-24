@@ -9,6 +9,7 @@ use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Subscriptions\Subscription;
+use Dodopayments\Subscriptions\SubscriptionChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionGetCreditUsageResponse;
 use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
@@ -156,7 +157,7 @@ final class SubscriptionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertNull($result);
+        $this->assertInstanceOf(SubscriptionChangePlanResponse::class, $result);
     }
 
     #[Test]
@@ -169,6 +170,8 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             adaptiveCurrencyFeesInclusive: true,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            cancelScheduledChangePlan: true,
+            collectViaPaymentLink: true,
             discountCode: 'discount_code',
             discountCodes: ['string'],
             effectiveAt: 'immediately',
@@ -177,7 +180,7 @@ final class SubscriptionsTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertNull($result);
+        $this->assertInstanceOf(SubscriptionChangePlanResponse::class, $result);
     }
 
     #[Test]
@@ -239,6 +242,8 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             adaptiveCurrencyFeesInclusive: true,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            cancelScheduledChangePlan: true,
+            collectViaPaymentLink: true,
             discountCode: 'discount_code',
             discountCodes: ['string'],
             effectiveAt: 'immediately',

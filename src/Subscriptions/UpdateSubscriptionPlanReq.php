@@ -24,6 +24,8 @@ use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\ProrationBillingMode;
  *   quantity: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
+ *   cancelScheduledChangePlan?: bool|null,
+ *   collectViaPaymentLink?: bool|null,
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
@@ -71,6 +73,36 @@ final class UpdateSubscriptionPlanReq implements BaseModel
      */
     #[Optional(list: AttachAddon::class, nullable: true)]
     public ?array $addons;
+
+    /**
+     * Replace a scheduled plan change with this one.
+     *
+     * The scheduled change is cancelled by the transaction that applies this
+     * change. A change that never applies leaves the schedule in place.
+     *
+     * `effective_at: next_billing_date` is allowed. The new schedule then
+     * replaces the old one in the request transaction.
+     *
+     * A pending plan change still gets a `409`. This field does not affect it.
+     *
+     * The preview route shares this request body, so a preview that sets this
+     * field also passes the scheduled-change `409`.
+     */
+    #[Optional('cancel_scheduled_change_plan')]
+    public ?bool $cancelScheduledChangePlan;
+
+    /**
+     * Collect the plan-change amount with a payment link. The customer then
+     * pays on a checkout page.
+     *
+     * The business needs the `allow_plan_change_via_payment_link` capability.
+     * The request needs `effective_at: immediately`. The request also needs
+     * `on_payment_failure: prevent_change`.
+     *
+     * The preview route shares this request body and ignores this field.
+     */
+    #[Optional('collect_via_payment_link')]
+    public ?bool $collectViaPaymentLink;
 
     /**
      * @deprecated Use `discount_id` instead.
@@ -168,6 +200,8 @@ final class UpdateSubscriptionPlanReq implements BaseModel
         int $quantity,
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
+        ?bool $cancelScheduledChangePlan = null,
+        ?bool $collectViaPaymentLink = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         EffectiveAt|string|null $effectiveAt = null,
@@ -182,6 +216,8 @@ final class UpdateSubscriptionPlanReq implements BaseModel
 
         null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
         null !== $addons && $self['addons'] = $addons;
+        null !== $cancelScheduledChangePlan && $self['cancelScheduledChangePlan'] = $cancelScheduledChangePlan;
+        null !== $collectViaPaymentLink && $self['collectViaPaymentLink'] = $collectViaPaymentLink;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $effectiveAt && $self['effectiveAt'] = $effectiveAt;
@@ -250,6 +286,47 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     {
         $self = clone $this;
         $self['addons'] = $addons;
+
+        return $self;
+    }
+
+    /**
+     * Replace a scheduled plan change with this one.
+     *
+     * The scheduled change is cancelled by the transaction that applies this
+     * change. A change that never applies leaves the schedule in place.
+     *
+     * `effective_at: next_billing_date` is allowed. The new schedule then
+     * replaces the old one in the request transaction.
+     *
+     * A pending plan change still gets a `409`. This field does not affect it.
+     *
+     * The preview route shares this request body, so a preview that sets this
+     * field also passes the scheduled-change `409`.
+     */
+    public function withCancelScheduledChangePlan(
+        bool $cancelScheduledChangePlan
+    ): self {
+        $self = clone $this;
+        $self['cancelScheduledChangePlan'] = $cancelScheduledChangePlan;
+
+        return $self;
+    }
+
+    /**
+     * Collect the plan-change amount with a payment link. The customer then
+     * pays on a checkout page.
+     *
+     * The business needs the `allow_plan_change_via_payment_link` capability.
+     * The request needs `effective_at: immediately`. The request also needs
+     * `on_payment_failure: prevent_change`.
+     *
+     * The preview route shares this request body and ignores this field.
+     */
+    public function withCollectViaPaymentLink(bool $collectViaPaymentLink): self
+    {
+        $self = clone $this;
+        $self['collectViaPaymentLink'] = $collectViaPaymentLink;
 
         return $self;
     }

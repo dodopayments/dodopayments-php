@@ -118,13 +118,29 @@ final class SubscriptionUpdateParams implements BaseModel
     public ?\DateTimeInterface $nextBillingDate;
 
     /**
-     * `Some(true)` pauses an active subscription; `Some(false)` unpauses a
-     * `Paused` (or abandoned `OnHold`) subscription. Exclusive of every other field.
+     * Removed. Use `status: paused` to pause and `status: active` to resume.
+     * This field always fails with 422, so a caller still on it gets a loud
+     * error instead of a silent no-op.
      */
     #[Optional(nullable: true)]
     public ?bool $pause;
 
-    /** @var value-of<SubscriptionStatus>|null $status */
+    /**
+     * Set to `cancelled` to cancel the subscription. See `cancel_reason`,
+     * `cancellation_feedback`, `cancellation_comment`, and
+     * `cancel_at_next_billing_date` for cancellation options.
+     *
+     * Set to `paused` to pause an active subscription.
+     * Set to `active` to resume a `paused` subscription.
+     * `active` also resumes an `on_hold` subscription that has an unpaid pause invoice.
+     * This voids that invoice.
+     *
+     * Send `paused` or `active` alone. A request that combines either with any
+     * other field fails with 422. `cancelled` is not exclusive this way — see
+     * `cancel_reason` and friends below.
+     *
+     * @var value-of<SubscriptionStatus>|null $status
+     */
     #[Optional(enum: SubscriptionStatus::class, nullable: true)]
     public ?string $status;
 
@@ -345,8 +361,9 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
-     * `Some(true)` pauses an active subscription; `Some(false)` unpauses a
-     * `Paused` (or abandoned `OnHold`) subscription. Exclusive of every other field.
+     * Removed. Use `status: paused` to pause and `status: active` to resume.
+     * This field always fails with 422, so a caller still on it gets a loud
+     * error instead of a silent no-op.
      */
     public function withPause(?bool $pause): self
     {
@@ -357,6 +374,19 @@ final class SubscriptionUpdateParams implements BaseModel
     }
 
     /**
+     * Set to `cancelled` to cancel the subscription. See `cancel_reason`,
+     * `cancellation_feedback`, `cancellation_comment`, and
+     * `cancel_at_next_billing_date` for cancellation options.
+     *
+     * Set to `paused` to pause an active subscription.
+     * Set to `active` to resume a `paused` subscription.
+     * `active` also resumes an `on_hold` subscription that has an unpaid pause invoice.
+     * This voids that invoice.
+     *
+     * Send `paused` or `active` alone. A request that combines either with any
+     * other field fails with 422. `cancelled` is not exclusive this way — see
+     * `cancel_reason` and friends below.
+     *
      * @param SubscriptionStatus|value-of<SubscriptionStatus>|null $status
      */
     public function withStatus(SubscriptionStatus|string|null $status): self
