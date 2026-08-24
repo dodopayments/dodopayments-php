@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.23.0](https://github.com/dodopayments/dodopayments-php/compare/v6.22.0...v6.23.0) (2026-08-24)
+
+
+### Features
+
+* **api:** return checkout handles from subscription change-plan ([cba86ef](https://github.com/dodopayments/dodopayments-php/commit/cba86ef1110f34d2a3cc7aa8534bfcf3522a16ee))
+* **api:** return checkout handles from subscription change-plan ([0e379c8](https://github.com/dodopayments/dodopayments-php/commit/0e379c8fb6609d9d5010ee2fd367b7363135049b))
+
 ## [6.22.0](https://github.com/dodopayments/dodopayments-php/compare/v6.21.0...v6.22.0) (2026-08-17)
 
 
