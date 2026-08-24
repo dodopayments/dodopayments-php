@@ -23,11 +23,11 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   fixedPrice: int,
  *   paymentFrequencyCount: int,
  *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
- *   purchasingPowerParity: bool,
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   type: 'usage_based_price',
  *   meters?: list<AddMeterToPrice|AddMeterToPriceShape>|null,
+ *   purchasingPowerParity?: bool|null,
  *   taxInclusive?: bool|null,
  * }
  */
@@ -77,13 +77,6 @@ final class UsageBasedPrice implements BaseModel
     public string $paymentFrequencyInterval;
 
     /**
-     * Indicates if purchasing power parity adjustments are applied to the price.
-     * Purchasing power parity feature is not available as of now.
-     */
-    #[Required('purchasing_power_parity')]
-    public bool $purchasingPowerParity;
-
-    /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
@@ -103,6 +96,15 @@ final class UsageBasedPrice implements BaseModel
     public ?array $meters;
 
     /**
+     * Opts this price in to purchasing power parity. The business must also
+     * enable purchasing power parity. The discount percentage per country is
+     * always business-wide. Applies to the fixed fee only, never to metered
+     * usage. Defaults to `false`.
+     */
+    #[Optional('purchasing_power_parity')]
+    public ?bool $purchasingPowerParity;
+
+    /**
      * Indicates if the price is tax inclusive.
      */
     #[Optional('tax_inclusive', nullable: true)]
@@ -119,7 +121,6 @@ final class UsageBasedPrice implements BaseModel
      *   fixedPrice: ...,
      *   paymentFrequencyCount: ...,
      *   paymentFrequencyInterval: ...,
-     *   purchasingPowerParity: ...,
      *   subscriptionPeriodCount: ...,
      *   subscriptionPeriodInterval: ...,
      * )
@@ -134,7 +135,6 @@ final class UsageBasedPrice implements BaseModel
      *   ->withFixedPrice(...)
      *   ->withPaymentFrequencyCount(...)
      *   ->withPaymentFrequencyInterval(...)
-     *   ->withPurchasingPowerParity(...)
      *   ->withSubscriptionPeriodCount(...)
      *   ->withSubscriptionPeriodInterval(...)
      * ```
@@ -160,10 +160,10 @@ final class UsageBasedPrice implements BaseModel
         int $fixedPrice,
         int $paymentFrequencyCount,
         TimeInterval|string $paymentFrequencyInterval,
-        bool $purchasingPowerParity,
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
         ?array $meters = null,
+        ?bool $purchasingPowerParity = null,
         ?bool $taxInclusive = null,
     ): self {
         $self = new self;
@@ -173,11 +173,11 @@ final class UsageBasedPrice implements BaseModel
         $self['fixedPrice'] = $fixedPrice;
         $self['paymentFrequencyCount'] = $paymentFrequencyCount;
         $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
-        $self['purchasingPowerParity'] = $purchasingPowerParity;
         $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
         null !== $meters && $self['meters'] = $meters;
+        null !== $purchasingPowerParity && $self['purchasingPowerParity'] = $purchasingPowerParity;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
         return $self;
@@ -246,18 +246,6 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * Indicates if purchasing power parity adjustments are applied to the price.
-     * Purchasing power parity feature is not available as of now.
-     */
-    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
-    {
-        $self = clone $this;
-        $self['purchasingPowerParity'] = $purchasingPowerParity;
-
-        return $self;
-    }
-
-    /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
@@ -302,6 +290,20 @@ final class UsageBasedPrice implements BaseModel
     {
         $self = clone $this;
         $self['meters'] = $meters;
+
+        return $self;
+    }
+
+    /**
+     * Opts this price in to purchasing power parity. The business must also
+     * enable purchasing power parity. The discount percentage per country is
+     * always business-wide. Applies to the fixed fee only, never to metered
+     * usage. Defaults to `false`.
+     */
+    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
+    {
+        $self = clone $this;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
         return $self;
     }

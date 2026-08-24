@@ -23,6 +23,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
+use Dodopayments\Subscriptions\SubscriptionChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
@@ -278,6 +279,8 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   quantity: int,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   cancelScheduledChangePlan?: bool,
+     *   collectViaPaymentLink?: bool,
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   effectiveAt?: EffectiveAt|value-of<EffectiveAt>,
@@ -286,7 +289,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * }|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<mixed>
+     * @return BaseResponse<SubscriptionChangePlanResponse>
      *
      * @throws APIException
      */
@@ -306,7 +309,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
             path: ['subscriptions/%1$s/change-plan', $subscriptionID],
             body: (object) $parsed,
             options: $options,
-            convert: null,
+            convert: SubscriptionChangePlanResponse::class,
         );
     }
 
@@ -358,6 +361,8 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   quantity: int,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   cancelScheduledChangePlan?: bool,
+     *   collectViaPaymentLink?: bool,
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   effectiveAt?: SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<SubscriptionPreviewChangePlanParams\EffectiveAt>,
