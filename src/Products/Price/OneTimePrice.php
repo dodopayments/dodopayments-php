@@ -17,9 +17,9 @@ use Dodopayments\Misc\Currency;
  *   currency: Currency|value-of<Currency>,
  *   discount: int,
  *   price: int,
- *   purchasingPowerParity: bool,
  *   type: 'one_time_price',
  *   payWhatYouWant?: bool|null,
+ *   purchasingPowerParity?: bool|null,
  *   suggestedPrice?: int|null,
  *   taxInclusive?: bool|null,
  * }
@@ -58,18 +58,19 @@ final class OneTimePrice implements BaseModel
     public int $price;
 
     /**
-     * Indicates if purchasing power parity adjustments are applied to the price.
-     * Purchasing power parity feature is not available as of now.
-     */
-    #[Required('purchasing_power_parity')]
-    public bool $purchasingPowerParity;
-
-    /**
      * Indicates whether the customer can pay any amount they choose.
      * If set to `true`, the [`price`](Self::price) field is the minimum amount.
      */
     #[Optional('pay_what_you_want')]
     public ?bool $payWhatYouWant;
+
+    /**
+     * Opts this price in to purchasing power parity. The business must also
+     * enable purchasing power parity. The discount percentage per country is
+     * always business-wide. Defaults to `false`.
+     */
+    #[Optional('purchasing_power_parity')]
+    public ?bool $purchasingPowerParity;
 
     /**
      * A suggested price for the user to pay. This value is only considered if
@@ -89,19 +90,13 @@ final class OneTimePrice implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * OneTimePrice::with(
-     *   currency: ..., discount: ..., price: ..., purchasingPowerParity: ...
-     * )
+     * OneTimePrice::with(currency: ..., discount: ..., price: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OneTimePrice)
-     *   ->withCurrency(...)
-     *   ->withDiscount(...)
-     *   ->withPrice(...)
-     *   ->withPurchasingPowerParity(...)
+     * (new OneTimePrice)->withCurrency(...)->withDiscount(...)->withPrice(...)
      * ```
      */
     public function __construct()
@@ -120,8 +115,8 @@ final class OneTimePrice implements BaseModel
         Currency|string $currency,
         int $discount,
         int $price,
-        bool $purchasingPowerParity,
         ?bool $payWhatYouWant = null,
+        ?bool $purchasingPowerParity = null,
         ?int $suggestedPrice = null,
         ?bool $taxInclusive = null,
     ): self {
@@ -130,9 +125,9 @@ final class OneTimePrice implements BaseModel
         $self['currency'] = $currency;
         $self['discount'] = $discount;
         $self['price'] = $price;
-        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
         null !== $payWhatYouWant && $self['payWhatYouWant'] = $payWhatYouWant;
+        null !== $purchasingPowerParity && $self['purchasingPowerParity'] = $purchasingPowerParity;
         null !== $suggestedPrice && $self['suggestedPrice'] = $suggestedPrice;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
 
@@ -179,18 +174,6 @@ final class OneTimePrice implements BaseModel
     }
 
     /**
-     * Indicates if purchasing power parity adjustments are applied to the price.
-     * Purchasing power parity feature is not available as of now.
-     */
-    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
-    {
-        $self = clone $this;
-        $self['purchasingPowerParity'] = $purchasingPowerParity;
-
-        return $self;
-    }
-
-    /**
      * @param 'one_time_price' $type
      */
     public function withType(string $type): self
@@ -209,6 +192,19 @@ final class OneTimePrice implements BaseModel
     {
         $self = clone $this;
         $self['payWhatYouWant'] = $payWhatYouWant;
+
+        return $self;
+    }
+
+    /**
+     * Opts this price in to purchasing power parity. The business must also
+     * enable purchasing power parity. The discount percentage per country is
+     * always business-wide. Defaults to `false`.
+     */
+    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
+    {
+        $self = clone $this;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
         return $self;
     }

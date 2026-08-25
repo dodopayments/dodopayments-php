@@ -10,6 +10,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionChargeParams;
 use Dodopayments\Subscriptions\SubscriptionChargeResponse;
 use Dodopayments\Subscriptions\SubscriptionCreateParams;
@@ -116,7 +117,7 @@ interface SubscriptionsRawContract
      * @param array<string,mixed>|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<mixed>
+     * @return BaseResponse<SubscriptionChangePlanResponse>
      *
      * @throws APIException
      */

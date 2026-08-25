@@ -20,10 +20,10 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   paymentFrequencyCount: int,
  *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
  *   price: int,
- *   purchasingPowerParity: bool,
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   type: 'recurring_price',
+ *   purchasingPowerParity?: bool|null,
  *   taxInclusive?: bool|null,
  *   trialAmount?: int|null,
  *   trialApplyDiscounts?: bool|null,
@@ -76,13 +76,6 @@ final class RecurringPrice implements BaseModel
     public int $price;
 
     /**
-     * Indicates if purchasing power parity adjustments are applied to the price.
-     * Purchasing power parity feature is not available as of now.
-     */
-    #[Required('purchasing_power_parity')]
-    public bool $purchasingPowerParity;
-
-    /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
@@ -96,6 +89,14 @@ final class RecurringPrice implements BaseModel
      */
     #[Required('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
+
+    /**
+     * Opts this price in to purchasing power parity. The business must also
+     * enable purchasing power parity. The discount percentage per country is
+     * always business-wide. Defaults to `false`.
+     */
+    #[Optional('purchasing_power_parity')]
+    public ?bool $purchasingPowerParity;
 
     /**
      * Indicates if the price is tax inclusive.
@@ -134,7 +135,6 @@ final class RecurringPrice implements BaseModel
      *   paymentFrequencyCount: ...,
      *   paymentFrequencyInterval: ...,
      *   price: ...,
-     *   purchasingPowerParity: ...,
      *   subscriptionPeriodCount: ...,
      *   subscriptionPeriodInterval: ...,
      * )
@@ -149,7 +149,6 @@ final class RecurringPrice implements BaseModel
      *   ->withPaymentFrequencyCount(...)
      *   ->withPaymentFrequencyInterval(...)
      *   ->withPrice(...)
-     *   ->withPurchasingPowerParity(...)
      *   ->withSubscriptionPeriodCount(...)
      *   ->withSubscriptionPeriodInterval(...)
      * ```
@@ -174,9 +173,9 @@ final class RecurringPrice implements BaseModel
         int $paymentFrequencyCount,
         TimeInterval|string $paymentFrequencyInterval,
         int $price,
-        bool $purchasingPowerParity,
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
+        ?bool $purchasingPowerParity = null,
         ?bool $taxInclusive = null,
         ?int $trialAmount = null,
         ?bool $trialApplyDiscounts = null,
@@ -189,10 +188,10 @@ final class RecurringPrice implements BaseModel
         $self['paymentFrequencyCount'] = $paymentFrequencyCount;
         $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
         $self['price'] = $price;
-        $self['purchasingPowerParity'] = $purchasingPowerParity;
         $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
+        null !== $purchasingPowerParity && $self['purchasingPowerParity'] = $purchasingPowerParity;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
         null !== $trialAmount && $self['trialAmount'] = $trialAmount;
         null !== $trialApplyDiscounts && $self['trialApplyDiscounts'] = $trialApplyDiscounts;
@@ -264,18 +263,6 @@ final class RecurringPrice implements BaseModel
     }
 
     /**
-     * Indicates if purchasing power parity adjustments are applied to the price.
-     * Purchasing power parity feature is not available as of now.
-     */
-    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
-    {
-        $self = clone $this;
-        $self['purchasingPowerParity'] = $purchasingPowerParity;
-
-        return $self;
-    }
-
-    /**
      * Number of units for the subscription period.
      * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
      */
@@ -309,6 +296,19 @@ final class RecurringPrice implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Opts this price in to purchasing power parity. The business must also
+     * enable purchasing power parity. The discount percentage per country is
+     * always business-wide. Defaults to `false`.
+     */
+    public function withPurchasingPowerParity(bool $purchasingPowerParity): self
+    {
+        $self = clone $this;
+        $self['purchasingPowerParity'] = $purchasingPowerParity;
 
         return $self;
     }
