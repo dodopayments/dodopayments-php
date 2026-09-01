@@ -1,13 +1,5 @@
 # Changelog
 
-## [6.24.0](https://github.com/dodopayments/dodopayments-php/compare/v6.23.0...v6.24.0) (2026-09-01)
-
-
-### Features
-
-* **api:** add customer blocklist and manual payment retry ([e975201](https://github.com/dodopayments/dodopayments-php/commit/e9752019ca2ab2b273621387c67581d60989039a))
-* **api:** add customer blocklist and manual payment retry ([61bdbc0](https://github.com/dodopayments/dodopayments-php/commit/61bdbc00f89a2daa03a5142053387ed8a3a1d90e))
-
 ## [6.23.0](https://github.com/dodopayments/dodopayments-php/compare/v6.22.0...v6.23.0) (2026-08-24)
 
 
