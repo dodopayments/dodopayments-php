@@ -7,6 +7,8 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Payments\ManualRetry;
+use Dodopayments\Payments\ManualRetryState;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
@@ -78,6 +80,36 @@ interface PaymentsRawContract
      * @throws APIException
      */
     public function retrieveLineItems(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ManualRetryState>
+     *
+     * @throws APIException
+     */
+    public function retrieveRetryState(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ManualRetry>
+     *
+     * @throws APIException
+     */
+    public function retry(
         string $paymentID,
         RequestOptions|array|null $requestOptions = null
     ): BaseResponse;

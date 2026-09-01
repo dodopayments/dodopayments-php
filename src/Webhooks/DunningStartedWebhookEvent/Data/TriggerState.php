@@ -9,4 +9,6 @@ enum TriggerState: string
     case ON_HOLD = 'on_hold';
 
     case CANCELLED = 'cancelled';
+
+    case PAST_DUE = 'past_due';
 }
