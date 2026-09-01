@@ -11,6 +11,8 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\ManualRetry;
+use Dodopayments\Payments\ManualRetryState;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentCreateParams;
@@ -185,6 +187,52 @@ final class PaymentsRawService implements PaymentsRawContract
             path: ['payments/%1$s/line-items', $paymentID],
             options: $requestOptions,
             convert: PaymentGetLineItemsResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ManualRetryState>
+     *
+     * @throws APIException
+     */
+    public function retrieveRetryState(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['payments/%1$s/retry', $paymentID],
+            options: $requestOptions,
+            convert: ManualRetryState::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<ManualRetry>
+     *
+     * @throws APIException
+     */
+    public function retry(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['payments/%1$s/retry', $paymentID],
+            options: $requestOptions,
+            convert: ManualRetry::class,
         );
     }
 }

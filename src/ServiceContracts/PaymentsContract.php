@@ -9,6 +9,8 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\ManualRetry;
+use Dodopayments\Payments\ManualRetryState;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
@@ -156,4 +158,30 @@ interface PaymentsContract
         string $paymentID,
         RequestOptions|array|null $requestOptions = null
     ): PaymentGetLineItemsResponse;
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveRetryState(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): ManualRetryState;
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retry(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): ManualRetry;
 }

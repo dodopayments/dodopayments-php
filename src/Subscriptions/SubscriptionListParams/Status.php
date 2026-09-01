@@ -22,4 +22,6 @@ enum Status: string
     case FAILED = 'failed';
 
     case EXPIRED = 'expired';
+
+    case PAST_DUE = 'past_due';
 }
