@@ -20,6 +20,8 @@ use Dodopayments\Misc\MetadataItem;
  *   customerID: string,
  *   email: string,
  *   name: string,
+ *   blockedAt?: \DateTimeInterface|null,
+ *   blocklistEntryID?: string|null,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   phoneNumber?: string|null,
  * }
@@ -43,6 +45,20 @@ final class Customer implements BaseModel
 
     #[Required]
     public string $name;
+
+    /**
+     * When the merchant blocked this customer. The dashboard shows the
+     * "Blocked" badge and the unblock action from it. The list route leaves it
+     * empty; only the single-customer route resolves it.
+     */
+    #[Optional('blocked_at', nullable: true)]
+    public ?\DateTimeInterface $blockedAt;
+
+    /**
+     * Blocklist entry behind `blocked_at`, so the dashboard can link to it.
+     */
+    #[Optional('blocklist_entry_id', nullable: true)]
+    public ?string $blocklistEntryID;
 
     /**
      * Additional metadata for the customer.
@@ -94,6 +110,8 @@ final class Customer implements BaseModel
         string $customerID,
         string $email,
         string $name,
+        ?\DateTimeInterface $blockedAt = null,
+        ?string $blocklistEntryID = null,
         ?array $metadata = null,
         ?string $phoneNumber = null,
     ): self {
@@ -105,6 +123,8 @@ final class Customer implements BaseModel
         $self['email'] = $email;
         $self['name'] = $name;
 
+        null !== $blockedAt && $self['blockedAt'] = $blockedAt;
+        null !== $blocklistEntryID && $self['blocklistEntryID'] = $blocklistEntryID;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $phoneNumber && $self['phoneNumber'] = $phoneNumber;
 
@@ -147,6 +167,30 @@ final class Customer implements BaseModel
     {
         $self = clone $this;
         $self['name'] = $name;
+
+        return $self;
+    }
+
+    /**
+     * When the merchant blocked this customer. The dashboard shows the
+     * "Blocked" badge and the unblock action from it. The list route leaves it
+     * empty; only the single-customer route resolves it.
+     */
+    public function withBlockedAt(?\DateTimeInterface $blockedAt): self
+    {
+        $self = clone $this;
+        $self['blockedAt'] = $blockedAt;
+
+        return $self;
+    }
+
+    /**
+     * Blocklist entry behind `blocked_at`, so the dashboard can link to it.
+     */
+    public function withBlocklistEntryID(?string $blocklistEntryID): self
+    {
+        $self = clone $this;
+        $self['blocklistEntryID'] = $blocklistEntryID;
 
         return $self;
     }

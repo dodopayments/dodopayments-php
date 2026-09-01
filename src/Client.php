@@ -9,6 +9,7 @@ use Dodopayments\Core\Implementation\StreamingHttpClient;
 use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
 use Dodopayments\Services\BalancesService;
+use Dodopayments\Services\BlocklistService;
 use Dodopayments\Services\BrandsService;
 use Dodopayments\Services\CheckoutSessionsService;
 use Dodopayments\Services\CreditEntitlementsService;
@@ -83,6 +84,11 @@ class Client extends BaseClient
      * @api
      */
     public CustomersService $customers;
+
+    /**
+     * @api
+     */
+    public BlocklistService $blocklist;
 
     /**
      * @api
@@ -236,6 +242,7 @@ class Client extends BaseClient
         $this->licenseKeys = new LicenseKeysService($this);
         $this->licenseKeyInstances = new LicenseKeyInstancesService($this);
         $this->customers = new CustomersService($this);
+        $this->blocklist = new BlocklistService($this);
         $this->refunds = new RefundsService($this);
         $this->disputes = new DisputesService($this);
         $this->payouts = new PayoutsService($this);
