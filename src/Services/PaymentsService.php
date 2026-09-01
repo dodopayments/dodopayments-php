@@ -11,6 +11,8 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\ManualRetry;
+use Dodopayments\Payments\ManualRetryState;
 use Dodopayments\Payments\NewCustomer;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\Payment;
@@ -228,6 +230,42 @@ final class PaymentsService implements PaymentsContract
     ): PaymentGetLineItemsResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveLineItems($paymentID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveRetryState(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): ManualRetryState {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveRetryState($paymentID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * @param string $paymentID Id of the failed payment
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retry(
+        string $paymentID,
+        RequestOptions|array|null $requestOptions = null
+    ): ManualRetry {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retry($paymentID, requestOptions: $requestOptions);
 
         return $response->parse();
     }

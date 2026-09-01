@@ -41,6 +41,8 @@ enum WebhookEventType: string
 
     case SUBSCRIPTION_ON_HOLD = 'subscription.on_hold';
 
+    case SUBSCRIPTION_PAST_DUE = 'subscription.past_due';
+
     case SUBSCRIPTION_PAUSED = 'subscription.paused';
 
     case SUBSCRIPTION_UNPAUSED = 'subscription.unpaused';

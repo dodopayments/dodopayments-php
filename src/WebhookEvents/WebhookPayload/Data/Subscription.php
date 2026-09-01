@@ -79,6 +79,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   taxID?: string|null,
  *   trialAmount?: int|null,
  *   payloadType: 'Subscription',
+ *   pastDueEndsAt?: \DateTimeInterface|null,
  * }
  */
 final class Subscription implements BaseModel
@@ -342,6 +343,18 @@ final class Subscription implements BaseModel
     public ?int $trialAmount;
 
     /**
+     * Time when the grace period ends. The subscription moves to `on_hold` or
+     * to `cancelled` at this time.
+     *
+     * Read in the same query as the rest of the payload, so it always comes
+     * from the row snapshot that produced `status`. It is set whenever the
+     * subscription sits in a window at that moment. A delayed event of another
+     * type therefore carries the deadline too, next to a `past_due` status.
+     */
+    #[Optional('past_due_ends_at', nullable: true)]
+    public ?\DateTimeInterface $pastDueEndsAt;
+
+    /**
      * `new Subscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -472,6 +485,7 @@ final class Subscription implements BaseModel
         ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
         ?int $trialAmount = null,
+        ?\DateTimeInterface $pastDueEndsAt = null,
     ): self {
         $self = new self;
 
@@ -515,6 +529,7 @@ final class Subscription implements BaseModel
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
         null !== $trialAmount && $self['trialAmount'] = $trialAmount;
+        null !== $pastDueEndsAt && $self['pastDueEndsAt'] = $pastDueEndsAt;
 
         return $self;
     }
@@ -989,6 +1004,23 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['payloadType'] = $payloadType;
+
+        return $self;
+    }
+
+    /**
+     * Time when the grace period ends. The subscription moves to `on_hold` or
+     * to `cancelled` at this time.
+     *
+     * Read in the same query as the rest of the payload, so it always comes
+     * from the row snapshot that produced `status`. It is set whenever the
+     * subscription sits in a window at that moment. A delayed event of another
+     * type therefore carries the deadline too, next to a `past_due` status.
+     */
+    public function withPastDueEndsAt(?\DateTimeInterface $pastDueEndsAt): self
+    {
+        $self = clone $this;
+        $self['pastDueEndsAt'] = $pastDueEndsAt;
 
         return $self;
     }
