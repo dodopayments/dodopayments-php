@@ -163,7 +163,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   metadata?: array<string,MetadataItemShape>|null,
      *   nextBillingDate?: \DateTimeInterface|null,
      *   pause?: bool|null,
-     *   status?: SubscriptionStatus|value-of<SubscriptionStatus>|null,
+     *   status?: value-of<SubscriptionStatus>,
      *   subscriptionPeriodCount?: int|null,
      *   subscriptionPeriodInterval?: TimeInterval|value-of<TimeInterval>|null,
      *   taxID?: string|null,
@@ -206,7 +206,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   pageNumber?: int,
      *   pageSize?: int,
      *   productID?: string,
-     *   status?: Status|value-of<Status>,
+     *   status?: value-of<Status>,
      * }|SubscriptionListParams $params
      * @param RequestOpts|null $requestOptions
      *
