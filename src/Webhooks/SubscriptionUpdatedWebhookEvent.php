@@ -7,14 +7,14 @@ namespace Dodopayments\Webhooks;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Subscriptions\Subscription;
+use Dodopayments\Webhooks\SubscriptionUpdatedWebhookEvent\Data;
 
 /**
- * @phpstan-import-type SubscriptionShape from \Dodopayments\Subscriptions\Subscription
+ * @phpstan-import-type DataShape from \Dodopayments\Webhooks\SubscriptionUpdatedWebhookEvent\Data
  *
  * @phpstan-type SubscriptionUpdatedWebhookEventShape = array{
  *   businessID: string,
- *   data: Subscription|SubscriptionShape,
+ *   data: Data|DataShape,
  *   timestamp: \DateTimeInterface,
  *   type: 'subscription.updated',
  * }
@@ -39,10 +39,11 @@ final class SubscriptionUpdatedWebhookEvent implements BaseModel
     public string $businessID;
 
     /**
-     * Response struct representing subscription details.
+     * Subscription payload sent on a webhook. It carries every field of
+     * `SubscriptionResponse`, plus the grace-period deadline.
      */
     #[Required]
-    public Subscription $data;
+    public Data $data;
 
     /**
      * The timestamp of when the event occurred.
@@ -79,11 +80,11 @@ final class SubscriptionUpdatedWebhookEvent implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
-     * @param Subscription|SubscriptionShape $data
+     * @param Data|DataShape $data
      */
     public static function with(
         string $businessID,
-        Subscription|array $data,
+        Data|array $data,
         \DateTimeInterface $timestamp
     ): self {
         $self = new self;
@@ -107,11 +108,12 @@ final class SubscriptionUpdatedWebhookEvent implements BaseModel
     }
 
     /**
-     * Response struct representing subscription details.
+     * Subscription payload sent on a webhook. It carries every field of
+     * `SubscriptionResponse`, plus the grace-period deadline.
      *
-     * @param Subscription|SubscriptionShape $data
+     * @param Data|DataShape $data
      */
-    public function withData(Subscription|array $data): self
+    public function withData(Data|array $data): self
     {
         $self = clone $this;
         $self['data'] = $data;

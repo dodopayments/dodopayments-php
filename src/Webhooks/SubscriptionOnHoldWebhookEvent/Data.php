@@ -1,0 +1,1012 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Dodopayments\Webhooks\SubscriptionOnHoldWebhookEvent;
+
+use Dodopayments\Core\Attributes\Optional;
+use Dodopayments\Core\Attributes\Required;
+use Dodopayments\Core\Concerns\SdkModel;
+use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Discounts\DiscountDetail;
+use Dodopayments\Misc\Currency;
+use Dodopayments\Misc\MetadataItem;
+use Dodopayments\Payments\BillingAddress;
+use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Payments\CustomFieldResponse;
+use Dodopayments\Subscriptions\AddonCartResponseItem;
+use Dodopayments\Subscriptions\CancellationFeedback;
+use Dodopayments\Subscriptions\CreditEntitlementCartResponse;
+use Dodopayments\Subscriptions\MeterCartResponseItem;
+use Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse;
+use Dodopayments\Subscriptions\ScheduledPlanChange;
+use Dodopayments\Subscriptions\SubscriptionStatus;
+use Dodopayments\Subscriptions\TimeInterval;
+
+/**
+ * Subscription payload sent on a webhook. It carries every field of
+ * `SubscriptionResponse`, plus the grace-period deadline.
+ *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type AddonCartResponseItemShape from \Dodopayments\Subscriptions\AddonCartResponseItem
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type CreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\CreditEntitlementCartResponse
+ * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
+ * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
+ * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
+ * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
+ * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
+ *
+ * @phpstan-type DataShape = array{
+ *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
+ *   billing: BillingAddress|BillingAddressShape,
+ *   brandID: string,
+ *   cancelAtNextBillingDate: bool,
+ *   createdAt: \DateTimeInterface,
+ *   creditEntitlementCart: list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape>,
+ *   currency: Currency|value-of<Currency>,
+ *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
+ *   metadata: array<string,MetadataItemShape>,
+ *   meterCreditEntitlementCart: list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape>,
+ *   meters: list<MeterCartResponseItem|MeterCartResponseItemShape>,
+ *   nextBillingDate: \DateTimeInterface,
+ *   onDemand: bool,
+ *   paymentFrequencyCount: int,
+ *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
+ *   previousBillingDate: \DateTimeInterface,
+ *   productID: string,
+ *   quantity: int,
+ *   recurringPreTaxAmount: int,
+ *   status: SubscriptionStatus|value-of<SubscriptionStatus>,
+ *   subscriptionID: string,
+ *   subscriptionPeriodCount: int,
+ *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
+ *   taxInclusive: bool,
+ *   trialPeriodDays: int,
+ *   cancellationComment?: string|null,
+ *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
+ *   cancelledAt?: \DateTimeInterface|null,
+ *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
+ *   customerBusinessName?: string|null,
+ *   discountCyclesRemaining?: int|null,
+ *   discountID?: string|null,
+ *   discounts?: list<DiscountDetail|DiscountDetailShape>|null,
+ *   expiresAt?: \DateTimeInterface|null,
+ *   pausedAt?: \DateTimeInterface|null,
+ *   paymentMethodID?: string|null,
+ *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
+ *   taxID?: string|null,
+ *   trialAmount?: int|null,
+ *   pastDueEndsAt?: \DateTimeInterface|null,
+ * }
+ */
+final class Data implements BaseModel
+{
+    /** @use SdkModel<DataShape> */
+    use SdkModel;
+
+    /**
+     * Addons associated with this subscription.
+     *
+     * @var list<AddonCartResponseItem> $addons
+     */
+    #[Required(list: AddonCartResponseItem::class)]
+    public array $addons;
+
+    #[Required]
+    public BillingAddress $billing;
+
+    /**
+     * Brand id this subscription belongs to.
+     */
+    #[Required('brand_id')]
+    public string $brandID;
+
+    /**
+     * Indicates if the subscription will cancel at the next billing date.
+     */
+    #[Required('cancel_at_next_billing_date')]
+    public bool $cancelAtNextBillingDate;
+
+    /**
+     * Timestamp when the subscription was created.
+     */
+    #[Required('created_at')]
+    public \DateTimeInterface $createdAt;
+
+    /**
+     * Credit entitlement cart settings for this subscription.
+     *
+     * @var list<CreditEntitlementCartResponse> $creditEntitlementCart
+     */
+    #[Required(
+        'credit_entitlement_cart',
+        list: CreditEntitlementCartResponse::class
+    )]
+    public array $creditEntitlementCart;
+
+    /** @var value-of<Currency> $currency */
+    #[Required(enum: Currency::class)]
+    public string $currency;
+
+    #[Required]
+    public CustomerLimitedDetails $customer;
+
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
+    public array $metadata;
+
+    /**
+     * Meter credit entitlement cart settings for this subscription.
+     *
+     * @var list<MeterCreditEntitlementCartResponse> $meterCreditEntitlementCart
+     */
+    #[Required(
+        'meter_credit_entitlement_cart',
+        list: MeterCreditEntitlementCartResponse::class,
+    )]
+    public array $meterCreditEntitlementCart;
+
+    /**
+     * Meters associated with this subscription (for usage-based billing).
+     *
+     * @var list<MeterCartResponseItem> $meters
+     */
+    #[Required(list: MeterCartResponseItem::class)]
+    public array $meters;
+
+    /**
+     * Timestamp of the next scheduled billing. Indicates the end of current billing period.
+     */
+    #[Required('next_billing_date')]
+    public \DateTimeInterface $nextBillingDate;
+
+    /**
+     * Wether the subscription is on-demand or not.
+     */
+    #[Required('on_demand')]
+    public bool $onDemand;
+
+    /**
+     * Number of payment frequency intervals.
+     */
+    #[Required('payment_frequency_count')]
+    public int $paymentFrequencyCount;
+
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @var value-of<TimeInterval> $paymentFrequencyInterval
+     */
+    #[Required('payment_frequency_interval', enum: TimeInterval::class)]
+    public string $paymentFrequencyInterval;
+
+    /**
+     * Timestamp of the last payment. Indicates the start of current billing period.
+     */
+    #[Required('previous_billing_date')]
+    public \DateTimeInterface $previousBillingDate;
+
+    /**
+     * Identifier of the product associated with this subscription.
+     */
+    #[Required('product_id')]
+    public string $productID;
+
+    /**
+     * Number of units/items included in the subscription.
+     */
+    #[Required]
+    public int $quantity;
+
+    /**
+     * Amount charged before tax for each recurring payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
+     */
+    #[Required('recurring_pre_tax_amount')]
+    public int $recurringPreTaxAmount;
+
+    /** @var value-of<SubscriptionStatus> $status */
+    #[Required(enum: SubscriptionStatus::class)]
+    public string $status;
+
+    /**
+     * Unique identifier for the subscription.
+     */
+    #[Required('subscription_id')]
+    public string $subscriptionID;
+
+    /**
+     * Number of subscription period intervals.
+     */
+    #[Required('subscription_period_count')]
+    public int $subscriptionPeriodCount;
+
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @var value-of<TimeInterval> $subscriptionPeriodInterval
+     */
+    #[Required('subscription_period_interval', enum: TimeInterval::class)]
+    public string $subscriptionPeriodInterval;
+
+    /**
+     * Indicates if the recurring_pre_tax_amount is tax inclusive.
+     */
+    #[Required('tax_inclusive')]
+    public bool $taxInclusive;
+
+    /**
+     * Number of days in the trial period (0 if no trial).
+     */
+    #[Required('trial_period_days')]
+    public int $trialPeriodDays;
+
+    /**
+     * Free-text cancellation comment, if any.
+     */
+    #[Optional('cancellation_comment', nullable: true)]
+    public ?string $cancellationComment;
+
+    /** @var value-of<CancellationFeedback>|null $cancellationFeedback */
+    #[Optional('cancellation_feedback', enum: CancellationFeedback::class)]
+    public ?string $cancellationFeedback;
+
+    /**
+     * Cancelled timestamp if the subscription is cancelled.
+     */
+    #[Optional('cancelled_at', nullable: true)]
+    public ?\DateTimeInterface $cancelledAt;
+
+    /**
+     * Customer's responses to custom fields collected during checkout.
+     *
+     * @var list<CustomFieldResponse>|null $customFieldResponses
+     */
+    #[Optional(
+        'custom_field_responses',
+        list: CustomFieldResponse::class,
+        nullable: true
+    )]
+    public ?array $customFieldResponses;
+
+    /**
+     * Business / legal name associated with the tax id (B2B). When set this is
+     * used on the invoice in place of the customer's personal name.
+     */
+    #[Optional('customer_business_name', nullable: true)]
+    public ?string $customerBusinessName;
+
+    /**
+     * DEPRECATED: Use discounts[].cycles_remaining instead.
+     */
+    #[Optional('discount_cycles_remaining', nullable: true)]
+    public ?int $discountCyclesRemaining;
+
+    /**
+     * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
+     */
+    #[Optional('discount_id', nullable: true)]
+    public ?string $discountID;
+
+    /**
+     * All stacked discounts applied, ordered by position.
+     *
+     * @var list<DiscountDetail>|null $discounts
+     */
+    #[Optional(list: DiscountDetail::class, nullable: true)]
+    public ?array $discounts;
+
+    /**
+     * Timestamp when the subscription will expire.
+     */
+    #[Optional('expires_at', nullable: true)]
+    public ?\DateTimeInterface $expiresAt;
+
+    /**
+     * Timestamp when the subscription was paused, if it currently is (or is
+     * `OnHold` due to an unresolved pause settlement). `null` otherwise.
+     */
+    #[Optional('paused_at', nullable: true)]
+    public ?\DateTimeInterface $pausedAt;
+
+    /**
+     * Saved payment method id used for recurring charges.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
+    #[Optional('scheduled_change')]
+    public ?ScheduledPlanChange $scheduledChange;
+
+    /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    #[Optional('tax_id', nullable: true)]
+    public ?string $taxID;
+
+    /**
+     * Per-unit trial amount after discounts, snapshotted at subscription creation
+     * (price currency minor units, pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    #[Optional('trial_amount', nullable: true)]
+    public ?int $trialAmount;
+
+    /**
+     * Time when the grace period ends. The subscription moves to `on_hold` or
+     * to `cancelled` at this time.
+     *
+     * Read in the same query as the rest of the payload, so it always comes
+     * from the row snapshot that produced `status`. It is set whenever the
+     * subscription sits in a window at that moment. A delayed event of another
+     * type therefore carries the deadline too, next to a `past_due` status.
+     */
+    #[Optional('past_due_ends_at', nullable: true)]
+    public ?\DateTimeInterface $pastDueEndsAt;
+
+    /**
+     * `new Data()` is missing required properties by the API.
+     *
+     * To enforce required parameters use
+     * ```
+     * Data::with(
+     *   addons: ...,
+     *   billing: ...,
+     *   brandID: ...,
+     *   cancelAtNextBillingDate: ...,
+     *   createdAt: ...,
+     *   creditEntitlementCart: ...,
+     *   currency: ...,
+     *   customer: ...,
+     *   metadata: ...,
+     *   meterCreditEntitlementCart: ...,
+     *   meters: ...,
+     *   nextBillingDate: ...,
+     *   onDemand: ...,
+     *   paymentFrequencyCount: ...,
+     *   paymentFrequencyInterval: ...,
+     *   previousBillingDate: ...,
+     *   productID: ...,
+     *   quantity: ...,
+     *   recurringPreTaxAmount: ...,
+     *   status: ...,
+     *   subscriptionID: ...,
+     *   subscriptionPeriodCount: ...,
+     *   subscriptionPeriodInterval: ...,
+     *   taxInclusive: ...,
+     *   trialPeriodDays: ...,
+     * )
+     * ```
+     *
+     * Otherwise ensure the following setters are called
+     *
+     * ```
+     * (new Data)
+     *   ->withAddons(...)
+     *   ->withBilling(...)
+     *   ->withBrandID(...)
+     *   ->withCancelAtNextBillingDate(...)
+     *   ->withCreatedAt(...)
+     *   ->withCreditEntitlementCart(...)
+     *   ->withCurrency(...)
+     *   ->withCustomer(...)
+     *   ->withMetadata(...)
+     *   ->withMeterCreditEntitlementCart(...)
+     *   ->withMeters(...)
+     *   ->withNextBillingDate(...)
+     *   ->withOnDemand(...)
+     *   ->withPaymentFrequencyCount(...)
+     *   ->withPaymentFrequencyInterval(...)
+     *   ->withPreviousBillingDate(...)
+     *   ->withProductID(...)
+     *   ->withQuantity(...)
+     *   ->withRecurringPreTaxAmount(...)
+     *   ->withStatus(...)
+     *   ->withSubscriptionID(...)
+     *   ->withSubscriptionPeriodCount(...)
+     *   ->withSubscriptionPeriodInterval(...)
+     *   ->withTaxInclusive(...)
+     *   ->withTrialPeriodDays(...)
+     * ```
+     */
+    public function __construct()
+    {
+        $this->initialize();
+    }
+
+    /**
+     * Construct an instance from the required parameters.
+     *
+     * You must use named parameters to construct any parameters with a default value.
+     *
+     * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
+     * @param BillingAddress|BillingAddressShape $billing
+     * @param list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape> $creditEntitlementCart
+     * @param Currency|value-of<Currency> $currency
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
+     * @param array<string,MetadataItemShape> $metadata
+     * @param list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape> $meterCreditEntitlementCart
+     * @param list<MeterCartResponseItem|MeterCartResponseItemShape> $meters
+     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
+     * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
+     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
+     * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
+     * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
+     * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
+     */
+    public static function with(
+        array $addons,
+        BillingAddress|array $billing,
+        string $brandID,
+        bool $cancelAtNextBillingDate,
+        \DateTimeInterface $createdAt,
+        array $creditEntitlementCart,
+        Currency|string $currency,
+        CustomerLimitedDetails|array $customer,
+        array $metadata,
+        array $meterCreditEntitlementCart,
+        array $meters,
+        \DateTimeInterface $nextBillingDate,
+        bool $onDemand,
+        int $paymentFrequencyCount,
+        TimeInterval|string $paymentFrequencyInterval,
+        \DateTimeInterface $previousBillingDate,
+        string $productID,
+        int $quantity,
+        int $recurringPreTaxAmount,
+        SubscriptionStatus|string $status,
+        string $subscriptionID,
+        int $subscriptionPeriodCount,
+        TimeInterval|string $subscriptionPeriodInterval,
+        bool $taxInclusive,
+        int $trialPeriodDays,
+        ?string $cancellationComment = null,
+        CancellationFeedback|string|null $cancellationFeedback = null,
+        ?\DateTimeInterface $cancelledAt = null,
+        ?array $customFieldResponses = null,
+        ?string $customerBusinessName = null,
+        ?int $discountCyclesRemaining = null,
+        ?string $discountID = null,
+        ?array $discounts = null,
+        ?\DateTimeInterface $expiresAt = null,
+        ?\DateTimeInterface $pausedAt = null,
+        ?string $paymentMethodID = null,
+        ScheduledPlanChange|array|null $scheduledChange = null,
+        ?string $taxID = null,
+        ?int $trialAmount = null,
+        ?\DateTimeInterface $pastDueEndsAt = null,
+    ): self {
+        $self = new self;
+
+        $self['addons'] = $addons;
+        $self['billing'] = $billing;
+        $self['brandID'] = $brandID;
+        $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+        $self['createdAt'] = $createdAt;
+        $self['creditEntitlementCart'] = $creditEntitlementCart;
+        $self['currency'] = $currency;
+        $self['customer'] = $customer;
+        $self['metadata'] = $metadata;
+        $self['meterCreditEntitlementCart'] = $meterCreditEntitlementCart;
+        $self['meters'] = $meters;
+        $self['nextBillingDate'] = $nextBillingDate;
+        $self['onDemand'] = $onDemand;
+        $self['paymentFrequencyCount'] = $paymentFrequencyCount;
+        $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+        $self['previousBillingDate'] = $previousBillingDate;
+        $self['productID'] = $productID;
+        $self['quantity'] = $quantity;
+        $self['recurringPreTaxAmount'] = $recurringPreTaxAmount;
+        $self['status'] = $status;
+        $self['subscriptionID'] = $subscriptionID;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+        $self['taxInclusive'] = $taxInclusive;
+        $self['trialPeriodDays'] = $trialPeriodDays;
+
+        null !== $cancellationComment && $self['cancellationComment'] = $cancellationComment;
+        null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
+        null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
+        null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
+        null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
+        null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
+        null !== $discountID && $self['discountID'] = $discountID;
+        null !== $discounts && $self['discounts'] = $discounts;
+        null !== $expiresAt && $self['expiresAt'] = $expiresAt;
+        null !== $pausedAt && $self['pausedAt'] = $pausedAt;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
+        null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
+        null !== $taxID && $self['taxID'] = $taxID;
+        null !== $trialAmount && $self['trialAmount'] = $trialAmount;
+        null !== $pastDueEndsAt && $self['pastDueEndsAt'] = $pastDueEndsAt;
+
+        return $self;
+    }
+
+    /**
+     * Addons associated with this subscription.
+     *
+     * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
+     */
+    public function withAddons(array $addons): self
+    {
+        $self = clone $this;
+        $self['addons'] = $addons;
+
+        return $self;
+    }
+
+    /**
+     * @param BillingAddress|BillingAddressShape $billing
+     */
+    public function withBilling(BillingAddress|array $billing): self
+    {
+        $self = clone $this;
+        $self['billing'] = $billing;
+
+        return $self;
+    }
+
+    /**
+     * Brand id this subscription belongs to.
+     */
+    public function withBrandID(string $brandID): self
+    {
+        $self = clone $this;
+        $self['brandID'] = $brandID;
+
+        return $self;
+    }
+
+    /**
+     * Indicates if the subscription will cancel at the next billing date.
+     */
+    public function withCancelAtNextBillingDate(
+        bool $cancelAtNextBillingDate
+    ): self {
+        $self = clone $this;
+        $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
+
+        return $self;
+    }
+
+    /**
+     * Timestamp when the subscription was created.
+     */
+    public function withCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $self = clone $this;
+        $self['createdAt'] = $createdAt;
+
+        return $self;
+    }
+
+    /**
+     * Credit entitlement cart settings for this subscription.
+     *
+     * @param list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape> $creditEntitlementCart
+     */
+    public function withCreditEntitlementCart(
+        array $creditEntitlementCart
+    ): self {
+        $self = clone $this;
+        $self['creditEntitlementCart'] = $creditEntitlementCart;
+
+        return $self;
+    }
+
+    /**
+     * @param Currency|value-of<Currency> $currency
+     */
+    public function withCurrency(Currency|string $currency): self
+    {
+        $self = clone $this;
+        $self['currency'] = $currency;
+
+        return $self;
+    }
+
+    /**
+     * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
+     */
+    public function withCustomer(CustomerLimitedDetails|array $customer): self
+    {
+        $self = clone $this;
+        $self['customer'] = $customer;
+
+        return $self;
+    }
+
+    /**
+     * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     *
+     * @param array<string,MetadataItemShape> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * Meter credit entitlement cart settings for this subscription.
+     *
+     * @param list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape> $meterCreditEntitlementCart
+     */
+    public function withMeterCreditEntitlementCart(
+        array $meterCreditEntitlementCart
+    ): self {
+        $self = clone $this;
+        $self['meterCreditEntitlementCart'] = $meterCreditEntitlementCart;
+
+        return $self;
+    }
+
+    /**
+     * Meters associated with this subscription (for usage-based billing).
+     *
+     * @param list<MeterCartResponseItem|MeterCartResponseItemShape> $meters
+     */
+    public function withMeters(array $meters): self
+    {
+        $self = clone $this;
+        $self['meters'] = $meters;
+
+        return $self;
+    }
+
+    /**
+     * Timestamp of the next scheduled billing. Indicates the end of current billing period.
+     */
+    public function withNextBillingDate(
+        \DateTimeInterface $nextBillingDate
+    ): self {
+        $self = clone $this;
+        $self['nextBillingDate'] = $nextBillingDate;
+
+        return $self;
+    }
+
+    /**
+     * Wether the subscription is on-demand or not.
+     */
+    public function withOnDemand(bool $onDemand): self
+    {
+        $self = clone $this;
+        $self['onDemand'] = $onDemand;
+
+        return $self;
+    }
+
+    /**
+     * Number of payment frequency intervals.
+     */
+    public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
+    {
+        $self = clone $this;
+        $self['paymentFrequencyCount'] = $paymentFrequencyCount;
+
+        return $self;
+    }
+
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
+     */
+    public function withPaymentFrequencyInterval(
+        TimeInterval|string $paymentFrequencyInterval
+    ): self {
+        $self = clone $this;
+        $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
+
+        return $self;
+    }
+
+    /**
+     * Timestamp of the last payment. Indicates the start of current billing period.
+     */
+    public function withPreviousBillingDate(
+        \DateTimeInterface $previousBillingDate
+    ): self {
+        $self = clone $this;
+        $self['previousBillingDate'] = $previousBillingDate;
+
+        return $self;
+    }
+
+    /**
+     * Identifier of the product associated with this subscription.
+     */
+    public function withProductID(string $productID): self
+    {
+        $self = clone $this;
+        $self['productID'] = $productID;
+
+        return $self;
+    }
+
+    /**
+     * Number of units/items included in the subscription.
+     */
+    public function withQuantity(int $quantity): self
+    {
+        $self = clone $this;
+        $self['quantity'] = $quantity;
+
+        return $self;
+    }
+
+    /**
+     * Amount charged before tax for each recurring payment in the currency's smallest unit
+     * (cents for USD, yen for JPY, fils for KWD).
+     */
+    public function withRecurringPreTaxAmount(int $recurringPreTaxAmount): self
+    {
+        $self = clone $this;
+        $self['recurringPreTaxAmount'] = $recurringPreTaxAmount;
+
+        return $self;
+    }
+
+    /**
+     * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
+     */
+    public function withStatus(SubscriptionStatus|string $status): self
+    {
+        $self = clone $this;
+        $self['status'] = $status;
+
+        return $self;
+    }
+
+    /**
+     * Unique identifier for the subscription.
+     */
+    public function withSubscriptionID(string $subscriptionID): self
+    {
+        $self = clone $this;
+        $self['subscriptionID'] = $subscriptionID;
+
+        return $self;
+    }
+
+    /**
+     * Number of subscription period intervals.
+     */
+    public function withSubscriptionPeriodCount(
+        int $subscriptionPeriodCount
+    ): self {
+        $self = clone $this;
+        $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
+
+        return $self;
+    }
+
+    /**
+     * Unit of a duration count (e.g. license-key validity period).
+     *
+     * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
+     */
+    public function withSubscriptionPeriodInterval(
+        TimeInterval|string $subscriptionPeriodInterval
+    ): self {
+        $self = clone $this;
+        $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
+
+        return $self;
+    }
+
+    /**
+     * Indicates if the recurring_pre_tax_amount is tax inclusive.
+     */
+    public function withTaxInclusive(bool $taxInclusive): self
+    {
+        $self = clone $this;
+        $self['taxInclusive'] = $taxInclusive;
+
+        return $self;
+    }
+
+    /**
+     * Number of days in the trial period (0 if no trial).
+     */
+    public function withTrialPeriodDays(int $trialPeriodDays): self
+    {
+        $self = clone $this;
+        $self['trialPeriodDays'] = $trialPeriodDays;
+
+        return $self;
+    }
+
+    /**
+     * Free-text cancellation comment, if any.
+     */
+    public function withCancellationComment(?string $cancellationComment): self
+    {
+        $self = clone $this;
+        $self['cancellationComment'] = $cancellationComment;
+
+        return $self;
+    }
+
+    /**
+     * @param CancellationFeedback|value-of<CancellationFeedback> $cancellationFeedback
+     */
+    public function withCancellationFeedback(
+        CancellationFeedback|string $cancellationFeedback
+    ): self {
+        $self = clone $this;
+        $self['cancellationFeedback'] = $cancellationFeedback;
+
+        return $self;
+    }
+
+    /**
+     * Cancelled timestamp if the subscription is cancelled.
+     */
+    public function withCancelledAt(?\DateTimeInterface $cancelledAt): self
+    {
+        $self = clone $this;
+        $self['cancelledAt'] = $cancelledAt;
+
+        return $self;
+    }
+
+    /**
+     * Customer's responses to custom fields collected during checkout.
+     *
+     * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
+     */
+    public function withCustomFieldResponses(?array $customFieldResponses): self
+    {
+        $self = clone $this;
+        $self['customFieldResponses'] = $customFieldResponses;
+
+        return $self;
+    }
+
+    /**
+     * Business / legal name associated with the tax id (B2B). When set this is
+     * used on the invoice in place of the customer's personal name.
+     */
+    public function withCustomerBusinessName(
+        ?string $customerBusinessName
+    ): self {
+        $self = clone $this;
+        $self['customerBusinessName'] = $customerBusinessName;
+
+        return $self;
+    }
+
+    /**
+     * DEPRECATED: Use discounts[].cycles_remaining instead.
+     */
+    public function withDiscountCyclesRemaining(
+        ?int $discountCyclesRemaining
+    ): self {
+        $self = clone $this;
+        $self['discountCyclesRemaining'] = $discountCyclesRemaining;
+
+        return $self;
+    }
+
+    /**
+     * DEPRECATED: Use discounts instead. Returns the first discount's ID if present.
+     */
+    public function withDiscountID(?string $discountID): self
+    {
+        $self = clone $this;
+        $self['discountID'] = $discountID;
+
+        return $self;
+    }
+
+    /**
+     * All stacked discounts applied, ordered by position.
+     *
+     * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
+     */
+    public function withDiscounts(?array $discounts): self
+    {
+        $self = clone $this;
+        $self['discounts'] = $discounts;
+
+        return $self;
+    }
+
+    /**
+     * Timestamp when the subscription will expire.
+     */
+    public function withExpiresAt(?\DateTimeInterface $expiresAt): self
+    {
+        $self = clone $this;
+        $self['expiresAt'] = $expiresAt;
+
+        return $self;
+    }
+
+    /**
+     * Timestamp when the subscription was paused, if it currently is (or is
+     * `OnHold` due to an unresolved pause settlement). `null` otherwise.
+     */
+    public function withPausedAt(?\DateTimeInterface $pausedAt): self
+    {
+        $self = clone $this;
+        $self['pausedAt'] = $pausedAt;
+
+        return $self;
+    }
+
+    /**
+     * Saved payment method id used for recurring charges.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
+
+        return $self;
+    }
+
+    /**
+     * @param ScheduledPlanChange|ScheduledPlanChangeShape $scheduledChange
+     */
+    public function withScheduledChange(
+        ScheduledPlanChange|array $scheduledChange
+    ): self {
+        $self = clone $this;
+        $self['scheduledChange'] = $scheduledChange;
+
+        return $self;
+    }
+
+    /**
+     * Tax identifier provided for this subscription (if applicable).
+     */
+    public function withTaxID(?string $taxID): self
+    {
+        $self = clone $this;
+        $self['taxID'] = $taxID;
+
+        return $self;
+    }
+
+    /**
+     * Per-unit trial amount after discounts, snapshotted at subscription creation
+     * (price currency minor units, pre-quantity, pre-tax). Null for a free trial or no trial.
+     */
+    public function withTrialAmount(?int $trialAmount): self
+    {
+        $self = clone $this;
+        $self['trialAmount'] = $trialAmount;
+
+        return $self;
+    }
+
+    /**
+     * Time when the grace period ends. The subscription moves to `on_hold` or
+     * to `cancelled` at this time.
+     *
+     * Read in the same query as the rest of the payload, so it always comes
+     * from the row snapshot that produced `status`. It is set whenever the
+     * subscription sits in a window at that moment. A delayed event of another
+     * type therefore carries the deadline too, next to a `past_due` status.
+     */
+    public function withPastDueEndsAt(?\DateTimeInterface $pastDueEndsAt): self
+    {
+        $self = clone $this;
+        $self['pastDueEndsAt'] = $pastDueEndsAt;
+
+        return $self;
+    }
+}

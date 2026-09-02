@@ -24,6 +24,7 @@ use Dodopayments\Misc\Currency;
  *   afterBalance?: int|null,
  *   beforeBalance?: int|null,
  *   description?: string|null,
+ *   payoutID?: string|null,
  *   referenceObjectID?: string|null,
  * }
  */
@@ -66,6 +67,9 @@ final class BalanceLedgerEntry implements BaseModel
 
     #[Optional(nullable: true)]
     public ?string $description;
+
+    #[Optional('payout_id', nullable: true)]
+    public ?string $payoutID;
 
     #[Optional('reference_object_id', nullable: true)]
     public ?string $referenceObjectID;
@@ -126,6 +130,7 @@ final class BalanceLedgerEntry implements BaseModel
         ?int $afterBalance = null,
         ?int $beforeBalance = null,
         ?string $description = null,
+        ?string $payoutID = null,
         ?string $referenceObjectID = null,
     ): self {
         $self = new self;
@@ -142,6 +147,7 @@ final class BalanceLedgerEntry implements BaseModel
         null !== $afterBalance && $self['afterBalance'] = $afterBalance;
         null !== $beforeBalance && $self['beforeBalance'] = $beforeBalance;
         null !== $description && $self['description'] = $description;
+        null !== $payoutID && $self['payoutID'] = $payoutID;
         null !== $referenceObjectID && $self['referenceObjectID'] = $referenceObjectID;
 
         return $self;
@@ -237,6 +243,14 @@ final class BalanceLedgerEntry implements BaseModel
     {
         $self = clone $this;
         $self['description'] = $description;
+
+        return $self;
+    }
+
+    public function withPayoutID(?string $payoutID): self
+    {
+        $self = clone $this;
+        $self['payoutID'] = $payoutID;
 
         return $self;
     }

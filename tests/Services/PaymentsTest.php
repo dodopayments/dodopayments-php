@@ -7,6 +7,8 @@ use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Payments\ManualRetry;
+use Dodopayments\Payments\ManualRetryState;
 use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListResponse;
@@ -116,5 +118,23 @@ final class PaymentsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(PaymentGetLineItemsResponse::class, $result);
+    }
+
+    #[Test]
+    public function testRetrieveRetryState(): void
+    {
+        $result = $this->client->payments->retrieveRetryState('payment_id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ManualRetryState::class, $result);
+    }
+
+    #[Test]
+    public function testRetry(): void
+    {
+        $result = $this->client->payments->retry('payment_id');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(ManualRetry::class, $result);
     }
 }
