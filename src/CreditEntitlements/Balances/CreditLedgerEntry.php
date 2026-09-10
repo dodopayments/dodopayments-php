@@ -77,9 +77,7 @@ final class CreditLedgerEntry implements BaseModel
     public bool $isCredit;
 
     /**
-     * Metadata associated with the credit grant's source (the subscription or
-     * payment created at checkout). Empty when the grant has no resolvable
-     * source (e.g. credits granted directly via the API).
+     * Metadata associated with this entry.
      *
      * @var array<string,MetadataItemVariants> $metadata
      */
@@ -293,9 +291,7 @@ final class CreditLedgerEntry implements BaseModel
     }
 
     /**
-     * Metadata associated with the credit grant's source (the subscription or
-     * payment created at checkout). Empty when the grant has no resolvable
-     * source (e.g. credits granted directly via the API).
+     * Metadata associated with this entry.
      *
      * @param array<string,MetadataItemShape> $metadata
      */

@@ -24,6 +24,7 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse\OneTimeProductCart;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
+ *   paymentMethodRequired: bool,
  *   recurringPreTaxAmount: int,
  *   subscriptionID: string,
  *   clientSecret?: string|null,
@@ -67,6 +68,13 @@ final class SubscriptionNewResponse implements BaseModel
      */
     #[Required('payment_id')]
     public string $paymentID;
+
+    /**
+     * False when the customer can start this subscription with no card.
+     * True for every other subscription.
+     */
+    #[Required('payment_method_required')]
+    public bool $paymentMethodRequired;
 
     /**
      * Tax will be added to the amount and charged to the customer on each billing cycle.
@@ -144,6 +152,7 @@ final class SubscriptionNewResponse implements BaseModel
      *   customer: ...,
      *   metadata: ...,
      *   paymentID: ...,
+     *   paymentMethodRequired: ...,
      *   recurringPreTaxAmount: ...,
      *   subscriptionID: ...,
      * )
@@ -157,6 +166,7 @@ final class SubscriptionNewResponse implements BaseModel
      *   ->withCustomer(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
+     *   ->withPaymentMethodRequired(...)
      *   ->withRecurringPreTaxAmount(...)
      *   ->withSubscriptionID(...)
      * ```
@@ -182,6 +192,7 @@ final class SubscriptionNewResponse implements BaseModel
         CustomerLimitedDetails|array $customer,
         array $metadata,
         string $paymentID,
+        bool $paymentMethodRequired,
         int $recurringPreTaxAmount,
         string $subscriptionID,
         ?string $clientSecret = null,
@@ -198,6 +209,7 @@ final class SubscriptionNewResponse implements BaseModel
         $self['customer'] = $customer;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
+        $self['paymentMethodRequired'] = $paymentMethodRequired;
         $self['recurringPreTaxAmount'] = $recurringPreTaxAmount;
         $self['subscriptionID'] = $subscriptionID;
 
@@ -258,6 +270,18 @@ final class SubscriptionNewResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * False when the customer can start this subscription with no card.
+     * True for every other subscription.
+     */
+    public function withPaymentMethodRequired(bool $paymentMethodRequired): self
+    {
+        $self = clone $this;
+        $self['paymentMethodRequired'] = $paymentMethodRequired;
 
         return $self;
     }

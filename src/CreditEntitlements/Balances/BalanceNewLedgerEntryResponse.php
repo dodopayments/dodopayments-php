@@ -8,9 +8,13 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\MetadataItem;
 
 /**
  * Response for creating a ledger entry.
+ *
+ * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type BalanceNewLedgerEntryResponseShape = array{
  *   id: string,
@@ -22,6 +26,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   customerID: string,
  *   entryType: LedgerEntryType|value-of<LedgerEntryType>,
  *   isCredit: bool,
+ *   metadata: array<string,MetadataItemShape>,
  *   overageAfter: string,
  *   overageBefore: string,
  *   grantID?: string|null,
@@ -61,6 +66,14 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
     #[Required('is_credit')]
     public bool $isCredit;
 
+    /**
+     * Metadata stored on this entry.
+     *
+     * @var array<string,MetadataItemVariants> $metadata
+     */
+    #[Required(map: MetadataItem::class)]
+    public array $metadata;
+
     #[Required('overage_after')]
     public string $overageAfter;
 
@@ -88,6 +101,7 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
      *   customerID: ...,
      *   entryType: ...,
      *   isCredit: ...,
+     *   metadata: ...,
      *   overageAfter: ...,
      *   overageBefore: ...,
      * )
@@ -106,6 +120,7 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
      *   ->withCustomerID(...)
      *   ->withEntryType(...)
      *   ->withIsCredit(...)
+     *   ->withMetadata(...)
      *   ->withOverageAfter(...)
      *   ->withOverageBefore(...)
      * ```
@@ -121,6 +136,7 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param LedgerEntryType|value-of<LedgerEntryType> $entryType
+     * @param array<string,MetadataItemShape> $metadata
      */
     public static function with(
         string $id,
@@ -132,6 +148,7 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
         string $customerID,
         LedgerEntryType|string $entryType,
         bool $isCredit,
+        array $metadata,
         string $overageAfter,
         string $overageBefore,
         ?string $grantID = null,
@@ -148,6 +165,7 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
         $self['customerID'] = $customerID;
         $self['entryType'] = $entryType;
         $self['isCredit'] = $isCredit;
+        $self['metadata'] = $metadata;
         $self['overageAfter'] = $overageAfter;
         $self['overageBefore'] = $overageBefore;
 
@@ -228,6 +246,19 @@ final class BalanceNewLedgerEntryResponse implements BaseModel
     {
         $self = clone $this;
         $self['isCredit'] = $isCredit;
+
+        return $self;
+    }
+
+    /**
+     * Metadata stored on this entry.
+     *
+     * @param array<string,MetadataItemShape> $metadata
+     */
+    public function withMetadata(array $metadata): self
+    {
+        $self = clone $this;
+        $self['metadata'] = $metadata;
 
         return $self;
     }

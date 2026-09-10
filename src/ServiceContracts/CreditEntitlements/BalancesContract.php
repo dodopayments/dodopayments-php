@@ -67,7 +67,7 @@ interface BalancesContract
      * @param LedgerEntryType|value-of<LedgerEntryType> $entryType Body param: Entry type: credit or debit
      * @param \DateTimeInterface|null $expiresAt Body param: Expiration for credited amount (only for credit type)
      * @param string|null $idempotencyKey Body param: Idempotency key to prevent duplicate entries
-     * @param array<string,MetadataItemShape>|null $metadata Body param: Optional metadata (max 50 key-value pairs, key max 40 chars, value max 500 chars)
+     * @param array<string,MetadataItemShape>|null $metadata body param: Optional metadata (max 50 key-value pairs, key max 40 chars, value max 500 chars)
      * @param string|null $reason Body param: Human-readable reason for the entry
      * @param RequestOpts|null $requestOptions
      *

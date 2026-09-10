@@ -26,6 +26,7 @@ use Dodopayments\Misc\Currency;
  *   currency: Currency|value-of<Currency>,
  *   currentBreakup: CurrentBreakup|CurrentBreakupShape,
  *   isByop: bool,
+ *   paymentMethodRequired: bool,
  *   productCart: list<ProductCart|ProductCartShape>,
  *   totalPrice: int,
  *   nextBillingDate?: \DateTimeInterface|null,
@@ -73,6 +74,13 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      */
     #[Required('is_byop')]
     public bool $isByop;
+
+    /**
+     * False when the customer can confirm this session with no card. True for
+     * every other cart, including a one-time cart.
+     */
+    #[Required('payment_method_required')]
+    public bool $paymentMethodRequired;
 
     /**
      * The total product cart.
@@ -152,6 +160,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      *   currency: ...,
      *   currentBreakup: ...,
      *   isByop: ...,
+     *   paymentMethodRequired: ...,
      *   productCart: ...,
      *   totalPrice: ...,
      * )
@@ -165,6 +174,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      *   ->withCurrency(...)
      *   ->withCurrentBreakup(...)
      *   ->withIsByop(...)
+     *   ->withPaymentMethodRequired(...)
      *   ->withProductCart(...)
      *   ->withTotalPrice(...)
      * ```
@@ -190,6 +200,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         Currency|string $currency,
         CurrentBreakup|array $currentBreakup,
         bool $isByop,
+        bool $paymentMethodRequired,
         array $productCart,
         int $totalPrice,
         ?\DateTimeInterface $nextBillingDate = null,
@@ -207,6 +218,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         $self['currency'] = $currency;
         $self['currentBreakup'] = $currentBreakup;
         $self['isByop'] = $isByop;
+        $self['paymentMethodRequired'] = $paymentMethodRequired;
         $self['productCart'] = $productCart;
         $self['totalPrice'] = $totalPrice;
 
@@ -272,6 +284,18 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     {
         $self = clone $this;
         $self['isByop'] = $isByop;
+
+        return $self;
+    }
+
+    /**
+     * False when the customer can confirm this session with no card. True for
+     * every other cart, including a one-time cart.
+     */
+    public function withPaymentMethodRequired(bool $paymentMethodRequired): self
+    {
+        $self = clone $this;
+        $self['paymentMethodRequired'] = $paymentMethodRequired;
 
         return $self;
     }

@@ -18,6 +18,7 @@ use Dodopayments\Entitlements\Grants\EntitlementGrant;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersContract;
 use Dodopayments\Services\Customers\CustomerPortalService;
+use Dodopayments\Services\Customers\EmailsService;
 use Dodopayments\Services\Customers\WalletsService;
 
 /**
@@ -42,6 +43,11 @@ final class CustomersService implements CustomersContract
     public WalletsService $wallets;
 
     /**
+     * @api
+     */
+    public EmailsService $emails;
+
+    /**
      * @internal
      */
     public function __construct(private Client $client)
@@ -49,6 +55,7 @@ final class CustomersService implements CustomersContract
         $this->raw = new CustomersRawService($client);
         $this->customerPortal = new CustomerPortalService($client);
         $this->wallets = new WalletsService($client);
+        $this->emails = new EmailsService($client);
     }
 
     /**
