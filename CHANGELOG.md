@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.25.0](https://github.com/dodopayments/dodopayments-php/compare/v6.24.0...v6.25.0) (2026-09-10)
+
+
+### Features
+
+* **api:** add customer email logs ([18e1be2](https://github.com/dodopayments/dodopayments-php/commit/18e1be2388e606ae918ea240c39591099076747a))
+* **api:** add customer email logs ([69cbfb6](https://github.com/dodopayments/dodopayments-php/commit/69cbfb61918d20064471008484cf68212bebbee9))
+
 ## [6.24.0](https://github.com/dodopayments/dodopayments-php/compare/v6.23.0...v6.24.0) (2026-09-01)
 
 
