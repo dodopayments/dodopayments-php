@@ -19,13 +19,14 @@ use Dodopayments\Subscriptions\TimeInterval;
  *
  * @phpstan-type UsageBasedPriceShape = array{
  *   currency: Currency|value-of<Currency>,
- *   discount: int,
  *   fixedPrice: int,
  *   paymentFrequencyCount: int,
  *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   type: 'usage_based_price',
+ *   discount?: int|null,
+ *   discountBps?: int|null,
  *   meters?: list<AddMeterToPrice|AddMeterToPriceShape>|null,
  *   purchasingPowerParity?: bool|null,
  *   taxInclusive?: bool|null,
@@ -47,12 +48,6 @@ final class UsageBasedPrice implements BaseModel
      */
     #[Required(enum: Currency::class)]
     public string $currency;
-
-    /**
-     * Discount applied to the price, represented as a percentage (0 to 100).
-     */
-    #[Required]
-    public int $discount;
 
     /**
      * The fixed payment amount. Represented in the lowest denomination of the currency (e.g., cents for USD).
@@ -91,6 +86,29 @@ final class UsageBasedPrice implements BaseModel
     #[Required('subscription_period_interval', enum: TimeInterval::class)]
     public string $subscriptionPeriodInterval;
 
+    /**
+     * @deprecated
+     *
+     * Deprecated: use `discount_bps` instead.
+     *
+     * Discount applied to the price, represented as a percentage (0 to 100).
+     * A response rounds this value to the nearest whole percent.
+     * Defaults to `0`.
+     */
+    #[Optional]
+    public ?int $discount;
+
+    /**
+     * Discount applied to the price, in basis points. 100 basis points make
+     * one percent, so `1250` is a discount of 12.5%.
+     *
+     * Use this field for a discount with a fraction of a percent. A request
+     * that sends this field ignores `discount`. A value of `0` gives no
+     * discount.
+     */
+    #[Optional('discount_bps', nullable: true)]
+    public ?int $discountBps;
+
     /** @var list<AddMeterToPrice>|null $meters */
     #[Optional(list: AddMeterToPrice::class, nullable: true)]
     public ?array $meters;
@@ -117,7 +135,6 @@ final class UsageBasedPrice implements BaseModel
      * ```
      * UsageBasedPrice::with(
      *   currency: ...,
-     *   discount: ...,
      *   fixedPrice: ...,
      *   paymentFrequencyCount: ...,
      *   paymentFrequencyInterval: ...,
@@ -131,7 +148,6 @@ final class UsageBasedPrice implements BaseModel
      * ```
      * (new UsageBasedPrice)
      *   ->withCurrency(...)
-     *   ->withDiscount(...)
      *   ->withFixedPrice(...)
      *   ->withPaymentFrequencyCount(...)
      *   ->withPaymentFrequencyInterval(...)
@@ -156,12 +172,13 @@ final class UsageBasedPrice implements BaseModel
      */
     public static function with(
         Currency|string $currency,
-        int $discount,
         int $fixedPrice,
         int $paymentFrequencyCount,
         TimeInterval|string $paymentFrequencyInterval,
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
+        ?int $discount = null,
+        ?int $discountBps = null,
         ?array $meters = null,
         ?bool $purchasingPowerParity = null,
         ?bool $taxInclusive = null,
@@ -169,13 +186,14 @@ final class UsageBasedPrice implements BaseModel
         $self = new self;
 
         $self['currency'] = $currency;
-        $self['discount'] = $discount;
         $self['fixedPrice'] = $fixedPrice;
         $self['paymentFrequencyCount'] = $paymentFrequencyCount;
         $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
         $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
+        null !== $discount && $self['discount'] = $discount;
+        null !== $discountBps && $self['discountBps'] = $discountBps;
         null !== $meters && $self['meters'] = $meters;
         null !== $purchasingPowerParity && $self['purchasingPowerParity'] = $purchasingPowerParity;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
@@ -192,17 +210,6 @@ final class UsageBasedPrice implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
-
-        return $self;
-    }
-
-    /**
-     * Discount applied to the price, represented as a percentage (0 to 100).
-     */
-    public function withDiscount(int $discount): self
-    {
-        $self = clone $this;
-        $self['discount'] = $discount;
 
         return $self;
     }
@@ -279,6 +286,37 @@ final class UsageBasedPrice implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Deprecated: use `discount_bps` instead.
+     *
+     * Discount applied to the price, represented as a percentage (0 to 100).
+     * A response rounds this value to the nearest whole percent.
+     * Defaults to `0`.
+     */
+    public function withDiscount(int $discount): self
+    {
+        $self = clone $this;
+        $self['discount'] = $discount;
+
+        return $self;
+    }
+
+    /**
+     * Discount applied to the price, in basis points. 100 basis points make
+     * one percent, so `1250` is a discount of 12.5%.
+     *
+     * Use this field for a discount with a fraction of a percent. A request
+     * that sends this field ignores `discount`. A value of `0` gives no
+     * discount.
+     */
+    public function withDiscountBps(?int $discountBps): self
+    {
+        $self = clone $this;
+        $self['discountBps'] = $discountBps;
 
         return $self;
     }

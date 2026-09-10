@@ -42,10 +42,7 @@ final class ProductsTest extends TestCase
         $result = $this->client->products->create(
             name: 'name',
             price: [
-                'currency' => Currency::AED,
-                'discount' => 0,
-                'price' => 0,
-                'type' => 'one_time_price',
+                'currency' => Currency::AED, 'price' => 0, 'type' => 'one_time_price',
             ],
             taxCategory: TaxCategory::DIGITAL_PRODUCTS,
         );
@@ -61,9 +58,10 @@ final class ProductsTest extends TestCase
             name: 'name',
             price: [
                 'currency' => Currency::AED,
-                'discount' => 0,
                 'price' => 0,
                 'type' => 'one_time_price',
+                'discount' => 0,
+                'discountBps' => 0,
                 'payWhatYouWant' => true,
                 'purchasingPowerParity' => true,
                 'suggestedPrice' => 0,
