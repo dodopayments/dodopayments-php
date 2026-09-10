@@ -16,18 +16,21 @@ use Dodopayments\Subscriptions\TimeInterval;
  *
  * @phpstan-type RecurringPriceShape = array{
  *   currency: Currency|value-of<Currency>,
- *   discount: int,
  *   paymentFrequencyCount: int,
  *   paymentFrequencyInterval: TimeInterval|value-of<TimeInterval>,
  *   price: int,
  *   subscriptionPeriodCount: int,
  *   subscriptionPeriodInterval: TimeInterval|value-of<TimeInterval>,
  *   type: 'recurring_price',
+ *   discount?: int|null,
+ *   discountBps?: int|null,
  *   purchasingPowerParity?: bool|null,
  *   taxInclusive?: bool|null,
  *   trialAmount?: int|null,
  *   trialApplyDiscounts?: bool|null,
+ *   trialPaymentMethodOptional?: bool|null,
  *   trialPeriodDays?: int|null,
+ *   zeroAmountPaymentMethodOptional?: bool|null,
  * }
  */
 final class RecurringPrice implements BaseModel
@@ -46,12 +49,6 @@ final class RecurringPrice implements BaseModel
      */
     #[Required(enum: Currency::class)]
     public string $currency;
-
-    /**
-     * Discount applied to the price, represented as a percentage (0 to 100).
-     */
-    #[Required]
-    public int $discount;
 
     /**
      * Number of units for the payment frequency.
@@ -91,6 +88,29 @@ final class RecurringPrice implements BaseModel
     public string $subscriptionPeriodInterval;
 
     /**
+     * @deprecated
+     *
+     * Deprecated: use `discount_bps` instead.
+     *
+     * Discount applied to the price, represented as a percentage (0 to 100).
+     * A response rounds this value to the nearest whole percent.
+     * Defaults to `0`.
+     */
+    #[Optional]
+    public ?int $discount;
+
+    /**
+     * Discount applied to the price, in basis points. 100 basis points make
+     * one percent, so `1250` is a discount of 12.5%.
+     *
+     * Use this field for a discount with a fraction of a percent. A request
+     * that sends this field ignores `discount`. A value of `0` gives no
+     * discount.
+     */
+    #[Optional('discount_bps', nullable: true)]
+    public ?int $discountBps;
+
+    /**
      * Opts this price in to purchasing power parity. The business must also
      * enable purchasing power parity. The discount percentage per country is
      * always business-wide. Defaults to `false`.
@@ -119,10 +139,23 @@ final class RecurringPrice implements BaseModel
     public ?bool $trialApplyDiscounts;
 
     /**
+     * Let a customer start a free trial with no card. Defaults to false.
+     */
+    #[Optional('trial_payment_method_optional')]
+    public ?bool $trialPaymentMethodOptional;
+
+    /**
      * Number of days for the trial period. A value of `0` indicates no trial period.
      */
     #[Optional('trial_period_days')]
     public ?int $trialPeriodDays;
+
+    /**
+     * Let a customer start a subscription with no card, when the amount due
+     * today is `0` (a native `0` price, or a 100% discount). Defaults to false.
+     */
+    #[Optional('zero_amount_payment_method_optional')]
+    public ?bool $zeroAmountPaymentMethodOptional;
 
     /**
      * `new RecurringPrice()` is missing required properties by the API.
@@ -131,7 +164,6 @@ final class RecurringPrice implements BaseModel
      * ```
      * RecurringPrice::with(
      *   currency: ...,
-     *   discount: ...,
      *   paymentFrequencyCount: ...,
      *   paymentFrequencyInterval: ...,
      *   price: ...,
@@ -145,7 +177,6 @@ final class RecurringPrice implements BaseModel
      * ```
      * (new RecurringPrice)
      *   ->withCurrency(...)
-     *   ->withDiscount(...)
      *   ->withPaymentFrequencyCount(...)
      *   ->withPaymentFrequencyInterval(...)
      *   ->withPrice(...)
@@ -169,33 +200,39 @@ final class RecurringPrice implements BaseModel
      */
     public static function with(
         Currency|string $currency,
-        int $discount,
         int $paymentFrequencyCount,
         TimeInterval|string $paymentFrequencyInterval,
         int $price,
         int $subscriptionPeriodCount,
         TimeInterval|string $subscriptionPeriodInterval,
+        ?int $discount = null,
+        ?int $discountBps = null,
         ?bool $purchasingPowerParity = null,
         ?bool $taxInclusive = null,
         ?int $trialAmount = null,
         ?bool $trialApplyDiscounts = null,
+        ?bool $trialPaymentMethodOptional = null,
         ?int $trialPeriodDays = null,
+        ?bool $zeroAmountPaymentMethodOptional = null,
     ): self {
         $self = new self;
 
         $self['currency'] = $currency;
-        $self['discount'] = $discount;
         $self['paymentFrequencyCount'] = $paymentFrequencyCount;
         $self['paymentFrequencyInterval'] = $paymentFrequencyInterval;
         $self['price'] = $price;
         $self['subscriptionPeriodCount'] = $subscriptionPeriodCount;
         $self['subscriptionPeriodInterval'] = $subscriptionPeriodInterval;
 
+        null !== $discount && $self['discount'] = $discount;
+        null !== $discountBps && $self['discountBps'] = $discountBps;
         null !== $purchasingPowerParity && $self['purchasingPowerParity'] = $purchasingPowerParity;
         null !== $taxInclusive && $self['taxInclusive'] = $taxInclusive;
         null !== $trialAmount && $self['trialAmount'] = $trialAmount;
         null !== $trialApplyDiscounts && $self['trialApplyDiscounts'] = $trialApplyDiscounts;
+        null !== $trialPaymentMethodOptional && $self['trialPaymentMethodOptional'] = $trialPaymentMethodOptional;
         null !== $trialPeriodDays && $self['trialPeriodDays'] = $trialPeriodDays;
+        null !== $zeroAmountPaymentMethodOptional && $self['zeroAmountPaymentMethodOptional'] = $zeroAmountPaymentMethodOptional;
 
         return $self;
     }
@@ -209,17 +246,6 @@ final class RecurringPrice implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
-
-        return $self;
-    }
-
-    /**
-     * Discount applied to the price, represented as a percentage (0 to 100).
-     */
-    public function withDiscount(int $discount): self
-    {
-        $self = clone $this;
-        $self['discount'] = $discount;
 
         return $self;
     }
@@ -301,6 +327,37 @@ final class RecurringPrice implements BaseModel
     }
 
     /**
+     * Deprecated: use `discount_bps` instead.
+     *
+     * Discount applied to the price, represented as a percentage (0 to 100).
+     * A response rounds this value to the nearest whole percent.
+     * Defaults to `0`.
+     */
+    public function withDiscount(int $discount): self
+    {
+        $self = clone $this;
+        $self['discount'] = $discount;
+
+        return $self;
+    }
+
+    /**
+     * Discount applied to the price, in basis points. 100 basis points make
+     * one percent, so `1250` is a discount of 12.5%.
+     *
+     * Use this field for a discount with a fraction of a percent. A request
+     * that sends this field ignores `discount`. A value of `0` gives no
+     * discount.
+     */
+    public function withDiscountBps(?int $discountBps): self
+    {
+        $self = clone $this;
+        $self['discountBps'] = $discountBps;
+
+        return $self;
+    }
+
+    /**
      * Opts this price in to purchasing power parity. The business must also
      * enable purchasing power parity. The discount percentage per country is
      * always business-wide. Defaults to `false`.
@@ -349,12 +406,37 @@ final class RecurringPrice implements BaseModel
     }
 
     /**
+     * Let a customer start a free trial with no card. Defaults to false.
+     */
+    public function withTrialPaymentMethodOptional(
+        bool $trialPaymentMethodOptional
+    ): self {
+        $self = clone $this;
+        $self['trialPaymentMethodOptional'] = $trialPaymentMethodOptional;
+
+        return $self;
+    }
+
+    /**
      * Number of days for the trial period. A value of `0` indicates no trial period.
      */
     public function withTrialPeriodDays(int $trialPeriodDays): self
     {
         $self = clone $this;
         $self['trialPeriodDays'] = $trialPeriodDays;
+
+        return $self;
+    }
+
+    /**
+     * Let a customer start a subscription with no card, when the amount due
+     * today is `0` (a native `0` price, or a 100% discount). Defaults to false.
+     */
+    public function withZeroAmountPaymentMethodOptional(
+        bool $zeroAmountPaymentMethodOptional
+    ): self {
+        $self = clone $this;
+        $self['zeroAmountPaymentMethodOptional'] = $zeroAmountPaymentMethodOptional;
 
         return $self;
     }

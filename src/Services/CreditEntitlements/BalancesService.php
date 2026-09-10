@@ -145,6 +145,7 @@ final class BalancesService implements BalancesContract
      * - `reason` - Optional human-readable reason
      * - `expires_at` - Optional expiration for credited amount (only for credit type)
      * - `idempotency_key` - Optional key to prevent duplicate entries
+     * - `metadata` - Optional key-value pairs
      *
      * # Responses
      * - `201 Created` - Ledger entry created successfully
@@ -161,7 +162,7 @@ final class BalancesService implements BalancesContract
      * @param LedgerEntryType|value-of<LedgerEntryType> $entryType Body param: Entry type: credit or debit
      * @param \DateTimeInterface|null $expiresAt Body param: Expiration for credited amount (only for credit type)
      * @param string|null $idempotencyKey Body param: Idempotency key to prevent duplicate entries
-     * @param array<string,MetadataItemShape>|null $metadata Body param: Optional metadata (max 50 key-value pairs, key max 40 chars, value max 500 chars)
+     * @param array<string,MetadataItemShape>|null $metadata body param: Optional metadata (max 50 key-value pairs, key max 40 chars, value max 500 chars)
      * @param string|null $reason Body param: Human-readable reason for the entry
      * @param RequestOpts|null $requestOptions
      *
