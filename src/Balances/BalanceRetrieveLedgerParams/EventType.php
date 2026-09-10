@@ -52,4 +52,8 @@ enum EventType: string
     case PAYMENT_RETRY_FEE = 'payment_retry_fee';
 
     case BYOP_FEE = 'byop_fee';
+
+    case ETHOCA_FEES = 'ethoca_fees';
+
+    case ETHOCA_FEES_REVERSAL = 'ethoca_fees_reversal';
 }

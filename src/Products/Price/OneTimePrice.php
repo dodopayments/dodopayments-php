@@ -15,9 +15,10 @@ use Dodopayments\Misc\Currency;
  *
  * @phpstan-type OneTimePriceShape = array{
  *   currency: Currency|value-of<Currency>,
- *   discount: int,
  *   price: int,
  *   type: 'one_time_price',
+ *   discount?: int|null,
+ *   discountBps?: int|null,
  *   payWhatYouWant?: bool|null,
  *   purchasingPowerParity?: bool|null,
  *   suggestedPrice?: int|null,
@@ -42,12 +43,6 @@ final class OneTimePrice implements BaseModel
     public string $currency;
 
     /**
-     * Discount applied to the price, represented as a percentage (0 to 100).
-     */
-    #[Required]
-    public int $discount;
-
-    /**
      * The payment amount, in the smallest denomination of the currency (e.g., cents for USD).
      * For example, to charge $1.00, pass `100`.
      *
@@ -56,6 +51,29 @@ final class OneTimePrice implements BaseModel
      */
     #[Required]
     public int $price;
+
+    /**
+     * @deprecated
+     *
+     * Deprecated: use `discount_bps` instead.
+     *
+     * Discount applied to the price, represented as a percentage (0 to 100).
+     * A response rounds this value to the nearest whole percent.
+     * Defaults to `0`.
+     */
+    #[Optional]
+    public ?int $discount;
+
+    /**
+     * Discount applied to the price, in basis points. 100 basis points make
+     * one percent, so `1250` is a discount of 12.5%.
+     *
+     * Use this field for a discount with a fraction of a percent. A request
+     * that sends this field ignores `discount`. A value of `0` gives no
+     * discount.
+     */
+    #[Optional('discount_bps', nullable: true)]
+    public ?int $discountBps;
 
     /**
      * Indicates whether the customer can pay any amount they choose.
@@ -90,13 +108,13 @@ final class OneTimePrice implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * OneTimePrice::with(currency: ..., discount: ..., price: ...)
+     * OneTimePrice::with(currency: ..., price: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new OneTimePrice)->withCurrency(...)->withDiscount(...)->withPrice(...)
+     * (new OneTimePrice)->withCurrency(...)->withPrice(...)
      * ```
      */
     public function __construct()
@@ -113,8 +131,9 @@ final class OneTimePrice implements BaseModel
      */
     public static function with(
         Currency|string $currency,
-        int $discount,
         int $price,
+        ?int $discount = null,
+        ?int $discountBps = null,
         ?bool $payWhatYouWant = null,
         ?bool $purchasingPowerParity = null,
         ?int $suggestedPrice = null,
@@ -123,9 +142,10 @@ final class OneTimePrice implements BaseModel
         $self = new self;
 
         $self['currency'] = $currency;
-        $self['discount'] = $discount;
         $self['price'] = $price;
 
+        null !== $discount && $self['discount'] = $discount;
+        null !== $discountBps && $self['discountBps'] = $discountBps;
         null !== $payWhatYouWant && $self['payWhatYouWant'] = $payWhatYouWant;
         null !== $purchasingPowerParity && $self['purchasingPowerParity'] = $purchasingPowerParity;
         null !== $suggestedPrice && $self['suggestedPrice'] = $suggestedPrice;
@@ -143,17 +163,6 @@ final class OneTimePrice implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
-
-        return $self;
-    }
-
-    /**
-     * Discount applied to the price, represented as a percentage (0 to 100).
-     */
-    public function withDiscount(int $discount): self
-    {
-        $self = clone $this;
-        $self['discount'] = $discount;
 
         return $self;
     }
@@ -180,6 +189,37 @@ final class OneTimePrice implements BaseModel
     {
         $self = clone $this;
         $self['type'] = $type;
+
+        return $self;
+    }
+
+    /**
+     * Deprecated: use `discount_bps` instead.
+     *
+     * Discount applied to the price, represented as a percentage (0 to 100).
+     * A response rounds this value to the nearest whole percent.
+     * Defaults to `0`.
+     */
+    public function withDiscount(int $discount): self
+    {
+        $self = clone $this;
+        $self['discount'] = $discount;
+
+        return $self;
+    }
+
+    /**
+     * Discount applied to the price, in basis points. 100 basis points make
+     * one percent, so `1250` is a discount of 12.5%.
+     *
+     * Use this field for a discount with a fraction of a percent. A request
+     * that sends this field ignores `discount`. A value of `0` gives no
+     * discount.
+     */
+    public function withDiscountBps(?int $discountBps): self
+    {
+        $self = clone $this;
+        $self['discountBps'] = $discountBps;
 
         return $self;
     }

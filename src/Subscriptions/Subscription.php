@@ -39,6 +39,7 @@ use Dodopayments\Payments\CustomFieldResponse;
  *   creditEntitlementCart: list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape>,
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
+ *   hasPaymentMethod: bool,
  *   metadata: array<string,MetadataItemShape>,
  *   meterCreditEntitlementCart: list<MeterCreditEntitlementCartResponse|MeterCreditEntitlementCartResponseShape>,
  *   meters: list<MeterCartResponseItem|MeterCartResponseItemShape>,
@@ -133,6 +134,13 @@ final class Subscription implements BaseModel
      */
     #[Required]
     public CustomerLimitedDetails $customer;
+
+    /**
+     * Whether a payment method is on file. False while a card-optional
+     * subscription waits for the customer to add one.
+     */
+    #[Required('has_payment_method')]
+    public bool $hasPaymentMethod;
 
     /**
      * Additional custom data associated with the subscription.
@@ -367,6 +375,7 @@ final class Subscription implements BaseModel
      *   creditEntitlementCart: ...,
      *   currency: ...,
      *   customer: ...,
+     *   hasPaymentMethod: ...,
      *   metadata: ...,
      *   meterCreditEntitlementCart: ...,
      *   meters: ...,
@@ -399,6 +408,7 @@ final class Subscription implements BaseModel
      *   ->withCreditEntitlementCart(...)
      *   ->withCurrency(...)
      *   ->withCustomer(...)
+     *   ->withHasPaymentMethod(...)
      *   ->withMetadata(...)
      *   ->withMeterCreditEntitlementCart(...)
      *   ->withMeters(...)
@@ -453,6 +463,7 @@ final class Subscription implements BaseModel
         array $creditEntitlementCart,
         Currency|string $currency,
         CustomerLimitedDetails|array $customer,
+        bool $hasPaymentMethod,
         array $metadata,
         array $meterCreditEntitlementCart,
         array $meters,
@@ -495,6 +506,7 @@ final class Subscription implements BaseModel
         $self['creditEntitlementCart'] = $creditEntitlementCart;
         $self['currency'] = $currency;
         $self['customer'] = $customer;
+        $self['hasPaymentMethod'] = $hasPaymentMethod;
         $self['metadata'] = $metadata;
         $self['meterCreditEntitlementCart'] = $meterCreditEntitlementCart;
         $self['meters'] = $meters;
@@ -627,6 +639,18 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['customer'] = $customer;
+
+        return $self;
+    }
+
+    /**
+     * Whether a payment method is on file. False while a card-optional
+     * subscription waits for the customer to add one.
+     */
+    public function withHasPaymentMethod(bool $hasPaymentMethod): self
+    {
+        $self = clone $this;
+        $self['hasPaymentMethod'] = $hasPaymentMethod;
 
         return $self;
     }

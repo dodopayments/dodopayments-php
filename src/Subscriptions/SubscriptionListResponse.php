@@ -31,6 +31,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  *   currency: Currency|value-of<Currency>,
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   discounts: list<Discount|DiscountShape>,
+ *   hasPaymentMethod: bool,
  *   metadata: array<string,MetadataItemShape>,
  *   nextBillingDate: \DateTimeInterface,
  *   onDemand: bool,
@@ -102,6 +103,13 @@ final class SubscriptionListResponse implements BaseModel
      */
     #[Required(list: Discount::class)]
     public array $discounts;
+
+    /**
+     * Whether a payment method is on file. False while a card-optional
+     * subscription waits for the customer to add one.
+     */
+    #[Required('has_payment_method')]
+    public bool $hasPaymentMethod;
 
     /**
      * Additional custom data associated with the subscription.
@@ -277,6 +285,7 @@ final class SubscriptionListResponse implements BaseModel
      *   currency: ...,
      *   customer: ...,
      *   discounts: ...,
+     *   hasPaymentMethod: ...,
      *   metadata: ...,
      *   nextBillingDate: ...,
      *   onDemand: ...,
@@ -305,6 +314,7 @@ final class SubscriptionListResponse implements BaseModel
      *   ->withCurrency(...)
      *   ->withCustomer(...)
      *   ->withDiscounts(...)
+     *   ->withHasPaymentMethod(...)
      *   ->withMetadata(...)
      *   ->withNextBillingDate(...)
      *   ->withOnDemand(...)
@@ -349,6 +359,7 @@ final class SubscriptionListResponse implements BaseModel
         Currency|string $currency,
         CustomerLimitedDetails|array $customer,
         array $discounts,
+        bool $hasPaymentMethod,
         array $metadata,
         \DateTimeInterface $nextBillingDate,
         bool $onDemand,
@@ -383,6 +394,7 @@ final class SubscriptionListResponse implements BaseModel
         $self['currency'] = $currency;
         $self['customer'] = $customer;
         $self['discounts'] = $discounts;
+        $self['hasPaymentMethod'] = $hasPaymentMethod;
         $self['metadata'] = $metadata;
         $self['nextBillingDate'] = $nextBillingDate;
         $self['onDemand'] = $onDemand;
@@ -484,6 +496,18 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['discounts'] = $discounts;
+
+        return $self;
+    }
+
+    /**
+     * Whether a payment method is on file. False while a card-optional
+     * subscription waits for the customer to add one.
+     */
+    public function withHasPaymentMethod(bool $hasPaymentMethod): self
+    {
+        $self = clone $this;
+        $self['hasPaymentMethod'] = $hasPaymentMethod;
 
         return $self;
     }
