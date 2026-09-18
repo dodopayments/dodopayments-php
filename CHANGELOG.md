@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.26.0](https://github.com/dodopayments/dodopayments-php/compare/v6.25.0...v6.26.0) (2026-09-18)
+
+
+### Features
+
+* **api:** tax id checkout flag, ledger event types, email policy fields ([f2d3cf8](https://github.com/dodopayments/dodopayments-php/commit/f2d3cf86416304efc7595a4bea997015ebe7b5e8))
+* **api:** tax id checkout flag, ledger event types, email policy fields ([7892095](https://github.com/dodopayments/dodopayments-php/commit/7892095ba920156f0b1b74cd162823caaabf7460))
+
+
+### Chores
+
+* add Dependabot config for GitHub Actions ([390d1e1](https://github.com/dodopayments/dodopayments-php/commit/390d1e171976652e5804dc6092be00af819c9d74))
+
 ## [6.25.0](https://github.com/dodopayments/dodopayments-php/compare/v6.24.0...v6.25.0) (2026-09-10)
 
 
