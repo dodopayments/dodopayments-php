@@ -27,4 +27,6 @@ enum EmailFailureCode: string
     case MARKED_AS_SPAM = 'marked_as_spam';
 
     case SEND_FAILED = 'send_failed';
+
+    case TEST_MODE_QUOTA_SPENT = 'test_mode_quota_spent';
 }

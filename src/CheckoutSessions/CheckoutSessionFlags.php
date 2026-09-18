@@ -27,6 +27,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   alwaysCreateNewCustomer?: bool|null,
  *   redirectImmediately?: bool|null,
  *   requirePhoneNumber?: bool|null,
+ *   requireTaxID?: bool|null,
  *   singlePage?: bool|null,
  * }
  */
@@ -139,6 +140,22 @@ final class CheckoutSessionFlags implements BaseModel
     public ?bool $requirePhoneNumber;
 
     /**
+     * If true, the customer must give a tax id to check out as a business.
+     * A tax id is the GST number in India, or the VAT number in the EU.
+     * You must also set `allow_tax_id` to true.
+     *
+     * On the checkout page, this field does not change checkout for a customer
+     * who buys as an individual.
+     *
+     * A `confirm: true` request skips the checkout page. The request must
+     * contain `tax_id`.
+     *
+     * Default is false
+     */
+    #[Optional('require_tax_id')]
+    public ?bool $requireTaxID;
+
+    /**
      * If true, the session uses the single-page checkout flow: the page
      * initializes the payment at load time and confirms it in
      * place, with no separate payment page.
@@ -176,6 +193,7 @@ final class CheckoutSessionFlags implements BaseModel
         ?bool $alwaysCreateNewCustomer = null,
         ?bool $redirectImmediately = null,
         ?bool $requirePhoneNumber = null,
+        ?bool $requireTaxID = null,
         ?bool $singlePage = null,
     ): self {
         $self = new self;
@@ -197,6 +215,7 @@ final class CheckoutSessionFlags implements BaseModel
         null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
         null !== $requirePhoneNumber && $self['requirePhoneNumber'] = $requirePhoneNumber;
+        null !== $requireTaxID && $self['requireTaxID'] = $requireTaxID;
         null !== $singlePage && $self['singlePage'] = $singlePage;
 
         return $self;
@@ -398,6 +417,27 @@ final class CheckoutSessionFlags implements BaseModel
     {
         $self = clone $this;
         $self['requirePhoneNumber'] = $requirePhoneNumber;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer must give a tax id to check out as a business.
+     * A tax id is the GST number in India, or the VAT number in the EU.
+     * You must also set `allow_tax_id` to true.
+     *
+     * On the checkout page, this field does not change checkout for a customer
+     * who buys as an individual.
+     *
+     * A `confirm: true` request skips the checkout page. The request must
+     * contain `tax_id`.
+     *
+     * Default is false
+     */
+    public function withRequireTaxID(bool $requireTaxID): self
+    {
+        $self = clone $this;
+        $self['requireTaxID'] = $requireTaxID;
 
         return $self;
     }
