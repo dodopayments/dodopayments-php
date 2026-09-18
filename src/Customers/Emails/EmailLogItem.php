@@ -23,7 +23,6 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   failureCode?: null|EmailFailureCode|value-of<EmailFailureCode>,
  *   failureReason?: string|null,
  *   from?: string|null,
- *   intendedRecipient?: string|null,
  *   recipient?: string|null,
  *   subject?: string|null,
  * }
@@ -101,13 +100,6 @@ final class EmailLogItem implements BaseModel
     public ?string $from;
 
     /**
-     * What the merchant typed, when test mode redirected the send to the
-     * business owner.
-     */
-    #[Optional('intended_recipient', nullable: true)]
-    public ?string $intendedRecipient;
-
-    /**
      * The address the email reached.
      */
     #[Optional(nullable: true)]
@@ -173,7 +165,6 @@ final class EmailLogItem implements BaseModel
         EmailFailureCode|string|null $failureCode = null,
         ?string $failureReason = null,
         ?string $from = null,
-        ?string $intendedRecipient = null,
         ?string $recipient = null,
         ?string $subject = null,
     ): self {
@@ -190,7 +181,6 @@ final class EmailLogItem implements BaseModel
         null !== $failureCode && $self['failureCode'] = $failureCode;
         null !== $failureReason && $self['failureReason'] = $failureReason;
         null !== $from && $self['from'] = $from;
-        null !== $intendedRecipient && $self['intendedRecipient'] = $intendedRecipient;
         null !== $recipient && $self['recipient'] = $recipient;
         null !== $subject && $self['subject'] = $subject;
 
@@ -313,18 +303,6 @@ final class EmailLogItem implements BaseModel
     {
         $self = clone $this;
         $self['from'] = $from;
-
-        return $self;
-    }
-
-    /**
-     * What the merchant typed, when test mode redirected the send to the
-     * business owner.
-     */
-    public function withIntendedRecipient(?string $intendedRecipient): self
-    {
-        $self = clone $this;
-        $self['intendedRecipient'] = $intendedRecipient;
 
         return $self;
     }
