@@ -17,6 +17,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   resendAllowed: bool,
  *   resendsRemaining: int,
  *   retryAllowed: bool,
+ *   superseded: bool,
  * }
  */
 final class EmailPolicies implements BaseModel
@@ -49,6 +50,13 @@ final class EmailPolicies implements BaseModel
     public bool $retryAllowed;
 
     /**
+     * A later send of this email reached the provider, so this row is history.
+     * To send it again would deliver a second copy.
+     */
+    #[Required]
+    public bool $superseded;
+
+    /**
      * `new EmailPolicies()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -58,6 +66,7 @@ final class EmailPolicies implements BaseModel
      *   resendAllowed: ...,
      *   resendsRemaining: ...,
      *   retryAllowed: ...,
+     *   superseded: ...,
      * )
      * ```
      *
@@ -69,6 +78,7 @@ final class EmailPolicies implements BaseModel
      *   ->withResendAllowed(...)
      *   ->withResendsRemaining(...)
      *   ->withRetryAllowed(...)
+     *   ->withSuperseded(...)
      * ```
      */
     public function __construct()
@@ -86,6 +96,7 @@ final class EmailPolicies implements BaseModel
         bool $resendAllowed,
         int $resendsRemaining,
         bool $retryAllowed,
+        bool $superseded,
     ): self {
         $self = new self;
 
@@ -93,6 +104,7 @@ final class EmailPolicies implements BaseModel
         $self['resendAllowed'] = $resendAllowed;
         $self['resendsRemaining'] = $resendsRemaining;
         $self['retryAllowed'] = $retryAllowed;
+        $self['superseded'] = $superseded;
 
         return $self;
     }
@@ -138,6 +150,18 @@ final class EmailPolicies implements BaseModel
     {
         $self = clone $this;
         $self['retryAllowed'] = $retryAllowed;
+
+        return $self;
+    }
+
+    /**
+     * A later send of this email reached the provider, so this row is history.
+     * To send it again would deliver a second copy.
+     */
+    public function withSuperseded(bool $superseded): self
+    {
+        $self = clone $this;
+        $self['superseded'] = $superseded;
 
         return $self;
     }

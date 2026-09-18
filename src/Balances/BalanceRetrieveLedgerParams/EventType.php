@@ -56,4 +56,12 @@ enum EventType: string
     case ETHOCA_FEES = 'ethoca_fees';
 
     case ETHOCA_FEES_REVERSAL = 'ethoca_fees_reversal';
+
+    case VISA_RDR_FEE = 'visa_rdr_fee';
+
+    case DISPUTE_FEES_REVERSAL = 'dispute_fees_reversal';
+
+    case DEFLECTION_FEES = 'deflection_fees';
+
+    case DEFLECTION_FEES_REVERSAL = 'deflection_fees_reversal';
 }
