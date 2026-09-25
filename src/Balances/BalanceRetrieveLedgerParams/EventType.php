@@ -64,4 +64,10 @@ enum EventType: string
     case DEFLECTION_FEES = 'deflection_fees';
 
     case DEFLECTION_FEES_REVERSAL = 'deflection_fees_reversal';
+
+    case RESERVE_HOLD = 'reserve_hold';
+
+    case RESERVE_RELEASE = 'reserve_release';
+
+    case MODERATION_FEES = 'moderation_fees';
 }

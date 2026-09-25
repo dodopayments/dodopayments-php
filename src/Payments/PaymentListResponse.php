@@ -25,9 +25,11 @@ use Dodopayments\Payments\PaymentListResponse\PaymentProvider;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   hasLicenseKey: bool,
+ *   isMultiSubscription: bool,
  *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
+ *   subscriptionIDs: list<string>,
  *   totalAmount: int,
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
@@ -66,6 +68,14 @@ final class PaymentListResponse implements BaseModel
     public bool $hasLicenseKey;
 
     /**
+     * True when one payment starts more than one subscription. Read this field
+     * to find the payment type. Do not read the length of `subscription_ids`.
+     * Do not read `subscription_id` for null.
+     */
+    #[Required('is_multi_subscription')]
+    public bool $isMultiSubscription;
+
+    /**
      * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      *
      * @var array<string,MetadataItemVariants> $metadata
@@ -85,6 +95,16 @@ final class PaymentListResponse implements BaseModel
      */
     #[Required('payment_provider', enum: PaymentProvider::class)]
     public string $paymentProvider;
+
+    /**
+     * Every subscription that this payment starts or charges, in a stable order.
+     * It is empty for a one-time payment. It holds the value of `subscription_id`
+     * when the payment names one subscription.
+     *
+     * @var list<string> $subscriptionIDs
+     */
+    #[Required('subscription_ids', list: 'string')]
+    public array $subscriptionIDs;
 
     #[Required('total_amount')]
     public int $totalAmount;
@@ -154,9 +174,11 @@ final class PaymentListResponse implements BaseModel
      *   customer: ...,
      *   digitalProductsDelivered: ...,
      *   hasLicenseKey: ...,
+     *   isMultiSubscription: ...,
      *   metadata: ...,
      *   paymentID: ...,
      *   paymentProvider: ...,
+     *   subscriptionIDs: ...,
      *   totalAmount: ...,
      * )
      * ```
@@ -171,9 +193,11 @@ final class PaymentListResponse implements BaseModel
      *   ->withCustomer(...)
      *   ->withDigitalProductsDelivered(...)
      *   ->withHasLicenseKey(...)
+     *   ->withIsMultiSubscription(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
      *   ->withPaymentProvider(...)
+     *   ->withSubscriptionIDs(...)
      *   ->withTotalAmount(...)
      * ```
      */
@@ -191,6 +215,7 @@ final class PaymentListResponse implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,MetadataItemShape> $metadata
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
+     * @param list<string> $subscriptionIDs
      * @param DisputeStatus|value-of<DisputeStatus>|null $disputeStatus
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
@@ -202,9 +227,11 @@ final class PaymentListResponse implements BaseModel
         CustomerLimitedDetails|array $customer,
         bool $digitalProductsDelivered,
         bool $hasLicenseKey,
+        bool $isMultiSubscription,
         array $metadata,
         string $paymentID,
         PaymentProvider|string $paymentProvider,
+        array $subscriptionIDs,
         int $totalAmount,
         ?string $cardLastFour = null,
         ?string $cardNetwork = null,
@@ -225,9 +252,11 @@ final class PaymentListResponse implements BaseModel
         $self['customer'] = $customer;
         $self['digitalProductsDelivered'] = $digitalProductsDelivered;
         $self['hasLicenseKey'] = $hasLicenseKey;
+        $self['isMultiSubscription'] = $isMultiSubscription;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
         $self['paymentProvider'] = $paymentProvider;
+        $self['subscriptionIDs'] = $subscriptionIDs;
         $self['totalAmount'] = $totalAmount;
 
         null !== $cardLastFour && $self['cardLastFour'] = $cardLastFour;
@@ -300,6 +329,19 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
+     * True when one payment starts more than one subscription. Read this field
+     * to find the payment type. Do not read the length of `subscription_ids`.
+     * Do not read `subscription_id` for null.
+     */
+    public function withIsMultiSubscription(bool $isMultiSubscription): self
+    {
+        $self = clone $this;
+        $self['isMultiSubscription'] = $isMultiSubscription;
+
+        return $self;
+    }
+
+    /**
      * Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
      *
      * @param array<string,MetadataItemShape> $metadata
@@ -332,6 +374,21 @@ final class PaymentListResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['paymentProvider'] = $paymentProvider;
+
+        return $self;
+    }
+
+    /**
+     * Every subscription that this payment starts or charges, in a stable order.
+     * It is empty for a one-time payment. It holds the value of `subscription_id`
+     * when the payment names one subscription.
+     *
+     * @param list<string> $subscriptionIDs
+     */
+    public function withSubscriptionIDs(array $subscriptionIDs): self
+    {
+        $self = clone $this;
+        $self['subscriptionIDs'] = $subscriptionIDs;
 
         return $self;
     }

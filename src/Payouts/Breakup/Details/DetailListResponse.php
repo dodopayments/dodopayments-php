@@ -10,7 +10,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * Individual balance ledger entry for a payout, with amounts pro-rated into the payout's currency.
+ * Individual balance ledger entry for a payout, converted into the payout's currency.
  *
  * @phpstan-type DetailListResponseShape = array{
  *   id: string,
@@ -62,7 +62,9 @@ final class DetailListResponse implements BaseModel
 
     /**
      * Amount in the payout's currency, in that currency's smallest unit
-     * (cents for USD, yen for JPY, fils for KWD). Uses cumulative rounding to ensure sum matches payout total exactly.
+     * (cents for USD, yen for JPY, fils for KWD). The entry is converted at the rate the payout
+     * settled at. These amounts sum to the value of the entries, which can be less than the
+     * payout: the grouped breakup reports the difference as `unattributed`.
      */
     #[Required('payout_currency_amount')]
     public int $payoutCurrencyAmount;
@@ -209,7 +211,9 @@ final class DetailListResponse implements BaseModel
 
     /**
      * Amount in the payout's currency, in that currency's smallest unit
-     * (cents for USD, yen for JPY, fils for KWD). Uses cumulative rounding to ensure sum matches payout total exactly.
+     * (cents for USD, yen for JPY, fils for KWD). The entry is converted at the rate the payout
+     * settled at. These amounts sum to the value of the entries, which can be less than the
+     * payout: the grouped breakup reports the difference as `unattributed`.
      */
     public function withPayoutCurrencyAmount(int $payoutCurrencyAmount): self
     {

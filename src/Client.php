@@ -23,6 +23,7 @@ use Dodopayments\Services\LicenseKeysService;
 use Dodopayments\Services\LicensesService;
 use Dodopayments\Services\MetersService;
 use Dodopayments\Services\MiscService;
+use Dodopayments\Services\ModerationService;
 use Dodopayments\Services\PaymentsService;
 use Dodopayments\Services\PayoutsService;
 use Dodopayments\Services\ProductCollectionsService;
@@ -171,6 +172,11 @@ class Client extends BaseClient
     public ProductCollectionsService $productCollections;
 
     /**
+     * @api
+     */
+    public ModerationService $moderation;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -259,6 +265,7 @@ class Client extends BaseClient
         $this->creditEntitlements = new CreditEntitlementsService($this);
         $this->entitlements = new EntitlementsService($this);
         $this->productCollections = new ProductCollectionsService($this);
+        $this->moderation = new ModerationService($this);
     }
 
     /** @return array<string,string> */
