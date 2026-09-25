@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.27.0](https://github.com/dodopayments/dodopayments-php/compare/v6.26.0...v6.27.0) (2026-09-25)
+
+
+### Features
+
+* **api:** add moderation API and multi-subscription payments ([189ecba](https://github.com/dodopayments/dodopayments-php/commit/189ecbac475ae1ffb553f0ab5eeedd8275c748e8))
+* **api:** add moderation API and multi-subscription payments ([0e92968](https://github.com/dodopayments/dodopayments-php/commit/0e9296883e15206f44055e23886196ea3b8d20fd))
+
 ## [6.26.0](https://github.com/dodopayments/dodopayments-php/compare/v6.25.0...v6.26.0) (2026-09-18)
 
 
