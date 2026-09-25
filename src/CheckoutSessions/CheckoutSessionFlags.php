@@ -26,6 +26,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   allowTaxID?: bool|null,
  *   alwaysCreateNewCustomer?: bool|null,
  *   redirectImmediately?: bool|null,
+ *   requireCardholderName?: bool|null,
  *   requirePhoneNumber?: bool|null,
  *   requireTaxID?: bool|null,
  *   singlePage?: bool|null,
@@ -131,6 +132,15 @@ final class CheckoutSessionFlags implements BaseModel
     public ?bool $redirectImmediately;
 
     /**
+     * If true, the customer must give the name on the card to pay by card.
+     * The checkout page enforces this. Other payment methods ignore it.
+     *
+     * Default is false
+     */
+    #[Optional('require_cardholder_name')]
+    public ?bool $requireCardholderName;
+
+    /**
      * If true, the customer must provide a phone number to complete checkout.
      * Requires `allow_phone_number_collection` to also be true.
      *
@@ -192,6 +202,7 @@ final class CheckoutSessionFlags implements BaseModel
         ?bool $allowTaxID = null,
         ?bool $alwaysCreateNewCustomer = null,
         ?bool $redirectImmediately = null,
+        ?bool $requireCardholderName = null,
         ?bool $requirePhoneNumber = null,
         ?bool $requireTaxID = null,
         ?bool $singlePage = null,
@@ -214,6 +225,7 @@ final class CheckoutSessionFlags implements BaseModel
         null !== $allowTaxID && $self['allowTaxID'] = $allowTaxID;
         null !== $alwaysCreateNewCustomer && $self['alwaysCreateNewCustomer'] = $alwaysCreateNewCustomer;
         null !== $redirectImmediately && $self['redirectImmediately'] = $redirectImmediately;
+        null !== $requireCardholderName && $self['requireCardholderName'] = $requireCardholderName;
         null !== $requirePhoneNumber && $self['requirePhoneNumber'] = $requirePhoneNumber;
         null !== $requireTaxID && $self['requireTaxID'] = $requireTaxID;
         null !== $singlePage && $self['singlePage'] = $singlePage;
@@ -403,6 +415,20 @@ final class CheckoutSessionFlags implements BaseModel
     {
         $self = clone $this;
         $self['redirectImmediately'] = $redirectImmediately;
+
+        return $self;
+    }
+
+    /**
+     * If true, the customer must give the name on the card to pay by card.
+     * The checkout page enforces this. Other payment methods ignore it.
+     *
+     * Default is false
+     */
+    public function withRequireCardholderName(bool $requireCardholderName): self
+    {
+        $self = clone $this;
+        $self['requireCardholderName'] = $requireCardholderName;
 
         return $self;
     }

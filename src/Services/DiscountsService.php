@@ -50,9 +50,11 @@ final class DiscountsService implements DiscountsContract
      * - Must be at least 3 characters if provided.
      * - If omitted, a random 16-character code is generated.
      * @param list<CurrencyOption|CurrencyOptionShape>|null $currencyOptions Per-currency options (flat deduction / percentage cap + minimum subtotal).
-     * Required for `flat` codes (must include a resolvable default); optional
-     * per-currency caps for `percentage` codes. Per-row invariants are checked
-     * in `normalize_currency_options`, not via `#[validate(nested)]`.
+     * Checkout uses the row for the currency the buyer pays in. For any other
+     * currency it converts the default row. Required for `flat` codes (must
+     * include a resolvable default); optional per-currency caps for
+     * `percentage` codes. Per-row invariants are checked in
+     * `normalize_currency_options`, not via `#[validate(nested)]`.
      * @param CustomerEligibility|value-of<CustomerEligibility>|null $customerEligibility Who may redeem this discount code. Defaults to `any` (unrestricted).
      * `specific` starts with zero attached customers (fails closed) until
      * customers are attached via `POST /discounts/{id}/customers`.

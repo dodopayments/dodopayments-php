@@ -50,8 +50,9 @@ final class EmailPolicies implements BaseModel
     public bool $retryAllowed;
 
     /**
-     * A later send of this email reached the provider, so this row is history.
-     * To send it again would deliver a second copy.
+     * A later send of this email replaced this row, so this row is history.
+     * A row that never went out needs a later send that reached the provider.
+     * A failed row needs a later send that was delivered.
      */
     #[Required]
     public bool $superseded;
@@ -155,8 +156,9 @@ final class EmailPolicies implements BaseModel
     }
 
     /**
-     * A later send of this email reached the provider, so this row is history.
-     * To send it again would deliver a second copy.
+     * A later send of this email replaced this row, so this row is history.
+     * A row that never went out needs a later send that reached the provider.
+     * A failed row needs a later send that was delivered.
      */
     public function withSuperseded(bool $superseded): self
     {
