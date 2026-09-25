@@ -28,7 +28,7 @@ final class DetailsRawService implements DetailsRawContract
     /**
      * @api
      *
-     * Returns paginated individual balance ledger entries for a payout, with each entry's amount pro-rated into the payout's currency. Supports pagination via `page_size` (default 10, max 100) and `page_number` (default 0) query parameters.
+     * Returns paginated individual balance ledger entries for a payout. Each entry is converted into the payout's currency at the rate the payout settled at. Supports pagination via `page_size` (default 10, max 100) and `page_number` (default 0) query parameters.
      *
      * @param string $payoutID Id of the Payout to get breakup for
      * @param array{pageNumber?: int, pageSize?: int}|DetailListParams $params

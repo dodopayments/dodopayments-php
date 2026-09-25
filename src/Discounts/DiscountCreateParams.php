@@ -72,9 +72,11 @@ final class DiscountCreateParams implements BaseModel
 
     /**
      * Per-currency options (flat deduction / percentage cap + minimum subtotal).
-     * Required for `flat` codes (must include a resolvable default); optional
-     * per-currency caps for `percentage` codes. Per-row invariants are checked
-     * in `normalize_currency_options`, not via `#[validate(nested)]`.
+     * Checkout uses the row for the currency the buyer pays in. For any other
+     * currency it converts the default row. Required for `flat` codes (must
+     * include a resolvable default); optional per-currency caps for
+     * `percentage` codes. Per-row invariants are checked in
+     * `normalize_currency_options`, not via `#[validate(nested)]`.
      *
      * @var list<CurrencyOption>|null $currencyOptions
      */
@@ -264,9 +266,11 @@ final class DiscountCreateParams implements BaseModel
 
     /**
      * Per-currency options (flat deduction / percentage cap + minimum subtotal).
-     * Required for `flat` codes (must include a resolvable default); optional
-     * per-currency caps for `percentage` codes. Per-row invariants are checked
-     * in `normalize_currency_options`, not via `#[validate(nested)]`.
+     * Checkout uses the row for the currency the buyer pays in. For any other
+     * currency it converts the default row. Required for `flat` codes (must
+     * include a resolvable default); optional per-currency caps for
+     * `percentage` codes. Per-row invariants are checked in
+     * `normalize_currency_options`, not via `#[validate(nested)]`.
      *
      * @param list<CurrencyOption|CurrencyOptionShape>|null $currencyOptions
      */

@@ -52,7 +52,9 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
     /**
      * @api
      *
-     * @param list<ProductItemReq|ProductItemReqShape> $productCart
+     * @param list<ProductItemReq|ProductItemReqShape> $productCart The products of the checkout. A cart holds at most 20 of them, one-time and
+     * subscription products together. An empty cart is valid for the product-collection
+     * flow, where the customer chooses the product later.
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes Customers will never see payment methods that are not in this list.
      * However, adding a method here does not guarantee customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
@@ -180,7 +182,9 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
     /**
      * @api
      *
-     * @param list<ProductItemReq|ProductItemReqShape> $productCart
+     * @param list<ProductItemReq|ProductItemReqShape> $productCart The products of the checkout. A cart holds at most 20 of them, one-time and
+     * subscription products together. An empty cart is valid for the product-collection
+     * flow, where the customer chooses the product later.
      * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes Customers will never see payment methods that are not in this list.
      * However, adding a method here does not guarantee customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).

@@ -23,6 +23,7 @@ use Dodopayments\Services\LicenseKeysService;
 use Dodopayments\Services\LicensesService;
 use Dodopayments\Services\MetersService;
 use Dodopayments\Services\MiscService;
+use Dodopayments\Services\ModerationService;
 use Dodopayments\Services\PaymentsService;
 use Dodopayments\Services\PayoutsService;
 use Dodopayments\Services\ProductCollectionsService;
@@ -171,6 +172,11 @@ class Client extends BaseClient
     public ProductCollectionsService $productCollections;
 
     /**
+     * @api
+     */
+    public ModerationService $moderation;
+
+    /**
      * @param RequestOpts|null $requestOptions
      */
     public function __construct(
@@ -210,7 +216,7 @@ class Client extends BaseClient
             'Accept' => 'application/json',
             'User-Agent' => sprintf('Dodo Payments/PHP %s', VERSION),
             'X-Stainless-Lang' => 'php',
-            'X-Stainless-Package-Version' => '6.25.0',
+            'X-Stainless-Package-Version' => '6.26.0',
             'X-Stainless-Arch' => Util::machtype(),
             'X-Stainless-OS' => Util::ostype(),
             'X-Stainless-Runtime' => php_sapi_name(),
@@ -258,6 +264,7 @@ class Client extends BaseClient
         $this->creditEntitlements = new CreditEntitlementsService($this);
         $this->entitlements = new EntitlementsService($this);
         $this->productCollections = new ProductCollectionsService($this);
+        $this->moderation = new ModerationService($this);
     }
 
     /** @return array<string,string> */

@@ -7,6 +7,7 @@ namespace Dodopayments\CheckoutSessions;
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\CurrentBreakup;
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart;
 use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\RecurringBreakup;
+use Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\Subscription;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -20,6 +21,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-import-type CurrentBreakupShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\CurrentBreakup
  * @phpstan-import-type ProductCartShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\ProductCart
  * @phpstan-import-type RecurringBreakupShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\RecurringBreakup
+ * @phpstan-import-type SubscriptionShape from \Dodopayments\CheckoutSessions\CheckoutSessionPreviewResponse\Subscription
  *
  * @phpstan-type CheckoutSessionPreviewResponseShape = array{
  *   billingCountry: CountryCode|value-of<CountryCode>,
@@ -31,6 +33,7 @@ use Dodopayments\Misc\Currency;
  *   totalPrice: int,
  *   nextBillingDate?: \DateTimeInterface|null,
  *   recurringBreakup?: null|RecurringBreakup|RecurringBreakupShape,
+ *   subscriptions?: list<Subscription|SubscriptionShape>|null,
  *   taxIDBusinessName?: string|null,
  *   taxIDErrMsg?: string|null,
  *   taxIDFormatName?: string|null,
@@ -101,6 +104,8 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      * with a trial it is `now + trial_period_days`, otherwise `now + payment
      * frequency`. `None` for one-time-only carts. This is a preview estimate;
      * the authoritative value is set when the subscription activates.
+     * For a cart of more than one subscription, this is the earliest date of the cart.
+     * `subscriptions` gives the date of each subscription.
      */
     #[Optional('next_billing_date', nullable: true)]
     public ?\DateTimeInterface $nextBillingDate;
@@ -110,6 +115,15 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      */
     #[Optional('recurring_breakup', nullable: true)]
     public ?RecurringBreakup $recurringBreakup;
+
+    /**
+     * One entry for each subscription of a cart that holds more than one. Each
+     * subscription renews on its own schedule, so the checkout shows each one here.
+     *
+     * @var list<Subscription>|null $subscriptions
+     */
+    #[Optional(list: Subscription::class, nullable: true)]
+    public ?array $subscriptions;
 
     /**
      * Registered business name from the official registry (EU/GB/AU) when found.
@@ -139,6 +153,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      * Per-unit trial amount after discounts, in the price currency's minor units
      * (pre-quantity, pre-tax; see `current_breakup` for the taxed total due today).
      * Only present for a paid trial; `None` for a free trial or no trial.
+     * Always `None` for a cart of more than one subscription.
      */
     #[Optional('trial_amount', nullable: true)]
     public ?int $trialAmount;
@@ -146,6 +161,8 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     /**
      * Effective trial duration in days for the subscription line, when
      * there's a trial (free or paid). `None` if no subscription or no trial.
+     * Always `None` for a cart of more than one subscription. Read the trial of each
+     * subscription from `subscriptions`.
      */
     #[Optional('trial_period_days', nullable: true)]
     public ?int $trialPeriodDays;
@@ -194,6 +211,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      * @param CurrentBreakup|CurrentBreakupShape $currentBreakup
      * @param list<ProductCart|ProductCartShape> $productCart
      * @param RecurringBreakup|RecurringBreakupShape|null $recurringBreakup
+     * @param list<Subscription|SubscriptionShape>|null $subscriptions
      */
     public static function with(
         CountryCode|string $billingCountry,
@@ -205,6 +223,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
         int $totalPrice,
         ?\DateTimeInterface $nextBillingDate = null,
         RecurringBreakup|array|null $recurringBreakup = null,
+        ?array $subscriptions = null,
         ?string $taxIDBusinessName = null,
         ?string $taxIDErrMsg = null,
         ?string $taxIDFormatName = null,
@@ -224,6 +243,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
 
         null !== $nextBillingDate && $self['nextBillingDate'] = $nextBillingDate;
         null !== $recurringBreakup && $self['recurringBreakup'] = $recurringBreakup;
+        null !== $subscriptions && $self['subscriptions'] = $subscriptions;
         null !== $taxIDBusinessName && $self['taxIDBusinessName'] = $taxIDBusinessName;
         null !== $taxIDErrMsg && $self['taxIDErrMsg'] = $taxIDErrMsg;
         null !== $taxIDFormatName && $self['taxIDFormatName'] = $taxIDFormatName;
@@ -329,6 +349,8 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      * with a trial it is `now + trial_period_days`, otherwise `now + payment
      * frequency`. `None` for one-time-only carts. This is a preview estimate;
      * the authoritative value is set when the subscription activates.
+     * For a cart of more than one subscription, this is the earliest date of the cart.
+     * `subscriptions` gives the date of each subscription.
      */
     public function withNextBillingDate(
         ?\DateTimeInterface $nextBillingDate
@@ -349,6 +371,20 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     ): self {
         $self = clone $this;
         $self['recurringBreakup'] = $recurringBreakup;
+
+        return $self;
+    }
+
+    /**
+     * One entry for each subscription of a cart that holds more than one. Each
+     * subscription renews on its own schedule, so the checkout shows each one here.
+     *
+     * @param list<Subscription|SubscriptionShape>|null $subscriptions
+     */
+    public function withSubscriptions(?array $subscriptions): self
+    {
+        $self = clone $this;
+        $self['subscriptions'] = $subscriptions;
 
         return $self;
     }
@@ -401,6 +437,7 @@ final class CheckoutSessionPreviewResponse implements BaseModel
      * Per-unit trial amount after discounts, in the price currency's minor units
      * (pre-quantity, pre-tax; see `current_breakup` for the taxed total due today).
      * Only present for a paid trial; `None` for a free trial or no trial.
+     * Always `None` for a cart of more than one subscription.
      */
     public function withTrialAmount(?int $trialAmount): self
     {
@@ -413,6 +450,8 @@ final class CheckoutSessionPreviewResponse implements BaseModel
     /**
      * Effective trial duration in days for the subscription line, when
      * there's a trial (free or paid). `None` if no subscription or no trial.
+     * Always `None` for a cart of more than one subscription. Read the trial of each
+     * subscription from `subscriptions`.
      */
     public function withTrialPeriodDays(?int $trialPeriodDays): self
     {

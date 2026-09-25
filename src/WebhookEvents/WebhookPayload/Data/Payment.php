@@ -42,6 +42,7 @@ use Dodopayments\Payments\RefundListItem;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   disputes: list<\Dodopayments\Disputes\Dispute|DisputeShape>,
+ *   isMultiSubscription: bool,
  *   isUpdatePaymentMethod: bool,
  *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
@@ -50,6 +51,7 @@ use Dodopayments\Payments\RefundListItem;
  *   retryAttempt: int,
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
+ *   subscriptionIDs: list<string>,
  *   totalAmount: int,
  *   cardHolderName?: string|null,
  *   cardIssuingCountry?: null|CountryCode|value-of<CountryCode>,
@@ -130,6 +132,14 @@ final class Payment implements BaseModel
     public array $disputes;
 
     /**
+     * True when one payment starts more than one subscription. Read this field
+     * to find the payment type. Do not read the length of `subscription_ids`.
+     * Do not read `subscription_id` for null.
+     */
+    #[Required('is_multi_subscription')]
+    public bool $isMultiSubscription;
+
+    /**
      * Whether this payment was created solely to update a subscription's
      * payment method (a zero-/setup-amount charge). `false` for normal charges.
      */
@@ -186,6 +196,16 @@ final class Payment implements BaseModel
     /** @var value-of<Currency> $settlementCurrency */
     #[Required('settlement_currency', enum: Currency::class)]
     public string $settlementCurrency;
+
+    /**
+     * Every subscription that this payment starts or charges, in a stable order.
+     * It is empty for a one-time payment. It holds the value of `subscription_id`
+     * when the payment names one subscription.
+     *
+     * @var list<string> $subscriptionIDs
+     */
+    #[Required('subscription_ids', list: 'string')]
+    public array $subscriptionIDs;
 
     /**
      * Total amount charged to the customer including tax, in the currency's smallest unit
@@ -337,6 +357,8 @@ final class Payment implements BaseModel
 
     /**
      * Identifier of the subscription if payment is part of a subscription.
+     * A multi-subscription payment leaves this null, because no single
+     * subscription owns the payment. Read `subscription_ids` for those.
      */
     #[Optional('subscription_id', nullable: true)]
     public ?string $subscriptionID;
@@ -368,6 +390,7 @@ final class Payment implements BaseModel
      *   customer: ...,
      *   digitalProductsDelivered: ...,
      *   disputes: ...,
+     *   isMultiSubscription: ...,
      *   isUpdatePaymentMethod: ...,
      *   metadata: ...,
      *   paymentID: ...,
@@ -376,6 +399,7 @@ final class Payment implements BaseModel
      *   retryAttempt: ...,
      *   settlementAmount: ...,
      *   settlementCurrency: ...,
+     *   subscriptionIDs: ...,
      *   totalAmount: ...,
      * )
      * ```
@@ -392,6 +416,7 @@ final class Payment implements BaseModel
      *   ->withCustomer(...)
      *   ->withDigitalProductsDelivered(...)
      *   ->withDisputes(...)
+     *   ->withIsMultiSubscription(...)
      *   ->withIsUpdatePaymentMethod(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
@@ -400,6 +425,7 @@ final class Payment implements BaseModel
      *   ->withRetryAttempt(...)
      *   ->withSettlementAmount(...)
      *   ->withSettlementCurrency(...)
+     *   ->withSubscriptionIDs(...)
      *   ->withTotalAmount(...)
      * ```
      */
@@ -421,6 +447,7 @@ final class Payment implements BaseModel
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param list<RefundListItem|RefundListItemShape> $refunds
      * @param Currency|value-of<Currency> $settlementCurrency
+     * @param list<string> $subscriptionIDs
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
@@ -437,6 +464,7 @@ final class Payment implements BaseModel
         CustomerLimitedDetails|array $customer,
         bool $digitalProductsDelivered,
         array $disputes,
+        bool $isMultiSubscription,
         bool $isUpdatePaymentMethod,
         array $metadata,
         string $paymentID,
@@ -445,6 +473,7 @@ final class Payment implements BaseModel
         int $retryAttempt,
         int $settlementAmount,
         Currency|string $settlementCurrency,
+        array $subscriptionIDs,
         int $totalAmount,
         ?string $cardHolderName = null,
         CountryCode|string|null $cardIssuingCountry = null,
@@ -481,6 +510,7 @@ final class Payment implements BaseModel
         $self['customer'] = $customer;
         $self['digitalProductsDelivered'] = $digitalProductsDelivered;
         $self['disputes'] = $disputes;
+        $self['isMultiSubscription'] = $isMultiSubscription;
         $self['isUpdatePaymentMethod'] = $isUpdatePaymentMethod;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
@@ -489,6 +519,7 @@ final class Payment implements BaseModel
         $self['retryAttempt'] = $retryAttempt;
         $self['settlementAmount'] = $settlementAmount;
         $self['settlementCurrency'] = $settlementCurrency;
+        $self['subscriptionIDs'] = $subscriptionIDs;
         $self['totalAmount'] = $totalAmount;
 
         null !== $cardHolderName && $self['cardHolderName'] = $cardHolderName;
@@ -611,6 +642,19 @@ final class Payment implements BaseModel
     }
 
     /**
+     * True when one payment starts more than one subscription. Read this field
+     * to find the payment type. Do not read the length of `subscription_ids`.
+     * Do not read `subscription_id` for null.
+     */
+    public function withIsMultiSubscription(bool $isMultiSubscription): self
+    {
+        $self = clone $this;
+        $self['isMultiSubscription'] = $isMultiSubscription;
+
+        return $self;
+    }
+
+    /**
      * Whether this payment was created solely to update a subscription's
      * payment method (a zero-/setup-amount charge). `false` for normal charges.
      */
@@ -708,6 +752,21 @@ final class Payment implements BaseModel
     ): self {
         $self = clone $this;
         $self['settlementCurrency'] = $settlementCurrency;
+
+        return $self;
+    }
+
+    /**
+     * Every subscription that this payment starts or charges, in a stable order.
+     * It is empty for a one-time payment. It holds the value of `subscription_id`
+     * when the payment names one subscription.
+     *
+     * @param list<string> $subscriptionIDs
+     */
+    public function withSubscriptionIDs(array $subscriptionIDs): self
+    {
+        $self = clone $this;
+        $self['subscriptionIDs'] = $subscriptionIDs;
 
         return $self;
     }
@@ -972,6 +1031,8 @@ final class Payment implements BaseModel
 
     /**
      * Identifier of the subscription if payment is part of a subscription.
+     * A multi-subscription payment leaves this null, because no single
+     * subscription owns the payment. Read `subscription_ids` for those.
      */
     public function withSubscriptionID(?string $subscriptionID): self
     {
