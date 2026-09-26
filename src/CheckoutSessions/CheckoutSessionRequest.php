@@ -58,7 +58,13 @@ final class CheckoutSessionRequest implements BaseModel
     /** @use SdkModel<CheckoutSessionRequestShape> */
     use SdkModel;
 
-    /** @var list<ProductItemReq> $productCart */
+    /**
+     * The products of the checkout. A cart holds at most 20 of them, one-time and
+     * subscription products together. An empty cart is valid for the product-collection
+     * flow, where the customer chooses the product later.
+     *
+     * @var list<ProductItemReq> $productCart
+     */
     #[Required('product_cart', list: ProductItemReq::class)]
     public array $productCart;
 
@@ -323,6 +329,10 @@ final class CheckoutSessionRequest implements BaseModel
     }
 
     /**
+     * The products of the checkout. A cart holds at most 20 of them, one-time and
+     * subscription products together. An empty cart is valid for the product-collection
+     * flow, where the customer chooses the product later.
+     *
      * @param list<ProductItemReq|ProductItemReqShape> $productCart
      */
     public function withProductCart(array $productCart): self

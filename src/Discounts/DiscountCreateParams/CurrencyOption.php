@@ -30,7 +30,8 @@ final class CurrencyOption implements BaseModel
     use SdkModel;
 
     /**
-     * The currency this option applies to.
+     * The currency this option applies to. The row applies when the buyer pays
+     * in this currency.
      *
      * @var value-of<Currency> $currency
      */
@@ -38,8 +39,8 @@ final class CurrencyOption implements BaseModel
     public string $currency;
 
     /**
-     * Whether this row is the default to convert from for unconfigured
-     * currencies. At most one row per discount may be default.
+     * Whether this row is the default to convert from when the buyer pays in a
+     * currency that has no row. At most one row per discount may be default.
      */
     #[Optional('is_default')]
     public ?bool $isDefault;
@@ -102,7 +103,8 @@ final class CurrencyOption implements BaseModel
     }
 
     /**
-     * The currency this option applies to.
+     * The currency this option applies to. The row applies when the buyer pays
+     * in this currency.
      *
      * @param Currency|value-of<Currency> $currency
      */
@@ -115,8 +117,8 @@ final class CurrencyOption implements BaseModel
     }
 
     /**
-     * Whether this row is the default to convert from for unconfigured
-     * currencies. At most one row per discount may be default.
+     * Whether this row is the default to convert from when the buyer pays in a
+     * currency that has no row. At most one row per discount may be default.
      */
     public function withIsDefault(bool $isDefault): self
     {

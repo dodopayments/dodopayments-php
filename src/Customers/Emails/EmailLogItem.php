@@ -100,7 +100,8 @@ final class EmailLogItem implements BaseModel
     public ?string $from;
 
     /**
-     * The address the email reached.
+     * The address the email went to. On a failed email this is the address the
+     * provider reports as bounced.
      */
     #[Optional(nullable: true)]
     public ?string $recipient;
@@ -308,7 +309,8 @@ final class EmailLogItem implements BaseModel
     }
 
     /**
-     * The address the email reached.
+     * The address the email went to. On a failed email this is the address the
+     * provider reports as bounced.
      */
     public function withRecipient(?string $recipient): self
     {
