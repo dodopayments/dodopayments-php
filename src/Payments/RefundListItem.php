@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\Currency;
+use Dodopayments\Refunds\RefundNetworkReferenceType;
 use Dodopayments\Refunds\RefundStatus;
 
 /**
@@ -21,6 +22,8 @@ use Dodopayments\Refunds\RefundStatus;
  *   status: RefundStatus|value-of<RefundStatus>,
  *   amount?: int|null,
  *   currency?: null|Currency|value-of<Currency>,
+ *   networkReference?: string|null,
+ *   networkReferenceType?: null|RefundNetworkReferenceType|value-of<RefundNetworkReferenceType>,
  *   reason?: string|null,
  * }
  */
@@ -82,6 +85,26 @@ final class RefundListItem implements BaseModel
     public ?string $currency;
 
     /**
+     * The reference number that the card network or the bank gives to the refund. The customer
+     * can give this number to their bank to trace the refund. It is null until the payment
+     * processor sends it.
+     */
+    #[Optional('network_reference', nullable: true)]
+    public ?string $networkReference;
+
+    /**
+     * The kind of `network_reference`: ARN, STAN or RRN.
+     *
+     * @var value-of<RefundNetworkReferenceType>|null $networkReferenceType
+     */
+    #[Optional(
+        'network_reference_type',
+        enum: RefundNetworkReferenceType::class,
+        nullable: true,
+    )]
+    public ?string $networkReferenceType;
+
+    /**
      * The reason provided for the refund, if any. Optional.
      */
     #[Optional(nullable: true)]
@@ -126,6 +149,7 @@ final class RefundListItem implements BaseModel
      *
      * @param RefundStatus|value-of<RefundStatus> $status
      * @param Currency|value-of<Currency>|null $currency
+     * @param RefundNetworkReferenceType|value-of<RefundNetworkReferenceType>|null $networkReferenceType
      */
     public static function with(
         string $businessID,
@@ -136,6 +160,8 @@ final class RefundListItem implements BaseModel
         RefundStatus|string $status,
         ?int $amount = null,
         Currency|string|null $currency = null,
+        ?string $networkReference = null,
+        RefundNetworkReferenceType|string|null $networkReferenceType = null,
         ?string $reason = null,
     ): self {
         $self = new self;
@@ -149,6 +175,8 @@ final class RefundListItem implements BaseModel
 
         null !== $amount && $self['amount'] = $amount;
         null !== $currency && $self['currency'] = $currency;
+        null !== $networkReference && $self['networkReference'] = $networkReference;
+        null !== $networkReferenceType && $self['networkReferenceType'] = $networkReferenceType;
         null !== $reason && $self['reason'] = $reason;
 
         return $self;
@@ -242,6 +270,33 @@ final class RefundListItem implements BaseModel
     {
         $self = clone $this;
         $self['currency'] = $currency;
+
+        return $self;
+    }
+
+    /**
+     * The reference number that the card network or the bank gives to the refund. The customer
+     * can give this number to their bank to trace the refund. It is null until the payment
+     * processor sends it.
+     */
+    public function withNetworkReference(?string $networkReference): self
+    {
+        $self = clone $this;
+        $self['networkReference'] = $networkReference;
+
+        return $self;
+    }
+
+    /**
+     * The kind of `network_reference`: ARN, STAN or RRN.
+     *
+     * @param RefundNetworkReferenceType|value-of<RefundNetworkReferenceType>|null $networkReferenceType
+     */
+    public function withNetworkReferenceType(
+        RefundNetworkReferenceType|string|null $networkReferenceType
+    ): self {
+        $self = clone $this;
+        $self['networkReferenceType'] = $networkReferenceType;
 
         return $self;
     }
