@@ -96,7 +96,13 @@ final class CheckoutSessionPreviewParams implements BaseModel
     public ?CheckoutSessionBillingAddress $billingAddress;
 
     /**
-     * This field is ingored if adaptive pricing is disabled.
+     * The currency to charge the customer in.
+     *
+     * Adaptive pricing must be enabled for the business. The customer then pays in this
+     * currency. If you do not set it, the currency comes from the billing country.
+     *
+     * If adaptive pricing is disabled, the API discards this field. The currency then comes
+     * from the product price, or from the billing country.
      *
      * @var value-of<Currency>|null $billingCurrency
      */
@@ -193,8 +199,10 @@ final class CheckoutSessionPreviewParams implements BaseModel
 
     /**
      * If true, only zipcode is required when confirm is true; other address fields remain optional.
+     *
+     * Default is true when `feature_flags.single_page` is true. Otherwise, default is false.
      */
-    #[Optional('minimal_address')]
+    #[Optional('minimal_address', nullable: true)]
     public ?bool $minimalAddress;
 
     /**
@@ -381,7 +389,13 @@ final class CheckoutSessionPreviewParams implements BaseModel
     }
 
     /**
-     * This field is ingored if adaptive pricing is disabled.
+     * The currency to charge the customer in.
+     *
+     * Adaptive pricing must be enabled for the business. The customer then pays in this
+     * currency. If you do not set it, the currency comes from the billing country.
+     *
+     * If adaptive pricing is disabled, the API discards this field. The currency then comes
+     * from the product price, or from the billing country.
      *
      * @param Currency|value-of<Currency>|null $billingCurrency
      */
@@ -552,8 +566,10 @@ final class CheckoutSessionPreviewParams implements BaseModel
 
     /**
      * If true, only zipcode is required when confirm is true; other address fields remain optional.
+     *
+     * Default is true when `feature_flags.single_page` is true. Otherwise, default is false.
      */
-    public function withMinimalAddress(bool $minimalAddress): self
+    public function withMinimalAddress(?bool $minimalAddress): self
     {
         $self = clone $this;
         $self['minimalAddress'] = $minimalAddress;

@@ -62,7 +62,13 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
      * If all payment methods are unavailable, checkout session will fail.
      * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress Billing address information for the session
-     * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
+     * @param Currency|value-of<Currency>|null $billingCurrency The currency to charge the customer in.
+     *
+     * Adaptive pricing must be enabled for the business. The customer then pays in this
+     * currency. If you do not set it, the currency comes from the billing country.
+     *
+     * If adaptive pricing is disabled, the API discards this field. The currency then comes
+     * from the product price, or from the billing country.
      * @param string|null $cancelURL The URL to redirect the customer if they cancel or go back from the checkout.
      * If not provided, the back button will not be displayed.
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
@@ -84,7 +90,9 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * lower. When unset, the merchant setting applies; when that's also unset,
      * the system default of ₹15,000 applies.
      * @param array<string,MetadataItemShape>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
-     * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
+     * @param bool|null $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
+     *
+     * Default is true when `feature_flags.single_page` is true. Otherwise, default is false.
      * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
      * Only allowed when `confirm` is true.
      * If provided, existing customer id must also be provided.
@@ -192,7 +200,13 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
      * If all payment methods are unavailable, checkout session will fail.
      * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress Billing address information for the session
-     * @param Currency|value-of<Currency>|null $billingCurrency This field is ingored if adaptive pricing is disabled
+     * @param Currency|value-of<Currency>|null $billingCurrency The currency to charge the customer in.
+     *
+     * Adaptive pricing must be enabled for the business. The customer then pays in this
+     * currency. If you do not set it, the currency comes from the billing country.
+     *
+     * If adaptive pricing is disabled, the API discards this field. The currency then comes
+     * from the product price, or from the billing country.
      * @param string|null $cancelURL The URL to redirect the customer if they cancel or go back from the checkout.
      * If not provided, the back button will not be displayed.
      * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
@@ -214,7 +228,9 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
      * lower. When unset, the merchant setting applies; when that's also unset,
      * the system default of ₹15,000 applies.
      * @param array<string,MetadataItemShape>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
-     * @param bool $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
+     * @param bool|null $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
+     *
+     * Default is true when `feature_flags.single_page` is true. Otherwise, default is false.
      * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
      * Only allowed when `confirm` is true.
      * If provided, existing customer id must also be provided.

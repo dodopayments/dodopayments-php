@@ -20,6 +20,7 @@ use Dodopayments\Subscriptions\CreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\MeterCartResponseItem;
 use Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\ScheduledPlanChange;
+use Dodopayments\Subscriptions\SubscriptionCancelledBy;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
 
@@ -34,6 +35,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type MeterCreditEntitlementCartResponseShape from \Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse
  * @phpstan-import-type MeterCartResponseItemShape from \Dodopayments\Subscriptions\MeterCartResponseItem
+ * @phpstan-import-type SubscriptionCancelledByShape from \Dodopayments\Subscriptions\SubscriptionCancelledBy
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
  * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
@@ -68,6 +70,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   cancellationComment?: string|null,
  *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
  *   cancelledAt?: \DateTimeInterface|null,
+ *   cancelledBy?: null|SubscriptionCancelledBy|SubscriptionCancelledByShape,
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   customerBusinessName?: string|null,
  *   discountCyclesRemaining?: int|null,
@@ -277,6 +280,12 @@ final class Subscription implements BaseModel
     public ?\DateTimeInterface $cancelledAt;
 
     /**
+     * The caller that cancelled a subscription or scheduled its cancel.
+     */
+    #[Optional('cancelled_by')]
+    public ?SubscriptionCancelledBy $cancelledBy;
+
+    /**
      * Customer's responses to custom fields collected during checkout.
      *
      * @var list<CustomFieldResponse>|null $customFieldResponses
@@ -451,6 +460,7 @@ final class Subscription implements BaseModel
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
+     * @param SubscriptionCancelledBy|SubscriptionCancelledByShape|null $cancelledBy
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
      * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
@@ -485,6 +495,7 @@ final class Subscription implements BaseModel
         ?string $cancellationComment = null,
         CancellationFeedback|string|null $cancellationFeedback = null,
         ?\DateTimeInterface $cancelledAt = null,
+        SubscriptionCancelledBy|array|null $cancelledBy = null,
         ?array $customFieldResponses = null,
         ?string $customerBusinessName = null,
         ?int $discountCyclesRemaining = null,
@@ -530,6 +541,7 @@ final class Subscription implements BaseModel
         null !== $cancellationComment && $self['cancellationComment'] = $cancellationComment;
         null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
+        null !== $cancelledBy && $self['cancelledBy'] = $cancelledBy;
         null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
@@ -886,6 +898,20 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['cancelledAt'] = $cancelledAt;
+
+        return $self;
+    }
+
+    /**
+     * The caller that cancelled a subscription or scheduled its cancel.
+     *
+     * @param SubscriptionCancelledBy|SubscriptionCancelledByShape $cancelledBy
+     */
+    public function withCancelledBy(
+        SubscriptionCancelledBy|array $cancelledBy
+    ): self {
+        $self = clone $this;
+        $self['cancelledBy'] = $cancelledBy;
 
         return $self;
     }

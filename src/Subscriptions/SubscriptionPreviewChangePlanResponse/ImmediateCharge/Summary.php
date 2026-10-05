@@ -14,6 +14,7 @@ use Dodopayments\Misc\Currency;
  * @phpstan-type SummaryShape = array{
  *   currency: Currency|value-of<Currency>,
  *   customerCredits: int,
+ *   customerCreditsCurrency: Currency|value-of<Currency>,
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
  *   totalAmount: int,
@@ -31,7 +32,8 @@ final class Summary implements BaseModel
     public string $currency;
 
     /**
-     * Net credit movement in the smallest currency unit (e.g. cents).
+     * Net credit movement in the smallest unit of `customer_credits_currency` (e.g. cents).
+     * Read `customer_credits_currency` for the currency. It can differ from `currency`.
      * **Negative** – credits were deducted from the customer's balance to offset
      * the charge (typical on upgrades).
      * **Positive** – credits were added to the customer's balance, either from a
@@ -41,6 +43,15 @@ final class Summary implements BaseModel
      */
     #[Required('customer_credits')]
     public int $customerCredits;
+
+    /**
+     * This field gives the currency of `customer_credits`.
+     * The credit wallet uses the subscription currency.
+     *
+     * @var value-of<Currency> $customerCreditsCurrency
+     */
+    #[Required('customer_credits_currency', enum: Currency::class)]
+    public string $customerCreditsCurrency;
 
     #[Required('settlement_amount')]
     public int $settlementAmount;
@@ -66,6 +77,7 @@ final class Summary implements BaseModel
      * Summary::with(
      *   currency: ...,
      *   customerCredits: ...,
+     *   customerCreditsCurrency: ...,
      *   settlementAmount: ...,
      *   settlementCurrency: ...,
      *   totalAmount: ...,
@@ -78,6 +90,7 @@ final class Summary implements BaseModel
      * (new Summary)
      *   ->withCurrency(...)
      *   ->withCustomerCredits(...)
+     *   ->withCustomerCreditsCurrency(...)
      *   ->withSettlementAmount(...)
      *   ->withSettlementCurrency(...)
      *   ->withTotalAmount(...)
@@ -94,11 +107,13 @@ final class Summary implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param Currency|value-of<Currency> $currency
+     * @param Currency|value-of<Currency> $customerCreditsCurrency
      * @param Currency|value-of<Currency> $settlementCurrency
      */
     public static function with(
         Currency|string $currency,
         int $customerCredits,
+        Currency|string $customerCreditsCurrency,
         int $settlementAmount,
         Currency|string $settlementCurrency,
         int $totalAmount,
@@ -109,6 +124,7 @@ final class Summary implements BaseModel
 
         $self['currency'] = $currency;
         $self['customerCredits'] = $customerCredits;
+        $self['customerCreditsCurrency'] = $customerCreditsCurrency;
         $self['settlementAmount'] = $settlementAmount;
         $self['settlementCurrency'] = $settlementCurrency;
         $self['totalAmount'] = $totalAmount;
@@ -131,7 +147,8 @@ final class Summary implements BaseModel
     }
 
     /**
-     * Net credit movement in the smallest currency unit (e.g. cents).
+     * Net credit movement in the smallest unit of `customer_credits_currency` (e.g. cents).
+     * Read `customer_credits_currency` for the currency. It can differ from `currency`.
      * **Negative** – credits were deducted from the customer's balance to offset
      * the charge (typical on upgrades).
      * **Positive** – credits were added to the customer's balance, either from a
@@ -143,6 +160,21 @@ final class Summary implements BaseModel
     {
         $self = clone $this;
         $self['customerCredits'] = $customerCredits;
+
+        return $self;
+    }
+
+    /**
+     * This field gives the currency of `customer_credits`.
+     * The credit wallet uses the subscription currency.
+     *
+     * @param Currency|value-of<Currency> $customerCreditsCurrency
+     */
+    public function withCustomerCreditsCurrency(
+        Currency|string $customerCreditsCurrency
+    ): self {
+        $self = clone $this;
+        $self['customerCreditsCurrency'] = $customerCreditsCurrency;
 
         return $self;
     }
