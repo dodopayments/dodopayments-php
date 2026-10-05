@@ -26,7 +26,8 @@ final class EmailPolicies implements BaseModel
     use SdkModel;
 
     /**
-     * A permanent failure was recorded, so the same address would be a no-op.
+     * A permanent failure was recorded, so a send to the same address delivers
+     * nothing. It is false for a suppressed address that a resend can clear.
      */
     #[Required('requires_different_address')]
     public bool $requiresDifferentAddress;
@@ -111,7 +112,8 @@ final class EmailPolicies implements BaseModel
     }
 
     /**
-     * A permanent failure was recorded, so the same address would be a no-op.
+     * A permanent failure was recorded, so a send to the same address delivers
+     * nothing. It is false for a suppressed address that a resend can clear.
      */
     public function withRequiresDifferentAddress(
         bool $requiresDifferentAddress

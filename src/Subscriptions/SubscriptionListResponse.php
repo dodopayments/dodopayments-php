@@ -22,6 +22,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type DiscountShape from \Dodopayments\Subscriptions\SubscriptionListResponse\Discount
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type SubscriptionCancelledByShape from \Dodopayments\Subscriptions\SubscriptionCancelledBy
  * @phpstan-import-type ScheduledPlanChangeShape from \Dodopayments\Subscriptions\ScheduledPlanChange
  *
  * @phpstan-type SubscriptionListResponseShape = array{
@@ -48,6 +49,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  *   taxInclusive: bool,
  *   trialPeriodDays: int,
  *   cancelledAt?: \DateTimeInterface|null,
+ *   cancelledBy?: null|SubscriptionCancelledBy|SubscriptionCancelledByShape,
  *   customerBusinessName?: string|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
@@ -217,6 +219,14 @@ final class SubscriptionListResponse implements BaseModel
     public ?\DateTimeInterface $cancelledAt;
 
     /**
+     * The caller that cancelled the subscription or scheduled its cancel.
+     * `null` when no caller is known, for example when the system cancelled
+     * the subscription.
+     */
+    #[Optional('cancelled_by', nullable: true)]
+    public ?SubscriptionCancelledBy $cancelledBy;
+
+    /**
      * Business / legal name associated with the tax id (B2B). When set this is
      * used on the invoice in place of the customer's personal name.
      */
@@ -350,6 +360,7 @@ final class SubscriptionListResponse implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
+     * @param SubscriptionCancelledBy|SubscriptionCancelledByShape|null $cancelledBy
      * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
      */
     public static function with(
@@ -376,6 +387,7 @@ final class SubscriptionListResponse implements BaseModel
         bool $taxInclusive,
         int $trialPeriodDays,
         ?\DateTimeInterface $cancelledAt = null,
+        SubscriptionCancelledBy|array|null $cancelledBy = null,
         ?string $customerBusinessName = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
@@ -412,6 +424,7 @@ final class SubscriptionListResponse implements BaseModel
         $self['trialPeriodDays'] = $trialPeriodDays;
 
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
+        null !== $cancelledBy && $self['cancelledBy'] = $cancelledBy;
         null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
         null !== $discountID && $self['discountID'] = $discountID;
@@ -698,6 +711,22 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['cancelledAt'] = $cancelledAt;
+
+        return $self;
+    }
+
+    /**
+     * The caller that cancelled the subscription or scheduled its cancel.
+     * `null` when no caller is known, for example when the system cancelled
+     * the subscription.
+     *
+     * @param SubscriptionCancelledBy|SubscriptionCancelledByShape|null $cancelledBy
+     */
+    public function withCancelledBy(
+        SubscriptionCancelledBy|array|null $cancelledBy
+    ): self {
+        $self = clone $this;
+        $self['cancelledBy'] = $cancelledBy;
 
         return $self;
     }
