@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.28.0](https://github.com/dodopayments/dodopayments-php/compare/v6.27.0...v6.28.0) (2026-10-05)
+
+
+### Features
+
+* **api:** refund network references and subscription cancelled_by ([7326e54](https://github.com/dodopayments/dodopayments-php/commit/7326e546d3a72814c3050369e6bf2c3331fca5e2))
+* **api:** refund network references and subscription cancelled_by ([38ea2ca](https://github.com/dodopayments/dodopayments-php/commit/38ea2caa5b33f3af09f80162500ceb9ab9c297db))
+
 ## [6.27.0](https://github.com/dodopayments/dodopayments-php/compare/v6.26.0...v6.27.0) (2026-09-25)
 
 
