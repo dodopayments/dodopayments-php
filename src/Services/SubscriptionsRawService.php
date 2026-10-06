@@ -279,6 +279,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   quantity: int,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   cancelOlderPaymentLink?: bool,
      *   cancelScheduledChangePlan?: bool,
      *   collectViaPaymentLink?: bool,
      *   discountCode?: string|null,
@@ -286,6 +287,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   effectiveAt?: EffectiveAt|value-of<EffectiveAt>,
      *   metadata?: array<string,MetadataItemShape>|null,
      *   onPaymentFailure?: OnPaymentFailure|value-of<OnPaymentFailure>|null,
+     *   returnURL?: string|null,
      * }|SubscriptionChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -361,6 +363,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   quantity: int,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   addons?: list<AttachAddon|AttachAddonShape>|null,
+     *   cancelOlderPaymentLink?: bool,
      *   cancelScheduledChangePlan?: bool,
      *   collectViaPaymentLink?: bool,
      *   discountCode?: string|null,
@@ -368,6 +371,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   effectiveAt?: SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<SubscriptionPreviewChangePlanParams\EffectiveAt>,
      *   metadata?: array<string,MetadataItemShape>|null,
      *   onPaymentFailure?: SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null,
+     *   returnURL?: string|null,
      * }|SubscriptionPreviewChangePlanParams $params
      * @param RequestOpts|null $requestOptions
      *
