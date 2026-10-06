@@ -24,6 +24,7 @@ use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\ProrationBillingMode;
  *   quantity: int,
  *   adaptiveCurrencyFeesInclusive?: bool|null,
  *   addons?: list<AttachAddon|AttachAddonShape>|null,
+ *   cancelOlderPaymentLink?: bool|null,
  *   cancelScheduledChangePlan?: bool|null,
  *   collectViaPaymentLink?: bool|null,
  *   discountCode?: string|null,
@@ -31,6 +32,7 @@ use Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\ProrationBillingMode;
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
+ *   returnURL?: string|null,
  * }
  */
 final class UpdateSubscriptionPlanReq implements BaseModel
@@ -73,6 +75,23 @@ final class UpdateSubscriptionPlanReq implements BaseModel
      */
     #[Optional(list: AttachAddon::class, nullable: true)]
     public ?array $addons;
+
+    /**
+     * Cancel the payment link of a pending plan change, so that this change
+     * can replace it.
+     *
+     * The link is cancelled only if the customer has not started to pay. A
+     * paid or in-progress payment gives a `409`. A failed cancel gives a
+     * `503`, and a retry is safe.
+     *
+     * The request is validated before the cancel. A later failure, for example
+     * an amount below the minimum, leaves the subscription on its current plan
+     * with no open link. A retry is safe.
+     *
+     * The preview route shares this request body and ignores this field.
+     */
+    #[Optional('cancel_older_payment_link')]
+    public ?bool $cancelOlderPaymentLink;
 
     /**
      * Replace a scheduled plan change with this one.
@@ -159,6 +178,22 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     public ?string $onPaymentFailure;
 
     /**
+     * The URL that receives the customer after they pay the payment link.
+     * Needs `collect_via_payment_link: true`. Without it, the request gets a
+     * `422`. A change that collects no money issues no link and does not use
+     * the URL. The preview route validates this field but does not use it.
+     *
+     * The redirect adds `subscription_id`, `payment_id` and `status`. The
+     * `status` value is the status of the plan-change payment. It is not the
+     * status of the subscription. When that payment fails, the subscription
+     * stays active on its current plan. To try again, call this endpoint
+     * again to get a new link. The new plan can apply after the redirect,
+     * when the payment webhook arrives.
+     */
+    #[Optional('return_url', nullable: true)]
+    public ?string $returnURL;
+
+    /**
      * `new UpdateSubscriptionPlanReq()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -200,6 +235,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
         int $quantity,
         ?bool $adaptiveCurrencyFeesInclusive = null,
         ?array $addons = null,
+        ?bool $cancelOlderPaymentLink = null,
         ?bool $cancelScheduledChangePlan = null,
         ?bool $collectViaPaymentLink = null,
         ?string $discountCode = null,
@@ -207,6 +243,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
         EffectiveAt|string|null $effectiveAt = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
+        ?string $returnURL = null,
     ): self {
         $self = new self;
 
@@ -216,6 +253,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
 
         null !== $adaptiveCurrencyFeesInclusive && $self['adaptiveCurrencyFeesInclusive'] = $adaptiveCurrencyFeesInclusive;
         null !== $addons && $self['addons'] = $addons;
+        null !== $cancelOlderPaymentLink && $self['cancelOlderPaymentLink'] = $cancelOlderPaymentLink;
         null !== $cancelScheduledChangePlan && $self['cancelScheduledChangePlan'] = $cancelScheduledChangePlan;
         null !== $collectViaPaymentLink && $self['collectViaPaymentLink'] = $collectViaPaymentLink;
         null !== $discountCode && $self['discountCode'] = $discountCode;
@@ -223,6 +261,7 @@ final class UpdateSubscriptionPlanReq implements BaseModel
         null !== $effectiveAt && $self['effectiveAt'] = $effectiveAt;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onPaymentFailure && $self['onPaymentFailure'] = $onPaymentFailure;
+        null !== $returnURL && $self['returnURL'] = $returnURL;
 
         return $self;
     }
@@ -286,6 +325,29 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     {
         $self = clone $this;
         $self['addons'] = $addons;
+
+        return $self;
+    }
+
+    /**
+     * Cancel the payment link of a pending plan change, so that this change
+     * can replace it.
+     *
+     * The link is cancelled only if the customer has not started to pay. A
+     * paid or in-progress payment gives a `409`. A failed cancel gives a
+     * `503`, and a retry is safe.
+     *
+     * The request is validated before the cancel. A later failure, for example
+     * an amount below the minimum, leaves the subscription on its current plan
+     * with no open link. A retry is safe.
+     *
+     * The preview route shares this request body and ignores this field.
+     */
+    public function withCancelOlderPaymentLink(
+        bool $cancelOlderPaymentLink
+    ): self {
+        $self = clone $this;
+        $self['cancelOlderPaymentLink'] = $cancelOlderPaymentLink;
 
         return $self;
     }
@@ -401,6 +463,27 @@ final class UpdateSubscriptionPlanReq implements BaseModel
     ): self {
         $self = clone $this;
         $self['onPaymentFailure'] = $onPaymentFailure;
+
+        return $self;
+    }
+
+    /**
+     * The URL that receives the customer after they pay the payment link.
+     * Needs `collect_via_payment_link: true`. Without it, the request gets a
+     * `422`. A change that collects no money issues no link and does not use
+     * the URL. The preview route validates this field but does not use it.
+     *
+     * The redirect adds `subscription_id`, `payment_id` and `status`. The
+     * `status` value is the status of the plan-change payment. It is not the
+     * status of the subscription. When that payment fails, the subscription
+     * stays active on its current plan. To try again, call this endpoint
+     * again to get a new link. The new plan can apply after the redirect,
+     * when the payment webhook arrives.
+     */
+    public function withReturnURL(?string $returnURL): self
+    {
+        $self = clone $this;
+        $self['returnURL'] = $returnURL;
 
         return $self;
     }
