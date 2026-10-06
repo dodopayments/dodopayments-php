@@ -170,6 +170,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             adaptiveCurrencyFeesInclusive: true,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            cancelOlderPaymentLink: true,
             cancelScheduledChangePlan: true,
             collectViaPaymentLink: true,
             discountCode: 'discount_code',
@@ -177,6 +178,7 @@ final class SubscriptionsTest extends TestCase
             effectiveAt: 'immediately',
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
+            returnURL: 'return_url',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -242,6 +244,7 @@ final class SubscriptionsTest extends TestCase
             quantity: 0,
             adaptiveCurrencyFeesInclusive: true,
             addons: [['addonID' => 'addon_id', 'quantity' => 0]],
+            cancelOlderPaymentLink: true,
             cancelScheduledChangePlan: true,
             collectViaPaymentLink: true,
             discountCode: 'discount_code',
@@ -249,6 +252,7 @@ final class SubscriptionsTest extends TestCase
             effectiveAt: 'immediately',
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
+            returnURL: 'return_url',
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
