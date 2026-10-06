@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.29.0](https://github.com/dodopayments/dodopayments-php/compare/v6.28.0...v6.29.0) (2026-10-06)
+
+
+### Features
+
+* **api:** change-plan cancel_older_payment_link and return_url ([7e8304e](https://github.com/dodopayments/dodopayments-php/commit/7e8304ea2e17f5cc2ff210b70fcfe81accca6b50))
+* **api:** change-plan cancel_older_payment_link and return_url ([7c19fcf](https://github.com/dodopayments/dodopayments-php/commit/7c19fcf57698e9ecb5789604144be21d64be4899))
+
 ## [6.28.0](https://github.com/dodopayments/dodopayments-php/compare/v6.27.0...v6.28.0) (2026-10-05)
 
 
