@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.29.1](https://github.com/dodopayments/dodopayments-php/compare/v6.29.0...v6.29.1) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** refresh generated SDK dependencies and CI action pins ([d405c87](https://github.com/dodopayments/dodopayments-php/commit/d405c87e3593f7d0e22a6dd7d6de0e75002d4f8d))
+* **deps:** refresh generated SDK dependencies and CI action pins ([4a54b71](https://github.com/dodopayments/dodopayments-php/commit/4a54b71fc1dc64694545079745699259db11e77b))
+
 ## [6.29.0](https://github.com/dodopayments/dodopayments-php/compare/v6.28.0...v6.29.0) (2026-10-06)
 
 
