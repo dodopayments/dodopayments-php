@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.29.2](https://github.com/dodopayments/dodopayments-php/compare/v6.29.1...v6.29.2) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade SDK toolchains (pnpm, uv, TypeScript 7, Gradle 9, okhttp 5, zod 4) and stop cursor pagination on done ([5acad15](https://github.com/dodopayments/dodopayments-php/commit/5acad15906470ca8fb66ec683a7da703a83ba265))
+* **deps:** upgrade SDK toolchains (pnpm, uv, TypeScript 7, Gradle 9, okhttp 5, zod 4) and stop cursor pagination on done ([0f1273d](https://github.com/dodopayments/dodopayments-php/commit/0f1273d019da563202ff1b84ed7368108f33ea69))
+
 ## [6.29.1](https://github.com/dodopayments/dodopayments-php/compare/v6.29.0...v6.29.1) (2026-10-09)
 
 
