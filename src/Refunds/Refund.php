@@ -31,6 +31,7 @@ use Dodopayments\Payments\CustomerLimitedDetails;
  *   currency?: null|Currency|value-of<Currency>,
  *   networkReference?: string|null,
  *   networkReferenceType?: null|RefundNetworkReferenceType|value-of<RefundNetworkReferenceType>,
+ *   networkReferenceUpdatedAt?: \DateTimeInterface|null,
  *   reason?: string|null,
  * }
  */
@@ -132,6 +133,13 @@ final class Refund implements BaseModel
     public ?string $networkReferenceType;
 
     /**
+     * The time in UTC when `network_reference` became available. It is null when the
+     * reference is not available, or when it became available before this field existed.
+     */
+    #[Optional('network_reference_updated_at', nullable: true)]
+    public ?\DateTimeInterface $networkReferenceUpdatedAt;
+
+    /**
      * The reason provided for the refund, if any. Optional.
      */
     #[Optional(nullable: true)]
@@ -200,6 +208,7 @@ final class Refund implements BaseModel
         Currency|string|null $currency = null,
         ?string $networkReference = null,
         RefundNetworkReferenceType|string|null $networkReferenceType = null,
+        ?\DateTimeInterface $networkReferenceUpdatedAt = null,
         ?string $reason = null,
     ): self {
         $self = new self;
@@ -218,6 +227,7 @@ final class Refund implements BaseModel
         null !== $currency && $self['currency'] = $currency;
         null !== $networkReference && $self['networkReference'] = $networkReference;
         null !== $networkReferenceType && $self['networkReferenceType'] = $networkReferenceType;
+        null !== $networkReferenceUpdatedAt && $self['networkReferenceUpdatedAt'] = $networkReferenceUpdatedAt;
         null !== $reason && $self['reason'] = $reason;
 
         return $self;
@@ -375,6 +385,19 @@ final class Refund implements BaseModel
     ): self {
         $self = clone $this;
         $self['networkReferenceType'] = $networkReferenceType;
+
+        return $self;
+    }
+
+    /**
+     * The time in UTC when `network_reference` became available. It is null when the
+     * reference is not available, or when it became available before this field existed.
+     */
+    public function withNetworkReferenceUpdatedAt(
+        ?\DateTimeInterface $networkReferenceUpdatedAt
+    ): self {
+        $self = clone $this;
+        $self['networkReferenceUpdatedAt'] = $networkReferenceUpdatedAt;
 
         return $self;
     }
