@@ -21,6 +21,7 @@ use Dodopayments\Payments\Payment\PaymentProvider;
 use Dodopayments\Payments\Payment\ProductCart;
 use Dodopayments\Payments\PaymentRefundStatus;
 use Dodopayments\Payments\RefundListItem;
+use Dodopayments\Payments\SubscriptionServicePeriod;
 
 /**
  * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
@@ -29,6 +30,7 @@ use Dodopayments\Payments\RefundListItem;
  * @phpstan-import-type DisputeShape from \Dodopayments\Disputes\Dispute
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RefundListItemShape from \Dodopayments\Payments\RefundListItem
+ * @phpstan-import-type SubscriptionServicePeriodShape from \Dodopayments\Payments\SubscriptionServicePeriod
  * @phpstan-import-type CustomFieldResponseShape from \Dodopayments\Payments\CustomFieldResponse
  * @phpstan-import-type DiscountDetailShape from \Dodopayments\Discounts\DiscountDetail
  * @phpstan-import-type ProductCartShape from \Dodopayments\Payments\Payment\ProductCart
@@ -49,6 +51,7 @@ use Dodopayments\Payments\RefundListItem;
  *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
  *   refunds: list<RefundListItem|RefundListItemShape>,
  *   retryAttempt: int,
+ *   servicePeriods: list<SubscriptionServicePeriod|SubscriptionServicePeriodShape>,
  *   settlementAmount: int,
  *   settlementCurrency: Currency|value-of<Currency>,
  *   subscriptionIDs: list<string>,
@@ -185,6 +188,18 @@ final class Payment implements BaseModel
      */
     #[Required('retry_attempt')]
     public int $retryAttempt;
+
+    /**
+     * The service period of each subscription that this payment pays for.
+     * The order is the same as `subscription_ids`. For a plan change charge, the
+     * period starts at the plan change and ends at the next billing date. The list
+     * is empty unless the payment status is `succeeded`. The list is also empty for
+     * a one-time payment, an on-demand charge, or a payment method update.
+     *
+     * @var list<SubscriptionServicePeriod> $servicePeriods
+     */
+    #[Required('service_periods', list: SubscriptionServicePeriod::class)]
+    public array $servicePeriods;
 
     /**
      * The amount that will be credited to your Dodo balance after currency conversion and processing.
@@ -397,6 +412,7 @@ final class Payment implements BaseModel
      *   paymentProvider: ...,
      *   refunds: ...,
      *   retryAttempt: ...,
+     *   servicePeriods: ...,
      *   settlementAmount: ...,
      *   settlementCurrency: ...,
      *   subscriptionIDs: ...,
@@ -423,6 +439,7 @@ final class Payment implements BaseModel
      *   ->withPaymentProvider(...)
      *   ->withRefunds(...)
      *   ->withRetryAttempt(...)
+     *   ->withServicePeriods(...)
      *   ->withSettlementAmount(...)
      *   ->withSettlementCurrency(...)
      *   ->withSubscriptionIDs(...)
@@ -446,6 +463,7 @@ final class Payment implements BaseModel
      * @param array<string,MetadataItemShape> $metadata
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param list<RefundListItem|RefundListItemShape> $refunds
+     * @param list<SubscriptionServicePeriod|SubscriptionServicePeriodShape> $servicePeriods
      * @param Currency|value-of<Currency> $settlementCurrency
      * @param list<string> $subscriptionIDs
      * @param CountryCode|value-of<CountryCode>|null $cardIssuingCountry
@@ -471,6 +489,7 @@ final class Payment implements BaseModel
         PaymentProvider|string $paymentProvider,
         array $refunds,
         int $retryAttempt,
+        array $servicePeriods,
         int $settlementAmount,
         Currency|string $settlementCurrency,
         array $subscriptionIDs,
@@ -517,6 +536,7 @@ final class Payment implements BaseModel
         $self['paymentProvider'] = $paymentProvider;
         $self['refunds'] = $refunds;
         $self['retryAttempt'] = $retryAttempt;
+        $self['servicePeriods'] = $servicePeriods;
         $self['settlementAmount'] = $settlementAmount;
         $self['settlementCurrency'] = $settlementCurrency;
         $self['subscriptionIDs'] = $subscriptionIDs;
@@ -728,6 +748,23 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['retryAttempt'] = $retryAttempt;
+
+        return $self;
+    }
+
+    /**
+     * The service period of each subscription that this payment pays for.
+     * The order is the same as `subscription_ids`. For a plan change charge, the
+     * period starts at the plan change and ends at the next billing date. The list
+     * is empty unless the payment status is `succeeded`. The list is also empty for
+     * a one-time payment, an on-demand charge, or a payment method update.
+     *
+     * @param list<SubscriptionServicePeriod|SubscriptionServicePeriodShape> $servicePeriods
+     */
+    public function withServicePeriods(array $servicePeriods): self
+    {
+        $self = clone $this;
+        $self['servicePeriods'] = $servicePeriods;
 
         return $self;
     }
