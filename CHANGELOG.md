@@ -1,13 +1,5 @@
 # Changelog
 
-## [6.30.0](https://github.com/dodopayments/dodopayments-php/compare/v6.29.2...v6.30.0) (2026-10-14)
-
-
-### Features
-
-* **api:** payment service periods, retry attempts and subscription renewal payment_id ([2083b2f](https://github.com/dodopayments/dodopayments-php/commit/2083b2fed9a7ef269e4a80ab33f1f77d62b1b127))
-* **api:** payment service periods, retry attempts and subscription renewal payment_id ([286820d](https://github.com/dodopayments/dodopayments-php/commit/286820d8a8415658ba9b3e329ac438c5b6eeea6f))
-
 ## [6.29.2](https://github.com/dodopayments/dodopayments-php/compare/v6.29.1...v6.29.2) (2026-10-09)
 
 
