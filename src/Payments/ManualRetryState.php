@@ -14,6 +14,9 @@ use Dodopayments\Core\Contracts\BaseModel;
  *   canRetry: bool,
  *   sendsAllowed: int,
  *   sendsUsed: int,
+ *   automaticRetryNumber?: int|null,
+ *   automaticRetryTotal?: int|null,
+ *   nextAutomaticRetryAt?: \DateTimeInterface|null,
  *   reason?: string|null,
  *   retryAvailableAt?: \DateTimeInterface|null,
  * }
@@ -31,6 +34,26 @@ final class ManualRetryState implements BaseModel
 
     #[Required('sends_used')]
     public int $sendsUsed;
+
+    /**
+     * The number of the queued automatic retry, starting at 1.
+     */
+    #[Optional('automatic_retry_number', nullable: true)]
+    public ?int $automaticRetryNumber;
+
+    /**
+     * The number of automatic retries that the current configuration plans for
+     * this invoice. It is never less than `automatic_retry_number`.
+     */
+    #[Optional('automatic_retry_total', nullable: true)]
+    public ?int $automaticRetryTotal;
+
+    /**
+     * When the next automatic retry on this invoice is scheduled. Null when no
+     * automatic retry is queued or automatic retries are disabled.
+     */
+    #[Optional('next_automatic_retry_at', nullable: true)]
+    public ?\DateTimeInterface $nextAutomaticRetryAt;
 
     /**
      * The code `POST` would fail with. Null when `can_retry` is true.
@@ -76,6 +99,9 @@ final class ManualRetryState implements BaseModel
         bool $canRetry,
         int $sendsAllowed,
         int $sendsUsed,
+        ?int $automaticRetryNumber = null,
+        ?int $automaticRetryTotal = null,
+        ?\DateTimeInterface $nextAutomaticRetryAt = null,
         ?string $reason = null,
         ?\DateTimeInterface $retryAvailableAt = null,
     ): self {
@@ -85,6 +111,9 @@ final class ManualRetryState implements BaseModel
         $self['sendsAllowed'] = $sendsAllowed;
         $self['sendsUsed'] = $sendsUsed;
 
+        null !== $automaticRetryNumber && $self['automaticRetryNumber'] = $automaticRetryNumber;
+        null !== $automaticRetryTotal && $self['automaticRetryTotal'] = $automaticRetryTotal;
+        null !== $nextAutomaticRetryAt && $self['nextAutomaticRetryAt'] = $nextAutomaticRetryAt;
         null !== $reason && $self['reason'] = $reason;
         null !== $retryAvailableAt && $self['retryAvailableAt'] = $retryAvailableAt;
 
@@ -111,6 +140,42 @@ final class ManualRetryState implements BaseModel
     {
         $self = clone $this;
         $self['sendsUsed'] = $sendsUsed;
+
+        return $self;
+    }
+
+    /**
+     * The number of the queued automatic retry, starting at 1.
+     */
+    public function withAutomaticRetryNumber(?int $automaticRetryNumber): self
+    {
+        $self = clone $this;
+        $self['automaticRetryNumber'] = $automaticRetryNumber;
+
+        return $self;
+    }
+
+    /**
+     * The number of automatic retries that the current configuration plans for
+     * this invoice. It is never less than `automatic_retry_number`.
+     */
+    public function withAutomaticRetryTotal(?int $automaticRetryTotal): self
+    {
+        $self = clone $this;
+        $self['automaticRetryTotal'] = $automaticRetryTotal;
+
+        return $self;
+    }
+
+    /**
+     * When the next automatic retry on this invoice is scheduled. Null when no
+     * automatic retry is queued or automatic retries are disabled.
+     */
+    public function withNextAutomaticRetryAt(
+        ?\DateTimeInterface $nextAutomaticRetryAt
+    ): self {
+        $self = clone $this;
+        $self['nextAutomaticRetryAt'] = $nextAutomaticRetryAt;
 
         return $self;
     }

@@ -16,4 +16,6 @@ enum ProrationBillingModeOnDowngrade: string
     case DIFFERENCE_IMMEDIATELY = 'difference_immediately';
 
     case DO_NOT_BILL = 'do_not_bill';
+
+    case PRORATED_IMMEDIATELY_KEEP_CYCLE = 'prorated_immediately_keep_cycle';
 }

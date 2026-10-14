@@ -70,4 +70,10 @@ enum EventType: string
     case RESERVE_RELEASE = 'reserve_release';
 
     case MODERATION_FEES = 'moderation_fees';
+
+    case DODO_FIXED_FEE = 'dodo_fixed_fee';
+
+    case INTERCHANGE_FEE = 'interchange_fee';
+
+    case SCHEME_FEE = 'scheme_fee';
 }

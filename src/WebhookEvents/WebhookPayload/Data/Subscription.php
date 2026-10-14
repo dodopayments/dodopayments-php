@@ -84,6 +84,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   trialAmount?: int|null,
  *   payloadType: 'Subscription',
  *   pastDueEndsAt?: \DateTimeInterface|null,
+ *   paymentID?: string|null,
  * }
  */
 final class Subscription implements BaseModel
@@ -372,6 +373,13 @@ final class Subscription implements BaseModel
     public ?\DateTimeInterface $pastDueEndsAt;
 
     /**
+     * Identifier of the payment that caused this event.
+     * It is set only for `subscription.renewed`. It is null for all other subscription events.
+     */
+    #[Optional('payment_id', nullable: true)]
+    public ?string $paymentID;
+
+    /**
      * `new Subscription()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -508,6 +516,7 @@ final class Subscription implements BaseModel
         ?string $taxID = null,
         ?int $trialAmount = null,
         ?\DateTimeInterface $pastDueEndsAt = null,
+        ?string $paymentID = null,
     ): self {
         $self = new self;
 
@@ -554,6 +563,7 @@ final class Subscription implements BaseModel
         null !== $taxID && $self['taxID'] = $taxID;
         null !== $trialAmount && $self['trialAmount'] = $trialAmount;
         null !== $pastDueEndsAt && $self['pastDueEndsAt'] = $pastDueEndsAt;
+        null !== $paymentID && $self['paymentID'] = $paymentID;
 
         return $self;
     }
@@ -1071,6 +1081,18 @@ final class Subscription implements BaseModel
     {
         $self = clone $this;
         $self['pastDueEndsAt'] = $pastDueEndsAt;
+
+        return $self;
+    }
+
+    /**
+     * Identifier of the payment that caused this event.
+     * It is set only for `subscription.renewed`. It is null for all other subscription events.
+     */
+    public function withPaymentID(?string $paymentID): self
+    {
+        $self = clone $this;
+        $self['paymentID'] = $paymentID;
 
         return $self;
     }

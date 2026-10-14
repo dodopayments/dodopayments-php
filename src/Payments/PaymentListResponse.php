@@ -17,6 +17,7 @@ use Dodopayments\Payments\PaymentListResponse\PaymentProvider;
  * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type CustomerLimitedDetailsShape from \Dodopayments\Payments\CustomerLimitedDetails
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
+ * @phpstan-import-type SubscriptionServicePeriodShape from \Dodopayments\Payments\SubscriptionServicePeriod
  *
  * @phpstan-type PaymentListResponseShape = array{
  *   brandID: string,
@@ -29,10 +30,13 @@ use Dodopayments\Payments\PaymentListResponse\PaymentProvider;
  *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
  *   paymentProvider: PaymentProvider|value-of<PaymentProvider>,
+ *   retryAttempt: int,
+ *   servicePeriods: list<SubscriptionServicePeriod|SubscriptionServicePeriodShape>,
  *   subscriptionIDs: list<string>,
  *   totalAmount: int,
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
+ *   checkoutSessionID?: string|null,
  *   disputeStatus?: null|DisputeStatus|value-of<DisputeStatus>,
  *   invoiceID?: string|null,
  *   invoiceURL?: string|null,
@@ -97,6 +101,26 @@ final class PaymentListResponse implements BaseModel
     public string $paymentProvider;
 
     /**
+     * The retry attempt number of this payment. The value is `0` for the original
+     * payment. Each retry after a failed subscription renewal adds `1`. The value
+     * is always `0` for a payment that is not for a subscription.
+     */
+    #[Required('retry_attempt')]
+    public int $retryAttempt;
+
+    /**
+     * The service period of each subscription that this payment pays for.
+     * The order is the same as `subscription_ids`. For a plan change charge, the
+     * period starts at the plan change and ends at the next billing date. The list
+     * is empty unless the payment status is `succeeded`. The list is also empty for
+     * a one-time payment, an on-demand charge, or a payment method update.
+     *
+     * @var list<SubscriptionServicePeriod> $servicePeriods
+     */
+    #[Required('service_periods', list: SubscriptionServicePeriod::class)]
+    public array $servicePeriods;
+
+    /**
      * Every subscription that this payment starts or charges, in a stable order.
      * It is empty for a one-time payment. It holds the value of `subscription_id`
      * when the payment names one subscription.
@@ -120,6 +144,13 @@ final class PaymentListResponse implements BaseModel
      */
     #[Optional('card_network', nullable: true)]
     public ?string $cardNetwork;
+
+    /**
+     * The ID of the checkout session for this payment. The value is null when
+     * the payment does not use a checkout session.
+     */
+    #[Optional('checkout_session_id', nullable: true)]
+    public ?string $checkoutSessionID;
 
     /**
      * The most recent dispute status for this payment. None if no disputes exist.
@@ -178,6 +209,8 @@ final class PaymentListResponse implements BaseModel
      *   metadata: ...,
      *   paymentID: ...,
      *   paymentProvider: ...,
+     *   retryAttempt: ...,
+     *   servicePeriods: ...,
      *   subscriptionIDs: ...,
      *   totalAmount: ...,
      * )
@@ -197,6 +230,8 @@ final class PaymentListResponse implements BaseModel
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
      *   ->withPaymentProvider(...)
+     *   ->withRetryAttempt(...)
+     *   ->withServicePeriods(...)
      *   ->withSubscriptionIDs(...)
      *   ->withTotalAmount(...)
      * ```
@@ -215,6 +250,7 @@ final class PaymentListResponse implements BaseModel
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param array<string,MetadataItemShape> $metadata
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
+     * @param list<SubscriptionServicePeriod|SubscriptionServicePeriodShape> $servicePeriods
      * @param list<string> $subscriptionIDs
      * @param DisputeStatus|value-of<DisputeStatus>|null $disputeStatus
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
@@ -231,10 +267,13 @@ final class PaymentListResponse implements BaseModel
         array $metadata,
         string $paymentID,
         PaymentProvider|string $paymentProvider,
+        int $retryAttempt,
+        array $servicePeriods,
         array $subscriptionIDs,
         int $totalAmount,
         ?string $cardLastFour = null,
         ?string $cardNetwork = null,
+        ?string $checkoutSessionID = null,
         DisputeStatus|string|null $disputeStatus = null,
         ?string $invoiceID = null,
         ?string $invoiceURL = null,
@@ -256,11 +295,14 @@ final class PaymentListResponse implements BaseModel
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
         $self['paymentProvider'] = $paymentProvider;
+        $self['retryAttempt'] = $retryAttempt;
+        $self['servicePeriods'] = $servicePeriods;
         $self['subscriptionIDs'] = $subscriptionIDs;
         $self['totalAmount'] = $totalAmount;
 
         null !== $cardLastFour && $self['cardLastFour'] = $cardLastFour;
         null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
+        null !== $checkoutSessionID && $self['checkoutSessionID'] = $checkoutSessionID;
         null !== $disputeStatus && $self['disputeStatus'] = $disputeStatus;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $invoiceURL && $self['invoiceURL'] = $invoiceURL;
@@ -379,6 +421,36 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
+     * The retry attempt number of this payment. The value is `0` for the original
+     * payment. Each retry after a failed subscription renewal adds `1`. The value
+     * is always `0` for a payment that is not for a subscription.
+     */
+    public function withRetryAttempt(int $retryAttempt): self
+    {
+        $self = clone $this;
+        $self['retryAttempt'] = $retryAttempt;
+
+        return $self;
+    }
+
+    /**
+     * The service period of each subscription that this payment pays for.
+     * The order is the same as `subscription_ids`. For a plan change charge, the
+     * period starts at the plan change and ends at the next billing date. The list
+     * is empty unless the payment status is `succeeded`. The list is also empty for
+     * a one-time payment, an on-demand charge, or a payment method update.
+     *
+     * @param list<SubscriptionServicePeriod|SubscriptionServicePeriodShape> $servicePeriods
+     */
+    public function withServicePeriods(array $servicePeriods): self
+    {
+        $self = clone $this;
+        $self['servicePeriods'] = $servicePeriods;
+
+        return $self;
+    }
+
+    /**
      * Every subscription that this payment starts or charges, in a stable order.
      * It is empty for a one-time payment. It holds the value of `subscription_id`
      * when the payment names one subscription.
@@ -419,6 +491,18 @@ final class PaymentListResponse implements BaseModel
     {
         $self = clone $this;
         $self['cardNetwork'] = $cardNetwork;
+
+        return $self;
+    }
+
+    /**
+     * The ID of the checkout session for this payment. The value is null when
+     * the payment does not use a checkout session.
+     */
+    public function withCheckoutSessionID(?string $checkoutSessionID): self
+    {
+        $self = clone $this;
+        $self['checkoutSessionID'] = $checkoutSessionID;
 
         return $self;
     }
