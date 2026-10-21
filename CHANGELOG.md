@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.31.0](https://github.com/dodopayments/dodopayments-php/compare/v6.30.0...v6.31.0) (2026-10-21)
+
+
+### Features
+
+* **api:** payment charge type, usage flag and card details, signed invoice link tokens ([847cdff](https://github.com/dodopayments/dodopayments-php/commit/847cdff1345c3913e87b3f55fc2017bbc0b80a94))
+* **api:** payment charge type, usage flag and card details, signed invoice link tokens ([d7f13ab](https://github.com/dodopayments/dodopayments-php/commit/d7f13ab9b2bb2e1238f3cf6995c18670d8e6a9ff))
+
 ## [6.30.0](https://github.com/dodopayments/dodopayments-php/compare/v6.29.2...v6.30.0) (2026-10-14)
 
 
