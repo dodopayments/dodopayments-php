@@ -57,14 +57,16 @@ final class UsageBasedPrice implements BaseModel
     public int $fixedPrice;
 
     /**
-     * Number of units for the payment frequency.
-     * For example, a value of `1` with a `payment_frequency_interval` of `month` represents monthly payments.
+     * Number of `payment_frequency_interval` units between two charges.
+     * This field sets the billing cycle.
+     * For example, `1` with a `payment_frequency_interval` of `month` charges the customer every month.
      */
     #[Required('payment_frequency_count')]
     public int $paymentFrequencyCount;
 
     /**
-     * The time interval for the payment frequency (e.g., day, month, year).
+     * The time unit of the billing cycle (e.g., day, month, year).
+     * Use it with `payment_frequency_count`.
      *
      * @var value-of<TimeInterval> $paymentFrequencyInterval
      */
@@ -72,14 +74,27 @@ final class UsageBasedPrice implements BaseModel
     public string $paymentFrequencyInterval;
 
     /**
-     * Number of units for the subscription period.
-     * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
+     * Number of `subscription_period_interval` units for the total duration of the subscription.
+     * This field does not set the billing cycle. Use `payment_frequency_count` for the billing cycle.
+     * When this period ends, the subscription expires. Dodo Payments does not start a new
+     * billing cycle after the subscription expires. Dodo Payments can still retry a failed
+     * payment for an earlier billing cycle.
+     *
+     * For a subscription that renews until the customer cancels it, set this to `20` with a
+     * `subscription_period_interval` of `year`. This is the recommended value and also the maximum.
+     * The subscription expires after 20 years if the customer does not cancel it before then.
+     *
+     * For example, a monthly plan uses a `payment_frequency_count` of `1`, a `payment_frequency_interval`
+     * of `month`, and a subscription period of `20` `year`. Do not set the subscription period to
+     * `1` `month` for a monthly plan: the subscription then expires after one month.
      */
     #[Required('subscription_period_count')]
     public int $subscriptionPeriodCount;
 
     /**
-     * The time interval for the subscription period (e.g., day, month, year).
+     * The time unit of the total subscription duration (e.g., day, month, year).
+     * Use it with `subscription_period_count`. The recommended value is `year`, with a
+     * `subscription_period_count` of `20`.
      *
      * @var value-of<TimeInterval> $subscriptionPeriodInterval
      */
@@ -227,8 +242,9 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * Number of units for the payment frequency.
-     * For example, a value of `1` with a `payment_frequency_interval` of `month` represents monthly payments.
+     * Number of `payment_frequency_interval` units between two charges.
+     * This field sets the billing cycle.
+     * For example, `1` with a `payment_frequency_interval` of `month` charges the customer every month.
      */
     public function withPaymentFrequencyCount(int $paymentFrequencyCount): self
     {
@@ -239,7 +255,8 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * The time interval for the payment frequency (e.g., day, month, year).
+     * The time unit of the billing cycle (e.g., day, month, year).
+     * Use it with `payment_frequency_count`.
      *
      * @param TimeInterval|value-of<TimeInterval> $paymentFrequencyInterval
      */
@@ -253,8 +270,19 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * Number of units for the subscription period.
-     * For example, a value of `12` with a `subscription_period_interval` of `month` represents a one-year subscription.
+     * Number of `subscription_period_interval` units for the total duration of the subscription.
+     * This field does not set the billing cycle. Use `payment_frequency_count` for the billing cycle.
+     * When this period ends, the subscription expires. Dodo Payments does not start a new
+     * billing cycle after the subscription expires. Dodo Payments can still retry a failed
+     * payment for an earlier billing cycle.
+     *
+     * For a subscription that renews until the customer cancels it, set this to `20` with a
+     * `subscription_period_interval` of `year`. This is the recommended value and also the maximum.
+     * The subscription expires after 20 years if the customer does not cancel it before then.
+     *
+     * For example, a monthly plan uses a `payment_frequency_count` of `1`, a `payment_frequency_interval`
+     * of `month`, and a subscription period of `20` `year`. Do not set the subscription period to
+     * `1` `month` for a monthly plan: the subscription then expires after one month.
      */
     public function withSubscriptionPeriodCount(
         int $subscriptionPeriodCount
@@ -266,7 +294,9 @@ final class UsageBasedPrice implements BaseModel
     }
 
     /**
-     * The time interval for the subscription period (e.g., day, month, year).
+     * The time unit of the total subscription duration (e.g., day, month, year).
+     * Use it with `subscription_period_count`. The recommended value is `year`, with a
+     * `subscription_period_count` of `20`.
      *
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      */

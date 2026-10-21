@@ -37,6 +37,7 @@ use Dodopayments\Misc\TaxCategory;
  *   description?: string|null,
  *   discountAmount?: int|null,
  *   discountCycle?: int|null,
+ *   monthlyEquivalent?: int|null,
  *   name?: string|null,
  *   tax?: int|null,
  * }
@@ -148,6 +149,14 @@ final class ProductCart implements BaseModel
     public ?int $discountCycle;
 
     /**
+     * The monthly equivalent of the yearly unit price after discounts, in minor units of `currency`.
+     * Only the hosted checkout sets it, when the business shows yearly plans as monthly.
+     * The value is only for display. The order summary shows the amounts that we charge.
+     */
+    #[Optional('monthly_equivalent', nullable: true)]
+    public ?int $monthlyEquivalent;
+
+    /**
      * name of the product.
      */
     #[Optional(nullable: true)]
@@ -235,6 +244,7 @@ final class ProductCart implements BaseModel
         ?string $description = null,
         ?int $discountAmount = null,
         ?int $discountCycle = null,
+        ?int $monthlyEquivalent = null,
         ?string $name = null,
         ?int $tax = null,
     ): self {
@@ -258,6 +268,7 @@ final class ProductCart implements BaseModel
         null !== $description && $self['description'] = $description;
         null !== $discountAmount && $self['discountAmount'] = $discountAmount;
         null !== $discountCycle && $self['discountCycle'] = $discountCycle;
+        null !== $monthlyEquivalent && $self['monthlyEquivalent'] = $monthlyEquivalent;
         null !== $name && $self['name'] = $name;
         null !== $tax && $self['tax'] = $tax;
 
@@ -450,6 +461,19 @@ final class ProductCart implements BaseModel
     {
         $self = clone $this;
         $self['discountCycle'] = $discountCycle;
+
+        return $self;
+    }
+
+    /**
+     * The monthly equivalent of the yearly unit price after discounts, in minor units of `currency`.
+     * Only the hosted checkout sets it, when the business shows yearly plans as monthly.
+     * The value is only for display. The order summary shows the amounts that we charge.
+     */
+    public function withMonthlyEquivalent(?int $monthlyEquivalent): self
+    {
+        $self = clone $this;
+        $self['monthlyEquivalent'] = $monthlyEquivalent;
 
         return $self;
     }
