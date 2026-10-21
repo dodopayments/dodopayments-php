@@ -26,6 +26,7 @@ use Dodopayments\Payments\PaymentListResponse\PaymentProvider;
  *   customer: CustomerLimitedDetails|CustomerLimitedDetailsShape,
  *   digitalProductsDelivered: bool,
  *   hasLicenseKey: bool,
+ *   includesUsage: bool,
  *   isMultiSubscription: bool,
  *   metadata: array<string,MetadataItemShape>,
  *   paymentID: string,
@@ -34,8 +35,12 @@ use Dodopayments\Payments\PaymentListResponse\PaymentProvider;
  *   servicePeriods: list<SubscriptionServicePeriod|SubscriptionServicePeriodShape>,
  *   subscriptionIDs: list<string>,
  *   totalAmount: int,
+ *   cardExpMonth?: string|null,
+ *   cardExpYear?: string|null,
  *   cardLastFour?: string|null,
  *   cardNetwork?: string|null,
+ *   cardType?: string|null,
+ *   chargeType?: null|ChargeType|value-of<ChargeType>,
  *   checkoutSessionID?: string|null,
  *   disputeStatus?: null|DisputeStatus|value-of<DisputeStatus>,
  *   invoiceID?: string|null,
@@ -70,6 +75,14 @@ final class PaymentListResponse implements BaseModel
 
     #[Required('has_license_key')]
     public bool $hasLicenseKey;
+
+    /**
+     * True when this payment also bills metered usage or credit overage. The usage is
+     * for the billing cycle before the service period, not for the service period.
+     * The value is set for each payment status. It is false when `charge_type` is null.
+     */
+    #[Required('includes_usage')]
+    public bool $includesUsage;
 
     /**
      * True when one payment starts more than one subscription. Read this field
@@ -114,6 +127,10 @@ final class PaymentListResponse implements BaseModel
      * period starts at the plan change and ends at the next billing date. The list
      * is empty unless the payment status is `succeeded`. The list is also empty for
      * a one-time payment, an on-demand charge, or a payment method update.
+     * The list is set for `new`, `renewal` and `plan_change` charges that succeeded.
+     * It can be empty for some zero-amount payments.
+     * A `renewal` with no entry for its subscription bills usage only.
+     * That payment does not extend the service period.
      *
      * @var list<SubscriptionServicePeriod> $servicePeriods
      */
@@ -134,16 +151,50 @@ final class PaymentListResponse implements BaseModel
     public int $totalAmount;
 
     /**
+     * Expiry month of the card, as two digits from `01` to `12`. For Apple Pay and
+     * Google Pay, this is the expiry of the wallet token, which can differ from the
+     * expiry of the physical card.
+     */
+    #[Optional('card_exp_month', nullable: true)]
+    public ?string $cardExpMonth;
+
+    /**
+     * Expiry year of the card, as four digits, for example `2029`. For Apple Pay and
+     * Google Pay, this is the expiry of the wallet token, which can differ from the
+     * expiry of the physical card.
+     */
+    #[Optional('card_exp_year', nullable: true)]
+    public ?string $cardExpYear;
+
+    /**
      * The last four digits of the card.
      */
     #[Optional('card_last_four', nullable: true)]
     public ?string $cardLastFour;
 
     /**
-     * Card network like VISA, MASTERCARD etc.
+     * Card network, in lowercase, for example `visa`, `mastercard` or `amex`. Older payments can
+     * carry other casing.
      */
     #[Optional('card_network', nullable: true)]
     public ?string $cardNetwork;
+
+    /**
+     * The type of card, in lowercase: `credit`, `debit` or `prepaid`. Older payments can carry
+     * other casing.
+     */
+    #[Optional('card_type', nullable: true)]
+    public ?string $cardType;
+
+    /**
+     * The type of subscription charge that this payment is for. Refer to `ChargeType`.
+     * The value is set for each payment status, not only for `succeeded`.
+     * The value is null when this payment charges no subscription.
+     *
+     * @var value-of<ChargeType>|null $chargeType
+     */
+    #[Optional('charge_type', enum: ChargeType::class, nullable: true)]
+    public ?string $chargeType;
 
     /**
      * The ID of the checkout session for this payment. The value is null when
@@ -167,7 +218,11 @@ final class PaymentListResponse implements BaseModel
     public ?string $invoiceID;
 
     /**
-     * URL to download the invoice PDF for this payment.
+     * @deprecated Use `GET /invoices/payments/{payment_id}` with an API key.
+     *
+     * DEPRECATED: Use `GET /invoices/payments/{payment_id}` with an API key.
+     * URL to download the invoice PDF for this payment. The URL has no signed token. If the
+     * business asks for a credential on its invoice links, the URL needs an API key.
      */
     #[Optional('invoice_url', nullable: true)]
     public ?string $invoiceURL;
@@ -205,6 +260,7 @@ final class PaymentListResponse implements BaseModel
      *   customer: ...,
      *   digitalProductsDelivered: ...,
      *   hasLicenseKey: ...,
+     *   includesUsage: ...,
      *   isMultiSubscription: ...,
      *   metadata: ...,
      *   paymentID: ...,
@@ -226,6 +282,7 @@ final class PaymentListResponse implements BaseModel
      *   ->withCustomer(...)
      *   ->withDigitalProductsDelivered(...)
      *   ->withHasLicenseKey(...)
+     *   ->withIncludesUsage(...)
      *   ->withIsMultiSubscription(...)
      *   ->withMetadata(...)
      *   ->withPaymentID(...)
@@ -252,6 +309,7 @@ final class PaymentListResponse implements BaseModel
      * @param PaymentProvider|value-of<PaymentProvider> $paymentProvider
      * @param list<SubscriptionServicePeriod|SubscriptionServicePeriodShape> $servicePeriods
      * @param list<string> $subscriptionIDs
+     * @param ChargeType|value-of<ChargeType>|null $chargeType
      * @param DisputeStatus|value-of<DisputeStatus>|null $disputeStatus
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
@@ -263,6 +321,7 @@ final class PaymentListResponse implements BaseModel
         CustomerLimitedDetails|array $customer,
         bool $digitalProductsDelivered,
         bool $hasLicenseKey,
+        bool $includesUsage,
         bool $isMultiSubscription,
         array $metadata,
         string $paymentID,
@@ -271,8 +330,12 @@ final class PaymentListResponse implements BaseModel
         array $servicePeriods,
         array $subscriptionIDs,
         int $totalAmount,
+        ?string $cardExpMonth = null,
+        ?string $cardExpYear = null,
         ?string $cardLastFour = null,
         ?string $cardNetwork = null,
+        ?string $cardType = null,
+        ChargeType|string|null $chargeType = null,
         ?string $checkoutSessionID = null,
         DisputeStatus|string|null $disputeStatus = null,
         ?string $invoiceID = null,
@@ -291,6 +354,7 @@ final class PaymentListResponse implements BaseModel
         $self['customer'] = $customer;
         $self['digitalProductsDelivered'] = $digitalProductsDelivered;
         $self['hasLicenseKey'] = $hasLicenseKey;
+        $self['includesUsage'] = $includesUsage;
         $self['isMultiSubscription'] = $isMultiSubscription;
         $self['metadata'] = $metadata;
         $self['paymentID'] = $paymentID;
@@ -300,8 +364,12 @@ final class PaymentListResponse implements BaseModel
         $self['subscriptionIDs'] = $subscriptionIDs;
         $self['totalAmount'] = $totalAmount;
 
+        null !== $cardExpMonth && $self['cardExpMonth'] = $cardExpMonth;
+        null !== $cardExpYear && $self['cardExpYear'] = $cardExpYear;
         null !== $cardLastFour && $self['cardLastFour'] = $cardLastFour;
         null !== $cardNetwork && $self['cardNetwork'] = $cardNetwork;
+        null !== $cardType && $self['cardType'] = $cardType;
+        null !== $chargeType && $self['chargeType'] = $chargeType;
         null !== $checkoutSessionID && $self['checkoutSessionID'] = $checkoutSessionID;
         null !== $disputeStatus && $self['disputeStatus'] = $disputeStatus;
         null !== $invoiceID && $self['invoiceID'] = $invoiceID;
@@ -366,6 +434,19 @@ final class PaymentListResponse implements BaseModel
     {
         $self = clone $this;
         $self['hasLicenseKey'] = $hasLicenseKey;
+
+        return $self;
+    }
+
+    /**
+     * True when this payment also bills metered usage or credit overage. The usage is
+     * for the billing cycle before the service period, not for the service period.
+     * The value is set for each payment status. It is false when `charge_type` is null.
+     */
+    public function withIncludesUsage(bool $includesUsage): self
+    {
+        $self = clone $this;
+        $self['includesUsage'] = $includesUsage;
 
         return $self;
     }
@@ -439,6 +520,10 @@ final class PaymentListResponse implements BaseModel
      * period starts at the plan change and ends at the next billing date. The list
      * is empty unless the payment status is `succeeded`. The list is also empty for
      * a one-time payment, an on-demand charge, or a payment method update.
+     * The list is set for `new`, `renewal` and `plan_change` charges that succeeded.
+     * It can be empty for some zero-amount payments.
+     * A `renewal` with no entry for its subscription bills usage only.
+     * That payment does not extend the service period.
      *
      * @param list<SubscriptionServicePeriod|SubscriptionServicePeriodShape> $servicePeriods
      */
@@ -474,6 +559,32 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
+     * Expiry month of the card, as two digits from `01` to `12`. For Apple Pay and
+     * Google Pay, this is the expiry of the wallet token, which can differ from the
+     * expiry of the physical card.
+     */
+    public function withCardExpMonth(?string $cardExpMonth): self
+    {
+        $self = clone $this;
+        $self['cardExpMonth'] = $cardExpMonth;
+
+        return $self;
+    }
+
+    /**
+     * Expiry year of the card, as four digits, for example `2029`. For Apple Pay and
+     * Google Pay, this is the expiry of the wallet token, which can differ from the
+     * expiry of the physical card.
+     */
+    public function withCardExpYear(?string $cardExpYear): self
+    {
+        $self = clone $this;
+        $self['cardExpYear'] = $cardExpYear;
+
+        return $self;
+    }
+
+    /**
      * The last four digits of the card.
      */
     public function withCardLastFour(?string $cardLastFour): self
@@ -485,12 +596,40 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
-     * Card network like VISA, MASTERCARD etc.
+     * Card network, in lowercase, for example `visa`, `mastercard` or `amex`. Older payments can
+     * carry other casing.
      */
     public function withCardNetwork(?string $cardNetwork): self
     {
         $self = clone $this;
         $self['cardNetwork'] = $cardNetwork;
+
+        return $self;
+    }
+
+    /**
+     * The type of card, in lowercase: `credit`, `debit` or `prepaid`. Older payments can carry
+     * other casing.
+     */
+    public function withCardType(?string $cardType): self
+    {
+        $self = clone $this;
+        $self['cardType'] = $cardType;
+
+        return $self;
+    }
+
+    /**
+     * The type of subscription charge that this payment is for. Refer to `ChargeType`.
+     * The value is set for each payment status, not only for `succeeded`.
+     * The value is null when this payment charges no subscription.
+     *
+     * @param ChargeType|value-of<ChargeType>|null $chargeType
+     */
+    public function withChargeType(ChargeType|string|null $chargeType): self
+    {
+        $self = clone $this;
+        $self['chargeType'] = $chargeType;
 
         return $self;
     }
@@ -533,7 +672,9 @@ final class PaymentListResponse implements BaseModel
     }
 
     /**
-     * URL to download the invoice PDF for this payment.
+     * DEPRECATED: Use `GET /invoices/payments/{payment_id}` with an API key.
+     * URL to download the invoice PDF for this payment. The URL has no signed token. If the
+     * business asks for a credential on its invoice links, the URL needs an API key.
      */
     public function withInvoiceURL(?string $invoiceURL): self
     {

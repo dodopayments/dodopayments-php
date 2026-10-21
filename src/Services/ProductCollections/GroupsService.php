@@ -71,7 +71,8 @@ final class GroupsService implements GroupsContract
      *
      * @param string $groupID Path param: Product Collection Group Id
      * @param string $id Path param: Product Collection Id
-     * @param string|null $groupName Body param: Optional group name update: Some(Some(name)) = set name, Some(None) = clear name, None = no change
+     * @param string|null $groupName body param: Optional group name update: Some(Some(name)) = set name, Some(None) = clear name, None = no change
+     * The API returns 422 if another group in the collection has no name
      * @param list<string>|null $productOrder Body param: Optional new order for products in this group (array of product_collection_group_pdts UUIDs)
      * @param bool|null $status Body param: Optional status update
      * @param RequestOpts|null $requestOptions

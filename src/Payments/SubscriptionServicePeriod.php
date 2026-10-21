@@ -13,6 +13,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type SubscriptionServicePeriodShape = array{
  *   endsAt: \DateTimeInterface,
+ *   prorationFactor: string,
  *   startsAt: \DateTimeInterface,
  *   subscriptionID: string,
  * }
@@ -27,6 +28,16 @@ final class SubscriptionServicePeriod implements BaseModel
      */
     #[Required('ends_at')]
     public \DateTimeInterface $endsAt;
+
+    /**
+     * The part of one full billing period that the plan charge pays for. The value
+     * `"1"` is a full period. A value less than 1 is a partial period, for example
+     * after a plan change that keeps the billing cycle.
+     * For a plan change, this is the value of the new plan. The credit for the old
+     * plan is not in this value.
+     */
+    #[Required('proration_factor')]
+    public string $prorationFactor;
 
     /**
      * Start of the service period. For a renewal, this is the billing date. For a
@@ -47,7 +58,9 @@ final class SubscriptionServicePeriod implements BaseModel
      *
      * To enforce required parameters use
      * ```
-     * SubscriptionServicePeriod::with(endsAt: ..., startsAt: ..., subscriptionID: ...)
+     * SubscriptionServicePeriod::with(
+     *   endsAt: ..., prorationFactor: ..., startsAt: ..., subscriptionID: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
@@ -55,6 +68,7 @@ final class SubscriptionServicePeriod implements BaseModel
      * ```
      * (new SubscriptionServicePeriod)
      *   ->withEndsAt(...)
+     *   ->withProrationFactor(...)
      *   ->withStartsAt(...)
      *   ->withSubscriptionID(...)
      * ```
@@ -71,12 +85,14 @@ final class SubscriptionServicePeriod implements BaseModel
      */
     public static function with(
         \DateTimeInterface $endsAt,
+        string $prorationFactor,
         \DateTimeInterface $startsAt,
         string $subscriptionID,
     ): self {
         $self = new self;
 
         $self['endsAt'] = $endsAt;
+        $self['prorationFactor'] = $prorationFactor;
         $self['startsAt'] = $startsAt;
         $self['subscriptionID'] = $subscriptionID;
 
@@ -90,6 +106,21 @@ final class SubscriptionServicePeriod implements BaseModel
     {
         $self = clone $this;
         $self['endsAt'] = $endsAt;
+
+        return $self;
+    }
+
+    /**
+     * The part of one full billing period that the plan charge pays for. The value
+     * `"1"` is a full period. A value less than 1 is a partial period, for example
+     * after a plan change that keeps the billing cycle.
+     * For a plan change, this is the value of the new plan. The credit for the old
+     * plan is not in this value.
+     */
+    public function withProrationFactor(string $prorationFactor): self
+    {
+        $self = clone $this;
+        $self['prorationFactor'] = $prorationFactor;
 
         return $self;
     }
