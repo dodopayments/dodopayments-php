@@ -6,6 +6,7 @@ namespace Dodopayments\Services\Invoices;
 
 use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
+use Dodopayments\Core\Util;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\Invoices\PaymentsContract;
 
@@ -31,16 +32,20 @@ final class PaymentsService implements PaymentsContract
      * @api
      *
      * @param string $paymentID Payment ID
+     * @param string $token The signed link token. If the business asks for a credential on its invoice links, a valid token for this record replaces the credential.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $paymentID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $token = null,
+        RequestOptions|array|null $requestOptions = null,
     ): string {
+        $params = Util::removeNulls(['token' => $token]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($paymentID, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($paymentID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -49,16 +54,20 @@ final class PaymentsService implements PaymentsContract
      * @api
      *
      * @param string $payoutID Payout ID
+     * @param string $token The signed link token. If the business asks for a credential on its invoice links, a valid token for this record replaces the credential.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrievePayout(
         string $payoutID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $token = null,
+        RequestOptions|array|null $requestOptions = null,
     ): string {
+        $params = Util::removeNulls(['token' => $token]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrievePayout($payoutID, requestOptions: $requestOptions);
+        $response = $this->raw->retrievePayout($payoutID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -67,16 +76,20 @@ final class PaymentsService implements PaymentsContract
      * @api
      *
      * @param string $refundID Refund ID
+     * @param string $token The signed link token. If the business asks for a credential on its invoice links, a valid token for this record replaces the credential.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieveRefund(
         string $refundID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $token = null,
+        RequestOptions|array|null $requestOptions = null,
     ): string {
+        $params = Util::removeNulls(['token' => $token]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieveRefund($refundID, requestOptions: $requestOptions);
+        $response = $this->raw->retrieveRefund($refundID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
