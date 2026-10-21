@@ -30,7 +30,8 @@ final class GroupUpdateParams implements BaseModel
     public string $id;
 
     /**
-     * Optional group name update: Some(Some(name)) = set name, Some(None) = clear name, None = no change.
+     * Optional group name update: Some(Some(name)) = set name, Some(None) = clear name, None = no change
+     * The API returns 422 if another group in the collection has no name.
      */
     #[Optional('group_name', nullable: true)]
     public ?string $groupName;
@@ -101,7 +102,8 @@ final class GroupUpdateParams implements BaseModel
     }
 
     /**
-     * Optional group name update: Some(Some(name)) = set name, Some(None) = clear name, None = no change.
+     * Optional group name update: Some(Some(name)) = set name, Some(None) = clear name, None = no change
+     * The API returns 422 if another group in the collection has no name.
      */
     public function withGroupName(?string $groupName): self
     {
