@@ -15,6 +15,7 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams;
 use Dodopayments\Payments\PaymentListResponse;
 use Dodopayments\Payments\PaymentNewResponse;
+use Dodopayments\Payments\PaymentRetrieveLineItemsParams;
 use Dodopayments\RequestOptions;
 
 /**
@@ -73,6 +74,7 @@ interface PaymentsRawContract
      * @api
      *
      * @param string $paymentID Payment Id
+     * @param array<string,mixed>|PaymentRetrieveLineItemsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PaymentGetLineItemsResponse>
@@ -81,7 +83,8 @@ interface PaymentsRawContract
      */
     public function retrieveLineItems(
         string $paymentID,
-        RequestOptions|array|null $requestOptions = null
+        array|PaymentRetrieveLineItemsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

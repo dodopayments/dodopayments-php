@@ -76,6 +76,9 @@ use Dodopayments\Payments\Payment\ProductCart;
  *   status?: null|IntentStatus|value-of<IntentStatus>,
  *   subscriptionID?: string|null,
  *   tax?: int|null,
+ *   threeDSFlow?: null|ThreeDSFlow|value-of<ThreeDSFlow>,
+ *   threeDSStatus?: null|ThreeDSStatus|value-of<ThreeDSStatus>,
+ *   threeDSVersion?: string|null,
  *   updatedAt?: \DateTimeInterface|null,
  * }
  */
@@ -445,6 +448,31 @@ final class Payment implements BaseModel
     public ?int $tax;
 
     /**
+     * How the cardholder completed the 3DS authentication. The value is null when the processor
+     * does not report it.
+     *
+     * @var value-of<ThreeDSFlow>|null $threeDSFlow
+     */
+    #[Optional('three_ds_flow', enum: ThreeDSFlow::class, nullable: true)]
+    public ?string $threeDSFlow;
+
+    /**
+     * The result of the 3DS authentication, as the processor reports it. The value is null when
+     * the processor reports no 3DS data, for example when the payment did not use 3DS.
+     *
+     * @var value-of<ThreeDSStatus>|null $threeDSStatus
+     */
+    #[Optional('three_ds_status', enum: ThreeDSStatus::class, nullable: true)]
+    public ?string $threeDSStatus;
+
+    /**
+     * The 3DS protocol version, for example `2.2.0`. The value is null when the processor does
+     * not report it.
+     */
+    #[Optional('three_ds_version', nullable: true)]
+    public ?string $threeDSVersion;
+
+    /**
      * Timestamp when the payment was last updated.
      */
     #[Optional('updated_at', nullable: true)]
@@ -534,6 +562,8 @@ final class Payment implements BaseModel
      * @param list<ProductCart|ProductCartShape>|null $productCart
      * @param PaymentRefundStatus|value-of<PaymentRefundStatus>|null $refundStatus
      * @param IntentStatus|value-of<IntentStatus>|null $status
+     * @param ThreeDSFlow|value-of<ThreeDSFlow>|null $threeDSFlow
+     * @param ThreeDSStatus|value-of<ThreeDSStatus>|null $threeDSStatus
      */
     public static function with(
         BillingAddress|array $billing,
@@ -583,6 +613,9 @@ final class Payment implements BaseModel
         IntentStatus|string|null $status = null,
         ?string $subscriptionID = null,
         ?int $tax = null,
+        ThreeDSFlow|string|null $threeDSFlow = null,
+        ThreeDSStatus|string|null $threeDSStatus = null,
+        ?string $threeDSVersion = null,
         ?\DateTimeInterface $updatedAt = null,
     ): self {
         $self = new self;
@@ -635,6 +668,9 @@ final class Payment implements BaseModel
         null !== $status && $self['status'] = $status;
         null !== $subscriptionID && $self['subscriptionID'] = $subscriptionID;
         null !== $tax && $self['tax'] = $tax;
+        null !== $threeDSFlow && $self['threeDSFlow'] = $threeDSFlow;
+        null !== $threeDSStatus && $self['threeDSStatus'] = $threeDSStatus;
+        null !== $threeDSVersion && $self['threeDSVersion'] = $threeDSVersion;
         null !== $updatedAt && $self['updatedAt'] = $updatedAt;
 
         return $self;
@@ -1232,6 +1268,47 @@ final class Payment implements BaseModel
     {
         $self = clone $this;
         $self['tax'] = $tax;
+
+        return $self;
+    }
+
+    /**
+     * How the cardholder completed the 3DS authentication. The value is null when the processor
+     * does not report it.
+     *
+     * @param ThreeDSFlow|value-of<ThreeDSFlow>|null $threeDSFlow
+     */
+    public function withThreeDSFlow(ThreeDSFlow|string|null $threeDSFlow): self
+    {
+        $self = clone $this;
+        $self['threeDSFlow'] = $threeDSFlow;
+
+        return $self;
+    }
+
+    /**
+     * The result of the 3DS authentication, as the processor reports it. The value is null when
+     * the processor reports no 3DS data, for example when the payment did not use 3DS.
+     *
+     * @param ThreeDSStatus|value-of<ThreeDSStatus>|null $threeDSStatus
+     */
+    public function withThreeDSStatus(
+        ThreeDSStatus|string|null $threeDSStatus
+    ): self {
+        $self = clone $this;
+        $self['threeDSStatus'] = $threeDSStatus;
+
+        return $self;
+    }
+
+    /**
+     * The 3DS protocol version, for example `2.2.0`. The value is null when the processor does
+     * not report it.
+     */
+    public function withThreeDSVersion(?string $threeDSVersion): self
+    {
+        $self = clone $this;
+        $self['threeDSVersion'] = $threeDSVersion;
 
         return $self;
     }

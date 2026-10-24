@@ -190,63 +190,70 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
     /**
      * @api
      *
-     * @param list<ProductItemReq|ProductItemReqShape> $productCart The products of the checkout. A cart holds at most 20 of them, one-time and
+     * @param list<ProductItemReq|ProductItemReqShape> $productCart Body param: The products of the checkout. A cart holds at most 20 of them, one-time and
      * subscription products together. An empty cart is valid for the product-collection
      * flow, where the customer chooses the product later.
-     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes Customers will never see payment methods that are not in this list.
+     * @param string $locale Query param: Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     * @param list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null $allowedPaymentMethodTypes Body param: Customers will never see payment methods that are not in this list.
      * However, adding a method here does not guarantee customers will see it.
      * Availability still depends on other factors (e.g., customer location, merchant settings).
      *
      * Disclaimar: Always provide 'credit' and 'debit' as a fallback.
      * If all payment methods are unavailable, checkout session will fail.
-     * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress Billing address information for the session
-     * @param Currency|value-of<Currency>|null $billingCurrency The currency to charge the customer in.
+     * @param CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null $billingAddress Body param: Billing address information for the session
+     * @param Currency|value-of<Currency>|null $billingCurrency Body param: The currency to charge the customer in.
      *
      * Adaptive pricing must be enabled for the business. The customer then pays in this
      * currency. If you do not set it, the currency comes from the billing country.
      *
      * If adaptive pricing is disabled, the API discards this field. The currency then comes
      * from the product price, or from the billing country.
-     * @param string|null $cancelURL The URL to redirect the customer if they cancel or go back from the checkout.
+     * @param string|null $cancelURL Body param: The URL to redirect the customer if they cancel or go back from the checkout.
      * If not provided, the back button will not be displayed.
-     * @param bool $confirm If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
-     * @param list<CustomField|CustomFieldShape>|null $customFields Custom fields to collect from customer during checkout (max 5 fields)
-     * @param CustomerRequestShape|null $customer Customer details for the session
-     * @param string|null $customerBusinessName Optional business / legal name associated with the tax id. When provided
+     * @param bool $confirm Body param: If confirm is true, all the details will be finalized. If required data is missing, an API error is thrown.
+     * @param list<CustomField|CustomFieldShape>|null $customFields Body param: Custom fields to collect from customer during checkout (max 5 fields)
+     * @param CustomerRequestShape|null $customer Body param: Customer details for the session
+     * @param string|null $customerBusinessName Body param: Optional business / legal name associated with the tax id. When provided
      * together with a valid tax id for a B2B purchase, this name is rendered
      * on the invoice instead of the customer's personal name.
-     * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Customization for the checkout session page
-     * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
-     * @param list<string>|null $discountCodes Stacked discount codes to apply, in order. Max 20.
+     * @param CheckoutSessionCustomization|CheckoutSessionCustomizationShape $customization Body param: Customization for the checkout session page
+     * @param string|null $discountCode Body param: DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
+     * @param list<string>|null $discountCodes Body param: Stacked discount codes to apply, in order. Max 20.
      * Cannot be used together with discount_code.
-     * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags
-     * @param bool|null $force3DS Override merchant default 3DS behaviour for this session
-     * @param int|null $mandateMinAmountInrPaise Override the merchant-level mandate floor (in INR paise) for INR
+     * @param CheckoutSessionFlags|CheckoutSessionFlagsShape $featureFlags Body param
+     * @param bool|null $force3DS Body param: Override merchant default 3DS behaviour for this session
+     * @param int|null $mandateMinAmountInrPaise Body param: Override the merchant-level mandate floor (in INR paise) for INR
      * e-mandates on Indian-card recurring payments. The mandate amount sent to
      * the processor is `max(this_floor, actual_billing_amount)`, so this is
      * effectively the customer-facing authorization ceiling whenever billing is
      * lower. When unset, the merchant setting applies; when that's also unset,
      * the system default of ₹15,000 applies.
-     * @param array<string,MetadataItemShape>|null $metadata Additional metadata associated with the payment. Defaults to empty if not provided.
-     * @param bool|null $minimalAddress If true, only zipcode is required when confirm is true; other address fields remain optional
+     * @param array<string,MetadataItemShape>|null $metadata Body param: Additional metadata associated with the payment. Defaults to empty if not provided.
+     * @param bool|null $minimalAddress Body param: If true, only zipcode is required when confirm is true; other address fields remain optional
      *
      * Default is true when `feature_flags.single_page` is true. Otherwise, default is false.
-     * @param string|null $paymentMethodID Optional payment method ID to use for this checkout session.
+     * @param string|null $paymentMethodID Body param: Optional payment method ID to use for this checkout session.
      * Only allowed when `confirm` is true.
      * If provided, existing customer id must also be provided.
-     * @param string|null $productCollectionID Product collection ID for collection-based checkout flow
-     * @param string|null $returnURL the url to redirect after payment failure or success
-     * @param bool $shortLink If true, returns a shortened checkout URL.
+     * @param string|null $productCollectionID Body param: Product collection ID for collection-based checkout flow
+     * @param string|null $returnURL body param: The url to redirect after payment failure or success
+     * @param bool $shortLink Body param: If true, returns a shortened checkout URL.
      * Defaults to false if not specified.
-     * @param bool $showSavedPaymentMethods Display saved payment methods of a returning customer False by default
-     * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData
-     * @param string|null $taxID Tax ID for the customer (e.g. VAT number). Requires billing_address with country.
+     * @param bool $showSavedPaymentMethods Body param: Display saved payment methods of a returning customer False by default
+     * @param SubscriptionData|SubscriptionDataShape|null $subscriptionData Body param
+     * @param string|null $taxID Body param: Tax ID for the customer (e.g. VAT number). Requires billing_address with country.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function preview(
         array $productCart,
+        ?string $locale = null,
         ?array $allowedPaymentMethodTypes = null,
         CheckoutSessionBillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
@@ -275,6 +282,7 @@ final class CheckoutSessionsService implements CheckoutSessionsContract
         $params = Util::removeNulls(
             [
                 'productCart' => $productCart,
+                'locale' => $locale,
                 'allowedPaymentMethodTypes' => $allowedPaymentMethodTypes,
                 'billingAddress' => $billingAddress,
                 'billingCurrency' => $billingCurrency,

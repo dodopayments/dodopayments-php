@@ -150,13 +150,16 @@ interface PaymentsContract
      * @api
      *
      * @param string $paymentID Payment Id
+     * @param Currency|value-of<Currency> $currency The currency of the amounts. It must be the currency that the customer paid in. Without
+     * it, the amounts are in the settlement currency.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieveLineItems(
         string $paymentID,
-        RequestOptions|array|null $requestOptions = null
+        Currency|string|null $currency = null,
+        RequestOptions|array|null $requestOptions = null,
     ): PaymentGetLineItemsResponse;
 
     /**

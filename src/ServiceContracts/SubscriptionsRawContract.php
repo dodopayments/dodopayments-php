@@ -21,6 +21,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
+use Dodopayments\Subscriptions\SubscriptionRetrieveParams;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
@@ -52,6 +53,7 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param array<string,mixed>|SubscriptionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
@@ -60,7 +62,8 @@ interface SubscriptionsRawContract
      */
     public function retrieve(
         string $subscriptionID,
-        RequestOptions|array|null $requestOptions = null
+        array|SubscriptionRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

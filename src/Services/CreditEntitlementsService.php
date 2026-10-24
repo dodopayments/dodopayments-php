@@ -14,6 +14,7 @@ use Dodopayments\Misc\Currency;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CreditEntitlementsContract;
 use Dodopayments\Services\CreditEntitlements\BalancesService;
+use Dodopayments\Services\CreditEntitlements\TranslationsService;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
@@ -29,6 +30,11 @@ final class CreditEntitlementsService implements CreditEntitlementsContract
     /**
      * @api
      */
+    public TranslationsService $translations;
+
+    /**
+     * @api
+     */
     public BalancesService $balances;
 
     /**
@@ -37,6 +43,7 @@ final class CreditEntitlementsService implements CreditEntitlementsContract
     public function __construct(private Client $client)
     {
         $this->raw = new CreditEntitlementsRawService($client);
+        $this->translations = new TranslationsService($client);
         $this->balances = new BalancesService($client);
     }
 
@@ -164,16 +171,25 @@ final class CreditEntitlementsService implements CreditEntitlementsContract
      * - Deleted entitlements return a 404 error and must be retrieved via the list endpoint with `deleted=true`
      *
      * @param string $id Credit Entitlement ID
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): CreditEntitlement {
+        $params = Util::removeNulls(['locale' => $locale]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -309,6 +325,12 @@ final class CreditEntitlementsService implements CreditEntitlementsContract
      * - Pagination uses offset-based pagination (offset = page_number * page_size)
      *
      * @param bool $deleted List deleted credit entitlements
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param RequestOpts|null $requestOptions
@@ -319,6 +341,7 @@ final class CreditEntitlementsService implements CreditEntitlementsContract
      */
     public function list(
         ?bool $deleted = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
@@ -326,6 +349,7 @@ final class CreditEntitlementsService implements CreditEntitlementsContract
         $params = Util::removeNulls(
             [
                 'deleted' => $deleted,
+                'locale' => $locale,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
             ],

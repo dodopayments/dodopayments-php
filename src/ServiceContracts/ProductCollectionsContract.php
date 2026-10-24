@@ -57,13 +57,20 @@ interface ProductCollectionsContract
      * @api
      *
      * @param string $id Product Collection Id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): ProductCollection;
 
     /**
@@ -104,6 +111,12 @@ interface ProductCollectionsContract
      *
      * @param bool $archived List archived collections
      * @param string $brandID Filter by Brand id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param RequestOpts|null $requestOptions
@@ -115,6 +128,7 @@ interface ProductCollectionsContract
     public function list(
         ?bool $archived = null,
         ?string $brandID = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,

@@ -73,4 +73,6 @@ enum EventType: string
     case INTERCHANGE_FEE = 'interchange_fee';
 
     case SCHEME_FEE = 'scheme_fee';
+
+    case OPENING_BALANCE = 'opening_balance';
 }

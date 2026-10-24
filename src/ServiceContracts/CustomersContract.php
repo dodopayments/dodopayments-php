@@ -13,6 +13,7 @@ use Dodopayments\Customers\CustomerListEntitlementGrantsParams\Status;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Misc\Locale;
 use Dodopayments\RequestOptions;
 
 /**
@@ -25,6 +26,8 @@ interface CustomersContract
      * @api
      *
      * @param array<string,MetadataItemShape> $metadata Additional metadata for the customer
+     * @param Locale|value-of<Locale>|null $preferredLocale The language of the customer emails, a code from `GET /locales`. With no value, the
+     * emails are in English until a checkout or the customer portal sets a language.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -34,6 +37,7 @@ interface CustomersContract
         string $name,
         ?array $metadata = null,
         ?string $phoneNumber = null,
+        Locale|string|null $preferredLocale = null,
         RequestOptions|array|null $requestOptions = null,
     ): Customer;
 
@@ -55,6 +59,9 @@ interface CustomersContract
      *
      * @param string $customerID Customer Id
      * @param array<string,MetadataItemShape>|null $metadata Additional metadata for the customer
+     * @param Locale|value-of<Locale>|null $preferredLocale The language of the customer emails, a code from `GET /locales`. A value replaces the
+     * current language, and `null` removes it. Send this field only to change the language
+     * on purpose. With no language, the emails are in English.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -65,6 +72,7 @@ interface CustomersContract
         ?array $metadata = null,
         ?string $name = null,
         ?string $phoneNumber = null,
+        Locale|string|null $preferredLocale = null,
         RequestOptions|array|null $requestOptions = null,
     ): Customer;
 
