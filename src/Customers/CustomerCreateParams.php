@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\Locale;
 use Dodopayments\Misc\MetadataItem;
 
 /**
@@ -22,6 +23,7 @@ use Dodopayments\Misc\MetadataItem;
  *   name: string,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   phoneNumber?: string|null,
+ *   preferredLocale?: null|Locale|value-of<Locale>,
  * }
  */
 final class CustomerCreateParams implements BaseModel
@@ -48,6 +50,15 @@ final class CustomerCreateParams implements BaseModel
     public ?string $phoneNumber;
 
     /**
+     * The language of the customer emails, a code from `GET /locales`. With no value, the
+     * emails are in English until a checkout or the customer portal sets a language.
+     *
+     * @var value-of<Locale>|null $preferredLocale
+     */
+    #[Optional('preferred_locale', enum: Locale::class, nullable: true)]
+    public ?string $preferredLocale;
+
+    /**
      * `new CustomerCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -72,12 +83,14 @@ final class CustomerCreateParams implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,MetadataItemShape>|null $metadata
+     * @param Locale|value-of<Locale>|null $preferredLocale
      */
     public static function with(
         string $email,
         string $name,
         ?array $metadata = null,
         ?string $phoneNumber = null,
+        Locale|string|null $preferredLocale = null,
     ): self {
         $self = new self;
 
@@ -86,6 +99,7 @@ final class CustomerCreateParams implements BaseModel
 
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $phoneNumber && $self['phoneNumber'] = $phoneNumber;
+        null !== $preferredLocale && $self['preferredLocale'] = $preferredLocale;
 
         return $self;
     }
@@ -123,6 +137,21 @@ final class CustomerCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['phoneNumber'] = $phoneNumber;
+
+        return $self;
+    }
+
+    /**
+     * The language of the customer emails, a code from `GET /locales`. With no value, the
+     * emails are in English until a checkout or the customer portal sets a language.
+     *
+     * @param Locale|value-of<Locale>|null $preferredLocale
+     */
+    public function withPreferredLocale(
+        Locale|string|null $preferredLocale
+    ): self {
+        $self = clone $this;
+        $self['preferredLocale'] = $preferredLocale;
 
         return $self;
     }

@@ -10,6 +10,7 @@ use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Misc\Locale;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -49,6 +50,7 @@ final class CustomersTest extends TestCase
             name: 'name',
             metadata: ['foo' => 'string'],
             phoneNumber: 'phone_number',
+            preferredLocale: Locale::AR,
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

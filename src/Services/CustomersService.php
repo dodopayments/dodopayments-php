@@ -15,6 +15,7 @@ use Dodopayments\Customers\CustomerListEntitlementGrantsParams\Status;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Misc\Locale;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersContract;
 use Dodopayments\Services\Customers\CustomerPortalService;
@@ -62,6 +63,8 @@ final class CustomersService implements CustomersContract
      * @api
      *
      * @param array<string,MetadataItemShape> $metadata Additional metadata for the customer
+     * @param Locale|value-of<Locale>|null $preferredLocale The language of the customer emails, a code from `GET /locales`. With no value, the
+     * emails are in English until a checkout or the customer portal sets a language.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -71,6 +74,7 @@ final class CustomersService implements CustomersContract
         string $name,
         ?array $metadata = null,
         ?string $phoneNumber = null,
+        Locale|string|null $preferredLocale = null,
         RequestOptions|array|null $requestOptions = null,
     ): Customer {
         $params = Util::removeNulls(
@@ -79,6 +83,7 @@ final class CustomersService implements CustomersContract
                 'name' => $name,
                 'metadata' => $metadata,
                 'phoneNumber' => $phoneNumber,
+                'preferredLocale' => $preferredLocale,
             ],
         );
 
@@ -111,6 +116,9 @@ final class CustomersService implements CustomersContract
      *
      * @param string $customerID Customer Id
      * @param array<string,MetadataItemShape>|null $metadata Additional metadata for the customer
+     * @param Locale|value-of<Locale>|null $preferredLocale The language of the customer emails, a code from `GET /locales`. A value replaces the
+     * current language, and `null` removes it. Send this field only to change the language
+     * on purpose. With no language, the emails are in English.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -121,6 +129,7 @@ final class CustomersService implements CustomersContract
         ?array $metadata = null,
         ?string $name = null,
         ?string $phoneNumber = null,
+        Locale|string|null $preferredLocale = null,
         RequestOptions|array|null $requestOptions = null,
     ): Customer {
         $params = Util::removeNulls(
@@ -129,6 +138,7 @@ final class CustomersService implements CustomersContract
                 'metadata' => $metadata,
                 'name' => $name,
                 'phoneNumber' => $phoneNumber,
+                'preferredLocale' => $preferredLocale,
             ],
         );
 

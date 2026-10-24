@@ -52,13 +52,20 @@ interface EntitlementsContract
      * @api
      *
      * @param string $id Entitlement ID
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Entitlement;
 
     /**
@@ -90,6 +97,12 @@ interface EntitlementsContract
      * @api
      *
      * @param IntegrationType|value-of<IntegrationType> $integrationType Filter by integration type
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number (default 0)
      * @param int $pageSize Page size (default 10, max 100)
      * @param RequestOpts|null $requestOptions
@@ -100,6 +113,7 @@ interface EntitlementsContract
      */
     public function list(
         IntegrationType|string|null $integrationType = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,

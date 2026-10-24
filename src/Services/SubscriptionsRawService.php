@@ -36,6 +36,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
+use Dodopayments\Subscriptions\SubscriptionRetrieveParams;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
@@ -127,6 +128,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param array{locale?: string}|SubscriptionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
@@ -135,13 +137,20 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      */
     public function retrieve(
         string $subscriptionID,
-        RequestOptions|array|null $requestOptions = null
+        array|SubscriptionRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = SubscriptionRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['subscriptions/%1$s', $subscriptionID],
-            options: $requestOptions,
+            query: $parsed,
+            options: $options,
             convert: Subscription::class,
         );
     }
@@ -203,6 +212,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   createdAtGte?: \DateTimeInterface,
      *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
+     *   locale?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
      *   productID?: string,

@@ -31,6 +31,7 @@ use Dodopayments\Payments\PaymentMethodTypes;
  *
  * @phpstan-type CheckoutSessionPreviewParamsShape = array{
  *   productCart: list<ProductItemReq|ProductItemReqShape>,
+ *   locale?: string|null,
  *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
  *   billingAddress?: null|CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape,
  *   billingCurrency?: null|Currency|value-of<Currency>,
@@ -71,6 +72,17 @@ final class CheckoutSessionPreviewParams implements BaseModel
      */
     #[Required('product_cart', list: ProductItemReq::class)]
     public array $productCart;
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    #[Optional]
+    public ?string $locale;
 
     /**
      * Customers will never see payment methods that are not in this list.
@@ -285,6 +297,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
      */
     public static function with(
         array $productCart,
+        ?string $locale = null,
         ?array $allowedPaymentMethodTypes = null,
         CheckoutSessionBillingAddress|array|null $billingAddress = null,
         Currency|string|null $billingCurrency = null,
@@ -313,6 +326,7 @@ final class CheckoutSessionPreviewParams implements BaseModel
 
         $self['productCart'] = $productCart;
 
+        null !== $locale && $self['locale'] = $locale;
         null !== $allowedPaymentMethodTypes && $self['allowedPaymentMethodTypes'] = $allowedPaymentMethodTypes;
         null !== $billingAddress && $self['billingAddress'] = $billingAddress;
         null !== $billingCurrency && $self['billingCurrency'] = $billingCurrency;
@@ -351,6 +365,22 @@ final class CheckoutSessionPreviewParams implements BaseModel
     {
         $self = clone $this;
         $self['productCart'] = $productCart;
+
+        return $self;
+    }
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    public function withLocale(string $locale): self
+    {
+        $self = clone $this;
+        $self['locale'] = $locale;
 
         return $self;
     }

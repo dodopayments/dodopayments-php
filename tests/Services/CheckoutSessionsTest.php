@@ -224,6 +224,7 @@ final class CheckoutSessionsTest extends TestCase
                     ],
                 ],
             ],
+            locale: 'locale',
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingAddress: [
                 'country' => CountryCode::AF,

@@ -9,6 +9,7 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\RefundListItem;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams;
@@ -36,6 +37,7 @@ final class RefundsRawService implements RefundsRawContract
      *
      * @param array{
      *   paymentID: string,
+     *   currency?: value-of<Currency>,
      *   items?: list<Item|ItemShape>|null,
      *   metadata?: array<string,MetadataItemShape>,
      *   reason?: string|null,

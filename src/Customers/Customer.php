@@ -8,6 +8,7 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\Locale;
 use Dodopayments\Misc\MetadataItem;
 
 /**
@@ -24,6 +25,7 @@ use Dodopayments\Misc\MetadataItem;
  *   blocklistEntryID?: string|null,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   phoneNumber?: string|null,
+ *   preferredLocale?: null|Locale|value-of<Locale>,
  * }
  */
 final class Customer implements BaseModel
@@ -72,6 +74,14 @@ final class Customer implements BaseModel
     public ?string $phoneNumber;
 
     /**
+     * The language of the customer emails. `null` gives English.
+     *
+     * @var value-of<Locale>|null $preferredLocale
+     */
+    #[Optional('preferred_locale', enum: Locale::class, nullable: true)]
+    public ?string $preferredLocale;
+
+    /**
      * `new Customer()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -103,6 +113,7 @@ final class Customer implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param array<string,MetadataItemShape>|null $metadata
+     * @param Locale|value-of<Locale>|null $preferredLocale
      */
     public static function with(
         string $businessID,
@@ -114,6 +125,7 @@ final class Customer implements BaseModel
         ?string $blocklistEntryID = null,
         ?array $metadata = null,
         ?string $phoneNumber = null,
+        Locale|string|null $preferredLocale = null,
     ): self {
         $self = new self;
 
@@ -127,6 +139,7 @@ final class Customer implements BaseModel
         null !== $blocklistEntryID && $self['blocklistEntryID'] = $blocklistEntryID;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $phoneNumber && $self['phoneNumber'] = $phoneNumber;
+        null !== $preferredLocale && $self['preferredLocale'] = $preferredLocale;
 
         return $self;
     }
@@ -212,6 +225,20 @@ final class Customer implements BaseModel
     {
         $self = clone $this;
         $self['phoneNumber'] = $phoneNumber;
+
+        return $self;
+    }
+
+    /**
+     * The language of the customer emails. `null` gives English.
+     *
+     * @param Locale|value-of<Locale>|null $preferredLocale
+     */
+    public function withPreferredLocale(
+        Locale|string|null $preferredLocale
+    ): self {
+        $self = clone $this;
+        $self['preferredLocale'] = $preferredLocale;
 
         return $self;
     }

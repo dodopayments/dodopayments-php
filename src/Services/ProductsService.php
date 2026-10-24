@@ -25,6 +25,7 @@ use Dodopayments\ServiceContracts\ProductsContract;
 use Dodopayments\Services\Products\ImagesService;
 use Dodopayments\Services\Products\LocalizedPricesService;
 use Dodopayments\Services\Products\ShortLinksService;
+use Dodopayments\Services\Products\TranslationsService;
 
 /**
  * @phpstan-import-type DigitalProductDeliveryShape from \Dodopayments\Products\ProductCreateParams\DigitalProductDelivery
@@ -42,6 +43,11 @@ final class ProductsService implements ProductsContract
      * @api
      */
     public ProductsRawService $raw;
+
+    /**
+     * @api
+     */
+    public TranslationsService $translations;
 
     /**
      * @api
@@ -64,6 +70,7 @@ final class ProductsService implements ProductsContract
     public function __construct(private Client $client)
     {
         $this->raw = new ProductsRawService($client);
+        $this->translations = new TranslationsService($client);
         $this->images = new ImagesService($client);
         $this->shortLinks = new ShortLinksService($client);
         $this->localizedPrices = new LocalizedPricesService($client);
@@ -161,16 +168,25 @@ final class ProductsService implements ProductsContract
      * @api
      *
      * @param string $id Product Id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Product {
+        $params = Util::removeNulls(['locale' => $locale]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -277,6 +293,12 @@ final class ProductsService implements ProductsContract
      *
      * @param bool $archived List archived products
      * @param string $brandID filter by Brand id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param bool $recurring Filter products by pricing type:
@@ -292,6 +314,7 @@ final class ProductsService implements ProductsContract
     public function list(
         ?bool $archived = null,
         ?string $brandID = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?bool $recurring = null,
@@ -301,6 +324,7 @@ final class ProductsService implements ProductsContract
             [
                 'archived' => $archived,
                 'brandID' => $brandID,
+                'locale' => $locale,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
                 'recurring' => $recurring,

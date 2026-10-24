@@ -9,6 +9,7 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Conversion\ListOf;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\LocaleInfo;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MiscRawContract;
 
@@ -22,6 +23,29 @@ final class MiscRawService implements MiscRawContract
      * @internal
      */
     public function __construct(private Client $client) {}
+
+    /**
+     * @api
+     *
+     * Lists the locales that a translation can have.
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<list<LocaleInfo>>
+     *
+     * @throws APIException
+     */
+    public function listLocales(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: 'locales',
+            options: $requestOptions,
+            convert: new ListOf(LocaleInfo::class),
+        );
+    }
 
     /**
      * @api

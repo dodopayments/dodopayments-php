@@ -124,6 +124,7 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
      *
      * @param array{
      *   productCart: list<ProductItemReq|ProductItemReqShape>,
+     *   locale?: string,
      *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
      *   billingAddress?: CheckoutSessionBillingAddress|CheckoutSessionBillingAddressShape|null,
      *   billingCurrency?: value-of<Currency>,
@@ -162,12 +163,14 @@ final class CheckoutSessionsRawService implements CheckoutSessionsRawContract
             $params,
             $requestOptions,
         );
+        $query_params = array_flip(['locale']);
 
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'post',
             path: 'checkouts/preview',
-            body: (object) $parsed,
+            query: array_intersect_key($parsed, $query_params),
+            body: (object) array_diff_key($parsed, $query_params),
             options: $options,
             convert: CheckoutSessionPreviewResponse::class,
         );
