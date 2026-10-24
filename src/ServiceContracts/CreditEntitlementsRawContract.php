@@ -9,6 +9,7 @@ use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\CreditEntitlements\CreditEntitlement;
 use Dodopayments\CreditEntitlements\CreditEntitlementCreateParams;
 use Dodopayments\CreditEntitlements\CreditEntitlementListParams;
+use Dodopayments\CreditEntitlements\CreditEntitlementRetrieveParams;
 use Dodopayments\CreditEntitlements\CreditEntitlementUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\RequestOptions;
@@ -37,6 +38,7 @@ interface CreditEntitlementsRawContract
      * @api
      *
      * @param string $id Credit Entitlement ID
+     * @param array<string,mixed>|CreditEntitlementRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CreditEntitlement>
@@ -45,7 +47,8 @@ interface CreditEntitlementsRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|CreditEntitlementRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

@@ -9,7 +9,6 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
-use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\ManualRetry;
 use Dodopayments\Payments\ManualRetryState;
@@ -18,10 +17,12 @@ use Dodopayments\Payments\Payment;
 use Dodopayments\Payments\PaymentCreateParams;
 use Dodopayments\Payments\PaymentGetLineItemsResponse;
 use Dodopayments\Payments\PaymentListParams;
+use Dodopayments\Payments\PaymentListParams\Currency;
 use Dodopayments\Payments\PaymentListParams\Status;
 use Dodopayments\Payments\PaymentListResponse;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\Payments\PaymentNewResponse;
+use Dodopayments\Payments\PaymentRetrieveLineItemsParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\PaymentsRawContract;
 
@@ -51,7 +52,7 @@ final class PaymentsRawService implements PaymentsRawContract
      *   productCart: list<OneTimeProductCartItem|OneTimeProductCartItemShape>,
      *   adaptiveCurrencyFeesInclusive?: bool|null,
      *   allowedPaymentMethodTypes?: list<PaymentMethodTypes|value-of<PaymentMethodTypes>>|null,
-     *   billingCurrency?: value-of<Currency>,
+     *   billingCurrency?: value-of<\Dodopayments\Misc\Currency>,
      *   customerBusinessName?: string|null,
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
@@ -121,7 +122,7 @@ final class PaymentsRawService implements PaymentsRawContract
      *   brandID?: string,
      *   createdAtGte?: \DateTimeInterface,
      *   createdAtLte?: \DateTimeInterface,
-     *   currency?: value-of<PaymentListParams\Currency>,
+     *   currency?: value-of<Currency>,
      *   customerID?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
@@ -171,6 +172,9 @@ final class PaymentsRawService implements PaymentsRawContract
      * @api
      *
      * @param string $paymentID Payment Id
+     * @param array{
+     *   currency?: value-of<\Dodopayments\Misc\Currency>
+     * }|PaymentRetrieveLineItemsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<PaymentGetLineItemsResponse>
@@ -179,13 +183,20 @@ final class PaymentsRawService implements PaymentsRawContract
      */
     public function retrieveLineItems(
         string $paymentID,
-        RequestOptions|array|null $requestOptions = null
+        array|PaymentRetrieveLineItemsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = PaymentRetrieveLineItemsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['payments/%1$s/line-items', $paymentID],
-            options: $requestOptions,
+            query: $parsed,
+            options: $options,
             convert: PaymentGetLineItemsResponse::class,
         );
     }

@@ -93,6 +93,24 @@ final class AddonsTest extends TestCase
     }
 
     #[Test]
+    public function testDelete(): void
+    {
+        $result = $this->client->addons->delete('adn_NX1zdqW4Hbivsqz8vI9dc');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
+    }
+
+    #[Test]
+    public function testUnarchive(): void
+    {
+        $result = $this->client->addons->unarchive('adn_NX1zdqW4Hbivsqz8vI9dc');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertNull($result);
+    }
+
+    #[Test]
     public function testUpdateImages(): void
     {
         $result = $this->client->addons->updateImages('adn_NX1zdqW4Hbivsqz8vI9dc');

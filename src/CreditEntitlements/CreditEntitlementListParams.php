@@ -35,7 +35,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\CreditEntitlementsService::list()
  *
  * @phpstan-type CreditEntitlementListParamsShape = array{
- *   deleted?: bool|null, pageNumber?: int|null, pageSize?: int|null
+ *   deleted?: bool|null,
+ *   locale?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class CreditEntitlementListParams implements BaseModel
@@ -49,6 +52,17 @@ final class CreditEntitlementListParams implements BaseModel
      */
     #[Optional]
     public ?bool $deleted;
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    #[Optional]
+    public ?string $locale;
 
     /**
      * Page number default is 0.
@@ -74,12 +88,14 @@ final class CreditEntitlementListParams implements BaseModel
      */
     public static function with(
         ?bool $deleted = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
-        ?int $pageSize = null
+        ?int $pageSize = null,
     ): self {
         $self = new self;
 
         null !== $deleted && $self['deleted'] = $deleted;
+        null !== $locale && $self['locale'] = $locale;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
 
@@ -93,6 +109,22 @@ final class CreditEntitlementListParams implements BaseModel
     {
         $self = clone $this;
         $self['deleted'] = $deleted;
+
+        return $self;
+    }
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    public function withLocale(string $locale): self
+    {
+        $self = clone $this;
+        $self['locale'] = $locale;
 
         return $self;
     }

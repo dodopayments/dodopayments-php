@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Refunds\RefundCreateParams\Item;
 
@@ -21,6 +22,7 @@ use Dodopayments\Refunds\RefundCreateParams\Item;
  *
  * @phpstan-type RefundCreateParamsShape = array{
  *   paymentID: string,
+ *   currency?: null|Currency|value-of<Currency>,
  *   items?: list<Item|ItemShape>|null,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   reason?: string|null,
@@ -37,6 +39,15 @@ final class RefundCreateParams implements BaseModel
      */
     #[Required('payment_id')]
     public string $paymentID;
+
+    /**
+     * The currency of every `items[].amount`. It must be the currency the customer paid in.
+     * Without it, the amounts are in the settlement currency.
+     *
+     * @var value-of<Currency>|null $currency
+     */
+    #[Optional(enum: Currency::class, nullable: true)]
+    public ?string $currency;
 
     /**
      * Partially Refund an Individual Item.
@@ -84,11 +95,13 @@ final class RefundCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param Currency|value-of<Currency>|null $currency
      * @param list<Item|ItemShape>|null $items
      * @param array<string,MetadataItemShape>|null $metadata
      */
     public static function with(
         string $paymentID,
+        Currency|string|null $currency = null,
         ?array $items = null,
         ?array $metadata = null,
         ?string $reason = null,
@@ -97,6 +110,7 @@ final class RefundCreateParams implements BaseModel
 
         $self['paymentID'] = $paymentID;
 
+        null !== $currency && $self['currency'] = $currency;
         null !== $items && $self['items'] = $items;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $reason && $self['reason'] = $reason;
@@ -111,6 +125,20 @@ final class RefundCreateParams implements BaseModel
     {
         $self = clone $this;
         $self['paymentID'] = $paymentID;
+
+        return $self;
+    }
+
+    /**
+     * The currency of every `items[].amount`. It must be the currency the customer paid in.
+     * Without it, the amounts are in the settlement currency.
+     *
+     * @param Currency|value-of<Currency>|null $currency
+     */
+    public function withCurrency(Currency|string|null $currency): self
+    {
+        $self = clone $this;
+        $self['currency'] = $currency;
 
         return $self;
     }

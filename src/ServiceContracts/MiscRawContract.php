@@ -7,6 +7,7 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\LocaleInfo;
 use Dodopayments\RequestOptions;
 
 /**
@@ -14,6 +15,19 @@ use Dodopayments\RequestOptions;
  */
 interface MiscRawContract
 {
+    /**
+     * @api
+     *
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<list<LocaleInfo>>
+     *
+     * @throws APIException
+     */
+    public function listLocales(
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
     /**
      * @api
      *

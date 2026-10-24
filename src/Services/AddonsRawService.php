@@ -7,6 +7,7 @@ namespace Dodopayments\Services;
 use Dodopayments\Addons\AddonCreateParams;
 use Dodopayments\Addons\AddonListParams;
 use Dodopayments\Addons\AddonResponse;
+use Dodopayments\Addons\AddonRetrieveParams;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
@@ -69,6 +70,7 @@ final class AddonsRawService implements AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
+     * @param array{locale?: string}|AddonRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
@@ -77,13 +79,20 @@ final class AddonsRawService implements AddonsRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|AddonRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = AddonRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['addons/%1$s', $id],
-            options: $requestOptions,
+            query: $parsed,
+            options: $options,
             convert: AddonResponse::class,
         );
     }
@@ -129,7 +138,9 @@ final class AddonsRawService implements AddonsRawContract
     /**
      * @api
      *
-     * @param array{pageNumber?: int, pageSize?: int}|AddonListParams $params
+     * @param array{
+     *   archived?: bool, locale?: string, pageNumber?: int, pageSize?: int
+     * }|AddonListParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<DefaultPageNumberPagination<AddonResponse>>
@@ -156,6 +167,52 @@ final class AddonsRawService implements AddonsRawContract
             options: $options,
             convert: AddonResponse::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function delete(
+        string $id,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'delete',
+            path: ['addons/%1$s', $id],
+            options: $requestOptions,
+            convert: null,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function unarchive(
+        string $id,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: ['addons/%1$s/unarchive', $id],
+            options: $requestOptions,
+            convert: null,
         );
     }
 

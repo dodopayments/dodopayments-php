@@ -19,6 +19,7 @@ use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductCreateParams\DigitalProductDelivery;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
+use Dodopayments\Products\ProductRetrieveParams;
 use Dodopayments\Products\ProductUpdateFilesParams;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\Products\ProductUpdateParams;
@@ -92,6 +93,7 @@ final class ProductsRawService implements ProductsRawContract
      * @api
      *
      * @param string $id Product Id
+     * @param array{locale?: string}|ProductRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Product>
@@ -100,13 +102,20 @@ final class ProductsRawService implements ProductsRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|ProductRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = ProductRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['products/%1$s', $id],
-            options: $requestOptions,
+            query: $parsed,
+            options: $options,
             convert: Product::class,
         );
     }
@@ -165,6 +174,7 @@ final class ProductsRawService implements ProductsRawContract
      * @param array{
      *   archived?: bool,
      *   brandID?: string,
+     *   locale?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
      *   recurring?: bool,

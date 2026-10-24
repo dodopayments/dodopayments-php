@@ -17,6 +17,7 @@ use Dodopayments\Entitlements\EntitlementListParams\IntegrationType;
  *
  * @phpstan-type EntitlementListParamsShape = array{
  *   integrationType?: null|IntegrationType|value-of<IntegrationType>,
+ *   locale?: string|null,
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
  * }
@@ -34,6 +35,17 @@ final class EntitlementListParams implements BaseModel
      */
     #[Optional(enum: IntegrationType::class)]
     public ?string $integrationType;
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    #[Optional]
+    public ?string $locale;
 
     /**
      * Page number (default 0).
@@ -61,12 +73,14 @@ final class EntitlementListParams implements BaseModel
      */
     public static function with(
         IntegrationType|string|null $integrationType = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
     ): self {
         $self = new self;
 
         null !== $integrationType && $self['integrationType'] = $integrationType;
+        null !== $locale && $self['locale'] = $locale;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
 
@@ -83,6 +97,22 @@ final class EntitlementListParams implements BaseModel
     ): self {
         $self = clone $this;
         $self['integrationType'] = $integrationType;
+
+        return $self;
+    }
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    public function withLocale(string $locale): self
+    {
+        $self = clone $this;
+        $self['locale'] = $locale;
 
         return $self;
     }

@@ -192,16 +192,25 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $subscriptionID,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Subscription {
+        $params = Util::removeNulls(['locale' => $locale]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($subscriptionID, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($subscriptionID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -303,6 +312,12 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product id
@@ -319,6 +334,7 @@ final class SubscriptionsService implements SubscriptionsContract
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
@@ -332,6 +348,7 @@ final class SubscriptionsService implements SubscriptionsContract
                 'createdAtGte' => $createdAtGte,
                 'createdAtLte' => $createdAtLte,
                 'customerID' => $customerID,
+                'locale' => $locale,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
                 'productID' => $productID,
@@ -419,6 +436,10 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
      * - `apply_change` (default): Apply plan change immediately regardless of payment outcome
+     *
+     * With `effective_at: next_billing_date`, the plan change payment replaces the renewal payment.
+     * If that payment fails with `prevent_change`, the plan change is cancelled.
+     * The subscription then renews on the current plan, with the usual payment retries.
      *
      * If not specified, uses the business-level default setting.
      * @param string|null $returnURL The URL that receives the customer after they pay the payment link.
@@ -579,6 +600,10 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
      * - `apply_change` (default): Apply plan change immediately regardless of payment outcome
+     *
+     * With `effective_at: next_billing_date`, the plan change payment replaces the renewal payment.
+     * If that payment fails with `prevent_change`, the plan change is cancelled.
+     * The subscription then renews on the current plan, with the usual payment retries.
      *
      * If not specified, uses the business-level default setting.
      * @param string|null $returnURL The URL that receives the customer after they pay the payment link.

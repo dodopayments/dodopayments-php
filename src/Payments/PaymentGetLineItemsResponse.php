@@ -14,7 +14,9 @@ use Dodopayments\Payments\PaymentGetLineItemsResponse\Item;
  * @phpstan-import-type ItemShape from \Dodopayments\Payments\PaymentGetLineItemsResponse\Item
  *
  * @phpstan-type PaymentGetLineItemsResponseShape = array{
- *   currency: Currency|value-of<Currency>, items: list<Item|ItemShape>
+ *   currency: Currency|value-of<Currency>,
+ *   items: list<Item|ItemShape>,
+ *   partialRefundAllowed: bool,
  * }
  */
 final class PaymentGetLineItemsResponse implements BaseModel
@@ -31,17 +33,28 @@ final class PaymentGetLineItemsResponse implements BaseModel
     public array $items;
 
     /**
+     * False when the payment method does not allow a partial refund of this payment.
+     */
+    #[Required('partial_refund_allowed')]
+    public bool $partialRefundAllowed;
+
+    /**
      * `new PaymentGetLineItemsResponse()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * PaymentGetLineItemsResponse::with(currency: ..., items: ...)
+     * PaymentGetLineItemsResponse::with(
+     *   currency: ..., items: ..., partialRefundAllowed: ...
+     * )
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new PaymentGetLineItemsResponse)->withCurrency(...)->withItems(...)
+     * (new PaymentGetLineItemsResponse)
+     *   ->withCurrency(...)
+     *   ->withItems(...)
+     *   ->withPartialRefundAllowed(...)
      * ```
      */
     public function __construct()
@@ -57,12 +70,16 @@ final class PaymentGetLineItemsResponse implements BaseModel
      * @param Currency|value-of<Currency> $currency
      * @param list<Item|ItemShape> $items
      */
-    public static function with(Currency|string $currency, array $items): self
-    {
+    public static function with(
+        Currency|string $currency,
+        array $items,
+        bool $partialRefundAllowed
+    ): self {
         $self = new self;
 
         $self['currency'] = $currency;
         $self['items'] = $items;
+        $self['partialRefundAllowed'] = $partialRefundAllowed;
 
         return $self;
     }
@@ -85,6 +102,17 @@ final class PaymentGetLineItemsResponse implements BaseModel
     {
         $self = clone $this;
         $self['items'] = $items;
+
+        return $self;
+    }
+
+    /**
+     * False when the payment method does not allow a partial refund of this payment.
+     */
+    public function withPartialRefundAllowed(bool $partialRefundAllowed): self
+    {
+        $self = clone $this;
+        $self['partialRefundAllowed'] = $partialRefundAllowed;
 
         return $self;
     }

@@ -8,6 +8,7 @@ use Dodopayments\Client;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\RefundListItem;
 use Dodopayments\Refunds\Refund;
 use Dodopayments\Refunds\RefundCreateParams\Item;
@@ -39,6 +40,8 @@ final class RefundsService implements RefundsContract
      * @api
      *
      * @param string $paymentID the unique identifier of the payment to be refunded
+     * @param Currency|value-of<Currency>|null $currency The currency of every `items[].amount`. It must be the currency the customer paid in.
+     * Without it, the amounts are in the settlement currency.
      * @param list<Item|ItemShape>|null $items Partially Refund an Individual Item
      * @param array<string,MetadataItemShape> $metadata additional metadata associated with the refund
      * @param string|null $reason The reason for the refund, if any. Maximum length is 3000 characters. Optional.
@@ -48,6 +51,7 @@ final class RefundsService implements RefundsContract
      */
     public function create(
         string $paymentID,
+        Currency|string|null $currency = null,
         ?array $items = null,
         ?array $metadata = null,
         ?string $reason = null,
@@ -56,6 +60,7 @@ final class RefundsService implements RefundsContract
         $params = Util::removeNulls(
             [
                 'paymentID' => $paymentID,
+                'currency' => $currency,
                 'items' => $items,
                 'metadata' => $metadata,
                 'reason' => $reason,

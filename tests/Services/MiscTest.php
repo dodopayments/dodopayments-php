@@ -27,6 +27,15 @@ final class MiscTest extends TestCase
     }
 
     #[Test]
+    public function testListLocales(): void
+    {
+        $result = $this->client->misc->listLocales();
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertIsList($result);
+    }
+
+    #[Test]
     public function testListSupportedCountries(): void
     {
         $result = $this->client->misc->listSupportedCountries();

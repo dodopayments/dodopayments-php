@@ -19,6 +19,7 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
  *   createdAtGte?: \DateTimeInterface|null,
  *   createdAtLte?: \DateTimeInterface|null,
  *   customerID?: string|null,
+ *   locale?: string|null,
  *   pageNumber?: int|null,
  *   pageSize?: int|null,
  *   productID?: string|null,
@@ -60,6 +61,17 @@ final class SubscriptionListParams implements BaseModel
      */
     #[Optional]
     public ?string $customerID;
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    #[Optional]
+    public ?string $locale;
 
     /**
      * Page number default is 0.
@@ -105,6 +117,7 @@ final class SubscriptionListParams implements BaseModel
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
@@ -117,6 +130,7 @@ final class SubscriptionListParams implements BaseModel
         null !== $createdAtGte && $self['createdAtGte'] = $createdAtGte;
         null !== $createdAtLte && $self['createdAtLte'] = $createdAtLte;
         null !== $customerID && $self['customerID'] = $customerID;
+        null !== $locale && $self['locale'] = $locale;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
         null !== $productID && $self['productID'] = $productID;
@@ -177,6 +191,22 @@ final class SubscriptionListParams implements BaseModel
     {
         $self = clone $this;
         $self['customerID'] = $customerID;
+
+        return $self;
+    }
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    public function withLocale(string $locale): self
+    {
+        $self = clone $this;
+        $self['locale'] = $locale;
 
         return $self;
     }

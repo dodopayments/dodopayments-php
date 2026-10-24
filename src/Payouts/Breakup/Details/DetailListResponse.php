@@ -65,6 +65,8 @@ final class DetailListResponse implements BaseModel
      * (cents for USD, yen for JPY, fils for KWD). The entry is converted at the rate the payout
      * settled at. These amounts sum to the value of the entries, which can be less than the
      * payout: the grouped breakup reports the difference as `unattributed`.
+     * A settlement batch payout shows the native amount of a row in the payout's currency, and 0
+     * for a row in a different currency.
      */
     #[Required('payout_currency_amount')]
     public int $payoutCurrencyAmount;
@@ -214,6 +216,8 @@ final class DetailListResponse implements BaseModel
      * (cents for USD, yen for JPY, fils for KWD). The entry is converted at the rate the payout
      * settled at. These amounts sum to the value of the entries, which can be less than the
      * payout: the grouped breakup reports the difference as `unattributed`.
+     * A settlement batch payout shows the native amount of a row in the payout's currency, and 0
+     * for a row in a different currency.
      */
     public function withPayoutCurrencyAmount(int $payoutCurrencyAmount): self
     {

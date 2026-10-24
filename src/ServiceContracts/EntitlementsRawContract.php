@@ -10,6 +10,7 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Entitlement;
 use Dodopayments\Entitlements\EntitlementCreateParams;
 use Dodopayments\Entitlements\EntitlementListParams;
+use Dodopayments\Entitlements\EntitlementRetrieveParams;
 use Dodopayments\Entitlements\EntitlementUpdateParams;
 use Dodopayments\RequestOptions;
 
@@ -37,6 +38,7 @@ interface EntitlementsRawContract
      * @api
      *
      * @param string $id Entitlement ID
+     * @param array<string,mixed>|EntitlementRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Entitlement>
@@ -45,7 +47,8 @@ interface EntitlementsRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|EntitlementRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**

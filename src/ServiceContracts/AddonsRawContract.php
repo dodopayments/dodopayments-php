@@ -7,6 +7,7 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Addons\AddonCreateParams;
 use Dodopayments\Addons\AddonListParams;
 use Dodopayments\Addons\AddonResponse;
+use Dodopayments\Addons\AddonRetrieveParams;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Core\Contracts\BaseResponse;
@@ -38,6 +39,7 @@ interface AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
+     * @param array<string,mixed>|AddonRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
@@ -46,7 +48,8 @@ interface AddonsRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|AddonRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
@@ -79,6 +82,36 @@ interface AddonsRawContract
     public function list(
         array|AddonListParams $params,
         RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function delete(
+        string $id,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<mixed>
+     *
+     * @throws APIException
+     */
+    public function unarchive(
+        string $id,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
