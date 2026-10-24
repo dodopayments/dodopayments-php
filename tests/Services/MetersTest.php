@@ -84,6 +84,15 @@ final class MetersTest extends TestCase
     }
 
     #[Test]
+    public function testUpdate(): void
+    {
+        $result = $this->client->meters->update('mtr_h5tgTWL55OyMO0L2Q9w9v');
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Meter::class, $result);
+    }
+
+    #[Test]
     public function testList(): void
     {
         $page = $this->client->meters->list();

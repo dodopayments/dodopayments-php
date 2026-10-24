@@ -42,13 +42,20 @@ interface AddonsContract
      * @api
      *
      * @param string $id Addon Id
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): AddonResponse;
 
     /**
@@ -80,6 +87,13 @@ interface AddonsContract
     /**
      * @api
      *
+     * @param bool $archived List archived addons. The default is false.
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param RequestOpts|null $requestOptions
@@ -89,10 +103,38 @@ interface AddonsContract
      * @throws APIException
      */
     public function list(
+        ?bool $archived = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function delete(
+        string $id,
+        RequestOptions|array|null $requestOptions = null
+    ): mixed;
+
+    /**
+     * @api
+     *
+     * @param string $id Addon Id
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function unarchive(
+        string $id,
+        RequestOptions|array|null $requestOptions = null
+    ): mixed;
 
     /**
      * @api

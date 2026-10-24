@@ -220,16 +220,21 @@ final class PaymentsService implements PaymentsContract
      * @api
      *
      * @param string $paymentID Payment Id
+     * @param Currency|value-of<Currency> $currency The currency of the amounts. It must be the currency that the customer paid in. Without
+     * it, the amounts are in the settlement currency.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieveLineItems(
         string $paymentID,
-        RequestOptions|array|null $requestOptions = null
+        Currency|string|null $currency = null,
+        RequestOptions|array|null $requestOptions = null,
     ): PaymentGetLineItemsResponse {
+        $params = Util::removeNulls(['currency' => $currency]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieveLineItems($paymentID, requestOptions: $requestOptions);
+        $response = $this->raw->retrieveLineItems($paymentID, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }

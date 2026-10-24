@@ -21,6 +21,7 @@ use Dodopayments\Customers\CustomerListParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Misc\Locale;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersRawContract;
 
@@ -44,6 +45,7 @@ final class CustomersRawService implements CustomersRawContract
      *   name: string,
      *   metadata?: array<string,MetadataItemShape>,
      *   phoneNumber?: string|null,
+     *   preferredLocale?: value-of<Locale>,
      * }|CustomerCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
@@ -102,6 +104,7 @@ final class CustomersRawService implements CustomersRawContract
      *   metadata?: array<string,MetadataItemShape>|null,
      *   name?: string|null,
      *   phoneNumber?: string|null,
+     *   preferredLocale?: value-of<Locale>,
      * }|CustomerUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *

@@ -13,7 +13,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @see Dodopayments\Services\MetersService::list()
  *
  * @phpstan-type MeterListParamsShape = array{
- *   archived?: bool|null, pageNumber?: int|null, pageSize?: int|null
+ *   archived?: bool|null,
+ *   locale?: string|null,
+ *   pageNumber?: int|null,
+ *   pageSize?: int|null,
  * }
  */
 final class MeterListParams implements BaseModel
@@ -27,6 +30,17 @@ final class MeterListParams implements BaseModel
      */
     #[Optional]
     public ?bool $archived;
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    #[Optional]
+    public ?string $locale;
 
     /**
      * Page number default is 0.
@@ -52,12 +66,14 @@ final class MeterListParams implements BaseModel
      */
     public static function with(
         ?bool $archived = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
-        ?int $pageSize = null
+        ?int $pageSize = null,
     ): self {
         $self = new self;
 
         null !== $archived && $self['archived'] = $archived;
+        null !== $locale && $self['locale'] = $locale;
         null !== $pageNumber && $self['pageNumber'] = $pageNumber;
         null !== $pageSize && $self['pageSize'] = $pageSize;
 
@@ -71,6 +87,22 @@ final class MeterListParams implements BaseModel
     {
         $self = clone $this;
         $self['archived'] = $archived;
+
+        return $self;
+    }
+
+    /**
+     * Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
+     */
+    public function withLocale(string $locale): self
+    {
+        $self = clone $this;
+        $self['locale'] = $locale;
 
         return $self;
     }

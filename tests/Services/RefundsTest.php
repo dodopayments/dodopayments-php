@@ -5,6 +5,7 @@ namespace Tests\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\RefundListItem;
 use Dodopayments\Refunds\Refund;
 use PHPUnit\Framework\Attributes\CoversNothing;
@@ -43,6 +44,7 @@ final class RefundsTest extends TestCase
     {
         $result = $this->client->refunds->create(
             paymentID: 'payment_id',
+            currency: Currency::AED,
             items: [['itemID' => 'item_id', 'amount' => 0, 'taxInclusive' => true]],
             metadata: ['foo' => 'string'],
             reason: 'reason',

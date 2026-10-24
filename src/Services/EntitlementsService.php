@@ -24,6 +24,7 @@ use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\EntitlementsContract;
 use Dodopayments\Services\Entitlements\FilesService;
 use Dodopayments\Services\Entitlements\GrantsService;
+use Dodopayments\Services\Entitlements\TranslationsService;
 
 /**
  * @phpstan-import-type IntegrationConfigShape from \Dodopayments\Entitlements\IntegrationConfig
@@ -36,6 +37,11 @@ final class EntitlementsService implements EntitlementsContract
      * @api
      */
     public EntitlementsRawService $raw;
+
+    /**
+     * @api
+     */
+    public TranslationsService $translations;
 
     /**
      * @api
@@ -53,6 +59,7 @@ final class EntitlementsService implements EntitlementsContract
     public function __construct(private Client $client)
     {
         $this->raw = new EntitlementsRawService($client);
+        $this->translations = new TranslationsService($client);
         $this->files = new FilesService($client);
         $this->grants = new GrantsService($client);
     }
@@ -101,16 +108,25 @@ final class EntitlementsService implements EntitlementsContract
      * GET /entitlements/{id}
      *
      * @param string $id Entitlement ID
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        ?string $locale = null,
+        RequestOptions|array|null $requestOptions = null,
     ): Entitlement {
+        $params = Util::removeNulls(['locale' => $locale]);
+
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($id, params: $params, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -162,6 +178,12 @@ final class EntitlementsService implements EntitlementsContract
      * GET /entitlements
      *
      * @param IntegrationType|value-of<IntegrationType> $integrationType Filter by integration type
+     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
+     * locale. The value must be a code from `GET /locales`, for example `fr`.
+     * A field with no translation, an unknown code, or no code shows the base text.
+     *
+     * Do not send a text from a localized response back in a create or update request.
+     * The base text then changes to the translated text.
      * @param int $pageNumber Page number (default 0)
      * @param int $pageSize Page size (default 10, max 100)
      * @param RequestOpts|null $requestOptions
@@ -172,6 +194,7 @@ final class EntitlementsService implements EntitlementsContract
      */
     public function list(
         IntegrationType|string|null $integrationType = null,
+        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
@@ -179,6 +202,7 @@ final class EntitlementsService implements EntitlementsContract
         $params = Util::removeNulls(
             [
                 'integrationType' => $integrationType,
+                'locale' => $locale,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
             ],

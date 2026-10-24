@@ -14,6 +14,8 @@ use Dodopayments\Meters\MeterAggregation;
 use Dodopayments\Meters\MeterCreateParams;
 use Dodopayments\Meters\MeterFilter;
 use Dodopayments\Meters\MeterListParams;
+use Dodopayments\Meters\MeterRetrieveParams;
+use Dodopayments\Meters\MeterUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MetersRawContract;
 
@@ -70,6 +72,7 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param string $id Meter ID
+     * @param array{locale?: string}|MeterRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
@@ -78,13 +81,53 @@ final class MetersRawService implements MetersRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|MeterRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = MeterRetrieveParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['meters/%1$s', $id],
-            options: $requestOptions,
+            query: $parsed,
+            options: $options,
+            convert: Meter::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id Meter ID
+     * @param array{
+     *   description?: string|null, measurementUnit?: string|null, name?: string|null
+     * }|MeterUpdateParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Meter>
+     *
+     * @throws APIException
+     */
+    public function update(
+        string $id,
+        array|MeterUpdateParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = MeterUpdateParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'patch',
+            path: ['meters/%1$s', $id],
+            body: (object) $parsed,
+            options: $options,
             convert: Meter::class,
         );
     }
@@ -93,7 +136,7 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param array{
-     *   archived?: bool, pageNumber?: int, pageSize?: int
+     *   archived?: bool, locale?: string, pageNumber?: int, pageSize?: int
      * }|MeterListParams $params
      * @param RequestOpts|null $requestOptions
      *

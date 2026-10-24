@@ -11,6 +11,7 @@ use Dodopayments\Products\Product;
 use Dodopayments\Products\ProductCreateParams;
 use Dodopayments\Products\ProductListParams;
 use Dodopayments\Products\ProductListResponse;
+use Dodopayments\Products\ProductRetrieveParams;
 use Dodopayments\Products\ProductUpdateFilesParams;
 use Dodopayments\Products\ProductUpdateFilesResponse;
 use Dodopayments\Products\ProductUpdateParams;
@@ -40,6 +41,7 @@ interface ProductsRawContract
      * @api
      *
      * @param string $id Product Id
+     * @param array<string,mixed>|ProductRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Product>
@@ -48,7 +50,8 @@ interface ProductsRawContract
      */
     public function retrieve(
         string $id,
-        RequestOptions|array|null $requestOptions = null
+        array|ProductRetrieveParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 
     /**
