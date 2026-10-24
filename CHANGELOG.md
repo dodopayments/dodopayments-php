@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.32.0](https://github.com/dodopayments/dodopayments-php/compare/v6.31.0...v6.32.0) (2026-10-24)
+
+
+### Features
+
+* **api:** translations and locales, addon delete/unarchive, meter update, 3DS payment details ([e4df509](https://github.com/dodopayments/dodopayments-php/commit/e4df509f89804ba8c487c2bf732cfcc2fa975e0d))
+* **api:** translations and locales, addon delete/unarchive, meter update, 3DS payment details ([3ca73f0](https://github.com/dodopayments/dodopayments-php/commit/3ca73f044ded1cffcfc709840268a541547a1216))
+
 ## [6.31.0](https://github.com/dodopayments/dodopayments-php/compare/v6.30.0...v6.31.0) (2026-10-21)
 
 
