@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.32.1](https://github.com/dodopayments/dodopayments-php/compare/v6.32.0...v6.32.1) (2026-10-25)
+
+
+### Chores
+
+* sync generated version strings with the latest release ([023c2c8](https://github.com/dodopayments/dodopayments-php/commit/023c2c8bfd0f0e24ef21ad8f4b883519219ce95a))
+* sync generated version strings with the latest release ([84f2425](https://github.com/dodopayments/dodopayments-php/commit/84f2425956c9bcf00ad7ef8f1a037e51c6a40788))
+
 ## [6.32.0](https://github.com/dodopayments/dodopayments-php/compare/v6.31.0...v6.32.0) (2026-10-24)
 
 
