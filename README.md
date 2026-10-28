@@ -140,6 +140,34 @@ $result = $client->checkoutSessions->create(
 );
 ```
 
+### Workload identity
+
+The client can use workload identity federation instead of an API key.
+It exchanges a JWT from your workload for a short-lived access token.
+It keeps the token in a cache and gets a new token when 5 minutes or less remain.
+
+```php
+<?php
+
+use Dodopayments\Client;
+use Dodopayments\WorkloadIdentity\Providers;
+use Dodopayments\WorkloadIdentity\WorkloadIdentity;
+
+$client = new Client(
+  workloadIdentity: new WorkloadIdentity(
+    provider: Providers::githubActions(),
+    identityProviderId: 'wip_...',
+  ),
+);
+
+// At the end of the job, revoke the access token:
+$client->workloadIdentity?->revoke();
+```
+
+The token sources are `githubActions()`, `gitlab()`, `terraformCloud()`, `gcp()`, `vercel()`, `kubernetes()`, `file()`, `aws($fn)`, `static($token)` and `auto()`.
+If you do not set `bearerToken` or `workloadIdentity`, and `DODO_PAYMENTS_API_KEY` is not set, the client uses `DODO_PAYMENTS_IDENTITY_PROVIDER_ID` and `Providers::auto()`.
+You cannot set `bearerToken` and `workloadIdentity` together.
+
 ## Advanced concepts
 
 ### Making custom or undocumented requests
