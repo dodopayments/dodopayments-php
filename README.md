@@ -164,7 +164,7 @@ $client = new Client(
 $client->workloadIdentity?->revoke();
 ```
 
-The token sources are `githubActions()`, `gitlab()`, `terraformCloud()`, `gcp()`, `vercel()`, `kubernetes()`, `file()`, `aws($fn)`, `static($token)` and `auto()`.
+The token sources are `githubActions()`, `gitlab()`, `terraformCloud()`, `gcp()`, `vercel()`, `kubernetes()`, `file()`, `aws($fn)`, `static($token)` and `auto()`. `vercel()` gets a Vercel OIDC token with the Dodo Payments audience from the Vercel token endpoint.
 If you do not set `bearerToken` or `workloadIdentity`, and `DODO_PAYMENTS_API_KEY` is not set, the client uses `DODO_PAYMENTS_IDENTITY_PROVIDER_ID` and `Providers::auto()`.
 You cannot set `bearerToken` and `workloadIdentity` together.
 

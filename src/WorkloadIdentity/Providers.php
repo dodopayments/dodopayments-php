@@ -22,6 +22,9 @@ final class Providers
 
     public const KUBERNETES_TOKEN_PATH = '/var/run/secrets/tokens/dodo-token';
 
+    /** @internal */
+    public const VERCEL_TOKEN_URL = 'https://oidc.vercel.com/~token';
+
     /**
      * Gets the OIDC token of the GitHub Actions job. The job must have the "id-token: write" permission.
      *
@@ -93,13 +96,54 @@ final class Providers
     }
 
     /**
-     * Reads the Vercel OIDC token.
+     * Gets a Vercel OIDC token for the Dodo Payments audience on each exchange.
+     * The base token comes from VERCEL_OIDC_TOKEN_FILE or VERCEL_OIDC_TOKEN.
+     * Vercel exchanges the base token for a token with the audience.
+     *
+     * @param string|null $audience the default is the origin of the client base URL
      *
      * @return \Closure(string): string
      */
-    public static function vercel(): \Closure
-    {
-        return static fn (string $baseUrl): string => self::env('VERCEL_OIDC_TOKEN');
+    public static function vercel(
+        ?string $audience = null,
+        ?ClientInterface $httpClient = null
+    ): \Closure {
+        return static function (string $baseUrl) use ($audience, $httpClient): string {
+            $tokenFile = self::optionalEnv('VERCEL_OIDC_TOKEN_FILE');
+            $baseToken = null !== $tokenFile
+                ? self::readFile($tokenFile)
+                : trim(self::optionalEnv('VERCEL_OIDC_TOKEN') ?? '');
+            if ('' === $baseToken) {
+                throw new WorkloadIdentityException('Cannot find a Vercel OIDC token. Set VERCEL_OIDC_TOKEN_FILE or VERCEL_OIDC_TOKEN.');
+            }
+
+            $body = json_encode(['token' => $baseToken, 'aud' => $audience ?? self::origin($baseUrl)], flags: JSON_THROW_ON_ERROR);
+            $request = Psr17FactoryDiscovery::findRequestFactory()
+                ->createRequest('POST', self::VERCEL_TOKEN_URL)
+                ->withHeader('Content-Type', 'application/json')
+                ->withHeader('Accept', 'application/json')
+                ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($body))
+            ;
+
+            try {
+                $response = ($httpClient ?? Psr18ClientDiscovery::find())->sendRequest($request);
+            } catch (ClientExceptionInterface $e) {
+                throw new WorkloadIdentityException('The Vercel OIDC token request failed.', previous: $e);
+            }
+
+            $status = $response->getStatusCode();
+            $responseBody = (string) $response->getBody();
+            if ($status < 200 || $status >= 300) {
+                throw new WorkloadIdentityException(sprintf('The Vercel OIDC token request returned HTTP %d: %s', $status, substr($responseBody, 0, 200)));
+            }
+
+            $decoded = json_decode($responseBody, associative: true);
+            if (!is_array($decoded) || !is_string($token = $decoded['token'] ?? null) || '' === $token) {
+                throw new WorkloadIdentityException(sprintf('The Vercel OIDC token response has no "token" field (HTTP %d).', $status));
+            }
+
+            return $token;
+        };
     }
 
     /**
