@@ -282,6 +282,60 @@ class WorkloadIdentityTest extends TestCase
         }
     }
 
+    #[Test]
+    public function testVercelExchangesForDefaultAudience(): void
+    {
+        $saved = ['VERCEL_OIDC_TOKEN' => $_ENV['VERCEL_OIDC_TOKEN'] ?? null, 'VERCEL_OIDC_TOKEN_FILE' => $_ENV['VERCEL_OIDC_TOKEN_FILE'] ?? null];
+        $_ENV['VERCEL_OIDC_TOKEN'] = 'vercel-base-token';
+        $_ENV['VERCEL_OIDC_TOKEN_FILE'] = '';
+
+        try {
+            $vercel = new MockClient;
+            $vercel->addResponse($this->json(200, ['token' => 'vercel-dodo-token', 'expiry' => 1]));
+            $mock = new MockClient;
+            $mock->addResponse($this->token('at_1', expiresIn: 3600));
+            $mock->addResponse($this->json(200, []));
+
+            $client = new Client(
+                baseUrl: 'http://localhost/v1',
+                requestOptions: ['transporter' => $mock, 'maxRetries' => 0],
+                workloadIdentity: new WorkloadIdentity(Providers::vercel(httpClient: $vercel), identityProviderId: 'wip_test'),
+            );
+            $client->misc->listSupportedCountries();
+
+            $request = $vercel->getRequests()[0];
+            $this->assertSame('POST', $request->getMethod());
+            $this->assertSame(Providers::VERCEL_TOKEN_URL, (string) $request->getUri());
+            $this->assertSame('application/json', $request->getHeaderLine('Content-Type'));
+            $this->assertSame(
+                ['token' => 'vercel-base-token', 'aud' => 'http://localhost'],
+                json_decode((string) $request->getBody(), associative: true),
+            );
+            $exchange = json_decode((string) $mock->getRequests()[0]->getBody(), associative: true);
+            $this->assertIsArray($exchange);
+            $this->assertSame('vercel-dodo-token', $exchange['subject_token'] ?? null);
+
+            $denied = new MockClient;
+            $denied->addResponse($this->json(403, ['error' => 'denied']));
+
+            try {
+                Providers::vercel(httpClient: $denied)('http://localhost');
+                $this->fail('Expected a WorkloadIdentityException.');
+            } catch (WorkloadIdentityException $e) {
+                $this->assertStringContainsString('HTTP 403', $e->getMessage());
+                $this->assertStringNotContainsString('vercel-base-token', $e->getMessage());
+            }
+        } finally {
+            foreach ($saved as $name => $value) {
+                if (null === $value) {
+                    unset($_ENV[$name]);
+                } else {
+                    $_ENV[$name] = $value;
+                }
+            }
+        }
+    }
+
     private function client(ClientInterface $transporter): Client
     {
         return new Client(
