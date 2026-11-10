@@ -13,7 +13,6 @@ use Dodopayments\Meters\MeterAggregation;
 use Dodopayments\Meters\MeterFilter;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MetersContract;
-use Dodopayments\Services\Meters\TranslationsService;
 
 /**
  * @phpstan-import-type MeterAggregationShape from \Dodopayments\Meters\MeterAggregation
@@ -28,17 +27,11 @@ final class MetersService implements MetersContract
     public MetersRawService $raw;
 
     /**
-     * @api
-     */
-    public TranslationsService $translations;
-
-    /**
      * @internal
      */
     public function __construct(private Client $client)
     {
         $this->raw = new MetersRawService($client);
-        $this->translations = new TranslationsService($client);
     }
 
     /**
@@ -84,25 +77,16 @@ final class MetersService implements MetersContract
      * @api
      *
      * @param string $id Meter ID
-     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
-     * locale. The value must be a code from `GET /locales`, for example `fr`.
-     * A field with no translation, an unknown code, or no code shows the base text.
-     *
-     * Do not send a text from a localized response back in a create or update request.
-     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $id,
-        ?string $locale = null,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): Meter {
-        $params = Util::removeNulls(['locale' => $locale]);
-
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($id, params: $params, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($id, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -143,12 +127,6 @@ final class MetersService implements MetersContract
      * @api
      *
      * @param bool $archived List archived meters
-     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
-     * locale. The value must be a code from `GET /locales`, for example `fr`.
-     * A field with no translation, an unknown code, or no code shows the base text.
-     *
-     * Do not send a text from a localized response back in a create or update request.
-     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param RequestOpts|null $requestOptions
@@ -159,7 +137,6 @@ final class MetersService implements MetersContract
      */
     public function list(
         ?bool $archived = null,
-        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         RequestOptions|array|null $requestOptions = null,
@@ -167,7 +144,6 @@ final class MetersService implements MetersContract
         $params = Util::removeNulls(
             [
                 'archived' => $archived,
-                'locale' => $locale,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
             ],

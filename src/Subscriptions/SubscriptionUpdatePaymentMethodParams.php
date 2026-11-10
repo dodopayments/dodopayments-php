@@ -13,6 +13,8 @@ use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMeth
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod\New_;
 
 /**
+ * For an invoice-led subscription, billing charges the open invoices after the change, so the response has no payment.
+ *
  * @see Dodopayments\Services\SubscriptionsService::updatePaymentMethod()
  *
  * @phpstan-import-type PaymentMethodVariants from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod

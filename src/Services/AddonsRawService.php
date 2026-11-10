@@ -7,7 +7,6 @@ namespace Dodopayments\Services;
 use Dodopayments\Addons\AddonCreateParams;
 use Dodopayments\Addons\AddonListParams;
 use Dodopayments\Addons\AddonResponse;
-use Dodopayments\Addons\AddonRetrieveParams;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Client;
@@ -70,7 +69,6 @@ final class AddonsRawService implements AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
-     * @param array{locale?: string}|AddonRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
@@ -79,20 +77,13 @@ final class AddonsRawService implements AddonsRawContract
      */
     public function retrieve(
         string $id,
-        array|AddonRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
-        [$parsed, $options] = AddonRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['addons/%1$s', $id],
-            query: $parsed,
-            options: $options,
+            options: $requestOptions,
             convert: AddonResponse::class,
         );
     }
@@ -139,7 +130,7 @@ final class AddonsRawService implements AddonsRawContract
      * @api
      *
      * @param array{
-     *   archived?: bool, locale?: string, pageNumber?: int, pageSize?: int
+     *   archived?: bool, pageNumber?: int, pageSize?: int
      * }|AddonListParams $params
      * @param RequestOpts|null $requestOptions
      *

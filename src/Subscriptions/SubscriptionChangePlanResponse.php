@@ -18,8 +18,10 @@ use Dodopayments\Core\Contracts\BaseModel;
  * @phpstan-type SubscriptionChangePlanResponseShape = array{
  *   clientSecret?: string|null,
  *   expiresOn?: \DateTimeInterface|null,
+ *   invoiceID?: string|null,
  *   paymentID?: string|null,
  *   paymentLink?: string|null,
+ *   refundID?: string|null,
  * }
  */
 final class SubscriptionChangePlanResponse implements BaseModel
@@ -40,6 +42,12 @@ final class SubscriptionChangePlanResponse implements BaseModel
     public ?\DateTimeInterface $expiresOn;
 
     /**
+     * The invoice that bills the plan change. Set only for an invoice-led subscription.
+     */
+    #[Optional('invoice_id', nullable: true)]
+    public ?string $invoiceID;
+
+    /**
      * Id of the payment that settles the plan change.
      */
     #[Optional('payment_id', nullable: true)]
@@ -50,6 +58,12 @@ final class SubscriptionChangePlanResponse implements BaseModel
      */
     #[Optional('payment_link', nullable: true)]
     public ?string $paymentLink;
+
+    /**
+     * The refund of a downgrade with `credit: refund`.
+     */
+    #[Optional('refund_id', nullable: true)]
+    public ?string $refundID;
 
     public function __construct()
     {
@@ -64,15 +78,19 @@ final class SubscriptionChangePlanResponse implements BaseModel
     public static function with(
         ?string $clientSecret = null,
         ?\DateTimeInterface $expiresOn = null,
+        ?string $invoiceID = null,
         ?string $paymentID = null,
         ?string $paymentLink = null,
+        ?string $refundID = null,
     ): self {
         $self = new self;
 
         null !== $clientSecret && $self['clientSecret'] = $clientSecret;
         null !== $expiresOn && $self['expiresOn'] = $expiresOn;
+        null !== $invoiceID && $self['invoiceID'] = $invoiceID;
         null !== $paymentID && $self['paymentID'] = $paymentID;
         null !== $paymentLink && $self['paymentLink'] = $paymentLink;
+        null !== $refundID && $self['refundID'] = $refundID;
 
         return $self;
     }
@@ -100,6 +118,17 @@ final class SubscriptionChangePlanResponse implements BaseModel
     }
 
     /**
+     * The invoice that bills the plan change. Set only for an invoice-led subscription.
+     */
+    public function withInvoiceID(?string $invoiceID): self
+    {
+        $self = clone $this;
+        $self['invoiceID'] = $invoiceID;
+
+        return $self;
+    }
+
+    /**
      * Id of the payment that settles the plan change.
      */
     public function withPaymentID(?string $paymentID): self
@@ -117,6 +146,17 @@ final class SubscriptionChangePlanResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentLink'] = $paymentLink;
+
+        return $self;
+    }
+
+    /**
+     * The refund of a downgrade with `credit: refund`.
+     */
+    public function withRefundID(?string $refundID): self
+    {
+        $self = clone $this;
+        $self['refundID'] = $refundID;
 
         return $self;
     }
