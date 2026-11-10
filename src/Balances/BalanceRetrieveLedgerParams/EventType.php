@@ -65,17 +65,15 @@ enum EventType: string
 
     case DEFLECTION_FEES_REVERSAL = 'deflection_fees_reversal';
 
+    case MODERATION_FEES = 'moderation_fees';
+
     case RESERVE_HOLD = 'reserve_hold';
 
     case RESERVE_RELEASE = 'reserve_release';
-
-    case MODERATION_FEES = 'moderation_fees';
 
     case DODO_FIXED_FEE = 'dodo_fixed_fee';
 
     case INTERCHANGE_FEE = 'interchange_fee';
 
     case SCHEME_FEE = 'scheme_fee';
-
-    case OPENING_BALANCE = 'opening_balance';
 }

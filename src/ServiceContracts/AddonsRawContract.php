@@ -7,7 +7,6 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Addons\AddonCreateParams;
 use Dodopayments\Addons\AddonListParams;
 use Dodopayments\Addons\AddonResponse;
-use Dodopayments\Addons\AddonRetrieveParams;
 use Dodopayments\Addons\AddonUpdateImagesResponse;
 use Dodopayments\Addons\AddonUpdateParams;
 use Dodopayments\Core\Contracts\BaseResponse;
@@ -39,7 +38,6 @@ interface AddonsRawContract
      * @api
      *
      * @param string $id Addon Id
-     * @param array<string,mixed>|AddonRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<AddonResponse>
@@ -48,8 +46,7 @@ interface AddonsRawContract
      */
     public function retrieve(
         string $id,
-        array|AddonRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**

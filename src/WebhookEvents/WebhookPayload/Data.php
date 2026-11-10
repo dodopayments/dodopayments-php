@@ -13,6 +13,7 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\CreditLedgerEntry;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Dispute;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant;
+use Dodopayments\WebhookEvents\WebhookPayload\Data\Invoice;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\LicenseKey;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payment;
 use Dodopayments\WebhookEvents\WebhookPayload\Data\Payout;
@@ -33,9 +34,10 @@ use Dodopayments\WebhookEvents\WebhookPayload\Data\Subscription;
  * @phpstan-import-type AbandonedCheckoutShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\AbandonedCheckout
  * @phpstan-import-type DunningAttemptShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\DunningAttempt
  * @phpstan-import-type EntitlementGrantShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\EntitlementGrant
+ * @phpstan-import-type InvoiceShape from \Dodopayments\WebhookEvents\WebhookPayload\Data\Invoice
  *
- * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|Payout|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant
- * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|PayoutShape|CreditLedgerEntryShape|CreditBalanceLowShape|AbandonedCheckoutShape|DunningAttemptShape|EntitlementGrantShape
+ * @phpstan-type DataVariants = Payment|Subscription|Refund|Dispute|LicenseKey|Payout|CreditLedgerEntry|CreditBalanceLow|AbandonedCheckout|DunningAttempt|EntitlementGrant|Invoice
+ * @phpstan-type DataShape = DataVariants|PaymentShape|SubscriptionShape|RefundShape|DisputeShape|LicenseKeyShape|PayoutShape|CreditLedgerEntryShape|CreditBalanceLowShape|AbandonedCheckoutShape|DunningAttemptShape|EntitlementGrantShape|InvoiceShape
  */
 final class Data implements ConverterSource
 {
@@ -63,6 +65,7 @@ final class Data implements ConverterSource
             'AbandonedCheckout' => AbandonedCheckout::class,
             'DunningAttempt' => DunningAttempt::class,
             'EntitlementGrant' => EntitlementGrant::class,
+            'Invoice' => Invoice::class,
         ];
     }
 }

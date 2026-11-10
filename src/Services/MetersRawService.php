@@ -14,7 +14,6 @@ use Dodopayments\Meters\MeterAggregation;
 use Dodopayments\Meters\MeterCreateParams;
 use Dodopayments\Meters\MeterFilter;
 use Dodopayments\Meters\MeterListParams;
-use Dodopayments\Meters\MeterRetrieveParams;
 use Dodopayments\Meters\MeterUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\MetersRawContract;
@@ -72,7 +71,6 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param string $id Meter ID
-     * @param array{locale?: string}|MeterRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
@@ -81,20 +79,13 @@ final class MetersRawService implements MetersRawContract
      */
     public function retrieve(
         string $id,
-        array|MeterRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
-        [$parsed, $options] = MeterRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['meters/%1$s', $id],
-            query: $parsed,
-            options: $options,
+            options: $requestOptions,
             convert: Meter::class,
         );
     }
@@ -136,7 +127,7 @@ final class MetersRawService implements MetersRawContract
      * @api
      *
      * @param array{
-     *   archived?: bool, locale?: string, pageNumber?: int, pageSize?: int
+     *   archived?: bool, pageNumber?: int, pageSize?: int
      * }|MeterListParams $params
      * @param RequestOpts|null $requestOptions
      *

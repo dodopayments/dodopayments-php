@@ -32,7 +32,7 @@ final class NotesTest extends TestCase
     {
         $result = $this->client->blocklist->customers->notes->create(
             'entry_id',
-            note: 'note'
+            text: 'text'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -44,7 +44,7 @@ final class NotesTest extends TestCase
     {
         $result = $this->client->blocklist->customers->notes->create(
             'entry_id',
-            note: 'note'
+            text: 'text'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -57,7 +57,7 @@ final class NotesTest extends TestCase
         $result = $this->client->blocklist->customers->notes->update(
             'note_id',
             entryID: 'entry_id',
-            note: 'note'
+            text: 'text'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
@@ -70,7 +70,7 @@ final class NotesTest extends TestCase
         $result = $this->client->blocklist->customers->notes->update(
             'note_id',
             entryID: 'entry_id',
-            note: 'note'
+            text: 'text'
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType

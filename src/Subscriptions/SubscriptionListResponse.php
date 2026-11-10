@@ -8,10 +8,12 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
+use Dodopayments\Invoices\CollectionMethod;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\CustomerLimitedDetails;
+use Dodopayments\Subscriptions\SubscriptionListResponse\BillingMode;
 use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
 
 /**
@@ -27,6 +29,7 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  *
  * @phpstan-type SubscriptionListResponseShape = array{
  *   billing: BillingAddress|BillingAddressShape,
+ *   billingMode: BillingMode|value-of<BillingMode>,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
  *   currency: Currency|value-of<Currency>,
@@ -50,11 +53,13 @@ use Dodopayments\Subscriptions\SubscriptionListResponse\Discount;
  *   trialPeriodDays: int,
  *   cancelledAt?: \DateTimeInterface|null,
  *   cancelledBy?: null|SubscriptionCancelledBy|SubscriptionCancelledByShape,
+ *   collectionMethod?: null|CollectionMethod|value-of<CollectionMethod>,
  *   customerBusinessName?: string|null,
  *   discountCyclesRemaining?: int|null,
  *   discountID?: string|null,
  *   pausedAt?: \DateTimeInterface|null,
  *   paymentMethodID?: string|null,
+ *   paymentTermsDays?: int|null,
  *   productName?: string|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
@@ -71,6 +76,14 @@ final class SubscriptionListResponse implements BaseModel
      */
     #[Required]
     public BillingAddress $billing;
+
+    /**
+     * `invoice_led` when invoices bill the subscription. `normal` otherwise.
+     *
+     * @var value-of<BillingMode> $billingMode
+     */
+    #[Required('billing_mode', enum: BillingMode::class)]
+    public string $billingMode;
 
     /**
      * Indicates if the subscription will cancel at the next billing date.
@@ -227,6 +240,18 @@ final class SubscriptionListResponse implements BaseModel
     public ?SubscriptionCancelledBy $cancelledBy;
 
     /**
+     * How an invoice-led subscription collects each invoice. `null` for `normal`.
+     *
+     * @var value-of<CollectionMethod>|null $collectionMethod
+     */
+    #[Optional(
+        'collection_method',
+        enum: CollectionMethod::class,
+        nullable: true
+    )]
+    public ?string $collectionMethod;
+
+    /**
      * Business / legal name associated with the tax id (B2B). When set this is
      * used on the invoice in place of the customer's personal name.
      */
@@ -257,6 +282,12 @@ final class SubscriptionListResponse implements BaseModel
      */
     #[Optional('payment_method_id', nullable: true)]
     public ?string $paymentMethodID;
+
+    /**
+     * Days from the invoice date to the due date. `null` for `normal`.
+     */
+    #[Optional('payment_terms_days', nullable: true)]
+    public ?int $paymentTermsDays;
 
     /**
      * Name of the product associated with this subscription.
@@ -290,6 +321,7 @@ final class SubscriptionListResponse implements BaseModel
      * ```
      * SubscriptionListResponse::with(
      *   billing: ...,
+     *   billingMode: ...,
      *   cancelAtNextBillingDate: ...,
      *   createdAt: ...,
      *   currency: ...,
@@ -319,6 +351,7 @@ final class SubscriptionListResponse implements BaseModel
      * ```
      * (new SubscriptionListResponse)
      *   ->withBilling(...)
+     *   ->withBillingMode(...)
      *   ->withCancelAtNextBillingDate(...)
      *   ->withCreatedAt(...)
      *   ->withCurrency(...)
@@ -353,6 +386,7 @@ final class SubscriptionListResponse implements BaseModel
      * You must use named parameters to construct any parameters with a default value.
      *
      * @param BillingAddress|BillingAddressShape $billing
+     * @param BillingMode|value-of<BillingMode> $billingMode
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
      * @param list<Discount|DiscountShape> $discounts
@@ -361,10 +395,12 @@ final class SubscriptionListResponse implements BaseModel
      * @param SubscriptionStatus|value-of<SubscriptionStatus> $status
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param SubscriptionCancelledBy|SubscriptionCancelledByShape|null $cancelledBy
+     * @param CollectionMethod|value-of<CollectionMethod>|null $collectionMethod
      * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
      */
     public static function with(
         BillingAddress|array $billing,
+        BillingMode|string $billingMode,
         bool $cancelAtNextBillingDate,
         \DateTimeInterface $createdAt,
         Currency|string $currency,
@@ -388,11 +424,13 @@ final class SubscriptionListResponse implements BaseModel
         int $trialPeriodDays,
         ?\DateTimeInterface $cancelledAt = null,
         SubscriptionCancelledBy|array|null $cancelledBy = null,
+        CollectionMethod|string|null $collectionMethod = null,
         ?string $customerBusinessName = null,
         ?int $discountCyclesRemaining = null,
         ?string $discountID = null,
         ?\DateTimeInterface $pausedAt = null,
         ?string $paymentMethodID = null,
+        ?int $paymentTermsDays = null,
         ?string $productName = null,
         ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
@@ -401,6 +439,7 @@ final class SubscriptionListResponse implements BaseModel
         $self = new self;
 
         $self['billing'] = $billing;
+        $self['billingMode'] = $billingMode;
         $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
         $self['createdAt'] = $createdAt;
         $self['currency'] = $currency;
@@ -425,11 +464,13 @@ final class SubscriptionListResponse implements BaseModel
 
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
         null !== $cancelledBy && $self['cancelledBy'] = $cancelledBy;
+        null !== $collectionMethod && $self['collectionMethod'] = $collectionMethod;
         null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
         null !== $discountID && $self['discountID'] = $discountID;
         null !== $pausedAt && $self['pausedAt'] = $pausedAt;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
+        null !== $paymentTermsDays && $self['paymentTermsDays'] = $paymentTermsDays;
         null !== $productName && $self['productName'] = $productName;
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
@@ -447,6 +488,19 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['billing'] = $billing;
+
+        return $self;
+    }
+
+    /**
+     * `invoice_led` when invoices bill the subscription. `normal` otherwise.
+     *
+     * @param BillingMode|value-of<BillingMode> $billingMode
+     */
+    public function withBillingMode(BillingMode|string $billingMode): self
+    {
+        $self = clone $this;
+        $self['billingMode'] = $billingMode;
 
         return $self;
     }
@@ -732,6 +786,20 @@ final class SubscriptionListResponse implements BaseModel
     }
 
     /**
+     * How an invoice-led subscription collects each invoice. `null` for `normal`.
+     *
+     * @param CollectionMethod|value-of<CollectionMethod>|null $collectionMethod
+     */
+    public function withCollectionMethod(
+        CollectionMethod|string|null $collectionMethod
+    ): self {
+        $self = clone $this;
+        $self['collectionMethod'] = $collectionMethod;
+
+        return $self;
+    }
+
+    /**
      * Business / legal name associated with the tax id (B2B). When set this is
      * used on the invoice in place of the customer's personal name.
      */
@@ -786,6 +854,17 @@ final class SubscriptionListResponse implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethodID'] = $paymentMethodID;
+
+        return $self;
+    }
+
+    /**
+     * Days from the invoice date to the due date. `null` for `normal`.
+     */
+    public function withPaymentTermsDays(?int $paymentTermsDays): self
+    {
+        $self = clone $this;
+        $self['paymentTermsDays'] = $paymentTermsDays;
 
         return $self;
     }

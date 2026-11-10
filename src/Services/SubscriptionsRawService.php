@@ -20,7 +20,9 @@ use Dodopayments\Subscriptions\CancellationFeedback;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Credit;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChangePlanResponse;
@@ -36,7 +38,6 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
-use Dodopayments\Subscriptions\SubscriptionRetrieveParams;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
@@ -53,7 +54,9 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
+ * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Invoice as InvoiceShape1
  * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
@@ -128,7 +131,6 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array{locale?: string}|SubscriptionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
@@ -137,20 +139,13 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      */
     public function retrieve(
         string $subscriptionID,
-        array|SubscriptionRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
-        [$parsed, $options] = SubscriptionRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['subscriptions/%1$s', $subscriptionID],
-            query: $parsed,
-            options: $options,
+            options: $requestOptions,
             convert: Subscription::class,
         );
     }
@@ -212,7 +207,6 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   createdAtGte?: \DateTimeInterface,
      *   createdAtLte?: \DateTimeInterface,
      *   customerID?: string,
-     *   locale?: string,
      *   pageNumber?: int,
      *   pageSize?: int,
      *   productID?: string,
@@ -292,9 +286,11 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   cancelOlderPaymentLink?: bool,
      *   cancelScheduledChangePlan?: bool,
      *   collectViaPaymentLink?: bool,
+     *   credit?: Credit|value-of<Credit>|null,
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   effectiveAt?: EffectiveAt|value-of<EffectiveAt>,
+     *   invoice?: Invoice|InvoiceShape|null,
      *   metadata?: array<string,MetadataItemShape>|null,
      *   onPaymentFailure?: OnPaymentFailure|value-of<OnPaymentFailure>|null,
      *   returnURL?: string|null,
@@ -376,9 +372,11 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *   cancelOlderPaymentLink?: bool,
      *   cancelScheduledChangePlan?: bool,
      *   collectViaPaymentLink?: bool,
+     *   credit?: SubscriptionPreviewChangePlanParams\Credit|value-of<SubscriptionPreviewChangePlanParams\Credit>|null,
      *   discountCode?: string|null,
      *   discountCodes?: list<string>|null,
      *   effectiveAt?: SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<SubscriptionPreviewChangePlanParams\EffectiveAt>,
+     *   invoice?: SubscriptionPreviewChangePlanParams\Invoice|InvoiceShape1|null,
      *   metadata?: array<string,MetadataItemShape>|null,
      *   onPaymentFailure?: SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null,
      *   returnURL?: string|null,
@@ -429,6 +427,32 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
             path: ['subscriptions/%1$s/credit-usage', $subscriptionID],
             options: $requestOptions,
             convert: SubscriptionGetCreditUsageResponse::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Prices the next cycle invoice of an invoice-led subscription. The invoice ID in the
+     * response is not stored, so the response has no allowed actions and no editable fields.
+     *
+     * @param string $subscriptionID Subscription ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<\Dodopayments\Invoices\Invoice>
+     *
+     * @throws APIException
+     */
+    public function retrieveUpcomingInvoice(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse {
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'get',
+            path: ['subscriptions/%1$s/upcoming-invoice', $subscriptionID],
+            options: $requestOptions,
+            convert: \Dodopayments\Invoices\Invoice::class,
         );
     }
 
@@ -513,6 +537,8 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
 
     /**
      * @api
+     *
+     * For an invoice-led subscription, billing charges the open invoices after the change, so the response has no payment.
      *
      * @param string $subscriptionID Subscription Id
      * @param array{
