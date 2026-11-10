@@ -8,7 +8,6 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
-use Dodopayments\Misc\Locale;
 
 /**
  * @phpstan-type CreateNewCustomerShape = array{
@@ -16,7 +15,6 @@ use Dodopayments\Misc\Locale;
  *   name: string,
  *   createNewCustomer?: bool|null,
  *   phoneNumber?: string|null,
- *   preferredLocale?: null|Locale|value-of<Locale>,
  * }
  */
 final class CreateNewCustomer implements BaseModel
@@ -42,16 +40,6 @@ final class CreateNewCustomer implements BaseModel
     public ?string $phoneNumber;
 
     /**
-     * The language of the customer emails, a code from `GET /locales`. A value replaces the
-     * stored language of the customer, also for an existing customer. Send a value only to
-     * change that language on purpose. With no value, the stored language stays.
-     *
-     * @var value-of<Locale>|null $preferredLocale
-     */
-    #[Optional('preferred_locale', enum: Locale::class, nullable: true)]
-    public ?string $preferredLocale;
-
-    /**
      * `new CreateNewCustomer()` is missing required properties by the API.
      *
      * To enforce required parameters use
@@ -74,15 +62,12 @@ final class CreateNewCustomer implements BaseModel
      * Construct an instance from the required parameters.
      *
      * You must use named parameters to construct any parameters with a default value.
-     *
-     * @param Locale|value-of<Locale>|null $preferredLocale
      */
     public static function with(
         string $email,
         string $name,
         ?bool $createNewCustomer = null,
         ?string $phoneNumber = null,
-        Locale|string|null $preferredLocale = null,
     ): self {
         $self = new self;
 
@@ -91,7 +76,6 @@ final class CreateNewCustomer implements BaseModel
 
         null !== $createNewCustomer && $self['createNewCustomer'] = $createNewCustomer;
         null !== $phoneNumber && $self['phoneNumber'] = $phoneNumber;
-        null !== $preferredLocale && $self['preferredLocale'] = $preferredLocale;
 
         return $self;
     }
@@ -129,22 +113,6 @@ final class CreateNewCustomer implements BaseModel
     {
         $self = clone $this;
         $self['phoneNumber'] = $phoneNumber;
-
-        return $self;
-    }
-
-    /**
-     * The language of the customer emails, a code from `GET /locales`. A value replaces the
-     * stored language of the customer, also for an existing customer. Send a value only to
-     * change that language on purpose. With no value, the stored language stays.
-     *
-     * @param Locale|value-of<Locale>|null $preferredLocale
-     */
-    public function withPreferredLocale(
-        Locale|string|null $preferredLocale
-    ): self {
-        $self = clone $this;
-        $self['preferredLocale'] = $preferredLocale;
 
         return $self;
     }

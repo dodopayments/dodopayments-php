@@ -33,8 +33,7 @@ final class BreakupGetResponseItem implements BaseModel
 
     /**
      * The type of balance ledger event (e.g., "payment", "refund", "dispute", "payment_fees"),
-     * or `unattributed` for the payout amount the entries do not account for. A settlement batch
-     * payout shows `carried_over` for its opening balance and the entries dated before that row.
+     * or `unattributed` for the payout amount the entries do not account for.
      */
     #[Required('event_type')]
     public string $eventType;
@@ -82,8 +81,7 @@ final class BreakupGetResponseItem implements BaseModel
 
     /**
      * The type of balance ledger event (e.g., "payment", "refund", "dispute", "payment_fees"),
-     * or `unattributed` for the payout amount the entries do not account for. A settlement batch
-     * payout shows `carried_over` for its opening balance and the entries dated before that row.
+     * or `unattributed` for the payout amount the entries do not account for.
      */
     public function withEventType(string $eventType): self
     {

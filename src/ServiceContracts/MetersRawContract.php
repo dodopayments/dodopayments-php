@@ -10,7 +10,6 @@ use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Meters\Meter;
 use Dodopayments\Meters\MeterCreateParams;
 use Dodopayments\Meters\MeterListParams;
-use Dodopayments\Meters\MeterRetrieveParams;
 use Dodopayments\Meters\MeterUpdateParams;
 use Dodopayments\RequestOptions;
 
@@ -38,7 +37,6 @@ interface MetersRawContract
      * @api
      *
      * @param string $id Meter ID
-     * @param array<string,mixed>|MeterRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Meter>
@@ -47,8 +45,7 @@ interface MetersRawContract
      */
     public function retrieve(
         string $id,
-        array|MeterRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**

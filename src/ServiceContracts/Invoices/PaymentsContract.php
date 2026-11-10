@@ -31,7 +31,7 @@ interface PaymentsContract
      * @api
      *
      * @param string $payoutID Payout ID
-     * @param string $token The signed link token. If the business asks for a credential on its invoice links, a valid token for this record replaces the credential.
+     * @param string $token The signed link token. A valid token for this record replaces the credential.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException

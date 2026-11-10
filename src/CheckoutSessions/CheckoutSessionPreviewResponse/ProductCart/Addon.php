@@ -16,6 +16,7 @@ use Dodopayments\Misc\TaxCategory;
  *   addonID: string,
  *   currency: Currency|value-of<Currency>,
  *   discountedPrice: int,
+ *   maxQuantityReached: bool,
  *   name: string,
  *   ogCurrency: Currency|value-of<Currency>,
  *   ogPrice: int,
@@ -43,6 +44,13 @@ final class Addon implements BaseModel
 
     #[Required('discounted_price')]
     public int $discountedPrice;
+
+    /**
+     * True when one more unit of this addon puts the cart above the cart value limit of the
+     * business. False when the limit does not apply to the business.
+     */
+    #[Required('max_quantity_reached')]
+    public bool $maxQuantityReached;
 
     #[Required]
     public string $name;
@@ -102,6 +110,7 @@ final class Addon implements BaseModel
      *   addonID: ...,
      *   currency: ...,
      *   discountedPrice: ...,
+     *   maxQuantityReached: ...,
      *   name: ...,
      *   ogCurrency: ...,
      *   ogPrice: ...,
@@ -120,6 +129,7 @@ final class Addon implements BaseModel
      *   ->withAddonID(...)
      *   ->withCurrency(...)
      *   ->withDiscountedPrice(...)
+     *   ->withMaxQuantityReached(...)
      *   ->withName(...)
      *   ->withOgCurrency(...)
      *   ->withOgPrice(...)
@@ -148,6 +158,7 @@ final class Addon implements BaseModel
         string $addonID,
         Currency|string $currency,
         int $discountedPrice,
+        bool $maxQuantityReached,
         string $name,
         Currency|string $ogCurrency,
         int $ogPrice,
@@ -165,6 +176,7 @@ final class Addon implements BaseModel
         $self['addonID'] = $addonID;
         $self['currency'] = $currency;
         $self['discountedPrice'] = $discountedPrice;
+        $self['maxQuantityReached'] = $maxQuantityReached;
         $self['name'] = $name;
         $self['ogCurrency'] = $ogCurrency;
         $self['ogPrice'] = $ogPrice;
@@ -204,6 +216,18 @@ final class Addon implements BaseModel
     {
         $self = clone $this;
         $self['discountedPrice'] = $discountedPrice;
+
+        return $self;
+    }
+
+    /**
+     * True when one more unit of this addon puts the cart above the cart value limit of the
+     * business. False when the limit does not apply to the business.
+     */
+    public function withMaxQuantityReached(bool $maxQuantityReached): self
+    {
+        $self = clone $this;
+        $self['maxQuantityReached'] = $maxQuantityReached;
 
         return $self;
     }
