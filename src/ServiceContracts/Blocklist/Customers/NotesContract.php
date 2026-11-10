@@ -23,7 +23,7 @@ interface NotesContract
      */
     public function create(
         string $entryID,
-        string $note,
+        string $text,
         RequestOptions|array|null $requestOptions = null,
     ): BlockedCustomerNote;
 
@@ -32,7 +32,7 @@ interface NotesContract
      *
      * @param string $noteID Path param: Note id
      * @param string $entryID Path param: Blocklist entry id
-     * @param string $note Body param
+     * @param string $text Body param
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -40,7 +40,7 @@ interface NotesContract
     public function update(
         string $noteID,
         string $entryID,
-        string $note,
+        string $text,
         RequestOptions|array|null $requestOptions = null,
     ): BlockedCustomerNote;
 }
