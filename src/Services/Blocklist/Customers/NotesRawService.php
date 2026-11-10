@@ -28,7 +28,7 @@ final class NotesRawService implements NotesRawContract
      * @api
      *
      * @param string $entryID Blocklist entry id
-     * @param array{note: string}|NoteCreateParams $params
+     * @param array{text: string}|NoteCreateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BlockedCustomerNote>
@@ -59,7 +59,7 @@ final class NotesRawService implements NotesRawContract
      * @api
      *
      * @param string $noteID Path param: Note id
-     * @param array{entryID: string, note: string}|NoteUpdateParams $params
+     * @param array{entryID: string, text: string}|NoteUpdateParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<BlockedCustomerNote>

@@ -39,10 +39,10 @@ final class NotesService implements NotesContract
      */
     public function create(
         string $entryID,
-        string $note,
+        string $text,
         RequestOptions|array|null $requestOptions = null,
     ): BlockedCustomerNote {
-        $params = Util::removeNulls(['note' => $note]);
+        $params = Util::removeNulls(['text' => $text]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->create($entryID, params: $params, requestOptions: $requestOptions);
@@ -55,7 +55,7 @@ final class NotesService implements NotesContract
      *
      * @param string $noteID Path param: Note id
      * @param string $entryID Path param: Blocklist entry id
-     * @param string $note Body param
+     * @param string $text Body param
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
@@ -63,10 +63,10 @@ final class NotesService implements NotesContract
     public function update(
         string $noteID,
         string $entryID,
-        string $note,
+        string $text,
         RequestOptions|array|null $requestOptions = null,
     ): BlockedCustomerNote {
-        $params = Util::removeNulls(['entryID' => $entryID, 'note' => $note]);
+        $params = Util::removeNulls(['entryID' => $entryID, 'text' => $text]);
 
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->update($noteID, params: $params, requestOptions: $requestOptions);

@@ -5,6 +5,8 @@ namespace Tests\Services;
 use Dodopayments\Client;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Invoices\CollectionMethod;
+use Dodopayments\Invoices\Invoice;
 use Dodopayments\Misc\CountryCode;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\PaymentMethodTypes;
@@ -173,9 +175,15 @@ final class SubscriptionsTest extends TestCase
             cancelOlderPaymentLink: true,
             cancelScheduledChangePlan: true,
             collectViaPaymentLink: true,
+            credit: 'customer_balance',
             discountCode: 'discount_code',
             discountCodes: ['string'],
             effectiveAt: 'immediately',
+            invoice: [
+                'collectionMethod' => CollectionMethod::AUTO_CHARGE,
+                'finalize' => true,
+                'paymentTerms' => ['type' => 'due_on_receipt'],
+            ],
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
             returnURL: 'return_url',
@@ -247,9 +255,15 @@ final class SubscriptionsTest extends TestCase
             cancelOlderPaymentLink: true,
             cancelScheduledChangePlan: true,
             collectViaPaymentLink: true,
+            credit: 'customer_balance',
             discountCode: 'discount_code',
             discountCodes: ['string'],
             effectiveAt: 'immediately',
+            invoice: [
+                'collectionMethod' => CollectionMethod::AUTO_CHARGE,
+                'finalize' => true,
+                'paymentTerms' => ['type' => 'due_on_receipt'],
+            ],
             metadata: ['foo' => 'string'],
             onPaymentFailure: 'prevent_change',
             returnURL: 'return_url',
@@ -271,6 +285,17 @@ final class SubscriptionsTest extends TestCase
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
         $this->assertInstanceOf(SubscriptionGetCreditUsageResponse::class, $result);
+    }
+
+    #[Test]
+    public function testRetrieveUpcomingInvoice(): void
+    {
+        $result = $this->client->subscriptions->retrieveUpcomingInvoice(
+            'subscription_id'
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(Invoice::class, $result);
     }
 
     #[Test]

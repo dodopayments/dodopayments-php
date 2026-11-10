@@ -10,7 +10,9 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Concerns\SdkParams;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Misc\MetadataItem;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Credit;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 
@@ -19,6 +21,7 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  *
  * @phpstan-import-type MetadataItemVariants from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
+ * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  *
  * @phpstan-type SubscriptionChangePlanParamsShape = array{
@@ -30,9 +33,11 @@ use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode
  *   cancelOlderPaymentLink?: bool|null,
  *   cancelScheduledChangePlan?: bool|null,
  *   collectViaPaymentLink?: bool|null,
+ *   credit?: null|Credit|value-of<Credit>,
  *   discountCode?: string|null,
  *   discountCodes?: list<string>|null,
  *   effectiveAt?: null|EffectiveAt|value-of<EffectiveAt>,
+ *   invoice?: null|Invoice|InvoiceShape,
  *   metadata?: array<string,MetadataItemShape>|null,
  *   onPaymentFailure?: null|OnPaymentFailure|value-of<OnPaymentFailure>,
  *   returnURL?: string|null,
@@ -128,6 +133,15 @@ final class SubscriptionChangePlanParams implements BaseModel
     public ?bool $collectViaPaymentLink;
 
     /**
+     * Where a downgrade credit goes. Only invoice-led subscriptions read it.
+     * The default is `customer_balance`.
+     *
+     * @var value-of<Credit>|null $credit
+     */
+    #[Optional(enum: Credit::class, nullable: true)]
+    public ?string $credit;
+
+    /**
      * @deprecated Use `discount_id` instead.
      *
      * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
@@ -156,6 +170,12 @@ final class SubscriptionChangePlanParams implements BaseModel
      */
     #[Optional('effective_at', enum: EffectiveAt::class)]
     public ?string $effectiveAt;
+
+    /**
+     * The invoice of a plan change billed now. Only invoice-led subscriptions read it.
+     */
+    #[Optional(nullable: true)]
+    public ?Invoice $invoice;
 
     /**
      * Metadata for the payment. If not passed, the metadata of the subscription will be taken.
@@ -232,8 +252,10 @@ final class SubscriptionChangePlanParams implements BaseModel
      *
      * @param ProrationBillingMode|value-of<ProrationBillingMode> $prorationBillingMode
      * @param list<AttachAddon|AttachAddonShape>|null $addons
+     * @param Credit|value-of<Credit>|null $credit
      * @param list<string>|null $discountCodes
      * @param EffectiveAt|value-of<EffectiveAt>|null $effectiveAt
+     * @param Invoice|InvoiceShape|null $invoice
      * @param array<string,MetadataItemShape>|null $metadata
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure
      */
@@ -246,9 +268,11 @@ final class SubscriptionChangePlanParams implements BaseModel
         ?bool $cancelOlderPaymentLink = null,
         ?bool $cancelScheduledChangePlan = null,
         ?bool $collectViaPaymentLink = null,
+        Credit|string|null $credit = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         EffectiveAt|string|null $effectiveAt = null,
+        Invoice|array|null $invoice = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
         ?string $returnURL = null,
@@ -264,9 +288,11 @@ final class SubscriptionChangePlanParams implements BaseModel
         null !== $cancelOlderPaymentLink && $self['cancelOlderPaymentLink'] = $cancelOlderPaymentLink;
         null !== $cancelScheduledChangePlan && $self['cancelScheduledChangePlan'] = $cancelScheduledChangePlan;
         null !== $collectViaPaymentLink && $self['collectViaPaymentLink'] = $collectViaPaymentLink;
+        null !== $credit && $self['credit'] = $credit;
         null !== $discountCode && $self['discountCode'] = $discountCode;
         null !== $discountCodes && $self['discountCodes'] = $discountCodes;
         null !== $effectiveAt && $self['effectiveAt'] = $effectiveAt;
+        null !== $invoice && $self['invoice'] = $invoice;
         null !== $metadata && $self['metadata'] = $metadata;
         null !== $onPaymentFailure && $self['onPaymentFailure'] = $onPaymentFailure;
         null !== $returnURL && $self['returnURL'] = $returnURL;
@@ -402,6 +428,20 @@ final class SubscriptionChangePlanParams implements BaseModel
     }
 
     /**
+     * Where a downgrade credit goes. Only invoice-led subscriptions read it.
+     * The default is `customer_balance`.
+     *
+     * @param Credit|value-of<Credit>|null $credit
+     */
+    public function withCredit(Credit|string|null $credit): self
+    {
+        $self = clone $this;
+        $self['credit'] = $credit;
+
+        return $self;
+    }
+
+    /**
      * DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      */
     public function withDiscountCode(?string $discountCode): self
@@ -440,6 +480,19 @@ final class SubscriptionChangePlanParams implements BaseModel
     {
         $self = clone $this;
         $self['effectiveAt'] = $effectiveAt;
+
+        return $self;
+    }
+
+    /**
+     * The invoice of a plan change billed now. Only invoice-led subscriptions read it.
+     *
+     * @param Invoice|InvoiceShape|null $invoice
+     */
+    public function withInvoice(Invoice|array|null $invoice): self
+    {
+        $self = clone $this;
+        $self['invoice'] = $invoice;
 
         return $self;
     }

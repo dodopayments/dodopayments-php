@@ -20,7 +20,9 @@ use Dodopayments\Subscriptions\AttachAddon;
 use Dodopayments\Subscriptions\CancellationFeedback;
 use Dodopayments\Subscriptions\OnDemandSubscription;
 use Dodopayments\Subscriptions\Subscription;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Credit;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\EffectiveAt;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\OnPaymentFailure;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams\ProrationBillingMode;
 use Dodopayments\Subscriptions\SubscriptionChangePlanResponse;
@@ -47,7 +49,9 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-import-type OneTimeProductCartItemShape from \Dodopayments\Payments\OneTimeProductCartItem
  * @phpstan-import-type CreditEntitlementCartShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart
  * @phpstan-import-type DisableOnDemandShape from \Dodopayments\Subscriptions\SubscriptionUpdateParams\DisableOnDemand
+ * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
+ * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Invoice as InvoiceShape1
  * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
  * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
@@ -192,25 +196,16 @@ final class SubscriptionsService implements SubscriptionsContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
-     * locale. The value must be a code from `GET /locales`, for example `fr`.
-     * A field with no translation, an unknown code, or no code shows the base text.
-     *
-     * Do not send a text from a localized response back in a create or update request.
-     * The base text then changes to the translated text.
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrieve(
         string $subscriptionID,
-        ?string $locale = null,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): Subscription {
-        $params = Util::removeNulls(['locale' => $locale]);
-
         // @phpstan-ignore-next-line argument.type
-        $response = $this->raw->retrieve($subscriptionID, params: $params, requestOptions: $requestOptions);
+        $response = $this->raw->retrieve($subscriptionID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -312,12 +307,6 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param \DateTimeInterface $createdAtGte Get events after this created time
      * @param \DateTimeInterface $createdAtLte Get events created before this time
      * @param string $customerID Filter by customer id
-     * @param string $locale Shows the translated name, description and unit of the catalog entities in this
-     * locale. The value must be a code from `GET /locales`, for example `fr`.
-     * A field with no translation, an unknown code, or no code shows the base text.
-     *
-     * Do not send a text from a localized response back in a create or update request.
-     * The base text then changes to the translated text.
      * @param int $pageNumber Page number default is 0
      * @param int $pageSize Page size default is 10 max is 100
      * @param string $productID Filter by product id
@@ -334,7 +323,6 @@ final class SubscriptionsService implements SubscriptionsContract
         ?\DateTimeInterface $createdAtGte = null,
         ?\DateTimeInterface $createdAtLte = null,
         ?string $customerID = null,
-        ?string $locale = null,
         ?int $pageNumber = null,
         ?int $pageSize = null,
         ?string $productID = null,
@@ -348,7 +336,6 @@ final class SubscriptionsService implements SubscriptionsContract
                 'createdAtGte' => $createdAtGte,
                 'createdAtLte' => $createdAtLte,
                 'customerID' => $customerID,
-                'locale' => $locale,
                 'pageNumber' => $pageNumber,
                 'pageSize' => $pageSize,
                 'productID' => $productID,
@@ -423,6 +410,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * `on_payment_failure: prevent_change`.
      *
      * The preview route shares this request body and ignores this field.
+     * @param Credit|value-of<Credit>|null $credit Where a downgrade credit goes. Only invoice-led subscriptions read it.
+     * The default is `customer_balance`.
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply to the new plan. Max 20.
      * Cannot be used together with discount_code.
@@ -432,6 +421,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param EffectiveAt|value-of<EffectiveAt> $effectiveAt When to apply the plan change.
      * - `immediately` (default): Apply the plan change right away
      * - `next_billing_date`: Schedule the change for the next billing date
+     * @param Invoice|InvoiceShape|null $invoice The invoice of a plan change billed now. Only invoice-led subscriptions read it.
      * @param array<string,MetadataItemShape>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param OnPaymentFailure|value-of<OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
@@ -467,9 +457,11 @@ final class SubscriptionsService implements SubscriptionsContract
         ?bool $cancelOlderPaymentLink = null,
         ?bool $cancelScheduledChangePlan = null,
         ?bool $collectViaPaymentLink = null,
+        Credit|string|null $credit = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         EffectiveAt|string|null $effectiveAt = null,
+        Invoice|array|null $invoice = null,
         ?array $metadata = null,
         OnPaymentFailure|string|null $onPaymentFailure = null,
         ?string $returnURL = null,
@@ -485,9 +477,11 @@ final class SubscriptionsService implements SubscriptionsContract
                 'cancelOlderPaymentLink' => $cancelOlderPaymentLink,
                 'cancelScheduledChangePlan' => $cancelScheduledChangePlan,
                 'collectViaPaymentLink' => $collectViaPaymentLink,
+                'credit' => $credit,
                 'discountCode' => $discountCode,
                 'discountCodes' => $discountCodes,
                 'effectiveAt' => $effectiveAt,
+                'invoice' => $invoice,
                 'metadata' => $metadata,
                 'onPaymentFailure' => $onPaymentFailure,
                 'returnURL' => $returnURL,
@@ -587,6 +581,8 @@ final class SubscriptionsService implements SubscriptionsContract
      * `on_payment_failure: prevent_change`.
      *
      * The preview route shares this request body and ignores this field.
+     * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Credit|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Credit>|null $credit Where a downgrade credit goes. Only invoice-led subscriptions read it.
+     * The default is `customer_balance`.
      * @param string|null $discountCode DEPRECATED: Use discount_codes instead. Cannot be used together with discount_codes.
      * @param list<string>|null $discountCodes Stacked discount codes to apply to the new plan. Max 20.
      * Cannot be used together with discount_code.
@@ -596,6 +592,7 @@ final class SubscriptionsService implements SubscriptionsContract
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt> $effectiveAt When to apply the plan change.
      * - `immediately` (default): Apply the plan change right away
      * - `next_billing_date`: Schedule the change for the next billing date
+     * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Invoice|InvoiceShape1|null $invoice The invoice of a plan change billed now. Only invoice-led subscriptions read it.
      * @param array<string,MetadataItemShape>|null $metadata Metadata for the payment. If not passed, the metadata of the subscription will be taken
      * @param \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|value-of<\Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure>|null $onPaymentFailure Controls behavior when the plan change payment fails.
      * - `prevent_change`: Keep subscription on current plan until payment succeeds
@@ -631,9 +628,11 @@ final class SubscriptionsService implements SubscriptionsContract
         ?bool $cancelOlderPaymentLink = null,
         ?bool $cancelScheduledChangePlan = null,
         ?bool $collectViaPaymentLink = null,
+        \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Credit|string|null $credit = null,
         ?string $discountCode = null,
         ?array $discountCodes = null,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\EffectiveAt|string|null $effectiveAt = null,
+        \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Invoice|array|null $invoice = null,
         ?array $metadata = null,
         \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\OnPaymentFailure|string|null $onPaymentFailure = null,
         ?string $returnURL = null,
@@ -649,9 +648,11 @@ final class SubscriptionsService implements SubscriptionsContract
                 'cancelOlderPaymentLink' => $cancelOlderPaymentLink,
                 'cancelScheduledChangePlan' => $cancelScheduledChangePlan,
                 'collectViaPaymentLink' => $collectViaPaymentLink,
+                'credit' => $credit,
                 'discountCode' => $discountCode,
                 'discountCodes' => $discountCodes,
                 'effectiveAt' => $effectiveAt,
+                'invoice' => $invoice,
                 'metadata' => $metadata,
                 'onPaymentFailure' => $onPaymentFailure,
                 'returnURL' => $returnURL,
@@ -678,6 +679,27 @@ final class SubscriptionsService implements SubscriptionsContract
     ): SubscriptionGetCreditUsageResponse {
         // @phpstan-ignore-next-line argument.type
         $response = $this->raw->retrieveCreditUsage($subscriptionID, requestOptions: $requestOptions);
+
+        return $response->parse();
+    }
+
+    /**
+     * @api
+     *
+     * Prices the next cycle invoice of an invoice-led subscription. The invoice ID in the
+     * response is not stored, so the response has no allowed actions and no editable fields.
+     *
+     * @param string $subscriptionID Subscription ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function retrieveUpcomingInvoice(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): \Dodopayments\Invoices\Invoice {
+        // @phpstan-ignore-next-line argument.type
+        $response = $this->raw->retrieveUpcomingInvoice($subscriptionID, requestOptions: $requestOptions);
 
         return $response->parse();
     }
@@ -756,6 +778,8 @@ final class SubscriptionsService implements SubscriptionsContract
 
     /**
      * @api
+     *
+     * For an invoice-led subscription, billing charges the open invoices after the change, so the response has no payment.
      *
      * @param string $subscriptionID Subscription Id
      * @param PaymentMethodShape $paymentMethod
