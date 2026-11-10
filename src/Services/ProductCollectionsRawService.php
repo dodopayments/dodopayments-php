@@ -19,7 +19,6 @@ use Dodopayments\ProductCollections\ProductCollectionCreateParams\ProrationBilli
 use Dodopayments\ProductCollections\ProductCollectionCreateParams\ProrationBillingModeOnUpgrade;
 use Dodopayments\ProductCollections\ProductCollectionListParams;
 use Dodopayments\ProductCollections\ProductCollectionListResponse;
-use Dodopayments\ProductCollections\ProductCollectionRetrieveParams;
 use Dodopayments\ProductCollections\ProductCollectionUnarchiveResponse;
 use Dodopayments\ProductCollections\ProductCollectionUpdateImagesParams;
 use Dodopayments\ProductCollections\ProductCollectionUpdateImagesResponse;
@@ -82,7 +81,6 @@ final class ProductCollectionsRawService implements ProductCollectionsRawContrac
      * @api
      *
      * @param string $id Product Collection Id
-     * @param array{locale?: string}|ProductCollectionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ProductCollection>
@@ -91,20 +89,13 @@ final class ProductCollectionsRawService implements ProductCollectionsRawContrac
      */
     public function retrieve(
         string $id,
-        array|ProductCollectionRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
-        [$parsed, $options] = ProductCollectionRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['product-collections/%1$s', $id],
-            query: $parsed,
-            options: $options,
+            options: $requestOptions,
             convert: ProductCollection::class,
         );
     }
@@ -155,11 +146,7 @@ final class ProductCollectionsRawService implements ProductCollectionsRawContrac
      * @api
      *
      * @param array{
-     *   archived?: bool,
-     *   brandID?: string,
-     *   locale?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
+     *   archived?: bool, brandID?: string, pageNumber?: int, pageSize?: int
      * }|ProductCollectionListParams $params
      * @param RequestOpts|null $requestOptions
      *

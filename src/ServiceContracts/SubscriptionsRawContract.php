@@ -7,6 +7,7 @@ namespace Dodopayments\ServiceContracts;
 use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Invoices\Invoice;
 use Dodopayments\RequestOptions;
 use Dodopayments\Subscriptions\Subscription;
 use Dodopayments\Subscriptions\SubscriptionChangePlanParams;
@@ -21,7 +22,6 @@ use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
-use Dodopayments\Subscriptions\SubscriptionRetrieveParams;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
@@ -53,7 +53,6 @@ interface SubscriptionsRawContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param array<string,mixed>|SubscriptionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Subscription>
@@ -62,8 +61,7 @@ interface SubscriptionsRawContract
      */
     public function retrieve(
         string $subscriptionID,
-        array|SubscriptionRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**
@@ -175,6 +173,21 @@ interface SubscriptionsRawContract
      * @throws APIException
      */
     public function retrieveCreditUsage(
+        string $subscriptionID,
+        RequestOptions|array|null $requestOptions = null
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param string $subscriptionID Subscription ID
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<Invoice>
+     *
+     * @throws APIException
+     */
+    public function retrieveUpcomingInvoice(
         string $subscriptionID,
         RequestOptions|array|null $requestOptions = null
     ): BaseResponse;

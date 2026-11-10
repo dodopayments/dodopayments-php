@@ -59,6 +59,22 @@ enum WebhookEventType: string
 
     case SUBSCRIPTION_UPDATE_PAYMENT_METHOD = 'subscription.update_payment_method';
 
+    case INVOICE_FINALIZED = 'invoice.finalized';
+
+    case INVOICE_SENT = 'invoice.sent';
+
+    case INVOICE_PAID = 'invoice.paid';
+
+    case INVOICE_PAYMENT_FAILED = 'invoice.payment_failed';
+
+    case INVOICE_PAST_DUE = 'invoice.past_due';
+
+    case INVOICE_REOPENED = 'invoice.reopened';
+
+    case INVOICE_VOIDED = 'invoice.voided';
+
+    case INVOICE_MARKED_UNCOLLECTABLE = 'invoice.marked_uncollectable';
+
     case LICENSE_KEY_CREATED = 'license_key.created';
 
     case PAYOUT_CREATED = 'payout.created';

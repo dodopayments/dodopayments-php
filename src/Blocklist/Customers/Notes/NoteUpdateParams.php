@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Services\Blocklist\Customers\NotesService::update()
  *
- * @phpstan-type NoteUpdateParamsShape = array{entryID: string, note: string}
+ * @phpstan-type NoteUpdateParamsShape = array{entryID: string, text: string}
  */
 final class NoteUpdateParams implements BaseModel
 {
@@ -24,20 +24,20 @@ final class NoteUpdateParams implements BaseModel
     public string $entryID;
 
     #[Required]
-    public string $note;
+    public string $text;
 
     /**
      * `new NoteUpdateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * NoteUpdateParams::with(entryID: ..., note: ...)
+     * NoteUpdateParams::with(entryID: ..., text: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new NoteUpdateParams)->withEntryID(...)->withNote(...)
+     * (new NoteUpdateParams)->withEntryID(...)->withText(...)
      * ```
      */
     public function __construct()
@@ -50,12 +50,12 @@ final class NoteUpdateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $entryID, string $note): self
+    public static function with(string $entryID, string $text): self
     {
         $self = new self;
 
         $self['entryID'] = $entryID;
-        $self['note'] = $note;
+        $self['text'] = $text;
 
         return $self;
     }
@@ -68,10 +68,10 @@ final class NoteUpdateParams implements BaseModel
         return $self;
     }
 
-    public function withNote(string $note): self
+    public function withText(string $text): self
     {
         $self = clone $this;
-        $self['note'] = $note;
+        $self['text'] = $text;
 
         return $self;
     }
