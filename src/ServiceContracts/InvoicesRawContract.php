@@ -211,7 +211,7 @@ interface InvoicesRawContract
      * @param array<string,mixed>|InvoicePreviewParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<mixed>
+     * @return BaseResponse<string>
      *
      * @throws APIException
      */
@@ -227,7 +227,7 @@ interface InvoicesRawContract
      * @param array<string,mixed>|InvoicePreviewExistingParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<mixed>
+     * @return BaseResponse<string>
      *
      * @throws APIException
      */

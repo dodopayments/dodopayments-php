@@ -508,7 +508,7 @@ final class InvoicesRawService implements InvoicesRawContract
      * }|InvoicePreviewParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<mixed>
+     * @return BaseResponse<string>
      *
      * @throws APIException
      */
@@ -527,9 +527,10 @@ final class InvoicesRawService implements InvoicesRawContract
             method: 'post',
             path: 'billing/invoices/preview',
             query: array_intersect_key($parsed, $query_params),
+            headers: ['Accept' => 'application/pdf'],
             body: (object) array_diff_key($parsed, $query_params),
             options: $options,
-            convert: null,
+            convert: 'string',
         );
     }
 
@@ -544,7 +545,7 @@ final class InvoicesRawService implements InvoicesRawContract
      * }|InvoicePreviewExistingParams $params
      * @param RequestOpts|null $requestOptions
      *
-     * @return BaseResponse<mixed>
+     * @return BaseResponse<string>
      *
      * @throws APIException
      */
@@ -563,8 +564,9 @@ final class InvoicesRawService implements InvoicesRawContract
             method: 'get',
             path: ['billing/invoices/%1$s/preview', $invoiceID],
             query: $parsed,
+            headers: ['Accept' => 'application/pdf'],
             options: $options,
-            convert: null,
+            convert: 'string',
         );
     }
 

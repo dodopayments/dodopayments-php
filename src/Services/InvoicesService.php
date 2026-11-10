@@ -497,7 +497,7 @@ final class InvoicesService implements InvoicesContract
         ?bool $reviewRequired = null,
         ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,
-    ): mixed {
+    ): string {
         $params = Util::removeNulls(
             [
                 'collectionMethod' => $collectionMethod,
@@ -541,7 +541,7 @@ final class InvoicesService implements InvoicesContract
         string $invoiceID,
         \Dodopayments\Invoices\InvoicePreviewExistingParams\Format|string|null $format = null,
         RequestOptions|array|null $requestOptions = null,
-    ): mixed {
+    ): string {
         $params = Util::removeNulls(['format' => $format]);
 
         // @phpstan-ignore-next-line argument.type

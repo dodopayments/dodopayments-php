@@ -317,7 +317,7 @@ interface InvoicesContract
         ?bool $reviewRequired = null,
         ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,
-    ): mixed;
+    ): string;
 
     /**
      * @api
@@ -333,7 +333,7 @@ interface InvoicesContract
         string $invoiceID,
         \Dodopayments\Invoices\InvoicePreviewExistingParams\Format|string|null $format = null,
         RequestOptions|array|null $requestOptions = null,
-    ): mixed;
+    ): string;
 
     /**
      * @api

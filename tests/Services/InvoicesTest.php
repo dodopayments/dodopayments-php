@@ -309,7 +309,7 @@ final class InvoicesTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertNull($result);
+        $this->assertIsString($result);
     }
 
     #[Test]
@@ -349,7 +349,7 @@ final class InvoicesTest extends TestCase
         );
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertNull($result);
+        $this->assertIsString($result);
     }
 
     #[Test]
@@ -358,7 +358,7 @@ final class InvoicesTest extends TestCase
         $result = $this->client->invoices->previewExisting('invoice_id');
 
         // @phpstan-ignore-next-line method.alreadyNarrowedType
-        $this->assertNull($result);
+        $this->assertIsString($result);
     }
 
     #[Test]
