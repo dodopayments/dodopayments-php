@@ -1,15 +1,5 @@
 # Changelog
 
-## [6.35.0](https://github.com/dodopayments/dodopayments-php/compare/v6.34.0...v6.35.0) (2026-11-10)
-
-
-### Features
-
-* **api:** billing invoices and upcoming invoice; sync spec to prod 1.122.7 ([f4cb5ea](https://github.com/dodopayments/dodopayments-php/commit/f4cb5ea04e4a2d07ee1abb6241f879ac81dfd143))
-* **api:** billing invoices and upcoming invoice; sync spec to prod 1.122.7 ([833fca5](https://github.com/dodopayments/dodopayments-php/commit/833fca50ed884d3980861583a58ad3b3e0d2599c))
-* **api:** regenerate SDK from latest OpenAPI spec ([9bcb6e6](https://github.com/dodopayments/dodopayments-php/commit/9bcb6e68f1abaa2e7b5c02d4df4c133790749513))
-* **api:** regenerate SDK from latest OpenAPI spec ([2a20adf](https://github.com/dodopayments/dodopayments-php/commit/2a20adf549334710f395865411068179f75e5aee))
-
 ## [6.34.0](https://github.com/dodopayments/dodopayments-php/compare/v6.33.0...v6.34.0) (2026-10-28)
 
 
