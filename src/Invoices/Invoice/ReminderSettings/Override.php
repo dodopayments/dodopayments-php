@@ -12,16 +12,16 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * The changes of a draft. A `null` field keeps the business value at finalise.
  *
- * @phpstan-type UnionMember1Shape = array{
+ * @phpstan-type OverrideShape = array{
  *   kind: 'override',
  *   offsetsMinutes?: list<int>|null,
  *   paused?: bool|null,
  *   remindersEnabled?: bool|null,
  * }
  */
-final class UnionMember1 implements BaseModel
+final class Override implements BaseModel
 {
-    /** @use SdkModel<UnionMember1Shape> */
+    /** @use SdkModel<OverrideShape> */
     use SdkModel;
 
     /** @var 'override' $kind */

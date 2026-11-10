@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice\PaymentTerms;
+namespace Dodopayments\Invoices\InvoiceCreateParams\PaymentTerms;
 
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type UnionMember1Shape = array{days: int, type: 'net'}
+ * @phpstan-type NetShape = array{days: int, type: 'net'}
  */
-final class UnionMember1 implements BaseModel
+final class Net implements BaseModel
 {
-    /** @use SdkModel<UnionMember1Shape> */
+    /** @use SdkModel<NetShape> */
     use SdkModel;
 
     /** @var 'net' $type */
@@ -24,17 +24,17 @@ final class UnionMember1 implements BaseModel
     public int $days;
 
     /**
-     * `new UnionMember1()` is missing required properties by the API.
+     * `new Net()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UnionMember1::with(days: ...)
+     * Net::with(days: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UnionMember1)->withDays(...)
+     * (new Net)->withDays(...)
      * ```
      */
     public function __construct()

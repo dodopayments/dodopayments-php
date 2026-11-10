@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Invoices\Invoice\Frequency;
+namespace Dodopayments\Invoices\InvoiceCreateParams\PaymentTerms;
 
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type TypeShape = array{type: 'one_time'}
+ * @phpstan-type DueOnReceiptShape = array{type: 'due_on_receipt'}
  */
-final class Type implements BaseModel
+final class DueOnReceipt implements BaseModel
 {
-    /** @use SdkModel<TypeShape> */
+    /** @use SdkModel<DueOnReceiptShape> */
     use SdkModel;
 
-    /** @var 'one_time' $type */
+    /** @var 'due_on_receipt' $type */
     #[Required]
-    public string $type = 'one_time';
+    public string $type = 'due_on_receipt';
 
     public function __construct()
     {
@@ -36,7 +36,7 @@ final class Type implements BaseModel
     }
 
     /**
-     * @param 'one_time' $type
+     * @param 'due_on_receipt' $type
      */
     public function withType(string $type): self
     {

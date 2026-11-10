@@ -12,8 +12,9 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Invoices\InvoiceUpdateParams\BillingAddress;
 use Dodopayments\Invoices\InvoiceUpdateParams\Dunning;
 use Dodopayments\Invoices\InvoiceUpdateParams\Item;
-use Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\Type;
-use Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\UnionMember1;
+use Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms;
+use Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\DueOnReceipt;
+use Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\Net;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\MetadataItem;
 
@@ -128,8 +129,8 @@ final class InvoiceUpdateParams implements BaseModel
     public ?array $metadata;
 
     /** @var PaymentTermsVariants|null $paymentTerms */
-    #[Optional('payment_terms', nullable: true)]
-    public Type|UnionMember1|null $paymentTerms;
+    #[Optional('payment_terms', union: PaymentTerms::class, nullable: true)]
+    public DueOnReceipt|Net|null $paymentTerms;
 
     #[Optional('review_required', nullable: true)]
     public ?bool $reviewRequired;
@@ -185,7 +186,7 @@ final class InvoiceUpdateParams implements BaseModel
         ?array $items = null,
         ?string $memo = null,
         ?array $metadata = null,
-        Type|array|UnionMember1|null $paymentTerms = null,
+        DueOnReceipt|array|Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
     ): self {
@@ -358,7 +359,7 @@ final class InvoiceUpdateParams implements BaseModel
      * @param PaymentTermsShape|null $paymentTerms
      */
     public function withPaymentTerms(
-        Type|array|UnionMember1|null $paymentTerms
+        DueOnReceipt|array|Net|null $paymentTerms
     ): self {
         $self = clone $this;
         $self['paymentTerms'] = $paymentTerms;

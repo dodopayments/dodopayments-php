@@ -10,13 +10,13 @@ use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Subscriptions\TimeInterval;
 
 /**
- * @phpstan-type UnionMember1Shape = array{
+ * @phpstan-type RecurringShape = array{
  *   count: int, interval: TimeInterval|value-of<TimeInterval>, type: 'recurring'
  * }
  */
-final class UnionMember1 implements BaseModel
+final class Recurring implements BaseModel
 {
-    /** @use SdkModel<UnionMember1Shape> */
+    /** @use SdkModel<RecurringShape> */
     use SdkModel;
 
     /** @var 'recurring' $type */
@@ -35,17 +35,17 @@ final class UnionMember1 implements BaseModel
     public string $interval;
 
     /**
-     * `new UnionMember1()` is missing required properties by the API.
+     * `new Recurring()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UnionMember1::with(count: ..., interval: ...)
+     * Recurring::with(count: ..., interval: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UnionMember1)->withCount(...)->withInterval(...)
+     * (new Recurring)->withCount(...)->withInterval(...)
      * ```
      */
     public function __construct()

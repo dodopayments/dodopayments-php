@@ -11,16 +11,16 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * The settings that finalise froze. The reminders run on them.
  *
- * @phpstan-type UnionMember0Shape = array{
+ * @phpstan-type SnapshotShape = array{
  *   kind: 'snapshot',
  *   offsetsMinutes: list<int>,
  *   paused: bool,
  *   remindersEnabled: bool,
  * }
  */
-final class UnionMember0 implements BaseModel
+final class Snapshot implements BaseModel
 {
-    /** @use SdkModel<UnionMember0Shape> */
+    /** @use SdkModel<SnapshotShape> */
     use SdkModel;
 
     /** @var 'snapshot' $kind */
@@ -38,17 +38,17 @@ final class UnionMember0 implements BaseModel
     public bool $remindersEnabled;
 
     /**
-     * `new UnionMember0()` is missing required properties by the API.
+     * `new Snapshot()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * UnionMember0::with(offsetsMinutes: ..., paused: ..., remindersEnabled: ...)
+     * Snapshot::with(offsetsMinutes: ..., paused: ..., remindersEnabled: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new UnionMember0)
+     * (new Snapshot)
      *   ->withOffsetsMinutes(...)
      *   ->withPaused(...)
      *   ->withRemindersEnabled(...)

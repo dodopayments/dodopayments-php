@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms;
+namespace Dodopayments\Subscriptions\UpdateSubscriptionPlanReq\Invoice\PaymentTerms;
 
 use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type TypeShape = array{type: 'due_on_receipt'}
+ * @phpstan-type DueOnReceiptShape = array{type: 'due_on_receipt'}
  */
-final class Type implements BaseModel
+final class DueOnReceipt implements BaseModel
 {
-    /** @use SdkModel<TypeShape> */
+    /** @use SdkModel<DueOnReceiptShape> */
     use SdkModel;
 
     /** @var 'due_on_receipt' $type */

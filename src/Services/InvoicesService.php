@@ -12,8 +12,8 @@ use Dodopayments\Invoices\CollectionMethod;
 use Dodopayments\Invoices\Invoice;
 use Dodopayments\Invoices\InvoiceCreateParams\BillingAddress;
 use Dodopayments\Invoices\InvoiceCreateParams\Dunning;
-use Dodopayments\Invoices\InvoiceCreateParams\PaymentTerms\Type;
-use Dodopayments\Invoices\InvoiceCreateParams\PaymentTerms\UnionMember1;
+use Dodopayments\Invoices\InvoiceCreateParams\PaymentTerms\DueOnReceipt;
+use Dodopayments\Invoices\InvoiceCreateParams\PaymentTerms\Net;
 use Dodopayments\Invoices\InvoiceListEventsResponse;
 use Dodopayments\Invoices\InvoiceListParams\Status;
 use Dodopayments\Invoices\InvoiceListParams\Tag;
@@ -100,7 +100,7 @@ final class InvoicesService implements InvoicesContract
         Dunning|array|null $dunning = null,
         ?string $memo = null,
         ?array $metadata = null,
-        Type|array|UnionMember1|null $paymentTerms = null,
+        DueOnReceipt|array|Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
         ?string $idempotencyKey = null,
@@ -194,7 +194,7 @@ final class InvoicesService implements InvoicesContract
         ?array $items = null,
         ?string $memo = null,
         ?array $metadata = null,
-        \Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\Type|array|\Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\UnionMember1|null $paymentTerms = null,
+        \Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\DueOnReceipt|array|\Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,
@@ -493,7 +493,7 @@ final class InvoicesService implements InvoicesContract
         \Dodopayments\Invoices\InvoicePreviewParams\Dunning|array|null $dunning = null,
         ?string $memo = null,
         ?array $metadata = null,
-        \Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\Type|array|\Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\UnionMember1|null $paymentTerms = null,
+        \Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\DueOnReceipt|array|\Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
         RequestOptions|array|null $requestOptions = null,

@@ -13,8 +13,9 @@ use Dodopayments\Invoices\InvoicePreviewParams\BillingAddress;
 use Dodopayments\Invoices\InvoicePreviewParams\Dunning;
 use Dodopayments\Invoices\InvoicePreviewParams\Format;
 use Dodopayments\Invoices\InvoicePreviewParams\Item;
-use Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\Type;
-use Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\UnionMember1;
+use Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms;
+use Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\DueOnReceipt;
+use Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\Net;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\MetadataItem;
 
@@ -141,8 +142,8 @@ final class InvoicePreviewParams implements BaseModel
      *
      * @var PaymentTermsVariants|null $paymentTerms
      */
-    #[Optional('payment_terms', nullable: true)]
-    public Type|UnionMember1|null $paymentTerms;
+    #[Optional('payment_terms', union: PaymentTerms::class, nullable: true)]
+    public DueOnReceipt|Net|null $paymentTerms;
 
     /**
      * `true` keeps a renewal draft for review before it finalises.
@@ -208,7 +209,7 @@ final class InvoicePreviewParams implements BaseModel
         Dunning|array|null $dunning = null,
         ?string $memo = null,
         ?array $metadata = null,
-        Type|array|UnionMember1|null $paymentTerms = null,
+        DueOnReceipt|array|Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
     ): self {
@@ -395,7 +396,7 @@ final class InvoicePreviewParams implements BaseModel
      * @param PaymentTermsShape|null $paymentTerms
      */
     public function withPaymentTerms(
-        Type|array|UnionMember1|null $paymentTerms
+        DueOnReceipt|array|Net|null $paymentTerms
     ): self {
         $self = clone $this;
         $self['paymentTerms'] = $paymentTerms;

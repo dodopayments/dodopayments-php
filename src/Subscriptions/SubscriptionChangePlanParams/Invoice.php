@@ -8,8 +8,9 @@ use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Invoices\CollectionMethod;
-use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice\PaymentTerms\Type;
-use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice\PaymentTerms\UnionMember1;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice\PaymentTerms;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice\PaymentTerms\DueOnReceipt;
+use Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice\PaymentTerms\Net;
 
 /**
  * The invoice of a plan change billed now. Only invoice-led subscriptions read it.
@@ -51,8 +52,8 @@ final class Invoice implements BaseModel
      *
      * @var PaymentTermsVariants|null $paymentTerms
      */
-    #[Optional('payment_terms', nullable: true)]
-    public Type|UnionMember1|null $paymentTerms;
+    #[Optional('payment_terms', union: PaymentTerms::class, nullable: true)]
+    public DueOnReceipt|Net|null $paymentTerms;
 
     public function __construct()
     {
@@ -70,7 +71,7 @@ final class Invoice implements BaseModel
     public static function with(
         CollectionMethod|string|null $collectionMethod = null,
         ?bool $finalize = null,
-        Type|array|UnionMember1|null $paymentTerms = null,
+        DueOnReceipt|array|Net|null $paymentTerms = null,
     ): self {
         $self = new self;
 
@@ -112,7 +113,7 @@ final class Invoice implements BaseModel
      * @param PaymentTermsShape|null $paymentTerms
      */
     public function withPaymentTerms(
-        Type|array|UnionMember1|null $paymentTerms
+        DueOnReceipt|array|Net|null $paymentTerms
     ): self {
         $self = clone $this;
         $self['paymentTerms'] = $paymentTerms;

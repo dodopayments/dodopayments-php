@@ -14,11 +14,14 @@ use Dodopayments\Invoices\Invoice\AllowedAction;
 use Dodopayments\Invoices\Invoice\BillingMode;
 use Dodopayments\Invoices\Invoice\Customer;
 use Dodopayments\Invoices\Invoice\EditableField;
-use Dodopayments\Invoices\Invoice\Frequency\Type;
-use Dodopayments\Invoices\Invoice\Frequency\Type1;
-use Dodopayments\Invoices\Invoice\Frequency\UnionMember1;
+use Dodopayments\Invoices\Invoice\Frequency;
+use Dodopayments\Invoices\Invoice\Frequency\Mixed_;
+use Dodopayments\Invoices\Invoice\Frequency\OneTime;
+use Dodopayments\Invoices\Invoice\Frequency\Recurring;
 use Dodopayments\Invoices\Invoice\Payment;
-use Dodopayments\Invoices\Invoice\ReminderSettings\UnionMember0;
+use Dodopayments\Invoices\Invoice\ReminderSettings;
+use Dodopayments\Invoices\Invoice\ReminderSettings\Override;
+use Dodopayments\Invoices\Invoice\ReminderSettings\Snapshot;
 use Dodopayments\Invoices\Invoice\Tag;
 use Dodopayments\Invoices\InvoiceLine;
 use Dodopayments\Invoices\InvoiceStatus;
@@ -156,8 +159,8 @@ final class Invoice implements BaseModel
      *
      * @var FrequencyVariants $frequency
      */
-    #[Required]
-    public Type|UnionMember1|Type1 $frequency;
+    #[Required(union: Frequency::class)]
+    public OneTime|Recurring|Mixed_ $frequency;
 
     #[Required('invoice_id')]
     public string $invoiceID;
@@ -275,8 +278,12 @@ final class Invoice implements BaseModel
      *
      * @var ReminderSettingsVariants|null $reminderSettings
      */
-    #[Optional('reminder_settings', nullable: true)]
-    public UnionMember0|\Dodopayments\Invoices\Invoice\ReminderSettings\UnionMember1|null $reminderSettings;
+    #[Optional(
+        'reminder_settings',
+        union: ReminderSettings::class,
+        nullable: true
+    )]
+    public Snapshot|Override|null $reminderSettings;
 
     /**
      * The time at which a draft that waits for review finalises.
@@ -388,7 +395,7 @@ final class Invoice implements BaseModel
         Customer|array $customer,
         array $discountIDs,
         array $editableFields,
-        Type|array|UnionMember1|Type1 $frequency,
+        OneTime|array|Recurring|Mixed_ $frequency,
         string $invoiceID,
         mixed $metadata,
         array $refundIDs,
@@ -411,7 +418,7 @@ final class Invoice implements BaseModel
         ?int $paymentTermsDays = null,
         ?array $payments = null,
         ?string $pdfURL = null,
-        UnionMember0|array|\Dodopayments\Invoices\Invoice\ReminderSettings\UnionMember1|null $reminderSettings = null,
+        Snapshot|array|Override|null $reminderSettings = null,
         ?\DateTimeInterface $reviewDeadline = null,
         ?\DateTimeInterface $sentAt = null,
     ): self {
@@ -598,7 +605,7 @@ final class Invoice implements BaseModel
      * @param FrequencyShape $frequency
      */
     public function withFrequency(
-        Type|array|UnionMember1|Type1 $frequency
+        OneTime|array|Recurring|Mixed_ $frequency
     ): self {
         $self = clone $this;
         $self['frequency'] = $frequency;
@@ -842,7 +849,7 @@ final class Invoice implements BaseModel
      * @param ReminderSettingsShape|null $reminderSettings
      */
     public function withReminderSettings(
-        UnionMember0|array|\Dodopayments\Invoices\Invoice\ReminderSettings\UnionMember1|null $reminderSettings,
+        Snapshot|array|Override|null $reminderSettings
     ): self {
         $self = clone $this;
         $self['reminderSettings'] = $reminderSettings;
