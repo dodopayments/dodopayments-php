@@ -11,7 +11,6 @@ use Dodopayments\ProductCollections\ProductCollection;
 use Dodopayments\ProductCollections\ProductCollectionCreateParams;
 use Dodopayments\ProductCollections\ProductCollectionListParams;
 use Dodopayments\ProductCollections\ProductCollectionListResponse;
-use Dodopayments\ProductCollections\ProductCollectionRetrieveParams;
 use Dodopayments\ProductCollections\ProductCollectionUnarchiveResponse;
 use Dodopayments\ProductCollections\ProductCollectionUpdateImagesParams;
 use Dodopayments\ProductCollections\ProductCollectionUpdateImagesResponse;
@@ -42,7 +41,6 @@ interface ProductCollectionsRawContract
      * @api
      *
      * @param string $id Product Collection Id
-     * @param array<string,mixed>|ProductCollectionRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<ProductCollection>
@@ -51,8 +49,7 @@ interface ProductCollectionsRawContract
      */
     public function retrieve(
         string $id,
-        array|ProductCollectionRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse;
 
     /**

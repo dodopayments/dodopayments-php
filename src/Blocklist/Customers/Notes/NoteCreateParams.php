@@ -12,7 +12,7 @@ use Dodopayments\Core\Contracts\BaseModel;
 /**
  * @see Dodopayments\Services\Blocklist\Customers\NotesService::create()
  *
- * @phpstan-type NoteCreateParamsShape = array{note: string}
+ * @phpstan-type NoteCreateParamsShape = array{text: string}
  */
 final class NoteCreateParams implements BaseModel
 {
@@ -21,20 +21,20 @@ final class NoteCreateParams implements BaseModel
     use SdkParams;
 
     #[Required]
-    public string $note;
+    public string $text;
 
     /**
      * `new NoteCreateParams()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * NoteCreateParams::with(note: ...)
+     * NoteCreateParams::with(text: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new NoteCreateParams)->withNote(...)
+     * (new NoteCreateParams)->withText(...)
      * ```
      */
     public function __construct()
@@ -47,19 +47,19 @@ final class NoteCreateParams implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $note): self
+    public static function with(string $text): self
     {
         $self = new self;
 
-        $self['note'] = $note;
+        $self['text'] = $text;
 
         return $self;
     }
 
-    public function withNote(string $note): self
+    public function withText(string $text): self
     {
         $self = clone $this;
-        $self['note'] = $note;
+        $self['text'] = $text;
 
         return $self;
     }

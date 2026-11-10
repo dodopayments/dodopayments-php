@@ -86,6 +86,7 @@ final class CheckoutSessionsTest extends TestCase
             customerBusinessName: 'customer_business_name',
             customization: [
                 'forceLanguage' => 'force_language',
+                'paymentMethodLayout' => 'accordion',
                 'showOnDemandTag' => true,
                 'showOrderDetails' => true,
                 'theme' => 'dark',
@@ -224,7 +225,6 @@ final class CheckoutSessionsTest extends TestCase
                     ],
                 ],
             ],
-            locale: 'locale',
             allowedPaymentMethodTypes: [PaymentMethodTypes::ACH],
             billingAddress: [
                 'country' => CountryCode::AF,
@@ -250,6 +250,7 @@ final class CheckoutSessionsTest extends TestCase
             customerBusinessName: 'customer_business_name',
             customization: [
                 'forceLanguage' => 'force_language',
+                'paymentMethodLayout' => 'accordion',
                 'showOnDemandTag' => true,
                 'showOrderDetails' => true,
                 'theme' => 'dark',

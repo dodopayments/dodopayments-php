@@ -9,7 +9,7 @@ use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 
 /**
- * @phpstan-type NoteRequestShape = array{note: string}
+ * @phpstan-type NoteRequestShape = array{text: string}
  */
 final class NoteRequest implements BaseModel
 {
@@ -17,20 +17,20 @@ final class NoteRequest implements BaseModel
     use SdkModel;
 
     #[Required]
-    public string $note;
+    public string $text;
 
     /**
      * `new NoteRequest()` is missing required properties by the API.
      *
      * To enforce required parameters use
      * ```
-     * NoteRequest::with(note: ...)
+     * NoteRequest::with(text: ...)
      * ```
      *
      * Otherwise ensure the following setters are called
      *
      * ```
-     * (new NoteRequest)->withNote(...)
+     * (new NoteRequest)->withText(...)
      * ```
      */
     public function __construct()
@@ -43,19 +43,19 @@ final class NoteRequest implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      */
-    public static function with(string $note): self
+    public static function with(string $text): self
     {
         $self = new self;
 
-        $self['note'] = $note;
+        $self['text'] = $text;
 
         return $self;
     }
 
-    public function withNote(string $note): self
+    public function withText(string $text): self
     {
         $self = clone $this;
-        $self['note'] = $note;
+        $self['text'] = $text;
 
         return $self;
     }

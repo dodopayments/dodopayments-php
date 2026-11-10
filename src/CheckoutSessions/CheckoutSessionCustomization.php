@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dodopayments\CheckoutSessions;
 
+use Dodopayments\CheckoutSessions\CheckoutSessionCustomization\PaymentMethodLayout;
 use Dodopayments\CheckoutSessions\CheckoutSessionCustomization\Theme;
 use Dodopayments\Core\Attributes\Optional;
 use Dodopayments\Core\Concerns\SdkModel;
@@ -14,6 +15,7 @@ use Dodopayments\Core\Contracts\BaseModel;
  *
  * @phpstan-type CheckoutSessionCustomizationShape = array{
  *   forceLanguage?: string|null,
+ *   paymentMethodLayout?: null|PaymentMethodLayout|value-of<PaymentMethodLayout>,
  *   showOnDemandTag?: bool|null,
  *   showOrderDetails?: bool|null,
  *   theme?: null|Theme|value-of<Theme>,
@@ -30,6 +32,21 @@ final class CheckoutSessionCustomization implements BaseModel
      */
     #[Optional('force_language', nullable: true)]
     public ?string $forceLanguage;
+
+    /**
+     * How a single-page checkout shows the payment methods. You can set it only
+     * when `feature_flags.single_page` is true.
+     *
+     * Default is `accordion`.
+     *
+     * @var value-of<PaymentMethodLayout>|null $paymentMethodLayout
+     */
+    #[Optional(
+        'payment_method_layout',
+        enum: PaymentMethodLayout::class,
+        nullable: true
+    )]
+    public ?string $paymentMethodLayout;
 
     /**
      * Show on demand tag.
@@ -73,11 +90,13 @@ final class CheckoutSessionCustomization implements BaseModel
      *
      * You must use named parameters to construct any parameters with a default value.
      *
+     * @param PaymentMethodLayout|value-of<PaymentMethodLayout>|null $paymentMethodLayout
      * @param Theme|value-of<Theme>|null $theme
      * @param ThemeConfig|ThemeConfigShape|null $themeConfig
      */
     public static function with(
         ?string $forceLanguage = null,
+        PaymentMethodLayout|string|null $paymentMethodLayout = null,
         ?bool $showOnDemandTag = null,
         ?bool $showOrderDetails = null,
         Theme|string|null $theme = null,
@@ -86,6 +105,7 @@ final class CheckoutSessionCustomization implements BaseModel
         $self = new self;
 
         null !== $forceLanguage && $self['forceLanguage'] = $forceLanguage;
+        null !== $paymentMethodLayout && $self['paymentMethodLayout'] = $paymentMethodLayout;
         null !== $showOnDemandTag && $self['showOnDemandTag'] = $showOnDemandTag;
         null !== $showOrderDetails && $self['showOrderDetails'] = $showOrderDetails;
         null !== $theme && $self['theme'] = $theme;
@@ -101,6 +121,23 @@ final class CheckoutSessionCustomization implements BaseModel
     {
         $self = clone $this;
         $self['forceLanguage'] = $forceLanguage;
+
+        return $self;
+    }
+
+    /**
+     * How a single-page checkout shows the payment methods. You can set it only
+     * when `feature_flags.single_page` is true.
+     *
+     * Default is `accordion`.
+     *
+     * @param PaymentMethodLayout|value-of<PaymentMethodLayout>|null $paymentMethodLayout
+     */
+    public function withPaymentMethodLayout(
+        PaymentMethodLayout|string|null $paymentMethodLayout
+    ): self {
+        $self = clone $this;
+        $self['paymentMethodLayout'] = $paymentMethodLayout;
 
         return $self;
     }
