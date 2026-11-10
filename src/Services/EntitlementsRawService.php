@@ -14,7 +14,6 @@ use Dodopayments\Entitlements\EntitlementCreateParams;
 use Dodopayments\Entitlements\EntitlementIntegrationType;
 use Dodopayments\Entitlements\EntitlementListParams;
 use Dodopayments\Entitlements\EntitlementListParams\IntegrationType;
-use Dodopayments\Entitlements\EntitlementRetrieveParams;
 use Dodopayments\Entitlements\EntitlementUpdateParams;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\EntitlementsRawContract;
@@ -75,7 +74,6 @@ final class EntitlementsRawService implements EntitlementsRawContract
      * GET /entitlements/{id}
      *
      * @param string $id Entitlement ID
-     * @param array{locale?: string}|EntitlementRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<Entitlement>
@@ -84,20 +82,13 @@ final class EntitlementsRawService implements EntitlementsRawContract
      */
     public function retrieve(
         string $id,
-        array|EntitlementRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
-        [$parsed, $options] = EntitlementRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['entitlements/%1$s', $id],
-            query: $parsed,
-            options: $options,
+            options: $requestOptions,
             convert: Entitlement::class,
         );
     }
@@ -146,10 +137,7 @@ final class EntitlementsRawService implements EntitlementsRawContract
      * GET /entitlements
      *
      * @param array{
-     *   integrationType?: value-of<IntegrationType>,
-     *   locale?: string,
-     *   pageNumber?: int,
-     *   pageSize?: int,
+     *   integrationType?: value-of<IntegrationType>, pageNumber?: int, pageSize?: int
      * }|EntitlementListParams $params
      * @param RequestOpts|null $requestOptions
      *

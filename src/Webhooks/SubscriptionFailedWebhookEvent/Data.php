@@ -9,6 +9,7 @@ use Dodopayments\Core\Attributes\Required;
 use Dodopayments\Core\Concerns\SdkModel;
 use Dodopayments\Core\Contracts\BaseModel;
 use Dodopayments\Discounts\DiscountDetail;
+use Dodopayments\Invoices\CollectionMethod;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Misc\MetadataItem;
 use Dodopayments\Payments\BillingAddress;
@@ -20,6 +21,7 @@ use Dodopayments\Subscriptions\CreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\MeterCartResponseItem;
 use Dodopayments\Subscriptions\MeterCreditEntitlementCartResponse;
 use Dodopayments\Subscriptions\ScheduledPlanChange;
+use Dodopayments\Subscriptions\Subscription\BillingMode;
 use Dodopayments\Subscriptions\SubscriptionCancelledBy;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\TimeInterval;
@@ -44,6 +46,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-type DataShape = array{
  *   addons: list<AddonCartResponseItem|AddonCartResponseItemShape>,
  *   billing: BillingAddress|BillingAddressShape,
+ *   billingMode: BillingMode|value-of<BillingMode>,
  *   brandID: string,
  *   cancelAtNextBillingDate: bool,
  *   createdAt: \DateTimeInterface,
@@ -72,6 +75,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   cancellationFeedback?: null|CancellationFeedback|value-of<CancellationFeedback>,
  *   cancelledAt?: \DateTimeInterface|null,
  *   cancelledBy?: null|SubscriptionCancelledBy|SubscriptionCancelledByShape,
+ *   collectionMethod?: null|CollectionMethod|value-of<CollectionMethod>,
  *   customFieldResponses?: list<CustomFieldResponse|CustomFieldResponseShape>|null,
  *   customerBusinessName?: string|null,
  *   discountCyclesRemaining?: int|null,
@@ -80,6 +84,7 @@ use Dodopayments\Subscriptions\TimeInterval;
  *   expiresAt?: \DateTimeInterface|null,
  *   pausedAt?: \DateTimeInterface|null,
  *   paymentMethodID?: string|null,
+ *   paymentTermsDays?: int|null,
  *   scheduledChange?: null|ScheduledPlanChange|ScheduledPlanChangeShape,
  *   taxID?: string|null,
  *   trialAmount?: int|null,
@@ -102,6 +107,14 @@ final class Data implements BaseModel
 
     #[Required]
     public BillingAddress $billing;
+
+    /**
+     * `invoice_led` when invoices bill the subscription. `normal` otherwise.
+     *
+     * @var value-of<BillingMode> $billingMode
+     */
+    #[Required('billing_mode', enum: BillingMode::class)]
+    public string $billingMode;
 
     /**
      * Brand id this subscription belongs to.
@@ -282,6 +295,10 @@ final class Data implements BaseModel
     #[Optional('cancelled_by')]
     public ?SubscriptionCancelledBy $cancelledBy;
 
+    /** @var value-of<CollectionMethod>|null $collectionMethod */
+    #[Optional('collection_method', enum: CollectionMethod::class)]
+    public ?string $collectionMethod;
+
     /**
      * Customer's responses to custom fields collected during checkout.
      *
@@ -340,6 +357,12 @@ final class Data implements BaseModel
     #[Optional('payment_method_id', nullable: true)]
     public ?string $paymentMethodID;
 
+    /**
+     * Days from the invoice date to the due date. `null` for `normal`.
+     */
+    #[Optional('payment_terms_days', nullable: true)]
+    public ?int $paymentTermsDays;
+
     #[Optional('scheduled_change')]
     public ?ScheduledPlanChange $scheduledChange;
 
@@ -383,6 +406,7 @@ final class Data implements BaseModel
      * Data::with(
      *   addons: ...,
      *   billing: ...,
+     *   billingMode: ...,
      *   brandID: ...,
      *   cancelAtNextBillingDate: ...,
      *   createdAt: ...,
@@ -416,6 +440,7 @@ final class Data implements BaseModel
      * (new Data)
      *   ->withAddons(...)
      *   ->withBilling(...)
+     *   ->withBillingMode(...)
      *   ->withBrandID(...)
      *   ->withCancelAtNextBillingDate(...)
      *   ->withCreatedAt(...)
@@ -454,6 +479,7 @@ final class Data implements BaseModel
      *
      * @param list<AddonCartResponseItem|AddonCartResponseItemShape> $addons
      * @param BillingAddress|BillingAddressShape $billing
+     * @param BillingMode|value-of<BillingMode> $billingMode
      * @param list<CreditEntitlementCartResponse|CreditEntitlementCartResponseShape> $creditEntitlementCart
      * @param Currency|value-of<Currency> $currency
      * @param CustomerLimitedDetails|CustomerLimitedDetailsShape $customer
@@ -465,6 +491,7 @@ final class Data implements BaseModel
      * @param TimeInterval|value-of<TimeInterval> $subscriptionPeriodInterval
      * @param CancellationFeedback|value-of<CancellationFeedback>|null $cancellationFeedback
      * @param SubscriptionCancelledBy|SubscriptionCancelledByShape|null $cancelledBy
+     * @param CollectionMethod|value-of<CollectionMethod>|null $collectionMethod
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
      * @param list<DiscountDetail|DiscountDetailShape>|null $discounts
      * @param ScheduledPlanChange|ScheduledPlanChangeShape|null $scheduledChange
@@ -472,6 +499,7 @@ final class Data implements BaseModel
     public static function with(
         array $addons,
         BillingAddress|array $billing,
+        BillingMode|string $billingMode,
         string $brandID,
         bool $cancelAtNextBillingDate,
         \DateTimeInterface $createdAt,
@@ -500,6 +528,7 @@ final class Data implements BaseModel
         CancellationFeedback|string|null $cancellationFeedback = null,
         ?\DateTimeInterface $cancelledAt = null,
         SubscriptionCancelledBy|array|null $cancelledBy = null,
+        CollectionMethod|string|null $collectionMethod = null,
         ?array $customFieldResponses = null,
         ?string $customerBusinessName = null,
         ?int $discountCyclesRemaining = null,
@@ -508,6 +537,7 @@ final class Data implements BaseModel
         ?\DateTimeInterface $expiresAt = null,
         ?\DateTimeInterface $pausedAt = null,
         ?string $paymentMethodID = null,
+        ?int $paymentTermsDays = null,
         ScheduledPlanChange|array|null $scheduledChange = null,
         ?string $taxID = null,
         ?int $trialAmount = null,
@@ -518,6 +548,7 @@ final class Data implements BaseModel
 
         $self['addons'] = $addons;
         $self['billing'] = $billing;
+        $self['billingMode'] = $billingMode;
         $self['brandID'] = $brandID;
         $self['cancelAtNextBillingDate'] = $cancelAtNextBillingDate;
         $self['createdAt'] = $createdAt;
@@ -547,6 +578,7 @@ final class Data implements BaseModel
         null !== $cancellationFeedback && $self['cancellationFeedback'] = $cancellationFeedback;
         null !== $cancelledAt && $self['cancelledAt'] = $cancelledAt;
         null !== $cancelledBy && $self['cancelledBy'] = $cancelledBy;
+        null !== $collectionMethod && $self['collectionMethod'] = $collectionMethod;
         null !== $customFieldResponses && $self['customFieldResponses'] = $customFieldResponses;
         null !== $customerBusinessName && $self['customerBusinessName'] = $customerBusinessName;
         null !== $discountCyclesRemaining && $self['discountCyclesRemaining'] = $discountCyclesRemaining;
@@ -555,6 +587,7 @@ final class Data implements BaseModel
         null !== $expiresAt && $self['expiresAt'] = $expiresAt;
         null !== $pausedAt && $self['pausedAt'] = $pausedAt;
         null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
+        null !== $paymentTermsDays && $self['paymentTermsDays'] = $paymentTermsDays;
         null !== $scheduledChange && $self['scheduledChange'] = $scheduledChange;
         null !== $taxID && $self['taxID'] = $taxID;
         null !== $trialAmount && $self['trialAmount'] = $trialAmount;
@@ -584,6 +617,19 @@ final class Data implements BaseModel
     {
         $self = clone $this;
         $self['billing'] = $billing;
+
+        return $self;
+    }
+
+    /**
+     * `invoice_led` when invoices bill the subscription. `normal` otherwise.
+     *
+     * @param BillingMode|value-of<BillingMode> $billingMode
+     */
+    public function withBillingMode(BillingMode|string $billingMode): self
+    {
+        $self = clone $this;
+        $self['billingMode'] = $billingMode;
 
         return $self;
     }
@@ -923,6 +969,18 @@ final class Data implements BaseModel
     }
 
     /**
+     * @param CollectionMethod|value-of<CollectionMethod> $collectionMethod
+     */
+    public function withCollectionMethod(
+        CollectionMethod|string $collectionMethod
+    ): self {
+        $self = clone $this;
+        $self['collectionMethod'] = $collectionMethod;
+
+        return $self;
+    }
+
+    /**
      * Customer's responses to custom fields collected during checkout.
      *
      * @param list<CustomFieldResponse|CustomFieldResponseShape>|null $customFieldResponses
@@ -1014,6 +1072,17 @@ final class Data implements BaseModel
     {
         $self = clone $this;
         $self['paymentMethodID'] = $paymentMethodID;
+
+        return $self;
+    }
+
+    /**
+     * Days from the invoice date to the due date. `null` for `normal`.
+     */
+    public function withPaymentTermsDays(?int $paymentTermsDays): self
+    {
+        $self = clone $this;
+        $self['paymentTermsDays'] = $paymentTermsDays;
 
         return $self;
     }

@@ -12,7 +12,6 @@ use Dodopayments\CreditEntitlements\CbbOverageBehavior;
 use Dodopayments\CreditEntitlements\CreditEntitlement;
 use Dodopayments\CreditEntitlements\CreditEntitlementCreateParams;
 use Dodopayments\CreditEntitlements\CreditEntitlementListParams;
-use Dodopayments\CreditEntitlements\CreditEntitlementRetrieveParams;
 use Dodopayments\CreditEntitlements\CreditEntitlementUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Misc\Currency;
@@ -133,7 +132,6 @@ final class CreditEntitlementsRawService implements CreditEntitlementsRawContrac
      * - Deleted entitlements return a 404 error and must be retrieved via the list endpoint with `deleted=true`
      *
      * @param string $id Credit Entitlement ID
-     * @param array{locale?: string}|CreditEntitlementRetrieveParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CreditEntitlement>
@@ -142,20 +140,13 @@ final class CreditEntitlementsRawService implements CreditEntitlementsRawContrac
      */
     public function retrieve(
         string $id,
-        array|CreditEntitlementRetrieveParams $params,
-        RequestOptions|array|null $requestOptions = null,
+        RequestOptions|array|null $requestOptions = null
     ): BaseResponse {
-        [$parsed, $options] = CreditEntitlementRetrieveParams::parseRequest(
-            $params,
-            $requestOptions,
-        );
-
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['credit-entitlements/%1$s', $id],
-            query: $parsed,
-            options: $options,
+            options: $requestOptions,
             convert: CreditEntitlement::class,
         );
     }
@@ -272,7 +263,7 @@ final class CreditEntitlementsRawService implements CreditEntitlementsRawContrac
      * - Pagination uses offset-based pagination (offset = page_number * page_size)
      *
      * @param array{
-     *   deleted?: bool, locale?: string, pageNumber?: int, pageSize?: int
+     *   deleted?: bool, pageNumber?: int, pageSize?: int
      * }|CreditEntitlementListParams $params
      * @param RequestOpts|null $requestOptions
      *

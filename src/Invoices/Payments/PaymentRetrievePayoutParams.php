@@ -21,7 +21,7 @@ final class PaymentRetrievePayoutParams implements BaseModel
     use SdkParams;
 
     /**
-     * The signed link token. If the business asks for a credential on its invoice links, a valid token for this record replaces the credential.
+     * The signed link token. A valid token for this record replaces the credential.
      */
     #[Optional]
     public ?string $token;
@@ -46,7 +46,7 @@ final class PaymentRetrievePayoutParams implements BaseModel
     }
 
     /**
-     * The signed link token. If the business asks for a credential on its invoice links, a valid token for this record replaces the credential.
+     * The signed link token. A valid token for this record replaces the credential.
      */
     public function withToken(string $token): self
     {
