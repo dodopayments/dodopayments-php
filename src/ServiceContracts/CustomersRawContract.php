@@ -14,6 +14,7 @@ use Dodopayments\Customers\CustomerListCreditEntitlementsResponse;
 use Dodopayments\Customers\CustomerListEntitlementGrantsParams;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
+use Dodopayments\Customers\CustomerRetrievePaymentMethodsParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
@@ -154,6 +155,7 @@ interface CustomersRawContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param array<string,mixed>|CustomerRetrievePaymentMethodsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerGetPaymentMethodsResponse>
@@ -162,6 +164,7 @@ interface CustomersRawContract
      */
     public function retrievePaymentMethods(
         string $customerID,
-        RequestOptions|array|null $requestOptions = null
+        array|CustomerRetrievePaymentMethodsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 }

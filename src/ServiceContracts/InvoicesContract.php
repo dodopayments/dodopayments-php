@@ -54,6 +54,7 @@ interface InvoicesContract
      * @param Dunning|DunningShape|null $dunning Body param: The reminder override of one invoice. The business settings fill the other dunning values.
      * @param string|null $memo Body param
      * @param array<string,MetadataItemShape> $metadata Body param: Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     * @param string|null $paymentMethodID Body param: A saved card of the customer. The new subscriptions of the invoice charge it.
      * @param PaymentTermsShape|null $paymentTerms body param: Do not send it with `due_at`
      * @param bool $reviewRequired body param: `true` keeps a renewal draft for review before it finalises
      * @param string|null $taxID Body param
@@ -75,6 +76,7 @@ interface InvoicesContract
         Dunning|array|null $dunning = null,
         ?string $memo = null,
         ?array $metadata = null,
+        ?string $paymentMethodID = null,
         DueOnReceipt|array|Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
@@ -112,6 +114,7 @@ interface InvoicesContract
      * @param list<ItemShape1>|null $items body param: 1 to 50 items
      * @param string|null $memo Body param
      * @param array<string,MetadataItemShape>|null $metadata Body param: Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     * @param string|null $paymentMethodID Body param: A saved card of the customer. `null` removes the card from the draft.
      * @param PaymentTermsShape1|null $paymentTerms Body param
      * @param bool|null $reviewRequired Body param
      * @param string|null $taxID Body param
@@ -134,6 +137,7 @@ interface InvoicesContract
         ?array $items = null,
         ?string $memo = null,
         ?array $metadata = null,
+        ?string $paymentMethodID = null,
         \Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\DueOnReceipt|array|\Dodopayments\Invoices\InvoiceUpdateParams\PaymentTerms\Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
@@ -292,6 +296,7 @@ interface InvoicesContract
      * @param \Dodopayments\Invoices\InvoicePreviewParams\Dunning|DunningShape2|null $dunning Body param: The reminder override of one invoice. The business settings fill the other dunning values.
      * @param string|null $memo Body param
      * @param array<string,MetadataItemShape> $metadata Body param: Arbitrary key-value metadata. Values can be string, integer, number, or boolean.
+     * @param string|null $paymentMethodID Body param: A saved card of the customer. The new subscriptions of the invoice charge it.
      * @param PaymentTermsShape2|null $paymentTerms body param: Do not send it with `due_at`
      * @param bool $reviewRequired body param: `true` keeps a renewal draft for review before it finalises
      * @param string|null $taxID Body param
@@ -313,6 +318,7 @@ interface InvoicesContract
         \Dodopayments\Invoices\InvoicePreviewParams\Dunning|array|null $dunning = null,
         ?string $memo = null,
         ?array $metadata = null,
+        ?string $paymentMethodID = null,
         \Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\DueOnReceipt|array|\Dodopayments\Invoices\InvoicePreviewParams\PaymentTerms\Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,

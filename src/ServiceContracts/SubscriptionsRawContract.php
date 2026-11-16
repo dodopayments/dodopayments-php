@@ -23,6 +23,8 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
+use Dodopayments\Subscriptions\SubscriptionStartTrialParams;
+use Dodopayments\Subscriptions\SubscriptionStartTrialResponse;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
@@ -206,6 +208,21 @@ interface SubscriptionsRawContract
     public function retrieveUsageHistory(
         string $subscriptionID,
         array|SubscriptionRetrieveUsageHistoryParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse;
+
+    /**
+     * @api
+     *
+     * @param array<string,mixed>|SubscriptionStartTrialParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<SubscriptionStartTrialResponse>
+     *
+     * @throws APIException
+     */
+    public function startTrial(
+        array|SubscriptionStartTrialParams $params,
         RequestOptions|array|null $requestOptions = null,
     ): BaseResponse;
 

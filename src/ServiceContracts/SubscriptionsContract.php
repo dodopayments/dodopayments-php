@@ -6,6 +6,7 @@ namespace Dodopayments\ServiceContracts;
 
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Invoices\CollectionMethod;
 use Dodopayments\Misc\Currency;
 use Dodopayments\Payments\AttachExistingCustomer;
 use Dodopayments\Payments\BillingAddress;
@@ -31,6 +32,9 @@ use Dodopayments\Subscriptions\SubscriptionListParams\Status;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
+use Dodopayments\Subscriptions\SubscriptionStartTrialParams\PaymentTerms\DueOnReceipt;
+use Dodopayments\Subscriptions\SubscriptionStartTrialParams\PaymentTerms\Net;
+use Dodopayments\Subscriptions\SubscriptionStartTrialResponse;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CreditEntitlementCart;
@@ -49,8 +53,10 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
  * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Invoice as InvoiceShape1
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Subscriptions\SubscriptionStartTrialParams\BillingAddress
+ * @phpstan-import-type PaymentTermsShape from \Dodopayments\Subscriptions\SubscriptionStartTrialParams\PaymentTerms
  * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
- * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress as BillingAddressShape1
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
@@ -62,7 +68,7 @@ interface SubscriptionsContract
      *
      * @api
      *
-     * @param BillingAddress|BillingAddressShape $billing Billing address information for the subscription
+     * @param BillingAddress|BillingAddressShape1 $billing Billing address information for the subscription
      * @param CustomerRequestShape $customer Customer details for the subscription
      * @param string $productID Unique identifier of the product to subscribe to
      * @param int $quantity Number of units to subscribe for. Must be at least 1.
@@ -159,7 +165,7 @@ interface SubscriptionsContract
      * @api
      *
      * @param string $subscriptionID Subscription Id
-     * @param BillingAddress|BillingAddressShape|null $billing
+     * @param BillingAddress|BillingAddressShape1|null $billing
      * @param bool|null $cancelAtNextBillingDate When set, the subscription will remain active until the end of billing period
      * @param CancelReason|value-of<CancelReason>|null $cancelReason
      * @param string|null $cancellationComment free-text cancellation comment (only valid when cancelling or scheduling cancellation)
@@ -542,6 +548,41 @@ interface SubscriptionsContract
         ?\DateTimeInterface $startDate = null,
         RequestOptions|array|null $requestOptions = null,
     ): DefaultPageNumberPagination;
+
+    /**
+     * @api
+     *
+     * @param CollectionMethod|value-of<CollectionMethod> $collectionMethod Body param
+     * @param Currency|value-of<Currency> $currency Body param
+     * @param string $customerID Body param
+     * @param string $productID body param: A recurring product
+     * @param \Dodopayments\Subscriptions\SubscriptionStartTrialParams\BillingAddress|BillingAddressShape|null $billingAddress body param: The billing address of an invoice request
+     * @param string|null $paymentMethodID Body param: A saved card of the customer. Automatic charge needs it.
+     * @param PaymentTermsShape|null $paymentTerms body param: The terms of the invoices after the trial
+     * @param int $quantity Body param
+     * @param bool $reviewRequired body param: `true` keeps each renewal draft for review before it finalises
+     * @param string|null $taxID Body param
+     * @param int|null $trialPeriodDays Body param: 1 to 730 days. When this is not set, the product trial applies and the trial misuse check runs.
+     * @param string $idempotencyKey Header param: A key of 1 to 255 characters. A repeat with the same key returns the first trial.
+     * @param RequestOpts|null $requestOptions
+     *
+     * @throws APIException
+     */
+    public function startTrial(
+        CollectionMethod|string $collectionMethod,
+        Currency|string $currency,
+        string $customerID,
+        string $productID,
+        \Dodopayments\Subscriptions\SubscriptionStartTrialParams\BillingAddress|array|null $billingAddress = null,
+        ?string $paymentMethodID = null,
+        DueOnReceipt|array|Net|null $paymentTerms = null,
+        ?int $quantity = null,
+        ?bool $reviewRequired = null,
+        ?string $taxID = null,
+        ?int $trialPeriodDays = null,
+        ?string $idempotencyKey = null,
+        RequestOptions|array|null $requestOptions = null,
+    ): SubscriptionStartTrialResponse;
 
     /**
      * @api

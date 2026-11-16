@@ -14,6 +14,7 @@ use Dodopayments\Core\Exceptions\AuthenticationException;
 use Dodopayments\Core\Implementation\StreamingHttpClient;
 use Dodopayments\Core\Util;
 use Dodopayments\Services\AddonsService;
+use Dodopayments\Services\AppInstallationService;
 use Dodopayments\Services\BalancesService;
 use Dodopayments\Services\BlocklistService;
 use Dodopayments\Services\BrandsService;
@@ -192,6 +193,11 @@ class Client extends BaseClient
      */
     public ModerationService $moderation;
 
+    /**
+     * @api
+     */
+    public AppInstallationService $appInstallation;
+
     private bool $workloadIdentityRequestInFlight = false;
 
     /**
@@ -239,7 +245,7 @@ class Client extends BaseClient
             'Accept' => 'application/json',
             'User-Agent' => sprintf('Dodo Payments/PHP %s', VERSION),
             'X-Stainless-Lang' => 'php',
-            'X-Stainless-Package-Version' => '6.34.0',
+            'X-Stainless-Package-Version' => '6.35.0',
             'X-Stainless-Arch' => Util::machtype(),
             'X-Stainless-OS' => Util::ostype(),
             'X-Stainless-Runtime' => php_sapi_name(),
@@ -301,6 +307,7 @@ class Client extends BaseClient
         $this->entitlements = new EntitlementsService($this);
         $this->productCollections = new ProductCollectionsService($this);
         $this->moderation = new ModerationService($this);
+        $this->appInstallation = new AppInstallationService($this);
     }
 
     /**
