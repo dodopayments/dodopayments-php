@@ -78,6 +78,7 @@ final class InvoicesRawService implements InvoicesRawContract
      *   dunning?: Dunning|DunningShape|null,
      *   memo?: string|null,
      *   metadata?: array<string,MetadataItemShape>,
+     *   paymentMethodID?: string|null,
      *   paymentTerms?: PaymentTermsShape|null,
      *   reviewRequired?: bool,
      *   taxID?: string|null,
@@ -161,6 +162,7 @@ final class InvoicesRawService implements InvoicesRawContract
      *   items?: list<ItemShape1>|null,
      *   memo?: string|null,
      *   metadata?: array<string,MetadataItemShape>|null,
+     *   paymentMethodID?: string|null,
      *   paymentTerms?: PaymentTermsShape1|null,
      *   reviewRequired?: bool|null,
      *   taxID?: string|null,
@@ -329,8 +331,8 @@ final class InvoicesRawService implements InvoicesRawContract
     /**
      * @api
      *
-     * Returns the page where the customer pays. A copied link counts as a send, so the first
-     * call sets `sent_at`.
+     * Returns the page where the customer pays. The first call sets `sent_at` and records a
+     * `link_shared` event. It sends no email and no `invoice.sent` webhook.
      *
      * @param string $invoiceID Invoice ID
      * @param RequestOpts|null $requestOptions
@@ -502,6 +504,7 @@ final class InvoicesRawService implements InvoicesRawContract
      *   dunning?: InvoicePreviewParams\Dunning|DunningShape2|null,
      *   memo?: string|null,
      *   metadata?: array<string,MetadataItemShape>,
+     *   paymentMethodID?: string|null,
      *   paymentTerms?: PaymentTermsShape2|null,
      *   reviewRequired?: bool,
      *   taxID?: string|null,
