@@ -1,5 +1,13 @@
 # Changelog
 
+## [6.36.0](https://github.com/dodopayments/dodopayments-php/compare/v6.35.0...v6.36.0) (2026-11-16)
+
+
+### Features
+
+* **api:** trial subscriptions and app installation settings; sync spec to prod 1.124.0 ([a401c53](https://github.com/dodopayments/dodopayments-php/commit/a401c531d3b95ea69bcb980347a4dabba75a4a92))
+* **api:** trial subscriptions and app installation settings; sync spec to prod 1.124.0 ([b391a50](https://github.com/dodopayments/dodopayments-php/commit/b391a50186f7a6db4173da0894a12001e638c1b1))
+
 ## [6.35.0](https://github.com/dodopayments/dodopayments-php/compare/v6.34.0...v6.35.0) (2026-11-10)
 
 
