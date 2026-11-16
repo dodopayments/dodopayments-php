@@ -52,6 +52,7 @@ use Dodopayments\Misc\Currency;
  *   metadata: mixed,
  *   refundIDs: list<string>,
  *   retryCount: int,
+ *   reviewRequired: bool,
  *   rowVersion: int,
  *   status: InvoiceStatus|value-of<InvoiceStatus>,
  *   subscriptionIDs: list<string>,
@@ -67,6 +68,7 @@ use Dodopayments\Misc\Currency;
  *   memo?: string|null,
  *   nextReminderAt?: \DateTimeInterface|null,
  *   nextRetryAt?: \DateTimeInterface|null,
+ *   paymentMethodID?: string|null,
  *   paymentTermsDays?: int|null,
  *   payments?: list<Payment|PaymentShape>|null,
  *   pdfURL?: string|null,
@@ -170,6 +172,13 @@ final class Invoice implements BaseModel
     public int $retryCount;
 
     /**
+     * `true` when a subscription of the invoice has renewal review on now. The value follows the
+     * subscription, so it can change after finalise. `review_deadline` shows that this draft waits.
+     */
+    #[Required('review_required')]
+    public bool $reviewRequired;
+
+    /**
      * Goes up by one on each change. Use it to ignore an older webhook delivery.
      */
     #[Required('row_version')]
@@ -253,6 +262,12 @@ final class Invoice implements BaseModel
     public ?\DateTimeInterface $nextRetryAt;
 
     /**
+     * The saved card that an automatic charge of the invoice uses.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
+    /**
      * Days from finalise to the due date. `null` when the invoice has a custom due date.
      */
     #[Optional('payment_terms_days', nullable: true)]
@@ -313,6 +328,7 @@ final class Invoice implements BaseModel
      *   metadata: ...,
      *   refundIDs: ...,
      *   retryCount: ...,
+     *   reviewRequired: ...,
      *   rowVersion: ...,
      *   status: ...,
      *   subscriptionIDs: ...,
@@ -343,6 +359,7 @@ final class Invoice implements BaseModel
      *   ->withMetadata(...)
      *   ->withRefundIDs(...)
      *   ->withRetryCount(...)
+     *   ->withReviewRequired(...)
      *   ->withRowVersion(...)
      *   ->withStatus(...)
      *   ->withSubscriptionIDs(...)
@@ -396,6 +413,7 @@ final class Invoice implements BaseModel
         mixed $metadata,
         array $refundIDs,
         int $retryCount,
+        bool $reviewRequired,
         int $rowVersion,
         InvoiceStatus|string $status,
         array $subscriptionIDs,
@@ -411,6 +429,7 @@ final class Invoice implements BaseModel
         ?string $memo = null,
         ?\DateTimeInterface $nextReminderAt = null,
         ?\DateTimeInterface $nextRetryAt = null,
+        ?string $paymentMethodID = null,
         ?int $paymentTermsDays = null,
         ?array $payments = null,
         ?string $pdfURL = null,
@@ -437,6 +456,7 @@ final class Invoice implements BaseModel
         $self['metadata'] = $metadata;
         $self['refundIDs'] = $refundIDs;
         $self['retryCount'] = $retryCount;
+        $self['reviewRequired'] = $reviewRequired;
         $self['rowVersion'] = $rowVersion;
         $self['status'] = $status;
         $self['subscriptionIDs'] = $subscriptionIDs;
@@ -453,6 +473,7 @@ final class Invoice implements BaseModel
         null !== $memo && $self['memo'] = $memo;
         null !== $nextReminderAt && $self['nextReminderAt'] = $nextReminderAt;
         null !== $nextRetryAt && $self['nextRetryAt'] = $nextRetryAt;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $paymentTermsDays && $self['paymentTermsDays'] = $paymentTermsDays;
         null !== $payments && $self['payments'] = $payments;
         null !== $pdfURL && $self['pdfURL'] = $pdfURL;
@@ -648,6 +669,18 @@ final class Invoice implements BaseModel
     }
 
     /**
+     * `true` when a subscription of the invoice has renewal review on now. The value follows the
+     * subscription, so it can change after finalise. `review_deadline` shows that this draft waits.
+     */
+    public function withReviewRequired(bool $reviewRequired): self
+    {
+        $self = clone $this;
+        $self['reviewRequired'] = $reviewRequired;
+
+        return $self;
+    }
+
+    /**
      * Goes up by one on each change. Use it to ignore an older webhook delivery.
      */
     public function withRowVersion(int $rowVersion): self
@@ -806,6 +839,17 @@ final class Invoice implements BaseModel
     {
         $self = clone $this;
         $self['nextRetryAt'] = $nextRetryAt;
+
+        return $self;
+    }
+
+    /**
+     * The saved card that an automatic charge of the invoice uses.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
         return $self;
     }
