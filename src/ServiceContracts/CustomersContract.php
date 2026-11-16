@@ -13,6 +13,8 @@ use Dodopayments\Customers\CustomerListEntitlementGrantsParams\Status;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
 use Dodopayments\RequestOptions;
 
 /**
@@ -161,12 +163,16 @@ interface CustomersContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param CountryCode|value-of<CountryCode> $billingCountry ISO country code alpha2 variant
+     * @param Currency|value-of<Currency> $currency
      * @param RequestOpts|null $requestOptions
      *
      * @throws APIException
      */
     public function retrievePaymentMethods(
         string $customerID,
-        RequestOptions|array|null $requestOptions = null
+        CountryCode|string|null $billingCountry = null,
+        Currency|string|null $currency = null,
+        RequestOptions|array|null $requestOptions = null,
     ): CustomerGetPaymentMethodsResponse;
 }
