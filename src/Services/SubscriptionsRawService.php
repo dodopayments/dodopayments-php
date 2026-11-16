@@ -9,8 +9,8 @@ use Dodopayments\Core\Contracts\BaseResponse;
 use Dodopayments\Core\Exceptions\APIException;
 use Dodopayments\Core\Util;
 use Dodopayments\DefaultPageNumberPagination;
+use Dodopayments\Invoices\CollectionMethod;
 use Dodopayments\Misc\Currency;
-use Dodopayments\Payments\BillingAddress;
 use Dodopayments\Payments\OneTimeProductCartItem;
 use Dodopayments\Payments\PaymentMethodTypes;
 use Dodopayments\RequestOptions;
@@ -39,6 +39,9 @@ use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
 use Dodopayments\Subscriptions\SubscriptionRetrieveUsageHistoryParams;
+use Dodopayments\Subscriptions\SubscriptionStartTrialParams;
+use Dodopayments\Subscriptions\SubscriptionStartTrialParams\BillingAddress;
+use Dodopayments\Subscriptions\SubscriptionStartTrialResponse;
 use Dodopayments\Subscriptions\SubscriptionStatus;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams;
 use Dodopayments\Subscriptions\SubscriptionUpdateParams\CancelReason;
@@ -57,8 +60,10 @@ use Dodopayments\Subscriptions\TimeInterval;
  * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionChangePlanParams\Invoice
  * @phpstan-import-type CustomerBalanceConfigShape from \Dodopayments\Subscriptions\SubscriptionChargeParams\CustomerBalanceConfig
  * @phpstan-import-type InvoiceShape from \Dodopayments\Subscriptions\SubscriptionPreviewChangePlanParams\Invoice as InvoiceShape1
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Subscriptions\SubscriptionStartTrialParams\BillingAddress
+ * @phpstan-import-type PaymentTermsShape from \Dodopayments\Subscriptions\SubscriptionStartTrialParams\PaymentTerms
  * @phpstan-import-type PaymentMethodShape from \Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodParams\PaymentMethod
- * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress
+ * @phpstan-import-type BillingAddressShape from \Dodopayments\Payments\BillingAddress as BillingAddressShape1
  * @phpstan-import-type AttachAddonShape from \Dodopayments\Subscriptions\AttachAddon
  * @phpstan-import-type MetadataItemShape from \Dodopayments\Misc\MetadataItem
  * @phpstan-import-type RequestOpts from \Dodopayments\RequestOptions
@@ -77,7 +82,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      * @api
      *
      * @param array{
-     *   billing: BillingAddress|BillingAddressShape,
+     *   billing: \Dodopayments\Payments\BillingAddress|BillingAddressShape1,
      *   customer: CustomerRequestShape,
      *   productID: string,
      *   quantity: int,
@@ -155,7 +160,7 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
      *
      * @param string $subscriptionID Subscription Id
      * @param array{
-     *   billing?: BillingAddress|BillingAddressShape|null,
+     *   billing?: \Dodopayments\Payments\BillingAddress|BillingAddressShape1|null,
      *   cancelAtNextBillingDate?: bool|null,
      *   cancelReason?: value-of<CancelReason>,
      *   cancellationComment?: string|null,
@@ -532,6 +537,59 @@ final class SubscriptionsRawService implements SubscriptionsRawContract
             options: $options,
             convert: SubscriptionGetUsageHistoryResponse::class,
             page: DefaultPageNumberPagination::class,
+        );
+    }
+
+    /**
+     * @api
+     *
+     * Creates an invoice-led subscription and a paid $0 invoice for the trial.
+     * The first invoice after the trial bills at `trial_ends_at`.
+     *
+     * @param array{
+     *   collectionMethod: CollectionMethod|value-of<CollectionMethod>,
+     *   currency: value-of<Currency>,
+     *   customerID: string,
+     *   productID: string,
+     *   billingAddress?: BillingAddress|BillingAddressShape|null,
+     *   paymentMethodID?: string|null,
+     *   paymentTerms?: PaymentTermsShape|null,
+     *   quantity?: int,
+     *   reviewRequired?: bool,
+     *   taxID?: string|null,
+     *   trialPeriodDays?: int|null,
+     *   idempotencyKey?: string,
+     * }|SubscriptionStartTrialParams $params
+     * @param RequestOpts|null $requestOptions
+     *
+     * @return BaseResponse<SubscriptionStartTrialResponse>
+     *
+     * @throws APIException
+     */
+    public function startTrial(
+        array|SubscriptionStartTrialParams $params,
+        RequestOptions|array|null $requestOptions = null,
+    ): BaseResponse {
+        [$parsed, $options] = SubscriptionStartTrialParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+        $header_params = ['idempotencyKey' => 'Idempotency-Key'];
+
+        // @phpstan-ignore-next-line return.type
+        return $this->client->request(
+            method: 'post',
+            path: 'billing/subscriptions',
+            headers: Util::array_transform_keys(
+                array_intersect_key($parsed, array_flip(array_keys($header_params))),
+                $header_params,
+            ),
+            body: (object) array_diff_key(
+                $parsed,
+                array_flip(array_keys($header_params))
+            ),
+            options: $options,
+            convert: SubscriptionStartTrialResponse::class,
         );
     }
 

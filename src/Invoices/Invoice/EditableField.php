@@ -20,6 +20,8 @@ enum EditableField: string
 
     case REVIEW_REQUIRED = 'review_required';
 
+    case PAYMENT_METHOD = 'payment_method';
+
     case DUE_AT = 'due_at';
 
     case COLLECTION_METHOD = 'collection_method';

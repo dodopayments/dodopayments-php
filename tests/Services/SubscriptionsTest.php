@@ -18,6 +18,7 @@ use Dodopayments\Subscriptions\SubscriptionGetUsageHistoryResponse;
 use Dodopayments\Subscriptions\SubscriptionListResponse;
 use Dodopayments\Subscriptions\SubscriptionNewResponse;
 use Dodopayments\Subscriptions\SubscriptionPreviewChangePlanResponse;
+use Dodopayments\Subscriptions\SubscriptionStartTrialResponse;
 use Dodopayments\Subscriptions\SubscriptionUpdatePaymentMethodResponse;
 use PHPUnit\Framework\Attributes\CoversNothing;
 use PHPUnit\Framework\Attributes\Test;
@@ -315,6 +316,48 @@ final class SubscriptionsTest extends TestCase
                 $item
             );
         }
+    }
+
+    #[Test]
+    public function testStartTrial(): void
+    {
+        $result = $this->client->subscriptions->startTrial(
+            collectionMethod: CollectionMethod::AUTO_CHARGE,
+            currency: Currency::AED,
+            customerID: 'customer_id',
+            productID: 'product_id',
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SubscriptionStartTrialResponse::class, $result);
+    }
+
+    #[Test]
+    public function testStartTrialWithOptionalParams(): void
+    {
+        $result = $this->client->subscriptions->startTrial(
+            collectionMethod: CollectionMethod::AUTO_CHARGE,
+            currency: Currency::AED,
+            customerID: 'customer_id',
+            productID: 'product_id',
+            billingAddress: [
+                'country' => CountryCode::AF,
+                'city' => 'city',
+                'state' => 'state',
+                'street' => 'street',
+                'zipcode' => 'zipcode',
+            ],
+            paymentMethodID: 'payment_method_id',
+            paymentTerms: ['type' => 'due_on_receipt'],
+            quantity: 0,
+            reviewRequired: true,
+            taxID: 'tax_id',
+            trialPeriodDays: 0,
+            idempotencyKey: 'Idempotency-Key',
+        );
+
+        // @phpstan-ignore-next-line method.alreadyNarrowedType
+        $this->assertInstanceOf(SubscriptionStartTrialResponse::class, $result);
     }
 
     #[Test]
