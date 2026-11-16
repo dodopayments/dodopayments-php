@@ -18,9 +18,12 @@ use Dodopayments\Customers\CustomerListEntitlementGrantsParams\IntegrationType;
 use Dodopayments\Customers\CustomerListEntitlementGrantsParams\Status;
 use Dodopayments\Customers\CustomerListEntitlementsResponse;
 use Dodopayments\Customers\CustomerListParams;
+use Dodopayments\Customers\CustomerRetrievePaymentMethodsParams;
 use Dodopayments\Customers\CustomerUpdateParams;
 use Dodopayments\DefaultPageNumberPagination;
 use Dodopayments\Entitlements\Grants\EntitlementGrant;
+use Dodopayments\Misc\CountryCode;
+use Dodopayments\Misc\Currency;
 use Dodopayments\RequestOptions;
 use Dodopayments\ServiceContracts\CustomersRawContract;
 
@@ -309,6 +312,9 @@ final class CustomersRawService implements CustomersRawContract
      * @api
      *
      * @param string $customerID Customer Id
+     * @param array{
+     *   billingCountry?: value-of<CountryCode>, currency?: value-of<Currency>
+     * }|CustomerRetrievePaymentMethodsParams $params
      * @param RequestOpts|null $requestOptions
      *
      * @return BaseResponse<CustomerGetPaymentMethodsResponse>
@@ -317,13 +323,23 @@ final class CustomersRawService implements CustomersRawContract
      */
     public function retrievePaymentMethods(
         string $customerID,
-        RequestOptions|array|null $requestOptions = null
+        array|CustomerRetrievePaymentMethodsParams $params,
+        RequestOptions|array|null $requestOptions = null,
     ): BaseResponse {
+        [$parsed, $options] = CustomerRetrievePaymentMethodsParams::parseRequest(
+            $params,
+            $requestOptions,
+        );
+
         // @phpstan-ignore-next-line return.type
         return $this->client->request(
             method: 'get',
             path: ['customers/%1$s/payment-methods', $customerID],
-            options: $requestOptions,
+            query: Util::array_transform_keys(
+                $parsed,
+                ['billingCountry' => 'billing_country']
+            ),
+            options: $options,
             convert: CustomerGetPaymentMethodsResponse::class,
         );
     }

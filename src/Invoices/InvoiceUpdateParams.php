@@ -46,6 +46,7 @@ use Dodopayments\Misc\MetadataItem;
  *   items?: list<ItemShape>|null,
  *   memo?: string|null,
  *   metadata?: array<string,MetadataItemShape>|null,
+ *   paymentMethodID?: string|null,
  *   paymentTerms?: PaymentTermsShape|null,
  *   reviewRequired?: bool|null,
  *   taxID?: string|null,
@@ -128,6 +129,12 @@ final class InvoiceUpdateParams implements BaseModel
     #[Optional(map: MetadataItem::class, nullable: true)]
     public ?array $metadata;
 
+    /**
+     * A saved card of the customer. `null` removes the card from the draft.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
     /** @var PaymentTermsVariants|null $paymentTerms */
     #[Optional('payment_terms', union: PaymentTerms::class, nullable: true)]
     public DueOnReceipt|Net|null $paymentTerms;
@@ -186,6 +193,7 @@ final class InvoiceUpdateParams implements BaseModel
         ?array $items = null,
         ?string $memo = null,
         ?array $metadata = null,
+        ?string $paymentMethodID = null,
         DueOnReceipt|array|Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
@@ -206,6 +214,7 @@ final class InvoiceUpdateParams implements BaseModel
         null !== $items && $self['items'] = $items;
         null !== $memo && $self['memo'] = $memo;
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $paymentTerms && $self['paymentTerms'] = $paymentTerms;
         null !== $reviewRequired && $self['reviewRequired'] = $reviewRequired;
         null !== $taxID && $self['taxID'] = $taxID;
@@ -351,6 +360,17 @@ final class InvoiceUpdateParams implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * A saved card of the customer. `null` removes the card from the draft.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
         return $self;
     }

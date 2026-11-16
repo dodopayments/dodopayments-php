@@ -47,6 +47,7 @@ use Dodopayments\Misc\MetadataItem;
  *   dunning?: null|Dunning|DunningShape,
  *   memo?: string|null,
  *   metadata?: array<string,MetadataItemShape>|null,
+ *   paymentMethodID?: string|null,
  *   paymentTerms?: PaymentTermsShape|null,
  *   reviewRequired?: bool|null,
  *   taxID?: string|null,
@@ -138,6 +139,12 @@ final class InvoicePreviewParams implements BaseModel
     public ?array $metadata;
 
     /**
+     * A saved card of the customer. The new subscriptions of the invoice charge it.
+     */
+    #[Optional('payment_method_id', nullable: true)]
+    public ?string $paymentMethodID;
+
+    /**
      * Do not send it with `due_at`.
      *
      * @var PaymentTermsVariants|null $paymentTerms
@@ -209,6 +216,7 @@ final class InvoicePreviewParams implements BaseModel
         Dunning|array|null $dunning = null,
         ?string $memo = null,
         ?array $metadata = null,
+        ?string $paymentMethodID = null,
         DueOnReceipt|array|Net|null $paymentTerms = null,
         ?bool $reviewRequired = null,
         ?string $taxID = null,
@@ -229,6 +237,7 @@ final class InvoicePreviewParams implements BaseModel
         null !== $dunning && $self['dunning'] = $dunning;
         null !== $memo && $self['memo'] = $memo;
         null !== $metadata && $self['metadata'] = $metadata;
+        null !== $paymentMethodID && $self['paymentMethodID'] = $paymentMethodID;
         null !== $paymentTerms && $self['paymentTerms'] = $paymentTerms;
         null !== $reviewRequired && $self['reviewRequired'] = $reviewRequired;
         null !== $taxID && $self['taxID'] = $taxID;
@@ -386,6 +395,17 @@ final class InvoicePreviewParams implements BaseModel
     {
         $self = clone $this;
         $self['metadata'] = $metadata;
+
+        return $self;
+    }
+
+    /**
+     * A saved card of the customer. The new subscriptions of the invoice charge it.
+     */
+    public function withPaymentMethodID(?string $paymentMethodID): self
+    {
+        $self = clone $this;
+        $self['paymentMethodID'] = $paymentMethodID;
 
         return $self;
     }
